@@ -1,0 +1,37 @@
+/web/bundles
+/web/media/*
+/web/symlinks/*
+/app/cache/*
+/app/logs/*
+/vendor*/
+
+
+/app/config/parameters.yml
+
+
+/logs/*
+!/logs/*/
+/logs/*/*
+
+#dot-file exceptions
+.*
+!.gitignore
+!.gitkeep
+!.htaccess
+!.sf
+
+#Ignore all temporary PHP files
+*.php~
+*.ini~
+*-transfer.log
+*-receive.log
+
+#Ignore .htaccess there so everybody can change the front controller app.php -> app_dev.php
+/web/.htaccess
+/nbproject/private/
+/nbproject
+
+/temp
+*.stackdump
+
+/app/app.sqlite
