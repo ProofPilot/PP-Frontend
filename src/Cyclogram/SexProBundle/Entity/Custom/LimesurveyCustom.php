@@ -1,6 +1,6 @@
 <?php
 
-namespace Cyclogram\Bundle\ProofPilotBundle\Entity\Custom;
+namespace Cyclogram\SexProBundle\Entity\Custom;
 
 class limesurveyCustom extends DbCustom
 {

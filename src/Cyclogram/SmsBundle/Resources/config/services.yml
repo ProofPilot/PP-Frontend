@@ -1,0 +1,16 @@
+parameters:
+#    cyclogram_sms.example.class: Cyclogram\SmsBundle\Example
+    sms.class: Cyclogram\SmsBundle\Controller\SmsController
+    cyclogram_proofpilot_database.class:    Cyclogram\SexProBundle\Entity\Custom\DbCustom    
+
+services:
+#    cyclogram_sms.example:
+#        class: %cyclogram_sms.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
+    sms:
+        class:     %sms.class%
+        arguments: [@kernel]
+        
+    custom_db:
+        class: %cyclogram_proofpilot_database.class%
+        arguments: [@database_connection]

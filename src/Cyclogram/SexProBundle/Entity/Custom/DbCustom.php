@@ -1,6 +1,6 @@
 <?php
 
-namespace Cyclogram\Bundle\ProofPilotBundle\Entity\Custom;
+namespace Cyclogram\SexProBundle\Entity\Custom;
 
 use \Doctrine\DBAL\Connection;
 
@@ -27,7 +27,7 @@ class DbCustom
     public function getFactory($entity) {
         $obj = null;
         if ($entity) {
-        	$name = "\Cyclogram\Bundle\ProofPilotBundle\Entity\Custom\\$entity";
+        	$name = "\Cyclogram\SexProBundle\Entity\Custom\\$entity";
         	$obj = new $name($this->db_conn);
             return $obj;
         }

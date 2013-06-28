@@ -374,7 +374,7 @@ class User implements AdvancedUserInterface
         ( is_null($this->roles) ) ? $this->roles = array() : $this->roles;
 
         //return array_merge( $this->roles->toArray(), array( new \Cyclogram\Bundle\ProofPilotBundle\Entity\UserRole( "ROLE_USER" ) ) );
-        return array_merge( $this->roles, array( new \Cyclogram\Bundle\ProofPilotBundle\Entity\UserRole( "ROLE_USER" ) ) );
+        return array_merge( $this->roles, array( new \Cyclogram\SexProBundle\Entity\UserRole( "ROLE_USER" ) ) );
     }
 
     public function setRoles( array $roles=array() ){

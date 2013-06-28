@@ -1,0 +1,3 @@
+CyclogramSmsBundle_testPage:
+    pattern:  /smstest
+    defaults: { _controller: CyclogramSmsBundle:Default:index }
