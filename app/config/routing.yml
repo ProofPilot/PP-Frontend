@@ -1,5 +1,5 @@
 cyclogram_sex_pro:
     resource: "@CyclogramSexProBundle/Controller/"
     type:     annotation
-    prefix:   /sexpro/
+    prefix: /
 

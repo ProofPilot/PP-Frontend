@@ -10,8 +10,13 @@ security:
         ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
     providers:
+        chain_provider: 
+            chain:
+                providers: [main, fos_facebook]
         main:
             entity: { class: CyclogramSexProBundle:User, property: userEmail }
+        fos_facebook:
+            id: my.facebook.user
 
     firewalls:
         dev:
@@ -19,27 +24,39 @@ security:
             security: false
 
         login:
-            pattern:  ^/sexpro/login$
+            pattern:  ^/login$
             security: false
             anonymous:  ~
 
         secured_area:
             pattern: ^/
             anonymous:  ~
+            fos_facebook:
+                provider: fos_facebook
+#                check_path: /login_check
+                check_path: _fb_security_check
+                login_path: /login
+                default_target_path: /doLogin
+                always_use_default_target_path: true
+                app_url: "http://apps.facebook.com/Proofpilot_sexpro/"
+                server_url: "http://localhost/facebookApp/"
             form_login:
-                check_path: /sexpro/login_check
-                login_path: /sexpro/login
-                default_target_path: /sexpro/doLogin
+                provider: main
+#                csrf_provider: form.csrf_provider
+#                check_path: /login_check
+#                login_path: /login
+                default_target_path: /doLogin
                 always_use_default_target_path: true
             logout:
-                path:   /sexpro/logout
+                path:   /logout
                 target: /
 
     access_control:
+        - { path: ^/secured/.*, role: [IS_AUTHENTICATED_FULLY] }
         - { path: ^/api, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/r/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/no-authorization, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/sexpro/doLogin, roles: ROLE_USER }
-        - { path: ^sexpro/loginSMS, roles: ROLE_USER }
+        - { path: ^/doLogin, roles: ROLE_USER }
+        - { path: ^/loginSMS, roles: ROLE_USER }
         - { path: ^/, roles: ROLE_USER }
         #- { path: ^/_internal/secure, roles: IS_AUTHENTICATED_ANONYMOUSLY, ip: 127.0.0.1 }

@@ -22,3 +22,5 @@ parameters:
     url_chartio: "https://chartio.com"
     
     encryption_key: "wKLH=qIk2A2&pEB"
+    
+    facebook.secret: 1d82c88b4ce3d162750fb32faf59700b

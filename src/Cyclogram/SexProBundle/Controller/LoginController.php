@@ -48,6 +48,13 @@ class LoginController extends Controller
     }
     
     /**
+     * @Route("/secured/", name="_fb_security_check")
+     */
+    public function facebookSecuredAction() {
+        
+    }
+    
+    /**
      * @Route("/logout", name="_logout")
      */
     public function logoutAction()

@@ -1,0 +1,15 @@
+fos_facebook:
+#    file:   %kernel.root_dir%/../vendor/facebook/php-sdk/src/base_facebook.php
+    alias:  facebook
+    app_id: 570022106369215
+    secret: %facebook.secret%
+    cookie: true
+    permissions: [email]
+
+services:
+    my.facebook.user:
+        class: Cyclogram\SexProBundle\Security\FacebookProvider
+        arguments:
+            facebook: "@fos_facebook.api"
+            userManager: "@doctrine.orm.entity_manager"
+            validator: "@validator"

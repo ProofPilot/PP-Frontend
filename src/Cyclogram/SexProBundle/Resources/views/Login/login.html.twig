@@ -18,10 +18,28 @@
         <link rel="stylesheet" href={{ asset('css/main.css') }}>
         <link rel="stylesheet" href={{ asset('css/site.css') }}>
         <script src={{ asset('js/vendor/modernizr-2.6.2.min.js') }}></script>
-       
+       <script>
+       function goLogIn(){
+           window.location = "{{ path('_fb_security_check') }}";
+       }
+
+       function onFbInit() {
+           if (typeof(FB) != 'undefined' && FB != null ) {
+               FB.Event.subscribe('auth.statusChange', function(response) {
+                   setTimeout(goLogIn, 500);
+               });
+           }
+           FB.Event.subscribe('auth.logout',
+                    function(response) {
+                        if (response.status === 'unknown')  {
+                           window.location = "{{ path('_logout') }}";
+                         }
+           });                            
+       }
+</script>
     </head>
     <body class="has_image">
-		
+		{{ facebook_initialize({'xfbml': true, 'fbAsyncInit': 'onFbInit();'}) }}
 		<div class="reg_header">
 			<a href="http://proofpilot.com/" class="logo">ProofPilot</a>
 		</div>
@@ -36,6 +54,7 @@
 				
 					<div class="btns_wapper">
 						<form>
+						{{ facebook_login_button({'autologoutlink': true}) }}
 							<a class="btn_reg fb" href="#"><span>Login with Facebook</span></a>
 						</form>
 						<form>
