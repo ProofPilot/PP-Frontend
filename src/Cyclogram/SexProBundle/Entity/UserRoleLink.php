@@ -66,7 +66,7 @@ class UserRoleLink
      * @param \Cyclogram\Bundle\ProofPilotBundle\Entity\UserRole $userRoleUserRole
      * @return UserRoleLink
      */
-    public function setUserRoleUserRole(\Cyclogram\Bundle\ProofPilotBundle\Entity\UserRole $userRoleUserRole = null)
+    public function setUserRoleUserRole(\Cyclogram\SexProBundle\Entity\UserRole $userRoleUserRole = null)
     {
         $this->userRoleUserRole = $userRoleUserRole;
     
@@ -89,7 +89,7 @@ class UserRoleLink
      * @param \Cyclogram\Bundle\ProofPilotBundle\Entity\User $userUser
      * @return UserRoleLink
      */
-    public function setUserUser(\Cyclogram\Bundle\ProofPilotBundle\Entity\User $userUser = null)
+    public function setUserUser(\Cyclogram\SexProBundle\Entity\User $userUser = null)
     {
         $this->userUser = $userUser;
     

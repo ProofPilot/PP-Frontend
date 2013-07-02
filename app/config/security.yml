@@ -36,15 +36,15 @@ security:
 #                check_path: /login_check
                 check_path: _fb_security_check
                 login_path: /login
-                default_target_path: /doLogin
+                default_target_path: /main
                 always_use_default_target_path: true
                 app_url: "http://apps.facebook.com/Proofpilot_sexpro/"
                 server_url: "http://localhost/facebookApp/"
             form_login:
                 provider: main
 #                csrf_provider: form.csrf_provider
-#                check_path: /login_check
-#                login_path: /login
+                check_path: /login_check
+                login_path: /login
                 default_target_path: /doLogin
                 always_use_default_target_path: true
             logout:

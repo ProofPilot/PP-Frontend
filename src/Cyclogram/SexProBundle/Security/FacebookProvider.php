@@ -8,6 +8,9 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use \BaseFacebook;
 use \FacebookApiException;
+use Cyclogram\SexProBundle\Entity\User;
+use Cyclogram\SexProBundle\Entity\UserRoleLink;
+use Cyclogram\SexProBundle\Entity\UserRole;
 
 class FacebookProvider implements UserProviderInterface
 {
@@ -27,12 +30,12 @@ class FacebookProvider implements UserProviderInterface
 
     public function supportsClass($class)
     {
-        return $this->userManager->supportsClass($class);
+//         return $this->userManager->supportsClass($class);
     }
 
     public function findUserByFbId($fbId)
     {
-        return $this->userManager->findUserBy(array('facebookId' => $fbId));
+        return $this->userManager->getRepository("CyclogramSexProBundle:User")->findOneBy(array('facebookId' => $fbId));
     }
 
     public function loadUserByUsername($username)
@@ -47,9 +50,20 @@ class FacebookProvider implements UserProviderInterface
 
         if (!empty($fbdata)) {
             if (empty($user)) {
-                $user = $this->userManager->createUser();
-                $user->setEnabled(true);
-                $user->setPassword('');
+                $user = new User();
+                $user->setUserPassword('');
+                $user->setUserEmailConfirmed(true);
+                $user->setUserMobileNumber('');
+                $user->setUserMobileSmsCode('');
+                $user->setUserMobileSmsCodeConfirmed(false);
+                $status = $this->userManager->getRepository('CyclogramSexProBundle:Status')->find(1);
+                $user->setStatus($status);
+                $userRoleLink = new UserRoleLink();
+                $userRole = $this->userManager->getRepository('CyclogramSexProBundle:UserRole')->findOneByUserRoleName('ROLE_REPRESENTATIVE');
+                $userRoleLink->setUserRoleUserRole($userRole);
+                $userRoleLink->setUserUser($user);
+                $this->userManager->persist($userRoleLink);
+                $user->setRoles(array($userRoleLink));
             }
 
             // TODO use http://developers.facebook.com/docs/api/realtime
@@ -59,7 +73,8 @@ class FacebookProvider implements UserProviderInterface
                 // TODO: the user was found obviously, but doesnt match our expectations, do something smart
                 throw new UsernameNotFoundException('The facebook user could not be stored');
             }
-            $this->userManager->updateUser($user);
+            $this->userManager->persist($user);
+            $this->userManager->flush();
         }
 
         if (empty($user)) {

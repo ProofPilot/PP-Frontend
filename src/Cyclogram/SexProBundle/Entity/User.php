@@ -6,7 +6,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Cyclogram\Bundle\SexProBundle\Entity\UserRoleLink;
+use Cyclogram\SexProBundle\Entity\UserRoleLink;
 
 /**
  * User
@@ -306,7 +306,7 @@ class User implements AdvancedUserInterface
      * @param \Cyclogram\Bundle\ProofPilotBundle\Entity\Status $status
      * @return User
      */
-    public function setStatus(\Cyclogram\Bundle\SexProBundle\Entity\Status $status = null)
+    public function setStatus(\Cyclogram\SexProBundle\Entity\Status $status = null)
     {
         $this->status = $status;
     
@@ -447,7 +447,7 @@ class User implements AdvancedUserInterface
     public function setFacebookId($facebookId)
     {
         $this->facebookId = $facebookId;
-        $this->setUsername($facebookId);
+//         $this->setUsername($facebookId);
         $this->salt = '';
     }
     
@@ -471,7 +471,6 @@ class User implements AdvancedUserInterface
     {
         if (isset($fbdata['id'])) {
             $this->setFacebookId($fbdata['id']);
-            $this->addRole('ROLE_FACEBOOK');
         }
         if (isset($fbdata['first_name'])) {
             $this->setFirstname($fbdata['first_name']);
@@ -480,7 +479,7 @@ class User implements AdvancedUserInterface
             $this->setLastname($fbdata['last_name']);
         }
         if (isset($fbdata['email'])) {
-            $this->setEmail($fbdata['email']);
+            $this->setUserEmail($fbdata['email']);
         }
     }
 }
