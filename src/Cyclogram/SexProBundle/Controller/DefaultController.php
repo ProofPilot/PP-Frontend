@@ -57,6 +57,13 @@ class DefaultController extends Controller
                       'class' => 'icon4 last'
                      )
                 );
+        $parameters["assistance"] = array(
+                array('info' => 'Help', 'class' => 'first'),
+                array('info' => 'How to activate your tests','class' => ''),
+                array('info' => 'Read instructions to Perform the Tests', 'class' => ''),
+                array('info' => 'Collect specimen', 'class' => ''),
+                array('info' => 'Some other info', 'class' => 'last')
+                );
         
         return $this->render('CyclogramSexProBundle:Default:main.html.twig', $parameters);
         
