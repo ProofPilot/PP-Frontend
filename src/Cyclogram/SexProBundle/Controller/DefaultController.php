@@ -14,7 +14,52 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        return $this->render('CyclogramSexProBundle:Default:main.html.twig');
+        $parameters = array();
+        
+        $parameters['text'] = array(
+                "title" => "title",
+                "content" => "content");
+        $parameters['message'] = array(
+                "activity" => "activity");
+        
+        $parameters["surveys"] = array(
+                array('title' => 'A survet title of some sort',
+                      'content' => 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt',
+                      'image' => 'images/tmp_banner_1.jpg'
+                      ),
+                array(
+                      'title' => 'An activity of some sort',
+                      'content' => 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt',
+                      'image' => 'images/tmp_banner_2.jpg'
+                      ),
+                array(
+                      'title' => 'A measurement of some sort',
+                      'content' => 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt',
+                      'image' => 'images/tmp_banner_3.jpg'
+                      ),
+                array(
+                      'title' => 'A test of some sort',
+                      'content' => 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt',
+                      'image' => 'images/tmp_banner_4.jpg'
+                      )
+                );
+        $parameters["actions"] = array(
+                array('activity' => 'Your e-mail address has been confirmed',
+                      'class' => 'icon1 first'
+                     ),
+                array('activity' => 'Your mobile telephone number has been confirmed',
+                      'class' => 'icon2'
+                     ),
+                array('activity' => 'Welcome to the study Know@Home: Putting the test to the test',
+                      'class' => 'icon3'
+                     ),
+                array('activity' => 'Your mobile telephone number has been confirmed',
+                      'class' => 'icon4 last'
+                     )
+                );
+        
+        return $this->render('CyclogramSexProBundle:Default:main.html.twig', $parameters);
+        
     }
     
     /**
