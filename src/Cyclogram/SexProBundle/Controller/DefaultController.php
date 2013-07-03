@@ -23,23 +23,27 @@ class DefaultController extends Controller
                 "activity" => "activity");
         
         $parameters["surveys"] = array(
-                array('title' => 'A survet title of some sort',
+                array('title' => 'A survey title of some sort',
                       'content' => 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt',
+                      'icon' => 'icon_1',
                       'image' => 'images/tmp_banner_1.jpg'
                       ),
                 array(
                       'title' => 'An activity of some sort',
                       'content' => 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt',
+                      'icon' => 'icon_2',
                       'image' => 'images/tmp_banner_2.jpg'
                       ),
                 array(
                       'title' => 'A measurement of some sort',
-                      'content' => 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt',
+                      'content' => 'After a pledge, confirm that you actually followed through on the pledge',
+                      'icon' => 'icon_3',
                       'image' => 'images/tmp_banner_3.jpg'
                       ),
                 array(
-                      'title' => 'A test of some sort',
+                      'title' => 'A Test of some sort',
                       'content' => 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt',
+                      'icon' => 'icon_4',
                       'image' => 'images/tmp_banner_4.jpg'
                       )
                 );
@@ -64,6 +68,10 @@ class DefaultController extends Controller
                 array('info' => 'Collect specimen', 'class' => ''),
                 array('info' => 'Some other info', 'class' => 'last')
                 );
+        
+       $parameters["lastaccess"] = new \DateTime("2013-07-01 10:05:00");
+       
+       $parameters["user"] = array('avatar' => 'images/tmp_avatar.jpg', 'name' => 'Damien Sonser');
         
         return $this->render('CyclogramSexProBundle:Default:main.html.twig', $parameters);
         
