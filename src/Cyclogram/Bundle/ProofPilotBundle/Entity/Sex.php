@@ -19,14 +19,14 @@ class Sex
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $sexId;
+    protected $sexId;
 
     /**
      * @var string
      *
      * @ORM\Column(name="sex_name", type="string", length=45, nullable=false)
      */
-    private $sexName;
+    protected $sexName;
 
     /**
      * @var \Status
@@ -36,7 +36,7 @@ class Sex
      *   @ORM\JoinColumn(name="status_id", referencedColumnName="status_id")
      * })
      */
-    private $status;
+    protected $status;
 
 
 

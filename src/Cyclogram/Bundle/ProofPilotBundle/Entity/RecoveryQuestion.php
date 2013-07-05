@@ -19,14 +19,14 @@ class RecoveryQuestion
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $recoveryQuestionId;
+    protected $recoveryQuestionId;
 
     /**
      * @var string
      *
      * @ORM\Column(name="recovery_question_name", type="string", length=145, nullable=false)
      */
-    private $recoveryQuestionName;
+    protected $recoveryQuestionName;
 
     /**
      * @var \Status
@@ -36,7 +36,7 @@ class RecoveryQuestion
      *   @ORM\JoinColumn(name="status_id", referencedColumnName="status_id")
      * })
      */
-    private $status;
+    protected $status;
 
 
 

@@ -19,14 +19,14 @@ class Race
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $raceId;
+    protected $raceId;
 
     /**
      * @var string
      *
      * @ORM\Column(name="race_name", type="string", length=45, nullable=false)
      */
-    private $raceName;
+    protected $raceName;
 
     /**
      * @var \Status
@@ -36,7 +36,7 @@ class Race
      *   @ORM\JoinColumn(name="status_id", referencedColumnName="status_id")
      * })
      */
-    private $status;
+    protected $status;
 
 
 

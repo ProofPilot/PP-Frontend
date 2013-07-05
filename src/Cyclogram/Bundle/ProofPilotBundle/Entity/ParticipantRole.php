@@ -19,14 +19,14 @@ class ParticipantRole
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $participantRoleId;
+    protected $participantRoleId;
 
     /**
      * @var string
      *
      * @ORM\Column(name="participant_role_name", type="string", length=45, nullable=false)
      */
-    private $participantRoleName;
+    protected $participantRoleName;
 
 
 

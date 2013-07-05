@@ -13,9 +13,7 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use \BaseFacebook;
 use \FacebookApiException;
-use Cyclogram\Bundle\ProofPilotBundle\Entity\User;
-use Cyclogram\Bundle\ProofPilotBundle\Entity\UserRoleLink;
-use Cyclogram\Bundle\ProofPilotBundle\Entity\UserRole;
+use Cyclogram\Bundle\ProofPilotBundle\Entity\Participant;
 
 class FacebookProvider implements UserProviderInterface
 {
@@ -42,12 +40,12 @@ class FacebookProvider implements UserProviderInterface
 
     public function findUserByFbId($fbId)
     {
-        return $this->userManager->getRepository("CyclogramProofPilotBundle:User")->findOneBy(array('facebookId' => $fbId));
+        return $this->userManager->getRepository("CyclogramProofPilotBundle:Participant")->findOneBy(array('facebookId' => $fbId));
     }
 
-    public function loadUserByUsername($username)
+    public function loadUserByUsername($fbId)
     {
-        $user = $this->findUserByFbId($username);
+        $participant = $this->findUserByFbId($fbId);
         $referer = array();
         $request = $this->container->get('request');
         $url = $request->headers->get('referer');
@@ -63,62 +61,77 @@ class FacebookProvider implements UserProviderInterface
         if(empty($fbdata))
             throw new UsernameNotFoundException('Facebook API not working');//TOFO
         
-        if (!empty($user)){
-            $user->setRoleDirect('FACEBOOK_REGISTERED');
+        if (!empty($participant)){
+            $participant->setRoles(array('FACEBOOK_REGISTERED'));
         
-            $user->setFBData($fbdata);
+            $participant->setFBData($fbdata);
         
-            $this->userManager->persist($user);
+            $this->userManager->persist($participant);
             $this->userManager->flush();
+            
+            return $participant;
         }
 
-        if (empty($user) && $referer['path'] == '/register') {
-            $user = new User();
-            $user->setUserPassword('');
-            $user->setRoleDirect('FACEBOOK_REGISTRATION_PROCESS');
-            $user->setUserEmailConfirmed(true);
-            $user->setUserMobileNumber('');
-            $user->setUserMobileSmsCode('');
-            $user->setUserMobileSmsCodeConfirmed(false);
+        if (empty($participant) && $referer['path'] == '/register') {
+            $participant = new Participant();
+            $participant->setRoles(array('FACEBOOK_REGISTRATION_PROCESS'));
+            $participant->setParticipantPassword('');
+            $question = $this->userManager->getRepository('CyclogramProofPilotBundle:RecoveryQuestion')->find(1);
+            $participant->setRecoveryQuestion($question);
+            $participant->setRecoveryPasswordCode('Default');
+            $participant->setParticipantEmailConfirmed(true);
+            $participant->setParticipantMobileNumber('');
+            $participant->setParticipantMobileSmsCodeConfirmed(true);
+            $participant->setParticipantIncentiveBalance(false);
+            $date = new \DateTime();
+            $participant->setParticipantLastTouchDatetime($date);
+            $participant->setParticipantZipcode('');
+            $country = $this->userManager->getRepository('CyclogramProofPilotBundle:Country')->find(1);
+            $participant->setCountry($country);
+            $state = $this->userManager->getRepository('CyclogramProofPilotBundle:State')->find(35);
+            $participant->setState($state);
+            $city = $this->userManager->getRepository('CyclogramProofPilotBundle:City')->find(25420);
+            $participant->setCity($city);
+            $sex = $this->userManager->getRepository('CyclogramProofPilotBundle:Sex')->find(1);
+            $participant->setSex($sex);
+            $race = $this->userManager->getRepository('CyclogramProofPilotBundle:Race')->find(1);
+            $participant->setRace($race);
+            $role = $this->userManager->getRepository('CyclogramProofPilotBundle:ParticipantRole')->find(1);
+            $participant->setParticipantRole($role);
             $status = $this->userManager->getRepository('CyclogramProofPilotBundle:Status')->find(1);
-            $user->setStatus($status);
-            $userRoleLink = new UserRoleLink();
-            $userRole = $this->userManager->getRepository('CyclogramProofPilotBundle:UserRole')->findOneByUserRoleName('ROLE_REPRESENTATIVE');
-            $userRoleLink->setUserRoleUserRole($userRole);
-            $userRoleLink->setUserUser($user);
-            $this->userManager->persist($userRoleLink);
-            $user->setRoles(array($userRoleLink));
-            $user->setFBData($fbdata);
-                
-            $this->userManager->persist($user);
+            $participant->setStatus($status);
+            $participant->setFBData($fbdata);
+            
+            $this->userManager->persist($participant);
             $this->userManager->flush();
-            return $user;
+            
+            return $participant;
         }
             
-        if (empty($user) && $referer['path'] == '/login') {
-            $user = new User();
-            $user->setRoleDirect('FACEBOOK_NOT_REGISTERED');
-            return $user;
+        if (empty($participant) && $referer['path'] == '/login') {
+            $participant = new Participant();
+            $participant->setRoles(array('FACEBOOK_NOT_REGISTERED'));
+            return $participant;
         }
 
-        if (count($this->validator->validate($user, 'Facebook'))) {
+        if (count($this->validator->validate($participant, 'Facebook'))) {
             // TODO: the user was found obviously, but doesnt match our expectations, do something smart
             throw new UsernameNotFoundException('The facebook user could not be stored');
         }
 
-        if (empty($user)) {
+        if (empty($participant)) {
             throw new UsernameNotFoundException('The user is not authenticated on facebook');
         }
 
-        return $user;
+        return $participant;
     }
 
-    public function refreshUser(UserInterface $user)
+    public function refreshUser(UserInterface $participant)
     {
-        if (!$this->supportsClass(get_class($user)) || !$user->getFacebookId()) {
-            throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', get_class($user)));
+        if (!$this->supportsClass(get_class($participant)) || !$participant->getFacebookId()) {
+            throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', get_class($participant)));
         }
 
-        return $this->loadUserByUsername($user->getFacebookId());
+        return $this->loadUserByUsername($participant->getFacebookId());
     }
 }

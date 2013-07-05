@@ -19,21 +19,21 @@ class Country
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $countryId;
+    protected $countryId;
 
     /**
      * @var string
      *
      * @ORM\Column(name="country_name", type="string", length=100, nullable=false)
      */
-    private $countryName;
+    protected $countryName;
 
     /**
      * @var string
      *
      * @ORM\Column(name="country_code", type="string", length=3, nullable=false)
      */
-    private $countryCode;
+    protected $countryCode;
 
 
 

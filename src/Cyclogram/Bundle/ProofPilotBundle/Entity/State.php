@@ -19,21 +19,21 @@ class State
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $stateId;
+    protected $stateId;
 
     /**
      * @var string
      *
      * @ORM\Column(name="state_code", type="string", length=3, nullable=false)
      */
-    private $stateCode;
+    protected $stateCode;
 
     /**
      * @var string
      *
      * @ORM\Column(name="state_name", type="string", length=45, nullable=false)
      */
-    private $stateName;
+    protected $stateName;
 
     /**
      * @var \Country
@@ -43,7 +43,7 @@ class State
      *   @ORM\JoinColumn(name="country_id", referencedColumnName="country_id")
      * })
      */
-    private $country;
+    protected $country;
 
 
 

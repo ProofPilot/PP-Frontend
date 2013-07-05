@@ -1,7 +1,9 @@
 <?php
 
 namespace Cyclogram\Bundle\ProofPilotBundle\Entity;
-
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\AdvancedUserInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -10,8 +12,9 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="participant")
  * @ORM\Entity
  */
-class Participant
+class Participant implements AdvancedUserInterface
 {
+    protected $participantRoles = array();
     /**
      * @var integer
      *
@@ -19,133 +22,151 @@ class Participant
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $participantId;
+    protected $participantId;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="facebookId", type="string", length=255)
+     */
+    protected $facebookId;
+
+    public function serialize()
+    {
+        return serialize(array($this->facebookId, parent::serialize()));
+    }
+    
+    public function unserialize($data)
+    {
+        list($this->facebookId, $parentData) = unserialize($data);
+        parent::unserialize($parentData);
+    }
 
     /**
      * @var string
      *
      * @ORM\Column(name="participant_email", type="string", length=255, nullable=false)
      */
-    private $participantEmail;
+    protected $participantEmail;
 
     /**
      * @var string
      *
      * @ORM\Column(name="participant_firstname", type="string", length=45, nullable=true)
      */
-    private $participantFirstname;
+    protected $participantFirstname;
 
     /**
      * @var string
      *
      * @ORM\Column(name="participant_lastname", type="string", length=45, nullable=true)
      */
-    private $participantLastname;
+    protected $participantLastname;
 
     /**
      * @var string
      *
      * @ORM\Column(name="participant_password", type="string", length=500, nullable=false)
      */
-    private $participantPassword;
+    protected $participantPassword;
 
     /**
      * @var string
      *
      * @ORM\Column(name="participant_username", type="string", length=45, nullable=true)
      */
-    private $participantUsername;
+    protected $participantUsername;
 
     /**
      * @var string
      *
      * @ORM\Column(name="recovery_password_code", type="string", length=45, nullable=false)
      */
-    private $recoveryPasswordCode;
+    protected $recoveryPasswordCode;
 
     /**
      * @var string
      *
      * @ORM\Column(name="participant_email_code", type="string", length=4, nullable=true)
      */
-    private $participantEmailCode;
+    protected $participantEmailCode;
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="participant_email_confirmed", type="boolean", nullable=false)
      */
-    private $participantEmailConfirmed;
+    protected $participantEmailConfirmed;
 
     /**
      * @var string
      *
      * @ORM\Column(name="participant_mobile_number", type="string", length=45, nullable=false)
      */
-    private $participantMobileNumber;
+    protected $participantMobileNumber;
 
     /**
      * @var string
      *
      * @ORM\Column(name="participant_mobile_sms_code", type="string", length=4, nullable=true)
      */
-    private $participantMobileSmsCode;
+    protected $participantMobileSmsCode;
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="participant_mobile_sms_code_confirmed", type="boolean", nullable=false)
      */
-    private $participantMobileSmsCodeConfirmed;
+    protected $participantMobileSmsCodeConfirmed;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="participant_birthdate", type="date", nullable=true)
      */
-    private $participantBirthdate;
+    protected $participantBirthdate;
 
     /**
      * @var float
      *
      * @ORM\Column(name="participant_incentive_balance", type="float", nullable=false)
      */
-    private $participantIncentiveBalance;
+    protected $participantIncentiveBalance;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="participant_last_touch_datetime", type="datetime", nullable=false)
      */
-    private $participantLastTouchDatetime;
+    protected $participantLastTouchDatetime;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="participant_datetime", type="datetime", nullable=true)
      */
-    private $participantDatetime;
+    protected $participantDatetime;
 
     /**
      * @var string
      *
      * @ORM\Column(name="participant_address1", type="string", length=100, nullable=true)
      */
-    private $participantAddress1;
+    protected $participantAddress1;
 
     /**
      * @var string
      *
      * @ORM\Column(name="participant_address2", type="string", length=45, nullable=true)
      */
-    private $participantAddress2;
+    protected $participantAddress2;
 
     /**
      * @var string
      *
      * @ORM\Column(name="participant_zipcode", type="string", length=10, nullable=false)
      */
-    private $participantZipcode;
+    protected $participantZipcode;
 
     /**
      * @var \City
@@ -155,7 +176,7 @@ class Participant
      *   @ORM\JoinColumn(name="city_id", referencedColumnName="city_id")
      * })
      */
-    private $city;
+    protected $city;
 
     /**
      * @var \Country
@@ -165,7 +186,7 @@ class Participant
      *   @ORM\JoinColumn(name="country_id", referencedColumnName="country_id")
      * })
      */
-    private $country;
+    protected $country;
 
     /**
      * @var \ParticipantRole
@@ -175,7 +196,7 @@ class Participant
      *   @ORM\JoinColumn(name="participant_role_id", referencedColumnName="participant_role_id")
      * })
      */
-    private $participantRole;
+    protected $participantRole;
 
     /**
      * @var \Race
@@ -185,7 +206,7 @@ class Participant
      *   @ORM\JoinColumn(name="race_id", referencedColumnName="race_id")
      * })
      */
-    private $race;
+    protected $race;
 
     /**
      * @var \RecoveryQuestion
@@ -195,7 +216,7 @@ class Participant
      *   @ORM\JoinColumn(name="recovery_question_id", referencedColumnName="recovery_question_id")
      * })
      */
-    private $recoveryQuestion;
+    protected $recoveryQuestion;
 
     /**
      * @var \Sex
@@ -205,7 +226,7 @@ class Participant
      *   @ORM\JoinColumn(name="sex_id", referencedColumnName="sex_id")
      * })
      */
-    private $sex;
+    protected $sex;
 
     /**
      * @var \State
@@ -215,7 +236,7 @@ class Participant
      *   @ORM\JoinColumn(name="state_id", referencedColumnName="state_id")
      * })
      */
-    private $state;
+    protected $state;
 
     /**
      * @var \Status
@@ -225,9 +246,7 @@ class Participant
      *   @ORM\JoinColumn(name="status_id", referencedColumnName="status_id")
      * })
      */
-    private $status;
-
-
+    protected $status;
 
     /**
      * Get participantId
@@ -475,7 +494,8 @@ class Participant
      * @param boolean $participantMobileSmsCodeConfirmed
      * @return Participant
      */
-    public function setParticipantMobileSmsCodeConfirmed($participantMobileSmsCodeConfirmed)
+    public function setParticipantMobileSmsCodeConfirmed(
+            $participantMobileSmsCodeConfirmed)
     {
         $this->participantMobileSmsCodeConfirmed = $participantMobileSmsCodeConfirmed;
     
@@ -521,10 +541,11 @@ class Participant
      * @param float $participantIncentiveBalance
      * @return Participant
      */
-    public function setParticipantIncentiveBalance($participantIncentiveBalance)
+    public function setParticipantIncentiveBalance(
+            $participantIncentiveBalance)
     {
         $this->participantIncentiveBalance = $participantIncentiveBalance;
-    
+
         return $this;
     }
 
@@ -544,7 +565,8 @@ class Participant
      * @param \DateTime $participantLastTouchDatetime
      * @return Participant
      */
-    public function setParticipantLastTouchDatetime($participantLastTouchDatetime)
+    public function setParticipantLastTouchDatetime(
+            $participantLastTouchDatetime)
     {
         $this->participantLastTouchDatetime = $participantLastTouchDatetime;
     
@@ -659,10 +681,11 @@ class Participant
      * @param \Cyclogram\Bundle\ProofPilotBundle\Entity\City $city
      * @return Participant
      */
-    public function setCity(\Cyclogram\Bundle\ProofPilotBundle\Entity\City $city = null)
+    public function setCity(
+            \Cyclogram\Bundle\ProofPilotBundle\Entity\City $city = null)
     {
         $this->city = $city;
-    
+
         return $this;
     }
 
@@ -682,7 +705,8 @@ class Participant
      * @param \Cyclogram\Bundle\ProofPilotBundle\Entity\Country $country
      * @return Participant
      */
-    public function setCountry(\Cyclogram\Bundle\ProofPilotBundle\Entity\Country $country = null)
+    public function setCountry(
+            \Cyclogram\Bundle\ProofPilotBundle\Entity\Country $country = null)
     {
         $this->country = $country;
     
@@ -705,7 +729,8 @@ class Participant
      * @param \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantRole $participantRole
      * @return Participant
      */
-    public function setParticipantRole(\Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantRole $participantRole = null)
+    public function setParticipantRole(
+            \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantRole $participantRole = null)
     {
         $this->participantRole = $participantRole;
     
@@ -728,7 +753,8 @@ class Participant
      * @param \Cyclogram\Bundle\ProofPilotBundle\Entity\Race $race
      * @return Participant
      */
-    public function setRace(\Cyclogram\Bundle\ProofPilotBundle\Entity\Race $race = null)
+    public function setRace(
+            \Cyclogram\Bundle\ProofPilotBundle\Entity\Race $race = null)
     {
         $this->race = $race;
     
@@ -751,7 +777,8 @@ class Participant
      * @param \Cyclogram\Bundle\ProofPilotBundle\Entity\RecoveryQuestion $recoveryQuestion
      * @return Participant
      */
-    public function setRecoveryQuestion(\Cyclogram\Bundle\ProofPilotBundle\Entity\RecoveryQuestion $recoveryQuestion = null)
+    public function setRecoveryQuestion(
+            \Cyclogram\Bundle\ProofPilotBundle\Entity\RecoveryQuestion $recoveryQuestion = null)
     {
         $this->recoveryQuestion = $recoveryQuestion;
     
@@ -774,7 +801,8 @@ class Participant
      * @param \Cyclogram\Bundle\ProofPilotBundle\Entity\Sex $sex
      * @return Participant
      */
-    public function setSex(\Cyclogram\Bundle\ProofPilotBundle\Entity\Sex $sex = null)
+    public function setSex(
+            \Cyclogram\Bundle\ProofPilotBundle\Entity\Sex $sex = null)
     {
         $this->sex = $sex;
     
@@ -797,7 +825,8 @@ class Participant
      * @param \Cyclogram\Bundle\ProofPilotBundle\Entity\State $state
      * @return Participant
      */
-    public function setState(\Cyclogram\Bundle\ProofPilotBundle\Entity\State $state = null)
+    public function setState(
+            \Cyclogram\Bundle\ProofPilotBundle\Entity\State $state = null)
     {
         $this->state = $state;
     
@@ -820,7 +849,8 @@ class Participant
      * @param \Cyclogram\Bundle\ProofPilotBundle\Entity\Status $status
      * @return Participant
      */
-    public function setStatus(\Cyclogram\Bundle\ProofPilotBundle\Entity\Status $status = null)
+    public function setStatus(
+            \Cyclogram\Bundle\ProofPilotBundle\Entity\Status $status = null)
     {
         $this->status = $status;
     
@@ -837,7 +867,94 @@ class Participant
         return $this->status;
     }
     
-    public function __toString() {
-    	return $this->participantFirstname . ' ' . $this->participantLastname;
+    public function __toString()
+    {
+        return $this->participantFirstname . ' ' . $this->participantLastname;
+    }
+    
+    public function isAccountNonExpired()
+    {
+        return true;
+    }
+    public function isAccountNonLocked()
+    {
+        return true;
+    }
+    public function isCredentialsNonExpired()
+    {
+        return true;
+    }
+    public function isEnabled()
+    {
+        return true;
+    }
+    
+    /**
+     * @param string $facebookId
+     * @return void
+     */
+    public function setFacebookId($facebookId)
+    {
+        $this->facebookId = $facebookId;
+        $this->salt = '';
+    }
+    
+    /**
+     * @return string
+     */
+    public function getFacebookId()
+    {
+        return $this->facebookId;
+    }
+    
+    public function getUsername()
+    {
+        // TODO: Implement getUsername() method.
+        return $this->getParticipantEmail();
+    }
+    
+    public function setFBData($fbdata)
+    {
+        if (isset($fbdata['id'])) {
+            $this->setFacebookId($fbdata['id']);
+        }
+        if (isset($fbdata['first_name'])) {
+            $this->setParticipantFirstname($fbdata['first_name']);
+        }
+        if (isset($fbdata['last_name'])) {
+            $this->setParticipantLastname($fbdata['last_name']);
+        }
+        if (isset($fbdata['email'])) {
+            $this->setParticipantEmail($fbdata['email']);
+        }
+    }
+
+    public function eraseCredentials()
+    {
+        // TODO: Implement eraseCredentials() method.
+    }
+    
+    public function getSalt()
+    {
+        // TODO: Implement getSalt() method.
+    }
+    
+    public function getPassword()
+    {
+        return $this->participantPassword;
+    }
+    
+    public function getRoles(){
+        return array_merge($this->participantRoles, array('ROLE_USER'));
+    }
+    
+    public function setRoles($role){
+       $this->participantRoles = $role;
+    }
+    
+    /* @UserInterface */
+    public function equals(UserInterface $user)
+    {
+        return ( $this->getUsername() === $user->getUsername() );
     }
 }

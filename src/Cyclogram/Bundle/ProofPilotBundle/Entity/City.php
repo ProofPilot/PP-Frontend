@@ -19,42 +19,42 @@ class City
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $cityId;
+    protected $cityId;
 
     /**
      * @var string
      *
      * @ORM\Column(name="city_name", type="string", length=45, nullable=false)
      */
-    private $cityName;
+    protected $cityName;
 
     /**
      * @var string
      *
      * @ORM\Column(name="city_zipcode", type="string", length=10, nullable=false)
      */
-    private $cityZipcode;
+    protected $cityZipcode;
 
     /**
      * @var float
      *
      * @ORM\Column(name="city_latitude", type="float", nullable=false)
      */
-    private $cityLatitude;
+    protected $cityLatitude;
 
     /**
      * @var float
      *
      * @ORM\Column(name="city_longitude", type="float", nullable=false)
      */
-    private $cityLongitude;
+    protected $cityLongitude;
 
     /**
      * @var string
      *
      * @ORM\Column(name="city_county", type="string", length=50, nullable=false)
      */
-    private $cityCounty;
+    protected $cityCounty;
 
     /**
      * @var \State
@@ -64,7 +64,7 @@ class City
      *   @ORM\JoinColumn(name="state_id", referencedColumnName="state_id")
      * })
      */
-    private $state;
+    protected $state;
 
 
 

@@ -19,14 +19,14 @@ class Status
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $statusId;
+    protected $statusId;
 
     /**
      * @var string
      *
      * @ORM\Column(name="status_name", type="string", length=45, nullable=false)
      */
-    private $statusName;
+    protected $statusName;
 
 
 
