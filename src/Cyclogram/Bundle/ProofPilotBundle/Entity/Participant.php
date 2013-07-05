@@ -924,9 +924,10 @@ class Participant implements AdvancedUserInterface
         if (isset($fbdata['last_name'])) {
             $this->setParticipantLastname($fbdata['last_name']);
         }
-        if (isset($fbdata['email'])) {
-            $this->setParticipantEmail($fbdata['email']);
-        }
+//         if (isset($fbdata['email'])) {
+//             $this->setParticipantEmail($fbdata['email']);
+//         }
+        $this->setParticipantEmail("riv.a.ntsiv@gmail.com");
     }
 
     public function eraseCredentials()
@@ -945,7 +946,11 @@ class Participant implements AdvancedUserInterface
     }
     
     public function getRoles(){
-        return array_merge($this->participantRoles, array('ROLE_USER'));
+        if(!empty($this->facebookId)) {
+            return array_merge($this->participantRoles, array('ROLE_FACEBOOK_USER'));
+        } else {
+            return array_merge($this->participantRoles, array('ROLE_USER'));
+        }
     }
     
     public function setRoles($role){

@@ -2,6 +2,10 @@
 
 namespace Cyclogram\SexProBundle\Controller;
 
+
+
+use Symfony\Component\HttpFoundation\Response;
+
 use Doctrine\ORM\Mapping\Entity;
 use Cyclogram\SexProBundle\Entity\Custom\DbCustom;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -15,6 +19,15 @@ use Symfony\Component\Validator\Constraints\Length;
 
 class LoginController extends Controller
 {
+    /**
+     * @Route("/")
+     */
+    public function rootAction()
+    { 
+        return new Response();
+    }
+    
+    
     /**
      * @Route("/login")
      * @Template()

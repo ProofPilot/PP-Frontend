@@ -23,4 +23,6 @@ parameters:
     
     encryption_key: "wKLH=qIk2A2&pEB"
     
-    facebook.secret: 1d82c88b4ce3d162750fb32faf59700b
+#	Facebook secret is from my riv.a.ntsiv@gmail.com
+    facebook.secret: 61577113f011589a7d217cc7972798a4
+    facebook.appid: 584886061542799
