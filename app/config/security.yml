@@ -33,16 +33,14 @@ security:
             anonymous:  ~
             fos_facebook:
                 provider: fos_facebook
-#                check_path: /login_check
                 check_path: _fb_security_check
                 login_path: /login
-                default_target_path: /main
-                always_use_default_target_path: true
+#                default_target_path: /main
+#                always_use_default_target_path: true
                 app_url: "http://apps.facebook.com/Proofpilot_sexpro/"
                 server_url: "http://localhost/facebookApp/"
             form_login:
                 provider: main
-#                csrf_provider: form.csrf_provider
                 check_path: /login_check
                 login_path: /login
                 default_target_path: /doLogin
@@ -53,10 +51,12 @@ security:
 
     access_control:
         - { path: ^/secured/.*, role: [IS_AUTHENTICATED_FULLY] }
+        - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/r/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/no-authorization, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/doLogin, roles: ROLE_USER }
         - { path: ^/loginSMS, roles: ROLE_USER }
         - { path: ^/, roles: ROLE_USER }
+        - { path: ^/reg_step_2, roles: ROLE_USER }
         #- { path: ^/_internal/secure, roles: IS_AUTHENTICATED_ANONYMOUSLY, ip: 127.0.0.1 }

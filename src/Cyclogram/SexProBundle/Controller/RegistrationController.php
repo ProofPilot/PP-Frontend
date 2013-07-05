@@ -10,7 +10,7 @@ class RegistrationController extends Controller
 {
 
     /**
-     * @Route("/register/")
+     * @Route("/register", name="_registration")
      * @Template()
      */
     public function registerAction()
@@ -19,7 +19,7 @@ class RegistrationController extends Controller
     }
     
     /**
-     * @Route("/register_step2/")
+     * @Route("/register_step2/", name="reg_step_2")
      * @Template()
      */
     public function phoneAction()

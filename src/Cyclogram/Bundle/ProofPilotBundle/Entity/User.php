@@ -26,6 +26,39 @@ class User implements AdvancedUserInterface
     }
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="facebookId", type="string", length=255)
+     */
+    protected $facebookId;
+    
+    
+    public function serialize()
+    {
+        return serialize(array($this->facebookId, parent::serialize()));
+    }
+    
+    public function unserialize($data)
+    {
+        list($this->facebookId, $parentData) = unserialize($data);
+        parent::unserialize($parentData);
+    }
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="firstname", type="string", length=255)
+     */
+    protected $firstname;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="lastname", type="string", length=255)
+     */
+    protected $lastname;
+    
+    /**
      * @var integer
      *
      * @ORM\Column(name="user_id", type="integer", nullable=false)
@@ -340,17 +373,6 @@ class User implements AdvancedUserInterface
         return array('userId');
     }
 
-    /* @Serializable */
-    public function serialize (){
-        return NULL;
-    }
-
-    /* @Serializable */
-    public function unserialize ( $serialized ) {
-        return;
-    }
-
-
     /**
      * Returns the roles granted to the user.
      *
@@ -386,8 +408,79 @@ class User implements AdvancedUserInterface
         }
     }
     
+    public function setRoleDirect($role)
+    {
+        $this->roles[] = $role;
+    }
+    
     public function __toString() 
     {
     	return (string) $this->userId;
+    }
+    
+    /**
+     * @return string
+     */
+    public function getFirstname()
+    {
+        return $this->firstname;
+    }
+    
+    /**
+     * @param string $firstname
+     */
+    public function setFirstname($firstname)
+    {
+        $this->firstname = $firstname;
+    }
+    
+    /**
+     * @return string
+     */
+    public function getLastname()
+    {
+        return $this->lastname;
+    }
+    
+    /**
+     * @param string $facebookId
+     * @return void
+     */
+    public function setFacebookId($facebookId)
+    {
+        $this->facebookId = $facebookId;
+        $this->salt = '';
+    }
+    
+    /**
+     * @return string
+     */
+    public function getFacebookId()
+    {
+        return $this->facebookId;
+    }
+    
+    /**
+     * @param string $lastname
+     */
+    public function setLastname($lastname)
+    {
+        $this->lastname = $lastname;
+    }
+    
+    public function setFBData($fbdata)
+    {
+        if (isset($fbdata['id'])) {
+            $this->setFacebookId($fbdata['id']);
+        }
+        if (isset($fbdata['first_name'])) {
+            $this->setFirstname($fbdata['first_name']);
+        }
+        if (isset($fbdata['last_name'])) {
+            $this->setLastname($fbdata['last_name']);
+        }
+        if (isset($fbdata['email'])) {
+            $this->setUserEmail($fbdata['email']);
+        }
     }
 }
