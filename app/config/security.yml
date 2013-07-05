@@ -14,7 +14,7 @@ security:
             chain:
                 providers: [main, fos_facebook]
         main:
-            entity: { class: CyclogramSexProBundle:User, property: userEmail }
+            entity: { class: CyclogramProofPilotBundle:User, property: userEmail }
         fos_facebook:
             id: my.facebook.user
 

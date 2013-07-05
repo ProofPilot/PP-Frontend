@@ -35,7 +35,7 @@ class FacebookProvider implements UserProviderInterface
 
     public function findUserByFbId($fbId)
     {
-        return $this->userManager->getRepository("CyclogramSexProBundle:User")->findOneBy(array('facebookId' => $fbId));
+        return $this->userManager->getRepository("CyclogramProofPilotBundle:User")->findOneBy(array('facebookId' => $fbId));
     }
 
     public function loadUserByUsername($username)
@@ -56,10 +56,10 @@ class FacebookProvider implements UserProviderInterface
                 $user->setUserMobileNumber('');
                 $user->setUserMobileSmsCode('');
                 $user->setUserMobileSmsCodeConfirmed(false);
-                $status = $this->userManager->getRepository('CyclogramSexProBundle:Status')->find(1);
+                $status = $this->userManager->getRepository('CyclogramProofPilotBundle:Status')->find(1);
                 $user->setStatus($status);
                 $userRoleLink = new UserRoleLink();
-                $userRole = $this->userManager->getRepository('CyclogramSexProBundle:UserRole')->findOneByUserRoleName('ROLE_REPRESENTATIVE');
+                $userRole = $this->userManager->getRepository('CyclogramProofPilotBundle:UserRole')->findOneByUserRoleName('ROLE_REPRESENTATIVE');
                 $userRoleLink->setUserRoleUserRole($userRole);
                 $userRoleLink->setUserUser($user);
                 $this->userManager->persist($userRoleLink);

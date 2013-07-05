@@ -159,13 +159,13 @@ class LoginController extends Controller
                     $em->persist($user);
                     $em->flush();
         
-                    $status = $em->getRepository('CyclogramSexProBundle:Status')->find(1);
+                    $status = $em->getRepository('CyclogramProofPilotBundle:Status')->find(1);
         
                     $user = $this->get('security.context')->getToken()->getUser();
                     $user->setStatus($status);
                     $user->setUserEmail(strtolower($user->getUserEmail()));
         
-                    $roles = $em->getRepository('CyclogramSexProBundle:UserRoleLink')->findBy(array("userUser"=>$user));
+                    $roles = $em->getRepository('CyclogramProofPilotBundle:UserRoleLink')->findBy(array("userUser"=>$user));
                     $user->setRoles($roles);
         
                     $em->persist($user);
