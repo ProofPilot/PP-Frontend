@@ -1,7 +1,7 @@
 parameters:
 #    cyclogram_sms.example.class: Cyclogram\SmsBundle\Example
     sms.class: Cyclogram\SmsBundle\Controller\SmsController
-    cyclogram_proofpilot_database.class:    Cyclogram\SexProBundle\Entity\Custom\DbCustom    
+    cyclogram_proofpilot_database.class:    Cyclogram\Bundle\ProofPilotBundle\Entity\Custom\DbCustom    
 
 services:
 #    cyclogram_sms.example:

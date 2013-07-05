@@ -7,7 +7,7 @@ namespace Cyclogram\SexProBundle\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
 use Doctrine\ORM\Mapping\Entity;
-use Cyclogram\SexProBundle\Entity\Custom\DbCustom;
+use Cyclogram\Bundle\ProofPilotBundle\Entity\Custom\DbCustom;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -24,7 +24,7 @@ class LoginController extends Controller
      */
     public function rootAction()
     { 
-        return new Response();
+         return $this->redirect( $this->generateUrl("_main") );
     }
     
     
@@ -164,34 +164,26 @@ class LoginController extends Controller
                 $values = $request->request->get('form');
                 $userSms = $values['user_sms'];
         
-                if( $participant->getParticipantMobileNumber() == $userSms ){
+                if( $participant->getParticipantMobileSmsCode() == $userSms ){
         
                     $participant->setParticipantMobileSmsCodeConfirmed(true);
                     $participant->setParticipantEmail(strtolower($participant->getParticipantEmail()));
-        
-                    $em->persist($participant);
-                    $em->flush();
-        
                     $status = $em->getRepository('CyclogramProofPilotBundle:Status')->find(1);
-        
-                    $participant = $this->get('security.context')->getToken()->getUser();
                     $participant->setStatus($status);
-                    $participant->setParticipantEmail(strtolower($user->getParticipantEmail()));
         
                     $roles = $em->getRepository('CyclogramProofPilotBundle:UserRoleLink')->findBy(array("userUser"=>$participant));
                     $participant->setRoles($roles);
         
                     $em->persist($participant);
                     $em->flush();
-        
-                    $token = new \Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken($participant->getParticipantname(), $participant->getPassword(), 'main', $participant->getRoles());
+
+                    $token = new \Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken($participant, $participant->getPassword(), 'main', $participant->getRoles());
                     $this->get('security.context')->setToken($token);
         
-                    $this->get('custom_db')->getFactory('CommonCustom')->addEvent($participant->getUserID(),null,1,'login','Login succesfully', TRUE);
-//                     return $this->redirect( $this->generateUrl("dashboard") );
-                        return new Response("Succesfully");
+                    $this->get('custom_db')->getFactory('CommonCustom')->addEvent($participant->getParticipantId(),null,1,'login','Login succesfully', TRUE);
+                    return $this->redirect( $this->generateUrl("_main") );
                 } else {
-                    $this->get('custom_db')->getFactory('CommonCustom')->addEvent($participant->getUserID(),null,1,'login','Login failed', FALSE);
+                    $this->get('custom_db')->getFactory('CommonCustom')->addEvent($participant->getParticipantId(),null,1,'login','Login failed', FALSE);
                     return $this->redirect( $this->generateUrl("login") );
                 }
             }
