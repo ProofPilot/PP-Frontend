@@ -43,7 +43,7 @@ class FacebookHelper extends Helper
      */
     public function initialize($parameters = array(), $name = null)
     {
-        $name = $name ?: 'FOSFacebookBundle::initialize.html.php';
+        $name = 'CyclogramSexProBundle:Facebook:initialize.html.twig';
         return $this->templating->render($name, $parameters + array(
             'async'       => true,
             'fbAsyncInit' => '',
@@ -59,7 +59,7 @@ class FacebookHelper extends Helper
 
     public function loginButton($parameters = array(), $name = null)
     {
-        $name = $name ?: 'FOSFacebookBundle::loginButton.html.php';
+        $name = 'CyclogramSexProBundle:Facebook:loginButton.html.twig';
         return $this->templating->render($name, $parameters + array(
             'autologoutlink'  => 'false',
             'label'           => 'Login with Facebook',

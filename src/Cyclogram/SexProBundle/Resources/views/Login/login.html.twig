@@ -39,7 +39,7 @@
 </script>
     </head>
     <body class="has_image">
-		{{ facebook_initialize({'xfbml': true, 'fbAsyncInit': 'onFbInit();'}) }}
+		{{ facebook_initialize({'async': true, 'xfbml': true, 'fbAsyncInit': 'onFbInit();'}) }}
 		<div class="reg_header">
 			<a href="http://proofpilot.com/" class="logo">ProofPilot</a>
 		</div>
@@ -87,7 +87,6 @@
 			
 			</div>
 			
-
 			
 		</div>
 		
@@ -108,6 +107,11 @@
                          $('#submit_button').trigger('click');
                         return false;
                 });
+
+            $('#facebook_button').click(function()
+                 { 
+                     FB.login();
+                 });
            });
         </script> 
 
