@@ -6,6 +6,7 @@ fos_facebook:
     cookie: true
     permissions: [email]
 
+
 services:
     my.facebook.user:
         class: Cyclogram\SexProBundle\Security\FacebookProvider
@@ -14,3 +15,14 @@ services:
             userManager: "@doctrine.orm.entity_manager"
             validator: "@validator"
             container: "@service_container"
+            
+    fos_facebook.helper:
+        class: Cyclogram\SexProBundle\Templating\Helper\FacebookHelper
+        arguments:
+            - @templating
+            - @fos_facebook.api
+            - %fos_facebook.logging%
+            - %fos_facebook.culture%
+            - %fos_facebook.permissions%
+        tags:
+            - { name: templating.helper, alias: facebook } 
