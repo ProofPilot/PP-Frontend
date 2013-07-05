@@ -87,12 +87,51 @@ class DefaultController extends Controller
     }
     
     /**
-     * @Route("/page/")
+     * @Route("/page")
      * @Template()
      */
     public function pageAction()
     {
-        return $this->render('CyclogramSexProBundle:Default:page.html.twig');
+        $parameters = array();
+        
+        $parameters["study"] = array(
+                'name' => 'Study name from CMS',
+                'list' => 'List of Study organizations from CMS',
+                'subtitle' => 'Study subtitle from CMS',
+                'description' => 'Study short description from CMS (this appears to not be in the current wires from the CMS. It should be on the Study Description page.) '
+        );
+        
+        $parameters["about"] = array(
+                'title' => 'About',
+                'info' => 'About, what\'s involved, Requirements, and Privacy and Security should be the headings from the CMS system.&nbsp; There should be 4 headings on this page.'
+        );
+        
+        $parameters["heading"] = array(
+                'title' => 'Heading',
+                'text' => 'This is a secondary heading body text.'
+        );
+        
+        $parameters["secure"] = array(
+                'title' => 'Is it secure',
+                'text' => 'ProofPilot takes a security-first approach. We understand
+                  that you are sharing some sensitive data with us and our
+                  partners. We house your data in secure servers in a highly
+                  encrypted format. We take your security and privacy seriously.
+                  Learn more about security with the link below.&nbsp;'
+        );
+        
+        $parameters["proofpilot"] = array(
+                'title' => 'About proofpilot',
+                'text' => 'ProofPilot is a platform to create, manage and participate
+                  in online research studies. We help researchers easily launch
+                  studies that, you, the participant, can join in order to
+                  answer some important questions about health, human behavior,
+                  social and public policy. Learn more about ProofPilot with the
+                  link below.'
+        );
+        
+        return $this->render('CyclogramSexProBundle:Default:page.html.twig', $parameters);
+        
     }
     
     /**
