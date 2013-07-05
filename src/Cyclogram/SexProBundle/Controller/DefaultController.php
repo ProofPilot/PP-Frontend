@@ -206,7 +206,12 @@ class DefaultController extends Controller
                                    preventing potential malicious hackers from accessing data while it is being transmitted.'
                 ),
                 array('question' => 'How can I protect my account?',
-                      'answer' => 'ProofPilot goes to great lengths to protect your data. There are some things you can do to make it even safer: '
+                      'answer' => 'ProofPilot goes to great lengths to protect your data. There are some things you can do to make it even safer: ',
+                      'list' => array(
+                                 'Choose a complex password with letters and numbers, and don’t share it with anyone.', 'Make sure you have virus protection software on any computer that you use to access ProofPilot.',
+                                 'Be wary about installing programs from companies that you are not familiar with.', 'If you receive an email from ProofPilot that seems suspicious, contact us immediately and report it. 
+                                 It could be another organization posing as ProofPilot.'
+                      )
                 ),
                 array('question' => 'What happens to my data if I close my account or I’m finished with ProofPilot’s services? ',
                       'answer' => 'If you close your account, your data remains housed on the secure servers as an inactive participant for up to three years. Your data will stay on 
@@ -231,12 +236,45 @@ class DefaultController extends Controller
     }
     
     /**
-     * @Route("/baseline/")
+     * @Route("/baseline")
      * @Template()
      */
     public function baseLineAction()
     {
-        return $this->render('CyclogramSexProBundle:Default:Sexpro_baseline.html.twig');
+        $parameters = array();
+        
+        $parameters["lastaccess"] = new \DateTime("2013-07-01 10:05:00");
+         
+        $parameters["user"] = array('avatar' => 'images/tmp_avatar.jpg', 'name' => 'Damien Sonser');
+        
+        $parameters["about"] = array('title' => 'About this survey',
+                                     'info' => 'This survey helps researchers determine what you are up to now - so
+                                                that we can compare how and if things have changed in the future.
+                                                Please answer as honestly as possible.&nbsp; '
+                                    );
+        
+        $parameters["page"] = array(
+                'image' => 'images/tmp_banner_small.jpg',
+                'title' => 'SexPro Baseline Survey',
+                'step' => 'The first step in this study'
+        );
+        
+        $parameters["survey"] = array(
+                array('question' => 'How many sexual partners have you had in the past 12 months?',
+                      'input' => array('Number')
+                ),
+                array('question' => 'What is your sexual orientation?',
+                      'radio' => array('Homosexual/Gay', 'Heterosexual/Straight', 'Bisexual', 'Not sure')
+                ),
+                array('question' => 'With whom have you had sex with in the past 12 months?',
+                      'radio' => array('Men', 'Women', 'Male to Female Trans-gendered', 'Female to Male Trans-gendered', 'Does not apply')
+                ),
+                array('question' => 'Just another question to fill out the empty space',
+                      'input' => array('Your height', 'Your weight')
+                )
+        );
+        
+        return $this->render('CyclogramSexProBundle:Default:Sexpro_baseline.html.twig', $parameters);
     }
     
     /**
