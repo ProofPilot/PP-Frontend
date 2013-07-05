@@ -18,7 +18,8 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Cyclogram\SexProBundle\CyclogramSexProBundle(),
             new Cyclogram\SmsBundle\CyclogramSmsBundle(),
-            new FOS\FacebookBundle\FOSFacebookBundle()
+            new FOS\FacebookBundle\FOSFacebookBundle(),
+            new Cyclogram\Bundle\ProofPilotBundle\CyclogramProofPilotBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

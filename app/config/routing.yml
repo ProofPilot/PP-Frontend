@@ -1,3 +1,8 @@
+cyclogram_proof_pilot:
+    resource: "@CyclogramProofPilotBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 cyclogram_sex_pro:
     resource: "@CyclogramSexProBundle/Controller/"
     type:     annotation
