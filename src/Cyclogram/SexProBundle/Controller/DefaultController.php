@@ -156,12 +156,78 @@ class DefaultController extends Controller
     }
     
     /**
-     * @Route("/is_it_secure/")
+     * @Route("/is_it_secure")
      * @Template()
      */
     public function isItSecureAction()
     {
-        return $this->render('CyclogramSexProBundle:Default:is_it_secure.html.twig');
+        $parameters = array();
+        
+        $parameters["security"] = array(
+                'note' => 'We understand that you may be sharing some really sensitive stuff with ProofPilot, so we take your privacy and security very seriously.'
+        );
+        
+        $parameters["privacy"] = array(
+                array('question' => 'How does this compare to participating in research where my data is housed at a doctors office, clinic, or other research facility?',
+                      'answer' => 'ProofPilot is required to keep your information as – or more – secure than the medical information housed in a doctor’s office, 
+                                   clinic or other research facility. In addition, you do not need to call to make an appointment, walk in the door, or wait in a 
+                                   lobby where others may see you.'
+                ),
+                array('question' => 'Am I at greater risk of someone discovering sensitive information by using ProofPilot compared to other research venues?',
+                      'answer' => 'ProofPilot is required to keep your information as – or more –                 secure than the medical information housed in 
+                                   a doctor’s office, clinic or other research facility. In addition, you do not need to call to make an appointment, walk in the door, 
+                                   or wait in a lobby where others may see you.'
+                ),
+                array('question' => 'What exactly do you mean by confidential?',
+                      'answer' => 'You may have heard of anonymous research studies.  In those cases, you do not provide any identifying information. 
+                                   With the Internet, anonymity is very difficult to achieve. IP addresses, usernames, passwords, logins – this is all identifying information. 
+                                   ProofPIlot makes participation in research studies confidential.  Any data you provide to ProofPilot will stay completely encrypted - 
+                                   strictly confidential. Make sure you carefully read the consent information for the specific study you are joining to understand how your 
+                                   data will be used. '
+                ),
+                array('question' => 'What information do you collect and why?',
+                      'answer' => 'ProofPilot collects information on behalf of research studies. This information spans a wide perspective – everything from sexual habits, to weight, 
+                                   to how much money you make each year.  The exact data we collect depends on the research study goals.  Make sure you read the specific study consent 
+                                   information carefully before joining a study to understand exactly what kinds of data are being collected.'
+                ),
+                array('question' => 'Most sites don’t ask for a mobile phone number. Why does ProofPilot?',
+                      'answer' => 'To increase security, ProofPilot uses dual-factor authentication. We ask that you use your username and a password, like any other site, to log into 
+                                   the system. However, to increase security, we then send you a random four-digit code by SMS text message. You must enter that code before getting 
+                                   access to the site. We may also use this number to call you in case we need to speak with you personally.'
+                ),
+                array('question' => 'Who has access to my data?',
+                      'answer' => 'When you choose to participate in a research study, you are choosing to share your data (based on the terms and conditions of the study available in 
+                                   the consent information) with a research organization using the ProofPilot infrastructure to help manage their effort. The name of that research 
+                                   organization is identified on the study homepage. It will have access to your data.'
+                ),
+                array('question' => 'How secure is my data? ',
+                      'answer' => 'ProofPilot takes a security-first approach. ProofPilot houses your data in an encrypted form on a dedicated server separate from the website and the 
+                                   Internet via advanced firewalls. We always transmit personal and financial information via industry standard secure socket layer technology, 
+                                   preventing potential malicious hackers from accessing data while it is being transmitted.'
+                ),
+                array('question' => 'How can I protect my account?',
+                      'answer' => 'ProofPilot goes to great lengths to protect your data. There are some things you can do to make it even safer: '
+                ),
+                array('question' => 'What happens to my data if I close my account or I’m finished with ProofPilot’s services? ',
+                      'answer' => 'If you close your account, your data remains housed on the secure servers as an inactive participant for up to three years. Your data will stay on 
+                                   the server in an encrypted format and it will not be shared with anyone.'
+                )
+        );
+        
+        $parameters["proofpilot"] = array(
+                'title' => 'About Proofpilot',
+                'info' => 'ProofPilot is a platform to create, manage, and participate in online research studies. We help researchers easily launch studies that you, the participant, 
+                           can join in order to answer some important questions about health, human behavior, social and public policy. Learn more about ProofPiot with the link below.'
+        );
+        
+        $parameters["blank"] = array(
+                'title' => 'Because we\'re on the Privacy Page this should be blank - but filled with privacy and security on all other pages',
+                'info' => 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim 
+                           ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.Ut wisi enim ad minim veniam, quis nostrud 
+                           exerci.'
+        );
+        
+        return $this->render('CyclogramSexProBundle:Default:is_it_secure.html.twig', $parameters);
     }
     
     /**
