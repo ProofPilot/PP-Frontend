@@ -106,14 +106,14 @@ class RegistrationController extends Controller
         
         $collectionConstraint = new Collection(array(
                 'fields' => array(
-                        'phone_small' => new Length(array('min' => 3, 'max' => 3)),
-                        'phone_wide' =>  new Length(array('min' => 9, 'max' => 9))
+                        'phone_small' => new Length(array('min' => 1, 'max' => 3, 'minMessage'=>"Country code must be at least 1 digit", "maxMessage"=>"Country code must be max 3 digits")),
+                        'phone_wide' =>  new Length(array('min' => 9, 'max' => 10, 'minMessage'=>"Phone number must be at least 9 digits", "maxMessage"=>"Phone number must be max 10 digits"))
                 )
         ));
         
         $form = $this->createFormBuilder(null, array('constraints' => $collectionConstraint))
-        ->add('phone_small', 'text')
-        ->add('phone_wide' , 'text')
+        ->add('phone_small', 'integer', array('attr'=>array('maxlength'=>3), 'data'=>1))
+        ->add('phone_wide' , 'integer', array('attr'=>array('maxlength'=>10)))
         ->getForm();
         
         if( $request->getMethod() == "POST" ){
