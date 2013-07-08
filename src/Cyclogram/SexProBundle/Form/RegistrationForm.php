@@ -18,7 +18,7 @@ class RegistrationForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('participantEmail', 'email', array('label'=>'email'));
-        $builder->add('username', 'text', array('mapped'=>false));
+        $builder->add('participantUsername', 'text', array('label'=>'username'));
         $builder->add('participantPassword', 'repeated',                   
                         array('type' => 'password', 
                             'invalid_message' => 'The password fields must match.',

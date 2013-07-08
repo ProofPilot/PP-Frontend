@@ -29,7 +29,7 @@ class LoginController extends Controller
     
     
     /**
-     * @Route("/login")
+     * @Route("/login", name="_login")
      * @Template()
      */
     public function loginAction()
@@ -84,7 +84,7 @@ class LoginController extends Controller
         $em = $this->getDoctrine()->getManager();
     
         if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
-            $this->redirect($this->generateUrl("login"));
+            $this->redirect($this->generateUrl("_login"));
         }
     
         $participant = $this->get('security.context')->getToken()->getUser();
@@ -136,7 +136,7 @@ class LoginController extends Controller
         $em = $this->getDoctrine()->getManager();
         
         if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
-            $this->redirect($this->generateUrl("login"));
+            $this->redirect($this->generateUrl("_login"));
         }
         
         $participant = $this->get('security.context')->getToken()->getUser();
@@ -184,7 +184,7 @@ class LoginController extends Controller
                     return $this->redirect( $this->generateUrl("_main") );
                 } else {
                     $this->get('custom_db')->getFactory('CommonCustom')->addEvent($participant->getParticipantId(),null,1,'login','Login failed', FALSE);
-                    return $this->redirect( $this->generateUrl("login") );
+                    return $this->redirect( $this->generateUrl("_login") );
                 }
             }
         }

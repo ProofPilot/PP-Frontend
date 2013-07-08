@@ -12,8 +12,9 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * Participant
  *
  * @ORM\Table(name="participant")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Cyclogram\Bundle\ProofPilotBundle\Repository\ParticipantRepository")
  * @UniqueEntity(fields={"participantEmail"}, message="The e-mail address is already registered")
+ * @UniqueEntity(fields={"participantUsername"}, message="Username is already registered")
  */
 class Participant implements AdvancedUserInterface
 {

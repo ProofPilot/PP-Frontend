@@ -48,6 +48,7 @@ class RegistrationController extends Controller
                     $user = new Participant();
                     $user->setParticipantEmail($registration->getParticipantEmail()); 
                     $user->setParticipantPassword($registration->getParticipantPassword());
+                    $user->setParticipantUsername($registration->getParticipantUsername());
                     $question = $em->getRepository('CyclogramProofPilotBundle:RecoveryQuestion')->find(1);
                     $user->setRecoveryQuestion($question);
                     $user->setRecoveryPasswordCode('Default');
