@@ -37,7 +37,7 @@ class RegistrationController extends Controller
                 )
         ));
         
-        $form = $this->createForm(new RegistrationForm($this->container));
+        $form = $this->createForm(new RegistrationForm($this->container, array('constraints' => $collectionConstraint)));
         
         if ($request->getMethod() == 'POST') {
             $form->handleRequest($request);
@@ -53,7 +53,7 @@ class RegistrationController extends Controller
                     $user->setRecoveryPasswordCode('Default');
                     $user->setParticipantEmailConfirmed(true);
                     $user->setParticipantMobileNumber('');
-                    $user->setParticipantMobileSmsCodeConfirmed(true);
+                    $user->setParticipantMobileSmsCodeConfirmed(false);
                     $user->setParticipantIncentiveBalance(false);
                     $date = new \DateTime();
                     $user->setParticipantLastTouchDatetime($date);
@@ -155,6 +155,7 @@ class RegistrationController extends Controller
             $sms = $this->get('sms');
             $sentSms = $sms->sendSmsAction( array('message' => "Your SMS Verification code is $participantSMSCode", 'phoneNumber'=>"$customerMobileNumber") );
             if($sentSms)
+                $participant->setParticipantMobileSmsCodeConfirmed(true);
                 return $this->redirect(($this->generateUrl("reg_step_4")));
         }
         
