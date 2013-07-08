@@ -17,16 +17,12 @@ class RegistrationForm extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('email');
-        $builder->add('username');
-        $builder->add('password', 'repeated',                   
+        $builder->add('participantEmail', 'email', array('label'=>'email'));
+        $builder->add('username', 'text', array('mapped'=>false));
+        $builder->add('participantPassword', 'repeated',                   
                         array('type' => 'password', 
-                               'first_name' => "Password",
-//                             'second_name' => "Repeat_password",
-//                             'options' => array('required'=>false),
                             'invalid_message' => 'The password fields must match.',
-                            'first_options'  => array('label' => false),
-                            'second_options' => array('label' => 'Confirm Password')));     
+                      ));     
     }
 
     public function getName()
@@ -42,7 +38,8 @@ class RegistrationForm extends AbstractType
     {
         $resolver->setDefaults(array(
                 'csrf_protection' => false,
-                'cascade_validation' => true
+                'cascade_validation' => true,
+                'data_class' => 'Cyclogram\Bundle\ProofPilotBundle\Entity\Participant'
         ));
 
     }
