@@ -68,7 +68,7 @@ class LoginController extends Controller
     }
     
     /**
-     * @Route("/logout", name="_logout")
+     * @Route("/logout", name="_logout" , options={"expose"=true})
      */
     public function logoutAction()
     {

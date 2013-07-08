@@ -924,10 +924,10 @@ class Participant implements AdvancedUserInterface
         if (isset($fbdata['last_name'])) {
             $this->setParticipantLastname($fbdata['last_name']);
         }
-//         if (isset($fbdata['email'])) {
-//             $this->setParticipantEmail($fbdata['email']);
-//         }
-        $this->setParticipantEmail("riv.a.ntsiv@gmail.com");
+        if (isset($fbdata['email'])) {
+            $this->setParticipantEmail($fbdata['email']);
+        }
+//         $this->setParticipantEmail("riv.a.ntsiv@gmail.com");
     }
 
     public function eraseCredentials()

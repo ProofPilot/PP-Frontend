@@ -20,6 +20,7 @@ class AppKernel extends Kernel
             new Cyclogram\SmsBundle\CyclogramSmsBundle(),
             new FOS\FacebookBundle\FOSFacebookBundle(),
             new Cyclogram\Bundle\ProofPilotBundle\CyclogramProofPilotBundle(),
+            new FOS\JsRoutingBundle\FOSJsRoutingBundle()
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
