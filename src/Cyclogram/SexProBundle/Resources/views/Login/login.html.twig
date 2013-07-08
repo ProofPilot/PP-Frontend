@@ -110,7 +110,7 @@
 
             $('#facebook_button').click(function()
                  { 
-                         FB.login();
+                         FB.login(null, {scope: "email"});
                  });
            });
         </script> 
