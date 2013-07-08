@@ -4,13 +4,16 @@ namespace Cyclogram\Bundle\ProofPilotBundle\Entity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Participant
  *
  * @ORM\Table(name="participant")
  * @ORM\Entity
+ * @UniqueEntity(fields={"participantEmail"}, message="The e-mail address is already registered")
  */
 class Participant implements AdvancedUserInterface
 {
@@ -46,6 +49,7 @@ class Participant implements AdvancedUserInterface
      * @var string
      *
      * @ORM\Column(name="participant_email", type="string", length=255, nullable=false)
+     * @Assert\Email()
      */
     protected $participantEmail;
 

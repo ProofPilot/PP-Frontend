@@ -2,6 +2,8 @@
 
 namespace Cyclogram\SexProBundle\Controller;
 
+use Symfony\Component\Config\Definition\Exception\DuplicateKeyException;
+
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -42,48 +44,52 @@ class RegistrationController extends Controller
             $em = $this->getDoctrine()->getManager();
             if ($form->isValid()) {
                 $registration = $form->getData();
-                
-                $user = new Participant();
-                $user->setParticipantEmail($registration['email']);
-                $user->setParticipantPassword($registration['password']);
-                $question = $em->getRepository('CyclogramProofPilotBundle:RecoveryQuestion')->find(1);
-                $user->setRecoveryQuestion($question);
-                $user->setRecoveryPasswordCode('Default');
-                $user->setParticipantEmailConfirmed(true);
-                $user->setParticipantMobileNumber('');
-                $user->setParticipantMobileSmsCodeConfirmed(true);
-                $user->setParticipantIncentiveBalance(false);
-                $date = new \DateTime();
-                $user->setParticipantLastTouchDatetime($date);
-                $user->setParticipantZipcode('');
-                $country = $em->getRepository('CyclogramProofPilotBundle:Country')->find(1);
-                $user->setCountry($country);
-                $state =  $em->getRepository('CyclogramProofPilotBundle:State')->find(35);
-                $user->setState($state);
-                $city = $em->getRepository('CyclogramProofPilotBundle:City')->find(25420);
-                $user->setCity($city);
-                $sex = $em->getRepository('CyclogramProofPilotBundle:Sex')->find(1);
-                $user->setSex($sex);
-                $race = $em->getRepository('CyclogramProofPilotBundle:Race')->find(1);
-                $user->setRace($race);
-                $role = $em->getRepository('CyclogramProofPilotBundle:ParticipantRole')->find(1);
-                $user->setParticipantRole($role);
-                $status = $em->getRepository('CyclogramProofPilotBundle:Status')->find(1);
-                $user->setStatus($status);
+                try{
+                    $user = new Participant();
+                    $user->setParticipantEmail($registration->getParticipantEmail()); 
+                    $user->setParticipantPassword($registration->getParticipantPassword());
+                    $question = $em->getRepository('CyclogramProofPilotBundle:RecoveryQuestion')->find(1);
+                    $user->setRecoveryQuestion($question);
+                    $user->setRecoveryPasswordCode('Default');
+                    $user->setParticipantEmailConfirmed(true);
+                    $user->setParticipantMobileNumber('');
+                    $user->setParticipantMobileSmsCodeConfirmed(true);
+                    $user->setParticipantIncentiveBalance(false);
+                    $date = new \DateTime();
+                    $user->setParticipantLastTouchDatetime($date);
+                    $user->setParticipantZipcode('');
+                    $country = $em->getRepository('CyclogramProofPilotBundle:Country')->find(1);
+                    $user->setCountry($country);
+                    $state =  $em->getRepository('CyclogramProofPilotBundle:State')->find(35);
+                    $user->setState($state);
+                    $city = $em->getRepository('CyclogramProofPilotBundle:City')->find(25420);
+                    $user->setCity($city);
+                    $sex = $em->getRepository('CyclogramProofPilotBundle:Sex')->find(1);
+                    $user->setSex($sex);
+                    $race = $em->getRepository('CyclogramProofPilotBundle:Race')->find(1);
+                    $user->setRace($race);
+                    $role = $em->getRepository('CyclogramProofPilotBundle:ParticipantRole')->find(1);
+                    $user->setParticipantRole($role);
+                    $status = $em->getRepository('CyclogramProofPilotBundle:Status')->find(1);
+                    $user->setStatus($status);
         
-                $em->persist($user);
-                $em->flush();
+                    $em->persist($user);
+                    $em->flush();
+                    
+                    $token = new UsernamePasswordToken($user, null, 'main', array('ROLE_USER'));
+                    $this->get('security.context')->setToken($token);
+                    
+                    return $this->redirect( $this->generateUrl("reg_step_2") );
                 
-                $token = new UsernamePasswordToken($user, null, 'main', array('ROLE_USER'));
-                $this->get('security.context')->setToken($token);
-                
-                return $this->redirect( $this->generateUrl("reg_step_2") );
-//                 return $this->render('CyclogramSexProBundle:Registration:mobile_phone_1.html.twig');
+                } catch (Exception $ex) {
+                    $em->close();
+                   throw new  Exception('HAHAHA');
+                }
             }
-        
-        }
 
+           }
         return $this->render('CyclogramSexProBundle:Registration:register.html.twig', array ('form' => $form->createView()));
+        
         }
 
     
