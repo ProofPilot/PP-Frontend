@@ -18,11 +18,18 @@ class GeneralSettingsController  extends Controller
     }
     
     /**
-     * @Route("/contact_prefs/")
+     * @Route("/contact_prefs")
      * @Template()
      */
     public function contactPrefsAction()
     {
-        return $this->render('CyclogramSexProBundle:GeneralSettings:contact_prefs.html.twig');
+        $parameters = array();
+        
+        $parameters['preferences'] = array(
+                array('title' => 'Study Task Reminder Preferences'
+                )
+        );
+        
+        return $this->render('CyclogramSexProBundle:GeneralSettings:contact_prefs.html.twig', $parameters);
     }
 }
