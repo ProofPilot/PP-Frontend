@@ -29,7 +29,7 @@ class LoginController extends Controller
     
     
     /**
-     * @Route("/login")
+     * @Route("/login", name="_login")
      * @Template()
      */
     public function loginAction()
