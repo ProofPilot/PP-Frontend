@@ -12,8 +12,6 @@ body.has_image {
 	background-size: cover;
 }
 
-
-
 ul {
 	padding: 0px;
 	margin: 0px;
@@ -2945,6 +2943,7 @@ footer a.icon_update span {
 	display: none;
 	background:  url(../images/error.png) no-repeat 0px 0px;
 	background-size: 13px 13px;
+	cursor: pointer;
 }
 .lt-ie9  .mobile_reg.login_form .loginform_right  span.input_placeholder span.mark  {
 	background:  url(../images/100_error.png) no-repeat 0px 0px;
