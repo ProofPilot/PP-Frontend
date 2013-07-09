@@ -2,72 +2,198 @@
 
 namespace Cyclogram\SexProBundle\Controller;
 
+use Symfony\Component\HttpFoundation\Session\Session;
+
+use Cyclogram\CyclogramCommon;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\Validator\Constraints\Collection;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Routing\Router;
 
 class SecurityController extends Controller
 {
     /**
-     * @Route("/create_pass/")
-     * @Template()
-     */
-    public function createPassAction()
-    {
-        return $this->render('CyclogramSexProBundle:Security:create_new_password.html.twig');
-    }
-    
-    /**
-     * @Route("/forgot_username/")
-     * @Template()
-     */
-    public function forgotUserAction()
-    {
-        return $this->render('CyclogramSexProBundle:Security:forgot_username.html.twig');
-    }
-    
-    /**
-     * @Route("/forgot_pass_no_error/")
-     * @Template()
-     */
-    public function forgotPassNoErrorAction()
-    {
-        return $this->render('CyclogramSexProBundle:Security:forgot_your_password_no_error.html.twig');
-    }
-    
-    /**
-     * @Route("/forgot_pass/")
+     * @Route("/forgot_pass", name="_forgot_pass")
      * @Template()
      */
     public function forgotPassAction()
     {
-        return $this->render('CyclogramSexProBundle:Security:forgot_your_password.html.twig');
+        if ($this->get('security.context')->isGranted("ROLE_USER")){
+            return $this->redirect($this->generateURL("_main"));
+        }
+        $request = $this->getRequest();
+        
+        $form = $this->createFormBuilder()
+        ->add('participantEmail', 'email', array('label'=>'email'))
+        ->getForm();
+        
+        if( $request->getMethod() == "POST" ){
+            $form->handleRequest($request);
+            $em = $this->getDoctrine()->getManager();
+            if( $form->isValid() ) {
+                
+                $values = $request->request->get('form');
+                $email = $values['participantEmail'];
+                $participant = $em->getRepository("CyclogramProofPilotBundle:Participant")->findOneByParticipantEmail($email);
+                if (!empty($participant)) {
+                
+                    $message = \Swift_Message::newInstance()
+                    ->setSubject('Reset Your Password')
+                    ->setFrom('send@example.com')
+                    ->setTo($email)
+                    ->setContentType('text/html')
+                    ->setBody(
+                            $this->renderView(
+                                    'CyclogramSexProBundle:Security:reset_pass_email.html.twig', 
+                                     array("id" => $participant->getParticipantId())
+                            )
+                    );
+                    $this->get('mailer')->send($message);
+                    return $this->render('CyclogramSexProBundle:Security:reset_password_confirmation.html.twig');
+                } else {
+                    return $this->render('CyclogramSexProBundle:Security:forgot_your_password.html.twig' , array("form" => $form->createView(), "error" => "We’re sorry, your entry does not match our records"));
+                }
+            }
+        }
+        return $this->render('CyclogramSexProBundle:Security:forgot_your_password.html.twig' , array("form" => $form->createView()));
     }
     
     /**
-     * @Route("/reset_pass/")
+     * @Route("/create_pass/{id}" , name="_create_new_pass")
      * @Template()
      */
-    public function resetPassAction()
+    public function createPassAction($id)
     {
-        return $this->render('CyclogramSexProBundle:Security:reset_password_confirmation.html.twig');
+        $request = $this->getRequest();
+        $session = $this->getRequest()->getSession();
+        
+        $collectionConstraint = new Collection(array(
+                'fields' => array(
+                        'participantPassword' => new Length(array('min' => 8))
+                )
+        ));
+        $form = $this->createFormBuilder(null, array('constraints' => $collectionConstraint))
+        ->add('participantPassword', 'repeated',                   
+                        array('type' => 'password', 
+                            'invalid_message' => 'The password fields must match.',
+                      ))     
+        ->getForm();
+        if( $request->getMethod() == "POST" ){
+            $form->handleRequest($request);
+            $em = $this->getDoctrine()->getManager();
+            if( $form->isValid() ) {
+                $participant = $em->getRepository("CyclogramProofPilotBundle:Participant")->find($id);
+                $values = $request->request->get('form');
+                if (!empty($participant)) {
+                    $participantSMSCode = CyclogramCommon::getAutoGeneratedCode(4);
+                    $participant->setParticipantMobileSmsCode($participantSMSCode);                 
+                    $em->persist($participant);
+                    $em->flush($participant);
+                    
+                    $sms = $this->get('sms');
+                    $sentSms = $sms->sendSmsAction( array('message' => "Your SMS Verification code is $participantSMSCode", 'phoneNumber'=> $participant->getParticipantMobileNumber()) );
+                    if($sentSms){
+
+                        $session->set('password' ,$values['participantPassword']['first']);
+                        return $this->redirect( $this->generateUrl('_confirm_pass_reset', array('id' => $id)));
+                    }
+                }
+            } 
+       }
+        return $this->render('CyclogramSexProBundle:Security:create_new_password.html.twig', array("form" => $form->createView(), 'id' => $id));
     }
     
     /**
-     * @Route("/confirm_reset/")
+     * @Route("/confirm_reset/{id}", name="_confirm_pass_reset")
      * @Template()
      */
-    public function confirmResetAction()
+    public function confirmResetAction($id)
     {
-        return $this->render('CyclogramSexProBundle:Security:confirm_reset.html.twig');
+        $request = $this->getRequest();
+        
+        $collectionConstraint = new Collection(array(
+                'fields' => array(
+                        'sms_code' => new Length(array('min' => 4)),
+                )
+        ));
+        $error = "";
+        $form = $this->createFormBuilder(null, array('constraints' => $collectionConstraint))
+        ->add('sms_code', 'text')
+                ->getForm();
+        if( $request->getMethod() == "POST" ){
+        
+            $form->handleRequest($request);
+        
+            if( $form->isValid() ) {
+                $value = $request->request->get('form');
+                $em = $this->getDoctrine()->getManager();
+                $participant = $em->getRepository("CyclogramProofPilotBundle:Participant")->find($id);
+                if (!empty($participant)){
+                    $smscode = $participant->getParticipantMobileSmsCode();
+                    if ($value['sms_code'] == $smscode) {
+                        $session = $this->getRequest()->getSession();
+                        $participant->setParticipantPassword($session->get('password'));
+                        
+                        $em->persist($participant);
+                        $em->flush($participant);
+                        $session->invalidate();
+                        
+                        return $this->render('CyclogramSexProBundle:Security:password_changed.html.twig');
+                    } else {
+                        $session->invalidate();
+                        $error = "Wrong SMS!";
+                    }
+                }
+            }
+        }
+        
+        return $this->render('CyclogramSexProBundle:Security:confirm_reset.html.twig', array('error' => $error, 'form' => $form->createView(), 'id' => $id));
     }
     
     /**
-     * @Route("/pass_changed/")
+     * @Route("/forgot_username", name="_forgot_username")
      * @Template()
      */
-    public function passChangedAction()
+    public function forgotUserAction()
     {
-        return $this->render('CyclogramSexProBundle:Security:password_changed.html.twig');
+        if ($this->get('security.context')->isGranted("ROLE_USER")){
+            return $this->redirect($this->generateURL("_main"));
+        }
+        $request = $this->getRequest();
+        
+        $collectionConstraint = new Collection(array(
+                'fields' => array(
+                        'phone_small' => new Length(array('min' => 3, 'max' => 3)),
+                        'phone_wide' =>  new Length(array('min' => 9, 'max' => 9))
+                )
+        ));
+        
+        $form = $this->createFormBuilder(null, array('constraints' => $collectionConstraint))
+        ->add('phone_small', 'text')
+        ->add('phone_wide' , 'text')
+        ->getForm();
+        
+        if( $request->getMethod() == "POST" ){
+            $form->handleRequest($request);
+            $em = $this->getDoctrine()->getManager();
+            if( $form->isValid() ) {
+                $values = $request->request->get('form');
+                $userSms = $values['phone_small'].$values['phone_wide'];
+                $participant = $em->getRepository('CyclogramProofPilotBundle:Participant')->findOneByParticipantMobileNumber($userSms);
+                if ($participant) {
+                    
+                    $participantSMS = $participant->getParticipantEmail();
+                    
+                    $sms = $this->get('sms');
+                    $sentSms = $sms->sendSmsAction( array('message' => "Your username is $participantSMS", 'phoneNumber'=>$participant->getParticipantMobileNumber()) );
+                    if($sentSms)
+                        $participant->setParticipantMobileSmsCodeConfirmed(true);
+                    return $this->render('CyclogramSexProBundle:Security:username_sent.html.twig');
+                }
+            }
+        }
+        return $this->render('CyclogramSexProBundle:Security:forgot_username.html.twig',array('form' => $form->createView()));
     }
 }

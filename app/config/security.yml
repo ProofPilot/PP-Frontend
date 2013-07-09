@@ -1,7 +1,7 @@
 security:
     encoders:
         Symfony\Component\Security\Core\User\User: plaintext
-        Cyclogram\SexProBundle\Entity\User: plaintext
+        Cyclogram\Bundle\ProofPilotBundle\Entity\Participant: plaintext
 
     always_authenticate_before_granting: false
 
