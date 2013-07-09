@@ -189,8 +189,7 @@ class SecurityController extends Controller
                     $sms = $this->get('sms');
                     $sentSms = $sms->sendSmsAction( array('message' => "Your username is $participantSMS", 'phoneNumber'=>$participant->getParticipantMobileNumber()) );
                     if($sentSms)
-                        $participant->setParticipantMobileSmsCodeConfirmed(true);
-                    return $this->render('CyclogramSexProBundle:Security:username_sent.html.twig');
+                        return $this->render('CyclogramSexProBundle:Security:username_sent.html.twig');
                 }
             }
         }
