@@ -71,10 +71,10 @@
 				
 				<div class="loginform_right">
 					<form action="{{ path('login_check') }}" method="post">
-					    <a class="forgot" href="forgot_username.html">Forgot your username?</a>
+					    <a class="forgot" href="{{ path('_forgot_username') }}">Forgot your username?</a>
 						<label for="reg_field_1">Username</label>
 						<span class="input_placeholder "><input type="text" class="text " value="{{ last_username }}" id="reg_field_1" name="_username" ><span class="mark"></span></span>
-						<label for="reg_field_2">Password</label><a class="forgot" href="forgot_your_password.html">Forgot your password?</a>
+						<label for="reg_field_2">Password</label><a class="forgot" href="{{ path('_forgot_pass') }}">Forgot your password?</a>
 						<span class="input_placeholder"><input type="password" class="text" name="_password" id="reg_field_2"><span class="mark"></span></span>
 						<div class="actions_row">
 							<input type="checkbox" value="" class="checkbox" name=""> Stay logged in

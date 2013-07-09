@@ -165,8 +165,8 @@ class SecurityController extends Controller
         
         $collectionConstraint = new Collection(array(
                 'fields' => array(
-                        'phone_small' => new Length(array('min' => 3, 'max' => 3)),
-                        'phone_wide' =>  new Length(array('min' => 9, 'max' => 9))
+                        'phone_small' => new Length(array('min' => 1, 'max' => 3)),
+                        'phone_wide' =>  new Length(array('min' => 9, 'max' => 10))
                 )
         ));
         
@@ -184,10 +184,11 @@ class SecurityController extends Controller
                 $participant = $em->getRepository('CyclogramProofPilotBundle:Participant')->findOneByParticipantMobileNumber($userSms);
                 if ($participant) {
                     
-                    $participantSMS = $participant->getParticipantEmail();
+                    $participantEmail = $participant->getParticipantEmail();
+                    $participantUsername = $participant->getParticipantUsername();
                     
                     $sms = $this->get('sms');
-                    $sentSms = $sms->sendSmsAction( array('message' => "Your username is $participantSMS", 'phoneNumber'=>$participant->getParticipantMobileNumber()) );
+                    $sentSms = $sms->sendSmsAction( array('message' => "Your username is $participantUsername , your email is $participantEmail", 'phoneNumber'=>$participant->getParticipantMobileNumber()) );
                     if($sentSms)
                         return $this->render('CyclogramSexProBundle:Security:username_sent.html.twig');
                 }
