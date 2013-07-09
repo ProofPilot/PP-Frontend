@@ -16,13 +16,13 @@ services:
             validator: "@validator"
             container: "@service_container"
             
-    fos_facebook.helper:
-        class: Cyclogram\SexProBundle\Templating\Helper\FacebookHelper
-        arguments:
-            - @templating
-            - @fos_facebook.api
-            - %fos_facebook.logging%
-            - %fos_facebook.culture%
-            - %fos_facebook.permissions%
-        tags:
-            - { name: templating.helper, alias: facebook } 
+#    fos_facebook.helper:
+#        class: Cyclogram\SexProBundle\Templating\Helper\FacebookHelper
+#        arguments:
+#            - @templating
+#            - @fos_facebook.api
+#            - %fos_facebook.logging%
+#            - %fos_facebook.culture%
+#            - %fos_facebook.permissions%
+#        tags:
+#            - { name: templating.helper, alias: facebook } 

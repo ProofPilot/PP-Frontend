@@ -54,7 +54,7 @@
 				
 					<div class="btns_wapper">
 						<form>
-						{{ facebook_login_button({'autologoutlink': true}) }}
+						{{ facebook_login_button({'autologoutlink': true}, 'CyclogramSexProBundle:Facebook:loginButton.html.twig') }}
 {# 							<a class="btn_reg fb" href="#"><span>Login with Facebook</span></a>#}
 						</form>
 						<form>
@@ -104,7 +104,7 @@
         $(document).ready(function(){
             $('#login_submit').click(function()
                 {
-                         $('#submit_button').trigger('click');
+                        $('#submit_button').trigger('click');
                         return false;
                 });
 
