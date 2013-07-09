@@ -104,6 +104,7 @@ class RegistrationController extends Controller
         $participant = $this->get('security.context')->getToken()->getUser();
         $request = $this->getRequest();
         
+        
         $collectionConstraint = new Collection(array(
                 'fields' => array(
                         'phone_small' => new Length(array('min' => 1, 'max' => 3, 'minMessage'=>"Country code must be at least 1 digit", "maxMessage"=>"Country code must be max 3 digits")),
@@ -111,10 +112,18 @@ class RegistrationController extends Controller
                 )
         ));
         
-        $form = $this->createFormBuilder(null, array('constraints' => $collectionConstraint))
-        ->add('phone_small', 'integer', array('attr'=>array('maxlength'=>3), 'data'=>1))
-        ->add('phone_wide' , 'integer', array('attr'=>array('maxlength'=>10)))
-        ->getForm();
+        $builder = $this->createFormBuilder(null, array('constraints' => $collectionConstraint))
+        ->add('phone_small', 'text', array('attr'=>array('maxlength'=>3), 'data'=>1))
+        ->add('phone_wide' , 'text', array('attr'=>array('maxlength'=>10)));
+        
+        if($request->query->has("country_code"))
+            $builder->get('phone_small')->setData($request->query->get("country_code"));
+        
+        if($request->query->has("phone"))
+            $builder->get('phone_wide')->setData($request->query->get("phone"));
+        
+        
+        $form = $builder->getForm();
         
         if( $request->getMethod() == "POST" ){
         

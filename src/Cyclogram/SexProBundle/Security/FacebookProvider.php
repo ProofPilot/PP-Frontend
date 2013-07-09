@@ -38,9 +38,14 @@ class FacebookProvider implements UserProviderInterface
 //         return $this->userManager->supportsClass($class);
     }
 
-    public function findUserByFbId($fbId)
+    private function findUserByFbId($fbId)
     {
         return $this->userManager->getRepository("CyclogramProofPilotBundle:Participant")->findOneBy(array('facebookId' => $fbId));
+    }
+    
+    private function findUserByEmail($email)
+    {
+        return $this->userManager->getRepository("CyclogramProofPilotBundle:Participant")->findOneBy(array('participantEmail' => $email));
     }
 
     public function loadUserByUsername($fbId)
@@ -73,14 +78,23 @@ class FacebookProvider implements UserProviderInterface
         }
 
         if (empty($participant) && $referer['path'] == '/register') {
-            $participant = new Participant();
+            //if we did not find a user by Facebbok id, we assume he does not exist or is not registered as Facebbok user;
+            
+            $participant = $this->findUserByEmail($fbdata["email"]);
+            if(!$participant)
+                $participant = new Participant();
+
             $participant->setRoles(array('FACEBOOK_REGISTRATION_PROCESS'));
-            $participant->setParticipantPassword('');
+
             $question = $this->userManager->getRepository('CyclogramProofPilotBundle:RecoveryQuestion')->find(1);
             $participant->setRecoveryQuestion($question);
             $participant->setRecoveryPasswordCode('Default');
             $participant->setParticipantEmailConfirmed(true);
-            $participant->setParticipantMobileNumber('');
+            if(!$participant->getParticipantMobileNumber())
+                $participant->setParticipantMobileNumber('');
+            if(!$participant->getParticipantPassword())
+                $participant->setParticipantPassword('');
+            
             $participant->setParticipantMobileSmsCodeConfirmed(true);
             $participant->setParticipantIncentiveBalance(false);
             $date = new \DateTime();

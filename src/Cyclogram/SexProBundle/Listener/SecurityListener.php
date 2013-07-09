@@ -1,6 +1,8 @@
 <?php
 namespace Cyclogram\SexProBundle\Listener;
 
+use Cyclogram\Bundle\ProofPilotBundle\Entity\Participant;
+
 use Symfony\Component\Routing\RouterInterface;
 
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
@@ -67,6 +69,7 @@ class SecurityListener
         if (!empty($this->user) ) {
             
             $roles = $this->user->getRoles();
+
             foreach ($roles as $role){
                 if ($role == 'FACEBOOK_REGISTERED')
                     $event->setResponse(new RedirectResponse($this->router->generate('_do_login')));
@@ -75,8 +78,20 @@ class SecurityListener
                     $this->container->get('request')->getSession()->invalidate();
                     $event->setResponse(new RedirectResponse($this->router->generate('_registration')));
                 }
-                if ($role == 'FACEBOOK_REGISTRATION_PROCESS')
-                    $event->setResponse(new RedirectResponse($this->router->generate('reg_step_2')));
+                if ($role == 'FACEBOOK_REGISTRATION_PROCESS') {
+                    //if user is trying to register through Facebook login, we redirect
+                    if($this->user instanceof Participant) {
+                        $mobile = $this->user->getParticipantMobileNumber();
+                        if($mobile) {
+                            $country_code = substr($mobile, 0, 1);
+                            $phone = substr($mobile, 1);
+                            $redirectUrl = $this->router->generate('reg_step_2', array('country_code' => $country_code,'phone' => $phone));
+                        } else {
+                            $redirectUrl = $this->router->generate('reg_step_2');
+                        }
+                    }
+                    $event->setResponse(new RedirectResponse($redirectUrl));
+                }
             }
             
         }
