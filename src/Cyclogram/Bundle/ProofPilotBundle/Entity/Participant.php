@@ -73,7 +73,7 @@ class Participant implements AdvancedUserInterface
      *
      * @Assert\Length(
      *      min = "8",
-     *      minMessage = "Your password name must be at least {{ limit }} characters length")
+     *      minMessage = "Your password name must be at least {{ limit }} characters")
      *      
      * @ORM\Column(name="participant_password", type="string", length=500, nullable=false)
      */

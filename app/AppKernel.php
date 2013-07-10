@@ -22,6 +22,9 @@ class AppKernel extends Kernel
             new Cyclogram\Bundle\ProofPilotBundle\CyclogramProofPilotBundle(),
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
+            new Knp\Bundle\MenuBundle\KnpMenuBundle(),
+            new Lunetics\LocaleBundle\LuneticsLocaleBundle(),
+            new JMS\TranslationBundle\JMSTranslationBundle()     
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

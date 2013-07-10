@@ -64,3 +64,12 @@ swiftmailer:
     username:  %mailer_user%
     password:  %mailer_password%
     spool:     { type: memory }
+    
+#Lunetics locale
+lunetics_locale:
+  allowed_locales: %locales%
+  guessing_order:
+    - query
+    - router
+    - browser
+
