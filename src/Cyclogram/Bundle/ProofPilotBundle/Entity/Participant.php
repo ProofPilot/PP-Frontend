@@ -50,7 +50,7 @@ class Participant implements AdvancedUserInterface
      * @var string
      *
      * @ORM\Column(name="participant_email", type="string", length=255, nullable=false)
-     * @Assert\Email()
+     * @Assert\Email(message="This does not appear to be a valid e-mail address")
      */
     protected $participantEmail;
 
