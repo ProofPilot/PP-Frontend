@@ -26,7 +26,7 @@ class SecurityController extends Controller
         $request = $this->getRequest();
         
         $form = $this->createFormBuilder()
-        ->add('participantEmail', 'email', array('label'=>'email'))
+        ->add('participantUsername', 'text', array('label'=>'username'))
         ->getForm();
         
         if( $request->getMethod() == "POST" ){
@@ -35,14 +35,14 @@ class SecurityController extends Controller
             if( $form->isValid() ) {
                 
                 $values = $request->request->get('form');
-                $email = $values['participantEmail'];
-                $participant = $em->getRepository("CyclogramProofPilotBundle:Participant")->findOneByParticipantEmail($email);
+                $username = $values['participantUsername'];
+                $participant = $em->getRepository("CyclogramProofPilotBundle:Participant")->findOneByParticipantUsername($username);
                 if (!empty($participant)) {
                 
                     $message = \Swift_Message::newInstance()
                     ->setSubject('Reset Your Password')
                     ->setFrom('send@example.com')
-                    ->setTo($email)
+                    ->setTo($participant->getParticipantEmail())
                     ->setContentType('text/html')
                     ->setBody(
                             $this->renderView(
