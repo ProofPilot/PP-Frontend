@@ -78,7 +78,7 @@ class SurveyController extends Controller
     }
     
     /**
-     * @Route("/survey_eligibility/")
+     * @Route("/survey_eligibility/", name="_survey_eligibility")
      * @Template()
      */
     public function surveyEligibilityAction()

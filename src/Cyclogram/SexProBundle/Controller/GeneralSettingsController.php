@@ -18,7 +18,7 @@ class GeneralSettingsController  extends Controller
     }
     
     /**
-     * @Route("/contact_prefs")
+     * @Route("/contact_prefs", name="_contact_prefs")
      * @Template()
      */
     public function contactPrefsAction()
