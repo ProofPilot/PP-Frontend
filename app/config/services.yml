@@ -1,0 +1,4 @@
+services:
+    cyclogram.common:
+        class: Cyclogram\CyclogramCommon
+        arguments: ['@service_container']

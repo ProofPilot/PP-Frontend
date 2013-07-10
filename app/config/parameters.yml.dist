@@ -9,7 +9,7 @@ parameters:
     database_name: proofpilot
     database_user: root
     database_password: null
-    mailer_transport: smtp
+    mailer_transport: gmail
     mailer_host: 127.0.0.1
     mailer_user: null
     mailer_password: null
@@ -28,3 +28,5 @@ parameters:
 #	Facebook secret is from my riv.a.ntsiv@gmail.com
     facebook.secret: 61577113f011589a7d217cc7972798a4
     facebook.appid: 584886061542799
+    my_mailer_user: bogdan.dubyk
+    my_mailer_password: Nhbkmjdcmrjuj29

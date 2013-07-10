@@ -37,20 +37,33 @@ class SecurityController extends Controller
                 $values = $request->request->get('form');
                 $username = $values['participantUsername'];
                 $participant = $em->getRepository("CyclogramProofPilotBundle:Participant")->findOneByParticipantUsername($username);
-                if (!empty($participant)) {
                 
-                    $message = \Swift_Message::newInstance()
-                    ->setSubject('Reset Your Password')
-                    ->setFrom('send@example.com')
-                    ->setTo($participant->getParticipantEmail())
-                    ->setContentType('text/html')
-                    ->setBody(
-                            $this->renderView(
-                                    'CyclogramSexProBundle:Security:reset_pass_email.html.twig', 
-                                     array("id" => $participant->getParticipantId())
-                            )
-                    );
-                    $this->get('mailer')->send($message);
+                if (!empty($participant)) {
+                    $parameters['id'] = $participant->getParticipantId();
+                    $embedded['logo_top'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_logo.png");
+                    $embedded['logo_footer'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newletter_logo_footer.png");
+                    $cc = $this->get('cyclogram.common');
+                    $cc->sendMail($participant->getParticipantEmail(),
+                                             'Reset Your Password',
+                                              'CyclogramSexProBundle:Security:reset_pass_email.html.twig', 
+                                              null,
+                                              $embedded,
+                                              true,
+                                              $parameters);
+
+                
+//                     $message = \Swift_Message::newInstance()
+//                     ->setSubject('Reset Your Password')
+//                     ->setFrom('send@example.com')
+//                     ->setTo($participant->getParticipantEmail())
+//                     ->setContentType('text/html')
+//                     ->setBody(
+//                             $this->renderView(
+//                                     'CyclogramSexProBundle:Security:reset_pass_email.html.twig', 
+//                                      array("id" => $participant->getParticipantId())
+//                             )
+//                     );
+//                     $this->get('mailer')->send($message);
                     return $this->render('CyclogramSexProBundle:Security:reset_password_confirmation.html.twig');
                 } else {
                     return $this->render('CyclogramSexProBundle:Security:forgot_your_password.html.twig' , array("form" => $form->createView(), "error" => "We’re sorry, your entry does not match our records"));
