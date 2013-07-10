@@ -191,6 +191,8 @@ class SecurityController extends Controller
                     $sentSms = $sms->sendSmsAction( array('message' => "Your username is $participantUsername , your email is $participantEmail", 'phoneNumber'=>$participant->getParticipantMobileNumber()) );
                     if($sentSms)
                         return $this->render('CyclogramSexProBundle:Security:username_sent.html.twig');
+                } else {
+                    return $this->render('CyclogramSexProBundle:Security:forgot_username.html.twig',array('form' => $form->createView(),"error" => "We’re sorry, your entry does not match our records"));
                 }
             }
         }
