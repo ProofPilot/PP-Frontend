@@ -9,7 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class SurveyController extends Controller
 {
     /**
-     * @Route("/survey/")
+     * @Route("/survey", name="_survey")
      * @Template()
      */
     public function surveyAction()

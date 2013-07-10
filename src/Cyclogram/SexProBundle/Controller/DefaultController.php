@@ -78,7 +78,7 @@ class DefaultController extends Controller
     }
     
     /**
-     * @Route("/newslatter")
+     * @Route("/newslatter", name="_newsletter")
      * @Template()
      */
     public function newslatterAction()
@@ -108,7 +108,7 @@ class DefaultController extends Controller
     }
     
     /**
-     * @Route("/page")
+     * @Route("/page", name="_page")
      * @Template()
      */
     public function pageAction()
@@ -156,7 +156,7 @@ class DefaultController extends Controller
     }
     
     /**
-     * @Route("/is_it_secure")
+     * @Route("/is_it_secure", name="_secure")
      * @Template()
      */
     public function isItSecureAction()
@@ -280,7 +280,7 @@ class DefaultController extends Controller
     }
     
     /**
-     * @Route("/study")
+     * @Route("/study", name="_study")
      * @Template()
      */
     public function studyAction()

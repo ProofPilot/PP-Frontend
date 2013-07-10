@@ -26,12 +26,12 @@
 			<header>
 			
 				<a href="#" class="site_logo">ProofPilot</a>
-				
-				<ul class="header_menu">
-					<li><a class="icon_help" href="#"><span>Help</span></a></li>
-					<li><a class="icon_logout" href="#"><span>Logout</span></a></li>
-					<li><a class="icon_settings" href="#"><span>My Settings</span></a></li>
-				</ul>
+				{{ knp_menu_render('CyclogramSexProBundle:MenuBuilder:createTopMenu',{'template': 'CyclogramSexProBundle:Knp:knp_menu.html.twig'}) }}
+{# 				<ul class="header_menu">#}
+{# 					<li><a class="icon_help" href="#"><span>Help</span></a></li>#}
+{# 					<li><a class="icon_logout" href="#"><span>Logout</span></a></li>#}
+{# 					<li><a class="icon_settings" href="#"><span>My Settings</span></a></li>#}
+{# 				</ul>#}
 			
 			</header>
 
@@ -74,13 +74,14 @@
 					</div>
 					
 					<div class="menu_cont">
-						<ul class="left_menu">
-							<li><a href="#" class="icon_dashboard active">Dashboard <span class="notice">5</span></a></li>
-							<li class="first"><a class="icon_survey" href="#">Survey</a></li>
-							<li><a class="icon_activities" href="#">Activities</a></li>
-							<li><a class="icon_measurments" href="#">Measurments</a></li>
-							<li><a class="icon_treatment" href="#">Treatment</a></li>
-						</ul>
+					{{ knp_menu_render('CyclogramSexProBundle:MenuBuilder:createSideDashboardMenu',{'template': 'CyclogramSexProBundle:Knp:knp_menu.html.twig'}) }}
+{# 						<ul class="left_menu">#}
+{# 							<li><a href="#" class="icon_dashboard active">Dashboard <span class="notice">5</span></a></li>#}
+{# 							<li class="first"><a class="icon_survey" href="#">Survey</a></li>#}
+{# 							<li><a class="icon_activities" href="#">Activities</a></li>#}
+{# 							<li><a class="icon_measurments" href="#">Measurments</a></li>#}
+{# 							<li><a class="icon_treatment" href="#">Treatment</a></li>#}
+{# 						</ul>#}
 					</div>
 					
 					<div class="study_desc survey_box">
@@ -256,21 +257,23 @@
 			<div class="site_container">
 			
 				<div class="footer_col_left">
-					<ul>
-						<li class="icon_home"><a class="icon_home" href="#"><span>Home</span></a></li>
-						<li class="icon_fullscreen"><a class="icon_fullscreen" href="#"><span>Fullscreen</span></a></li>
-						<li class="icon_update"><a class="icon_update" href="#"><span>Update</span></a></li>
-					</ul>
+				{{ knp_menu_render('CyclogramSexProBundle:MenuBuilder:createBottomLeftMenu',{'template': 'CyclogramSexProBundle:Knp:knp_menu.html.twig'}) }}
+{# 					<ul>#}
+{# 						<li class="icon_home"><a class="icon_home" href="#"><span>Home</span></a></li>#}
+{# 						<li class="icon_fullscreen"><a class="icon_fullscreen" href="#"><span>Fullscreen</span></a></li>#}
+{# 						<li class="icon_update"><a class="icon_update" href="#"><span>Update</span></a></li>#}
+{# 					</ul>#}
 				</div>
 				
 				<div class="footer_col_middle"><a class="to_top" href="#"><span>ON TOP</span></a></div>
 				
 				<div class="footer_col_right">
-					<ul>
-						<li class="icon_help"><a class="icon_help" href="#"><span>Help</span></a></li>
-						<li class="icon_logout" ><a class="icon_logout" href="#"><span>Logout</span></a></li>
-						<li class="icon_settings"><a class="icon_settings" href="#"><span>My Settings</span></a></li>
-					</ul>
+				{{ knp_menu_render('CyclogramSexProBundle:MenuBuilder:createBottomRightMenu',{'template': 'CyclogramSexProBundle:Knp:knp_menu.html.twig'}) }}
+{# 					<ul>#}
+{# 						<li class="icon_help"><a class="icon_help" href="#"><span>Help</span></a></li>#}
+{# 						<li class="icon_logout" ><a class="icon_logout" href="#"><span>Logout</span></a></li>#}
+{# 						<li class="icon_settings"><a class="icon_settings" href="#"><span>My Settings</span></a></li>#}
+{# 					</ul>#}
 				</div>
 			
 			</div>

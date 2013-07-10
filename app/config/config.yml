@@ -67,9 +67,9 @@ swiftmailer:
     
 #Lunetics locale
 lunetics_locale:
-  allowed_locales: %locales%
-  guessing_order:
-    - query
-    - router
-    - browser
+    allowed_locales: %locales%
+    guessing_order:
+        - query
+        - router
+        - browser
 
