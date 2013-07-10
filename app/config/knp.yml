@@ -1,0 +1,11 @@
+knp_menu:
+    twig:
+        template: ::menu_extended.html.twig
+        
+services:
+    merk.voter.request:
+        class: Cyclogram\SexProBundle\Menu\RequestVoter
+        arguments:
+            - @service_container
+        tags:
+            - { name: knp_menu.voter }

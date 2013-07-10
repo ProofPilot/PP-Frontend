@@ -3,6 +3,7 @@ imports:
     - { resource: security.yml }
     - { resource: facebook.yml }
     - { resource: services.yml }
+    - { resource: knp.yml }
 
 framework:
     #esi:             ~
