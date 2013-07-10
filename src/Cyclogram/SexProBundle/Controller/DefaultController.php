@@ -241,42 +241,7 @@ class DefaultController extends Controller
      */
     public function baseLineAction()
     {
-        $parameters = array();
-        
-        $parameters["lastaccess"] = new \DateTime("2013-07-01 10:05:00");
-         
-        $parameters["user"] = array('avatar' => 'images/tmp_avatar.jpg', 'name' => 'Damien Sonser');
-        
-        $parameters["about"] = array('title' => 'About this survey',
-                                     'info' => 'This survey helps researchers determine what you are up to now - so
-                                                that we can compare how and if things have changed in the future.
-                                                Please answer as honestly as possible.&nbsp; '
-                                    );
-        
-        $parameters["page"] = array(
-                'image' => 'images/tmp_banner_small.jpg',
-                'title' => 'SexPro Baseline Survey',
-                'step' => 'The first step in this study'
-        );
-        
-        $parameters["survey"] = array(
-                array('question' => 'How many sexual partners have you had in the past 12 months?',
-                      'input' => array('Number')
-                ),
-                array('question' => 'What is your sexual orientation?',
-                      'radio' => array('Homosexual/Gay', 'Heterosexual/Straight', 'Bisexual', 'Not sure'),
-                      'radiogroupname' => 'group1'
-                ),
-                array('question' => 'With whom have you had sex with in the past 12 months?',
-                      'radio' => array('Men', 'Women', 'Male to Female Trans-gendered', 'Female to Male Trans-gendered', 'Does not apply'),
-                      'radiogroupname' => 'group1'
-                ),
-                array('question' => 'Just another question to fill out the empty space',
-                      'input' => array('Your height', 'Your weight')
-                )
-        );
-        
-        return $this->render('CyclogramSexProBundle:Default:Sexpro_baseline.html.twig', $parameters);
+        return $this->render('CyclogramSexProBundle:Default:Sexpro_baseline.html.twig');
     }
     
     /**

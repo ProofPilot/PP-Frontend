@@ -62,12 +62,12 @@
 				
 					<div class="profile_info alt_bg">
 						<div class="wrapper">
-							<a href="#" class="avatar"><img src="images/tmp_avatar.jpg" width="80" height="82" alt="" title=""/></a>
+							<a href="#" class="avatar"><img src="{{ user.avatar }}" width="80" height="82" alt="" title=""/></a>
 							<ul class="user_info">
-								<li><a href="#">Damien Sonser</a></li>
+								<li><a href="#">{{ user.name }}</a></li>
 								<li>
 									<p>Last Access: <br />
-									<span>16 May 2013, 15:30</span></p>
+									<span>{{ lastaccess|date("d F Y, H:i") }}</span></p>
 								</li>
 							</ul>
 						</div>
@@ -87,14 +87,14 @@
 					<div class="study_desc survey_box">
 
 						
-						<h3>About this survey</h3>
+						<h3>{{ about.title }}</h3>
 						
-						<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</p>
+						<p>{{ about.info }}</p>
 						<p>&nbsp;</p>
 						
-						<p>1. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</p>
-						<p>2. Claritas est etiam processus dynamicus, qui sequitur mutationem consuetudium lectorum.</p>
-						<p>3. Eodem modo typi, qui nunc nobis videntur parum clari, fiant sollemnes in futurum.</p>
+						{% for element in list %}
+						<p>{{ element.item }}</p>
+						{% endfor %}
 						
 					</div>
 				
@@ -103,9 +103,9 @@
 				<div class="panel_right">
 					
 					<div class="dashboard_title white">
-						<div class="image"><img src="images/tmp_banner_small.jpg" width="93" height="93" alt="" title=""/></div>
-						<h1>Know@home baseline study</h1>
-						<p>Surveys allow you to provide feedback, input information all online.</p>
+						<div class="image"><img src="{{ page.image }}" width="93" height="93" alt="" title=""/></div>
+						<h1>{{ page.title }}</h1>
+						<p>{{ page.subtitle }}</p>
 					</div>
 					
 					<div class="progress_bar">
@@ -129,100 +129,102 @@
 						
 						
 						<div class="mobile about_box">
-							<a href="#" class="expander" id="about_expander"><span>About this SURVEY</span></a>
+							<a href="#" class="expander" id="about_expander"><span>{{ about.title }}</span></a>
 							<div class="text_desc">
 						
-								<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</p>
+								<p>{{ about.info }}</p>
 								<p>&nbsp;</p>
 								
-								<p>1. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</p>
-								<p>2. Claritas est etiam processus dynamicus, qui sequitur mutationem consuetudium lectorum.</p>
-								<p>3. Eodem modo typi, qui nunc nobis videntur parum clari, fiant sollemnes in futurum.</p>
+								{% for element in list %}
+        						<p>{{ element.item }}</p>
+        						{% endfor %}
 						
 							</div>
 						</div>
 						
-						<div class="survey_intro">
+						<iframe src="http://backbone/index.php/184354/lang-en" height="800" width="670"></iframe>
 						
-							<h2>Get Started</h2>
+{# 						<div class="survey_intro">#}
+						
+{# 							<h2>Get Started</h2>#}
 							
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut ut eros pretium ante bibendum 
-							condimentum. Aenean sit amet sem vel enim rutrum ultrices eu non massa.</p>	
+{# 							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut ut eros pretium ante bibendum #}
+{# 							condimentum. Aenean sit amet sem vel enim rutrum ultrices eu non massa.</p>	#}
 												
-						</div>
+{# 						</div>#}
 
 						
-						<form method="POST" action="">
-							<div class="qbox">
-								<h4>How old are you?</h4>
-								<ul class="for_text">
-									<li class="left"><label for="tmp1">Your age</label></li>
-									<li class="right"><input type="text" value="" name="" class="text" id="tmp1"></li>
-								</ul>	
-							</div>
-							<div class="qbox">
-								<h4>Do you consider yourself to be Hispanic or Latino?</h4>
-								<ul class="for_radios">
-									<li>
-										<span><input type="radio" value="" name="" id="tmp2"></span>
-										<label for="tmp2">No</label>
-									</li>
-									<li>
-										<span><input type="radio" value="" name="" id="tmp3"></span>
-										<label for="tmp3">Yes</label>
-									</li>
-									<li>
-										<span><input type="radio" value="" name="" id="tmp4"></span>
-										<label for="tmp4">Don’t know</label>
-									</li>
-									<li class="last">
-										<span><input type="radio" value="" name="" id="tmp5"></span>
-										<label for="tmp5">No answer</label>
-									</li>
-								</ul>	
-							</div>
-							<div class="qbox">
-								<h4>Which racial group or groups do you consider yourself to be in?</h4>
-								<ul class="for_radios">
-									<li>
-										<span><input type="radio" value="" name="" id="tmp6"></span>
-										<label for="tmp6">American</label>
-									</li>
-									<li>
-										<span><input type="radio" value="" name="" id="tmp7"></span>
-										<label for="tmp7">Asian</label>
-									</li>
-									<li>
-										<span><input type="radio" value="" name="" id="tmp8"></span>
-										<label for="tmp8">Black or African American</label>
-									</li>
-									<li>
-										<span><input type="radio" value="" name="" id="tmp9"></span>
-										<label for="tmp9">Caucasian</label>
-									</li>
-									<li class="last">
-										<span><input type="radio" value="" name="" id="tmp10"></span>
-										<label for="tmp10">Does not apply</label>
-									</li>
-								</ul>	
-							</div>
-							<div class="qbox">
-								<h4>Just another question to fill out the empty space</h4>
-								<ul class="for_text">
-									<li class="left"><label for="tmp1">Your height</label></li>
-									<li class="right"><input type="text" value="" name="" class="text" id="tmp1"></li>
-								</ul>	
-								<ul class="for_text">
-									<li class="left"><label for="tmp1">Your weight</label></li>
-									<li class="right"><input type="text" value="" name="" class="text" id="tmp1"></li>
-								</ul>
-							</div>
-						</form>
+{# 						<form method="POST" action="">#}
+{# 							<div class="qbox">#}
+{# 								<h4>How old are you?</h4>#}
+{# 								<ul class="for_text">#}
+{# 									<li class="left"><label for="tmp1">Your age</label></li>#}
+{# 									<li class="right"><input type="text" value="" name="" class="text" id="tmp1"></li>#}
+{# 								</ul>	#}
+{# 							</div>#}
+{# 							<div class="qbox">#}
+{# 								<h4>Do you consider yourself to be Hispanic or Latino?</h4>#}
+{# 								<ul class="for_radios">#}
+{# 									<li>#}
+{# 										<span><input type="radio" value="" name="" id="tmp2"></span>#}
+{# 										<label for="tmp2">No</label>#}
+{# 									</li>#}
+{# 									<li>#}
+{# 										<span><input type="radio" value="" name="" id="tmp3"></span>#}
+{# 										<label for="tmp3">Yes</label>#}
+{# 									</li>#}
+{# 									<li>#}
+{# 										<span><input type="radio" value="" name="" id="tmp4"></span>#}
+{# 										<label for="tmp4">Don’t know</label>#}
+{# 									</li>#}
+{# 									<li class="last">#}
+{# 										<span><input type="radio" value="" name="" id="tmp5"></span>#}
+{# 										<label for="tmp5">No answer</label>#}
+{# 									</li>#}
+{# 								</ul>	#}
+{# 							</div>#}
+{# 							<div class="qbox">#}
+{# 								<h4>Which racial group or groups do you consider yourself to be in?</h4>#}
+{# 								<ul class="for_radios">#}
+{# 									<li>#}
+{# 										<span><input type="radio" value="" name="" id="tmp6"></span>#}
+{# 										<label for="tmp6">American</label>#}
+{# 									</li>#}
+{# 									<li>#}
+{# 										<span><input type="radio" value="" name="" id="tmp7"></span>#}
+{# 										<label for="tmp7">Asian</label>#}
+{# 									</li>#}
+{# 									<li>#}
+{# 										<span><input type="radio" value="" name="" id="tmp8"></span>#}
+{# 										<label for="tmp8">Black or African American</label>#}
+{# 									</li>#}
+{# 									<li>#}
+{# 										<span><input type="radio" value="" name="" id="tmp9"></span>#}
+{# 										<label for="tmp9">Caucasian</label>#}
+{# 									</li>#}
+{# 									<li class="last">#}
+{# 										<span><input type="radio" value="" name="" id="tmp10"></span>#}
+{# 										<label for="tmp10">Does not apply</label>#}
+{# 									</li>#}
+{# 								</ul>	#}
+{# 							</div>#}
+{# 							<div class="qbox">#}
+{# 								<h4>Just another question to fill out the empty space</h4>#}
+{# 								<ul class="for_text">#}
+{# 									<li class="left"><label for="tmp1">Your height</label></li>#}
+{# 									<li class="right"><input type="text" value="" name="" class="text" id="tmp1"></li>#}
+{# 								</ul>	#}
+{# 								<ul class="for_text">#}
+{# 									<li class="left"><label for="tmp1">Your weight</label></li>#}
+{# 									<li class="right"><input type="text" value="" name="" class="text" id="tmp1"></li>#}
+{# 								</ul>#}
+{# 							</div>#}
+{# 						</form>#}
 						
-						<div class="pagination"><p>Page 2 of 4</p></div>
+{# 						<div class="pagination"><p>Page 2 of 4</p></div>#}
 				 		
 				 	
-					</div>
+{# 					</div>#}
 					
 					<div class="prev_next for_mobile">
 						<ul>
