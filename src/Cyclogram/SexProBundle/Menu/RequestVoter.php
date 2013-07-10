@@ -34,9 +34,7 @@ class RequestVoter implements VoterInterface
      */
     public function matchItem(ItemInterface $item)
     {
-        if($item->getUri() == "/contact_prefs")
-            return true;
-        
+
         if ($item->getUri() === $this->container->get('request')->getRequestUri()) {
             return true;
         }
