@@ -18,7 +18,7 @@ class MenuBuilder extends ContainerAware
         $menu = $factory->createItem('root');
         $menu->setChildrenAttribute('class', 'left_menu');
         
-        $menu->addChild('Dashboard', array('route' => '_main'))->setAttribute('class', 'icon_dashboard active')->setAttribute("news", 5);
+        $menu->addChild('Dashboard', array('route' => '_main'))->setAttribute('class', 'icon_dashboard')->setAttribute("news", 5);
         $menu->addChild('Survey', array('route' => '_survey'))->setAttribute('class', 'icon_survey');
         $menu->addChild('Activities', array('route' => '_study'))->setAttribute('class', 'icon_activities');
         $menu->addChild('Measurements', array('route' => '_secure'))->setAttribute('class', 'icon_measurments');
@@ -69,7 +69,7 @@ class MenuBuilder extends ContainerAware
         $menu = $factory->createItem('root');
         $menu->setChildrenAttribute('class', 'left_menu');
     
-        $menu->addChild('General Settings', array('route' => '_settings'))->setAttribute('class', 'icon_general_settings active');
+        $menu->addChild('General Settings', array('route' => '_settings'))->setAttribute('class', 'icon_general_settings');
         $menu->addChild('Contact preferences', array('route' => '_contact_prefs'))->setAttribute('class', 'icon_contact_prefs');
         $menu->addChild('Shipping information', array('route' => '_survey_eligibility'))->setAttribute('class', 'icon_shipping_info');
 

@@ -9,7 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class GeneralSettingsController  extends Controller
 {
     /**
-     * @Route("/general_settings/", name="_settings")
+     * @Route("/general_settings", name="_settings")
      * @Template()
      */
     public function generalSettingsAction()
