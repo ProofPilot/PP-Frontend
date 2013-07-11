@@ -60,15 +60,33 @@ class DefaultController extends Controller
         $parameters = array();
         
         $parameters["study"] = array(
-                'name' => 'Study name from CMS',
-                'list' => 'List of Study organizations from CMS',
-                'subtitle' => 'Study subtitle from CMS',
-                'description' => 'Study short description from CMS (this appears to not be in the current wires from the CMS. It should be on the Study Description page.) '
+                'name' => 'Sexual Health Promotion (SexPro) Study',
+                'list' => 'Bridge HIV, San Francisco Department of Public Health',
+                'subtitle' => 'Online Tool for Sexual Health Promotion',
+                'description' => 'Sex Pro is a part of a new study of online tools that might be helpful in keeping yourself HIV-negative inside and outside of your relationship(s).',
+                'image' => '/images/tmp_sexpro.png',
+                'mainimg' => '/images/tmp_img2.png',
+                'enroll' => 'Enroll in the study to get started!'
         );
         
         $parameters["about"] = array(
-                'title' => 'About',
-                'info' => 'About, what\'s involved, Requirements, and Privacy and Security should be the headings from the CMS system.&nbsp; There should be 4 headings on this page.'
+                array(
+                        'title' => 'About',
+                        'info' => 'The purpose of this study is to learn what men and transwomen like and don’t like about SexPro and how it affects their understanding of sexual protection 
+                                   behaviors. We will also see whether Sex Pro helps men and transwomen to change their sexual health practices, and how using this tool affects counseling sessions
+                                   between our study participants and their HIV counselors.'
+                ),
+                array(
+                        'title' => 'What\'s Involved',
+                        'info' => 'You will be asked to come to the clinic for 3 different study visits: enrollment, 3 months and 6 months after enrollment. You will answer questions by computer 
+                                   about your sexual and drug use practices at each of these visits, and then will meet with a study counselor, who will talk with you about ways you can protect 
+                                   yourself against HIV infection. '
+                ),
+                array(
+                        'title' => '',
+                        'info' => 'You will receive SexPro instructions and start to use SexPro either at your first study visit or at your second study visit, depending on your 
+                        random group assignment.'
+               )
         );
         
         $parameters["heading"] = array(
@@ -77,7 +95,7 @@ class DefaultController extends Controller
         );
         
         $parameters["secure"] = array(
-                'title' => 'Is it secure',
+                'title' => 'Is it secure?',
                 'text' => 'ProofPilot takes a security-first approach. We understand
                   that you are sharing some sensitive data with us and our
                   partners. We house your data in secure servers in a highly
