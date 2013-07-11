@@ -14,6 +14,7 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\HttpFoundation\Request;
 use Cyclogram\CyclogramCommon;
 use Symfony\Component\HttpFoundation\Response;
+use Cyclogram\FrontendBundle\Form\MobilePhoneForm;
 use Cyclogram\FrontendBundle\Form\RegistrationForm;
 use Cyclogram\Bundle\ProofPilotBundle\Entity\Participant;
 
@@ -107,26 +108,14 @@ class RegistrationController extends Controller
         $participant = $this->get('security.context')->getToken()->getUser();
         $request = $this->getRequest();
         
-        
-        $collectionConstraint = new Collection(array(
-                'fields' => array(
-                        'phone_small' => new Length(array('min' => 1, 'max' => 3, 'minMessage'=>"Country code must be at least 1 digit", "maxMessage"=>"Country code must be max 3 digits")),
-                        'phone_wide' =>  new Length(array('min' => 9, 'max' => 10, 'minMessage'=>"Phone number must be at least 9 digits", "maxMessage"=>"Phone number must be max 10 digits"))
-                )
-        ));
-        
-        $builder = $this->createFormBuilder(null, array('constraints' => $collectionConstraint))
-        ->add('phone_small', 'text', array('attr'=>array('maxlength'=>3), 'data'=>1))
-        ->add('phone_wide' , 'text', array('attr'=>array('maxlength'=>10)));
-        
-        if($request->query->has("country_code"))
-            $builder->get('phone_small')->setData($request->query->get("country_code"));
-        
-        if($request->query->has("phone"))
-            $builder->get('phone_wide')->setData($request->query->get("phone"));
-        
-        
-        $form = $builder->getForm();
+        $form = $this->createForm(new MobilePhoneForm($this->container));
+        if ($participant->getParticipantMobileNumber()){
+            $phone = CyclogramCommon::parsePhoneNumber($participant->getParticipantMobileNumber());
+        }
+        if(!empty($phone)) {
+            $form->get('phone_small')->setData($phone['country_code']);
+            $form->get('phone_wide')->setData($phone['phone']);
+        }
         
         if( $request->getMethod() == "POST" ){
         
@@ -134,7 +123,7 @@ class RegistrationController extends Controller
         
             if( $form->isValid() ) {
         
-                $values = $request->request->get('form');
+                $values = $form->getData();
                 $userSms = $values['phone_small'].$values['phone_wide'];
                 $participant->setParticipantMobileNumber($userSms);
                 $em->persist($participant);
@@ -172,7 +161,7 @@ class RegistrationController extends Controller
                 return $this->redirect(($this->generateUrl("reg_step_4")));
         }
         
-        return $this->render('CyclogramFrontendBundle:Registration:mobile_phone_2.html.twig', array('phone' => $phoneNumber));
+        return $this->render('CyclogramFrontendBundle:Registration:mobile_phone_2.html.twig', array('phone' => $customerMobileNumber ));
     }
     
     /**

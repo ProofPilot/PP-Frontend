@@ -229,24 +229,10 @@ class CyclogramCommon {
             if($templating->exists($body)) {
                 $message->setBody($templating->render($body, $renderParams));
             } else {
-                //template does not exist on filesystem
-//                 $documentManager = $this->container->get('doctrine_phpcr.odm.default_document_manager');
-        
-//                 $loader = new OdmTwigLoader($documentManager);
-//                 $twig =  new \Twig_Environment($loader);
-//                 $content = $twig->render($body, $renderParams);
-//                 $title = $twig->render("title_" . $body, $renderParams);
-        
-//                 $message_body = $templating->render('::email_template.html.twig', array('email_body' => $content ));
-        
-//                 $message->setBody($message_body);
-//                 $message->setSubject($title);
+
         
             }
-        
-        
-        
-        
+
         } else {
             $message->setBody($body);
         }
@@ -260,5 +246,21 @@ class CyclogramCommon {
         return true;
     }
     
-    
+    public static function parsePhoneNumber($phone){
+        $full_phone = array();
+        if(substr($phone, 0 , 1) == '1'){
+            $full_phone['country_code'] = substr($phone, 0 , 1);
+            $full_phone['phone'] = substr($phone, 1);
+        }
+        if (substr($phone, 0 , 3) == '380') {
+            $full_phone['country_code'] = substr($phone, 0 , 3);
+            $full_phone['phone'] = substr($phone, 3);
+        }
+        if (substr($phone, 0 , 3) == '506') {
+            $full_phone['country_code'] = substr($phone, 0 , 3);
+            $full_phone['phone'] = substr($phone, 3);
+        }
+        return $full_phone;
+    }
+
 }
