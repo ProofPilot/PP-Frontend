@@ -39,7 +39,8 @@ class RegistrationForm extends AbstractType
         $resolver->setDefaults(array(
                 'csrf_protection' => false,
                 'cascade_validation' => true,
-                'data_class' => 'Cyclogram\Bundle\ProofPilotBundle\Entity\Participant'
+                'data_class' => 'Cyclogram\Bundle\ProofPilotBundle\Entity\Participant',
+                'translation_domain' => 'register'
         ));
 
     }
