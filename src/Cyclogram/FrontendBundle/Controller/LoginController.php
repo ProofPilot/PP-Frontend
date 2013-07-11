@@ -160,6 +160,7 @@ class LoginController extends Controller
         
                     $roles = $em->getRepository('CyclogramProofPilotBundle:UserRoleLink')->findBy(array("userUser"=>$participant));
                     $participant->setRoles($roles);
+                    $participant->setParticipantLastTouchDatetime(new \DateTime());
         
                     $em->persist($participant);
                     $em->flush();

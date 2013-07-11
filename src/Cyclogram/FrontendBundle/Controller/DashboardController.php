@@ -75,7 +75,14 @@ class DashboardController extends Controller
     
         $parameters["lastaccess"] = new \DateTime("2013-07-01 10:05:00");
          
-        $parameters["user"] = array('avatar' => '/images/tmp_avatar.jpg', 'name' => 'Damien Sonser');
+        
+        $parameters["user"] = array(
+                'avatar' => '/images/tmp_avatar.jpg', 
+                'name' => $participant->getParticipantFirstname() . ' ' . $participant->getParticipantLastname(),
+                'last_access' => $participant->getParticipantLastTouchDatetime()
+                
+                );
+        
         if ($participant->getParticipantEmailConfirmed()){
             $parameters["confirm_email"] = true;
         } else {
