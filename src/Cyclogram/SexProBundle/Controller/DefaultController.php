@@ -44,7 +44,7 @@ class DefaultController extends Controller
         $parameters["surveys"] = array(
                 array('title' => 'iTest@Home Public Survey',
                       'content' => 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt',
-                      'image' => 'newsletter/images/newsletter_tmp_image.jpg'
+                      'image' => '/newsletter/images/newsletter_tmp_image.jpg'
                 )
         );
         

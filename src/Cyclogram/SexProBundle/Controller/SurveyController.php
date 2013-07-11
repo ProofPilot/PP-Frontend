@@ -22,7 +22,7 @@ class SurveyController extends Controller
         
         $parameters["lastaccess"] = new \DateTime("2013-07-01 10:05:00");
          
-        $parameters["user"] = array('avatar' => 'images/tmp_avatar.jpg', 'name' => 'Damien Sonser');
+        $parameters["user"] = array('avatar' => '/images/tmp_avatar.jpg', 'name' => 'Damien Sonser');
         
         $parameters["about"] = array('title' => 'About this survey',
                 'info' => 'This survey helps researchers determine what you are up to now - so
@@ -37,7 +37,7 @@ class SurveyController extends Controller
         );
         
         $parameters["page"] = array(
-                'image' => 'images/tmp_banner_small.jpg',
+                'image' => '/images/tmp_banner_small.jpg',
                 'title' => 'Know@home baseline study',
                 'subtitle' => 'Surveys allow you to provide feedback, input information all online.'
         );

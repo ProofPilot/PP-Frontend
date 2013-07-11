@@ -29,25 +29,25 @@ class DashboardController extends Controller
                 array('title' => 'A survey title of some sort',
                         'content' => 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt',
                         'icon' => 'icon_1',
-                        'image' => 'images/tmp_banner_1.jpg'
+                        'image' => '/images/tmp_banner_1.jpg'
                 ),
                 array(
                         'title' => 'An activity of some sort',
                         'content' => 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt',
                         'icon' => 'icon_2',
-                        'image' => 'images/tmp_banner_2.jpg'
+                        'image' => '/images/tmp_banner_2.jpg'
                 ),
                 array(
                         'title' => 'A measurement of some sort',
                         'content' => 'After a pledge, confirm that you actually followed through on the pledge',
                         'icon' => 'icon_3',
-                        'image' => 'images/tmp_banner_3.jpg'
+                        'image' => '/images/tmp_banner_3.jpg'
                 ),
                 array(
                         'title' => 'A Test of some sort',
                         'content' => 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt',
                         'icon' => 'icon_4',
-                        'image' => 'images/tmp_banner_4.jpg'
+                        'image' => '/images/tmp_banner_4.jpg'
                 )
         );
         $parameters["actions"] = array(
@@ -74,7 +74,7 @@ class DashboardController extends Controller
     
         $parameters["lastaccess"] = new \DateTime("2013-07-01 10:05:00");
          
-        $parameters["user"] = array('avatar' => 'images/tmp_avatar.jpg', 'name' => 'Damien Sonser');
+        $parameters["user"] = array('avatar' => '/images/tmp_avatar.jpg', 'name' => 'Damien Sonser');
     
         return $this->render('CyclogramFrontendBundle:Dashboard:main.html.twig', $parameters);
     
