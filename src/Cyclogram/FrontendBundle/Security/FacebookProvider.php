@@ -1,6 +1,6 @@
 <?php
 
-namespace Cyclogram\SexProBundle\Security;
+namespace Cyclogram\FrontendBundle\Security;
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\DependencyInjection\Container;
@@ -76,8 +76,9 @@ class FacebookProvider implements UserProviderInterface
             
             return $participant;
         }
+        
 
-        if (empty($participant) && $referer['path'] == '/register') {
+        if (empty($participant) && $referer['path'] == $this->container->get('router')->generate('_registration')) {
             //if we did not find a user by Facebbok id, we assume he does not exist or is not registered as Facebbok user;
             
             $participant = $this->findUserByEmail($fbdata["email"]);
@@ -122,7 +123,7 @@ class FacebookProvider implements UserProviderInterface
             return $participant;
         }
             
-        if (empty($participant) && $referer['path'] == '/login') {
+        if (empty($participant) && $referer['path'] == $this->container->get('router')->generate('_login')) {
             $participant = new Participant();
             $participant->setRoles(array('FACEBOOK_NOT_REGISTERED'));
             return $participant;

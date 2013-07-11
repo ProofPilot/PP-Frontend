@@ -1,5 +1,5 @@
 <?php
-namespace Cyclogram\SexProBundle\Listener;
+namespace Cyclogram\FrontendBundle\Listener;
 
 use Cyclogram\Bundle\ProofPilotBundle\Entity\Participant;
 

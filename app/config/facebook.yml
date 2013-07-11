@@ -9,7 +9,7 @@ fos_facebook:
 
 services:
     my.facebook.user:
-        class: Cyclogram\SexProBundle\Security\FacebookProvider
+        class: Cyclogram\FrontendBundle\Security\FacebookProvider
         arguments:
             facebook: "@fos_facebook.api"
             userManager: "@doctrine.orm.entity_manager"

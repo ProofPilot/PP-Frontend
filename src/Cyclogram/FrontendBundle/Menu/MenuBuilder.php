@@ -1,5 +1,5 @@
 <?php
-namespace Cyclogram\SexProBundle\Menu;
+namespace Cyclogram\FrontendBundle\Menu;
 use Symfony\Component\Security\Core\SecurityContext;
 
 // use Symfony\Component\DependencyInjection\Container;

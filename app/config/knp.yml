@@ -4,7 +4,7 @@ knp_menu:
         
 services:
     merk.voter.request:
-        class: Cyclogram\SexProBundle\Menu\RequestVoter
+        class: Cyclogram\FrontendBundle\Menu\RequestVoter
         arguments:
             - @service_container
         tags:

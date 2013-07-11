@@ -1,6 +1,6 @@
 <?php
 
-namespace Cyclogram\SexProBundle\DependencyInjection;
+namespace Cyclogram\FrontendBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
@@ -12,7 +12,7 @@ use Symfony\Component\DependencyInjection\Loader;
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  */
-class CyclogramSexProExtension extends Extension
+class CyclogramFrontendExtension extends Extension
 {
     /**
      * {@inheritDoc}
@@ -24,5 +24,8 @@ class CyclogramSexProExtension extends Extension
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
+        
+        $ymlLoader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $ymlLoader->load('listener.yml');
     }
 }

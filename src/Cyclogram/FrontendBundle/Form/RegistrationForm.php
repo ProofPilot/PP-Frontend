@@ -1,5 +1,5 @@
 <?php
-namespace Cyclogram\SexProBundle\Form;
+namespace Cyclogram\FrontendBundle\Form;
 
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Form\AbstractType;

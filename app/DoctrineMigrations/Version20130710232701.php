@@ -14,7 +14,7 @@ class Version20130710232701 extends AbstractMigration
     {
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != "mysql");
         
-        $this->addSql("ALTER TABLE `proofpilot`.`participant` ADD COLUMN `facebookId` VARCHAR(255) NOT NULL  AFTER `status_id`;");
+        $this->addSql("ALTER TABLE `proofpilot`.`participant` ADD COLUMN `facebookId` VARCHAR(255) NULL  AFTER `status_id`;");
 
     }
 

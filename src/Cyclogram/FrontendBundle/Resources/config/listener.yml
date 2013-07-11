@@ -1,5 +1,5 @@
 parameters:
-    kernel.listener.login.class: Cyclogram\SexProBundle\Listener\SecurityListener
+    kernel.listener.login.class: Cyclogram\FrontendBundle\Listener\SecurityListener
 
 services:
     kernel.listener.login:

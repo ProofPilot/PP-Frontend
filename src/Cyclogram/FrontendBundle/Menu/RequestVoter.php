@@ -2,7 +2,7 @@
 
 // src/merk/Voter/RequestVoter.php
 
-namespace Cyclogram\SexProBundle\Menu;
+namespace Cyclogram\FrontendBundle\Menu;
 
 use Knp\Menu\ItemInterface;
 use Knp\Menu\Matcher\Voter\VoterInterface;
