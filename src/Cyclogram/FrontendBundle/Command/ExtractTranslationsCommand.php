@@ -1,5 +1,5 @@
 <?php
-namespace Cyclogram\SexProBundle\Command;
+namespace Cyclogram\FrontendBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\ArgvInput;

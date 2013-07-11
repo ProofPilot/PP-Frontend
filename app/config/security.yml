@@ -25,11 +25,6 @@ security:
             pattern:  ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-        login:
-            pattern:  ^/login$
-            security: false
-            anonymous:  ~
-
         secured_area:
             pattern: ^/
             anonymous:  ~
@@ -59,6 +54,7 @@ security:
         - { path: "^/[a-z]{2}/doLogin$", roles: ROLE_USER }
         - { path: "^/[a-z]{2}/loginSMS$", roles: ROLE_USER }
         - { path: "^/$", roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: "^/[a-z]{2}/", roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: "^/[a-z]{2}/reg_step2$", roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: "^/[a-z]{2}/reg_step3$", roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: "^/[a-z]{2}/reg_step4$", roles: IS_AUTHENTICATED_ANONYMOUSLY }

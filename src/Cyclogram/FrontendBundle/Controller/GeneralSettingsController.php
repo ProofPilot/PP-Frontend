@@ -1,11 +1,14 @@
 <?php
 
-namespace Cyclogram\SexProBundle\Controller;
+namespace Cyclogram\FrontendBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
+/**
+ * @Route("/{_locale}/main")
+ */
 class GeneralSettingsController  extends Controller
 {
     /**
@@ -14,7 +17,7 @@ class GeneralSettingsController  extends Controller
      */
     public function generalSettingsAction()
     {
-        return $this->render('CyclogramSexProBundle:GeneralSettings:general_settings.html.twig');
+        return $this->render('CyclogramFrontendBundle:GeneralSettings:general_settings.html.twig');
     }
     
     /**
@@ -76,6 +79,6 @@ class GeneralSettingsController  extends Controller
                 )
         );
         
-        return $this->render('CyclogramSexProBundle:GeneralSettings:contact_prefs.html.twig', $parameters);
+        return $this->render('CyclogramFrontendBundle:GeneralSettings:contact_prefs.html.twig', $parameters);
     }
 }
