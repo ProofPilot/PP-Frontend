@@ -48,7 +48,7 @@
 			
 			<div class="wrapper">
 			
-				<h1>Log in</h1>
+				<h1>{% trans from "login" %}txt_log_in{% endtrans %}</h1>
 				
 				<div class="loginform_left">
 				
@@ -61,24 +61,24 @@
 							<a id="expand_google_form" class="btn_reg google" href="#"><span>Login with Google</span></a>
 						</form>	
 					</div>
-					<div class="notice2"><p><span>Login Securely with your accounts.</span></p></div>
+					<div class="notice2"><p><span>{% trans from "login" %}txt_login_securely{% endtrans %}</span></p></div>
 				
 				</div>
 				
 				<div class="sep">
-					OR
+					{% trans from "login" %}txt_or{% endtrans %}
 				</div>
 				
 				<div class="loginform_right">
 					<form action="{{ path('login_check') }}" method="post">
-					    <a class="forgot" href="{{ path('_forgot_username') }}">Forgot your username?</a>
-						<label for="reg_field_1">Username</label>
+					    <a class="forgot" href="{{ path('_forgot_username') }}">{% trans from "login" %}txt_forgot_your_username{% endtrans %}</a>
+						<label for="reg_field_1">{% trans from "login" %}txt_form_username{% endtrans %}</label>
 						<span class="input_placeholder "><input type="text" class="text " value="{{ last_username }}" id="reg_field_1" name="_username" ><span class="mark"></span></span>
-						<label for="reg_field_2">Password</label><a class="forgot" href="{{ path('_forgot_pass') }}">Forgot your password?</a>
+						<label for="reg_field_2">{% trans from "login" %}txt_form_password{% endtrans %}</label><a class="forgot" href="{{ path('_forgot_pass') }}">{% trans from "login" %}txt_forgot_your_password{% endtrans %}</a>
 						<span class="input_placeholder"><input type="password" class="text" name="_password" id="reg_field_2"><span class="mark"></span></span>
 						<div class="actions_row">
-							<input type="checkbox" value="" class="checkbox" name=""> Stay logged in
-							<a id="login_submit" class="submit btn_login">LOGIN</a>
+							<input type="checkbox" value="" class="checkbox" name="">{%  trans from "login" %}txt_stay_logged_in{% endtrans %}
+							<a id="login_submit" class="submit btn_login">{% trans from "login" %}txt_login_button{% endtrans %}</a>
 							<button type="submit" style="display:none" id="submit_button"></button>
 						</div>
 						{% if error %}<div>{{ error.message }}</div>{% endif %}

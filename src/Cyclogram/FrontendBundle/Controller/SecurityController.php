@@ -56,7 +56,8 @@ class SecurityController extends Controller
 
                     return $this->render('CyclogramFrontendBundle:Security:reset_password_confirmation.html.twig');
                 } else {
-                    return $this->render('CyclogramFrontendBundle:Security:forgot_your_password.html.twig' , array("form" => $form->createView(), "error" => "We’re sorry, your entry does not match our records"));
+                    return $this->render('CyclogramFrontendBundle:Security:forgot_your_password.html.twig' , array("form" => $form->createView(), 
+                            "error" => $this->get('translator')->trans("doesnt_match_records", array(), "login")));
                 }
             }
         }
