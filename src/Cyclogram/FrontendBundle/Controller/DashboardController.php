@@ -17,6 +17,7 @@ class DashboardController extends Controller
      */
     public function indexAction()
     {
+        $participant = $this->get('security.context')->getToken()->getUser();
         $parameters = array();
     
         $parameters['text'] = array(
@@ -75,6 +76,12 @@ class DashboardController extends Controller
         $parameters["lastaccess"] = new \DateTime("2013-07-01 10:05:00");
          
         $parameters["user"] = array('avatar' => '/images/tmp_avatar.jpg', 'name' => 'Damien Sonser');
+        if ($participant->getParticipantEmailConfirmed()){
+            $parameters["confirm_email"] = true;
+        } else {
+            $parameters["confirm_email"] = false;
+            $parameters["email_alert"] = "Please verify your e-mail address. To participate in studies we need a valid e-mail address - please go to your e-mail and click the link";
+        }
     
         return $this->render('CyclogramFrontendBundle:Dashboard:main.html.twig', $parameters);
     

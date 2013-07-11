@@ -54,19 +54,6 @@ class SecurityController extends Controller
                                               true,
                                               $parameters);
 
-                
-//                     $message = \Swift_Message::newInstance()
-//                     ->setSubject('Reset Your Password')
-//                     ->setFrom('send@example.com')
-//                     ->setTo($participant->getParticipantEmail())
-//                     ->setContentType('text/html')
-//                     ->setBody(
-//                             $this->renderView(
-//                                     'CyclogramFrontendBundle:Security:reset_pass_email.html.twig', 
-//                                      array("id" => $participant->getParticipantId())
-//                             )
-//                     );
-//                     $this->get('mailer')->send($message);
                     return $this->render('CyclogramFrontendBundle:Security:reset_password_confirmation.html.twig');
                 } else {
                     return $this->render('CyclogramFrontendBundle:Security:forgot_your_password.html.twig' , array("form" => $form->createView(), "error" => "We’re sorry, your entry does not match our records"));
