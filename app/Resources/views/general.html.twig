@@ -1,0 +1,44 @@
+{% block body %}
+  <body class="page_study">
+    <div class="site_container">
+      {% block header %}
+      <header>
+        <a class="site_logo" href="#">ProofPilot</a>
+        <ul class="header_menu">
+          <li>
+            <a class="icon_help" href="#">
+              <span>Help</span>
+            </a>
+          </li>
+          <li>
+            <a class="icon_logout" href="#">
+              <span></span>
+            </a>
+            <br>
+          </li>
+        </ul>
+      </header>
+      {% endblock header %}
+
+      {% block content %}
+      {% endblock content %}
+
+      {% block footer %}
+      <footer>
+        <div class="site_container">
+          <div class="footer_col_left">
+            <ul>
+              <li class="icon_home"><a class="icon_home" href="#"><span>Home</span></a></li>
+              <li class="icon_fullscreen"><a class="icon_fullscreen" href="#"><span>Fullscreen</span></a></li>
+              <li class="icon_update"><a class="icon_update" href="#"><span>Update</span></a></li>
+            </ul>
+          </div>
+          <div class="footer_col_middle"><a class="to_top" href="#"><span>ON TOP</span></a></div>
+          <br>
+        </div>
+        <a href="http://www.kudos.hr" target="_blank" class="author">design by kudos studio</a>
+      </footer>
+      {% endblock footer %}
+    </div>
+  </body>
+{% endblock body %}
