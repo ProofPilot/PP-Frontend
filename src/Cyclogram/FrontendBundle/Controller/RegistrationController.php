@@ -55,7 +55,7 @@ class RegistrationController extends Controller
                     $question = $em->getRepository('CyclogramProofPilotBundle:RecoveryQuestion')->find(1);
                     $user->setRecoveryQuestion($question);
                     $user->setRecoveryPasswordCode('Default');
-                    $user->setParticipantEmailConfirmed(true);
+                    $user->setParticipantEmailConfirmed(false);
                     $user->setParticipantMobileNumber('');
                     $user->setParticipantMobileSmsCodeConfirmed(false);
                     $user->setParticipantIncentiveBalance(false);
@@ -202,6 +202,27 @@ class RegistrationController extends Controller
             if( $form->isValid() ) {
                 $value = $request->request->get('form');;
                 if ($value['sms_code'] == $mobileNumber) {
+                    
+                    $embedded['logo_top'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_logo.png");
+                    $embedded['logo_footer'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newletter_logo_footer.png");
+                    $cc = $this->get('cyclogram.common');
+                    $parameters['code'] = substr(md5( md5( $participant->getParticipantEmail() . md5(microtime()))), 0, 4);
+                    $parameters['email'] = $participant->getParticipantEmail();
+                    
+                    $em = $this->getDoctrine()->getManager();
+                    
+                    $participant->setParticipantEmailCode($parameters['code']);
+                    $em->persist($participant);
+                    $em->flush($participant);
+                    
+                    $cc->sendMail($participant->getParticipantEmail(),
+                            'Please Verify your e-mail address',
+                            'CyclogramFrontendBundle:Registration:confirm_email.html.twig',
+                            null,
+                            $embedded,
+                            true,
+                            $parameters);
+
                      return $this->redirect( $this->generateUrl("_main") );
                 } else {
                     $error = "Wrong SMS!";
@@ -211,6 +232,22 @@ class RegistrationController extends Controller
         return $this->render('CyclogramFrontendBundle:Registration:mobile_phone_3.html.twig', array('error' => $error, 'form' => $form->createView()));
     }
     
+    /**
+     * @Route("/email_verify/{email}/{code}", name="email_verify")
+     * @Template()
+     */
+    public function confirmEmailAction($email, $code)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $code = substr($code, 0, 4);
+        $participant = $em->getRepository('CyclogramProofPilotBundle:Participant')->findOneBy(array('participantEmailCode' =>$code, 'participantEmail' => $email));
+        if ($participant) {
+            $participant->setParticipantEmailConfirmed(true);
+            $em->persist($participant);
+            $em->flush($participant);
+        }
+        return $this->redirect( $this->generateUrl("_main") );
+    }
     
     /**
      * @Route("/register_popup/")
