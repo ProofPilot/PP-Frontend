@@ -34,7 +34,8 @@ class ExtractTranslationsCommand extends ContainerAwareCommand
         
         $arguments = array(
                 'command' => 'translation:extract',
-                '--config' => 'app'
+                '--config' => 'app',
+                '--default-output-format' => 'yml'
         );
         
         if ($input->getArgument('domain') != 'all') {
