@@ -58,7 +58,12 @@ doctrine:
 
     orm:
         auto_generate_proxy_classes: %kernel.debug%
-        auto_mapping: true
+        default_entity_manager: default # specify the EM used by default (when using console commands f.e)
+        entity_managers:
+            default:
+                connection: default
+                mappings:
+                    CyclogramProofPilotBundle : ~        
 
 # Swiftmailer Configuration
 swiftmailer:

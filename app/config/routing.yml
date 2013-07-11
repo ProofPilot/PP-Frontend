@@ -3,13 +3,13 @@ cyclogram_frontend:
     type:     annotation
     prefix:   /
 
-#_root:
-#    pattern: /
-#    defaults:
-#        _controller: lunetics_locale.switcher_controller:switchAction
-#        route: _login
-#        statusCode: 301
-#        useReferrer: false
+_root:
+    pattern: /
+    defaults:
+        _controller: lunetics_locale.switcher_controller:switchAction
+        route: _page
+        statusCode: 301
+        useReferrer: false
 
 cyclogram_proof_pilot:
     resource: "@CyclogramProofPilotBundle/Controller/"

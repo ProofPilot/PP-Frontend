@@ -11,15 +11,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
  */
 class DefaultController extends Controller
 {
-    /**
-     * @Route("/", name="_campaign")
-     */
-    public function rootAction()
-    {
-        return $this->redirect( $this->generateUrl("_page") );
-    }
-    
-
     
     /**
      * @Route("/newslatter", name="_newsletter")
@@ -52,7 +43,7 @@ class DefaultController extends Controller
     }
     
     /**
-     * @Route("/page", name="_page")
+     * @Route("", name="_page")
      * @Template()
      */
     public function pageAction()
