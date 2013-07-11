@@ -2,7 +2,6 @@ parameters:
     site_name: "ProofPilot"
     base_path: ""
     upload_path: "trim(`pwd`) . '/' . md5('attachments')"
-
     database_driver: pdo_mysql
     database_host: db
     database_port: null
@@ -15,16 +14,12 @@ parameters:
     mailer_password: null
     locale: en
     locales: [en, es, pt]
-    
     secret: 10da697491608e381e7f81207a304c43f
     database_path: null
-
     url_survey: "http://limesurvey.dev1.proofpilot.net"
     url_analytics: "http://analytics.dev1.proofpilot.net"
     url_chartio: "https://chartio.com"
-    
     encryption_key: "wKLH=qIk2A2&pEB"
-    
 #	Facebook secret is from my riv.a.ntsiv@gmail.com
     facebook.secret: 61577113f011589a7d217cc7972798a4
     facebook.appid: 584886061542799
