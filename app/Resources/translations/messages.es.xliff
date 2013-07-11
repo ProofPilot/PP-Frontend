@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
+  <file date="2013-07-11T09:39:25Z" source-language="en" target-language="es" datatype="plaintext" original="not.available">
+    <header>
+      <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
+      <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
+    </header>
+    <body>
+      <trans-unit id="2112b08e6faabc5cc4168d2e22115e755307df4a" resname="SMS Code:">
+        <source>SMS Code:</source>
+        <target state="new">SMS Code:</target>
+        <jms:reference-file line="152">SexProBundle/Controller/LoginController.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="a88b7dcd1a9e3e17770bbaa6d7515b31a2d7e85d" resname="email">
+        <source>email</source>
+        <target state="new">email</target>
+        <jms:reference-file line="20">SexProBundle/Form/RegistrationForm.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="83a2571ec90caafb3e567345435b9126537ec211" resname="some.text">
+        <source>some.text</source>
+        <target state="new">some.text</target>
+        <jms:reference-file line="86">views/Default/main.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="249ba36000029bbe97499c03db5a9001f6b734ec" resname="username">
+        <source>username</source>
+        <target state="new">username</target>
+        <jms:reference-file line="29">SexProBundle/Controller/SecurityController.php</jms:reference-file>
+        <jms:reference-file line="21">SexProBundle/Form/RegistrationForm.php</jms:reference-file>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

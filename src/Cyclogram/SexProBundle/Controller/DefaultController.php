@@ -6,8 +6,19 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
+/**
+ * @Route("/{_locale}/sexpro")
+ */
 class DefaultController extends Controller
 {
+    /**
+     * @Route("/")
+     */
+    public function rootAction()
+    {
+        return $this->redirect( $this->generateUrl("_main") );
+    }
+    
     /**
      * @Route("/main", name="_main")
      * @Template()
