@@ -1,0 +1,15 @@
+already_joined: already_joined
+confirm_password: confirm_password
+create_password: create_password
+enter_email: enter_email
+enter_mobile_phone: enter_mobile_phone
+enter_sms_code: enter_sms_code
+min_charachters: min_charachters
+no_code: no_code
+ok_verify: ok_verify
+pick_user: pick_user
+send_confirmation: send_confirmation
+txt_join: txt_join
+txt_join_with: txt_join_with   # FIXME
+txt_why: txt_why
+wrong_back: wrong_back
