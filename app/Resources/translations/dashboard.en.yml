@@ -13,3 +13,6 @@ txt_treatments: 'Treatments'
 txt_help: 'Help'
 txt_lgout: 'Log-Out'
 txt_settings: 'My Settings'
+txt_please_verify_email: |
+    Please verify your e-mail address.<br/>
+    To participate in studies we need a valid e-mail address - please go to your e-mail and click the link.

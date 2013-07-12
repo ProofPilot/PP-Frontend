@@ -95,7 +95,7 @@ class DashboardController extends Controller
             $parameters["confirm_email"] = true;
         } else {
             $parameters["confirm_email"] = false;
-            $parameters["email_alert"] = "Please verify your e-mail address. To participate in studies we need a valid e-mail address - please go to your e-mail and click the link";
+            $parameters["email_alert"] = $this->get('translator')->trans('txt_please_verify_email', array(), 'dashboard');
         }
     
         return $this->render('CyclogramFrontendBundle:Dashboard:main.html.twig', $parameters);

@@ -19,10 +19,10 @@ class MenuBuilder extends ContainerAware
         $menu->setChildrenAttribute('class', 'left_menu');
         
         $menu->addChild('Dashboard', array('route' => '_main'))->setAttribute('class', 'icon_dashboard')->setAttribute("news", 5);
-        $menu->addChild('Survey', array('route' => null))->setAttribute('class', 'icon_survey');
-        $menu->addChild('Activities', array('route' => null))->setAttribute('class', 'icon_activities');
-        $menu->addChild('Measurements', array('route' => null))->setAttribute('class', 'icon_measurments');
-        $menu->addChild('Treatment', array('route' => null))->setAttribute('class', 'icon_treatment');
+        $menu->addChild('Survey', array('route' => '_main'))->setAttribute('class', 'icon_survey');
+        $menu->addChild('Activities', array('route' => '_main'))->setAttribute('class', 'icon_activities');
+        $menu->addChild('Measurements', array('route' => '_main'))->setAttribute('class', 'icon_measurments');
+        $menu->addChild('Treatment', array('route' => '_main'))->setAttribute('class', 'icon_treatment');
 
         return $menu;
     }
