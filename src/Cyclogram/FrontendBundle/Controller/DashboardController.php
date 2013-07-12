@@ -80,13 +80,14 @@ class DashboardController extends Controller
     
         $parameters["lastaccess"] = new \DateTime("2013-07-01 10:05:00");
          
+        if(!$participant->getFacebookId())
+            $parameters["user"]["avatar"] = "/images/tmp_avatar.jpg";
+        else
+            $parameters["user"]["avatar"] = "http://graph.facebook.com/" . $participant->getParticipantUsername() . "/picture?width=80&height=82";
         
-        $parameters["user"] = array(
-                'avatar' => '/images/tmp_avatar.jpg', 
-                'name' => $participant->getParticipantFirstname() . ' ' . $participant->getParticipantLastname(),
-                'last_access' => $participant->getParticipantLastTouchDatetime()
-                
-                );
+        $parameters["user"]["name"] = $participant->getParticipantFirstname() . ' ' . $participant->getParticipantLastname();
+        $parameters["user"]["last_access"] = $participant->getParticipantLastTouchDatetime();
+        
         
         if ($participant->getParticipantEmailConfirmed()){
             if ($session->get('confirmed'))

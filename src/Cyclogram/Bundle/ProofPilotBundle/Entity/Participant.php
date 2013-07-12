@@ -936,6 +936,9 @@ class Participant implements AdvancedUserInterface
         if (isset($fbdata['email'])) {
             $this->setParticipantEmail($fbdata['email']);
         }
+        if( isset($fbdata['username'])) {
+            $this->setParticipantUsername($fbdata['username']);
+        }
 //         $this->setParticipantEmail("riv.a.ntsiv@gmail.com");
     }
 
