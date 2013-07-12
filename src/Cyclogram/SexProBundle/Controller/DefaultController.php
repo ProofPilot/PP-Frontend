@@ -11,6 +11,65 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
  */
 class DefaultController extends Controller
 {
+    /**
+     * @Route("", name="_page")
+     * @Template()
+     */
+    public function pageAction()
+    {
+        $studyId = 1;
+        $locale = $this->getRequest()->getLocale();
+    
+        $studyContent = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:StudyContent')
+        ->getStudyContent($studyId, $locale);
+    
+    
+        $parameters = array();
+    
+        $parameters["studycontent"] = $studyContent;
+    
+        return $this->render('CyclogramSexProBundle:Default:page.html.twig', $parameters);
+    
+    }
+    
+    /**
+     * @Route("/study/{studyId}", name="_study")
+     * @Template()
+     */
+    public function studyAction($studyId)
+    {
+        $locale = $this->getRequest()->getLocale();
+    
+        $studyContent = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:StudyContent')
+        ->getStudyContent($studyId, $locale);
+    
+    
+        $parameters = array();
+    
+        $parameters["studycontent"] = $studyContent;
+    
+    
+        $parameters["info"] = 'The purpose of this study is to learn what men and transwomen like and don’t like about SexPro and how it affects their understanding of sexual protection
+                behaviors. We will also see whether Sex Pro helps men and transwomen to change their sexual health practices, and how using this tool affects counseling
+                sessions between our study participants and their HIV counselors.';
+    
+        $parameters["content"] = array(
+                array('title' => 'What’s Involved?',
+                        'text' => 'Taking part in this study is your choice.  You may choose either to take part or not to take part in the study.  If you decide to take part in this
+                        study, you may leave the study at any time.  No matter what decision you make, there will be no penalty to you in any way. You can still get your care
+                        from our institution the way you usually do.We will tell you about new information or changes in the study that may affect your health or your willingness
+                        to continue in the study.'),
+                array('title' => 'What are my rights if I take part in this study?',
+                        'text' => 'Taking part in this study is your choice. You may choose either to take part or not to take part in the study. If you decide to take part in this study,
+                        you may leave the study at any time.  No matter what decision you make, there will be no penalty to you in any way. You can still get your care from our
+                        institution the way you usually do.'),
+                array('title' => 'Who can answer my questions about the study?',
+                        'text' => 'You can talk to the researcher(s) about any questions, concerns, or complaints you have about this study.')
+        );
+    
+        return $this->render('CyclogramSexProBundle:Default:study.html.twig', $parameters);
+    }
+    
     
     /**
      * @Route("/newslatter", name="_newsletter")
@@ -42,39 +101,7 @@ class DefaultController extends Controller
         return $this->render('CyclogramSexProBundle:Default:_newsletter.html.twig', $parameters);
     }
     
-    /**
-     * @Route("", name="_page")
-     * @Template()
-     */
-    public function pageAction()
-    {
-        $studyId = 1;
-        $locale = $this->getRequest()->getLocale();
-        
-        $studyContent = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:StudyContent')
-        ->getStudyContent($studyId, $locale);
-        
 
-        $parameters = array();
-        
-        $parameters["studycontent"] = $studyContent;
-
-
-        $parameters["study"] = array(
-                'name' => 'Sexual Health Promotion (SexPro) Study',
-                'list' => 'Bridge HIV, San Francisco Department of Public Health',
-                'subtitle' => 'Online Tool for Sexual Health Promotion',
-                'description' => 'Sex Pro is a part of a new study of online tools that might be helpful in keeping yourself HIV-negative inside and outside of your relationship(s).',
-                'image' => '/images/tmp_sexpro.png',
-                'mainimg' => '/images/tmp_img2.png',
-                'enroll' => 'Enroll in the study to get started!'
-        );
-
-
-        
-        return $this->render('CyclogramSexProBundle:Default:page.html.twig', $parameters);
-        
-    }
     
     /**
      * @Route("/is_it_secure", name="_secure")
@@ -165,45 +192,7 @@ class DefaultController extends Controller
         return $this->render('CyclogramSexProBundle:Default:Sexpro_baseline.html.twig');
     }
     
-    /**
-     * @Route("/study", name="_study")
-     * @Template()
-     */
-    public function studyAction()
-    {
-        
-        $parameters = array();
-        
-        $parameters["about"] = array(
-                'title' => 'About this study',
-                'info' => 'The purpose of this study is to learn what men and transwomen like and don’t like about SexPro and how it affects their understanding of sexual protection
-                           behaviors. We will also see whether Sex Pro helps men and transwomen to change their sexual health practices, and how using this tool affects counseling 
-                           sessions between our study participants and their HIV counselors.'
-        );
-        
-        $parameters["study"] = array(
-                'title' => 'Sexual Health Promotion (sexPro) Study',
-                'description' => 'The purpose of this study is to learn what men and transgender women like and don’t like about SexPro and how it affects their understanding of 
-                 sexual protection behaviors. We will also see whether SexPro helps men and transgender women to change their sexual health practices, and how using this tool affects
-                 counseling sessions between our study participants and their HIV counselors.'
-        );
-        
-        $parameters["content"] = array(
-                array('title' => 'What’s Involved?',
-                      'text' => 'Taking part in this study is your choice.  You may choose either to take part or not to take part in the study.  If you decide to take part in this 
-                                 study, you may leave the study at any time.  No matter what decision you make, there will be no penalty to you in any way. You can still get your care 
-                                 from our institution the way you usually do.We will tell you about new information or changes in the study that may affect your health or your willingness 
-                                 to continue in the study.'),
-                array('title' => 'What are my rights if I take part in this study?',
-                      'text' => 'Taking part in this study is your choice. You may choose either to take part or not to take part in the study. If you decide to take part in this study,
-                                 you may leave the study at any time.  No matter what decision you make, there will be no penalty to you in any way. You can still get your care from our
-                                 institution the way you usually do.'),
-                array('title' => 'Who can answer my questions about the study?',
-                      'text' => 'You can talk to the researcher(s) about any questions, concerns, or complaints you have about this study.')
-        );
-        
-        return $this->render('CyclogramSexProBundle:Default:study.html.twig', $parameters);
-    }
+
     
 
 }
