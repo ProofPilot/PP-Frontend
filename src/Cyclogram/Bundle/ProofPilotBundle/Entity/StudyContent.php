@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * StudyContent
  *
  * @ORM\Table(name="study_content")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Cyclogram\Bundle\ProofPilotBundle\Repository\StudyContentRepository")
  */
 class StudyContent
 {
