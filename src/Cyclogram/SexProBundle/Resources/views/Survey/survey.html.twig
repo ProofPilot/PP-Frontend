@@ -43,7 +43,7 @@
 				<div class="panel_left survey">
 				
 					<div class="profile_info alt_bg">
-						<div class="wrapper">
+						<div class="wrapper">#}
 							<a href="#" class="avatar"><img src="{{ user.avatar }}" width="80" height="82" alt="" title=""/></a>
 							<ul class="user_info">
 								<li><a href="#">{{ user.name }}</a></li>
@@ -66,7 +66,7 @@
 {# 						</ul>#}
 					</div>
 					
-					<div class="study_desc survey_box">
+{#					<div class="study_desc survey_box">
 
 						
 						<h3>{{ about.title }}</h3>
@@ -78,7 +78,7 @@
 						<p>{{ element.item }}</p>
 						{% endfor %}
 						
-					</div>
+					</div>#}
 				
 				</div>
 				
@@ -90,7 +90,7 @@
 						<p>{{ page.subtitle }}</p>
 					</div>
 					
-					<div class="progress_bar">
+{#					<div class="progress_bar">
 	
 						<div class="text">Progress</div>
 						<ul class="bar">
@@ -105,27 +105,8 @@
 							<span>12 Minutes</span>
 						</div>
 				
-					</div>
+					</div>#}
 					
-					<div class="dashboard_panel">
-						
-						
-						<div class="mobile about_box">
-							<a href="#" class="expander" id="about_expander"><span>{{ about.title }}</span></a>
-							<div class="text_desc">
-						
-								<p>{{ about.info }}</p>
-								<p>&nbsp;</p>
-								
-								{% for element in list %}
-        						<p>{{ element.item }}</p>
-        						{% endfor %}
-						
-							</div>
-						</div>
-						
-						<iframe src="/lime/index.php/survey/index/sid/468727/newtest/Y/lang/en" height="800" width="670"></iframe>
-						
 {# 						<div class="survey_intro">#}
 						
 {# 							<h2>Get Started</h2>#}
@@ -230,12 +211,31 @@
 						</ul>	
 					</div>#}
 				
-				</div>
 				
 			</div>
 			
+			<div class="dashboard_panel">
+						
+						
+						<div class="mobile about_box">
+							<a href="#" class="expander" id="about_expander"><span>{{ about.title }}</span></a>
+							<div class="text_desc">
+						
+								<p>{{ about.info }}</p>
+								<p>&nbsp;</p>
+								
+								{% for element in list %}
+        						<p>{{ element.item }}</p>
+        						{% endfor %}
+						
+							</div>
+						</div>
+						
+						<iframe src="/lime/index.php/survey/index/sid/468727/newtest/Y/lang/en" id="iframe1" height="800" width="1013" onLoad="autoResize('iframe1');"></iframe>
+				    </div>
+			
 		</div>
-		
+	</div>	
 		<footer>
 		
 			<div class="site_container">
@@ -266,7 +266,34 @@
 			
 		</footer>
 		
+		<script>
+    		function autoResize(id){
+    		    var newheight;
+    
+    		    if(document.getElementById){
+    		        newheight=document.getElementById(id).contentWindow.document.body.scrollHeight;
+    		    }
+    
+    		    document.getElementById(id).height=(newheight) + "px";
+    		}
+    		$('#iframe1').load(function(){
+    		    $(this).contents().find(' #completed a').attr('target', '_parent');
+    		});
+		</script>
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        
+        <style>
+            .panel_right {
+                height: 130px;
+            }
+            iframe {
+                border: 1px;
+                margin-left: -8px;
+            }
+            .dashboard_panel {
+                margin-bottom: -5px;
+            }
+        </style>
     </body>
     {% endblock body %}

@@ -78,7 +78,7 @@
 						<span class="input_placeholder"><input type="password" class="text" name="_password" id="reg_field_2"><span class="mark"></span></span>
 						<div class="actions_row">
 							<input type="checkbox" value="" class="checkbox" name="">{%  trans from "login" %}txt_stay_logged_in{% endtrans %}
-							<a id="login_submit" class="submit btn_login">{% trans from "login" %}txt_login_button{% endtrans %}</a>
+							<a id="login_submit" class="submit btn_login" href="#">{% trans from "login" %}txt_login_button{% endtrans %}</a>
 							<button type="submit" style="display:none" id="submit_button"></button>
 						</div>
 						{% if error %}<div>{{ error.message }}</div>{% endif %}
