@@ -22,6 +22,7 @@ class AppKernel extends Kernel
             new Cyclogram\Bundle\ProofPilotBundle\CyclogramProofPilotBundle(),
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
+            new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
             new Lunetics\LocaleBundle\LuneticsLocaleBundle(),
             new JMS\AopBundle\JMSAopBundle(),

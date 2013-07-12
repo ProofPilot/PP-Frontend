@@ -23,6 +23,8 @@
         "friendsofsymfony/jsrouting-bundle": "dev-master",
         "doctrine/doctrine-migrations-bundle": "dev-master",
         "doctrine/migrations": "dev-master",
+        "doctrine/data-fixtures": "dev-master",
+        "doctrine/doctrine-fixtures-bundle": "dev-master",
         "jms/translation-bundle": "dev-master",
         "jms/di-extra-bundle": ">=1.1",
         "jms/security-extra-bundle": "1.5.*",

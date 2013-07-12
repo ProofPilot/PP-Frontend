@@ -50,6 +50,18 @@ class DefaultController extends Controller
     {
         $parameters = array();
         
+        $study = $this->getDoctrine()->getEntityManager()
+        ->createQuery("
+                SELECT s, l, sc
+                FROM CyclogramProofPilotBundle:StudyContent sc
+                JOIN sc.study s
+                JOIN sc.language l
+                WHERE l.languageName=?1
+                AND s.studyId=?2")
+                ->setParameter(1, "English")
+                ->setParameter(2, 1)
+                ->getSingleResult();
+
         $parameters["study"] = array(
                 'name' => 'Sexual Health Promotion (SexPro) Study',
                 'list' => 'Bridge HIV, San Francisco Department of Public Health',
