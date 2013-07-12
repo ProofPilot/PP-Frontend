@@ -1,0 +1,23 @@
+<header> 
+    <a class="site_logo" href="#">ProofPilot</a>
+        <ul class="header_menu">
+          <li><a class="register_link" href="{{ path('_registration') }}">{% trans %}txt_header_register_here{% endtrans %}</a>
+              <span class="text">{% trans %}txt_header_or{% endtrans %}</span>
+          </li>
+          <li><a class="login" href="{{ path('_login') }}"><span>{% trans %}txt_header_login{% endtrans %}</span></a></li>
+        </ul>
+</header>
+<div class="mobile_header_menu nologin">
+        <ul>
+          <li class="logo"><a class="site_logo" href="#">ProofPilot</a></li>
+          <li class="right"><a class="trigger_sitemenu" href="#"></a></li>
+        </ul>
+</div>
+<div class="mobile_sitemenu register nologin">
+        <div class="menu_wrapper"> <a class="close" href="#"></a> <a class="logo" href="#">ProofPilot</a>
+          <ul>
+            <li><a href="{{ path('_registration') }}" class="icon_register"><span>{% trans %}txt_header_register{% endtrans %}</span></a></li>
+            <li><a href="{{ path('_login') }}" class="icon_login"><span>{% trans %}txt_header_login{% endtrans %}</span></a></li>
+          </ul>
+        </div>
+</div>

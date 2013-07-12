@@ -22,13 +22,6 @@ class Study
     private $studyId;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="study_name", type="string", length=45, nullable=false)
-     */
-    private $studyName;
-
-    /**
      * @var \DateTime
      *
      * @ORM\Column(name="study_recruitment_start", type="datetime", nullable=true)

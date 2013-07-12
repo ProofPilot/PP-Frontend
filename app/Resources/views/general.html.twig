@@ -1,22 +1,22 @@
+{% extends '::base.html.twig' %}
+
 {% block body %}
   <body class="page_study">
     <div class="site_container">
-
-      {% block content %}
-      {% endblock content %}
-
+      {% block header %}{% endblock header %}
+      {% block content %}{% endblock content %}
     </div>
     {% block footer %}
       <footer>
         <div class="site_container">
           <div class="footer_col_left">
             <ul>
-              <li class="icon_home"><a class="icon_home" href="#"><span>{% trans from "study" %}txt_home{% endtrans %}</span></a></li>
-              <li class="icon_fullscreen"><a class="icon_fullscreen" href="#"><span>{% trans from "study" %}txt_fullscreen{% endtrans %}</span></a></li>
-              <li class="icon_update"><a class="icon_update" href="#"><span>Update</span></a></li>
+              <li class="icon_home"><a class="icon_home" href="#"><span>{% trans %}txt_footer_home{% endtrans %}</span></a></li>
+              <li class="icon_fullscreen"><a class="icon_fullscreen" href="#"><span>{% trans %}txt_footer_fullscreen{% endtrans %}</span></a></li>
+              <li class="icon_update"><a class="icon_update" href="#"><span>{% trans %}txt_footer_update{% endtrans %}</span></a></li>
             </ul>
           </div>
-          <div class="footer_col_middle"><a class="to_top" href="#"><span>{% trans from "study" %}txt_on_top{% endtrans %}</span></a></div>
+          <div class="footer_col_middle"><a class="to_top" href="#"><span>{% trans %}txt_footer_top{% endtrans %}</span></a></div>
           <br>
         </div>
         <a href="http://www.kudos.hr" target="_blank" class="author">design by kudos studio</a>
