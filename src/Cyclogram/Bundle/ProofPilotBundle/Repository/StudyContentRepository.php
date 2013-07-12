@@ -24,7 +24,7 @@ class StudyContentRepository extends EntityRepository
         
         return $this->getEntityManager()
         ->createQuery("
-                SELECT sc
+                SELECT sc, s, l
                 FROM CyclogramProofPilotBundle:StudyContent sc
                 JOIN sc.language l
                 JOIN sc.study s

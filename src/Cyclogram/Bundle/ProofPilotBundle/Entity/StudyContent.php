@@ -15,6 +15,13 @@ class StudyContent
     /**
      * @var string
      *
+     * @ORM\Column(name="study_name", type="string", length=255, nullable=true)
+     */
+    private $studyName;
+    
+    /**
+     * @var string
+     *
      * @ORM\Column(name="study_logo", type="string", length=255, nullable=true)
      */
     private $studyLogo;
@@ -260,5 +267,15 @@ class StudyContent
     public function setStudy($study)
     {
         $this->study = $study;
+    }
+
+    public function getStudyName()
+    {
+        return $this->studyName;
+    }
+
+    public function setStudyName($studyName)
+    {
+        $this->studyName = $studyName;
     }
 }

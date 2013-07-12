@@ -27,6 +27,7 @@ class LoadStudyData implements FixtureInterface
         $studyContent->setLanguage($language);
         $studyContent->setStudyLogo('/images/tmp_sexpro.png');
         $studyContent->setStudyGraphic('/images/tmp_img2.png');
+        $studyContent->setStudyName("Sexual Health Promotion (SexPro) Study");
         $str = <<<EOD
             <h2>About</h2>
             <p>The purpose of this study is to learn what men and transwomen like and don’t like about SexPro and how it affects their understanding of sexual protection 
@@ -54,6 +55,7 @@ EOD;
         $studyContent->setLanguage($language);
         $studyContent->setStudyLogo('/images/tmp_sexpro.png');
         $studyContent->setStudyGraphic('/images/tmp_img2.png');
+        $studyContent->setStudyName("Promoción Estudio de la Salud Sexual (SexPro)");
         $str = <<<EOD
             <h2>Sobre</h2>
             <p>El propósito de este estudio es conocer lo que los hombres y transexuales gusta y no les gusta de SexPro y cómo afecta a su comprensión de la protección sexual

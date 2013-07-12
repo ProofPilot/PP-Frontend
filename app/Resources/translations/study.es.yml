@@ -9,6 +9,8 @@ txt_home: txt_home
 txt_on_top: txt_on_top
 txt_progress: txt_progress
 txt_secure: txt_secure
-txt_to_do: txt_to_do
+txt_to_do: ¿Qué quieres hacer?
 txt_you_are_eligible: txt_you_are_eligible
 warning_message: warning_message
+btn_start_enrollment: 'INICIO INSCRIPCIÓN DE ESTUDIO'
+btn_log_in: 'INICIAR'

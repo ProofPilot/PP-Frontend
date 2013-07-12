@@ -69,50 +69,8 @@ class DefaultController extends Controller
                 'mainimg' => '/images/tmp_img2.png',
                 'enroll' => 'Enroll in the study to get started!'
         );
-        
-        $parameters["about"] = array(
-                array(
-                        'title' => 'About',
-                        'info' => 'The purpose of this study is to learn what men and transwomen like and don’t like about SexPro and how it affects their understanding of sexual protection 
-                                   behaviors. We will also see whether Sex Pro helps men and transwomen to change their sexual health practices, and how using this tool affects counseling sessions
-                                   between our study participants and their HIV counselors.'
-                ),
-                array(
-                        'title' => 'What\'s Involved',
-                        'info' => 'You will be asked to come to the clinic for 3 different study visits: enrollment, 3 months and 6 months after enrollment. You will answer questions by computer 
-                                   about your sexual and drug use practices at each of these visits, and then will meet with a study counselor, who will talk with you about ways you can protect 
-                                   yourself against HIV infection. '
-                ),
-                array(
-                        'title' => '',
-                        'info' => 'You will receive SexPro instructions and start to use SexPro either at your first study visit or at your second study visit, depending on your 
-                        random group assignment.'
-               )
-        );
-        
-        $parameters["heading"] = array(
-                'title' => 'Heading',
-                'text' => 'This is a secondary heading body text.'
-        );
-        
-        $parameters["secure"] = array(
-                'title' => 'Is it secure?',
-                'text' => 'ProofPilot takes a security-first approach. We understand
-                  that you are sharing some sensitive data with us and our
-                  partners. We house your data in secure servers in a highly
-                  encrypted format. We take your security and privacy seriously.
-                  Learn more about security with the link below.&nbsp;'
-        );
-        
-        $parameters["proofpilot"] = array(
-                'title' => 'About proofpilot',
-                'text' => 'ProofPilot is a platform to create, manage and participate
-                  in online research studies. We help researchers easily launch
-                  studies that, you, the participant, can join in order to
-                  answer some important questions about health, human behavior,
-                  social and public policy. Learn more about ProofPilot with the
-                  link below.'
-        );
+
+
         
         return $this->render('CyclogramSexProBundle:Default:page.html.twig', $parameters);
         
