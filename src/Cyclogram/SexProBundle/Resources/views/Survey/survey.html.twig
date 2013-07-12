@@ -277,9 +277,16 @@
     		    document.getElementById(id).height=(newheight) + "px";
     		}
      		$('#iframe1').load(function(){
-    		    $(this).contents().find('#movesubmitbtn').click(function(){
-    		    	  window.location = 'http://frontend-bogdan.dyndns.org/en/sexpro';
-   		        });
+
+     			var surveydata = $(this).contents().find('#surveydata');
+		    	var surveyId = surveydata.attr('surveyid');
+		    	var saveId = surveydata.attr('saveid');
+		    	if(surveyId !== undefined && saveId !== undefined) {
+		    	    window.location = '/surveyResponce?surveyId=' + surveyId + "&saveId=" + saveId;
+		    	}
+
+
+
     		});
 		</script>
 
