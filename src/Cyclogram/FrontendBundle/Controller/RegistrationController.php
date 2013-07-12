@@ -124,8 +124,8 @@ class RegistrationController extends Controller
             if( $form->isValid() ) {
         
                 $values = $form->getData();
-                $userSms = $values['phone_small'].$values['phone_wide'];
-                $participant->setParticipantMobileNumber($userSms);
+                $userPhone = $values['phone_small'].$values['phone_wide'];
+                $participant->setParticipantMobileNumber($userPhone);
                 $em->persist($participant);
                 $em->flush();
                 
@@ -158,6 +158,8 @@ class RegistrationController extends Controller
             $sentSms = $sms->sendSmsAction( array('message' => "Your SMS Verification code is $participantSMSCode", 'phoneNumber'=>"$customerMobileNumber") );
             if($sentSms)
                 $participant->setParticipantMobileSmsCodeConfirmed(true);
+                $em->persist($participant);
+                $em->flush($participant);
                 return $this->redirect(($this->generateUrl("reg_step_4")));
         }
         
@@ -197,6 +199,7 @@ class RegistrationController extends Controller
                     $cc = $this->get('cyclogram.common');
                     $parameters['code'] = substr(md5( md5( $participant->getParticipantEmail() . md5(microtime()))), 0, 4);
                     $parameters['email'] = $participant->getParticipantEmail();
+                    $parameters['confirmed'] = 1;
                     
                     $em = $this->getDoctrine()->getManager();
                     
@@ -222,11 +225,15 @@ class RegistrationController extends Controller
     }
     
     /**
-     * @Route("/email_verify/{email}/{code}", name="email_verify")
+     * @Route("/email_verify/{email}/{code}/{confirmed}", name="email_verify")
      * @Template()
      */
-    public function confirmEmailAction($email, $code)
+    public function confirmEmailAction($email, $code, $confirmed)
     {
+        $request = $this->getRequest();
+        $session = $this->getRequest()->getSession();
+        if ($confirmed)
+            $session->set('confirmed', "Congratilations!!! Your e-mail is confirmed!");
         $em = $this->getDoctrine()->getManager();
         $code = substr($code, 0, 4);
         $participant = $em->getRepository('CyclogramProofPilotBundle:Participant')->findOneBy(array('participantEmailCode' =>$code, 'participantEmail' => $email));
