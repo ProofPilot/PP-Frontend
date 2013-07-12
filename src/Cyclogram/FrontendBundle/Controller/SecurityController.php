@@ -11,6 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Validator\Constraints\Collection;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Routing\Router;
+use Cyclogram\FrontendBundle\Form\MobilePhoneForm;
 
 /**
  * @Route("/{_locale}")
@@ -167,23 +168,14 @@ class SecurityController extends Controller
         }
         $request = $this->getRequest();
         
-        $collectionConstraint = new Collection(array(
-                'fields' => array(
-                        'phone_small' => new Length(array('min' => 1, 'max' => 3)),
-                        'phone_wide' =>  new Length(array('min' => 9, 'max' => 10))
-                )
-        ));
-        
-        $form = $this->createFormBuilder(null, array('constraints' => $collectionConstraint))
-        ->add('phone_small', 'text')
-        ->add('phone_wide' , 'text')
-        ->getForm();
+        $form = $this->createForm(new MobilePhoneForm($this->container));
+
         
         if( $request->getMethod() == "POST" ){
             $form->handleRequest($request);
             $em = $this->getDoctrine()->getManager();
             if( $form->isValid() ) {
-                $values = $request->request->get('form');
+                 $values = $form->getData();
                 $userSms = $values['phone_small'].$values['phone_wide'];
                 $participant = $em->getRepository('CyclogramProofPilotBundle:Participant')->findOneByParticipantMobileNumber($userSms);
                 if ($participant) {
