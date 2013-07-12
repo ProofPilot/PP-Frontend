@@ -276,8 +276,10 @@
     
     		    document.getElementById(id).height=(newheight) + "px";
     		}
-    		$('#iframe1').load(function(){
-    		    $(this).contents().find(' #completed a').attr('target', '_parent');
+     		$('#iframe1').load(function(){
+    		    $(this).contents().find('#movesubmitbtn').click(function(){
+    		    	  window.location = 'http://frontend-bogdan.dyndns.org/en/sexpro';
+   		        });
     		});
 		</script>
 
