@@ -231,7 +231,7 @@
 							</div>
 						</div>
 						
-						<iframe src="/lime/index.php/survey/index/sid/468727/newtest/Y/lang/en" id="iframe1" height="800" width="1013" onLoad="autoResize('iframe1');"></iframe>
+						<iframe src="/lime/index.php/survey/index/sid/468727/newtest/Y/lang/en" id="iframe1" height="800" width="1013""></iframe>
 				    </div>
 			
 		</div>
@@ -267,16 +267,24 @@
 		</footer>
 		
 		<script>
-    		function autoResize(id){
-    		    var newheight;
-    
+    		/*function autoResize(id){
     		    if(document.getElementById){
-    		        newheight=document.getElementById(id).contentWindow.document.body.scrollHeight;
+    		        var iframe = document.getElementById(id);
+        		    var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+        		    if(innerDoc.body.offsetHeight)
+        		    {
+            		    iframe.height = innerDoc.body.offsetHeight + 32 + 'px';
+        		    } else {
+        		        iframe.height = innerDoc.body.scrollHeight + 'px';
+        		    }
+
     		    }
-    
-    		    document.getElementById(id).height=(newheight) + "px";
-    		}
+    		}*/
      		$('#iframe1').load(function(){
+
+         		var frameHeight = $(this).contents().find("html").height();
+
+         		$(this).height(frameHeight);
 
      			var surveydata = $(this).contents().find('#surveydata');
 		    	var surveyId = surveydata.attr('surveyid');
