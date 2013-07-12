@@ -2,6 +2,6 @@ dashboard_subtitle: dashboard_subtitle
 do_it: do_it
 do_it_now: do_it_now
 past_activity: past_activity
-success_message: success_message   # FIXME
 txt_dashboard: txt_dashboard
+txt_please_verify_email: txt_please_verify_email   # FIXME
 what_next: what_next

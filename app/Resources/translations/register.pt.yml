@@ -1,7 +1,7 @@
 already_joined: already_joined
 confirm_password: confirm_password
 create_password: create_password
-email: email   # FIXME
+email: email
 enter_email: enter_email
 enter_mobile_phone: enter_mobile_phone
 enter_sms_code: enter_sms_code
@@ -13,5 +13,5 @@ send_confirmation: send_confirmation
 txt_join: txt_join
 txt_join_with: txt_join_with
 txt_why: txt_why
-username: username   # FIXME
+username: username
 wrong_back: wrong_back

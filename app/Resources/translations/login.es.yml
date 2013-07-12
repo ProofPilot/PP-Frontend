@@ -1,22 +1,22 @@
-btn_send_username_to_mobilephone: btn_send_username_to_mobilephone   # FIXME
+btn_send_username_to_mobilephone: btn_send_username_to_mobilephone
 cant_remember_username: 'Can''t remember your username?'
 doesnt_match_records: 'We''re sorry, your entry does not match our records'
 email_sent_containing_password: 'An e-mail has been sent containing a link to reset your password'
 enter_mobile_phone: 'Enter Mobile Phone '
-forgot_password: forgot_password   # FIXME
-forgot_password_message: forgot_password_message   # FIXME
+forgot_password: forgot_password
+forgot_password_message: forgot_password_message
 forgot_username: 'Forgot Your Username'
-forgot_username_message: forgot_username_message   # FIXME
+forgot_username_message: forgot_username_message
 new_password_selection: 'Click on the link in the e-mail and you will be guided through the selection of a new password.  You will need your mobile phone to complete this process.  If it hasn''t arrived within a few minutes, check your SPAM or junkmail folders'
 passsword_reset_email: 'Send Password Reset E-mail'
-txt_forgot_your_password: txt_forgot_your_password   # FIXME
-txt_forgot_your_username: txt_forgot_your_username   # FIXME
+txt_forgot_your_password: txt_forgot_your_password
+txt_forgot_your_username: txt_forgot_your_username
 txt_form_password: Contraseña
 txt_form_username: Usuario
-txt_log_in: txt_log_in   # FIXME
-txt_login_button: txt_login_button   # FIXME
-txt_login_securely: txt_login_securely   # FIXME
+txt_log_in: txt_log_in
+txt_login_button: txt_login_button
+txt_login_securely: txt_login_securely
 txt_login_with: 'Ingresar con'
-txt_or: txt_or   # FIXME
-txt_stay_logged_in: txt_stay_logged_in   # FIXME
+txt_or: txt_or
+txt_stay_logged_in: txt_stay_logged_in
 username_sent: 'Your username has been sent to the the mobile telephone number on record'

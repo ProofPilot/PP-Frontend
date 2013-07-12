@@ -1,7 +1,7 @@
 already_joined: 'already joined? '
 confirm_password: 'Confirm Password'
 create_password: 'Create a password'
-email: email   # FIXME
+email: email
 enter_email: 'Enter your e-mail'
 enter_mobile_phone: ' Enter your mobile phone number'
 enter_sms_code: ' Enter verification code you received on your phone'
@@ -13,5 +13,5 @@ send_confirmation: 'Send verification code to mobile phone'
 txt_join: JOIN
 txt_join_with: 'Join with'
 txt_why: 'Why?'
-username: username   # FIXME
+username: username
 wrong_back: 'Wrong go back'
