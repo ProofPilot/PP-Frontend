@@ -72,7 +72,7 @@ class DefaultController extends Controller
     
     
     /**
-     * @Route("/newslatter", name="_newsletter")
+     * @Route("/newsletter", name="_newsletter")
      * @Template()
      */
     public function newslatterAction()
@@ -182,17 +182,6 @@ class DefaultController extends Controller
         
         return $this->render('CyclogramSexProBundle:Default:is_it_secure.html.twig', $parameters);
     }
-    
-    /**
-     * @Route("/baseline")
-     * @Template()
-     */
-    public function baseLineAction()
-    {
-        return $this->render('CyclogramSexProBundle:Default:Sexpro_baseline.html.twig');
-    }
-    
-
     
 
 }

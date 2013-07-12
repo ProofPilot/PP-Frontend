@@ -1,16 +1,14 @@
-est_duration: est_duration
-last_access: last_access
+btn_log_in: INICIAR
+btn_start_enrollment: 'INICIO INSCRIPCIÓN DE ESTUDIO'
 txt_about: txt_about
-txt_about_title: txt_about_title
+txt_about_proofpilot_text: txt_about_proofpilot_text   # FIXME
+txt_about_proofpilot_title: txt_about_proofpilot_title   # FIXME
 txt_accept_btn: txt_accept_btn
 txt_decline_btn: txt_decline_btn
-txt_fullscreen: txt_fullscreen
-txt_home: txt_home
-txt_on_top: txt_on_top
-txt_progress: txt_progress
-txt_secure: txt_secure
-txt_to_do: ¿Qué quieres hacer?
+txt_eligible_dsc: txt_eligible_dsc   # FIXME
+txt_secure_text: txt_secure_text   # FIXME
+txt_secure_title: txt_secure_title   # FIXME
+txt_security_privacy: txt_security_privacy   # FIXME
+txt_to_do: '¿Qué quieres hacer?'
 txt_you_are_eligible: txt_you_are_eligible
 warning_message: warning_message
-btn_start_enrollment: 'INICIO INSCRIPCIÓN DE ESTUDIO'
-btn_log_in: 'INICIAR'
