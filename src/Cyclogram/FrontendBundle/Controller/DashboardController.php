@@ -18,6 +18,11 @@ class DashboardController extends Controller
     public function indexAction()
     {
         $participant = $this->get('security.context')->getToken()->getUser();
+        $request = $this->getRequest();
+        
+        $session = $this->getRequest()->getSession();
+        
+        
         $parameters = array();
     
         $parameters['text'] = array(
@@ -84,6 +89,9 @@ class DashboardController extends Controller
                 );
         
         if ($participant->getParticipantEmailConfirmed()){
+            if ($session->get('confirmed'))
+                $parameters["confirmed"] = $session->get('confirmed');
+            $session->invalidate();
             $parameters["confirm_email"] = true;
         } else {
             $parameters["confirm_email"] = false;
