@@ -276,8 +276,17 @@
     
     		    document.getElementById(id).height=(newheight) + "px";
     		}
-    		$('#iframe1').load(function(){
-    		    $(this).contents().find(' #completed a').attr('target', '_parent');
+     		$('#iframe1').load(function(){
+
+     			var surveydata = $(this).contents().find('#surveydata');
+		    	var surveyId = surveydata.attr('surveyid');
+		    	var saveId = surveydata.attr('saveid');
+		    	if(surveyId !== undefined && saveId !== undefined) {
+		    	    window.location = '/surveyResponce?surveyId=' + surveyId + "&saveId=" + saveId;
+		    	}
+
+
+
     		});
 		</script>
 
