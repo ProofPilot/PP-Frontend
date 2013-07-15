@@ -1,17 +1,17 @@
-already_joined: already_joined
-confirm_password: confirm_password
-create_password: create_password
+already_joined: 'Já aderiu'
+confirm_password: 'confirme a senha'
+create_password: 'Crie uma senha (minímo de 8 caracteres com pelo menos 2 números)'
 email: email
-enter_email: enter_email
-enter_mobile_phone: enter_mobile_phone
-enter_sms_code: enter_sms_code
-min_charachters: min_charachters
-no_code: no_code
-ok_verify: ok_verify
-pick_user: pick_user
-send_confirmation: send_confirmation
-txt_join: txt_join
-txt_join_with: txt_join_with
-txt_why: txt_why
-username: username
-wrong_back: wrong_back
+enter_email: 'Por favor insira um endereço de e-mail válido'
+enter_mobile_phone: 'Digite o número do seu telefone celular'
+enter_sms_code: "Digite o código de verificação que você recebeu em seu telefone\n"
+min_charachters: 'minímo de 8 caracteres com pelo menos 2 números'
+no_code: 'Sem código? Enviar outro'
+ok_verify: 'OK, Verifique!'
+pick_user: 'Escolha o seu nome de usuário'
+send_confirmation: 'Enviar código de verificação para o celular'
+txt_join: Junte
+txt_join_with: Junte-se
+txt_why: 'Por que?'
+username: usuário
+wrong_back: 'Incorreto, voltar'

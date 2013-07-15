@@ -1,7 +1,7 @@
-dashboard_subtitle: dashboard_subtitle
-do_it: do_it
-do_it_now: do_it_now
-past_activity: past_activity
-txt_dashboard: txt_dashboard
-txt_please_verify_email: txt_please_verify_email   # FIXME
-what_next: what_next
+dashboard_subtitle: 'Sua participação em um piscar de olhos. O que você precisa fazer agora e os próximos passos.'
+do_it: Faça-o
+do_it_now: 'Faça-o agora'
+past_activity: 'Atividades passadas'
+txt_dashboard: 'Painel de controle'
+txt_please_verify_email: "Por favor, verifique o seu endereço de e-mail. <br/>\nPara participar de estudos necessitamos de um endereço de e-mail válido - por favor, vá para o seu e-mail e clique no link"
+what_next: 'Qual é o próximo passo'
