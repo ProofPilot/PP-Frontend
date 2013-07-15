@@ -20,3 +20,6 @@ txt_login_with: txt_login_with   # FIXME
 txt_or: txt_or   # FIXME
 txt_stay_logged_in: txt_stay_logged_in   # FIXME
 username_sent: username_sent   # FIXME
+enter_sms_code: txt_enter_code_you_received_via_sms
+btn_confrimcoe_login: txt_confirm_code_login
+send_another_code: text_send_another_code

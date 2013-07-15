@@ -20,3 +20,6 @@ txt_login_with: 'Login with'
 txt_or: OR
 txt_stay_logged_in: 'Stay logged in'
 username_sent: 'Your username has been sent to the the mobile telephone number on record'
+enter_sms_code: 'Enter code you received via SMS'
+btn_confrimcoe_login: 'confirm code & login'
+send_another_code: 'No code? Send another'
