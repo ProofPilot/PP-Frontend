@@ -17,6 +17,7 @@ txt_log_in: txt_log_in
 txt_login_button: txt_login_button
 txt_login_securely: txt_login_securely
 txt_login_with: 'Ingresar con'
+txt_login_error_message: txt_your_entry_does_not_match_our_records
 txt_or: txt_or
 txt_stay_logged_in: txt_stay_logged_in
 username_sent: 'Your username has been sent to the the mobile telephone number on record'

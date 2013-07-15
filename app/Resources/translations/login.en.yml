@@ -17,6 +17,7 @@ txt_log_in: 'Log in'
 txt_login_button: LOGIN
 txt_login_securely: 'Login Securely with your accounts.'
 txt_login_with: 'Login with'
+txt_login_error_message: 'Your entry does not match our records'
 txt_or: OR
 txt_stay_logged_in: 'Stay logged in'
 username_sent: 'Your username has been sent to the the mobile telephone number on record'

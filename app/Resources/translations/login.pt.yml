@@ -17,6 +17,10 @@ txt_log_in: Logar
 txt_login_button: Logar
 txt_login_securely: txt_login_securely
 txt_login_with: Logar
+txt_login_error_message: txt_your_entry_does_not_match_our_records
 txt_or: ou
 txt_stay_logged_in: txt_stay_logged_in
 username_sent: username_sent
+enter_sms_code: txt_enter_code_you_received_via_sms
+btn_confrimcoe_login: txt_confirm_code_login
+send_another_code: text_send_another_code
