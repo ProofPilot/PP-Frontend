@@ -1,0 +1,17 @@
+bottom_left_menu:
+    fullscreen: fullscreen
+    home: home
+    update: update
+
+bottom_right_menu:
+    help: help
+    logout: logout
+    my_settings: 'my settings'
+
+top_menu:
+    contact_preferences: 'Contact preferences'
+    general_settings: 'General settings'
+    help: help
+    logout: logout
+    settings: settings
+    shipping_information: 'shipping information'

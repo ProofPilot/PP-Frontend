@@ -57,25 +57,25 @@ class DashboardController extends Controller
                 )
         );
         $parameters["actions"] = array(
-                array('activity' => 'Your e-mail address has been confirmed',
+                array('activity' => $this->get('translator')->trans('past_activity.emai_confirmation_status', array(), 'dashboard'),
                         'class' => 'icon1 first'
                 ),
-                array('activity' => 'Your mobile telephone number has been confirmed',
+                array('activity' => $this->get('translator')->trans('past_activity.mobile_confirmation_status', array(), 'dashboard'),
                         'class' => 'icon2'
                 ),
-                array('activity' => 'Welcome to the study Know@Home: Putting the test to the test',
+                array('activity' => $this->get('translator')->trans('past_activity.welcome_study', array(), 'dashboard'),
                         'class' => 'icon3'
                 ),
-                array('activity' => 'Your mobile telephone number has been confirmed',
+                array('activity' => $this->get('translator')->trans('past_activity.mobile_status', array(), 'dashboard'),
                         'class' => 'icon4 last'
                 )
         );
         $parameters["assistance"] = array(
-                array('info' => 'Help', 'class' => 'first'),
-                array('info' => 'How to activate your tests','class' => ''),
-                array('info' => 'Read instructions to Perform the Tests', 'class' => ''),
-                array('info' => 'Collect specimen', 'class' => ''),
-                array('info' => 'Some other info', 'class' => 'last')
+                array('info' => $this->get('translator')->trans('what_next_list.help', array(), 'dashboard'), 'class' => 'first'),
+                array('info' => $this->get('translator')->trans('what_next_list.how_activate_tests', array(), 'dashboard'),'class' => ''),
+                array('info' => $this->get('translator')->trans('what_next_list.reade_instruction', array(), 'dashboard'), 'class' => ''),
+                array('info' => $this->get('translator')->trans('what_next_list.collect_speciment', array(), 'dashboard'), 'class' => ''),
+                array('info' => $this->get('translator')->trans('what_next_list.other_info', array(), 'dashboard'), 'class' => 'last')
         );
     
         $parameters["lastaccess"] = new \DateTime("2013-07-01 10:05:00");

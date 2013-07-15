@@ -1,80 +1,182 @@
 <?php
 namespace Cyclogram\FrontendBundle\Menu;
+use JMS\TranslationBundle\Model\Message;
+
 use Symfony\Component\Security\Core\SecurityContext;
 
 // use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\DependencyInjection\ContainerAware;
 
+use JMS\TranslationBundle\Translation\TranslationContainerInterface;
+
 use Knp\Menu\FactoryInterface;
 
-
-class MenuBuilder extends ContainerAware
+class MenuBuilder extends ContainerAware implements TranslationContainerInterface
 {
 
-
-    public function createSideDashboardMenu(FactoryInterface $factory, array $options)
+    public function createSideDashboardMenu(FactoryInterface $factory,
+            array $options)
     {
         $menu = $factory->createItem('root');
         $menu->setChildrenAttribute('class', 'left_menu');
-        
-        $menu->addChild('Dashboard', array('route' => '_main'))->setAttribute('class', 'icon_dashboard')->setAttribute("news", 5);
-        $menu->addChild('Survey', array('route' => '_main'))->setAttribute('class', 'icon_survey');
-        $menu->addChild('Activities', array('route' => '_main'))->setAttribute('class', 'icon_activities');
-        $menu->addChild('Measurements', array('route' => '_main'))->setAttribute('class', 'icon_measurments');
-        $menu->addChild('Treatment', array('route' => '_main'))->setAttribute('class', 'icon_treatment');
+
+        $menu->addChild('side_dasboard_menu.dashboard', array('route' => '_main'))
+                ->setAttribute('class', 'icon_dashboard')->setExtra('translation_domain', 'sidemenu');
+        $menu->addChild('side_dasboard_menu.survey', array('route' => '_main'))
+                ->setAttribute('class', 'icon_survey')->setExtra('translation_domain', 'sidemenu');
+        $menu->addChild('side_dasboard_menu.activities', array('route' => '_main'))
+                ->setAttribute('class', 'icon_activities')->setExtra('translation_domain', 'sidemenu');
+        $menu->addChild('side_dasboard_menu.measurements', array('route' => '_main'))
+                ->setAttribute('class', 'icon_measurments');
+        $menu->addChild('side_dasboard_menu.treatment', array('route' => '_main'))
+                ->setAttribute('class', 'icon_treatment')->setExtra('translation_domain', 'sidemenu');
 
         return $menu;
     }
 
-    public function createBottomRightMenu(FactoryInterface $factory, array $options)
+    public function createBottomRightMenu(FactoryInterface $factory,
+            array $options)
     {
         $menu = $factory->createItem('root');
-        
-        $menu->addChild('Help', array('route' => '_page'))->setAttribute('class', 'icon_help');
-        $menu->addChild('Logout', array('route' => '_logout'))->setAttribute('class', 'icon_logout normal');
-        $menu->addChild('My Settings', array('route' => '_settings'))->setAttribute('class', 'icon_settings');
+
+        $menu->addChild('bottom_right_menu.help', array('route' => '_page'))
+                ->setAttribute('class', 'icon_help')->setExtra('translation_domain', 'generalmenus');
+        $menu->addChild('bottom_right_menu.logout', array('route' => '_logout'))
+                ->setAttribute('class', 'icon_logout normal')->setExtra('translation_domain', 'generalmenus');
+        $menu->addChild('bottom_right_menu.my_settings', array('route' => '_settings'))
+                ->setAttribute('class', 'icon_settings')->setExtra('translation_domain', 'generalmenus');
 
         return $menu;
     }
-    
-    public function createBottomLeftMenu(FactoryInterface $factory, array $options)
+
+    public function createBottomLeftMenu(FactoryInterface $factory,
+            array $options)
     {
         $menu = $factory->createItem('root');
-    
-        $menu->addChild('Home', array('route' => '_main'))->setAttribute('class', 'icon_home');
-        $menu->addChild('Fullscreen', array('route' => '_main'))->setAttribute('class', 'icon_fullscreen');
-        $menu->addChild('Update', array('route' => '_main'))->setAttribute('class', 'icon_update');
-    
+
+        $menu->addChild('bottom_left_menu.home', array('route' => '_main'))
+                ->setAttribute('class', 'icon_home')->setExtra('translation_domain', 'generalmenus');
+        $menu->addChild('bottom_left_menu.fullscreen', array('route' => '_main'))
+                ->setAttribute('class', 'icon_fullscreen')->setExtra('translation_domain', 'generalmenus');
+        $menu->addChild('bottom_left_menu.update', array('route' => '_main'))
+                ->setAttribute('class', 'icon_update')->setExtra('translation_domain', 'generalmenus');
+
         return $menu;
     }
-    
-    public function createTopSettingsMenu(FactoryInterface $factory, array $options)
+
+    public function createTopSettingsMenu(FactoryInterface $factory,
+            array $options)
     {
         $menu = $factory->createItem('root');
         $menu->setChildrenAttribute('class', 'header_menu');
-    
-        $menu->addChild('Help', array('route' => '_page'))->setAttribute('class', 'icon_help');
-        $menu->addChild('Logout', array('route' => '_logout'))->setAttribute('class', 'icon_logout normal');
-        $menu->addChild('My Settings', array('route' => '_settings'))->setAttribute('class', 'icon_settings')->setAttribute("dropdown", true);
-        $menu['My Settings']->addChild('General Settings', array('route' => '_settings'))->setAttribute('class','submenu_icon_general')->setAttribute("nospan", true);
-        $menu['My Settings']->addChild('Contact preferences', array('route' => '_contact_prefs'))->setAttribute('class', 'submenu_icon_contact')->setAttribute("nospan", true);
-        $menu['My Settings']->addChild('Shipping information', array('route' => '_survey_eligibility'))->setAttribute('class', 'submenu_icon_shipping')->setAttribute("nospan", true);
-        
+
+        $menu->addChild('top_menu.help', array('route' => '_page'))
+                ->setAttribute('class', 'icon_help')
+                ->setExtra('translation_domain', 'generalmenus');
+        $menu->addChild('top_menu.logout', array('route' => '_logout'))
+                ->setAttribute('class', 'icon_logout normal')
+                ->setExtra('translation_domain', 'generalmenus');
+        $menu->addChild('top_menu.settings', array('route' => '_settings'))
+                ->setAttribute('class', 'icon_settings')
+                ->setAttribute("dropdown", true)
+                ->setExtra('translation_domain', 'generalmenus');
+        $menu['top_menu.settings']
+                ->addChild('top_menu.general_settings',
+                        array('route' => '_settings'))
+                ->setAttribute('class', 'submenu_icon_general')
+                ->setAttribute("nospan", true)
+                ->setExtra('translation_domain', 'generalmenus');
+        $menu['top_menu.settings']
+                ->addChild('top_menu.contact_preferences',
+                        array('route' => '_contact_prefs'))
+                ->setAttribute('class', 'submenu_icon_contact')
+                ->setAttribute("nospan", true)
+                ->setExtra('translation_domain', 'generalmenus');
+        $menu['top_menu.settings']
+                ->addChild('top_menu.shipping_information',
+                        array('route' => '_survey_eligibility'))
+                ->setAttribute('class', 'submenu_icon_shipping')
+                ->setAttribute("nospan", true)
+                ->setExtra('translation_domain', 'generalmenus');
+
+        return $menu;
+    }
+
+    public function createSideSettingsMenu(FactoryInterface $factory,
+            array $options)
+    {
+        $menu = $factory->createItem('root');
+        $menu->setChildrenAttribute('class', 'left_menu')->setExtra('translation_domain', 'sidemenu');
+
+        $menu->addChild('side_settings_menu.general_settings', array('route' => '_settings'))
+                ->setAttribute('class', 'icon_general_settings')->setExtra('translation_domain', 'sidemenu');
+        $menu
+                ->addChild('side_settings_menu.contact_preferences',
+                        array('route' => '_contact_prefs'))
+                ->setAttribute('class', 'icon_contact_prefs')->setExtra('translation_domain', 'sidemenu');
+        $menu
+                ->addChild('side_settings_menu.shipping_information',
+                        array('route' => '_survey_eligibility'))
+                ->setAttribute('class', 'icon_shipping_info')->setExtra('translation_domain', 'sidemenu');
+
         return $menu;
     }
     
-    public function createSideSettingsMenu(FactoryInterface $factory, array $options)
+    
+    public static function getTranslationMessages()
     {
-        $menu = $factory->createItem('root');
-        $menu->setChildrenAttribute('class', 'left_menu');
-    
-        $menu->addChild('General Settings', array('route' => '_settings'))->setAttribute('class', 'icon_general_settings');
-        $menu->addChild('Contact preferences', array('route' => '_contact_prefs'))->setAttribute('class', 'icon_contact_prefs');
-        $menu->addChild('Shipping information', array('route' => '_survey_eligibility'))->setAttribute('class', 'icon_shipping_info');
-
-    
-        return $menu;
+        // TODO: Auto-generated method stub
+        
+        $menuNames = array(
+                //top menu
+                'top_menu.help',
+                'top_menu.logout',
+                'top_menu.settings',
+                'top_menu.general_settings',
+                'top_menu.contact_preferences',
+                'top_menu.shipping_information',
+                //bottom right menu
+                'bottom_right_menu.help',
+                'bottom_right_menu.logout',
+                'bottom_right_menu.my_settings',
+                //bottom left menu
+                'bottom_left_menu.home',
+                'bottom_left_menu.fullscreen',
+                'bottom_left_menu.update'
+                );
+        
+        foreach ($menuNames as $name) {
+            $menuMessages[] = new Message($name, "generalmenus");
+        }
+        
+        $menuNames = array(
+                //side dasboard menu
+                'side_dasboard_menu.dashboard',
+                'side_dasboard_menu.survey',
+                'side_dasboard_menu.activities',
+                'side_dasboard_menu.measurements',
+                'side_dasboard_menu.treatment',
+                //side_settigs_menu
+                'side_settings_menu.general_settings',
+                'side_settings_menu.contact_preferences',
+                'side_settings_menu.shipping_information'
+        );
+        
+        foreach ($menuNames as $name) {
+            $menuMessages[] = new Message($name, "sidemenu");
+        }
+        
+//         $menuNames = array(
+//                 'bottom_left_menu.home',
+//                 'bottom_left_menu.fullscreen',
+//                 'bottom_left_menu.update'
+//         );
+        
+//         foreach ($menuNames as $name) {
+//             $menuMessages[] = new Message($name, "generalmenus");
+//         }
+        return $menuMessages;
     }
 
 }
