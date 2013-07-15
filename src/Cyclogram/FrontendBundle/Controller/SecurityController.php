@@ -188,7 +188,7 @@ class SecurityController extends Controller
                     if($sentSms)
                         return $this->render('CyclogramFrontendBundle:Security:username_sent.html.twig');
                 } else {
-                    return $this->render('CyclogramFrontendBundle:Security:forgot_username.html.twig',array('form' => $form->createView(),"error" => "We’re sorry, your entry does not match our records"));
+                    return $this->render('CyclogramFrontendBundle:Security:forgot_username.html.twig',array('form' => $form->createView(),"error" => $this->get('translator')->trans("doesnt_match_records", array(), "login")));
                 }
             }
         }
