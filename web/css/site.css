@@ -1599,7 +1599,7 @@ header .header_menu span.text  , .footer_col_right span.text  {
 	min-width: 128px;
 	padding-left: 25px;
 	padding-right: 25px;
-	min-width: 78px;
+	min-width: 90px;
 	border-radius: 3px;
 	background: #97c52c; /* Old browsers */
 	background: -moz-linear-gradient(top, #97c52c 0%, #7ea61f 100%); /* FF3.6+ */
