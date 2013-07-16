@@ -262,7 +262,7 @@ class Participant implements AdvancedUserInterface
      *
      * @ORM\ManyToOne(targetEntity="Language")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="language", referencedColumnName="language_id")
+     *   @ORM\JoinColumn(name="participant_language_id", referencedColumnName="language_id")
      * })
      */
     protected $participantLanguage;
