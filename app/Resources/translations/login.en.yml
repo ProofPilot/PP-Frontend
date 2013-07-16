@@ -1,26 +1,27 @@
+btn_confrimcoe_login: 'confirm code & login'
 btn_send_username_to_mobilephone: 'Send username to my mobile phone'
 cant_remember_username: 'Can''t remember your username?'
 doesnt_match_records: 'We''re sorry, your entry does not match our records'
 email_sent_containing_password: 'An e-mail has been sent containing a link to reset your password'
 enter_mobile_phone: 'Enter Mobile Phone Number'
+enter_sms_code: 'Enter code you received via SMS'
 forgot_password: 'Forgot your password'
 forgot_password_message: "It happens to all of us more times that we'd like to admin. \nNo problem, we'll walk you through creating a new password while protecting your privacy and security.\n"
 forgot_username: 'Forgot your Username'
 forgot_username_message: 'No problem.  Enter the mobile telephone number you used to sign up and we will send your username via text message.'
+havent_joined: 'Haven''t joined yet?'
 new_password_selection: "<p>Click on the link in the e-mail and you will be guided through the selection of a new password.  You will need your mobile phone to complete this process.</p>\n<p>If it hasn't arrived within a few minutes, check your SPAM or junkmail folders</p>\n"
 passsword_reset_email: 'Send Password Reset E-mail'
+send_another_code: 'No code? Send another'
 txt_forgot_your_password: 'Forgot your password?'
 txt_forgot_your_username: 'Forgot your username?'
 txt_form_password: Password
 txt_form_username: Username
 txt_log_in: 'Log in'
 txt_login_button: LOGIN
+txt_login_error_message: 'Your entry does not match our records'
 txt_login_securely: 'Login Securely with your accounts.'
 txt_login_with: 'Login with'
-txt_login_error_message: 'Your entry does not match our records'
 txt_or: OR
 txt_stay_logged_in: 'Stay logged in'
 username_sent: 'Your username has been sent to the the mobile telephone number on record'
-enter_sms_code: 'Enter code you received via SMS'
-btn_confrimcoe_login: 'confirm code & login'
-send_another_code: 'No code? Send another'

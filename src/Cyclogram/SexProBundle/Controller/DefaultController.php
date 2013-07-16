@@ -168,9 +168,9 @@ class DefaultController extends Controller
         );
         
         $parameters["proofpilot"] = array(
-                'title' => 'About Proofpilot',
+                'title' => 'About ProofPilot',
                 'info' => 'ProofPilot is a platform to create, manage, and participate in online research studies. We help researchers easily launch studies that you, the participant, 
-                           can join in order to answer some important questions about health, human behavior, social and public policy. Learn more about ProofPiot with the link below.'
+                           can join in order to answer some important questions about health, human behavior, social and public policy. Learn more about ProofPilot with the link below.'
         );
         
         $parameters["blank"] = array(
