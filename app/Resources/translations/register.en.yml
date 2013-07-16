@@ -1,19 +1,19 @@
-already_joined: 'already joined? '
+already_joined: 'Already joined? '
 confirm_password: 'Confirm Password'
 create_password: 'Create a password'
-email: email
+double_check: 'Double Check You Entry'
+email: Email
 enter_email: 'Enter your e-mail'
 enter_mobile_phone: ' Enter your mobile phone number'
 enter_sms_code: ' Enter verification code you received on your phone'
-min_charachters: '(8 character min with atleast 2 numbers)'
+join: JOIN
+min_charachters: '(8 character min with at least 2 numbers)'
 no_code: 'No Code? Send Another'
 ok_verify: 'OK, Verify!'
-pick_user: 'Pick your username'
+pick_user: 'Pick your Username'
 send_confirmation: 'Send verification code to mobile phone'
 txt_join: JOIN
 txt_join_with: 'Join with'
 txt_why: 'Why?'
-username: username
+username: Username
 wrong_back: 'Wrong go back'
-double_check: 'Double Check You Entry'
-join: 'JOIN'

@@ -1,17 +1,17 @@
 bottom_left_menu:
-    fullscreen: fullscreen
-    home: home
-    update: update
+    fullscreen: Fullscreen
+    home: Home
+    update: Update
 
 bottom_right_menu:
-    help: help
-    logout: logout
-    my_settings: 'my settings'
+    help: Help
+    logout: Logout
+    my_settings: 'My settings'
 
 top_menu:
     contact_preferences: 'Contact preferences'
     general_settings: 'General settings'
-    help: help
-    logout: logout
-    settings: settings
-    shipping_information: 'shipping information'
+    help: Help
+    logout: Logout
+    settings: Settings
+    shipping_information: 'Shipping information'

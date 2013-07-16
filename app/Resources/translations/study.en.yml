@@ -2,7 +2,7 @@ btn_log_in: LOG-IN
 btn_start_enrollment: 'START STUDY ENROLLMENT'
 txt_about: 'About this study'
 txt_about_proofpilot_text: "<p>ProofPilot is a platform to create, manage and participate\nin online research studies. We help researchers easily launch\nstudies that, you, the participant, can join in order to\nanswer some important questions about health, human behavior,\nsocial and public policy. Learn more about ProofPilot with the\nlink below.</p>\n<p><a href=\"/\">www.proofpilot.com</a></p>\n"
-txt_about_proofpilot_title: 'About proofpilot'
+txt_about_proofpilot_title: 'About ProofPilot'
 txt_accept_btn: 'I ACCEPT - Join the study'
 txt_decline_btn: 'DECLINE - MAYBE LATER'
 txt_eligible_dsc: 'Your participation at a glance: What you need to do now and what’s next.'
