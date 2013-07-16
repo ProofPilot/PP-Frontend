@@ -17,7 +17,8 @@ class SurveyController extends Controller
      */
     public function surveyAction()
     {
-        
+        $lime_em = $this->getDoctrine()->getManager('limesurvey');
+        $survey = $lime_em->getRepository('CyclogramSexProBundle:LimeSurveys')->find('468727');
         $parameters = array();
         
         $parameters["lastaccess"] = new \DateTime("2013-07-01 10:05:00");
@@ -38,8 +39,8 @@ class SurveyController extends Controller
         
         $parameters["page"] = array(
                 'image' => '/images/tmp_banner_small.jpg',
-                'title' => 'Know@home baseline study',
-                'subtitle' => 'Surveys allow you to provide feedback, input information all online.'
+                'title' => $survey->getTemplate(),
+                'subtitle' => $survey->getAdmin()
         );
         
 //         $parameters["survey"] = array(
