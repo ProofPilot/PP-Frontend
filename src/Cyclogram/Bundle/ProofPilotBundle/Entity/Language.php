@@ -1,7 +1,6 @@
 <?php
 
 namespace Cyclogram\Bundle\ProofPilotBundle\Entity;
-
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -46,13 +45,20 @@ class Language
     private $status;
 
     /**
+     * @var string
+     *
+     *   @ORM\JoinColumn(name="status_id", referencedColumnName="status_id")
+     * })
+     */
+    private $locale;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
         $this->study = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
 
     /**
      * Get languageId
@@ -73,7 +79,7 @@ class Language
     public function setLanguageName($languageName)
     {
         $this->languageName = $languageName;
-    
+
         return $this;
     }
 
@@ -93,10 +99,11 @@ class Language
      * @param \Cyclogram\Bundle\ProofPilotBundle\Entity\Study $study
      * @return Language
      */
-    public function addStudy(\Cyclogram\Bundle\ProofPilotBundle\Entity\Study $study)
+    public function addStudy(
+            \Cyclogram\Bundle\ProofPilotBundle\Entity\Study $study)
     {
         $this->study[] = $study;
-    
+
         return $this;
     }
 
@@ -105,7 +112,8 @@ class Language
      *
      * @param \Cyclogram\Bundle\ProofPilotBundle\Entity\Study $study
      */
-    public function removeStudy(\Cyclogram\Bundle\ProofPilotBundle\Entity\Study $study)
+    public function removeStudy(
+            \Cyclogram\Bundle\ProofPilotBundle\Entity\Study $study)
     {
         $this->study->removeElement($study);
     }
@@ -126,10 +134,11 @@ class Language
      * @param \Cyclogram\Bundle\ProofPilotBundle\Entity\Status $status
      * @return Language
      */
-    public function setStatus(\Cyclogram\Bundle\ProofPilotBundle\Entity\Status $status = null)
+    public function setStatus(
+            \Cyclogram\Bundle\ProofPilotBundle\Entity\Status $status = null)
     {
         $this->status = $status;
-    
+
         return $this;
     }
 
@@ -142,4 +151,15 @@ class Language
     {
         return $this->status;
     }
+
+    public function getLocale()
+    {
+        return $this->locale;
+    }
+
+    public function setLocale(string $locale)
+    {
+        $this->locale = $locale;
+    }
+
 }
