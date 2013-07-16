@@ -1,19 +1,20 @@
-dashboard_subtitle: dashboard_subtitle
-do_it: do_it
-do_it_now: do_it_now
-past_activity: past_activity
-past_activity.emai_confirmation_status: yuor_e-mail_address_has_been_confirmed
-past_activity.mobile_confirmation_status: your_mobile_telephone_number_has_been_confirmed
-past_activity.mobile_status: your_mobile_telephone_number_has_been_confirmed
-past_activity.welcome_study: 'welcome_to_the_study_know@home:_putting_the_test_to_the_test'
-txt_dashboard: txt_dashboard
-txt_please_verify_email: txt_please_verify_email
-view_more: view_more
-what_next: what_next
-last_access: last_access
+dashboard_subtitle: 'El resúmen de su participación. Lo que tiene que hacer ahora y lo que está por venir.'
+do_it: Hazlo
+do_it_now: 'Hazlo Ahora'
+last_access: 'Último Acceso'
+past_activity: 'Actividad Anterior'
+past_activity.emai_confirmation_status: 'Su Email ha sido confirmado'
+past_activity.mobile_confirmation_status: 'Su número de telefóno móbil ha sido confirmado'
+past_activity.mobile_status: 'Su número de telefóno móbil ha sido confirmado'
+past_activity.welcome_study: 'Bienvenido al studio Know@Home: Poniendo a prueba la prueba'
+txt_dashboard: 'Tablero Principal'
+txt_please_verify_email: "Porfavor verifique su dirección de e-mail.<br>\nPara participar en los estudios necesitamos un e-mail válido - Porfavor vaya al e-mail y haga click en el enlace."
+view_more: 'Ver más'
+what_next: '¿Que sigue?'
+
 what_next_list:
-    collect_speciment: collect_specimen
-    help: _help
-    how_activate_tests: how_to_activate_your_tests
-    other_info: some_other_info
-    reade_instruction: read_instructions_to_perform_the_tests
+    collect_speciment: 'Colectar espécimen'
+    help: Ayuda
+    how_activate_tests: 'Cómo activar sus pruebas'
+    other_info: 'Alguna otra información'
+    reade_instruction: 'Lea las instrucciónes para realizar las pruebas'

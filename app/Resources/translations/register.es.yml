@@ -1,19 +1,19 @@
-already_joined: already_joined
-confirm_password: confirm_password
-create_password: create_password
-email: email
-enter_email: enter_email
-enter_mobile_phone: enter_mobile_phone
-enter_sms_code: enter_sms_code
-min_charachters: min_charachters
-no_code: no_code
-ok_verify: ok_verify
-pick_user: pick_user
-send_confirmation: send_confirmation
-txt_join: txt_join
-txt_join_with: txt_join_with
-txt_why: txt_why
-username: username
-wrong_back: wrong_back
-double_check: txt_double_check-you_entry'
-join: txt_JOIN
+already_joined: '¿Ya es parte?'
+confirm_password: 'Confirme contraseña'
+create_password: 'Crear una contraseña'
+double_check: 'Revise dos veces su entrada'
+email: Email
+enter_email: 'Ingrese su e-mail'
+enter_mobile_phone: 'Ingrese su teléfono móbil'
+enter_sms_code: 'Ingrese el código de verificación que recibió en su teléfono móbil'
+join: UNASE
+min_charachters: '(8 caractéres mínimo con almenos 2 números)'
+no_code: '¿Sin código? Enviar otro'
+ok_verify: 'Ok, ¡verifique!'
+pick_user: 'Escoja su usuario'
+send_confirmation: 'Enviar código de verificación al teléfono móbil'
+txt_join: Unase
+txt_join_with: 'Unase con'
+txt_why: '¿Por qué?'
+username: Usuario
+wrong_back: 'erroneo devuelvase'
