@@ -987,13 +987,22 @@ class Participant implements AdvancedUserInterface
     {
         return ($this->getUsername() === $user->getUsername());
     }
-
+    /**
+     * Get participantLanguage
+     *
+     * @return \Cyclogram\Bundle\ProofPilotBundle\Entity\Language
+     */
     public function getParticipantLanguage()
     {
         return $this->participantLanguage;
     }
-
-    public function setParticipantLanguage(\Language $participantLanguage)
+    /**
+     * Set participantLanguage
+     *
+     * @param \Cyclogram\Bundle\ProofPilotBundle\Entity\Language $participantLanguage
+     * @return Participant
+     */
+    public function setParticipantLanguage(\Cyclogram\Bundle\ProofPilotBundle\Entity\Language  $participantLanguage)
     {
         $this->participantLanguage = $participantLanguage;
     }

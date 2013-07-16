@@ -18,14 +18,14 @@ class Language
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $languageId;
+    protected $languageId;
 
     /**
      * @var string
      *
      * @ORM\Column(name="language_name", type="string", length=45, nullable=false)
      */
-    private $languageName;
+    protected $languageName;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -42,15 +42,15 @@ class Language
      *   @ORM\JoinColumn(name="status_id", referencedColumnName="status_id")
      * })
      */
-    private $status;
+    protected $status;
 
     /**
      * @var string
      *
-     *   @ORM\JoinColumn(name="status_id", referencedColumnName="status_id")
-     * })
+     *   @ORM\Column(name="locale", type="string", nullable=false)
+     * 
      */
-    private $locale;
+    protected $locale;
 
     /**
      * Constructor
@@ -151,12 +151,21 @@ class Language
     {
         return $this->status;
     }
-
+    /**
+     * Get locale
+     *
+     * @return string
+     */
     public function getLocale()
     {
         return $this->locale;
     }
-
+    /**
+     * Set locale
+     *
+     * @param string $locale
+     * @return Language
+     */
     public function setLocale(string $locale)
     {
         $this->locale = $locale;
