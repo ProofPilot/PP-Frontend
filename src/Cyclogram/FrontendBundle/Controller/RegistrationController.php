@@ -97,12 +97,21 @@ class RegistrationController extends Controller
         
         }
 
-    
     /**
      * @Route("/reg_step2", name="reg_step_2")
      * @Template()
+    */
+    public function step2Action()
+    {
+        return $this->render('CyclogramFrontendBundle:Registration:step2_mail_confirm.html.twig');
+        
+    }
+    
+    /**
+     * @Route("/reg_step3", name="reg_step_3")
+     * @Template()
      */
-    public function phoneAction()
+    public function step3Action()
     {
         $em = $this->getDoctrine()->getManager();
         $participant = $this->get('security.context')->getToken()->getUser();
@@ -130,17 +139,17 @@ class RegistrationController extends Controller
                 $em->flush();
                 
 //                 return $this->redirect( $this->generateUrl("reg_step_3") );
-                return $this->render('CyclogramFrontendBundle:Registration:mobile_phone_2.html.twig', array('phone' => $participant->getParticipantMobileNumber()));
+                return $this->render('CyclogramFrontendBundle:Registration:step4_mobile_phone_2.html.twig', array('phone' => $participant->getParticipantMobileNumber()));
             }
         }
-        return $this->render('CyclogramFrontendBundle:Registration:mobile_phone_1.html.twig', array("form" => $form->createView()));
+        return $this->render('CyclogramFrontendBundle:Registration:step3_mobile_phone_1.html.twig', array("form" => $form->createView()));
     }
     
     /**
-     * @Route("/reg_step3", name="reg_step_3")
+     * @Route("/reg_step4", name="reg_step_4")
      * @Template()
      */
-    public function checkPhoneAction()
+    public function step4Action()
     {
         $em = $this->getDoctrine()->getManager();
         $participant = $this->get('security.context')->getToken()->getUser();
@@ -160,17 +169,17 @@ class RegistrationController extends Controller
                 $participant->setParticipantMobileSmsCodeConfirmed(true);
                 $em->persist($participant);
                 $em->flush($participant);
-                return $this->redirect(($this->generateUrl("reg_step_4")));
+                return $this->redirect(($this->generateUrl("reg_step_5")));
         }
         
-        return $this->render('CyclogramFrontendBundle:Registration:mobile_phone_2.html.twig', array('phone' => $customerMobileNumber ));
+        return $this->render('CyclogramFrontendBundle:Registration:step4_mobile_phone_2.html.twig', array('phone' => $customerMobileNumber ));
     }
     
     /**
-     * @Route("/reg_step4/", name="reg_step_4")
+     * @Route("/reg_step5/", name="reg_step_5")
      * @Template()
      */
-    public function enterSMSAction()
+    public function step5Action()
     {
         $participant = $this->get('security.context')->getToken()->getUser();
         $mobileNumber = $participant->getParticipantMobileSmsCode();
@@ -221,7 +230,17 @@ class RegistrationController extends Controller
                 }
             }
         }
-        return $this->render('CyclogramFrontendBundle:Registration:mobile_phone_3.html.twig', array('error' => $error, 'form' => $form->createView()));
+        return $this->render('CyclogramFrontendBundle:Registration:step5_mobile_phone_3.html.twig', array('error' => $error, 'form' => $form->createView()));
+    }
+    
+    
+    /**
+     * @Route("/reg_step6/", name="reg_step_6")
+     * @Template()
+     */
+    public function step6Action()
+    {
+    
     }
     
     /**
