@@ -6,12 +6,12 @@ email: Email
 enter_email: 'Ingrese su e-mail'
 enter_mobile_phone: 'Ingrese su teléfono móbil'
 enter_sms_code: 'Ingrese el código de verificación que recibió en su teléfono móbil'
-join: UNASE
 min_charachters: '(8 caractéres mínimo con almenos 2 números)'
 no_code: '¿Sin código? Enviar otro'
 ok_verify: 'Ok, ¡verifique!'
 pick_user: 'Escoja su usuario'
 send_confirmation: 'Enviar código de verificación al teléfono móbil'
+txt_check_email: txt_check_email   # FIXME
 txt_join: Unase
 txt_join_with: 'Unase con'
 txt_why: '¿Por qué?'

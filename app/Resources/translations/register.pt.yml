@@ -1,6 +1,7 @@
 already_joined: 'Já aderiu'
 confirm_password: 'confirme a senha'
 create_password: 'Crie uma senha (minímo de 8 caracteres com pelo menos 2 números)'
+double_check: 'txt_double_check-you_entry'''
 email: email
 enter_email: 'Por favor insira um endereço de e-mail válido'
 enter_mobile_phone: 'Digite o número do seu telefone celular'
@@ -10,10 +11,9 @@ no_code: 'Sem código? Enviar outro'
 ok_verify: 'OK, Verifique!'
 pick_user: 'Escolha o seu nome de usuário'
 send_confirmation: 'Enviar código de verificação para o celular'
+txt_check_email: txt_check_email   # FIXME
 txt_join: Junte
 txt_join_with: Junte-se
 txt_why: 'Por que?'
 username: usuário
 wrong_back: 'Incorreto, voltar'
-double_check: txt_double_check-you_entry'
-join: txt_JOIN

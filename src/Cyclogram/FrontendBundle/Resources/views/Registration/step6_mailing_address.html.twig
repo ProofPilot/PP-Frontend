@@ -1,0 +1,32 @@
+{%  extends '::base.html.twig' %}
+
+{% block body %}
+<body class="has_image">
+  <div class="reg_header"> <a href="#" class="logo">ProofPilot</a> </div>
+  <div class="mobile_reg login_form">
+    <div class="wrapper">
+      <h1><span>{% trans from "register" %}txt_join{% endtrans %} 6/6:</span> Mailing address</h1>
+      <div>Please enter your mailing address, so we can send your test kit:</div>
+      <form>
+        <div class="loginform_right">
+          <label>First name</label>
+          <span><input type="text" class="text"/></span>
+          <label>Last name</label>
+          <input type="text" class="text"/>
+          <label>Street address</label>
+          <input type="text" class="text"/>
+          <label>Street address #2</label>
+          <input type="text" class="text"/>
+          <label>Zip Code</label>
+          <input type="text" class="text"/>
+          <label>City, State</label>
+          <input type="text" class="text"/>
+        </div>
+        <div class="center_align">
+          <a id="register_submit" class="submit" href="#">SAVE MAILING ADDRESS</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+{% endblock body %}
