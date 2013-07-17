@@ -2,6 +2,8 @@
 
 namespace Cyclogram\FrontendBundle\Controller;
 
+use Symfony\Component\HttpKernel\EventListener\ResponseListener;
+
 use Symfony\Component\Config\Definition\Exception\DuplicateKeyException;
 
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
@@ -28,7 +30,7 @@ class RegistrationController extends Controller
      * @Route("/register", name="_registration")
      * @Template()
      */
-    public function registerAction()
+    public function step1Action()
     {
         if ($this->get('security.context')->isGranted("ROLE_USER")){
             return $this->redirect($this->generateURL("_main"));
@@ -77,8 +79,6 @@ class RegistrationController extends Controller
                     $user->setParticipantRole($role);
                     $status = $em->getRepository('CyclogramProofPilotBundle:Status')->find(1);
                     $user->setStatus($status);
-                    $language = $em->getRepository('CyclogramProofPilotBundle:Language')->find(1);
-                    $user->setParticipantLanguage($language);
         
                     $em->persist($user);
                     $em->flush();
@@ -106,7 +106,6 @@ class RegistrationController extends Controller
     public function step2Action()
     {
         return $this->render('CyclogramFrontendBundle:Registration:step2_mail_confirm.html.twig');
-        
     }
     
     /**
@@ -285,5 +284,25 @@ class RegistrationController extends Controller
     public function userNameSentAction()
     {
         return $this->render('CyclogramFrontendBundle:Registration:username_sent.html.twig');
+    }
+    
+    
+    /**
+     * @Route("/testemail")
+     */
+    public function sendMailAction()
+    {
+        $cc = $this->get('cyclogram.common');
+        
+        $cc->sendMail("r.ivantsiv@gmail.com",
+                'Please Verify your e-mail address',
+                'CyclogramFrontendBundle:Email:email.html.twig',
+                null,
+                null,
+                true,
+                array());
+        
+        
+        return new Response("Mail sent");
     }
 }
