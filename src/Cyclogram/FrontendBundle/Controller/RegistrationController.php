@@ -95,7 +95,7 @@ class RegistrationController extends Controller
             }
 
            }
-        return $this->render('CyclogramFrontendBundle:Registration:register.html.twig', array ('form' => $form->createView()));
+        return $this->render('CyclogramFrontendBundle:Registration:step1_register.html.twig', array ('form' => $form->createView()));
         
         }
 
@@ -244,7 +244,7 @@ class RegistrationController extends Controller
      */
     public function step6Action()
     {
-    
+        return $this->render('CyclogramFrontendBundle:Registration:step6_mailing_address.html.twig');
     }
     
     /**
