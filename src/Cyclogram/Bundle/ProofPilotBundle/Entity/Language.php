@@ -1,7 +1,6 @@
 <?php
 
 namespace Cyclogram\Bundle\ProofPilotBundle\Entity;
-
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -19,14 +18,14 @@ class Language
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $languageId;
+    protected $languageId;
 
     /**
      * @var string
      *
      * @ORM\Column(name="language_name", type="string", length=45, nullable=false)
      */
-    private $languageName;
+    protected $languageName;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -43,7 +42,15 @@ class Language
      *   @ORM\JoinColumn(name="status_id", referencedColumnName="status_id")
      * })
      */
-    private $status;
+    protected $status;
+
+    /**
+     * @var string
+     *
+     *   @ORM\Column(name="locale", type="string", nullable=false)
+     * 
+     */
+    protected $locale;
 
     /**
      * Constructor
@@ -52,7 +59,6 @@ class Language
     {
         $this->study = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
 
     /**
      * Get languageId
@@ -73,7 +79,7 @@ class Language
     public function setLanguageName($languageName)
     {
         $this->languageName = $languageName;
-    
+
         return $this;
     }
 
@@ -93,10 +99,11 @@ class Language
      * @param \Cyclogram\Bundle\ProofPilotBundle\Entity\Study $study
      * @return Language
      */
-    public function addStudy(\Cyclogram\Bundle\ProofPilotBundle\Entity\Study $study)
+    public function addStudy(
+            \Cyclogram\Bundle\ProofPilotBundle\Entity\Study $study)
     {
         $this->study[] = $study;
-    
+
         return $this;
     }
 
@@ -105,7 +112,8 @@ class Language
      *
      * @param \Cyclogram\Bundle\ProofPilotBundle\Entity\Study $study
      */
-    public function removeStudy(\Cyclogram\Bundle\ProofPilotBundle\Entity\Study $study)
+    public function removeStudy(
+            \Cyclogram\Bundle\ProofPilotBundle\Entity\Study $study)
     {
         $this->study->removeElement($study);
     }
@@ -126,10 +134,11 @@ class Language
      * @param \Cyclogram\Bundle\ProofPilotBundle\Entity\Status $status
      * @return Language
      */
-    public function setStatus(\Cyclogram\Bundle\ProofPilotBundle\Entity\Status $status = null)
+    public function setStatus(
+            \Cyclogram\Bundle\ProofPilotBundle\Entity\Status $status = null)
     {
         $this->status = $status;
-    
+
         return $this;
     }
 
@@ -142,4 +151,24 @@ class Language
     {
         return $this->status;
     }
+    /**
+     * Get locale
+     *
+     * @return string
+     */
+    public function getLocale()
+    {
+        return $this->locale;
+    }
+    /**
+     * Set locale
+     *
+     * @param string $locale
+     * @return Language
+     */
+    public function setLocale(string $locale)
+    {
+        $this->locale = $locale;
+    }
+
 }
