@@ -24,3 +24,4 @@ txt_why: '¿Por qué?'
 username: Usuario
 wrong_back: 'erroneo devuelvase'
 zip_code: zip_code   # FIXME
+mail_confirmation_fail: mail_confirmation_fail

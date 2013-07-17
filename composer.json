@@ -30,7 +30,8 @@
         "jms/security-extra-bundle": "1.5.*",
         "lunetics/locale-bundle": "2.2.*",
         "knplabs/knp-menu-bundle": "dev-master as 1.1.x-dev",
-        "knplabs/knp-menu": "dev-master"
+        "knplabs/knp-menu": "dev-master",
+        "genemu/form-bundle": "2.2.*"
     },
     "scripts": {
         "post-install-cmd": [

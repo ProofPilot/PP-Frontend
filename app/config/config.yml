@@ -115,3 +115,6 @@ jms_translation:
 jms_aop:
     cache_dir: %kernel.cache_dir%/jms_aop
 
+genemu_form:
+    autocomplete: ~
+

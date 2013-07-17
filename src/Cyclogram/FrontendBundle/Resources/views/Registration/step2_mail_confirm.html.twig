@@ -4,7 +4,11 @@
   <body class="has_image">
     <div class="reg_header"> <a href="#" class="logo">ProofPilot</a> </div>
     <div class="mobile_reg">
+    {% if error is defined %}
+            <p class="error">{{ error }}</p></div>
+    {% else %}
       <h1><span>{% trans from "register" %}txt_join{% endtrans %} 2/6:</span> {% trans from "register" %}txt_check_email{% endtrans %}</h1>
+    {% endif %}
     </div>
         <script>
         $(document).ready(function(){
@@ -13,9 +17,6 @@
                          $('#submit_button').trigger('click');
                         return false;
                 });
-            $("#phone_phone_small").numeric();
-            $('#phone_phone_wide').numeric();
-            
            });
         </script>
   </body>

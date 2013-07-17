@@ -23,4 +23,7 @@ txt_join_with: Junte-se
 txt_why: 'Por que?'
 username: usuário
 wrong_back: 'Incorreto, voltar'
+double_check: txt_double_check-you_entry'
+join: txt_JOIN
+mail_confirmation_fail: mail_confirmation_fail
 zip_code: zip_code   # FIXME

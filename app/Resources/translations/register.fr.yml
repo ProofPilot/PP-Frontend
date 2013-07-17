@@ -17,3 +17,4 @@ username: username   # FIXME
 wrong_back: wrong_back   # FIXME
 double_check: txt_double_check-you_entry'
 join: txt_JOIN
+mail_confirmation_fail: mail_confirmation_fail
