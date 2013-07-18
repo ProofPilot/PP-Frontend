@@ -1,0 +1,71 @@
+{%  extends '::base.html.twig' %}
+    {% block stylesheets %}
+            <link href="{{ asset('css/jquery-ui.min.css') }}" rel="stylesheet" />
+     {%  endblock stylesheets %}
+    {% block javascripts %}
+    <script src="{{ asset('js/jquery-ui.min.js') }}" ></script>
+    <!-- form javacript -->
+    {{ form_javascript(form) }}
+    
+    {% endblock javascripts %}
+
+{% block body %}
+<body class="has_image">
+  <div class="reg_header"> <a href="#" class="logo">ProofPilot</a> </div>
+  <div class="mobile_reg login_form">
+    <div class="wrapper">
+      <h1><span>{% trans from "register" %}txt_join{% endtrans %} 6/6:</span> Mailing address</h1>
+      <div>{% trans from "register" %}enter_address{% endtrans %}</div>
+      <form method="post" action="{{ path('reg_step_6',{'id' : id}) }}" name="mailing_address">
+        <div class="loginform_right">
+          <label>{% trans from "register" %}fisrt_name{% endtrans %}</label>
+          <span>{{ form_widget(form.participantFirstname, {'attr' : {'class' : 'text'}}) }}</span>
+          {{ form_errors(form.participantFirstname) }}
+{#           <span><input type="text" class="text"/></span>#}
+          <label>{% trans from "register" %}last_name{% endtrans %}</label>
+          {{ form_widget(form.participantLastname, {'attr' : {'class' : 'text'}}) }}
+          {{ form_errors(form.participantLastname) }}
+{#           <input type="text" class="text"/>#}
+          <label>{% trans from "register" %}str_address{% endtrans %}</label>
+          {{ form_widget(form.participantAddress1, {'attr' : {'class' : 'text'}}) }}
+          {{ form_errors(form.participantAddress1) }}
+{#           <input type="text" class="text"/>#}
+          <label>{% trans from "register" %}str_address2{% endtrans %}</label>
+          {{ form_widget(form.participantAddress2, {'attr' : {'class' : 'text'}}) }}
+          {{ form_errors(form.participantAddress2) }}
+{#           <input type="text" class="text"/>#}
+          <label>{% trans from "register" %}zip_code{% endtrans %}</label>
+          {{ form_widget(form.participantZipcode, {'attr' : {'class' : 'text'}}) }}
+          {{ form_errors(form.participantZipcode) }}
+{#           <input type="text" class="text"/>#}
+          <label>{% trans from "register" %}city_state{% endtrans %}</label>
+{#           {{ form_widget(form.state) }}#}
+{#           {{ form_errors(form.state) }}#}
+          {{ form_widget(form.city) }}
+          {{ form_errors(form.city) }}
+{#           <input type="text" class="text"/>#}
+
+              {{ form_rest(form) }}
+              {{ form_errors(form) }}
+        </div>
+        <div class="center_align">
+          <a id="register_submit" class="submit" href="#">SAVE MAILING ADDRESS</a>
+          <button type="submit" style="display:none" id="submit_button"></button>
+        </div>
+      </form>
+      <script type="text/javascript">
+        $(document).ready(function(){
+           $('#register_submit').click(function()
+                {
+                         $('#submit_button').trigger('click');
+                        return false;
+                });
+
+
+           
+        });
+        </script> 
+    </div>
+  </div>
+</body>
+{% endblock body %}

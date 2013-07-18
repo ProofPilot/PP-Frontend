@@ -83,11 +83,13 @@ class SecurityListener
                     if($this->user instanceof Participant) {
                         $mobile = $this->user->getParticipantMobileNumber();
                         if($mobile) {
+                            $id = $this->user->getParticipantId();
                             $country_code = substr($mobile, 0, 1);
                             $phone = substr($mobile, 1);
-                            $redirectUrl = $this->router->generate('reg_step_2', array('country_code' => $country_code,'phone' => $phone));
+                            $redirectUrl = $this->router->generate('reg_step_2', array('country_code' => $country_code,'phone' => $phone, 'id' => $id));
                         } else {
-                            $redirectUrl = $this->router->generate('reg_step_2');
+                            $id = $this->user->getParticipantId();
+                            $redirectUrl = $this->router->generate('reg_step_2', array('id' => $id));
                         }
                     }
                     $event->setResponse(new RedirectResponse($redirectUrl));

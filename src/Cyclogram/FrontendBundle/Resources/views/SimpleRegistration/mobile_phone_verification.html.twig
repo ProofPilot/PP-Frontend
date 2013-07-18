@@ -1,0 +1,25 @@
+{%  extends '::base.html.twig' %}
+
+{% block body %}
+  <body class="has_image">
+    <div class="reg_header"> <a href="#" class="logo">ProofPilot</a> </div>
+    <div class="mobile_reg">
+      <h1><span>{% trans from "register" %}txt_join{% endtrans %} 3/4:</span> {% trans from "register" %}double_check{% endtrans %}</h1>
+      <ul class="confirm_list">
+        <li>{{ phone }}</li>
+      </ul>
+      <div class="center_align m"> 
+        <a href={{ path('simplereg_step_2',{'id' : id}) }} class="submit m1 gray">{% trans from "register" %}wrong_back{% endtrans %}</a> 
+        <a href={{ path('simplereg_step_3',{'id' : id}) }} class="submit m2">{% trans from "register" %}ok_verify{% endtrans %}</a>
+      </div>
+    </div>
+    <script>
+        $(document).ready(function(){
+            $('#register_submit').click(function() {
+                $('#submit_button').trigger('click');
+                return false;
+            });
+        });
+    </script>
+  </body>
+{% endblock body %}
