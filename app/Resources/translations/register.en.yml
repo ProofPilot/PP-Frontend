@@ -1,5 +1,6 @@
 already_joined: 'Already joined? '
-city_state: 'City, State'
+city: 'City'
+state: 'State'
 confirm_password: 'Confirm Password'
 create_password: 'Create a password'
 double_check: 'Double Check You Entry'

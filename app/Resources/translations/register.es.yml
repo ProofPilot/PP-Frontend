@@ -1,5 +1,6 @@
 already_joined: '¿Ya es parte?'
-city_state: city_state   # FIXME
+city: city
+state: state
 confirm_password: 'Confirme contraseña'
 create_password: 'Crear una contraseña'
 double_check: 'Revise dos veces su entrada'

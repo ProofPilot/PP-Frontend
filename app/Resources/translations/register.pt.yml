@@ -1,5 +1,6 @@
 already_joined: 'Já aderiu'
-city_state: city_state   # FIXME
+city: city
+state: state
 confirm_password: 'confirme a senha'
 create_password: 'Crie uma senha (minímo de 8 caracteres com pelo menos 2 números)'
 double_check: 'txt_double_check-you_entry'''

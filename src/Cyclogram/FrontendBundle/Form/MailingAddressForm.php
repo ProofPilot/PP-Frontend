@@ -21,11 +21,10 @@ class MailingAddressForm extends AbstractType
         $builder->add('participantAddress1', 'text', array('label'=>'address1'));
         $builder->add('participantAddress2', 'text', array('label'=>'address2'));
         $builder->add('participantZipcode', 'text', array('label'=>'zipcode'));
-        $builder->add('city', 'genemu_jqueryautocompleter_entity', array(
-                       'route_name' => 'searchCityWithAjax',
-                 'class' => 'CyclogramProofPilotBundle:State',
-//                 'property' => 'state_name'
-                 ));
+        $builder->add('cityId', 'hidden');
+        $builder->add('city', 'text');
+        $builder->add('stateId', 'hidden');
+        $builder->add('state', 'text');
     }
     
     public function getName()

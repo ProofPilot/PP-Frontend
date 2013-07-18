@@ -281,17 +281,19 @@ class RegistrationController extends Controller
             if ($form->isValid()) {
                 $form = $form->getData();
                 $participant->setParticipantFirstname($form['participantFirstname']);
-                $participant->setParticipantLastname($form['participantLasttname']);
+                $participant->setParticipantLastname($form['participantLastname']);
                 $participant->setParticipantAddress1($form['participantAddress1']);
                 $participant->setParticipantAddress2($form['participantAddress2']);
                 $participant->setParticipantZipcode($form['participantZipcode']);
-                $participant->setCity($form['city']);
-                $participant->setState($form['state']);
+                $city = $em->getRepository('CyclogramProofPilotBundle:City')->find($form['cityId']);
+                $participant->setCity($city);
+                $state = $em->getRepository('CyclogramProofPilotBundle:State')->find($form['stateId']);
+                $participant->setState($state);
                 
                 $em->persist($participant);
                 $em->flush($participant);
                 
-                $token = new UsernamePasswordToken($user, null, 'main', array('ROLE_USER'));
+                $token = new UsernamePasswordToken($participant, null, 'main', array('ROLE_USER'));
                 $this->get('security.context')->setToken($token);
                 
                 return $this->redirect( $this->generateUrl("_main") );
@@ -325,49 +327,100 @@ class RegistrationController extends Controller
        
     }
     
+    
+    /**
+     * @Route("/get_city_state_ajax/{zipcode}", name="_get_city_state_by_zip", options={"expose"=true})
+     */
+    public function getCityAndStateByZipCode($zipcode)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $results = $em->createQuery("
+                SELECT c.cityId, c.cityName, s.stateId, s.stateName
+                FROM CyclogramProofPilotBundle:City c
+                INNER JOIN c.state s
+                WHERE c.cityZipcode = :zipcode
+                ")
+                ->setParameter('zipcode', $zipcode)
+                ->getResult();
+        
+//         foreach($results as $result ) {
+//             $json[] = array (
+//                     'cityId' => $result["cityId"],
+//                     'cityName' => $result["cityName"],
+//                     'stateId' => $result["stateId"],
+//                     'stateName' => $result["stateName"]
+//                     );
+//         }
+        return new Response(json_encode($results));
+        
+    }
+    
+    
     /**
      * @Route("/search_city_ajax", name="searchCityWithAjax", options={"expose"=true})
      */
     public function searchCityWithAjaxAction(Request $request)
     {
-            if ($term = trim($request->get('term')))
-            {
-                $term = strtoupper($term);
-                $em = $this->getDoctrine()->getEntityManager();
+        if ($term = trim($request->get('term')))
+        {
+            $term = strtoupper($term);
+            $em = $this->getDoctrine()->getEntityManager();
     
-                $repository = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:City');
+            $repository = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:City');
     
-                $qb = $repository->createQueryBuilder('c');
-                $query = $qb
-                ->select('c.cityName')
-                ->where("UPPER(c.cityName) like '%$term%'")
-                ->getQuery();
+            $qb = $repository->createQueryBuilder('c');
+            $query = $qb
+            ->select('c, s')
+            ->join('c.state',  's')
+            ->where("UPPER(c.cityName) like '%$term%'")
+            ->getQuery();
     
-                $cities = $query->getScalarResult();
-
-                return new Response(json_encode($cities), 200);
+            $cities = $query->getResult();
+            foreach($cities as $city) {
+                $json[] = array(
+                        'label' => $city->getCityName(),
+                        'value' => $city->getCityId()
+                        
+                        );
             }
-        
-//         if ($request->isXmlHttpRequest() and in_array($parameter, array('state_name')) ) {
-//             if ($term = trim($request->get('term')))
-//             {
-//                 $term = strtoupper($term);
-//                 $em = $this->getDoctrine()->getEntityManager();
-        
-//                 $repository = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:State');
-        
-//                 $qb = $repository->createQueryBuilder('s');
-//                 $query = $qb
-//                 ->select('s.state_name')
-//                 ->where("UPPER(c.$parameter) like '%$term%'")
-//                 ->getQuery();
-        
-//                 $state = $query->getResult();
-        
-//                 return new Response(json_encode($state), 200);
-//             }
-//         }
+    
+            return new Response(json_encode($json), 200);
+        }
+    
         return new Response('', 200);
     }
     
+    /**
+     * @Route("/search_state_ajax", name="searchStateWithAjax", options={"expose"=true})
+     */
+    public function searchStateWithAjaxAction(Request $request)
+    {
+        if ($term = trim($request->get('term')))
+        {
+            $term = strtoupper($term);
+            $em = $this->getDoctrine()->getEntityManager();
+    
+            $repository = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:State');
+    
+            $qb = $repository->createQueryBuilder('s');
+            $query = $qb
+            ->select('s')
+//             ->join('c.state',  's')
+            ->where("UPPER(s.stateName) like '%$term%'")
+            ->getQuery();
+    
+            $states = $query->getResult();
+            foreach($states as $state) {
+                $json[] = array(
+                        'label' => $state->getStateName(),
+                        'value' => $state->getStateId()
+    
+                );
+            }
+    
+            return new Response(json_encode($json), 200);
+        }
+    
+        return new Response('', 200);
+    }
 }

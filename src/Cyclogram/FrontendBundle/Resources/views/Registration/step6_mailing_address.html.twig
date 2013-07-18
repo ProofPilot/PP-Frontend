@@ -1,4 +1,6 @@
 {%  extends '::base.html.twig' %}
+
+
     {% block stylesheets %}
             {% stylesheets filter='cssrewrite' output="assetic/css/jqueryui.css" debug=false
                 'css/jquery-ui-1.10.3/base/jquery.ui.core.min.css'
@@ -8,6 +10,7 @@
              %}
                  <link rel="stylesheet" href="{{ asset_url }}" media="screen" type="text/css"/>
              {% endstylesheets %}
+{#             <link rel="stylesheet" href="{{ asset('css/jquery-ui-1.10.3/base/jquery-ui.min.css') }}" media="screen" type="text/css"/>#}
     {%  endblock stylesheets %}
 
 
@@ -21,7 +24,8 @@
             %}
                 <script src="{{ asset_url }}"></script>
             {% endjavascripts %}
-            {{ form_javascript(form) }}
+{#             <script src="{{ asset('js/jquery-ui-1.10.3/jquery-ui.min.js') }}"></script>#}
+{#             {{ form_javascript(form) }}#}
     {% endblock javascripts %}
 
 {% block body %}
@@ -52,29 +56,135 @@
           <label>{% trans from "register" %}zip_code{% endtrans %}</label>
           {{ form_widget(form.participantZipcode, {'attr' : {'class' : 'text'}}) }}
           {{ form_errors(form.participantZipcode) }}
-{#           <input type="text" class="text"/>#}
-          <label>{% trans from "register" %}city_state{% endtrans %}</label>
+          <label>{% trans from "register" %}city{% endtrans %}</label>
           {{ form_widget(form.city, {'attr' : {'class' : 'text'}}) }}
           {{ form_errors(form.city) }}
+          <label>{% trans from "register" %}state{% endtrans %}</label>
+          {{ form_widget(form.state, {'attr' : {'class' : 'text'}}) }}
+          {{ form_errors(form.state) }}
 
 
               {{ form_rest(form) }}
               {{ form_errors(form) }}
         </div>
         <div class="center_align">
-          <a id="register_submit" class="submit" href="#">SAVE MAILING ADDRESS</a>
+          <a id="register_submit" class="submit" href="#">{% trans from "register" %}txt.save.mailing.address{% endtrans %}</a>
           <button type="submit" style="display:none" id="submit_button"></button>
         </div>
       </form>
       <script type="text/javascript">
         $(document).ready(function(){
+
+            var chosenCities = [];
+            var chosenStates = [];
+
+            function containsObject(obj, list) {
+                var i;
+                for (i = 0; i < list.length; i++) {
+                    if (list[i] === obj) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+            
+
+
+            $('#mailing_address_participantZipcode').on('blur', function(){
+                if(!$(this).val())
+                    return;
+
+                $.getJSON(
+                        Routing.generate('_get_city_state_by_zip', {
+                            'zipcode': $(this).val(), 
+                            '_locale':'{{ app.request.locale }}'
+                                }),
+                        null,
+                        function(data, textStatus, jqXHR) {
+                               if($.isEmptyObject(data)) return;
+                               if (!(data instanceof Array)) return;
+                               $('#mailing_address_city').val(data[0]['cityName']);
+                               $('#mailing_address_cityId').val(data[0]['cityId']);
+                               $('#mailing_address_state').val(data[0]['stateName']);
+                               $('#mailing_address_stateId').val(data[0]['stateId']);
+
+                               chosenCities = [];
+                               chosenStates = [];
+
+                               var len = data.length;
+                               for(var i=0;i<len;i++) {
+                            	    chosenCities[i] = {'value': data[i]["cityId"], 'label': data[i]["cityName"]};
+                            	    var stateObj = {'value': data[i]["stateId"], 'label': data[i]["stateName"]};
+                            	    if(!containsObject(stateObj, chosenStates)) {
+                            	        chosenStates.push(stateObj);
+                                	}
+                               }
+
+                               $('#mailing_address_city').autocomplete({
+                            	    source: chosenCities,
+                                   	select: function( event, ui ) {
+                                		var l = ui.item.label;
+                                    	var v = ui.item.value;
+                                    	$('#mailing_address_city').val(l);
+                                    	$('#mailing_address_cityId').val(v);
+                                    	return false;
+                                	},
+                                	minLength: 0
+                                });
+
+                               $('#mailing_address_state').autocomplete({
+                               	    source: chosenStates,
+                                   	select: function( event, ui ) {
+                                		var l = ui.item.label;
+                                    	var v = ui.item.value;
+                                    	$('#mailing_address_state').val(l);
+                                    	$('#mailing_address_stateId').val(v);
+                                    	return false;
+                                	},
+                                	minLength: 0
+                               });
+                               
+                        }
+                 );
+    
+
+
+            });
+
+
+            $("#mailing_address_city" ).autocomplete({
+            	source: Routing.generate('searchCityWithAjax', {'_locale':'{{ app.request.locale }}'}),
+            	minLength: 3,
+            	dataType: "jsonp",
+            	select: function( event, ui ) {
+            		var l = ui.item.label;
+                	var v = ui.item.value;
+                	$('#mailing_address_city').val(l);
+                	$('#mailing_address_cityId').val(v);
+
+                	return false;
+            	}
+            });
+
+            $("#mailing_address_state" ).autocomplete({
+            	source: Routing.generate('searchStateWithAjax', {'_locale':'{{ app.request.locale }}'}),
+            	minLength: 0,
+            	dataType: "jsonp",
+            	select: function( event, ui ) {
+                	var l = ui.item.label;
+                	var v = ui.item.value;
+                	$('#mailing_address_state').val(l);
+                	$('#mailing_address_stateId').val(v);
+
+                	return false;
+            	}
+            });
+
            $('#register_submit').click(function()
                 {
                          $('#submit_button').trigger('click');
                         return false;
                 });
-
-
            
         });
         </script> 
