@@ -90,13 +90,13 @@ class FacebookProvider implements UserProviderInterface
             $question = $this->userManager->getRepository('CyclogramProofPilotBundle:RecoveryQuestion')->find(1);
             $participant->setRecoveryQuestion($question);
             $participant->setRecoveryPasswordCode('Default');
-            $participant->setParticipantEmailConfirmed(true);
+            $participant->setParticipantEmailConfirmed(false);
             if(!$participant->getParticipantMobileNumber())
                 $participant->setParticipantMobileNumber('');
             if(!$participant->getParticipantPassword())
                 $participant->setParticipantPassword('');
             
-            $participant->setParticipantMobileSmsCodeConfirmed(true);
+            $participant->setParticipantMobileSmsCodeConfirmed(false);
             $participant->setParticipantIncentiveBalance(false);
             $date = new \DateTime();
             $participant->setParticipantLastTouchDatetime($date);

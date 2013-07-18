@@ -1,0 +1,55 @@
+{%  extends '::base.html.twig' %}
+
+{% block body %}
+  <body class="has_image">
+    <div class="reg_header"> <a href="#" class="logo">ProofPilot</a> </div>
+    <div class="mobile_reg">
+      <h1><span>{% trans from "register" %}txt_join{% endtrans %} 2/4:</span>{% trans from "register" %}enter_mobile_phone{% endtrans %}</h1>
+      <p>{% trans from "register" %}enter_mobile_phone{% endtrans %}</p>
+      <form method="post" action="{{ path('simplereg_step_2',{'id' : id}) }}">
+        <ul class="form_fields">
+          <li class="small_input">
+          {% if form is defined %}
+              {{ form_widget(form.phone_small, {'attr' : {'class' : 'default_input tac small' , 'id' : 'numeric'}}) }}
+              
+          {% else %}
+          <input name="" value="" class="default_input tac small" type="text">
+          {% endif %}
+          </li>
+          <li class="wide_input">
+          {% if form is defined %}
+          {{ form_widget(form.phone_wide, {'attr' : {'class' : 'default_input wide', 'id' : 'numeric'}}) }}
+          {% else %}
+          <input name="" value="" class="default_input wide" type="text">
+          {% endif %}
+          </li>
+           {% if form is defined %}
+              {{ form_errors(form.phone_small) }}
+              {{ form_errors(form.phone_wide) }}
+              {{ form_errors(form) }}
+              {{ form_rest(form) }}
+           {% endif %}
+        </ul>
+        <div class="center_align"><a href="#" class="submit" id="register_submit">{% trans from "register" %}send_confirmation{% endtrans %}</a></div>
+            <button type="submit" style="display:none" id="submit_button"></button>
+      </form>
+    </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src={{ asset('js/vendor/jquery-1.9.1.min.js') }}><\/script>')</script>
+        <script src= {{ asset ('js/plugins.js') }}></script>
+        <script src= {{ asset ('js/main.js') }}></script>
+        <script src= {{ asset ('js/jquery.numeric.js') }}></script>
+        <script>
+        $(document).ready(function(){
+            $('#register_submit').click(function()
+                {
+                         $('#submit_button').trigger('click');
+                        return false;
+                });
+            $("#phone_phone_small").numeric();
+            $('#phone_phone_wide').numeric();
+            
+           });
+        </script>
+  </body>
+{% endblock body %}
