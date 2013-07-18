@@ -26,6 +26,14 @@ class Language
      * @ORM\Column(name="language_name", type="string", length=45, nullable=false)
      */
     protected $languageName;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="locale", type="string", length=10, nullable=false)
+     *
+     */
+    protected $locale;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -43,14 +51,6 @@ class Language
      * })
      */
     protected $status;
-
-    /**
-     * @var string
-     *
-     *   @ORM\Column(name="locale", type="string", nullable=false)
-     * 
-     */
-    protected $locale;
 
     /**
      * Constructor
@@ -151,22 +151,22 @@ class Language
     {
         return $this->status;
     }
+    
     /**
      * Get locale
      *
-     * @return string
      */
     public function getLocale()
     {
         return $this->locale;
     }
+    
     /**
      * Set locale
      *
      * @param string $locale
-     * @return Language
      */
-    public function setLocale(string $locale)
+    public function setLocale($locale)
     {
         $this->locale = $locale;
     }

@@ -4,6 +4,8 @@
 /app/cache/*
 /app/logs/*
 /vendor*/
+/web/assetic/js/*
+/web/assetic/css/*
 
 
 /app/config/parameters.yml
