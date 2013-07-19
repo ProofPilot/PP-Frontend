@@ -26,3 +26,4 @@ username: Username
 wrong_back: 'Wrong go back'
 zip_code: 'Zip Code'
 mail_confirmation_fail: 'Failed to confirm the email. No such user!'
+txt.save.mailing.address: 'Save mailing address and login'
