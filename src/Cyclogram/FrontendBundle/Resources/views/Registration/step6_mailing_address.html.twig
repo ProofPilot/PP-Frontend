@@ -123,6 +123,10 @@
                                        lookup: chosenCities,
                                        minChars: 0,
                                        maxHeight: 150,
+                                       onSelect: function(suggestion) {
+                                    	    $("#mailing_address_city").val(suggestion.value);
+                                    	    $("#mailing_address_cityId").val(suggestion.data);
+                               	}
                                };
 
                                $('#mailing_address_city').autocomplete('disable');
@@ -139,6 +143,10 @@
                 serviceUrl: Routing.generate('searchCityWithAjax', {'_locale':'{{ app.request.locale }}'}),
                 minChars: 3,
                 maxHeight: 150,
+                onSelect: function(suggestion) {
+                    $("#mailing_address_city").val(suggestion.value);
+                    $("#mailing_address_cityId").val(suggestion.data);
+            	}
                 });
             
             $("#mailing_address_state" ).autocomplete({
@@ -146,7 +154,8 @@
                 minChars: 1,
                 maxHeight: 150,
             	onSelect: function(suggestion) {
-            		
+            		 $("#mailing_address_state").val(suggestion.value);
+                     $("#mailing_address_stateId").val(suggestion.data);
             	}
             });
 
