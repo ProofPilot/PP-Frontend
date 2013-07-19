@@ -11,7 +11,7 @@ enter_mobile_phone: 'Ingrese su teléfono móbil'
 enter_sms_code: 'Ingrese el código de verificación que recibió en su teléfono móbil'
 fisrt_name: fisrt_name   # FIXME
 last_name: last_name   # FIXME
-min_charachters: '(8 caractéres mínimo con almenos 2 números)'
+min_charachters: '(8 caractéres mínimo)'
 no_code: '¿Sin código? Enviar otro'
 ok_verify: 'Ok, ¡verifique!'
 pick_user: 'Escoja su usuario'
