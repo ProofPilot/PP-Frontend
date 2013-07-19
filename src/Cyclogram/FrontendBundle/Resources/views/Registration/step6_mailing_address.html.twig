@@ -87,7 +87,7 @@
             var chosenCities = [];
             var cityIds = [];
             var chosenStates = [];
-            var statIds = [];
+            var stateIds = [];
 
             $('#mailing_address_participantZipcode').on('blur', function(){
                 if(!$(this).val())
@@ -126,44 +126,36 @@
                                 	}
                                }
 
-                               $('#mailing_address_city').autocomplete({
-                            	    source: chosenCities,
-                                   	select: function( event, ui ) {
-                                		var l = ui.item.label;
-                                    	var v = ui.item.value;
-                                    	$('#mailing_address_city').val(l);
-                                    	$('#mailing_address_cityId').val(v);
-                                    	return false;
-                                	},
-                                	minLength: 0
-                                });
+                               var cityoptions = {
+                                       lookup: chosenCities,
+                                       minChars: 0,
+                                       maxHeight: 150,
+                               };
 
-                               $('#mailing_address_state').autocomplete({
-                               	    source: chosenStates,
-                                   	select: function( event, ui ) {
-                                		var l = ui.item.label;
-                                    	var v = ui.item.value;
-                                    	$('#mailing_address_state').val(l);
-                                    	$('#mailing_address_stateId').val(v);
-                                    	return false;
-                                	},
-                                	minLength: 0
-                               });
-                               
+                               $('#mailing_address_city').autocomplete('disable');
+                               $('#mailing_address_city').autocomplete('setOptions', cityoptions);
+                               $('#mailing_address_city').autocomplete('enable');
+                               var stateoptions = {
+                            		    lookup: chosenStates,
+                            		    minChars: 0 ,
+                            		    maxHeight: 150,
+                               };
+
+                               $('#mailing_address_state').autocomplete('disable');
+                               $('#mailing_address_state').autocomplete('setOptions', stateoptions);
+                               $('#mailing_address_state').autocomplete('enable');
+
                         }
                  );
-    
-
 
             });
-
-
+            
             $("#mailing_address_city").autocomplete({
                 serviceUrl: Routing.generate('searchCityWithAjax', {'_locale':'{{ app.request.locale }}'}),
                 minChars: 3,
                 maxHeight: 150,
                 });
-
+            
             $("#mailing_address_state" ).autocomplete({
             	serviceUrl: Routing.generate('searchStateWithAjax', {'_locale':'{{ app.request.locale }}'}),
                 minChars: 3,

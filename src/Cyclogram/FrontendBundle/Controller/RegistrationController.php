@@ -409,7 +409,6 @@ class RegistrationController extends Controller
             $qb = $repository->createQueryBuilder('s');
             $query = $qb
             ->select('s.stateName, s.stateId')
-//             ->join('c.state',  's')
             ->where("UPPER(s.stateName) like '%$termUpper%'")
             ->getQuery();
     
