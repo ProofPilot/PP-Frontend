@@ -361,28 +361,32 @@ class RegistrationController extends Controller
      */
     public function searchCityWithAjaxAction(Request $request)
     {
-        if ($term = trim($request->get('term')))
+        if ($term = trim($request->get('query')))
         {
-            $term = strtoupper($term);
+            $termUpper = strtoupper($term);
             $em = $this->getDoctrine()->getEntityManager();
     
             $repository = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:City');
     
             $qb = $repository->createQueryBuilder('c');
             $query = $qb
-            ->select('c, s')
-            ->join('c.state',  's')
-            ->where("UPPER(c.cityName) like '%$term%'")
+            ->select('c.cityName, c.cityId')
+            ->where("UPPER(c.cityName) like '%$termUpper%'")
             ->getQuery();
     
             $cities = $query->getResult();
+            
             foreach($cities as $city) {
-                $json[] = array(
-                        'label' => $city->getCityName(),
-                        'value' => $city->getCityId()
-                        
-                        );
+                $suggestions[] = array(
+                        'value' => $city["cityName"],
+                        'data' =>  $city["cityId"]
+                        ); 
             }
+            
+            $json = array(
+                    'query' => $term,
+                    'suggestions' => $suggestions
+                    );
     
             return new Response(json_encode($json), 200);
         }
@@ -395,29 +399,34 @@ class RegistrationController extends Controller
      */
     public function searchStateWithAjaxAction(Request $request)
     {
-        if ($term = trim($request->get('term')))
+        if ($term = trim($request->get('query')))
         {
-            $term = strtoupper($term);
+            $termUpper = strtoupper($term);
             $em = $this->getDoctrine()->getEntityManager();
     
             $repository = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:State');
     
             $qb = $repository->createQueryBuilder('s');
             $query = $qb
-            ->select('s')
+            ->select('s.stateName, s.stateId')
 //             ->join('c.state',  's')
-            ->where("UPPER(s.stateName) like '%$term%'")
+            ->where("UPPER(s.stateName) like '%$termUpper%'")
             ->getQuery();
     
             $states = $query->getResult();
+            
             foreach($states as $state) {
-                $json[] = array(
-                        'label' => $state->getStateName(),
-                        'value' => $state->getStateId()
-    
-                );
+                $suggestions[] = array(
+                        'value' => $state["stateName"],
+                        'data' =>  $state["stateId"]
+                        ); 
             }
-    
+            
+            $json = array(
+                    'query' => $term,
+                    'suggestions' => $suggestions
+                    );
+            
             return new Response(json_encode($json), 200);
         }
     

@@ -2,30 +2,39 @@
 
 
     {% block stylesheets %}
-            {% stylesheets filter='cssrewrite' output="assetic/css/jqueryui.css" debug=false
-                'css/jquery-ui-1.10.3/base/jquery.ui.core.min.css'
-                'css/jquery-ui-1.10.3/base/jquery.ui.theme.min.css'
-                'css/jquery-ui-1.10.3/base/jquery.ui.menu.min.css'
-                'css/jquery-ui-1.10.3/base/jquery.ui.autocomplete.min.css'
-             %}
-                 <link rel="stylesheet" href="{{ asset_url }}" media="screen" type="text/css"/>
-             {% endstylesheets %}
+{#             {% stylesheets filter='cssrewrite' output="assetic/css/jqueryui.css" debug=false#}
+{#                 'css/jquery-ui-1.10.3/base/jquery.ui.core.min.css'#}
+{#                 'css/jquery-ui-1.10.3/base/jquery.ui.theme.min.css'#}
+{#                 'css/jquery-ui-1.10.3/base/jquery.ui.menu.min.css'#}
+{#                 'css/jquery-ui-1.10.3/base/jquery.ui.autocomplete.min.css'#}
+{#              %}#}
+{#                  <link rel="stylesheet" href="{{ asset_url }}" media="screen" type="text/css"/>#}
+{#              {% endstylesheets %}#}
 {#             <link rel="stylesheet" href="{{ asset('css/jquery-ui-1.10.3/base/jquery-ui.min.css') }}" media="screen" type="text/css"/>#}
+            <style type="text/css">
+            
+                .autocomplete-suggestions { border: 1px solid #999; background: #FFF; overflow: auto; }
+                .autocomplete-suggestion { padding: 2px 5px; white-space: nowrap; overflow: hidden; }
+                .autocomplete-selected { background: #F0F0F0; }
+                .autocomplete-suggestions strong { font-weight: normal; color: #3399FF; }
+            
+            </style>
     {%  endblock stylesheets %}
 
 
     {% block javascripts %}
-            {% javascripts output="assetic/js/jqueryui.js"  debug=false
-                'js/jquery-ui-1.10.3/jquery.ui.core.min.js'
-                'js/jquery-ui-1.10.3/jquery.ui.widget.min.js'
-                'js/jquery-ui-1.10.3/jquery.ui.menu.min.js'
-                'js/jquery-ui-1.10.3/jquery.ui.position.min.js'
-                'js/jquery-ui-1.10.3/jquery.ui.autocomplete.min.js'
-            %}
-                <script src="{{ asset_url }}"></script>
-            {% endjavascripts %}
+{#             {% javascripts output="assetic/js/jqueryui.js"  debug=false#}
+{#                 'js/jquery-ui-1.10.3/jquery.ui.core.min.js'#}
+{#                 'js/jquery-ui-1.10.3/jquery.ui.widget.min.js'#}
+{#                 'js/jquery-ui-1.10.3/jquery.ui.menu.min.js'#}
+{#                 'js/jquery-ui-1.10.3/jquery.ui.position.min.js'#}
+{#                 'js/jquery-ui-1.10.3/jquery.ui.autocomplete.min.js'#}
+{#             %}#}
+{#                 <script src="{{ asset_url }}"></script>#}
+{#             {% endjavascripts %}#}
 {#             <script src="{{ asset('js/jquery-ui-1.10.3/jquery-ui.min.js') }}"></script>#}
 {#             {{ form_javascript(form) }}#}
+            <script src="{{ asset('js/jquery.autocomplete.min.js') }}"></script>
     {% endblock javascripts %}
 
 {% block body %}
@@ -76,19 +85,9 @@
         $(document).ready(function(){
 
             var chosenCities = [];
+            var cityIds = [];
             var chosenStates = [];
-
-            function containsObject(obj, list) {
-                var i;
-                for (i = 0; i < list.length; i++) {
-                    if (list[i] === obj) {
-                        return true;
-                    }
-                }
-                return false;
-            }
-            
-
+            var statIds = [];
 
             $('#mailing_address_participantZipcode').on('blur', function(){
                 if(!$(this).val())
@@ -101,22 +100,29 @@
                                 }),
                         null,
                         function(data, textStatus, jqXHR) {
-                               if($.isEmptyObject(data)) return;
+                               if($.isEmptyObject(data)) {
+                                   $('#mailing_address_city').val('');
+                                   $('#mailing_address_cityId').val('');
+                                   $('#mailing_address_state').val('');
+                                   $('#mailing_address_stateId').val('');
+
+                               };
                                if (!(data instanceof Array)) return;
                                $('#mailing_address_city').val(data[0]['cityName']);
                                $('#mailing_address_cityId').val(data[0]['cityId']);
                                $('#mailing_address_state').val(data[0]['stateName']);
                                $('#mailing_address_stateId').val(data[0]['stateId']);
 
-                               chosenCities = [];
-                               chosenStates = [];
+                               chosenCities = []; cityIds = [];
+                               chosenStates = []; stateIds = [];
 
                                var len = data.length;
                                for(var i=0;i<len;i++) {
-                            	    chosenCities[i] = {'value': data[i]["cityId"], 'label': data[i]["cityName"]};
-                            	    var stateObj = {'value': data[i]["stateId"], 'label': data[i]["stateName"]};
-                            	    if(!containsObject(stateObj, chosenStates)) {
-                            	        chosenStates.push(stateObj);
+                            	    chosenCities[i] = {'data': data[i]["cityId"], 'value': data[i]["cityName"]};
+                            	    cityIds[i] = data[i]["cityId"];
+                            	    if(!$.inArray(data[i]["stateId"], stateIds)) {
+                            	        stateIds.push(data[i]["stateId"]);
+                            	        chosenStates.push({'data': data[i]["stateId"], 'value': data[i]["stateName"]});
                                 	}
                                }
 
@@ -152,31 +158,18 @@
             });
 
 
-            $("#mailing_address_city" ).autocomplete({
-            	source: Routing.generate('searchCityWithAjax', {'_locale':'{{ app.request.locale }}'}),
-            	minLength: 3,
-            	dataType: "jsonp",
-            	select: function( event, ui ) {
-            		var l = ui.item.label;
-                	var v = ui.item.value;
-                	$('#mailing_address_city').val(l);
-                	$('#mailing_address_cityId').val(v);
-
-                	return false;
-            	}
-            });
+            $("#mailing_address_city").autocomplete({
+                serviceUrl: Routing.generate('searchCityWithAjax', {'_locale':'{{ app.request.locale }}'}),
+                minChars: 3,
+                maxHeight: 150,
+                });
 
             $("#mailing_address_state" ).autocomplete({
-            	source: Routing.generate('searchStateWithAjax', {'_locale':'{{ app.request.locale }}'}),
-            	minLength: 0,
-            	dataType: "jsonp",
-            	select: function( event, ui ) {
-                	var l = ui.item.label;
-                	var v = ui.item.value;
-                	$('#mailing_address_state').val(l);
-                	$('#mailing_address_stateId').val(v);
-
-                	return false;
+            	serviceUrl: Routing.generate('searchStateWithAjax', {'_locale':'{{ app.request.locale }}'}),
+                minChars: 3,
+                maxHeight: 150,
+            	onSelect: function(suggestion) {
+            		alert('You selected: ' + suggestion.value + ', ' + suggestion.data);
             	}
             });
 
