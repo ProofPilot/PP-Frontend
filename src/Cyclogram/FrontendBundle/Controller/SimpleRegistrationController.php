@@ -226,7 +226,7 @@ class  SimpleRegistrationController extends Controller{
                     
                     $cc->sendMail($participant->getParticipantEmail(),
                             'Please Verify your e-mail address',
-                            'CyclogramFrontendBundle:SimpleRegistration:confirm_email.html.twig',
+                             'CyclogramFrontendBundle:Email:email_confirmation.html.twig',
                             null,
                             $embedded,
                             true,

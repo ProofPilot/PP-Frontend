@@ -44,38 +44,9 @@
 		</tr>
 		<tr>
 			<td width="31" style="background-color: white;">&nbsp;</td>
-			<td width="643" style="background-color: white;">
-			
-				<p style="margin: 0px; padding: 0px; margin-bottom: 25px; color: #ae4840; font-family: Arial; font-weight: bold; font-size: 40px;">Please Verify your e-mail address</p>
-				
-				<p style="margin: 0px; padding: 0px; margin-bottom: 35px; color: #8b8b8b; font-family: Arial; font-size: 13px; line-height: 20px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin tristique, enim vel pretium commodo, dui purus cursus tellus, vel sodales nisl elit a arcu. Curabitur ultrices aliquam nisi, in venenatis arcu porta vitae. Sed hendrerit mollis nibh vel faucibus. Phasellus viverra suscipit auctor. Vivamus accumsan molestie felis, at ornare purus laoreet sed. Nam et velit lorem. Maecenas tortor nulla, tincidunt nec commodo non, adipiscing eu neque. Vestibulum vehicula imperdiet scelerisque.</p>
-				
-				<table width="643" cellpadding="0" cellspacing="0" align="center">
-					<tr>
-						<td width="126" height="126" style="border-top: 1px solid #dfded5; border-bottom: 1px solid #dfded5;"><img src="newsletter/images/newsletter_tmp_image.jpg" width="126" height="126" alt="" title="" style="display: block;" /></td>
-						<td width="20" style="background-color: #f8f7ef; border-top: 1px solid #dfded5; border-bottom: 1px solid #dfded5;"></td>
-						<td width="324" style="background-color: #f8f7ef; border-top: 1px solid #dfded5; border-bottom: 1px solid #dfded5;">
-							<p style="margin: 0px; padding: 0px; color: #383b41; font-family: Arial; font-size: 18px; margin-bottom: 15px;">iTest@Home Public Survey</p>
-							<p style="margin: 0px; padding: 0px; color: #8f8f8d; font-family: Arial; font-size: 13px;">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt</p>
-						</td>
-						<td width="23" style="background-color: #f8f7ef; border-top: 1px solid #dfded5; border-bottom: 1px solid #dfded5;"></td>
-						<td width="128"  style="background-color: #f8f7ef; border-top: 1px solid #dfded5; border-bottom: 1px solid #dfded5;"><a href="{{ url('email_verify', {'email': email, 'code': code, 'confirmed' : confirmed}) }}">Do It</a></td>
-						<td width="22"><img src="newsletter/images/bg_right.gif" width="22" height="128" alt="" title="" style="display: block;"/></td>
-					</tr>
-				</table> 
-				
-				<p style="margin: 0px; padding: 0px; margin-bottom: 20px;">&nbsp;</p>
-				
-				<p style="margin: 0px; padding: 0px; margin-bottom: 35px; color: #8b8b8b; font-family: Arial; font-size: 13px; line-height: 20px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin tristique, enim vel pretium commodo, dui purus cursus tellus, vel sodales nisl elit a arcu. Curabitur ultrices aliquam nisi, in venenatis arcu porta vitae. Sed hendrerit mollis nibh vel faucibus.</p>
+			{% block email_content %}
 
-				<p style="margin: 0px; padding: 0px; margin-bottom: 35px; text-align: center;">
-					<a href="#"><img src="newsletter/images/newsletter_big_login.jpg" width="229" height="58" alt="" title="" style="display: inline-block;" /></a>
-				</p>
-
-				
-				<p style="margin: 0px; padding: 0px; margin-bottom: 35px; color: #8b8b8b; font-family: Arial; font-size: 13px; line-height: 20px;">P.s. manage your preferences for which alerts you want to receive. <a href="#" style="color: #c05b47;">Log in</a> to set your communication preferences.</p>
-			
-			</td>
+			{% endblock %}
 			<td width="26" style="background-color: white;">&nbsp;</td>
 		</tr>		
 		<tr>
