@@ -7,7 +7,7 @@ use Symfony\Component\HttpKernel\EventListener\ResponseListener;
 use Symfony\Component\Config\Definition\Exception\DuplicateKeyException;
 
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -272,8 +272,15 @@ class RegistrationController extends Controller
         if (empty($participant)) {
             return $this->redirect( $this->generateUrl("_registration"));
         }
-        
-        $form = $this->createForm(new MailingAddressForm($this->container));
+        $collectionConstraint = new Collection(array(
+                'participantFirstname'     =>  new NotBlank(),
+                'participantLastname'        => new NotBlank(),
+                'participantAddress1'      => new NotBlank(),
+                'participantZipcode' => new NotBlank(),
+                'city'     => new NotBlank(),
+                'state'    => new NotBlank()
+        ));
+        $form = $this->createForm(new MailingAddressForm($this->container), array('constraints' => $collectionConstraint));
         
         if ($request->getMethod() == 'POST') {
             $form->handleRequest($request);

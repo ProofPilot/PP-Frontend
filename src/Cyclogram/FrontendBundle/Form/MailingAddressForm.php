@@ -18,7 +18,7 @@ class MailingAddressForm extends AbstractType
     {
         $builder->add('participantFirstname', 'text', array('label'=>'firstname'));
         $builder->add('participantLastname', 'text', array('label'=>'lastname'));
-        $builder->add('participantAddress1', 'text', array('label'=>'address1'));
+        $builder->add('participantAddress1', 'text', array('label'=>'address1' ));
         $builder->add('participantAddress2', 'text', array('label'=>'address2'));
         $builder->add('participantZipcode', 'text', array('label'=>'zipcode'));
         $builder->add('cityId', 'hidden');

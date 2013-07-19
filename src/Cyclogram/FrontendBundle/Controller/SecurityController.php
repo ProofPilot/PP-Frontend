@@ -46,10 +46,11 @@ class SecurityController extends Controller
                     $parameters['id'] = $participant->getParticipantId();
                     $embedded['logo_top'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_logo.png");
                     $embedded['logo_footer'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newletter_logo_footer.png");
+                    $embedded['login_button'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_small_login.jpg");
                     $cc = $this->get('cyclogram.common');
                     $cc->sendMail($participant->getParticipantEmail(),
                                              'Reset Your Password',
-                                              'CyclogramFrontendBundle:Security:reset_pass_email.html.twig', 
+                                              'CyclogramFrontendBundle:Email:reset_password_email.html.twig', 
                                               null,
                                               $embedded,
                                               true,
