@@ -19,6 +19,7 @@ send_confirmation: 'Send verification code to mobile phone'
 str_address: 'Street Address'
 str_address2: 'Street Address #2'
 txt_check_email: 'Please check your email address'
+txt_subtitle_check_email: 'Please check your email address'
 txt_join: JOIN
 txt_join_with: 'Join with'
 txt_why: 'Why?'

@@ -13,10 +13,12 @@ parameters:
     lime_database_name: limesurvey
     lime_database_user: root
     lime_database_password: null
-    mailer_transport: gmail
-    mailer_host: 127.0.0.1
-    mailer_user: null
-    mailer_password: null
+    mailer_transport: smtp
+    mailer_host: smtp.proofpilot.com
+    mailer_user: proofpilot
+    mailer_password: da2UmugE
+    mailer_encryption: ssl
+    mailer_from: crew@cyclogram.com
     locale: en
     locales: [en, es, pt, fr]
     secret: 10da697491608e381e7f81207a304c43f
@@ -28,5 +30,3 @@ parameters:
 #	Facebook secret is from my riv.a.ntsiv@gmail.com
     facebook.secret: 61577113f011589a7d217cc7972798a4
     facebook.appid: 584886061542799
-    my_mailer_user: bogdan.dubyk
-    my_mailer_password: Nhbkmjdcmrjuj29
