@@ -1,22 +1,17 @@
 {%  extends '::base.html.twig' %}
 
-    {% block body %}
+{% block body %}
     <body class="page_survey">
 	
 		<div class="site_container">
+		{% block header %}
+            {% include '::header.html.twig' %}
+        {% endblock header %}
+{# 		<header>#}
+{# 		<a href="#" class="site_logo">ProofPilot</a>#}
+{# 				{{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createTopSettingsMenu',{'template': 'CyclogramFrontendBundle:Knp:top_menu.html.twig'}) }}#}
+{# 		</header>#}
 		
-			<header>
-			
-				<a href="#" class="site_logo">ProofPilot</a>
-				{{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createTopSettingsMenu',{'template': 'CyclogramFrontendBundle:Knp:top_menu.html.twig'}) }}
-{# 				<ul class="header_menu">#}
-{# 					<li><a class="icon_help" href="#"><span>Help</span></a></li>#}
-{# 					<li><a class="icon_logout" href="#"><span>Logout</span></a></li>#}
-{# 					<li><a class="icon_settings" href="#"><span>My Settings</span></a></li>#}
-{# 				</ul>#}
-			
-			</header>
-
 			<div class="mobile_header_menu">
 				<ul>
 					<li><a href="#" class="trigger_left_menu"></a></li>
