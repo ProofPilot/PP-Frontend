@@ -48,33 +48,33 @@
         <div class="loginform_right">
           <label>{% trans from "register" %}label_firstname{% endtrans %}</label>
           <span>{{ form_widget(form.participantFirstname, {'attr' : {'class' : 'text'}}) }}</span>
-          {{ form_errors(form.participantFirstname) }}
+          <span class="error">{{ form_errors(form.participantFirstname) }}</span>
 {#           <span><input type="text" class="text"/></span>#}
           <label>{% trans from "register" %}label_lastname{% endtrans %}</label>
           {{ form_widget(form.participantLastname, {'attr' : {'class' : 'text'}}) }}
-          {{ form_errors(form.participantLastname) }}
+          <span class="error">{{ form_errors(form.participantLastname) }}</span>
 {#           <input type="text" class="text"/>#}
           <label>{% trans from "register" %}label_address1{% endtrans %}</label>
           {{ form_widget(form.participantAddress1, {'attr' : {'class' : 'text'}}) }}
-          {{ form_errors(form.participantAddress1) }}
+          <span class="error">{{ form_errors(form.participantAddress1) }}</span>
 {#           <input type="text" class="text"/>#}
           <label>{% trans from "register" %}label_address2{% endtrans %}</label>
           {{ form_widget(form.participantAddress2, {'attr' : {'class' : 'text'}}) }}
-          {{ form_errors(form.participantAddress2) }}
+          <span class="error">{{ form_errors(form.participantAddress2) }}</span>
 {#           <input type="text" class="text"/>#}
           <label>{% trans from "register" %}label_zipcode{% endtrans %}</label>
           {{ form_widget(form.participantZipcode, {'attr' : {'class' : 'text'}}) }}
-          {{ form_errors(form.participantZipcode) }}
+          <span class="error">{{ form_errors(form.participantZipcode) }}</span>
           <label>{% trans from "register" %}label_city{% endtrans %}</label>
           {{ form_widget(form.city, {'attr' : {'class' : 'text'}}) }}
-          {{ form_errors(form.city) }}
+          <span class="error">{{ form_errors(form.city) }}</span>
           <label>{% trans from "register" %}label_state{% endtrans %}</label>
           {{ form_widget(form.state, {'attr' : {'class' : 'text'}}) }}
-          {{ form_errors(form.state) }}
+          <span class="error">{{ form_errors(form.state) }}</span>
 
 
               {{ form_rest(form) }}
-              {{ form_errors(form) }}
+              <span class="error">{{ form_errors(form) }}</span>
         </div>
         <div class="center_align">
           <a id="register_submit" class="submit" href="#">{% trans from "register" %}txt_save_mailing_address{% endtrans %}</a>

@@ -3328,6 +3328,7 @@ footer a.icon_update span {
 	line-height: 42px;
 	padding-left: 20px;
 	padding-right: 20px;
+	margin-top: 10px;
 	border: 1px solid #b9503e;
 	border-radius: 3px;
 	background: #e3624c; /* Old browsers */
@@ -3497,7 +3498,7 @@ footer a.icon_update span {
 .lt-ie9  .mobile_reg a.cant_remember span {
 	background: url(../images/100_icon_notice2.png) no-repeat 0px 50%;
 }
-.mobile_reg.login_form .loginform_right .error {
+.mobile_reg.login_form .loginform_right .error, .mobile_reg .error {
 	color: #c03e2d;
 	font-size: 12px;
 	text-align: center;
