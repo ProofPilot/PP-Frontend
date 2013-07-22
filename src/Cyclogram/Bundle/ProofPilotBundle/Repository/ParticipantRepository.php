@@ -34,5 +34,14 @@ class ParticipantRepository extends EntityRepository implements
     {
         return $class === 'Cyclogram\Bundle\ProofPilotBundle\Entity\Participant';
     }
+    
+    public function getParticipantInterventions($userid){
+        return $this->getEntityManager()
+        ->createQuery('SELECT COUNT (pi) FROM CyclogramProofPilotBundle:ParticipantInterventionLink pi
+                WHERE pi.participant = :userid')
+        ->setParameters(array(
+                        'userid' => $userid))
+        ->getSingleScalarResult();
+    }
 
 }

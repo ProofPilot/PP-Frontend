@@ -5,6 +5,7 @@ namespace Cyclogram\FrontendBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Cyclogram\Bundle\ProofPilotBundle\Entity\Participant;
 
 /**
  * @Route("/{_locale}")
@@ -19,11 +20,15 @@ class DashboardController extends Controller
     {
         $participant = $this->get('security.context')->getToken()->getUser();
         $request = $this->getRequest();
+        $em = $this->getDoctrine()->getManager();
+        $surveyscount = $em->getRepository('CyclogramProofPilotBundle:Participant')->getParticipantInterventions($participant);
+
         
         $session = $this->getRequest()->getSession();
         
         
         $parameters = array();
+        $parameters['surveycount'] = $surveyscount;
     
         $parameters['text'] = array(
                 "title" => "title",
