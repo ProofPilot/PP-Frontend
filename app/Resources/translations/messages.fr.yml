@@ -1,10 +1,10 @@
-'SMS Code:': 'SMS Code:'   # FIXME
-txt_footer_fullscreen: txt_footer_fullscreen   # FIXME
-txt_footer_home: txt_footer_home   # FIXME
-txt_footer_top: txt_footer_top   # FIXME
-txt_footer_update: txt_footer_update   # FIXME
-txt_header_login: txt_header_login   # FIXME
-txt_header_or: txt_header_or   # FIXME
-txt_header_register: txt_header_register   # FIXME
-txt_header_register_here: txt_header_register_here   # FIXME
-username: username   # FIXME
+'SMS Code:': 'SMS Code:'
+txt_footer_fullscreen: txt_footer_fullscreen
+txt_footer_home: txt_footer_home
+txt_footer_top: txt_footer_top
+txt_footer_update: txt_footer_update
+txt_header_login: txt_header_login
+txt_header_or: txt_header_or
+txt_header_register: txt_header_register
+txt_header_register_here: txt_header_register_here
+username: username

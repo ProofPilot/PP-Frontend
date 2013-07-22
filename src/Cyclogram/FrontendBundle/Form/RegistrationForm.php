@@ -1,10 +1,15 @@
 <?php
 namespace Cyclogram\FrontendBundle\Form;
 
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
+use Symfony\Component\Validator\Constraints\Collection;
+
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Validator\Constraints\Length;
 
 
 class RegistrationForm extends AbstractType
@@ -21,8 +26,8 @@ class RegistrationForm extends AbstractType
         $builder->add('participantUsername', 'text', array('label'=>'username'));
         $builder->add('participantPassword', 'repeated',                   
                         array('type' => 'password', 
-                            'invalid_message' => 'The password fields must match.',
-                      ));     
+                              'invalid_message' => 'error_passwords_do_not_match')
+                      );     
     }
 
     public function getName()

@@ -13,8 +13,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *
  * @ORM\Table(name="participant")
  * @ORM\Entity(repositoryClass="Cyclogram\Bundle\ProofPilotBundle\Repository\ParticipantRepository")
- * @UniqueEntity(fields={"participantEmail"}, message="The e-mail address is already registered")
- * @UniqueEntity(fields={"participantUsername"}, message="Username is already registered")
+ * @UniqueEntity(fields={"participantEmail"}, message="email_already_registered")
+ * @UniqueEntity(fields={"participantUsername"}, message="username_already_registered")
  */
 class Participant implements AdvancedUserInterface
 {
@@ -50,7 +50,7 @@ class Participant implements AdvancedUserInterface
      * @var string
      *
      * @ORM\Column(name="participant_email", type="string", length=255, nullable=false)
-     * @Assert\Email(message="This does not appear to be a valid e-mail address")
+     * @Assert\Email(message="error_not_valid_email")
      */
     protected $participantEmail;
 
@@ -73,7 +73,7 @@ class Participant implements AdvancedUserInterface
      *
      * @Assert\Length(
      *      min = "8",
-     *      minMessage = "Your password name must be at least {{ limit }} characters")
+     *      minMessage = "error_password_short")
      *      
      * @ORM\Column(name="participant_password", type="string", length=500, nullable=false)
      */

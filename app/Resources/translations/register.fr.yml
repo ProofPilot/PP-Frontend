@@ -1,22 +1,36 @@
-already_joined: already_joined   # FIXME
-confirm_password: confirm_password   # FIXME
-create_password: create_password   # FIXME
-email: email   # FIXME
-enter_email: enter_email   # FIXME
-enter_mobile_phone: enter_mobile_phone   # FIXME
-enter_sms_code: enter_sms_code   # FIXME
-min_charachters: min_charachters   # FIXME
-no_code: no_code   # FIXME
-ok_verify: ok_verify   # FIXME
-pick_user: pick_user   # FIXME
-send_confirmation: send_confirmation   # FIXME
-txt_join: txt_join   # FIXME
-txt_join_with: txt_join_with   # FIXME
-txt_why: txt_why   # FIXME
-username: username   # FIXME
-wrong_back: wrong_back   # FIXME
-double_check: txt_double_check-you_entry'
-join: txt_JOIN
+already_joined: already_joined
+city_state: city_state
+confirm_password: confirm_password
+create_password: create_password
+double_check: 'txt_double_check-you_entry'''
+email: email
+enter_address: enter_address
+enter_email: enter_email
+enter_mobile_phone: enter_mobile_phone
+enter_sms_code: enter_sms_code
+fisrt_name: fisrt_name
+label_address1: label_address1
+label_address2: label_address2
+label_city: label_city
+label_firstname: label_firstname
+label_lastname: label_lastname
+label_state: label_state
+label_zipcode: label_zipcode
+last_name: last_name
 mail_confirmation_fail: mail_confirmation_fail
-city: city
-state: state
+min_charachters: min_charachters
+no_code: no_code
+ok_verify: ok_verify
+pick_user: pick_user
+send_confirmation: send_confirmation
+str_address: str_address
+str_address2: str_address2
+txt_check_email: txt_check_email
+txt_join: txt_join
+txt_join_with: txt_join_with
+txt_save_mailing_address: txt_save_mailing_address
+txt_subtitle_check_email: txt_subtitle_check_email
+txt_why: txt_why
+username: username
+wrong_back: wrong_back
+zip_code: zip_code

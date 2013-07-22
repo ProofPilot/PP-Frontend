@@ -9,7 +9,7 @@ forgot_password: 'Esqueceu senha?'
 forgot_password_message: 'Sim, isso acontece com todos nós! Você não lembra sua senha, tudo  bem. Clique neste link para redefinir sua senha.'
 forgot_username: 'Esqueceu seu nome de usuário'
 forgot_username_message: 'Não tem problema. Digite o número do telefone celular que você usou para se inscrever e vamos enviar seu nome de usuário via mensagem de texto.'
-havent_joined: havent_joined   # FIXME
+havent_joined: havent_joined
 new_password_selection: 'Clique no link  em seu e-mail e você será guiado para criar uma nova senha. Você vai precisar do seu telefone celular para completar este processo. Se a mensagem não chegar em poucos minutos, verifique sua caixa de spam ou lixeira.'
 passsword_reset_email: 'Enviar nova senha de e-mail'
 send_another_code: text_send_another_code

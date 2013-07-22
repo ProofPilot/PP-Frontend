@@ -1,20 +1,20 @@
-dashboard_subtitle: dashboard_subtitle   # FIXME
-do_it: do_it   # FIXME
-do_it_now: do_it_now   # FIXME
-past_activity: past_activity   # FIXME
-txt_dashboard: txt_dashboard   # FIXME
-txt_please_verify_email: txt_please_verify_email   # FIXME
-what_next: what_next   # FIXME
+dashboard_subtitle: dashboard_subtitle
+do_it: do_it
+do_it_now: do_it_now
 last_access: last_access
 past_activity: past_activity
 past_activity.emai_confirmation_status: yuor_e-mail_address_has_been_confirmed
 past_activity.mobile_confirmation_status: your_mobile_telephone_number_has_been_confirmed
-past_activity.welcome_study: welcome_to_the_study_know@home:_putting_the_test_to_the_test
 past_activity.mobile_status: your_mobile_telephone_number_has_been_confirmed
+past_activity.welcome_study: 'welcome_to_the_study_know@home:_putting_the_test_to_the_test'
+txt_dashboard: txt_dashboard
+txt_please_verify_email: txt_please_verify_email
+view_more: view_more
+what_next: what_next
+
 what_next_list:
+    collect_speciment: collect_specimen
     help: _help
     how_activate_tests: how_to_activate_your_tests
-    reade_instruction: read_instructions_to_perform_the_tests
-    collect_speciment: collect_specimen
     other_info: some_other_info
-view_more: view_more
+    reade_instruction: read_instructions_to_perform_the_tests

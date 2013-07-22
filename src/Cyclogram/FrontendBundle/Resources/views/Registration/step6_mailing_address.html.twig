@@ -44,31 +44,31 @@
     <div class="wrapper">
       <h1><span>{% trans from "register" %}txt_join{% endtrans %} 6/6:</span> Mailing address</h1>
       <div>{% trans from "register" %}enter_address{% endtrans %}</div>
-      <form method="post" action="{{ path('reg_step_6',{'id' : id}) }}" name="mailing_address">
+      <form novalidate method="post" action="{{ path('reg_step_6',{'id' : id}) }}" name="mailing_address">
         <div class="loginform_right">
-          <label>{% trans from "register" %}fisrt_name{% endtrans %}</label>
+          <label>{% trans from "register" %}label_firstname{% endtrans %}</label>
           <span>{{ form_widget(form.participantFirstname, {'attr' : {'class' : 'text'}}) }}</span>
           {{ form_errors(form.participantFirstname) }}
 {#           <span><input type="text" class="text"/></span>#}
-          <label>{% trans from "register" %}last_name{% endtrans %}</label>
+          <label>{% trans from "register" %}label_lastname{% endtrans %}</label>
           {{ form_widget(form.participantLastname, {'attr' : {'class' : 'text'}}) }}
           {{ form_errors(form.participantLastname) }}
 {#           <input type="text" class="text"/>#}
-          <label>{% trans from "register" %}str_address{% endtrans %}</label>
+          <label>{% trans from "register" %}label_address1{% endtrans %}</label>
           {{ form_widget(form.participantAddress1, {'attr' : {'class' : 'text'}}) }}
           {{ form_errors(form.participantAddress1) }}
 {#           <input type="text" class="text"/>#}
-          <label>{% trans from "register" %}str_address2{% endtrans %}</label>
+          <label>{% trans from "register" %}label_address2{% endtrans %}</label>
           {{ form_widget(form.participantAddress2, {'attr' : {'class' : 'text'}}) }}
           {{ form_errors(form.participantAddress2) }}
 {#           <input type="text" class="text"/>#}
-          <label>{% trans from "register" %}zip_code{% endtrans %}</label>
+          <label>{% trans from "register" %}label_zipcode{% endtrans %}</label>
           {{ form_widget(form.participantZipcode, {'attr' : {'class' : 'text'}}) }}
           {{ form_errors(form.participantZipcode) }}
-          <label>{% trans from "register" %}city{% endtrans %}</label>
+          <label>{% trans from "register" %}label_city{% endtrans %}</label>
           {{ form_widget(form.city, {'attr' : {'class' : 'text'}}) }}
           {{ form_errors(form.city) }}
-          <label>{% trans from "register" %}state{% endtrans %}</label>
+          <label>{% trans from "register" %}label_state{% endtrans %}</label>
           {{ form_widget(form.state, {'attr' : {'class' : 'text'}}) }}
           {{ form_errors(form.state) }}
 
@@ -77,7 +77,7 @@
               {{ form_errors(form) }}
         </div>
         <div class="center_align">
-          <a id="register_submit" class="submit" href="#">{% trans from "register" %}txt.save.mailing.address{% endtrans %}</a>
+          <a id="register_submit" class="submit" href="#">{% trans from "register" %}txt_save_mailing_address{% endtrans %}</a>
           <button type="submit" style="display:none" id="submit_button"></button>
         </div>
       </form>

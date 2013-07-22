@@ -1,6 +1,5 @@
 already_joined: '¿Ya es parte?'
-city: city
-state: state
+city_state: city_state
 confirm_password: 'Confirme contraseña'
 create_password: 'Crear una contraseña'
 double_check: 'Revise dos veces su entrada'
@@ -9,20 +8,29 @@ enter_address: enter_address
 enter_email: 'Ingrese su e-mail'
 enter_mobile_phone: 'Ingrese su teléfono móbil'
 enter_sms_code: 'Ingrese el código de verificación que recibió en su teléfono móbil'
-fisrt_name: fisrt_name   # FIXME
-last_name: last_name   # FIXME
+fisrt_name: fisrt_name
+label_address1: label_address1
+label_address2: label_address2
+label_city: label_city
+label_firstname: label_firstname
+label_lastname: label_lastname
+label_state: label_state
+label_zipcode: label_zipcode
+last_name: last_name
+mail_confirmation_fail: mail_confirmation_fail
 min_charachters: '(8 caractéres mínimo)'
 no_code: '¿Sin código? Enviar otro'
 ok_verify: 'Ok, ¡verifique!'
 pick_user: 'Escoja su usuario'
 send_confirmation: 'Enviar código de verificación al teléfono móbil'
-str_address: str_address   # FIXME
-str_address2: str_address2   # FIXME
+str_address: str_address
+str_address2: str_address2
 txt_check_email: txt_check_email
 txt_join: Unase
 txt_join_with: 'Unase con'
+txt_save_mailing_address: txt_save_mailing_address
+txt_subtitle_check_email: txt_subtitle_check_email
 txt_why: '¿Por qué?'
 username: Usuario
 wrong_back: 'erroneo devuelvase'
-zip_code: zip_code   # FIXME
-mail_confirmation_fail: mail_confirmation_fail
+zip_code: zip_code

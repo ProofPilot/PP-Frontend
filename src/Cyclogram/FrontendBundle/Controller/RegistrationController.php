@@ -38,13 +38,7 @@ class RegistrationController extends Controller
         }
         $request = $this->getRequest();
         
-        $collectionConstraint = new Collection(array(
-                'fields' => array(
-                        'password' => new Length(array('min' => 8))
-                )
-        ));
-        
-        $form = $this->createForm(new RegistrationForm($this->container, array('constraints' => $collectionConstraint)));
+        $form = $this->createForm(new RegistrationForm($this->container));
         
         if ($request->getMethod() == 'POST') {
             $form->handleRequest($request);

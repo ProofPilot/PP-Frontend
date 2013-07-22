@@ -1,0 +1,6 @@
+email_already_registered: 'The e-mail address is already registered'
+username_already_registered: 'Username is already registered'
+error_password_short: 'Password must be 8 characters min'
+error_not_valid_email: 'Email is not valid'
+error_passwords_do_not_match: 'Passwords do not match'
+error_not_blank: 'No blank values'
