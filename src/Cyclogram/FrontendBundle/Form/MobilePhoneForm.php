@@ -2,6 +2,8 @@
 
 namespace Cyclogram\FrontendBundle\Form;
 
+use Symfony\Component\Validator\Constraints\Length;
+
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -20,8 +22,28 @@ class MobilePhoneForm extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('phone_small', 'text', array('attr'=>array('maxlength'=>3)));
-        $builder->add('phone_wide' , 'text', array('attr'=>array('maxlength'=>10)));
+        $builder->add('phone_small', 
+                      'text', 
+                      array(
+                              'attr'=>array('maxlength'=>3),
+                              'constraints' => new Length(array(
+                                      'min'=>1,
+                                      'minMessage'=>'error_min_area_code_length',
+                                      'max'=>3,
+                                      'maxMessage'=>'error_max_area_code_length'
+                                       ))
+                        ));
+        $builder->add('phone_wide' , 
+                      'text', 
+                      array(
+                              'attr'=>array('maxlength'=>10),
+                              'constraints' => new Length(array(
+                                      'min'=>8,
+                                      'minMessage'=>'error_min_phone_code_length',
+                                      'max'=>11,
+                                      'maxMessage'=>'error_max_phone_code_length'
+                                       ))
+                       ));
     }
 
     public function getName()
