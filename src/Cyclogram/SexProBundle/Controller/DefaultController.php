@@ -18,6 +18,7 @@ class DefaultController extends Controller
     public function pageAction()
     {
         $studyId = 1;
+        $surveyId = 468727;
         $locale = $this->getRequest()->getLocale();
     
         $studyContent = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:StudyContent')
@@ -27,6 +28,8 @@ class DefaultController extends Controller
         $parameters = array();
     
         $parameters["studycontent"] = $studyContent;
+        $parameters["studyId"] = $studyId;
+        $parameters["surveyId"] = $surveyId;
     
         return $this->render('CyclogramSexProBundle:Default:page.html.twig', $parameters);
     
