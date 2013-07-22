@@ -40,9 +40,7 @@
 {% block body %}
     <body class="has_image">
 		{{ facebook_initialize({'async': true, 'xfbml': true, 'fbAsyncInit': 'onFbInit();'}) }}
-		<div class="reg_header">
-			<a href="http://proofpilot.com/" class="logo">ProofPilot</a>
-		</div>
+        {% include '::header_reg.html.twig' %}
 		
 		<div class="mobile_reg login_form">
 			
