@@ -1,6 +1,7 @@
 <?php
 
 namespace Cyclogram\Bundle\ProofPilotBundle\Entity;
+
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -13,8 +14,6 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *
  * @ORM\Table(name="participant")
  * @ORM\Entity(repositoryClass="Cyclogram\Bundle\ProofPilotBundle\Repository\ParticipantRepository")
- * @UniqueEntity(fields={"participantEmail"}, message="email_already_registered")
- * @UniqueEntity(fields={"participantUsername"}, message="username_already_registered")
  */
 class Participant implements AdvancedUserInterface
 {

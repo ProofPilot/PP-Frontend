@@ -43,5 +43,51 @@ class ParticipantRepository extends EntityRepository implements
                         'userid' => $userid))
         ->getSingleScalarResult();
     }
+    
+    
+    public function checkIfEmailNotUsed($email) {
+        $result = $this->getEntityManager()
+            ->createQuery('SELECT COUNT(p.participantEmail) FROM CyclogramProofPilotBundle:Participant p
+                    WHERE p.participantEmail = :email
+                    AND p.participantEmailConfirmed = true')
+            ->setParameter('email', $email)
+            ->getSingleScalarResult();
+        return $result;
+    }
+    
+    public function checkIfUsernameNotUsed($username) {
+        $result = $this->getEntityManager()
+        ->createQuery('SELECT COUNT(p.participantUsername) FROM CyclogramProofPilotBundle:Participant p
+                WHERE p.participantUsername = :username
+                AND p.participantEmailConfirmed = true')
+                ->setParameter('username', $username)
+                ->getSingleScalarResult();
+        return $result;
+    }
+    
+    public function checkIfPhoneNotUsed($phone) {
+        $result = $this->getEntityManager()
+        ->createQuery('SELECT COUNT(p.participantMobileNumber) FROM CyclogramProofPilotBundle:Participant p
+                WHERE p.participantMobileNumber = :phone
+                AND p.participantMobileSmsCodeConfirmed = true')
+                ->setParameter('phone', $phone)
+                ->getSingleScalarResult();
+        return $result;
+    }
+    
+    public function getUnfinishedParticipant($username, $email) {
+        $result = $this->getEntityManager()
+        ->createQuery('SELECT p FROM CyclogramProofPilotBundle:Participant p
+                WHERE (p.participantUsername = :username
+                OR p.participantEmail = :email)
+                AND p.participantEmailConfirmed = false
+                ')
+                ->setParameters(array(
+                        'username' => $username,
+                        'email' => $email
+                        ))
+                 ->getOneOrNullResult();
+        return $result;
+    }
 
 }

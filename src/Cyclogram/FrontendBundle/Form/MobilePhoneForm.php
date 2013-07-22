@@ -4,10 +4,13 @@ namespace Cyclogram\FrontendBundle\Form;
 
 use Symfony\Component\Validator\Constraints\Length;
 
+use Symfony\Component\Validator\Constraints\Callback;
+
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Validator\ExecutionContextInterface;
 
 class MobilePhoneForm extends AbstractType
 {
@@ -59,8 +62,11 @@ class MobilePhoneForm extends AbstractType
         $resolver
                 ->setDefaults(
                         array('csrf_protection' => false,
-                                'cascade_validation' => true));
-
+                              'cascade_validation' => true,
+                              'constraints' => array(
+                                        new Callback(array(array($this, 'validatePhone'))
+                                       ))
+                        ));
     }
 
     public function getPhone()
@@ -82,5 +88,18 @@ class MobilePhoneForm extends AbstractType
     {
         $this->country_code = $country_code;
     }
+    
+    public function validatePhone($formData, ExecutionContextInterface $context)
+    {
+        $phone = $formData["phone_small"] . $formData["phone_wide"];
+        
+        $count = $this->container->get('doctrine')
+        ->getRepository('CyclogramProofPilotBundle:Participant')
+        ->checkIfPhoneNotUsed($phone);
+    
+        if($count)
+            $context->addViolationAt('phone_wide', 'error_mobile_phone_already_registered');
+    }
+    
 
 }

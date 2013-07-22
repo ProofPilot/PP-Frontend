@@ -46,39 +46,46 @@ class RegistrationController extends Controller
             if ($form->isValid()) {
                 $registration = $form->getData();
                 try{
-                    $user = new Participant();
-                    $user->setParticipantEmail($registration->getParticipantEmail()); 
-                    $user->setParticipantPassword($registration->getParticipantPassword());
-                    $user->setParticipantUsername($registration->getParticipantUsername());
+                    //if participant is unfinished record, try to get it
+                    $participant = $em->getRepository('CyclogramProofPilotBundle:Participant')
+                            ->getUnfinishedParticipant($registration->getParticipantUsername(), $registration->getParticipantEmail());
+
+                    if(!$participant){
+                        $participant = new Participant();
+                    }
+                    
+                    $participant->setParticipantEmail($registration->getParticipantEmail()); 
+                    $participant->setParticipantPassword($registration->getParticipantPassword());
+                    $participant->setParticipantUsername($registration->getParticipantUsername());
                     $question = $em->getRepository('CyclogramProofPilotBundle:RecoveryQuestion')->find(1);
-                    $user->setRecoveryQuestion($question);
-                    $user->setRecoveryPasswordCode('Default');
-                    $user->setParticipantEmailConfirmed(false);
-                    $user->setParticipantMobileNumber('');
-                    $user->setParticipantMobileSmsCodeConfirmed(false);
-                    $user->setParticipantIncentiveBalance(false);
+                    $participant->setRecoveryQuestion($question);
+                    $participant->setRecoveryPasswordCode('Default');
+                    $participant->setParticipantEmailConfirmed(false);
+                    $participant->setParticipantMobileNumber('');
+                    $participant->setParticipantMobileSmsCodeConfirmed(false);
+                    $participant->setParticipantIncentiveBalance(false);
                     $date = new \DateTime();
-                    $user->setParticipantLastTouchDatetime($date);
-                    $user->setParticipantZipcode('');
+                    $participant->setParticipantLastTouchDatetime($date);
+                    $participant->setParticipantZipcode('');
                     $country = $em->getRepository('CyclogramProofPilotBundle:Country')->find(1);
-                    $user->setCountry($country);
+                    $participant->setCountry($country);
                     $state =  $em->getRepository('CyclogramProofPilotBundle:State')->find(35);
-                    $user->setState($state);
+                    $participant->setState($state);
                     $city = $em->getRepository('CyclogramProofPilotBundle:City')->find(25420);
-                    $user->setCity($city);
+                    $participant->setCity($city);
                     $sex = $em->getRepository('CyclogramProofPilotBundle:Sex')->find(1);
-                    $user->setSex($sex);
+                    $participant->setSex($sex);
                     $race = $em->getRepository('CyclogramProofPilotBundle:Race')->find(1);
-                    $user->setRace($race);
+                    $participant->setRace($race);
                     $role = $em->getRepository('CyclogramProofPilotBundle:ParticipantRole')->find(1);
-                    $user->setParticipantRole($role);
+                    $participant->setParticipantRole($role);
                     $status = $em->getRepository('CyclogramProofPilotBundle:Status')->find(1);
-                    $user->setStatus($status);
+                    $participant->setStatus($status);
         
-                    $em->persist($user);
+                    $em->persist($participant);
                     $em->flush();
                     
-                    return $this->redirect( $this->generateUrl("reg_step_2", array('id' => $user->getParticipantId())) );
+                    return $this->redirect( $this->generateUrl("reg_step_2", array('id' => $participant->getParticipantId())) );
                 
                 } catch (Exception $ex) {
                     $em->close();
