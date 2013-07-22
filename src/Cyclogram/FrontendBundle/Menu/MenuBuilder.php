@@ -1,5 +1,7 @@
 <?php
 namespace Cyclogram\FrontendBundle\Menu;
+use Doctrine\Bundle\DoctrineBundle\Registry;
+
 use JMS\TranslationBundle\Model\Message;
 
 use Symfony\Component\Security\Core\SecurityContext;
@@ -14,15 +16,29 @@ use Knp\Menu\FactoryInterface;
 
 class MenuBuilder extends ContainerAware implements TranslationContainerInterface
 {
-
+//     private $factory;
+//     private $container;
+    
+//     /**
+//      * @param FactoryInterface $factory
+//      */
+//     public function __construct(FactoryInterface $factory, Container $container)
+//     {
+//         $this->factory = $factory;
+//         $this->container = $container;
+//     }
+    
     public function createSideDashboardMenu(FactoryInterface $factory,
             array $options)
     {
+        $participant = $this->container->get('security.context')->getToken()->getUser();
+        $em = $this->container->get('doctrine')->getManager();
+        $surveyscount = $em->getRepository('CyclogramProofPilotBundle:Participant')->getParticipantInterventions($participant);
         $menu = $factory->createItem('root');
         $menu->setChildrenAttribute('class', 'left_menu');
 
         $menu->addChild('side_dasboard_menu.dashboard', array('route' => '_main'))
-                ->setAttribute('class', 'icon_dashboard')->setExtra('translation_domain', 'sidemenu');
+                ->setAttribute('class', 'icon_dashboard')->setExtra('translation_domain', 'sidemenu')->setAttribute("news", $surveyscount);
         $menu->addChild('side_dasboard_menu.survey', array('route' => '_main'))
                 ->setAttribute('class', 'icon_survey')->setExtra('translation_domain', 'sidemenu');
         $menu->addChild('side_dasboard_menu.activities', array('route' => '_main'))
