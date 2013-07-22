@@ -1,0 +1,16 @@
+<footer>
+  <div class="site_container">
+    <div class="footer_col_left">
+	  {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createBottomLeftMenu',{'template': 'CyclogramFrontendBundle:Knp:knp_menu.html.twig'}) }}
+    </div>
+    <div class="footer_col_middle"><a class="to_top" href="#"><span>{% trans %}txt_footer_top{% endtrans %}</span></a></div>
+    {% if app.user %}
+      <div class="footer_col_right">
+	    {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createBottomRightMenu',{'template': 'CyclogramFrontendBundle:Knp:knp_menu.html.twig'}) }}
+	  </div>
+    {% endif %}
+    <br />
+    <span class="footer_cyclogram">(c) Cyclogram 2011-2013, California USA</span>
+  </div>
+  <a href="http://www.kudos.hr" target="_blank" class="author">design by kudos studio</a>
+</footer>

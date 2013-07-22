@@ -25,6 +25,7 @@
         <div class="center_align"><a href={{ path('reg_step_3',{'id' : id}) }} class="repeat">{% trans from "register" %}no_code{% endtrans %}</a></div>
       </form>
     </div>
+    {% include '::footer_reg.html.twig' %}
     <script>
         $(document).ready(function(){
             $('#register_submit').click(function() {

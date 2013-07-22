@@ -86,6 +86,7 @@
 			
 			</div>
 		</div>
-		<div class="login_btn_placeholder">{% trans from "login" %}havent_joined{% endtrans %} <a href="{{ path('_registration') }}">Register</a>
+		<div class="login_btn_placeholder">{% trans from "login" %}havent_joined{% endtrans %} <a href="{{ path('_registration') }}">Register</a></div>
+		{% include '::footer_reg.html.twig' %}
     </body>
 {% endblock body %}

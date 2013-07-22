@@ -11,8 +11,24 @@ body.has_image {
 	background: #161719 url(../images/bg_reg2.jpg) no-repeat 50% 0px;
 	background-size: cover;
 }
-
-
+footer .site_container {
+	position: relative;
+}
+.footer_cyclogram {
+	position: absolute;
+	top: -25px;
+	color: #fff;
+}
+.cyclogram_reg {
+	width: 500px;
+	color: white;
+    bottom: 20px;
+    text-align: center;
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    margin-left: -250px; 
+}
 
 ul {
 	padding: 0px;

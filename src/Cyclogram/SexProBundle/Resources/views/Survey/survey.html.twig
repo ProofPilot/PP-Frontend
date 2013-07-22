@@ -206,35 +206,7 @@
 			
 		</div>
 	</div>	
-		<footer>
-		
-			<div class="site_container">
-			
-				<div class="footer_col_left">
-				{{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createBottomLeftMenu',{'template': 'CyclogramFrontendBundle:Knp:knp_menu.html.twig'}) }}
-{# 					<ul>#}
-{# 						<li class="icon_home"><a class="icon_home" href="#"><span>Home</span></a></li>#}
-{# 						<li class="icon_fullscreen"><a class="icon_fullscreen" href="#"><span>Fullscreen</span></a></li>#}
-{# 						<li class="icon_update"><a class="icon_update" href="#"><span>Update</span></a></li>#}
-{# 					</ul>#}
-				</div>
-				
-				<div class="footer_col_middle"><a class="to_top" href="#"><span>ON TOP</span></a></div>
-				
-				<div class="footer_col_right">
-				{{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createBottomRightMenu',{'template': 'CyclogramFrontendBundle:Knp:knp_menu.html.twig'}) }}
-{# 					<ul>#}
-{# 						<li class="icon_help"><a class="icon_help" href="#"><span>Help</span></a></li>#}
-{# 						<li class="icon_logout" ><a class="icon_logout" href="#"><span>Logout</span></a></li>#}
-{# 						<li class="icon_settings"><a class="icon_settings" href="#"><span>My Settings</span></a></li>#}
-{# 					</ul>#}
-				</div>
-			
-			</div>
-			
-			<a href="http://www.kudos.hr" target="_blank" class="author">design by kudos studio</a>
-			
-		</footer>
+    {% include '::footer.html.twig' %}
 		
 		<script>
     		/*function autoResize(id){
