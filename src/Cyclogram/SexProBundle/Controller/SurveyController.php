@@ -19,8 +19,7 @@ class SurveyController extends Controller
     {
         $lime_em = $this->getDoctrine()->getManager('limesurvey');
         $locale = $this->getRequest()->getLocale();
-        if ($locale == 'es')
-            $locale = 'es-MX';
+
         $survey = $lime_em->getRepository('CyclogramProofPilotBundleLime:LimeSurveysLanguagesettings')->find(array('surveylsSurveyId' => $surveyId,'surveylsLanguage' => $locale));
         if (empty($survey))
             $survey = $lime_em->getRepository('CyclogramProofPilotBundleLime:LimeSurveysLanguagesettings')->find(array('surveylsSurveyId' => $surveyId,'surveylsLanguage' => 'en'));
