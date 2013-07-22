@@ -1,23 +1,44 @@
 <header> 
-    <a class="site_logo" href="#">ProofPilot</a>
-        <ul class="header_menu">
-          <li><a class="register_link" href="{{ path('_registration') }}">{% trans %}txt_header_register_here{% endtrans %}</a>
-              <span class="text">{% trans %}txt_header_or{% endtrans %}</span>
-          </li>
-          <li><a class="login" href="{{ path('_login') }}"><span>{% trans %}txt_header_login{% endtrans %}</span></a></li>
-        </ul>
+    {% if app.user %}
+        <a class="site_logo" href="{{ path('_main') }}">ProofPilot</a>
+    {% else %}
+        <a class="site_logo" href="{{ path('_login') }}">ProofPilot</a>
+    {% endif %}
+    {% if app.user %}
+        {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createTopSettingsMenu',{'template': 'CyclogramFrontendBundle:Knp:top_menu.html.twig'}) }}
+        {% else %}
+            <ul class="header_menu">
+                <li><a class="register_link" href="{{ path('_registration') }}">{% trans %}txt_header_register_here{% endtrans %}</a>
+                   <span class="text">{% trans %}txt_header_or{% endtrans %}</span>
+              </li>
+              <li><a class="login" href="{{ path('_login') }}"><span>{% trans %}txt_header_login{% endtrans %}</span></a></li>
+            </ul>
+        {% endif %}
 </header>
 <div class="mobile_header_menu nologin">
         <ul>
-          <li class="logo"><a class="site_logo" href="#">ProofPilot</a></li>
+        {% if app.user %}
+            <li class="logo"><a class="site_logo" href="{{ path('_main') }}">ProofPilot</a></li>
+        {% else %}
+            <li class="logo"><a class="site_logo" href="{{ path('_login') }}">ProofPilot</a></li>
+        {% endif %}
           <li class="right"><a class="trigger_sitemenu" href="#"></a></li>
         </ul>
 </div>
 <div class="mobile_sitemenu register nologin">
-        <div class="menu_wrapper"> <a class="close" href="#"></a> <a class="logo" href="#">ProofPilot</a>
-          <ul>
-            <li><a href="{{ path('_registration') }}" class="icon_register"><span>{% trans %}txt_header_register{% endtrans %}</span></a></li>
-            <li><a href="{{ path('_login') }}" class="icon_login"><span>{% trans %}txt_header_login{% endtrans %}</span></a></li>
-          </ul>
+        <div class="menu_wrapper">
+        {% if app.user %}
+            <a class="close" href="#"></a> <a class="logo" href="#">ProofPilot</a>
+        {% else %}
+            <a class="close" href="#"></a> <a class="logo" href="#">ProofPilot</a>
+        {% endif %}
+        {% if app.user %}
+            {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createTopSettingsMenu',{'template': 'CyclogramFrontendBundle:Knp:top_menu.html.twig'}) }}
+        {% else %}
+            <ul>         
+                <li><a href="{{ path('_registration') }}" class="icon_register"><span>{% trans %}txt_header_register{% endtrans %}</span></a></li>
+                <li><a href="{{ path('_login') }}" class="icon_login"><span>{% trans %}txt_header_login{% endtrans %}</span></a></li>
+            </ul>
+        {% endif %}
         </div>
 </div>

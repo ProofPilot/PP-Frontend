@@ -1,5 +1,9 @@
 <header>
-  <a class="site_logo" href="#">ProofPilot</a>
+     {% if app.user %}
+        <a class="site_logo" href="{{ path('_main') }}">ProofPilot</a>
+    {% else %}
+        <a class="site_logo" href="{{ path('_login') }}">ProofPilot</a>
+    {% endif %}
   <ul class="header_menu">
     <li>
       <a class="icon_help" href="#">
@@ -17,13 +21,22 @@
   <div class="mobile_header_menu">
     <ul>
       <li><a href="#" class="trigger_left_menu"></a></li>
-      <li class="logo"><a href="#" class="site_logo">ProofPilot</a></li>
+      {% if app.user %}
+          <li class="logo"><a class="site_logo" href="{{ path('_main') }}">ProofPilot</a></li>
+      {% else %}
+          <li class="logo"><a class="site_logo" href="{{ path('_login') }}">ProofPilot</a></li>
+      {% endif %}
+
       <li class="right"><a href="#" class="trigger_sitemenu"></a></li>
     </ul>
   </div>
   <div class="mobile_sitemenu">
     <div class="menu_wrapper">
-      <a href="#" class="close"></a> <a href="#" class="logo">ProofPilot</a>
+      {% if app.user %}
+          <a href="#" class="close"></a> <a href="{{ path('_main') }}" class="logo">ProofPilot</a>
+      {% else %}
+          <a href="#" class="close"></a> <a href="{{ path('_login') }}" class="logo">ProofPilot</a>
+      {% endif %}
       <ul>
         <li><a class="icon_settings" href="#"><span>My Settings</span></a></li>
         <li><a class="icon_logout" href="#"><span>Logout</span></a></li>
