@@ -39,7 +39,7 @@ class MobilePhoneForm extends AbstractType
         $builder->add('phone_wide' , 
                       'text', 
                       array(
-                              'attr'=>array('maxlength'=>10),
+                              'attr'=>array('maxlength'=>11),
                               'constraints' => new Length(array(
                                       'min'=>8,
                                       'minMessage'=>'error_min_phone_code_length',
@@ -92,7 +92,6 @@ class MobilePhoneForm extends AbstractType
     public function validatePhone($formData, ExecutionContextInterface $context)
     {
         $phone = $formData["phone_small"] . $formData["phone_wide"];
-        
         $count = $this->container->get('doctrine')
         ->getRepository('CyclogramProofPilotBundle:Participant')
         ->checkIfPhoneNotUsed($phone);
