@@ -1,7 +1,6 @@
 <?php
 
 namespace Cyclogram\Bundle\ProofPilotBundle\Entity;
-
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -18,7 +17,7 @@ class StudyContent
      * @ORM\Column(name="study_name", type="string", length=255, nullable=true)
      */
     private $studyName;
-    
+
     /**
      * @var string
      *
@@ -39,6 +38,13 @@ class StudyContent
      * @ORM\Column(name="study_graphic", type="string", length=255, nullable=true)
      */
     private $studyGraphic;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="study_graphic_text", type="string", length=255, nullable=true)
+     */
+    private $studyGraphicText;
 
     /**
      * @var string
@@ -126,8 +132,6 @@ class StudyContent
      * })
      */
     private $study;
-
-
 
     public function getStudyLogo()
     {
@@ -278,4 +282,15 @@ class StudyContent
     {
         $this->studyName = $studyName;
     }
+
+    public function getStudyGraphicText()
+    {
+        return $this->studyGraphicText;
+    }
+
+    public function setStudyGraphicText($studyGraphicText)
+    {
+        $this->studyGraphicText = $studyGraphicText;
+    }
+
 }

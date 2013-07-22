@@ -81,7 +81,14 @@ doctrine:
             limesurvey:
                 connection: limesurvey
                 mappings:
-                    CyclogramSexProBundle: ~     
+                    CyclogramProofPilotBundle: 
+                        mapping:              true
+                        type:                 annotation
+                        dir:                  %kernel.root_dir%/../src/Cyclogram/Bundle/ProofPilotBundle/Entity/LimeSurvey
+                        alias:                CyclogramProofPilotBundleLime
+                        prefix:               Cyclogram\Bundle\ProofPilotBundle\Entity\LimeSurvey
+                        is_bundle:            false
+
 
 # Swiftmailer Configuration
 swiftmailer:

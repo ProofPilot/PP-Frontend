@@ -12,14 +12,21 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class SurveyController extends Controller
 {
     /**
-     * @Route("/survey", name="_survey")
+     * @Route("/survey/{studyId}/{surveyId}", name="_survey")
      * @Template()
      */
-    public function surveyAction()
+    public function surveyAction($studyId, $surveyId)
     {
         $lime_em = $this->getDoctrine()->getManager('limesurvey');
-        $survey = $lime_em->getRepository('CyclogramSexProBundle:LimeSurveys')->find('468727');
+        $locale = $this->getRequest()->getLocale();
+        if ($locale == 'es')
+            $locale = 'es-MX';
+        $survey = $lime_em->getRepository('CyclogramProofPilotBundleLime:LimeSurveysLanguagesettings')->find(array('surveylsSurveyId' => $surveyId,'surveylsLanguage' => $locale));
+        if (empty($survey))
+            $survey = $lime_em->getRepository('CyclogramProofPilotBundleLime:LimeSurveysLanguagesettings')->find(array('surveylsSurveyId' => $surveyId,'surveylsLanguage' => 'en'));
         $parameters = array();
+        
+        $parameters['survey_url'] = "/lime/index.php/survey/index/sid/".$surveyId."/newtest/Y/lang/".$locale;
         
         $parameters["lastaccess"] = new \DateTime("2013-07-01 10:05:00");
          
@@ -39,8 +46,7 @@ class SurveyController extends Controller
         
         $parameters["page"] = array(
                 'image' => '/images/tmp_banner_small.jpg',
-                'title' => $survey->getTemplate(),
-                'subtitle' => $survey->getAdmin()
+                'title' => $survey->getSurveylsTitle()
         );
         
 //         $parameters["survey"] = array(
