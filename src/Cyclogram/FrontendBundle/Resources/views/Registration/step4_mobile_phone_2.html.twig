@@ -2,7 +2,7 @@
 
 {% block body %}
   <body class="has_image">
-    <div class="reg_header"> <a href="#" class="logo">ProofPilot</a> </div>
+    {% include '::header_reg.html.twig' %}
     <div class="mobile_reg">
       <h1><span>{% trans from "register" %}txt_join{% endtrans %} 4/6:</span> {% trans from "register" %}double_check{% endtrans %}</h1>
       <ul class="confirm_list">

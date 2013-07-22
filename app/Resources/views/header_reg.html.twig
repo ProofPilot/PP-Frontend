@@ -1,0 +1,7 @@
+		<div class="reg_header">
+		{% if app.user %}
+			<a href="{{ path('_main') }}" class="logo">ProofPilot</a>
+	    {% else  %}
+	        <a href="{{ path('_login') }}" class="logo">ProofPilot</a>
+	    {%  endif %}
+		</div>
