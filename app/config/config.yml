@@ -116,7 +116,7 @@ jms_translation:
             output_dir: %kernel.root_dir%/Resources/translations
             ignored_domains: [routes, validators]
             excluded_names: [*TestCase.php, *Test.php]
-            excluded_dirs: [cache, data, logs, Acme]
+            excluded_dirs: [cache, data, logs, Acme, LimeSurvey]
             #extractors: [alias_of_the_extractor]
     locales: %locales%
 

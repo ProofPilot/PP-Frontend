@@ -1,5 +1,4 @@
 already_joined: 'Já aderiu'
-city_state: city_state
 confirm_password: 'confirme a senha'
 create_password: 'Crie uma senha (minímo de 8 caracteres com pelo menos 2 números)'
 double_check: 'txt_double_check-you_entry'''
@@ -8,7 +7,6 @@ enter_address: enter_address
 enter_email: 'Por favor insira um endereço de e-mail válido'
 enter_mobile_phone: 'Digite o número do seu telefone celular'
 enter_sms_code: "Digite o código de verificação que você recebeu em seu telefone\n"
-fisrt_name: fisrt_name
 label_address1: label_address1
 label_address2: label_address2
 label_city: label_city
@@ -16,15 +14,12 @@ label_firstname: label_firstname
 label_lastname: label_lastname
 label_state: label_state
 label_zipcode: label_zipcode
-last_name: last_name
 mail_confirmation_fail: mail_confirmation_fail
 min_charachters: '(minímo de 8 caracteres)'
 no_code: 'Sem código? Enviar outro'
 ok_verify: 'OK, Verifique!'
 pick_user: 'Escolha o seu nome de usuário'
 send_confirmation: 'Enviar código de verificação para o celular'
-str_address: str_address
-str_address2: str_address2
 txt_check_email: txt_check_email
 txt_join: Junte
 txt_join_with: Junte-se
@@ -33,4 +28,3 @@ txt_subtitle_check_email: txt_subtitle_check_email
 txt_why: 'Por que?'
 username: usuário
 wrong_back: 'Incorreto, voltar'
-zip_code: zip_code
