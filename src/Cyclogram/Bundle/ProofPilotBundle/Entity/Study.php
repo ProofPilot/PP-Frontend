@@ -1,7 +1,6 @@
 <?php
 
 namespace Cyclogram\Bundle\ProofPilotBundle\Entity;
-
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -94,6 +93,13 @@ class Study
     /**
      * @var boolean
      *
+     * @ORM\Column(name="email_verification_required", type="boolean", nullable=false)
+     */
+    private $emailVerificationRequired;
+
+    /**
+     * @var boolean
+     *
      * @ORM\Column(name="study_real_time_graphics", type="boolean", nullable=false)
      */
     private $studyRealTimeGraphics;
@@ -130,7 +136,6 @@ class Study
     {
         $this->language = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
 
     /**
      * Get studyId
@@ -151,7 +156,7 @@ class Study
     public function setStudyName($studyName)
     {
         $this->studyName = $studyName;
-    
+
         return $this;
     }
 
@@ -174,7 +179,7 @@ class Study
     public function setStudyRecruitmentStart($studyRecruitmentStart)
     {
         $this->studyRecruitmentStart = $studyRecruitmentStart;
-    
+
         return $this;
     }
 
@@ -197,7 +202,7 @@ class Study
     public function setStudyRecruitmentEnd($studyRecruitmentEnd)
     {
         $this->studyRecruitmentEnd = $studyRecruitmentEnd;
-    
+
         return $this;
     }
 
@@ -220,7 +225,7 @@ class Study
     public function setStudyRecruitmentExtendEnd($studyRecruitmentExtendEnd)
     {
         $this->studyRecruitmentExtendEnd = $studyRecruitmentExtendEnd;
-    
+
         return $this;
     }
 
@@ -243,7 +248,7 @@ class Study
     public function setStudyAllowInvites($studyAllowInvites)
     {
         $this->studyAllowInvites = $studyAllowInvites;
-    
+
         return $this;
     }
 
@@ -266,7 +271,7 @@ class Study
     public function setStudyAllowSharing($studyAllowSharing)
     {
         $this->studyAllowSharing = $studyAllowSharing;
-    
+
         return $this;
     }
 
@@ -289,7 +294,7 @@ class Study
     public function setStudyInviteOnly($studyInviteOnly)
     {
         $this->studyInviteOnly = $studyInviteOnly;
-    
+
         return $this;
     }
 
@@ -312,7 +317,7 @@ class Study
     public function setStudyFacebookPage($studyFacebookPage)
     {
         $this->studyFacebookPage = $studyFacebookPage;
-    
+
         return $this;
     }
 
@@ -335,7 +340,7 @@ class Study
     public function setStudyTwitterPage($studyTwitterPage)
     {
         $this->studyTwitterPage = $studyTwitterPage;
-    
+
         return $this;
     }
 
@@ -355,10 +360,11 @@ class Study
      * @param boolean $studyAllowMobileDevicesStoreDate
      * @return Study
      */
-    public function setStudyAllowMobileDevicesStoreDate($studyAllowMobileDevicesStoreDate)
+    public function setStudyAllowMobileDevicesStoreDate(
+            $studyAllowMobileDevicesStoreDate)
     {
         $this->studyAllowMobileDevicesStoreDate = $studyAllowMobileDevicesStoreDate;
-    
+
         return $this;
     }
 
@@ -381,7 +387,7 @@ class Study
     public function setStudyBarcodeRequired($studyBarcodeRequired)
     {
         $this->studyBarcodeRequired = $studyBarcodeRequired;
-    
+
         return $this;
     }
 
@@ -404,7 +410,7 @@ class Study
     public function setStudyRealTimeGraphics($studyRealTimeGraphics)
     {
         $this->studyRealTimeGraphics = $studyRealTimeGraphics;
-    
+
         return $this;
     }
 
@@ -424,10 +430,11 @@ class Study
      * @param \Cyclogram\Bundle\ProofPilotBundle\Entity\Language $language
      * @return Study
      */
-    public function addLanguage(\Cyclogram\Bundle\ProofPilotBundle\Entity\Language $language)
+    public function addLanguage(
+            \Cyclogram\Bundle\ProofPilotBundle\Entity\Language $language)
     {
         $this->language[] = $language;
-    
+
         return $this;
     }
 
@@ -436,7 +443,8 @@ class Study
      *
      * @param \Cyclogram\Bundle\ProofPilotBundle\Entity\Language $language
      */
-    public function removeLanguage(\Cyclogram\Bundle\ProofPilotBundle\Entity\Language $language)
+    public function removeLanguage(
+            \Cyclogram\Bundle\ProofPilotBundle\Entity\Language $language)
     {
         $this->language->removeElement($language);
     }
@@ -457,10 +465,11 @@ class Study
      * @param \Cyclogram\Bundle\ProofPilotBundle\Entity\Status $status
      * @return Study
      */
-    public function setStatus(\Cyclogram\Bundle\ProofPilotBundle\Entity\Status $status = null)
+    public function setStatus(
+            \Cyclogram\Bundle\ProofPilotBundle\Entity\Status $status = null)
     {
         $this->status = $status;
-    
+
         return $this;
     }
 
@@ -473,8 +482,20 @@ class Study
     {
         return $this->status;
     }
-    
-    public function __toString() {
-    	return $this->studyName;
+
+    public function __toString()
+    {
+        return $this->studyName;
     }
+
+    public function getEmailVerificationRequired()
+    {
+        return $this->emailVerificationRequired;
+    }
+
+    public function setEmailVerificationRequired($emailVerificationRequired)
+    {
+        $this->emailVerificationRequired = $emailVerificationRequired;
+    }
+
 }

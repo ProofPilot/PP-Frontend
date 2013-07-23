@@ -10,6 +10,8 @@ _root:
         route: _page
         statusCode: 301
         useReferrer: false
+        routeParameters:
+            studyUrl: 'sexpro'
 
 cyclogram_proof_pilot:
     resource: "@CyclogramProofPilotBundle/Controller/"

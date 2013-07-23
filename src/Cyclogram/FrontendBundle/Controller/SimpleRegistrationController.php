@@ -26,76 +26,6 @@ use Cyclogram\Bundle\ProofPilotBundle\Entity\Participant;
 class  SimpleRegistrationController extends Controller{
     
     /**
-     * @Route("/simpleregister", name="simple_registration")
-     * @Template()
-     */
-    public function simpleRegStep1Action()
-    {
-        if ($this->get('security.context')->isGranted("ROLE_USER")){
-            return $this->redirect($this->generateURL("_main"));
-        }
-        $request = $this->getRequest();
-    
-        $collectionConstraint = new Collection(array(
-                'fields' => array(
-                        'password' => new Length(array('min' => 8))
-                )
-        ));
-    
-        $form = $this->createForm(new RegistrationForm($this->container, array('constraints' => $collectionConstraint)));
-    
-        if ($request->getMethod() == 'POST') {
-            $form->handleRequest($request);
-            $em = $this->getDoctrine()->getManager();
-            if ($form->isValid()) {
-                $registration = $form->getData();
-                try{
-                    $user = new Participant();
-                    $user->setParticipantEmail($registration->getParticipantEmail());
-                    $user->setParticipantPassword($registration->getParticipantPassword());
-                    $user->setParticipantUsername($registration->getParticipantUsername());
-                    $question = $em->getRepository('CyclogramProofPilotBundle:RecoveryQuestion')->find(1);
-                    $user->setRecoveryQuestion($question);
-                    $user->setRecoveryPasswordCode('Default');
-                    $user->setParticipantEmailConfirmed(false);
-                    $user->setParticipantMobileNumber('');
-                    $user->setParticipantMobileSmsCodeConfirmed(false);
-                    $user->setParticipantIncentiveBalance(false);
-                    $date = new \DateTime();
-                    $user->setParticipantLastTouchDatetime($date);
-                    $user->setParticipantZipcode('');
-                    $country = $em->getRepository('CyclogramProofPilotBundle:Country')->find(1);
-                    $user->setCountry($country);
-                    $state =  $em->getRepository('CyclogramProofPilotBundle:State')->find(35);
-                    $user->setState($state);
-                    $city = $em->getRepository('CyclogramProofPilotBundle:City')->find(25420);
-                    $user->setCity($city);
-                    $sex = $em->getRepository('CyclogramProofPilotBundle:Sex')->find(1);
-                    $user->setSex($sex);
-                    $race = $em->getRepository('CyclogramProofPilotBundle:Race')->find(1);
-                    $user->setRace($race);
-                    $role = $em->getRepository('CyclogramProofPilotBundle:ParticipantRole')->find(1);
-                    $user->setParticipantRole($role);
-                    $status = $em->getRepository('CyclogramProofPilotBundle:Status')->find(1);
-                    $user->setStatus($status);
-    
-                    $em->persist($user);
-                    $em->flush();
-    
-                    return $this->redirect( $this->generateUrl("simplereg_step_2", array('id' => $user->getParticipantId())) );
-    
-                } catch (Exception $ex) {
-                    $em->close();
-                    throw new  Exception('HAHAHA');
-                }
-            }
-    
-        }
-        return $this->render('CyclogramFrontendBundle:SimpleRegistration:register.html.twig', array ('form' => $form->createView()));
-    
-    }
-    
-    /**
      * @Route("/simplereg_step2/{id}", name="simplereg_step_2")
      * @Template()
      */
@@ -104,7 +34,7 @@ class  SimpleRegistrationController extends Controller{
         $em = $this->getDoctrine()->getManager();
         $participant = $em->getRepository('CyclogramProofPilotBundle:Participant')->find($id);
         if (empty($participant)) {
-            return $this->redirect( $this->generateUrl("simple_registration"));
+            return $this->redirect( $this->generateUrl("_registration"));
         }
         $request = $this->getRequest();
     
@@ -145,7 +75,7 @@ class  SimpleRegistrationController extends Controller{
         $em = $this->getDoctrine()->getManager();
         $participant = $em->getRepository('CyclogramProofPilotBundle:Participant')->find($id);
         if (empty($participant)) {
-            return $this->redirect( $this->generateUrl("simple_registration"));
+            return $this->redirect( $this->generateUrl("_registration"));
         }
     
         if ($participant->getParticipantMobileSmsCodeConfirmed() == true) {
@@ -187,7 +117,7 @@ class  SimpleRegistrationController extends Controller{
         $em = $this->getDoctrine()->getManager();
         $participant = $em->getRepository('CyclogramProofPilotBundle:Participant')->find($id);
         if (empty($participant)) {
-            return $this->redirect( $this->generateUrl("simple_registration"));
+            return $this->redirect( $this->generateUrl("_registration"));
         }
     
         $userSMS = $participant->getParticipantMobileSmsCode();

@@ -23,8 +23,6 @@ use Symfony\Component\Validator\Constraints\Length;
 class LoginController extends Controller
 {
 
-    
-    
     /**
      * @Route("/login", name="_login")
      * @Template()
@@ -48,7 +46,7 @@ class LoginController extends Controller
             'error'         => $error,
         ));
     }
-    
+
     /**
      * @Route("/login_check", name="login_check")
      */
@@ -63,7 +61,7 @@ class LoginController extends Controller
     public function facebookSecuredAction() {
         
     }
-    
+
     /**
      * @Route("/logout", name="_logout" , options={"expose"=true})
      */
@@ -71,7 +69,7 @@ class LoginController extends Controller
     {
         // The security layer will intercept this request
     }
-    
+
     /**
      * @Route("/doLogin", name="_do_login")
      * @Template()
@@ -113,7 +111,7 @@ class LoginController extends Controller
     
         return $this->redirect(($this->generateUrl("login_sms")));
     }
-    
+
     /**
      * @Route("/login_sms/", name="login_sms" )
      * @Template()

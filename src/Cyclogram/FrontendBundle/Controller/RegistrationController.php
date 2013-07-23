@@ -28,10 +28,10 @@ class RegistrationController extends Controller
 {
 
     /**
-     * @Route("/register", name="_registration")
+     * @Route("/register/{studyId}", name="_registration", defaults={"studyId" = 1})
      * @Template()
      */
-    public function step1Action()
+    public function step1Action($studyId)
     {
         if ($this->get('security.context')->isGranted("ROLE_USER")){
             return $this->redirect($this->generateURL("_main"));
@@ -84,8 +84,10 @@ class RegistrationController extends Controller
         
                     $em->persist($participant);
                     $em->flush();
-                    
-                    return $this->redirect( $this->generateUrl("reg_step_2", array('id' => $participant->getParticipantId())) );
+                    $study = $em->getRepository('CyclogramProofPilotBundle:Study')->find($studyId);
+                    if ($study->getEmailVerificationRequired())
+                        return $this->redirect( $this->generateUrl("reg_step_2", array('id' => $participant->getParticipantId())) );
+                    return $this->redirect( $this->generateUrl("simplereg_step_2", array('id' => $participant->getParticipantId())) );
                 
                 } catch (Exception $ex) {
                     $em->close();
@@ -94,7 +96,7 @@ class RegistrationController extends Controller
             }
 
            }
-        return $this->render('CyclogramFrontendBundle:Registration:step1_register.html.twig', array ('form' => $form->createView()));
+        return $this->render('CyclogramFrontendBundle:Registration:step1_register.html.twig', array ('form' => $form->createView(), 'studyId' => $studyId));
         
         }
 

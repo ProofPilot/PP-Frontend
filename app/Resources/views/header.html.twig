@@ -8,7 +8,7 @@
         {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createTopSettingsMenu',{'template': 'CyclogramFrontendBundle:Knp:top_menu.html.twig'}) }}
         {% else %}
             <ul class="header_menu">
-                <li><a class="register_link" href="{{ path('_registration') }}">{% trans %}txt_header_register_here{% endtrans %}</a>
+                <li><a class="register_link" href="{{ path('_registration', {'studyId' : studyId}) }}">{% trans %}txt_header_register_here{% endtrans %}</a>
                    <span class="text">{% trans %}txt_header_or{% endtrans %}</span>
               </li>
               <li><a class="login" href="{{ path('_login') }}"><span>{% trans %}txt_header_login{% endtrans %}</span></a></li>
@@ -36,7 +36,7 @@
             {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createTopSettingsMenu',{'template': 'CyclogramFrontendBundle:Knp:top_menu.html.twig'}) }}
         {% else %}
             <ul>         
-                <li><a href="{{ path('_registration') }}" class="icon_register"><span>{% trans %}txt_header_register{% endtrans %}</span></a></li>
+                <li><a href="{{ path('_registration', {'studyId' : studyId}) }}" class="icon_register"><span>{% trans %}txt_header_register{% endtrans %}</span></a></li>
                 <li><a href="{{ path('_login') }}" class="icon_login"><span>{% trans %}txt_header_login{% endtrans %}</span></a></li>
             </ul>
         {% endif %}

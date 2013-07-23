@@ -12,10 +12,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class SurveyController extends Controller
 {
     /**
-     * @Route("/survey/{studyId}/{surveyId}", name="_survey")
+     * @Route("/survey/{studyUrl}/{studyId}/{surveyId}", name="_survey")
      * @Template()
      */
-    public function surveyAction($studyId, $surveyId)
+    public function surveyAction($studyUrl, $studyId, $surveyId)
     {
         $lime_em = $this->getDoctrine()->getManager('limesurvey');
         $locale = $this->getRequest()->getLocale();
@@ -24,6 +24,9 @@ class SurveyController extends Controller
         if (empty($survey))
             $survey = $lime_em->getRepository('CyclogramProofPilotBundleLime:LimeSurveysLanguagesettings')->find(array('surveylsSurveyId' => $surveyId,'surveylsLanguage' => 'en'));
         $parameters = array();
+        
+        $parameters['studyUrl'] = $studyUrl;
+        $parameters['studyId'] = $studyId;
         
         $parameters['survey_url'] = "/lime/index.php/survey/index/sid/".$surveyId."/newtest/Y/lang/".$locale;
         

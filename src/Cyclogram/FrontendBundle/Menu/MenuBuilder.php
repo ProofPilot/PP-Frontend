@@ -56,7 +56,7 @@ class MenuBuilder extends ContainerAware implements TranslationContainerInterfac
     {
         $menu = $factory->createItem('root');
 
-        $menu->addChild('bottom_right_menu.help', array('route' => '_page'))
+        $menu->addChild('bottom_right_menu.help', array('route' => '_page', 'routeParameters' => array('studyUrl' => 'sexpro')))
                 ->setAttribute('class', 'icon_help')->setExtra('translation_domain', 'generalmenus');
         $menu->addChild('bottom_right_menu.logout', array('route' => '_logout'))
                 ->setAttribute('class', 'icon_logout normal')->setExtra('translation_domain', 'generalmenus');
@@ -87,7 +87,7 @@ class MenuBuilder extends ContainerAware implements TranslationContainerInterfac
         $menu = $factory->createItem('root');
         $menu->setChildrenAttribute('class', 'header_menu');
 
-        $menu->addChild('top_menu.help', array('route' => '_page'))
+        $menu->addChild('top_menu.help', array('route' => '_page', 'routeParameters' => array('studyUrl' => 'sexpro')))
                 ->setAttribute('class', 'icon_help')
                 ->setExtra('translation_domain', 'generalmenus');
         $menu->addChild('top_menu.logout', array('route' => '_logout'))
