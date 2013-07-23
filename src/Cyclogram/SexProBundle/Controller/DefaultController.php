@@ -4,10 +4,11 @@ namespace Cyclogram\SexProBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/{_locale}/sexpro")
+ * @Route("/{_locale}/{studyUrl}")
  */
 class DefaultController extends Controller
 {
@@ -15,9 +16,11 @@ class DefaultController extends Controller
      * @Route("", name="_page")
      * @Template()
      */
-    public function pageAction()
+    public function pageAction($studyUrl)
     {
-        $studyId = 1;
+        $em = $this->getDoctrine()->getManager();
+        $study = $em->getRepository("CyclogramProofPilotBundle:StudyContent")->findOneBystudyUrl($studyUrl);
+        $studyId = $study->getStudyId();
         $surveyId = 468727;
         $locale = $this->getRequest()->getLocale();
     
@@ -28,6 +31,7 @@ class DefaultController extends Controller
         $parameters = array();
     
         $parameters["studycontent"] = $studyContent;
+        $parameters["studyUrl"] = $studyUrl;
         $parameters["studyId"] = $studyId;
         $parameters["surveyId"] = $surveyId;
     
@@ -39,7 +43,7 @@ class DefaultController extends Controller
      * @Route("/study/{studyId}", name="_study")
      * @Template()
      */
-    public function studyAction($studyId)
+    public function studyAction($studyUrl, $studyId)
     {
         $locale = $this->getRequest()->getLocale();
     
@@ -50,6 +54,7 @@ class DefaultController extends Controller
         $parameters = array();
     
         $parameters["studycontent"] = $studyContent;
+        $parameters["studyUrl"] = $studyUrl;
     
     
         $parameters["info"] = 'The purpose of this study is to learn what men and transwomen like and don’t like about SexPro and how it affects their understanding of sexual protection
@@ -78,7 +83,7 @@ class DefaultController extends Controller
      * @Route("/newsletter", name="_newsletter")
      * @Template()
      */
-    public function newslatterAction()
+    public function newslatterAction($studyUrl)
     {
         $parameters["email"] = array(
                 'title' => 'E-mail title placeholder', 
@@ -110,9 +115,10 @@ class DefaultController extends Controller
      * @Route("/is_it_secure", name="_secure")
      * @Template()
      */
-    public function isItSecureAction()
+    public function isItSecureAction($studyUrl)
     {
         $parameters = array();
+        $parameters["studyUrl"] = $studyUrl;
         
         $parameters["security"] = array(
                 'note' => 'We understand that you may be sharing some really sensitive stuff with ProofPilot, so we take your privacy and security very seriously.'

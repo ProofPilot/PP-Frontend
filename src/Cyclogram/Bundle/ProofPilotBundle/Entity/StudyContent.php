@@ -12,6 +12,12 @@ use Doctrine\ORM\Mapping as ORM;
 class StudyContent
 {
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="study_id", type="integer", nullable=false)
+     */
+    private $studyId;
+    /**
      * @var string
      *
      * @ORM\Column(name="study_name", type="string", length=255, nullable=true)
@@ -115,6 +121,13 @@ class StudyContent
      * @ORM\Column(name="study_description", type="string", length=2000, nullable=true)
      */
     private $studyDescription;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="study_url", type="string", length=200, nullable=true)
+     */
+    private $studyUrl;
 
     /**
      * @var \Language
@@ -308,6 +321,26 @@ class StudyContent
     public function setStudyDescription($studyDescription)
     {
         $this->studyDescription = $studyDescription;
+    }
+
+    public function getStudyUrl()
+    {
+        return $this->studyUrl;
+    }
+
+    public function setStudyUrl($studyUrl)
+    {
+        $this->studyUrl = $studyUrl;
+    }
+
+    public function getStudyId()
+    {
+        return $this->studyId;
+    }
+
+    public function setStudyId($studyId)
+    {
+        $this->studyId = $studyId;
     }
 
 }

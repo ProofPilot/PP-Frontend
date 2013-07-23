@@ -53,6 +53,7 @@ EOD;
           <p><br></p>
           <p>Enroll in the study to get started!<br></p>
 EOD;
+        $studyContent->setStudyUrl("sexpro");
         $studyContent->setStudyTagline($strStudyTagline);
         $studyContent->setStudyDescription($strStudyDescription);
         $studyContent->setStudyAbout($strAbout);
@@ -97,6 +98,7 @@ EOD;
           <p><br></p>
           <p>Inscríbase en el estudio para empezar!<br></p>
 EOD;
+        $studyContent->setStudyUrl("sexpro");
         $studyContent->setStudyTagline($strStudyTagline);
         $studyContent->setStudyDescription($strStudyDescription);
         $studyContent->setStudyAbout($strAbout);
