@@ -53,6 +53,26 @@ EOD;
           <p><br></p>
           <p>Enroll in the study to get started!<br></p>
 EOD;
+        $strStudyConsentIntroduction = <<<EOD
+          <p>The purpose of this study is to learn what men and transwomen like and don’t like about SexPro and how it affects their understanding of sexual protection
+                behaviors. We will also see whether Sex Pro helps men and transwomen to change their sexual health practices, and how using this tool affects counseling
+                sessions between our study participants and their HIV counselors.</p>
+EOD;
+        $strStudyConsent = <<<EOD
+          <h2>What’s Involved?</h2>
+        <p style="color: #7e7e7e;">Taking part in this study is your choice.  You may choose either to take part or not to take part in the study.  If you decide to take part in this
+                        study, you may leave the study at any time.  No matter what decision you make, there will be no penalty to you in any way. You can still get your care
+                        from our institution the way you usually do.We will tell you about new information or changes in the study that may affect your health or your willingness
+                        to continue in the study.</p>
+        <h2>What are my rights if I take part in this study?</h2>
+        <p style="color: #7e7e7e;">Taking part in this study is your choice. You may choose either to take part or not to take part in the study. If you decide to take part in this study,
+                        you may leave the study at any time.  No matter what decision you make, there will be no penalty to you in any way. You can still get your care from our
+                        institution the way you usually do.</p>
+        <h2>Who can answer my questions about the study?</h2>
+        <p style="color: #7e7e7e;">You can talk to the researcher(s) about any questions, concerns, or complaints you have about this study.</p>
+EOD;
+        $studyContent->setStudyConsent($strStudyConsent);
+        $studyContent->setStudyConsentIntroduction($strStudyConsentIntroduction);
         $studyContent->setStudyUrl("sexpro");
         $studyContent->setStudyTagline($strStudyTagline);
         $studyContent->setStudyDescription($strStudyDescription);

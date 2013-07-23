@@ -63,9 +63,6 @@ class DefaultController extends Controller
         $parameters["studyUrl"] = $studyUrl;
     
     
-        $parameters["info"] = 'The purpose of this study is to learn what men and transwomen like and don’t like about SexPro and how it affects their understanding of sexual protection
-                behaviors. We will also see whether Sex Pro helps men and transwomen to change their sexual health practices, and how using this tool affects counseling
-                sessions between our study participants and their HIV counselors.';
     
         $parameters["content"] = array(
                 array('title' => 'What’s Involved?',

@@ -231,8 +231,9 @@
      			var surveydata = $(this).contents().find('#surveydata');
 		    	var surveyId = surveydata.attr('surveyid');
 		    	var saveId = surveydata.attr('saveid');
+		    	var studyUrl = '{{ studyUrl }}';
 		    	if(surveyId !== undefined && saveId !== undefined) {
-		    	    window.location = '/surveyResponce?surveyId=' + surveyId + "&saveId=" + saveId;
+		    	    window.location = '/surveyResponce?studyUrl=' + studyUrl + '&surveyId=' + surveyId + '&saveId=' + saveId;
 		    	}
 
 
