@@ -5,7 +5,7 @@
 	
 		<div class="site_container">
 		{% block header %}
-            {% include '::header.html.twig' %}
+{% include '::header.html.twig' with {'studyId' : studyId}%}
         {% endblock header %}
 
 			<div class="panel alt_bg">
@@ -232,8 +232,9 @@
 		    	var surveyId = surveydata.attr('surveyid');
 		    	var saveId = surveydata.attr('saveid');
 		    	var studyUrl = '{{ studyUrl }}';
+		    	var studyId = {{ studyId }};
 		    	if(surveyId !== undefined && saveId !== undefined) {
-		    	    window.location = '/surveyResponce?studyUrl=' + studyUrl + '&surveyId=' + surveyId + '&saveId=' + saveId;
+		    	    window.location = '/surveyResponce?studyUrl=' + studyUrl + '&surveyId=' + surveyId + '&saveId=' + saveId + '&studyId=' + studyId;
 		    	}
 
 

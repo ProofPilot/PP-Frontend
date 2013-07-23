@@ -22,6 +22,7 @@ class LimeController extends Controller
         $surveyId = $this->getRequest()->query->get('surveyId');
         $saveId = $this->getRequest()->query->get('saveId');
         $studyUrl = $this->getRequest()->query->get('studyUrl');
+        $studyId = $this->getRequest()->query->get('studyId');
         
         $uniqId = uniqid();
         
@@ -35,7 +36,7 @@ class LimeController extends Controller
         $em->persist($ParticipantSurveyLink);
         $em->flush();
         
-        return $this->redirect(($this->generateUrl("_study", array('studyId'=>1, 'studyUrl' => $studyUrl))));
+        return $this->redirect(($this->generateUrl("_study", array('studyId'=> $studyId, 'studyUrl' => $studyUrl))));
 
         
     }

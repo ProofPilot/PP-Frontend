@@ -26,6 +26,7 @@ class SurveyController extends Controller
         $parameters = array();
         
         $parameters['studyUrl'] = $studyUrl;
+        $parameters['studyId'] = $studyId;
         
         $parameters['survey_url'] = "/lime/index.php/survey/index/sid/".$surveyId."/newtest/Y/lang/".$locale;
         

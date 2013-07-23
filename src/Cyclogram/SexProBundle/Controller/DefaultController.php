@@ -61,6 +61,7 @@ class DefaultController extends Controller
     
         $parameters["studycontent"] = $studyContent;
         $parameters["studyUrl"] = $studyUrl;
+        $parameters["studyId"] = $studyId;
     
     
     
@@ -118,10 +119,11 @@ class DefaultController extends Controller
      * @Route("/is_it_secure", name="_secure")
      * @Template()
      */
-    public function isItSecureAction($studyUrl)
+    public function isItSecureAction($studyUrl, $studyId)
     {
         $parameters = array();
         $parameters["studyUrl"] = $studyUrl;
+        $parameters["studyId"] = $studyId;
         
         $parameters["security"] = array(
                 'note' => 'We understand that you may be sharing some really sensitive stuff with ProofPilot, so we take your privacy and security very seriously.'

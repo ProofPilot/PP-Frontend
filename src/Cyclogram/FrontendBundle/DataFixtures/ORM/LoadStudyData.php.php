@@ -118,6 +118,26 @@ EOD;
           <p><br></p>
           <p>Inscríbase en el estudio para empezar!<br></p>
 EOD;
+        $strStudyConsentIntroduction = <<<EOD
+          <p>El propósito de este estudio es conocer lo que los hombres y transexuales gusta y no les gusta de SexPro y cómo afecta a su comprensión de la protección sexual
+                 comportamientos. También vamos a ver si Sex Pro ayuda a los hombres y los transexuales a cambiar sus prácticas de salud sexual, y cómo el uso de esta herramienta afecta el asesoramiento
+                 sesiones entre los participantes del estudio y sus consejeros de VIH.</p>
+EOD;
+        $strStudyConsent = <<<EOD
+          <h2>De qué se trata?</h2>
+        <p style="color: #7e7e7e;">La participación en este estudio es su elección. Usted puede optar por participar o no participar en el estudio. Si decide participar en este
+                         estudio, puede retirarse del estudio en cualquier momento. No importa cuál sea la decisión que tome, no habrá ninguna pena a usted de ninguna manera. Usted todavía puede obtener su atención
+                         de nuestra institución la forma en que normalmente do.we le informará acerca de nueva información o cambios en el estudio que pueda afectar su salud o su voluntad
+                         para continuar en el estudio.</p>
+        <h2>¿Cuáles son mis derechos si participo en este estudio?</h2>
+        <p style="color: #7e7e7e;">La participación en este estudio es su elección. Usted puede optar por participar o no participar en el estudio. Si usted decide participar en este estudio,
+                         puede dejar el estudio en cualquier momento. No importa cuál sea la decisión que tome, no habrá ninguna pena a usted de ninguna manera. Usted todavía puede recibir la atención de nuestra
+                         institución de la forma en que usualmente lo hace.</p>
+        <h2>¿Quién puede responder a mis preguntas sobre el estudio?</h2>
+        <p style="color: #7e7e7e;">Usted puede hablar con el investigador (s) sobre cualquier pregunta, inquietud o queja que tenga sobre este estudio.</p>
+EOD;
+        $studyContent->setStudyConsent($strStudyConsent);
+        $studyContent->setStudyConsentIntroduction($strStudyConsentIntroduction);
         $studyContent->setStudyUrl("sexpro");
         $studyContent->setStudyTagline($strStudyTagline);
         $studyContent->setStudyDescription($strStudyDescription);
