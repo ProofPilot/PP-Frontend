@@ -7,3 +7,13 @@ services:
         class: Twig_Extensions_Extension_Text
         tags:
             - name: twig.extension
+            
+            
+    lunetics_locale.switcher_controller:
+        class: Cyclogram\FrontendBundle\Controller\LocaleController
+        arguments:
+            - @router
+            - @lunetics_locale.validator.meta
+            - %lunetics_locale.switcher.use_referrer%
+            - %lunetics_locale.switcher.redirect_to_route%
+            - %lunetics_locale.switcher.redirect_statuscode%
