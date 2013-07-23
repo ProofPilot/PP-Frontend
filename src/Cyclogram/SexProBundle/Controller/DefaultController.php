@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @Route("/{_locale}/{studyUrl}")
@@ -18,11 +19,16 @@ class DefaultController extends Controller
      */
     public function pageAction($studyUrl)
     {
+        $locale = $this->getRequest()->getLocale();
         $em = $this->getDoctrine()->getManager();
-        $study = $em->getRepository("CyclogramProofPilotBundle:StudyContent")->findOneBystudyUrl($studyUrl);
+        $language = $em->getRepository("CyclogramProofPilotBundle:Language")->findOneByLocale($locale);
+        
+        $study = $em->getRepository("CyclogramProofPilotBundle:StudyContent")->findOneBy(array('studyUrl' => $studyUrl, 'language' => $language->getLanguageId()));
+        if (empty($study))
+            return new Response("Not found", 404);
+        
         $studyId = $study->getStudyId();
         $surveyId = 468727;
-        $locale = $this->getRequest()->getLocale();
     
         $studyContent = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:StudyContent')
         ->getStudyContent($studyId, $locale);

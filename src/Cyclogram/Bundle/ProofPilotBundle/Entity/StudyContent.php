@@ -17,6 +17,7 @@ class StudyContent
      * @ORM\Column(name="study_id", type="integer", nullable=false)
      */
     private $studyId;
+
     /**
      * @var string
      *
