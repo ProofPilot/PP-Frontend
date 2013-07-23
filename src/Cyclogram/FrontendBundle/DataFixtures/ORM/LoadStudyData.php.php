@@ -45,13 +45,16 @@ EOD;
             <p>You will receive SexPro instructions and start to use SexPro either at your first study visit or at your second study visit, depending on your 
                random group assignment.</p>
 EOD;
-        $strGraphicText = <<<EOD
+        $strStudyTagline = <<<EOD
           <span>Online Tool for Sexual Health Promotion</span>
+EOD;
+        $strStudyDescription = <<<EOD
           <p>SexPro is a part of a new study of online tools that might be helpful in keeping yourself HIV-negative inside and outside of your relationship(s).</p>
           <p><br></p>
           <p>Enroll in the study to get started!<br></p>
 EOD;
-        $studyContent->setStudyGraphicText($strGraphicText);
+        $studyContent->setStudyTagline($strStudyTagline);
+        $studyContent->setStudyDescription($strStudyDescription);
         $studyContent->setStudyAbout($strAbout);
         $studyContent->setStudyWhatsInvolved($strWhatsInvolved);
         $studyContent->setStudyRequirements($strRequirements);
@@ -86,13 +89,16 @@ EOD;
             <p>Usted recibirá instrucciones SexPro y empezar a utilizar SexPro ya sea en su primera visita de estudio o en su segunda visita de estudio, dependiendo de su
                 asignación a los grupos al azar.</p>
 EOD;
-        $strGraphicText = <<<EOD
+       $strStudyTagline = <<<EOD
           <span>Herramienta en línea para la Promoción de la Salud Sexual/span>
+EOD;
+        $strStudyDescription = <<<EOD
           <p>SexPro es una parte de un nuevo estudio de las herramientas en línea que pueden ser útiles para mantener a sí mismo en el interior del VIH-negativas y fuera de su relación (s).</p>
           <p><br></p>
           <p>Inscríbase en el estudio para empezar!<br></p>
 EOD;
-        $studyContent->setStudyGraphicText($strGraphicText);
+        $studyContent->setStudyTagline($strStudyTagline);
+        $studyContent->setStudyDescription($strStudyDescription);
         $studyContent->setStudyAbout($strAbout);
         $studyContent->setStudyWhatsInvolved($strWhatsInvolved);
         $studyContent->setStudyRequirements($strRequirements);

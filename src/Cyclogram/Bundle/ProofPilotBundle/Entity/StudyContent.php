@@ -42,13 +42,6 @@ class StudyContent
     /**
      * @var string
      *
-     * @ORM\Column(name="study_graphic_text", type="string", length=255, nullable=true)
-     */
-    private $studyGraphicText;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="study_about", type="string", length=2000, nullable=true)
      */
     private $studyAbout;
@@ -108,6 +101,20 @@ class StudyContent
      * @ORM\Column(name="study_consent", type="string", length=2000, nullable=true)
      */
     private $studyConsent;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="study_tagline", type="string", length=250, nullable=true)
+     */
+    private $studyTagline;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="study_description", type="string", length=2000, nullable=true)
+     */
+    private $studyDescription;
 
     /**
      * @var \Language
@@ -283,14 +290,24 @@ class StudyContent
         $this->studyName = $studyName;
     }
 
-    public function getStudyGraphicText()
+    public function getStudyTagline()
     {
-        return $this->studyGraphicText;
+        return $this->studyTagline;
     }
 
-    public function setStudyGraphicText($studyGraphicText)
+    public function setStudyTagline($studyTagline)
     {
-        $this->studyGraphicText = $studyGraphicText;
+        $this->studyTagline = $studyTagline;
+    }
+
+    public function getStudyDescription()
+    {
+        return $this->studyDescription;
+    }
+
+    public function setStudyDescription($studyDescription)
+    {
+        $this->studyDescription = $studyDescription;
     }
 
 }
