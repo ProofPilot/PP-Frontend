@@ -28,7 +28,7 @@ class RegistrationController extends Controller
 {
 
     /**
-     * @Route("/register/{studyId}", name="_registration")
+     * @Route("/register/{studyId}", name="_registration", defaults={"studyId" = 1})
      * @Template()
      */
     public function step1Action($studyId)
