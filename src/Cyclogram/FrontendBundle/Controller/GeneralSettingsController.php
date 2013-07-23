@@ -2,6 +2,8 @@
 
 namespace Cyclogram\FrontendBundle\Controller;
 
+use Symfony\Component\HttpFoundation\Response;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -17,7 +19,36 @@ class GeneralSettingsController  extends Controller
      */
     public function generalSettingsAction()
     {
-        return $this->render('CyclogramFrontendBundle:GeneralSettings:general_settings.html.twig');
+        $participant = $this->get('security.context')->getToken()->getUser();
+        $request = $this->getRequest();
+        $em = $this->getDoctrine()->getManager();
+        $surveyscount = $em->getRepository('CyclogramProofPilotBundle:Participant')->getParticipantInterventions($participant);
+        
+        $parameters["lastaccess"] = new \DateTime();
+         
+        if(!$participant->getFacebookId())
+            $parameters["user"]["avatar"] = "/images/tmp_avatar.jpg";
+        else
+            $parameters["user"]["avatar"] = "http://graph.facebook.com/" . $participant->getParticipantUsername() . "/picture?width=80&height=82";
+        
+        $parameters["user"]["name"] = $participant->getParticipantFirstname() . ' ' . $participant->getParticipantLastname();
+        $parameters["user"]["last_access"] = $participant->getParticipantLastTouchDatetime();
+        
+//         $lastAccessDate = $participant->getParticipantLastTouchDatetime();
+        
+//         $locale = $request->getLocale();
+        
+//         echo "Last access: " . $lastAccessDate->format("d F Y, H:i");
+        
+//         setlocale(LC_TIME, 'nl_NL');
+        
+        
+        
+//         echo $locale . " " .  strftime("%d %B %Y, %H:%M", $lastAccessDate->getTimestamp());
+//         return new Response("");
+        
+        
+        return $this->render('CyclogramFrontendBundle:GeneralSettings:general_settings.html.twig', $parameters);
     }
     
     /**
@@ -78,6 +109,21 @@ class GeneralSettingsController  extends Controller
                       )
                 )
         );
+        
+        $participant = $this->get('security.context')->getToken()->getUser();
+        $request = $this->getRequest();
+        $em = $this->getDoctrine()->getManager();
+        $surveyscount = $em->getRepository('CyclogramProofPilotBundle:Participant')->getParticipantInterventions($participant);
+        
+        $parameters["lastaccess"] = new \DateTime();
+         
+        if(!$participant->getFacebookId())
+            $parameters["user"]["avatar"] = "/images/tmp_avatar.jpg";
+        else
+            $parameters["user"]["avatar"] = "http://graph.facebook.com/" . $participant->getParticipantUsername() . "/picture?width=80&height=82";
+        
+        $parameters["user"]["name"] = $participant->getParticipantFirstname() . ' ' . $participant->getParticipantLastname();
+        $parameters["user"]["last_access"] = $participant->getParticipantLastTouchDatetime();
         
         return $this->render('CyclogramFrontendBundle:GeneralSettings:contact_prefs.html.twig', $parameters);
     }

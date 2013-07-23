@@ -83,7 +83,7 @@ class DashboardController extends Controller
                 array('info' => $this->get('translator')->trans('what_next_list.other_info', array(), 'dashboard'), 'class' => 'last')
         );
     
-        $parameters["lastaccess"] = new \DateTime("2013-07-01 10:05:00");
+        $parameters["lastaccess"] = new \DateTime();
          
         if(!$participant->getFacebookId())
             $parameters["user"]["avatar"] = "/images/tmp_avatar.jpg";

@@ -1,6 +1,7 @@
-txt_change: txt_change   # FIXME
-txt_edit: txt_edit   # FIXME
-txt_email: txt_email   # FIXME
-txt_mobile_number: txt_mobile_number   # FIXME
-txt_password: txt_password   # FIXME
-txt_username: txt_username   # FIXME
+last_access: 'Ultimo acceso:'
+txt_change: txt_change
+txt_edit: txt_edit
+txt_email: txt_email
+txt_mobile_number: txt_mobile_number
+txt_password: txt_password
+txt_username: txt_username
