@@ -23,15 +23,13 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getManager();
         $language = $em->getRepository("CyclogramProofPilotBundle:Language")->findOneByLocale($locale);
         
-        $study = $em->getRepository("CyclogramProofPilotBundle:StudyContent")->findOneBy(array('studyUrl' => $studyUrl, 'language' => $language->getLanguageId()));
-        if (empty($study))
+        $studyContent = $em->getRepository("CyclogramProofPilotBundle:StudyContent")->findOneBy(array('studyUrl' => $studyUrl, 'language' => $language->getLanguageId()));
+        if (empty($studyContent))
             return new Response("Not found", 404);
         
-        $studyId = $study->getStudyId();
+        $studyId = $studyContent->getStudyId();
+        
         $surveyId = 468727;
-    
-        $studyContent = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:StudyContent')
-        ->getStudyContent($studyId, $locale);
     
     
         $parameters = array();
