@@ -13,7 +13,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class LimeController extends Controller
 {
     /**
-     * @Route("{/surveyResponce", name="_record_survey")
+     * @Route("/surveyResponce", name="_record_survey")
      */
     public function recordSurveyAction() {
         
