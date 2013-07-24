@@ -37,12 +37,13 @@ class RegistrationController extends Controller
             return $this->redirect($this->generateURL("_main"));
         }
         $request = $this->getRequest();
-        
+        $em = $this->getDoctrine()->getManager();
+        $study = $em->getRepository('CyclogramProofPilotBundle:Study')->find($studyId);
+       
         $form = $this->createForm(new RegistrationForm($this->container));
         
         if ($request->getMethod() == 'POST') {
             $form->handleRequest($request);
-            $em = $this->getDoctrine()->getManager();
             if ($form->isValid()) {
                 $registration = $form->getData();
                 try{
@@ -84,7 +85,6 @@ class RegistrationController extends Controller
         
                     $em->persist($participant);
                     $em->flush();
-                    $study = $em->getRepository('CyclogramProofPilotBundle:Study')->find($studyId);
                     if ($study->getEmailVerificationRequired())
                         return $this->redirect( $this->generateUrl("reg_step_2", array('id' => $participant->getParticipantId())) );
                     return $this->redirect( $this->generateUrl("simplereg_step_2", array('id' => $participant->getParticipantId())) );
@@ -96,7 +96,12 @@ class RegistrationController extends Controller
             }
 
            }
-        return $this->render('CyclogramFrontendBundle:Registration:step1_register.html.twig', array ('form' => $form->createView(), 'studyId' => $studyId));
+           if ($study->getEmailVerificationRequired() == true) {
+               $totalSteps = 6;
+           } else {
+               $totalSteps = 4;
+           }
+        return $this->render('CyclogramFrontendBundle:Registration:step1_register.html.twig', array ('form' => $form->createView(), 'studyId' => $studyId, 'totalSteps' => $totalSteps));
         
         }
 
