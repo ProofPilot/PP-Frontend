@@ -66,7 +66,7 @@ class SecurityListener
      */
     public function onKernelResponse(FilterResponseEvent $event)
     {
-        $request = $event->getResponse()->headers->set('X-Frame-Options', 'SAMEORIGIN');
+        $request = $event->getResponse()->headers->set('x-frame-options', 'SAMEORIGIN');
         
         
         if (!empty($this->user) ) {
