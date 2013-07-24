@@ -13,9 +13,7 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Routing\Router;
 use Cyclogram\FrontendBundle\Form\MobilePhoneForm;
 
-/**
- * @Route("/{_locale}")
- */
+
 class SecurityController extends Controller
 {
     /**

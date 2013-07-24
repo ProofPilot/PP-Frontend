@@ -111,7 +111,7 @@ class MenuBuilder extends ContainerAware implements TranslationContainerInterfac
                 ->setExtra('translation_domain', 'generalmenus');
         $menu['top_menu.settings']
                 ->addChild('top_menu.shipping_information',
-                        array('route' => '_survey_eligibility'))
+                        array('route' => '_survey_eligibility', 'routeParameters' => array('studyUrl' => 'sexpro')))
                 ->setAttribute('class', 'submenu_icon_shipping')
                 ->setAttribute("nospan", true)
                 ->setExtra('translation_domain', 'generalmenus');
@@ -133,7 +133,7 @@ class MenuBuilder extends ContainerAware implements TranslationContainerInterfac
                 ->setAttribute('class', 'icon_contact_prefs')->setExtra('translation_domain', 'sidemenu');
         $menu
                 ->addChild('side_settings_menu.shipping_information',
-                        array('route' => '_survey_eligibility'))
+                        array('route' => '_survey_eligibility', 'routeParameters' => array('studyUrl' => 'sexpro')))
                 ->setAttribute('class', 'icon_shipping_info')->setExtra('translation_domain', 'sidemenu');
 
         return $menu;

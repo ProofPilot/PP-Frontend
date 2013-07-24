@@ -44,7 +44,7 @@
     <div class="wrapper">
       <h1><span>{% trans from "register" %}txt_join{% endtrans %} 6/6:</span> Mailing address</h1>
       <div>{% trans from "register" %}enter_address{% endtrans %}</div>
-      <form novalidate method="post" action="{{ path('reg_step_6',{'id' : id}) }}" name="mailing_address">
+      <form novalidate method="post" action="{{ path('reg_step_6',{'id' : id, 'studyId' : studyId}) }}" name="mailing_address">
         <div class="loginform_right">
           <label>{% trans from "register" %}label_firstname{% endtrans %}</label>
           <span>{{ form_widget(form.participantFirstname, {'attr' : {'class' : 'text'}}) }}</span>

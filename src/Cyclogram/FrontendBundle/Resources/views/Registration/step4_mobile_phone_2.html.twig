@@ -9,8 +9,8 @@
         <li>{{ phone }}</li>
       </ul>
       <div class="center_align m"> 
-        <a href={{ path('reg_step_3',{'id' : id}) }} class="submit m1 gray">{% trans from "register" %}wrong_back{% endtrans %}</a> 
-        <a href={{ path('reg_step_4',{'id' : id}) }} class="submit m2">{% trans from "register" %}ok_verify{% endtrans %}</a>
+        <a href={{ path('reg_step_3',{'id' : id, 'studyId' : studyId}) }} class="submit m1 gray">{% trans from "register" %}wrong_back{% endtrans %}</a> 
+        <a href={{ path('reg_step_4',{'id' : id, 'studyId' : studyId}) }} class="submit m2">{% trans from "register" %}ok_verify{% endtrans %}</a>
       </div>
     </div>
     {% include '::footer_reg.html.twig' %}

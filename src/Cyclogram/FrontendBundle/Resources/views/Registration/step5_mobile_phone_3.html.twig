@@ -6,7 +6,7 @@
     <div class="mobile_reg">
       <h1><span>{% trans from "register" %}txt_join{% endtrans %} 5/6:</span>{% trans from "register" %}enter_sms_code{% endtrans %}</h1>
       <br>
-      <form method="post" action="{{ path('reg_step_5',{'id' : id}) }}">
+      <form method="post" action="{{ path('reg_step_5',{'id' : id, 'studyId' : studyId}) }}">
         <ul class="form_fields">
           <li>
           {% if form is defined %}
@@ -22,7 +22,7 @@
         </ul>
         <div class="center_align"><a href="main.html" class="submit" id="register_submit">{% trans from "login" %}btn_confrimcoe_login{% endtrans %}</a></div>
             <button type="submit" style="display:none" id="submit_button"></button>
-        <div class="center_align"><a href={{ path('reg_step_3',{'id' : id}) }} class="repeat">{% trans from "register" %}no_code{% endtrans %}</a></div>
+        <div class="center_align"><a href={{ path('reg_step_3',{'id' : id, 'studyId' : studyId}) }} class="repeat">{% trans from "register" %}no_code{% endtrans %}</a></div>
       </form>
     </div>
     {% include '::footer_reg.html.twig' %}
