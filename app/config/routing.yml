@@ -1,8 +1,3 @@
-cyclogram_frontend:
-    resource: "@CyclogramFrontendBundle/Controller/"
-    type:     annotation
-    prefix:   /
-
 _root:
     pattern: /
     defaults:
@@ -18,10 +13,19 @@ cyclogram_proof_pilot:
     type:     annotation
     prefix:   /
 
+cyclogram_frontend:
+    resource: "@CyclogramFrontendBundle/Controller/"
+    type:     annotation
+    prefix:   /{_locale}
+    requirements:
+        _locale: en|es|pt|fr
+
 cyclogram_sex_pro:
     resource: "@CyclogramSexProBundle/Controller/"
     type:     annotation
-    prefix: /
+    prefix: /{_locale}/{studyUrl}
+    requirements:
+        _locale: en|es|pt|fr
 
 fos_js_routing:
     resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"

@@ -20,16 +20,14 @@ use Cyclogram\FrontendBundle\Form\MobilePhoneForm;
 use Cyclogram\FrontendBundle\Form\RegistrationForm;
 use Cyclogram\Bundle\ProofPilotBundle\Entity\Participant;
 
-/**
- * @Route("/{_locale}")
- */
+
 class  SimpleRegistrationController extends Controller{
     
     /**
-     * @Route("/simplereg_step2/{id}", name="simplereg_step_2")
+     * @Route("/simplereg_step2/{id}/{studyId}", name="simplereg_step_2", defaults={"studyId"=null})
      * @Template()
      */
-    public function simpleRegStep2Action($id)
+    public function simpleRegStep2Action($id, $studyId)
     {
         $em = $this->getDoctrine()->getManager();
         $participant = $em->getRepository('CyclogramProofPilotBundle:Participant')->find($id);
@@ -60,17 +58,17 @@ class  SimpleRegistrationController extends Controller{
                 $em->flush();
     
                 //                 return $this->redirect( $this->generateUrl("reg_step_3") );
-                return $this->render('CyclogramFrontendBundle:SimpleRegistration:mobile_phone_verification.html.twig', array('phone' => $participant->getParticipantMobileNumber(), 'id' => $participant->getParticipantId()));
+                return $this->render('CyclogramFrontendBundle:SimpleRegistration:mobile_phone_verification.html.twig', array('phone' => $participant->getParticipantMobileNumber(), 'id' => $participant->getParticipantId(), 'studyId' => $studyId));
             }
         }
-        return $this->render('CyclogramFrontendBundle:SimpleRegistration:mobile_phone.html.twig', array("form" => $form->createView(), 'id' => $id));
+        return $this->render('CyclogramFrontendBundle:SimpleRegistration:mobile_phone.html.twig', array("form" => $form->createView(), 'id' => $id, 'studyId' => $studyId));
     }
 
     /**
-     * @Route("/simplereg_step3/{id}", name="simplereg_step_3")
+     * @Route("/simplereg_step3/{id}/{studyId}", name="simplereg_step_3", defaults={"studyId"=null})
      * @Template()
      */
-    public function simpleRegStep3Action($id)
+    public function simpleRegStep3Action($id, $studyId)
     {
         $em = $this->getDoctrine()->getManager();
         $participant = $em->getRepository('CyclogramProofPilotBundle:Participant')->find($id);
@@ -102,17 +100,17 @@ class  SimpleRegistrationController extends Controller{
                 $participant->setParticipantMobileSmsCodeConfirmed(true);
             $em->persist($participant);
             $em->flush($participant);
-            return $this->redirect(($this->generateUrl("simplereg_step_4", array('id'=> $participant->getParticipantId()))));
+            return $this->redirect(($this->generateUrl("simplereg_step_4", array('id'=> $participant->getParticipantId(), 'studyId' => $studyId))));
         }
     
-        return $this->render('CyclogramFrontendBundle:SimpleRegistration:mobile_phone_verification.html.twig', array('phone' => $customerMobileNumber ));
+        return $this->render('CyclogramFrontendBundle:SimpleRegistration:mobile_phone_verification.html.twig', array('phone' => $customerMobileNumber, 'studyId' => $studyId ));
     }
     
     /**
-     * @Route("/simplereg_step4/{id}", name="simplereg_step_4")
+     * @Route("/simplereg_step4/{id}/{studyId}", name="simplereg_step_4", defaults={"studyId"=null})
      * @Template()
      */
-    public function simpleRegStep5Action($id)
+    public function simpleRegStep5Action($id, $studyId)
     {
         $em = $this->getDoctrine()->getManager();
         $participant = $em->getRepository('CyclogramProofPilotBundle:Participant')->find($id);
@@ -147,6 +145,7 @@ class  SimpleRegistrationController extends Controller{
                     $parameters['code'] = substr(md5( md5( $participant->getParticipantEmail() . md5(microtime()))), 0, 4);
                     $parameters['email'] = $participant->getParticipantEmail();
                     $parameters['confirmed'] = 1;
+                    $parameters['studyId'] = $studyId;
                     
                     $em = $this->getDoctrine()->getManager();
                     
@@ -171,7 +170,7 @@ class  SimpleRegistrationController extends Controller{
                 }
             }
         }
-        return $this->render('CyclogramFrontendBundle:SimpleRegistration:mobile_phone_sms.html.twig', array('error' => $error, 'form' => $form->createView(), 'id' => $participant->getParticipantId()));
+        return $this->render('CyclogramFrontendBundle:SimpleRegistration:mobile_phone_sms.html.twig', array('error' => $error, 'form' => $form->createView(), 'id' => $participant->getParticipantId(), 'studyId' => $studyId));
     }
     
     /**

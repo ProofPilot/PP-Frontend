@@ -17,9 +17,7 @@ use Symfony\Component\Validator\Constraints\Collection;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Length;
 
-/**
- * @Route("/{_locale}")
- */
+
 class LoginController extends Controller
 {
 

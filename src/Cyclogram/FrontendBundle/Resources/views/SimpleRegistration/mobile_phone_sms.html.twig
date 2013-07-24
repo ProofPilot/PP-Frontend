@@ -6,7 +6,7 @@
     <div class="mobile_reg">
       <h1><span>{% trans from "register" %}txt_join{% endtrans %} 4/4:</span>{% trans from "register" %}enter_sms_code{% endtrans %}</h1>
       <br>
-      <form method="post" action="{{ path('simplereg_step_4',{'id' : id}) }}">
+      <form method="post" action="{{ path('simplereg_step_4',{'id' : id, 'studyId' : studyId}) }}">
         <ul class="form_fields">
           <li>
           {% if form is defined %}

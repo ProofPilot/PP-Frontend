@@ -6,13 +6,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
-/**
- * @Route("/{_locale}/sexpro")
- */
+
 class SurveyController extends Controller
 {
     /**
-     * @Route("/survey/{studyUrl}/{studyId}/{surveyId}", name="_survey")
+     * @Route("/survey/{studyId}/{surveyId}", name="_survey")
      * @Template()
      */
     public function surveyAction($studyUrl, $studyId, $surveyId)
@@ -27,6 +25,7 @@ class SurveyController extends Controller
         
         $parameters['studyUrl'] = $studyUrl;
         $parameters['studyId'] = $studyId;
+        $parameters['locale'] = $locale;
         
         $parameters['survey_url'] = "/lime/index.php/survey/index/sid/".$surveyId."/newtest/Y/lang/".$locale;
         

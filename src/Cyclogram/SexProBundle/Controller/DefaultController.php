@@ -7,10 +7,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
-/**
- * @Route("/{_locale}/{studyUrl}")
- */
+
 class DefaultController extends Controller
 {
     /**
@@ -25,7 +24,8 @@ class DefaultController extends Controller
         
         $studyContent = $em->getRepository("CyclogramProofPilotBundle:StudyContent")->findOneBy(array('studyUrl' => $studyUrl, 'language' => $language->getLanguageId()));
         if (empty($studyContent))
-            return new Response("Not found", 404);
+            throw new ResourceNotFoundException('404 Not found');
+
         
         $studyId = $studyContent->getStudyId();
         

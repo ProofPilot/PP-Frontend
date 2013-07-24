@@ -234,7 +234,7 @@
 		    	var studyUrl = '{{ studyUrl }}';
 		    	var studyId = {{ studyId }};
 		    	if(surveyId !== undefined && saveId !== undefined) {
-		    	    window.location = '/surveyResponce?studyUrl=' + studyUrl + '&surveyId=' + surveyId + '&saveId=' + saveId + '&studyId=' + studyId;
+		    	    window.location = '/' + '{{ app.request.locale }}' + '/surveyResponce?&studyUrl=' + studyUrl + '&surveyId=' + surveyId + '&saveId=' + saveId + '&studyId=' + studyId;
 		    	}
 
 
