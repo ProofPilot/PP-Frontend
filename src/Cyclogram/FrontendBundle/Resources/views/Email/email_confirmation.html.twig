@@ -5,8 +5,10 @@
 				<p style="margin: 0px; padding: 0px; margin-bottom: 25px; color: #ae4840; font-family: Arial; font-weight: bold; font-size: 40px;">Please Verify your e-mail address</p>
 			            
 			            <p style="margin: 0px; padding: 0px; margin-bottom: 35px; color: #8b8b8b; font-family: Arial; font-size: 13px; line-height: 20px;">Yes, it's part of any website registration and ProofPilot is no different. Please click on the link below to verify your e-mail address and get going.</p>
-				        
-				        <p style="margin: 0px; padding: 0px; margin-bottom: 35px; color: #8b8b8b; font-family: Arial; font-size: 13px; line-height: 20px;"><a href="{{ url('email_verify', {'email': email, 'code': code, 'confirmed' : confirmed, 'studyId' : studyId}) }}">Please verify your email</a></p>
-				
+				        {% if simple %}
+				            <p style="margin: 0px; padding: 0px; margin-bottom: 35px; color: #8b8b8b; font-family: Arial; font-size: 13px; line-height: 20px;"><a href="{{ url('simpleemail_verify', {'email': email, 'code': code, 'confirmed' : confirmed, 'studyId' : studyId}) }}">Please verify your email</a></p>
+				        {%  else  %}
+				            <p style="margin: 0px; padding: 0px; margin-bottom: 35px; color: #8b8b8b; font-family: Arial; font-size: 13px; line-height: 20px;"><a href="{{ url('email_verify', {'email': email, 'code': code, 'confirmed' : confirmed, 'studyId' : studyId}) }}">Please verify your email</a></p>
+				        {% endif %}
 			</td>
 {% endblock %}

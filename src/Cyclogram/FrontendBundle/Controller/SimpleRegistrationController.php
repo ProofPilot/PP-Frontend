@@ -146,6 +146,7 @@ class  SimpleRegistrationController extends Controller{
                     $parameters['email'] = $participant->getParticipantEmail();
                     $parameters['confirmed'] = 1;
                     $parameters['studyId'] = $studyId;
+                    $parameters['simple'] = true;
                     
                     $em = $this->getDoctrine()->getManager();
                     
