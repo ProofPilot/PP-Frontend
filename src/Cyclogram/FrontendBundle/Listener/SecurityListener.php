@@ -66,6 +66,9 @@ class SecurityListener
      */
     public function onKernelResponse(FilterResponseEvent $event)
     {
+        $request = $event->getResponse()->headers->set('X-Frame-Options', 'SAMEORIGIN');
+        
+        
         if (!empty($this->user) ) {
             
             $roles = $this->user->getRoles();
