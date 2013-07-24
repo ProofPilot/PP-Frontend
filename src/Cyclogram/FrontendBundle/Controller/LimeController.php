@@ -26,15 +26,15 @@ class LimeController extends Controller
         
         $uniqId = uniqid();
         
-        $ParticipantSurveyLink = new ParticipantSurveyLink();
-        $ParticipantSurveyLink->setParticipant($this->getDoctrine()->getRepository('CyclogramProofPilotBundle:Participant')->find(1));
-        $ParticipantSurveyLink->setParticipantSurveyLinkUniqid($uniqId);
-        $ParticipantSurveyLink->setSaveId($saveId);
-        $ParticipantSurveyLink->setSidId($surveyId);
+//         $ParticipantSurveyLink = new ParticipantSurveyLink();
+//         $ParticipantSurveyLink->setParticipant($this->getDoctrine()->getRepository('CyclogramProofPilotBundle:Participant')->find(1));
+//         $ParticipantSurveyLink->setParticipantSurveyLinkUniqid($uniqId);
+//         $ParticipantSurveyLink->setSaveId($saveId);
+//         $ParticipantSurveyLink->setSidId($surveyId);
         
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($ParticipantSurveyLink);
-        $em->flush();
+//         $em = $this->getDoctrine()->getManager();
+//         $em->persist($ParticipantSurveyLink);
+//         $em->flush();
         
         return $this->redirect(($this->generateUrl("_study", array('studyId'=> $studyId, 'studyUrl' => $studyUrl))));
 
