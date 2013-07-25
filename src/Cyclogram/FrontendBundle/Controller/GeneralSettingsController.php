@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Cyclogram\FrontendBundle\Form\GeneralSettingForm;
 
 /**
  * @Route("/main")
@@ -34,20 +35,16 @@ class GeneralSettingsController  extends Controller
         $parameters["user"]["name"] = $participant->getParticipantFirstname() . ' ' . $participant->getParticipantLastname();
         $parameters["user"]["last_access"] = $participant->getParticipantLastTouchDatetime();
         
-//         $lastAccessDate = $participant->getParticipantLastTouchDatetime();
+        $form = $this->createForm(new GeneralSettingForm($this->container));
+        $parameters['form'] = $form->createView();
         
-//         $locale = $request->getLocale();
-        
-//         echo "Last access: " . $lastAccessDate->format("d F Y, H:i");
-        
-//         setlocale(LC_TIME, 'nl_NL');
-        
-        
-        
-//         echo $locale . " " .  strftime("%d %B %Y, %H:%M", $lastAccessDate->getTimestamp());
-//         return new Response("");
-        
-        
+        if ($request->getMethod() == 'POST') {
+            $form->handleRequest($request);
+            if ($form->isValid()) {
+                return new Response ("FORM");
+            }
+        }
+            
         return $this->render('CyclogramFrontendBundle:GeneralSettings:general_settings.html.twig', $parameters);
     }
     
