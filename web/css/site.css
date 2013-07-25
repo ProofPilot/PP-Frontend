@@ -502,7 +502,6 @@ header .header_menu span.text  , .footer_col_right span.text  {
 	border-color: #d3d4d5;
 }
 .panel .panel_left .profile_info.alt_bg {
-	height: 128px;
 	background: #e6e8e9 url(../images/bg_panel2.png) repeat-y 100% 0px;
 }
 .panel .panel_left .profile_info .wrapper {
