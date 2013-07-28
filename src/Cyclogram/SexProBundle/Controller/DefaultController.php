@@ -38,6 +38,9 @@ class DefaultController extends Controller
         $parameters["studyUrl"] = $studyUrl;
         $parameters["studyId"] = $studyId;
         $parameters["surveyId"] = $surveyId;
+        $parameters["logo"] = '/' . md5("study") . '/' . $studyId . '/' . "logo-" . $studyId . "-" . $locale . ".png";
+        $parameters["graphic"] = '/' . md5("study") . '/' . $studyId . '/' . "graphic-" . $studyId . "-" . $locale . ".png";
+        
     
         return $this->render('CyclogramSexProBundle:Default:page.html.twig', $parameters);
     
