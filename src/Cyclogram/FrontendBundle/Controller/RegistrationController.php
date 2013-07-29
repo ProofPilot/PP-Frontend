@@ -37,6 +37,10 @@ class RegistrationController extends Controller
         $request = $this->getRequest();
         $session = $request->getSession();
 
+        echo "studyId = " . var_dump( $studyId ) . "<br>";
+        echo "svid = " . var_dump( $svid ) . "<br>";
+        echo "sid = " . var_dump( $sid ) . "<br>";
+
         $em = $this->getDoctrine()->getManager();
         $study = null;
         $studyLogo = "";
@@ -191,7 +195,7 @@ class RegistrationController extends Controller
            } else {
                $totalSteps = 4;
            }
-        return $this->render('CyclogramFrontendBundle:Registration:step1_register.html.twig', array ('form' => $form->createView(), 'studyId' => $studyId, 'totalSteps' => $totalSteps, 'nPic' => $nPic,'studyLogo'=>$studyLogo));
+        return $this->render('CyclogramFrontendBundle:Registration:step1_register.html.twig', array ('form' => $form->createView(), 'studyId' => $studyId, 'totalSteps' => $totalSteps, 'nPic' => $nPic,'studyLogo'=>$studyLogo, 'sid'=>$sid, "svid"=>$svid));
         
         }
 
