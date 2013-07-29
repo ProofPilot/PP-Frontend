@@ -44,7 +44,9 @@ class  SimpleRegistrationController extends Controller{
             $form->get('phone_small')->setData($phone['country_code']);
             $form->get('phone_wide')->setData($phone['phone']);
         }
-    
+
+        $nPic = rand ( 1, 4 );
+
         if( $request->getMethod() == "POST" ){
     
             $form->handleRequest($request);
@@ -58,10 +60,10 @@ class  SimpleRegistrationController extends Controller{
                 $em->flush();
     
                 //                 return $this->redirect( $this->generateUrl("reg_step_3") );
-                return $this->render('CyclogramFrontendBundle:SimpleRegistration:mobile_phone_verification.html.twig', array('phone' => $participant->getParticipantMobileNumber(), 'id' => $participant->getParticipantId(), 'studyId' => $studyId));
+                return $this->render('CyclogramFrontendBundle:SimpleRegistration:mobile_phone_verification.html.twig', array('phone' => $participant->getParticipantMobileNumber(), 'id' => $participant->getParticipantId(), 'studyId' => $studyId, 'nPic' => $nPic));
             }
         }
-        return $this->render('CyclogramFrontendBundle:SimpleRegistration:mobile_phone.html.twig', array("form" => $form->createView(), 'id' => $id, 'studyId' => $studyId));
+        return $this->render('CyclogramFrontendBundle:SimpleRegistration:mobile_phone.html.twig', array("form" => $form->createView(), 'id' => $id, 'studyId' => $studyId, 'nPic' => $nPic));
     }
 
     /**
@@ -130,7 +132,9 @@ class  SimpleRegistrationController extends Controller{
         $form = $this->createFormBuilder(null, array('constraints' => $collectionConstraint))
         ->add('sms_code', 'text')
         ->getForm();
-    
+
+        $nPic = rand ( 1, 4 );
+
         if( $request->getMethod() == "POST" ){
     
             $form->handleRequest($request);
@@ -171,7 +175,7 @@ class  SimpleRegistrationController extends Controller{
                 }
             }
         }
-        return $this->render('CyclogramFrontendBundle:SimpleRegistration:mobile_phone_sms.html.twig', array('error' => $error, 'form' => $form->createView(), 'id' => $participant->getParticipantId(), 'studyId' => $studyId));
+        return $this->render('CyclogramFrontendBundle:SimpleRegistration:mobile_phone_sms.html.twig', array('error' => $error, 'form' => $form->createView(), 'id' => $participant->getParticipantId(), 'studyId' => $studyId, 'nPic'=>$nPic));
     }
     
     /**

@@ -42,8 +42,9 @@ class RegistrationController extends Controller
             $study = null;
         }
         
-       
+
         $form = $this->createForm(new RegistrationForm($this->container));
+        $nPic = rand ( 1, 4 );
         
         if ($request->getMethod() == 'POST') {
             $form->handleRequest($request);
@@ -112,7 +113,7 @@ class RegistrationController extends Controller
            } else {
                $totalSteps = 4;
            }
-        return $this->render('CyclogramFrontendBundle:Registration:step1_register.html.twig', array ('form' => $form->createView(), 'studyId' => $studyId, 'totalSteps' => $totalSteps));
+        return $this->render('CyclogramFrontendBundle:Registration:step1_register.html.twig', array ('form' => $form->createView(), 'studyId' => $studyId, 'totalSteps' => $totalSteps, 'nPic' => $nPic,));
         
         }
 
@@ -139,6 +140,8 @@ class RegistrationController extends Controller
         $parameters['studyId'] = $studyId;
         
         $em = $this->getDoctrine()->getManager();
+
+        $nPic = rand ( 1, 4 );
         
         $participant->setParticipantEmailCode($parameters['code']);
         $em->persist($participant);
@@ -151,7 +154,7 @@ class RegistrationController extends Controller
                 $embedded,
                 true,
                 $parameters);
-        return $this->render('CyclogramFrontendBundle:Registration:step2_mail_confirm.html.twig');
+        return $this->render('CyclogramFrontendBundle:Registration:step2_mail_confirm.html.twig', array('nPic' => $nPic, 'studyId' => $studyId));
     }
     
     /**

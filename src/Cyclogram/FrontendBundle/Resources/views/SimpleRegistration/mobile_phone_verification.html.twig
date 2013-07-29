@@ -1,7 +1,13 @@
 {%  extends '::base.html.twig' %}
 
 {% block body %}
-  <body class="has_image">
+
+{% if studyId == 1 %}
+    <body class="knowathome{{ nPic }}">
+{% else  %}
+    <body class="has_image">
+{%  endif %}
+
     {% include '::header_reg.html.twig' %}
     <div class="mobile_reg">
       <h1><span>{% trans from "register" %}txt_join{% endtrans %} 3/4:</span> {% trans from "register" %}double_check{% endtrans %}</h1>
@@ -9,8 +15,8 @@
         <li>{{ phone }}</li>
       </ul>
       <div class="center_align m"> 
-        <a href={{ path('simplereg_step_2',{'id' : id, 'stydyId' : studyId}) }} class="submit m1 gray">{% trans from "register" %}wrong_back{% endtrans %}</a> 
-        <a href={{ path('simplereg_step_3',{'id' : id, 'stydyId' : studyId}) }} class="submit m2">{% trans from "register" %}ok_verify{% endtrans %}</a>
+        <a href={{ path('simplereg_step_2',{'id' : id, 'studyId' : studyId}) }} class="submit m1 gray">{% trans from "register" %}wrong_back{% endtrans %}</a>
+        <a href={{ path('simplereg_step_3',{'id' : id, 'studyId' : studyId}) }} class="submit m2">{% trans from "register" %}ok_verify{% endtrans %}</a>
       </div>
     </div>
     {% include '::footer_reg.html.twig' %}
