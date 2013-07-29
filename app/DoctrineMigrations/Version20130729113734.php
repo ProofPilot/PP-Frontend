@@ -25,7 +25,7 @@ class Version20130729113734 extends AbstractMigration
     public function down(Schema $schema)
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql("ALTER TABLE `proofpilot`.`study_content` ADD COLUMN `study_graphic_text`  text NULL AFTER `study_consent`");
+        $this->abortIf($this->connection->getDatabasePlatform()->getName() != "mysql");
         $this->addSql("DROP  TABLE IF EXISTS `proofpilot`.`participant_timezone`");
     }
 }
