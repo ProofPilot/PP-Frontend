@@ -32,7 +32,7 @@ class Version20130729114613 extends AbstractMigration
         public function down(Schema $schema)
         {
             $this->abortIf($this->connection->getDatabasePlatform()->getName() != "mysql");
-            $this->addSql("DROP  TABLE IF EXISTS `proofpilot`.`participant_contact_time`");
+            $this->addSql("DROP  TABLE IF EXISTS `proofpilot`.`participant_study_reminder_link`");
         
         }
 }
