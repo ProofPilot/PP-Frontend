@@ -29,16 +29,13 @@ class RegistrationController extends Controller
      * @Route("/register/{studyId}/{svid}/{sid}", name="_registration", defaults={"studyId"= null})
      * @Template()
      */
-    public function step1Action($studyId=null, $svid=0, $sid=0)
+    public function step1Action($studyId=null, $svid, $sid)
     {
         if ($this->get('security.context')->isGranted("ROLE_USER")){
             return $this->redirect($this->generateURL("_main"));
         }
         $request = $this->getRequest();
         $session = $request->getSession();
-
-        $svid = $request->query->get('svid');
-        $sid = $request->query->get('sid');
         
         $em = $this->getDoctrine()->getManager();
         $study = null;
