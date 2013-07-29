@@ -46,6 +46,16 @@ class  SimpleRegistrationController extends Controller{
         }
 
         $nPic = rand ( 1, 4 );
+        $study = null;
+        $studyLogo = "";
+        if ($studyId != null) {
+            $study = $em->getRepository('CyclogramProofPilotBundle:Study')->find($studyId);
+            $studyContent = $em->getRepository('CyclogramProofPilotBundle:StudyContent')->findOneBy(array('studyId'=>$studyId));
+            $studyLogo = $studyContent->getStudyLogo();
+            $studyLogo = "http://admin.dev1.proofpilot.net/2cd1c6ecec2c6d908b3ed66d4ea7b902/".$studyId."/".$studyLogo;
+        } else {
+            $study = null;
+        }
 
         if( $request->getMethod() == "POST" ){
     
@@ -60,10 +70,10 @@ class  SimpleRegistrationController extends Controller{
                 $em->flush();
     
                 //                 return $this->redirect( $this->generateUrl("reg_step_3") );
-                return $this->render('CyclogramFrontendBundle:SimpleRegistration:mobile_phone_verification.html.twig', array('phone' => $participant->getParticipantMobileNumber(), 'id' => $participant->getParticipantId(), 'studyId' => $studyId, 'nPic' => $nPic));
+                return $this->render('CyclogramFrontendBundle:SimpleRegistration:mobile_phone_verification.html.twig', array('phone' => $participant->getParticipantMobileNumber(), 'id' => $participant->getParticipantId(), 'studyId' => $studyId, 'nPic' => $nPic, 'studyLogo'=>$studyLogo));
             }
         }
-        return $this->render('CyclogramFrontendBundle:SimpleRegistration:mobile_phone.html.twig', array("form" => $form->createView(), 'id' => $id, 'studyId' => $studyId, 'nPic' => $nPic));
+        return $this->render('CyclogramFrontendBundle:SimpleRegistration:mobile_phone.html.twig', array("form" => $form->createView(), 'id' => $id, 'studyId' => $studyId, 'nPic' => $nPic, 'studyLogo'=>$studyLogo));
     }
 
     /**
@@ -134,6 +144,16 @@ class  SimpleRegistrationController extends Controller{
         ->getForm();
 
         $nPic = rand ( 1, 4 );
+        $study = null;
+        $studyLogo = "";
+        if ($studyId != null) {
+            $study = $em->getRepository('CyclogramProofPilotBundle:Study')->find($studyId);
+            $studyContent = $em->getRepository('CyclogramProofPilotBundle:StudyContent')->findOneBy(array('studyId'=>$studyId));
+            $studyLogo = $studyContent->getStudyLogo();
+            $studyLogo = "http://admin.dev1.proofpilot.net/2cd1c6ecec2c6d908b3ed66d4ea7b902/".$studyId."/".$studyLogo;
+        } else {
+            $study = null;
+        }
 
         if( $request->getMethod() == "POST" ){
     
@@ -175,7 +195,7 @@ class  SimpleRegistrationController extends Controller{
                 }
             }
         }
-        return $this->render('CyclogramFrontendBundle:SimpleRegistration:mobile_phone_sms.html.twig', array('error' => $error, 'form' => $form->createView(), 'id' => $participant->getParticipantId(), 'studyId' => $studyId, 'nPic'=>$nPic));
+        return $this->render('CyclogramFrontendBundle:SimpleRegistration:mobile_phone_sms.html.twig', array('error' => $error, 'form' => $form->createView(), 'id' => $participant->getParticipantId(), 'studyId' => $studyId, 'nPic'=>$nPic, 'studyLogo'=>$studyLogo));
     }
     
     /**

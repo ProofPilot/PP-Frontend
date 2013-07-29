@@ -36,12 +36,17 @@ class RegistrationController extends Controller
         }
         $request = $this->getRequest();
         $em = $this->getDoctrine()->getManager();
+        $study = null;
+        $studyLogo = "";
         if ($studyId != null) {
             $study = $em->getRepository('CyclogramProofPilotBundle:Study')->find($studyId);
+            $study = $em->getRepository('CyclogramProofPilotBundle:Study')->find($studyId);
+            $studyContent = $em->getRepository('CyclogramProofPilotBundle:StudyContent')->findOneBy(array('studyId'=>$studyId));
+            $studyLogo = $studyContent->getStudyLogo();
+            $studyLogo = "http://admin.dev1.proofpilot.net/2cd1c6ecec2c6d908b3ed66d4ea7b902/".$studyId."/".$studyLogo;
         } else {
             $study = null;
         }
-        
 
         $form = $this->createForm(new RegistrationForm($this->container));
         $nPic = rand ( 1, 4 );
@@ -113,7 +118,7 @@ class RegistrationController extends Controller
            } else {
                $totalSteps = 4;
            }
-        return $this->render('CyclogramFrontendBundle:Registration:step1_register.html.twig', array ('form' => $form->createView(), 'studyId' => $studyId, 'totalSteps' => $totalSteps, 'nPic' => $nPic,));
+        return $this->render('CyclogramFrontendBundle:Registration:step1_register.html.twig', array ('form' => $form->createView(), 'studyId' => $studyId, 'totalSteps' => $totalSteps, 'nPic' => $nPic,'studyLogo'=>$studyLogo));
         
         }
 

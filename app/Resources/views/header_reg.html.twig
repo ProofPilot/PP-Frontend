@@ -1,7 +1,13 @@
-		<div class="reg_header">
-		{% if app.user %}
+        <div class="reg_header">
+		{% if app.user and studyId is null %}
 			<a href="{{ path('_main') }}" class="logo">ProofPilot</a>
 	    {% else  %}
-	        <a href="{{ path('_login') }}" class="logo">ProofPilot</a>
+            {% if studyId == 1 and studyLogo is not null %}
+                <a href="{{ path('_login') }}" class="logo knowathome">
+                    <img src="{{ studyLogo }}" width="117" height="22" />
+                </a>
+            {% else  %}
+	            <a href="{{ path('_login') }}" class="logo">ProofPilot</a>
+            {%  endif %}
 	    {%  endif %}
 		</div>

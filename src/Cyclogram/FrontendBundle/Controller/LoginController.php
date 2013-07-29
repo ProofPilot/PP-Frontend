@@ -36,8 +36,13 @@ class LoginController extends Controller
         $session->set('studyId', $studyId);
 
         $em = $this->getDoctrine()->getManager();
+        $study = null;
+        $studyLogo = "";
         if ($studyId != null) {
             $study = $em->getRepository('CyclogramProofPilotBundle:Study')->find($studyId);
+            $studyContent = $em->getRepository('CyclogramProofPilotBundle:StudyContent')->findOneBy(array('studyId'=>$studyId));
+            $studyLogo = $studyContent->getStudyLogo();
+            $studyLogo = "http://admin.dev1.proofpilot.net/2cd1c6ecec2c6d908b3ed66d4ea7b902/".$studyId."/".$studyLogo;
         } else {
             $study = null;
         }
@@ -55,7 +60,8 @@ class LoginController extends Controller
             'last_username' => $session->get(SecurityContext::LAST_USERNAME),
             'error'         => $error,
             'nPic'          => $nPic,
-            'studyId'       => $studyId
+            'studyId'       => $studyId,
+            'studyLogo'     => $studyLogo
         ));
     }
 
@@ -149,6 +155,17 @@ class LoginController extends Controller
         $nPic = rand ( 1, 4 );
         $studyIdS = $session->get('studyId');
         ($studyId) ? $studyId  : $studyId = $studyIdS;
+
+        $study = null;
+        $studyLogo = "";
+        if ($studyId != null) {
+            $study = $em->getRepository('CyclogramProofPilotBundle:Study')->find($studyId);
+            $studyContent = $em->getRepository('CyclogramProofPilotBundle:StudyContent')->findOneBy(array('studyId'=>$studyId));
+            $studyLogo = $studyContent->getStudyLogo();
+            $studyLogo = "http://admin.dev1.proofpilot.net/2cd1c6ecec2c6d908b3ed66d4ea7b902/".$studyId."/".$studyLogo;
+        } else {
+            $study = null;
+        }
         
         $collectionConstraint = new Collection(array(
                 'fields' => array(
@@ -201,7 +218,8 @@ class LoginController extends Controller
             array(
                 "form"=>$form->createView(),
                 'nPic'          => $nPic,
-                'studyId'       => $studyId
+                'studyId'       => $studyId,
+                'studyLogo'     => $studyLogo
             ));
     }
 }
