@@ -139,8 +139,8 @@ class RegistrationController extends Controller
 
                         $participantSurveyLink = new \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantSurveyLink();
                         $participantSurveyLink->setParticipant($participant);
-                        $participantSurveyLink->setSaveId("$svid");
-                        $participantSurveyLink->setSidId("$sid");
+                        $participantSurveyLink->setSaveId($svid);
+                        $participantSurveyLink->setSidId($sid);
                         $participantSurveyLink->setParticipantSurveyLinkUniqid( $uniqId );
                         $participantSurveyLink->setParticipantSurveyLinkElegibility(1);
 
