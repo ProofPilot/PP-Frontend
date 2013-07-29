@@ -136,9 +136,9 @@ class RegistrationController extends Controller
 
                         $em->persist( $campaignLink );
 
-                        $svid = ( $svid ) ? svid : 0 ;
+                        $svid = ( $svid ) ? $svid : 0 ;
                         $sid = ( $sid ) ? $sid : 0 ;
-
+                        
                         $participantSurveyLink = new \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantSurveyLink();
                         $participantSurveyLink->setParticipant($participant);
                         $participantSurveyLink->setSaveId($svid);
