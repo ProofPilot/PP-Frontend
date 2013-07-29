@@ -1,6 +1,35 @@
 {%  extends '::base.html.twig' %}
 
-    {% block body %}
+{% form_theme form _self %}
+
+
+{% block form_errors %}
+    {% spaceless %}
+        {% if errors|length > 0 %}
+            {% for error in errors %}
+                <p class="error_msg">{{ error.message }}</p>
+            {% endfor %}
+        {% endif %}
+    {% endspaceless %}
+{% endblock form_errors %}
+
+{% block form_widget_simple %}
+{% spaceless %}
+    {% set type = type|default('text') %}
+    {% if errors %}
+        {% set class_error = "has_error" %}
+        {% set attr = attr|merge({'class': class_error}) %} 
+    {% endif %}
+    <span class="input_container {% if errors %}has_error{% endif %}">
+        <span class="input_placeholder {% if errors %}has_error{% endif %}">
+            <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %} value="{{ value }}" {% endif %}/>
+            <span class="mark"></span>
+        </span>
+    </span>
+{% endspaceless %}
+{% endblock form_widget_simple %}
+
+{% block body %}
   <body class="page_main">
     <div class="site_container">
 
@@ -32,29 +61,25 @@
                 
                 <li class="form_expanded form-username">
                   <div class="wrapper">
-                    <div class="current_text">{{ user.username }}</div>
+                    <div class="current_text">{{ participant.participantUserName }}</div>
                     <div class="close_cont"><a href="#" data-form-cont=".form-username">Cancel</a></div>
                     <div class="new_inputs_cont">
                       <div class="for_label"><label>New username</label></div>
-                      <span class="input_container">
-                    {{ form_widget(form.newUserName) }}
-                    {{ form_errors(form.newUserName) }}
-                      </span>
+                         {{ form_widget(form.newUserName) }}
+                         {{ form_errors(form.newUserName) }}
                     </div>
                     <div class="new_inputs_cont">
                       <div class="for_label"><label>Enter password</label><a href="{{ path('_forgot_pass') }}" class="forgot">Forgot it?</a></div>
-                      <span class="input_container">
                           {{ form_widget(form.newUserNamePassword) }}
                           {{ form_errors(form.newUserNamePassword) }}
-                      </span>
                     </div>
                     <div class="confirm_cont">
                         {{ form_widget(form.userNameConfirm, {'attr':{'class' : 'btn_confirm'}}) }}
                     </div>
                   </div>
                 </li>
-                <li class="middle_input form-username">OKOK
-                    {{ form_widget(form.userName, {'attr' : {'class' : 'middle_input'}, 'value': 'okok'}) }}
+                <li class="middle_input form-username">
+                    {{ form_widget(form.userName, {'attr' : {'class' : 'middle_input'}, 'value': participant.participantUsername }) }}
                     {{ form_errors(form.userName) }}
                 </li>
                 <li class="edit_btn form-username"><a href="#" data-form-cont=".form-username">{% trans from "general_settings" %}txt_change{% endtrans %}</a></li>
@@ -65,36 +90,26 @@
                     <div class="new_inputs_cont with_margin">
                       <div class="for_label"><label>Old password</label><a href="{{ path('_forgot_pass') }}" class="forgot">Forgot
                           it?</a></div>
-                      <span class="input_container">
                           {{ form_widget(form.oldPassword) }}
                           {{ form_errors(form.oldPassword) }}
-                      </span>
                     </div>
                     <div class="new_inputs_cont">
                       <div class="for_label"><label>Type new password</label></div>
-                      <span class="input_container">
                           {{ form_widget(form.newPassword.first) }}
                           {{ form_errors(form.newPassword.first) }}
-                      </span>
                     </div>
                     <div class="new_inputs_cont">
                       <div class="for_label"><label>Confirm new password</label></div>
-                      <span class="input_container has_error">
                           {{ form_widget(form.newPassword.second) }}
                           {{ form_errors(form.newPassword.second) }}
-                          <span class="mark"></span>
-                      </span>
                     </div>
                     <div class="confirm_cont">
                         {{ form_widget(form.passwordSendSMS, {'attr':{'class' : 'btn_confirm'}}) }}
                     </div>
-                    <p class="error_msg">Passwords do not match</p>
                     <div class="new_inputs_cont">
                       <div class="for_label"><label>Enter mobile code to confirm</label></div>
-                      <span class="input_container">
                          {{ form_widget(form.passwordMobileComfirm) }}
                          {{ form_errors(form.passwordMobileComfirm) }}
-                      </span>
                     </div>
                     <div class="confirm_cont">
                         {{ form_widget(form.passwordConfirm, {'attr':{'class' : 'btn_confirm disabled'}}) }}
@@ -107,7 +122,7 @@
                 <li class="left_text form-email">{% trans from "general_settings" %}txt_email{% endtrans %}</li>
                 <li class="form_expanded form-email">
                   <div class="wrapper">
-                    <div class="current_text">{{ user.email }}</div>
+                    <div class="current_text">{{ participant.participantEmail }}</div>
                     <div class="close_cont"><a href="#" data-form-cont=".form-email">Cancel</a></div>
                     <div class="new_inputs_cont">
                       <div class="for_label"><label>New e-mail</label></div>
@@ -128,13 +143,13 @@
                   </div>
                 </li>
                 <li class="middle_input form-email">
-                    {{ form_widget(form.email, {'attr' : {'class' : 'middle_input'}}) }}
+                    {{ form_widget(form.email, {'attr' : {'class' : 'middle_input'}, 'value' : participant.participantEmail }) }}
                     {{ form_errors(form.email) }}
                 <li class="edit_btn form-email"><a href="#" data-form-cont=".form-email">{% trans from "general_settings" %}txt_change{% endtrans %}</a></li>
                 <li class="left_text form-mobile">{% trans from "general_settings" %}txt_mobile_number{% endtrans %}</li>
                 <li class="form_expanded form-mobile">
                   <div class="wrapper">
-                    <div class="current_text">{{ user.phone }}</div>
+                    <div class="current_text">{{ participant.participantMobileNumber }}</div>
                     <div class="close_cont"><a href="#" data-form-cont=".form-mobile">Cancel</a></div>
                     <div class="new_inputs_cont">
                       <div class="for_label"><label>New phone number</label></div>
@@ -165,7 +180,7 @@
                   </div>
                 </li>
                 <li class="middle_input form-mobile">
-                    {{ form_widget(form.phoneNumber, {'attr' : {'class' : 'middle_input'}}) }}
+                    {{ form_widget(form.phoneNumber, {'attr' : {'class' : 'middle_input'}, 'value': participant.participantMobileNumber}) }}
                     {{ form_errors(form.phoneNumber) }}
                 </li>
                 <li class="edit_btn form-mobile"><a href="#" data-form-cont=".form-mobile">{% trans from "general_settings" %}txt_edit{% endtrans %}</a></li>
@@ -187,8 +202,7 @@
             {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createBottomRightMenu',{'template': 'CyclogramFrontendBundle:Knp:knp_menu.html.twig'}) }}
         </div>
       </div>
-      <a href="http://www.kudos.hr" target="_blank" class="author">design by
-        kudos studio</a> </footer>
+    </footer>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src={{ asset('js/vendor/jquery-1.9.1.min.js') }}><\/script>')</script>
         <script src= {{ asset ('js/plugins.js') }}></script>
@@ -225,6 +239,18 @@
                             $('#general_settings_validationCheck').val("mobile");
                    });
            });
+
+           var error_form='{{ invalidFormClass }}';
+
+
+           if(error_form) {
+        	    var form = '.form-' + error_form;
+        	    $("li.form_expanded" + form).show();
+        	    $("li.middle_input" + form).hide();
+        	    $("li.edit_btn" + form).hide();
+           }
+
+
         </script>
   </body>
 {% endblock body %}

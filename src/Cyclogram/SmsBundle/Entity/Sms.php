@@ -50,6 +50,7 @@ class Sms
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL,  $url);
         curl_setopt($ch, CURLOPT_HTTPGET, true);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
         //This avoids SSL cert verification. USE THIS ONLY IN DEV
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
