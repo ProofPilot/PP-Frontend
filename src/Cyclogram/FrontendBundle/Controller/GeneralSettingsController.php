@@ -35,9 +35,7 @@ class GeneralSettingsController  extends Controller
         else
             $parameters["user"]["avatar"] = "http://graph.facebook.com/" . $participant->getParticipantUsername() . "/picture?width=80&height=82";
         
-        $parameters["user"]["name"] = $participant->getParticipantFirstname() . ' ' . $participant->getParticipantLastname();
-        $parameters["user"]["last_access"] = $participant->getParticipantLastTouchDatetime();
-        $parameters["user"]["phone"] = $participant->getParticipantMobileNumber();
+
         
         $form = $this->createForm(new GeneralSettingForm($this->container));
         
@@ -112,14 +110,22 @@ class GeneralSettingsController  extends Controller
                     }
                 }
                 $parameters['form'] = $form->createView();
-                return $this->render('CyclogramFrontendBundle:GeneralSettings:general_settings.html.twig', $parameters);
+                
             } 
             else {
                 $data = $form->getData();
                 $parameters["invalidFormClass"] = $data['validationCheck'];
             }
-            return $this->render('CyclogramFrontendBundle:GeneralSettings:general_settings.html.twig', $parameters);
+            
         }
+        
+        $parameters["participant"] = $participant;
+        
+        $parameters["user"]["name"] = $participant->getParticipantFirstname() . ' ' . $participant->getParticipantLastname();
+        $parameters["user"]["username"] = $participant->getParticipantUsername();
+        $parameters["user"]["last_access"] = $participant->getParticipantLastTouchDatetime();
+        $parameters["user"]["phone"] = $participant->getParticipantMobileNumber();
+        $parameters["user"]["email"] = $participant->getParticipantEmail();
         
         $parameters['form'] = $form->createView();
             
