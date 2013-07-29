@@ -135,15 +135,17 @@ class RegistrationController extends Controller
                         $campaignLink->setParticipantCampaignLinkDatetime( new \DateTime("now") );
 
                         $em->persist( $campaignLink );
+                        $em->flush();
 
                         $participantSurveyLink = new \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantSurveyLink();
                         $participantSurveyLink->setParticipant($participant);
-                        $participantSurveyLink->setSaveId($svid);
-                        $participantSurveyLink->setSidId($sid);
+                        $participantSurveyLink->setSaveId("$svid");
+                        $participantSurveyLink->setSidId("$sid");
                         $participantSurveyLink->setParticipantSurveyLinkUniqid( $uniqId );
                         $participantSurveyLink->setParticipantSurveyLinkElegibility(1);
 
                         $em->persist( $participantSurveyLink );
+                        $em->flush();
 
                         //Add participants to Default Arm at the moment.
                         $armData = $em->getRepository('CyclogramProofPilotBundle:Arm')->find( 5 );
