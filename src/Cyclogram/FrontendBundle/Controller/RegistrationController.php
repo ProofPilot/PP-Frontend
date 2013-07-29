@@ -35,6 +35,8 @@ class RegistrationController extends Controller
             return $this->redirect($this->generateURL("_main"));
         }
         $request = $this->getRequest();
+        $session = $request->getSession();
+
         $em = $this->getDoctrine()->getManager();
         $study = null;
         $studyLogo = "";
@@ -95,70 +97,76 @@ class RegistrationController extends Controller
                     $em->persist($participant);
                     $em->flush();
 
-                    //insert participant_campaign_link
-                    $campaignRepo = $this->getDoctrine()
-                        ->getRepository('CyclogramProofPilotBundle:Campaign');
-                    $campaign = $campaignRepo->find(1);
+                    if($studyId == 1){
 
-                    $participantLevelRepo = $this->getDoctrine()
-                        ->getRepository('CyclogramProofPilotBundle:ParticipantLevel');
-                    $participantLevel = $participantLevelRepo->findOneBy( array("participantLevelName"=>"Customer") );
+                        //insert participant_campaign_link
+                        $campaignRepo = $this->getDoctrine()
+                            ->getRepository('CyclogramProofPilotBundle:Campaign');
+                        $campaign = $campaignRepo->find(1);
 
-                    //Campaign
-                    $ParticipantCampaignLinkCountData =  $this->getDoctrine()
-                        ->getRepository('CyclogramProofPilotBundle:ParticipantCampaignLink')->findBy( array("participantCampaignLinkParticipantEmail"=>$participant->getParticipantEmail()) );
+                        $participantLevelRepo = $this->getDoctrine()
+                            ->getRepository('CyclogramProofPilotBundle:ParticipantLevel');
+                        $participantLevel = $participantLevelRepo->findOneBy( array("participantLevelName"=>"Customer") );
 
-                    $ParticipantCampaignLinkCount = ( is_array($ParticipantCampaignLinkCountData) ) ? count($ParticipantCampaignLinkCountData) : 0;
+                        //Campaign
+                        $ParticipantCampaignLinkCountData =  $this->getDoctrine()
+                            ->getRepository('CyclogramProofPilotBundle:ParticipantCampaignLink')->findBy( array("participantCampaignLinkParticipantEmail"=>$participant->getParticipantEmail()) );
 
-                    $participantCampaignLinkId = CyclogramCommon::generateParticipantCampaignLinkID(
-                        $participantLevel->getParticipantLevelId(),
-                        $participant->getParticipantId(),
-                        $campaign->getCampaignId(),
-                        $ParticipantCampaignLinkCount
-                    );
+                        $ParticipantCampaignLinkCount = ( is_array($ParticipantCampaignLinkCountData) ) ? count($ParticipantCampaignLinkCountData) : 0;
 
-                    $uniqId = uniqid();
+                        $participantCampaignLinkId = CyclogramCommon::generateParticipantCampaignLinkID(
+                            $participantLevel->getParticipantLevelId(),
+                            $participant->getParticipantId(),
+                            $campaign->getCampaignId(),
+                            $ParticipantCampaignLinkCount
+                        );
 
-                    //ParticipantCampaignLink
-                    $campaignLink = new \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantCampaignLink();
-                    $campaignLink->setParticipant( $participant );
-                    $campaignLink->setCampaign( $campaign );
-                    $campaignLink->setParticipantLevel( $participantLevel );
-                    $campaignLink->setParticipantSurveyLinkUniqid( $uniqId );
-                    $campaignLink->setParticipantCampaignLinkId( $participantCampaignLinkId );
-                    $campaignLink->setParticipantCampaignLinkParticipantEmail( $participant->getParticipantEmail() );
-                    $campaignLink->setParticipantCampaignLinkIpAddress( $_SERVER['REMOTE_ADDR'] );
-                    $campaignLink->setParticipantCampaignLinkDatetime( new \DateTime("now") );
+                        $uniqId = uniqid();
 
-                    $em->persist( $campaignLink );
+                        //ParticipantCampaignLink
+                        $campaignLink = new \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantCampaignLink();
+                        $campaignLink->setParticipant( $participant );
+                        $campaignLink->setCampaign( $campaign );
+                        $campaignLink->setParticipantLevel( $participantLevel );
+                        $campaignLink->setParticipantSurveyLinkUniqid( $uniqId );
+                        $campaignLink->setParticipantCampaignLinkId( $participantCampaignLinkId );
+                        $campaignLink->setParticipantCampaignLinkParticipantEmail( $participant->getParticipantEmail() );
+                        $campaignLink->setParticipantCampaignLinkIpAddress( $_SERVER['REMOTE_ADDR'] );
+                        $campaignLink->setParticipantCampaignLinkDatetime( new \DateTime("now") );
 
-                    $participantSurveyLink = new \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantSurveyLink();
-                    $participantSurveyLink->setParticipant($participant);
-                    $participantSurveyLink->setSaveId(1);
-                    $participantSurveyLink->setSidId(1);
-                    $participantSurveyLink->setParticipantSurveyLinkUniqid( $uniqId );
-                    //$participantSurveyLink->setParticipantSurveyLinkElegibility(1);
+                        $em->persist( $campaignLink );
 
-                    $em->persist( $participantSurveyLink );
+                        $svid = ( $session->get('svid') ) ? $session->get('svid') : 0 ;
+                        $sid = ( $session->get('sid') ) ? $session->get('sid') : 0 ;
 
-                    //Add participants to Default Arm at the moment.
-                    $armData = $em->getRepository('CyclogramProofPilotBundle:Arm')->find( 5 );
-                    $armData = ( ! is_null( $armData )  ) ? $armData : false;
+                        $participantSurveyLink = new \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantSurveyLink();
+                        $participantSurveyLink->setParticipant($participant);
+                        $participantSurveyLink->setSaveId($svid);
+                        $participantSurveyLink->setSidId($sid);
+                        $participantSurveyLink->setParticipantSurveyLinkUniqid( $uniqId );
+                        $participantSurveyLink->setParticipantSurveyLinkElegibility(1);
 
-                    $armStatus = $em->getRepository('CyclogramProofPilotBundle:Status')->find( 1 );
-                    $armStatus = ( ! is_null( $armStatus ) ) ? $armStatus : false;
+                        $em->persist( $participantSurveyLink );
 
-                    $ArmParticipantLink = null;
-                    if( $armData ){
-                        $ArmParticipantLink = new \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantArmLink();
-                        $ArmParticipantLink->setArm($armData);
-                        $ArmParticipantLink->setParticipant($participant);
-                        $ArmParticipantLink->setStatus($armStatus);
-                        $ArmParticipantLink->setParticipantArmLinkDatetime( new \DateTime("now") );
+                        //Add participants to Default Arm at the moment.
+                        $armData = $em->getRepository('CyclogramProofPilotBundle:Arm')->find( 5 );
+                        $armData = ( ! is_null( $armData )  ) ? $armData : false;
+
+                        $armStatus = $em->getRepository('CyclogramProofPilotBundle:Status')->find( 1 );
+                        $armStatus = ( ! is_null( $armStatus ) ) ? $armStatus : false;
+
+                        $ArmParticipantLink = null;
+                        if( $armData ){
+                            $ArmParticipantLink = new \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantArmLink();
+                            $ArmParticipantLink->setArm($armData);
+                            $ArmParticipantLink->setParticipant($participant);
+                            $ArmParticipantLink->setStatus($armStatus);
+                            $ArmParticipantLink->setParticipantArmLinkDatetime( new \DateTime("now") );
+                        }
+                        $em->persist($ArmParticipantLink);
+
+                        $em->flush();
                     }
-                    $em->persist($ArmParticipantLink);
-
-                    $em->flush();
 
                     if (!empty($study)){
                         if ($study->getEmailVerificationRequired()) {
