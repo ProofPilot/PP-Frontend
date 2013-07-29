@@ -1,7 +1,7 @@
 <?php
 
 namespace Cyclogram\Bundle\ProofPilotBundle\Entity;
-use JMS\TranslationBundle\Model\Message;
+
 
 use JMS\TranslationBundle\Translation\TranslationContainerInterface;
 
@@ -90,7 +90,7 @@ class ParticipantStudyReminder implements TranslationContainerInterface
         $translations = array();
         
         foreach($messages as $message) {
-            $translations[] = new Message($message, "contact_preferences");
+            $translations[] = new \JMS\TranslationBundle\Model\Message($message, "contact_preferences");
         }
         
         return $translations;

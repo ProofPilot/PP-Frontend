@@ -164,53 +164,47 @@ class GeneralSettingsController  extends Controller
                 6=>'day_saturday'
                 );
         
-        
-        
-        
-        
-        
-        
-        $parameters['preferences'] = array(
-                array('title' => 'How would you like to receive STUDY REMINDERS',
-                      'subtitle' => 'How would you like us to communicate with you?',
-                      'col' => 'col_5',
-                      'sms_email' => '',
-                      'options' => array(
-                        array('row' => 'Send me study task reminders by'),
-                        array('row' => 'Communicate with me about my orders by'),
-                        array('row' => 'Send me info on other studies I may be eligible for')
-                      )
-                ),
-                array('title' => 'What TIME OF DAY suits you best?',
-                      'subtitle' => 'Tell us when it\'s most convienent for you to recieve reminders.',
-                      'col' => 'col_4',
-                      'check_here' => '',
-                      'timezone' => '',
-                      'options' => array(
-                        array('row' => 'Early AM (5AM-8AM)'),
-                        array('row' => 'Morning (8AM-Noon)'),
-                        array('row' => 'Afternoon (Noon-5PM)'),
-                        array('row' => 'Early Evening (5PM-9PM)'),
-                        array('row' => 'Night (9PM-Midnight)'),
-                        array('row' => 'Late Night (midnight-5AM)')
-                      )
-                ),
-                array('title' => 'What DAY OF THE WEEK suits you best? ',
-                      'subtitle' => 'Tell us what day is best for you to recieve communications from us.',
-                      'col' => 'col_4',
-                      'check_here' => '',
-                      'options' => array(
-                        array('row' => 'Sunday'),
-                        array('row' => 'Monday'),
-                        array('row' => 'Tuesday'),
-                        array('row' => 'Wednesday'),
-                        array('row' => 'Thursday'),
-                        array('row' => 'Friday'),
-                        array('row' => 'Saturday'),
-                        array('row' => 'Sunday')
-                      )
-                )
-        );
+//         $parameters['preferences'] = array(
+//                 array('title' => 'How would you like to receive STUDY REMINDERS',
+//                       'subtitle' => 'How would you like us to communicate with you?',
+//                       'col' => 'col_5',
+//                       'sms_email' => '',
+//                       'options' => array(
+//                         array('row' => 'Send me study task reminders by'),
+//                         array('row' => 'Communicate with me about my orders by'),
+//                         array('row' => 'Send me info on other studies I may be eligible for')
+//                       )
+//                 ),
+//                 array('title' => 'What TIME OF DAY suits you best?',
+//                       'subtitle' => 'Tell us when it\'s most convienent for you to recieve reminders.',
+//                       'col' => 'col_4',
+//                       'check_here' => '',
+//                       'timezone' => '',
+//                       'options' => array(
+//                         array('row' => 'Early AM (5AM-8AM)'),
+//                         array('row' => 'Morning (8AM-Noon)'),
+//                         array('row' => 'Afternoon (Noon-5PM)'),
+//                         array('row' => 'Early Evening (5PM-9PM)'),
+//                         array('row' => 'Night (9PM-Midnight)'),
+//                         array('row' => 'Late Night (midnight-5AM)')
+//                       )
+//                 ),
+//                 array('title' => 'What DAY OF THE WEEK suits you best? ',
+//                       'subtitle' => 'Tell us what day is best for you to recieve communications from us.',
+//                       'col' => 'col_4',
+//                       'check_here' => '',
+//                       'options' => array(
+//                         array('row' => 'Sunday'),
+//                         array('row' => 'Monday'),
+//                         array('row' => 'Tuesday'),
+//                         array('row' => 'Wednesday'),
+//                         array('row' => 'Thursday'),
+//                         array('row' => 'Friday'),
+//                         array('row' => 'Saturday'),
+//                         array('row' => 'Sunday')
+//                       )
+//                 )
+//         );
         
         $participant = $this->get('security.context')->getToken()->getUser();
         $request = $this->getRequest();
@@ -218,6 +212,7 @@ class GeneralSettingsController  extends Controller
         $surveyscount = $em->getRepository('CyclogramProofPilotBundle:Participant')->getParticipantInterventions($participant);
         
         $parameters["lastaccess"] = new \DateTime();
+        $parameters["participant"] = $participant;
          
         if(!$participant->getFacebookId())
             $parameters["user"]["avatar"] = "/images/tmp_avatar.jpg";
