@@ -52,6 +52,13 @@ class ParticipantSurveyLink
      */
     private $participant;
 
+    /**
+     * @var smallint $participantSurveyLinkElegibility
+     *
+     * @ORM\Column(name="participant_survey_link_elegibility", type="smallint", nullable=true)
+     */
+    private $participantSurveyLinkElegibility;
+
 
 
     /**
@@ -131,6 +138,26 @@ class ParticipantSurveyLink
     public function getSaveId()
     {
         return $this->saveId;
+    }
+
+    /**
+     * Set participantSurveyLinkElegibility
+     *
+     * @param smallint $participantSurveyLinkElegibility
+     */
+    public function setParticipantSurveyLinkElegibility($participantSurveyLinkElegibility)
+    {
+        $this->participantSurveyLinkElegibility = $participantSurveyLinkElegibility;
+    }
+
+    /**
+     * Get participantSurveyLinkElegibility
+     *
+     * @return smallint
+     */
+    public function getParticipantSurveyLinkElegibility()
+    {
+        return $this->participantSurveyLinkElegibility;
     }
 
     /**
