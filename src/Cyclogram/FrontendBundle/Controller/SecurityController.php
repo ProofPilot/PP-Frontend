@@ -17,10 +17,10 @@ use Cyclogram\FrontendBundle\Form\MobilePhoneForm;
 class SecurityController extends Controller
 {
     /**
-     * @Route("/forgot_pass", name="_forgot_pass")
+     * @Route("/forgot_pass/{studyId}", name="_forgot_pass")
      * @Template()
      */
-    public function forgotPassAction()
+    public function forgotPassAction($studyId=null)
     {
         if ($this->get('security.context')->isGranted("ROLE_USER")){
             return $this->redirect($this->generateURL("_main"));
@@ -30,6 +30,19 @@ class SecurityController extends Controller
         $form = $this->createFormBuilder()
         ->add('participantUsername', 'text', array('label'=>'username'))
         ->getForm();
+
+        $em = $this->getDoctrine()->getManager();
+        $study = null;
+        $studyLogo = "";
+        if ($studyId != null) {
+            $study = $em->getRepository('CyclogramProofPilotBundle:Study')->find($studyId);
+            $studyContent = $em->getRepository('CyclogramProofPilotBundle:StudyContent')->findOneBy(array('studyId'=>$studyId));
+            $studyLogo = $studyContent->getStudyLogo();
+            $studyLogo = "http://admin.dev1.proofpilot.net/2cd1c6ecec2c6d908b3ed66d4ea7b902/".$studyId."/".$studyLogo;
+        } else {
+            $study = null;
+        }
+        $nPic = rand ( 1, 4 );
         
         if( $request->getMethod() == "POST" ){
             $form->handleRequest($request);
@@ -42,6 +55,7 @@ class SecurityController extends Controller
                 
                 if (!empty($participant)) {
                     $parameters['id'] = $participant->getParticipantId();
+                    $parameters['studyId'] = $studyId;
                     $embedded['logo_top'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_logo.png");
                     $embedded['logo_footer'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newletter_logo_footer.png");
                     $embedded['login_button'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_small_login.jpg");
@@ -54,21 +68,21 @@ class SecurityController extends Controller
                                               true,
                                               $parameters);
 
-                    return $this->render('CyclogramFrontendBundle:Security:reset_password_confirmation.html.twig');
+                    return $this->render('CyclogramFrontendBundle:Security:reset_password_confirmation.html.twig', array("studyId"=>$studyId, "studyLogo"=>$studyLogo, "nPic"=>$nPic));
                 } else {
                     return $this->render('CyclogramFrontendBundle:Security:forgot_your_password.html.twig' , array("form" => $form->createView(), 
-                            "error" => $this->get('translator')->trans("doesnt_match_records", array(), "login")));
+                            "error" => $this->get('translator')->trans("doesnt_match_records", array(), "login"), "studyId"=>$studyId, "studyLogo"=>$studyLogo, "nPic"=>$nPic));
                 }
             }
         }
-        return $this->render('CyclogramFrontendBundle:Security:forgot_your_password.html.twig' , array("form" => $form->createView()));
+        return $this->render('CyclogramFrontendBundle:Security:forgot_your_password.html.twig' , array("form" => $form->createView(), "studyId"=>$studyId, "studyLogo"=>$studyLogo, "nPic"=>$nPic));
     }
     
     /**
-     * @Route("/create_pass/{id}" , name="_create_new_pass")
+     * @Route("/create_pass/{id}/{studyId}" , name="_create_new_pass")
      * @Template()
      */
-    public function createPassAction($id)
+    public function createPassAction($id, $studyId=null)
     {
         $request = $this->getRequest();
         $session = $this->getRequest()->getSession();
@@ -84,6 +98,23 @@ class SecurityController extends Controller
                             'invalid_message' => 'The password fields must match.',
                       ))     
         ->getForm();
+
+        $em = $this->getDoctrine()->getManager();
+        $study = null;
+        $studyLogo = "";
+        $nPic = "";
+        if ($studyId != null) {
+            if($studyId==1){
+                $nPic = rand ( 1, 4 );
+            }
+            $study = $em->getRepository('CyclogramProofPilotBundle:Study')->find($studyId);
+            $studyContent = $em->getRepository('CyclogramProofPilotBundle:StudyContent')->findOneBy(array('studyId'=>$studyId));
+            $studyLogo = $studyContent->getStudyLogo();
+            $studyLogo = "http://admin.dev1.proofpilot.net/2cd1c6ecec2c6d908b3ed66d4ea7b902/".$studyId."/".$studyLogo;
+        } else {
+            $study = null;
+        }
+
         if( $request->getMethod() == "POST" ){
             $form->handleRequest($request);
             $em = $this->getDoctrine()->getManager();
@@ -106,7 +137,7 @@ class SecurityController extends Controller
                 }
             } 
        }
-        return $this->render('CyclogramFrontendBundle:Security:create_new_password.html.twig', array("form" => $form->createView(), 'id' => $id));
+        return $this->render('CyclogramFrontendBundle:Security:create_new_password.html.twig', array("form" => $form->createView(), 'id' => $id, "studyId"=>$studyId, "studyLogo"=>$studyLogo, "nPic"=>$nPic));
     }
     
     /**
@@ -127,9 +158,9 @@ class SecurityController extends Controller
         ->add('sms_code', 'text')
                 ->getForm();
         if( $request->getMethod() == "POST" ){
-        
+
             $form->handleRequest($request);
-        
+
             if( $form->isValid() ) {
                 $value = $request->request->get('form');
                 $em = $this->getDoctrine()->getManager();
@@ -157,10 +188,10 @@ class SecurityController extends Controller
     }
     
     /**
-     * @Route("/forgot_username", name="_forgot_username")
+     * @Route("/forgot_username/{studyId}", name="_forgot_username")
      * @Template()
      */
-    public function forgotUserAction()
+    public function forgotUserAction($studyId=null)
     {
         if ($this->get('security.context')->isGranted("ROLE_USER")){
             return $this->redirect($this->generateURL("_main"));
@@ -169,6 +200,22 @@ class SecurityController extends Controller
         
         $form = $this->createForm(new MobilePhoneForm($this->container));
 
+        $em = $this->getDoctrine()->getManager();
+        $study = null;
+        $studyLogo = "";
+        $nPic = "";
+        if ($studyId != null) {
+            $study = $em->getRepository('CyclogramProofPilotBundle:Study')->find($studyId);
+            $studyContent = $em->getRepository('CyclogramProofPilotBundle:StudyContent')->findOneBy(array('studyId'=>$studyId));
+            $studyLogo = $studyContent->getStudyLogo();
+            //JP: Need to fi this
+            $studyLogo = "http://admin.dev1.proofpilot.net/2cd1c6ecec2c6d908b3ed66d4ea7b902/".$studyId."/".$studyLogo;
+            if( $studyId == 1 ){
+                $nPic = rand ( 1, 4 );
+            }
+        } else {
+            $study = null;
+        }
         
         if( $request->getMethod() == "POST" ){
             $form->handleRequest($request);
@@ -185,12 +232,12 @@ class SecurityController extends Controller
                     $sms = $this->get('sms');
                     $sentSms = $sms->sendSmsAction( array('message' => "Your username is $participantUsername , your email is $participantEmail", 'phoneNumber'=>$participant->getParticipantMobileNumber()) );
                     if($sentSms)
-                        return $this->render('CyclogramFrontendBundle:Security:username_sent.html.twig');
+                        return $this->render('CyclogramFrontendBundle:Security:username_sent.html.twig', array("studyId"=>$studyId, "studyLogo"=>$studyLogo, "nPic"=>$nPic));
                 } else {
-                    return $this->render('CyclogramFrontendBundle:Security:forgot_username.html.twig',array('form' => $form->createView(),"error" => $this->get('translator')->trans("doesnt_match_records", array(), "login")));
+                    return $this->render('CyclogramFrontendBundle:Security:forgot_username.html.twig',array('form' => $form->createView(),"error" => $this->get('translator')->trans("doesnt_match_records", array(), "login"), "studyId"=>$studyId, "studyLogo"=>$studyLogo, "nPic"=>$nPic));
                 }
             }
         }
-        return $this->render('CyclogramFrontendBundle:Security:forgot_username.html.twig',array('form' => $form->createView()));
+        return $this->render('CyclogramFrontendBundle:Security:forgot_username.html.twig',array('form' => $form->createView(), "studyId"=>$studyId, "studyLogo"=>$studyLogo, "nPic"=>$nPic));
     }
 }
