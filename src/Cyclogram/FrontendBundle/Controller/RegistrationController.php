@@ -95,8 +95,54 @@ class RegistrationController extends Controller
                     $em->persist($participant);
                     $em->flush();
 
+                    //insert participant_campaign_link
+                    $campaignRepo = $this->getDoctrine()
+                        ->getRepository('CyclogramProofPilotBundle:Campaign');
+                    $campaign = $campaignRepo->find(1);
+
+                    $participantLevelRepo = $this->getDoctrine()
+                        ->getRepository('CyclogramProofPilotBundle:ParticipantLevel');
+                    $participantLevel = $participantLevelRepo->findOneBy( array("participantLevelName"=>"Customer") );
+
+                    //Campaign
+                    $ParticipantCampaignLinkCountData =  $this->getDoctrine()
+                        ->getRepository('CyclogramProofPilotBundle:ParticipantCampaignLink')->findBy( array("participantCampaignLinkParticipantEmail"=>$participant->getParticipantEmail()) );
+
+                    $ParticipantCampaignLinkCount = ( is_array($ParticipantCampaignLinkCountData) ) ? count($ParticipantCampaignLinkCountData) : 0;
+
+                    $participantCampaignLinkId = CyclogramCommon::generateParticipantCampaignLinkID(
+                        $participantLevel->getParticipantLevelId(),
+                        $participant->getParticipantId(),
+                        $campaign->getCampaignId(),
+                        $ParticipantCampaignLinkCount
+                    );
+
+                    $uniqId = uniqid();
+
+                    //ParticipantCampaignLink
+                    $campaignLink = new \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantCampaignLink();
+                    $campaignLink->setParticipant( $participant );
+                    $campaignLink->setCampaign( $campaign );
+                    $campaignLink->setParticipantLevel( $participantLevel );
+                    $campaignLink->setParticipantSurveyLinkUniqid( $uniqId );
+                    $campaignLink->setParticipantCampaignLinkId( $participantCampaignLinkId );
+                    $campaignLink->setParticipantCampaignLinkParticipantEmail( $participant->getParticipantEmail() );
+                    $campaignLink->setParticipantCampaignLinkIpAddress( $_SERVER['REMOTE_ADDR'] );
+                    $campaignLink->setParticipantCampaignLinkDatetime( new \DateTime("now") );
+
+                    $em->persist( $campaignLink );
+
+                    $participantSurveyLink = new \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantSurveyLink();
+                    $participantSurveyLink->setParticipant($participant);
+                    $participantSurveyLink->setSaveId(1);
+                    $participantSurveyLink->setSidId(1);
+                    $participantSurveyLink->setParticipantSurveyLinkUniqid( $uniqId );
+                    //$participantSurveyLink->setParticipantSurveyLinkElegibility(1);
+
+                    $em->persist( $participantSurveyLink );
+
                     //Add participants to Default Arm at the moment.
-                    $armData = $em->getRepository('CyclogramProofPilotBundle:Arm')->find( 3 );
+                    $armData = $em->getRepository('CyclogramProofPilotBundle:Arm')->find( 5 );
                     $armData = ( ! is_null( $armData )  ) ? $armData : false;
 
                     $armStatus = $em->getRepository('CyclogramProofPilotBundle:Status')->find( 1 );
@@ -113,7 +159,7 @@ class RegistrationController extends Controller
                     $em->persist($ArmParticipantLink);
 
                     $em->flush();
-                    
+
                     if (!empty($study)){
                         if ($study->getEmailVerificationRequired()) {
                         return $this->redirect( $this->generateUrl("reg_step_2", array('id' => $participant->getParticipantId(), 'studyId' => $studyId)));
@@ -124,7 +170,7 @@ class RegistrationController extends Controller
                         return $this->redirect( $this->generateUrl("simplereg_step_2", array('id' => $participant->getParticipantId())) );
                     }
                     
-                
+
                 } catch (Exception $ex) {
                     $em->close();
                    throw new  Exception('HAHAHA');
