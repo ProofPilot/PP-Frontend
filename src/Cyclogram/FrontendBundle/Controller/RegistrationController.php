@@ -37,6 +37,9 @@ class RegistrationController extends Controller
         $request = $this->getRequest();
         $session = $request->getSession();
 
+        $svid = $request->query->get('svid');
+        $sid = $request->query->get('sid');
+        
         $em = $this->getDoctrine()->getManager();
         $study = null;
         $studyLogo = "";
