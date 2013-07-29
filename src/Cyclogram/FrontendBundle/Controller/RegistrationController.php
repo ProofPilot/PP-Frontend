@@ -26,10 +26,10 @@ class RegistrationController extends Controller
 {
 
     /**
-     * @Route("/register/{studyId}", name="_registration", defaults={"studyId"= null})
+     * @Route("/register/{studyId}/{svid}/{sid}", name="_registration", defaults={"studyId"= null})
      * @Template()
      */
-    public function step1Action($studyId)
+    public function step1Action($studyId=null, $svid=null, $sid=null)
     {
         if ($this->get('security.context')->isGranted("ROLE_USER")){
             return $this->redirect($this->generateURL("_main"));
@@ -136,8 +136,8 @@ class RegistrationController extends Controller
 
                         $em->persist( $campaignLink );
 
-                        $svid = ( $session->get('svid') ) ? $session->get('svid') : 0 ;
-                        $sid = ( $session->get('sid') ) ? $session->get('sid') : 0 ;
+                        $svid = ( $svid ) ? svid : 0 ;
+                        $sid = ( $sid ) ? $sid : 0 ;
 
                         $participantSurveyLink = new \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantSurveyLink();
                         $participantSurveyLink->setParticipant($participant);
