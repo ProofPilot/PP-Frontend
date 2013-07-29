@@ -135,43 +135,34 @@ class GeneralSettingsController  extends Controller
         $parameters = array();
         
         $parameters['preferences'] = array(
-                array('title' => 'Study Task Reminder Preferences',
-                      'subtitle' => 'The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters',
+                array('title' => 'How would you like to receive STUDY REMINDERS',
+                      'subtitle' => 'How would you like us to communicate with you?',
                       'col' => 'col_5',
-                      'dontremind' => '',
+                      'sms_email' => '',
                       'options' => array(
-                        array('row' => 'Remind me to take surveys by'),
-                        array('row' => 'Communicate with me about ORDERS by'),
-                        array('row' => 'Remind me to participate in STUDY DIRECTORY by'),
-                        array('row' => 'Remind me to take TREATMENTS by'),
-                        array('row' => 'Remind me about APPOINTMENTS by'),
-                        array('row' => 'Remind me to take MEASUREMENTS by'),
-                        array('row' => 'Communicate with me about INCENTIVES by'),
-                        array('personal' => '',
-                              'row' => 'Communicate with me about personal issues'
-                              ),
-                        array('row' => 'Study News'),
-                        array('row' => 'Other studies I might be eliglble for')
+                        array('row' => 'Send me study task reminders by'),
+                        array('row' => 'Communicate with me about my orders by'),
+                        array('row' => 'Send me info on other studies I may be eligible for')
                       )
                 ),
-                array('title' => 'What day of the week suits you best?',
-                      'subtitle' => 'The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters',
+                array('title' => 'What TIME OF DAY suits you best?',
+                      'subtitle' => 'Tell us when it\'s most convienent for you to recieve reminders.',
                       'col' => 'col_4',
+                      'check_here' => '',
                       'timezone' => '',
                       'options' => array(
-                        array('row' => 'Early AM (6AM-8AM)'),
+                        array('row' => 'Early AM (5AM-8AM)'),
                         array('row' => 'Morning (8AM-Noon)'),
-                        array('row' => 'Lunchtime (Noon-2PM)'),
-                        array('row' => 'Afternoon (1PM-5PM)'),
-                        array('row' => 'Early Evening (5PM-7PM)'),
-                        array('row' => 'Evening (7PM-9PM)'),
+                        array('row' => 'Afternoon (Noon-5PM)'),
+                        array('row' => 'Early Evening (5PM-9PM)'),
                         array('row' => 'Night (9PM-Midnight)'),
-                        array('row' => 'Late Night (midnight-6AM)')
+                        array('row' => 'Late Night (midnight-5AM)')
                       )
                 ),
-                array('title' => 'Study Task Reminder Preferences',
-                      'subtitle' => 'The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters',
+                array('title' => 'What DAY OF THE WEEK suits you best? ',
+                      'subtitle' => 'Tell us what day is best for you to recieve communications from us.',
                       'col' => 'col_4',
+                      'check_here' => '',
                       'options' => array(
                         array('row' => 'Sunday'),
                         array('row' => 'Monday'),

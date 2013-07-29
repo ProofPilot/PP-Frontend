@@ -131,10 +131,6 @@ class MenuBuilder extends ContainerAware implements TranslationContainerInterfac
                 ->addChild('side_settings_menu.contact_preferences',
                         array('route' => '_contact_prefs'))
                 ->setAttribute('class', 'icon_contact_prefs')->setExtra('translation_domain', 'sidemenu');
-        $menu
-                ->addChild('side_settings_menu.shipping_information',
-                        array('route' => '_survey_eligibility', 'routeParameters' => array('studyUrl' => 'sexpro')))
-                ->setAttribute('class', 'icon_shipping_info')->setExtra('translation_domain', 'sidemenu');
 
         return $menu;
     }
