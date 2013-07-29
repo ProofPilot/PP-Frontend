@@ -36,11 +36,7 @@ class RegistrationController extends Controller
         }
         $request = $this->getRequest();
         $session = $request->getSession();
-
-        echo "studyId = " . var_dump( $studyId ) . "<br>";
-        echo "svid = " . var_dump( $svid ) . "<br>";
-        echo "sid = " . var_dump( $sid ) . "<br>";
-
+        
         $em = $this->getDoctrine()->getManager();
         $study = null;
         $studyLogo = "";
