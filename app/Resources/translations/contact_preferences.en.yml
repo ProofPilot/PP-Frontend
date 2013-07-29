@@ -1,0 +1,16 @@
+day_friday: Friday
+day_monday: Monday
+day_saturday: Saturday
+day_sunday: Sunday
+day_thursday: Thursday
+day_tuesday: Tuesday
+day_wednesday: Wednesday
+reminder_orders: 'Send me study task reminders by'
+reminder_other_studies: 'Communicate with me about my orders by'
+reminder_study_task: 'Send me info on other studies I may be eligible for'
+time_afternoon: Afternoon (Noon-5PM)
+time_early_am: Early AM (5AM-8AM)
+time_early_evening: Early Evening (5PM-9PM)
+time_late_night: Late Night (midnight-5AM)
+time_morning: Morning (8AM-Noon)
+time_night: Night (9PM-Midnight)

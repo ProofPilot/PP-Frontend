@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * ParticipantTimezone
  *
- * @ORM\Table()
+ * @ORM\Table("participant_timezone")
  * @ORM\Entity
  */
 class ParticipantTimezone
@@ -15,7 +15,7 @@ class ParticipantTimezone
     /**
      * @var integer
      *
-     * @ORM\Column(name="participantTimezoneId", type="integer")
+     * @ORM\Column(name="participant_timezone_id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
@@ -24,7 +24,7 @@ class ParticipantTimezone
     /**
      * @var string
      *
-     * @ORM\Column(name="participantTimezoneDesc", type="string", length=45)
+     * @ORM\Column(name="participant_timezone_desc", type="string", length=45)
      */
     private $participantTimezoneDesc;
 

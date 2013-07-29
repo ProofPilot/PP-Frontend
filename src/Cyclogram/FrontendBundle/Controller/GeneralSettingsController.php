@@ -35,7 +35,7 @@ class GeneralSettingsController  extends Controller
         else
             $parameters["user"]["avatar"] = "http://graph.facebook.com/" . $participant->getParticipantUsername() . "/picture?width=80&height=82";
         
-        $parameters["user"]["name"] = $participant->getParticipantUserName();
+        $parameters["user"]["name"] = $participant->getParticipantFirstname() . ' ' . $participant->getParticipantLastname();
         $parameters["user"]["last_access"] = $participant->getParticipantLastTouchDatetime();
         $parameters["user"]["phone"] = $participant->getParticipantMobileNumber();
         
@@ -132,7 +132,31 @@ class GeneralSettingsController  extends Controller
      */
     public function contactPrefsAction()
     {
+        $participant = $this->get('security.context')->getToken()->getUser();
+        $request = $this->getRequest();
+        $em = $this->getDoctrine()->getManager();
+        $reminders = $em->getRepository('CyclogramProofPilotBundle:ParticipantStudyReminder')->findAll();
+        $datetimes = $em->getRepository('CyclogramProofPilotBundle:ParticipantContactTime')->findAll();
+        $timezones = $em->getRepository('CyclogramProofPilotBundle:ParticipantTimezone')->findAll();
         $parameters = array();
+        $parameters['reminders'] = $reminders;
+        $parameters['datetimes'] = $datetimes;
+        $parameters['timezones'] = $timezones;
+        $parameters['weekdays'] =  array(
+                0=>'day_sunday',
+                1=>'day_monday',
+                2=>'day_tuesday',
+                3=>'day_wednesday',
+                4=>'day_thursday',
+                5=>'day_friday',
+                6=>'day_saturday'
+                );
+        
+        
+        
+        
+        
+        
         
         $parameters['preferences'] = array(
                 array('title' => 'How would you like to receive STUDY REMINDERS',
