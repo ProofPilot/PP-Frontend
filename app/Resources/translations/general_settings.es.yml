@@ -1,6 +1,23 @@
-general_subtitle: general_subtitle   # FIXME
-general_title: general_title   # FIXME
+confirm: confirm   # FIXME
+general_subtitle: general_subtitle
+general_title: general_title
+label_email: label_email   # FIXME
+label_new_email: label_new_email   # FIXME
+label_new_pass: label_new_pass   # FIXME
+label_new_phone_number: label_new_phone_number   # FIXME
+label_new_phone_number_pass: label_new_phone_number_pass   # FIXME
+label_new_phone_number_sms: label_new_phone_number_sms   # FIXME
+label_new_user_name: label_new_user_name   # FIXME
+label_new_user_name_pass: label_new_user_name_pass   # FIXME
+label_old_password: label_old_password   # FIXME
+label_password: label_password   # FIXME
+label_password_mobile_confirm: label_password_mobile_confirm   # FIXME
+label_phone_number: label_phone_number   # FIXME
+label_repeat_email: label_repeat_email   # FIXME
+label_repeat_pass: label_repeat_pass   # FIXME
+label_username: label_username   # FIXME
 last_access: 'Ultimo acceso:'
+'send mobile code': 'send mobile code'   # FIXME
 txt_change: txt_change
 txt_edit: txt_edit
 txt_email: txt_email

@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * ParticipantStudyReminderLink
  *
- * @ORM\Table()
+ * @ORM\Table(name="participant_study_reminder_link")
  * @ORM\Entity
  */
 class ParticipantStudyReminderLink
@@ -15,7 +15,7 @@ class ParticipantStudyReminderLink
     /**
      * @var integer
      *
-     * @ORM\Column(name="participantStudyReminderLinkId", type="integer")
+     * @ORM\Column(name="participant_study_reminder_link_id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
@@ -44,14 +44,14 @@ class ParticipantStudyReminderLink
     /**
      * @var integer
      *
-     * @ORM\Column(name="bySMS", type="integer")
+     * @ORM\Column(name="by_sms", type="integer")
      */
     private $bySMS;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="byEmail", type="integer")
+     * @ORM\Column(name="by_email", type="integer")
      */
     private $byEmail;
 

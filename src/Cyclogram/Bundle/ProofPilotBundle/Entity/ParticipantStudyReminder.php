@@ -2,20 +2,23 @@
 
 namespace Cyclogram\Bundle\ProofPilotBundle\Entity;
 
+
+use JMS\TranslationBundle\Translation\TranslationContainerInterface;
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * ParticipantStudyReminder
  *
- * @ORM\Table()
+ * @ORM\Table(name="participant_study_reminder")
  * @ORM\Entity
  */
-class ParticipantStudyReminder
+class ParticipantStudyReminder implements TranslationContainerInterface
 {
     /**
      * @var integer
      *
-     * @ORM\Column(name="participantStudyReminderId", type="integer")
+     * @ORM\Column(name="participant_study_reminder_id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
@@ -24,20 +27,9 @@ class ParticipantStudyReminder
     /**
      * @var string
      *
-     * @ORM\Column(name="participantStudyReminderName", type="string", length=45)
+     * @ORM\Column(name="participant_study_reminder_name", type="string", length=45)
      */
     private $participantStudyReminderName;
-
-
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
 
     /**
      * Set participantStudyReminderId
@@ -48,7 +40,7 @@ class ParticipantStudyReminder
     public function setParticipantStudyReminderId($participantStudyReminderId)
     {
         $this->participantStudyReminderId = $participantStudyReminderId;
-    
+
         return $this;
     }
 
@@ -68,10 +60,11 @@ class ParticipantStudyReminder
      * @param string $participantStudyReminderName
      * @return ParticipantStudyReminder
      */
-    public function setParticipantStudyReminderName($participantStudyReminderName)
+    public function setParticipantStudyReminderName(
+            $participantStudyReminderName)
     {
         $this->participantStudyReminderName = $participantStudyReminderName;
-    
+
         return $this;
     }
 
@@ -84,4 +77,24 @@ class ParticipantStudyReminder
     {
         return $this->participantStudyReminderName;
     }
+    
+    
+    public static function getTranslationMessages()
+    {
+        $messages =  array(
+                'reminder_study_task',
+                'reminder_orders',
+                'reminder_other_studies'
+                );
+        
+        $translations = array();
+        
+        foreach($messages as $message) {
+            $translations[] = new \JMS\TranslationBundle\Model\Message($message, "contact_preferences");
+        }
+        
+        return $translations;
+
+    }
+
 }

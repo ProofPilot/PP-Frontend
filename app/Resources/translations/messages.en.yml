@@ -5,3 +5,4 @@ txt_header_or: or
 txt_header_register: Register
 txt_header_register_here: 'Register Here'
 username: Username
+reminder_study_task: 'Send me info on other studies I may be eligible for'

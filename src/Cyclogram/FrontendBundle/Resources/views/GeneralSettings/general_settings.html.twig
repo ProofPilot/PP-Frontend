@@ -1,1 +1,256 @@
-{%  extends '::base.html.twig' %}    {% block body %}  <body class="page_main">    <div class="site_container">    {% include '::header.html.twig' %}      <div class="panel">        <div class="panel_left">          {% include '::profile_info.html.twig' %}          <div class="menu_cont">              {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createSideSettingsMenu',{'template': 'CyclogramFrontendBundle:Knp:knp_side_menu.html.twig','currentClass': 'active'}) }}          </div>        </div>        <div class="panel_right">          <div class="dashboard_title general_settings">               <span class="align_to_middle">                  <h1>{% trans from "general_settings" %}general_title{% endtrans %}</h1>                  <p>{% trans from "general_settings" %}general_subtitle{% endtrans %}</p>              </span>           </div>          <div class="dashboard_panel">          {% if message is defined %}            <p class="notice green nomargin margin_top"><span>{{ message }}</span></p>          {%  endif %}            <form action="{{ path('_settings') }}" method="POST", name="general_settings">              <ul class="settings_form">                <li class="left_text form-password">{% trans from "general_settings" %}txt_password{% endtrans %}</li>                <li class="form_expanded form-password">                  <div class="wrapper">                    <div class="close_cont"><a href="#" data-form-cont=".form-password">Cancel</a></div>                    <div class="new_inputs_cont with_margin">                      <div class="for_label"><label>Old password</label><a href="{{ path('_forgot_pass') }}" class="forgot">Forgot                          it?</a></div>                      <span class="input_container">                          {{ form_widget(form.oldPassword) }}                          {{ form_errors(form.oldPassword) }}                      </span>                    </div>                    <div class="new_inputs_cont">                      <div class="for_label"><label>Type new password</label></div>                      <span class="input_container">                          {{ form_widget(form.newPassword.first) }}                          {{ form_errors(form.newPassword.first) }}                      </span>                    </div>                    <div class="new_inputs_cont">                      <div class="for_label"><label>Confirm new password</label></div>                      <span class="input_container has_error">                          {{ form_widget(form.newPassword.second) }}                          {{ form_errors(form.newPassword.second) }}                          <span class="mark"></span>                      </span>                    </div>                    <div class="confirm_cont">                        {{ form_widget(form.passwordSendSMS, {'attr':{'class' : 'btn_confirm'}}) }}                    </div>                    <p class="error_msg">Passwords do not match</p>                    <div class="new_inputs_cont">                      <div class="for_label"><label>Enter mobile code to confirm</label></div>                      <span class="input_container">                         {{ form_widget(form.passwordMobileComfirm) }}                         {{ form_errors(form.passwordMobileComfirm) }}                      </span>                    </div>                    <div class="confirm_cont">                        {{ form_widget(form.passwordConfirm, {'attr':{'class' : 'btn_confirm disabled'}}) }}                  </div>                </li>                <li class="middle_input form-password">                    {{ form_widget(form.password, {'attr' : {'class' : 'middle_input', 'value' : 'password'}}) }}                    {{ form_errors(form.password) }}                <li class="edit_btn form-password"><a href="#" data-form-cont=".form-password">{% trans from "general_settings" %}txt_change{% endtrans %}</a></li>                <li class="left_text form-email">{% trans from "general_settings" %}txt_email{% endtrans %}</li>                <li class="form_expanded form-email">                  <div class="wrapper">                    <div class="current_text">Matt@cyclogram.com</div>                    <div class="close_cont"><a href="#" data-form-cont=".form-email">Cancel</a></div>                    <div class="new_inputs_cont">                      <div class="for_label"><label>New e-mail</label></div>                      <span class="input_container">                          {{ form_widget(form.newEmail.first) }}                          {{ form_errors(form.newEmail.first) }}                      </span>                    </div>                    <div class="new_inputs_cont">                      <div class="for_label"><label>Confirm new e-mail</label></div>                      <span class="input_container">                          {{ form_widget(form.newEmail.second) }}                          {{ form_errors(form.newEmail.second) }}                      </span>                    </div>                    <div class="confirm_cont">                        {{ form_widget(form.emailConfirm, {'attr':{'class' : 'btn_confirm'}}) }}                  </div>                </li>                <li class="middle_input form-email">                    {{ form_widget(form.email, {'attr' : {'class' : 'middle_input'}}) }}                    {{ form_errors(form.email) }}                <li class="edit_btn form-email"><a href="#" data-form-cont=".form-email">{% trans from "general_settings" %}txt_change{% endtrans %}</a></li>                <li class="left_text form-mobile">{% trans from "general_settings" %}txt_mobile_number{% endtrans %}</li>                <li class="form_expanded form-mobile">                  <div class="wrapper">                    <div class="current_text">{{ user.phone }}</div>                    <div class="close_cont"><a href="#" data-form-cont=".form-mobile">Cancel</a></div>                    <div class="new_inputs_cont">                      <div class="for_label"><label>New phone number</label></div>                      <span class="input_container">                          {{ form_widget(form.newPhoneNumber) }}                          {{ form_errors(form.newPhoneNumber) }}                      </span>                      </div>                    <div class="new_inputs_cont">                      <div class="for_label"><label>Enter password to confirm change</label><a href="{{ path('_forgot_pass') }}" class="forgot">Forgot it?</a></div>                      <span class="input_container">                          {{ form_widget(form.newPhoneNumberPassword) }}                          {{ form_errors(form.newPhoneNumberPassword) }}                      </span>                    </div>                    <div class="confirm_cont">                        {{ form_widget(form.phoneSendSMS, {'attr':{'class' : 'btn_confirm'}}) }}                    <div class="new_inputs_cont">                      <div class="for_label"><label>Enter mobile code to confirm</label></div>                      <span class="input_container">                          {{ form_widget(form.newPhoneNumberSMS) }}                          {{ form_errors(form.newPhoneNumberSMS) }}                      </span>                    </div>                    <div class="confirm_cont">                        {{ form_widget(form.phoneConfirm, {'attr':{'class' : 'btn_confirm disabled'}}) }}                    </div>                  </div>                </li>                <li class="middle_input form-mobile">                    {{ form_widget(form.phoneNumber, {'attr' : {'class' : 'middle_input'}}) }}                    {{ form_errors(form.phoneNumber) }}                </li>                <li class="edit_btn form-mobile"><a href="#" data-form-cont=".form-mobile">{% trans from "general_settings" %}txt_edit{% endtrans %}</a></li>              </ul>            </form>          </div>        </div>      </div>    </div>    <footer>      <div class="site_container">        <div class="footer_col_left">            {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createBottomLeftMenu',{'template': 'CyclogramFrontendBundle:Knp:knp_menu.html.twig'}) }}        </div>        <div class="footer_col_middle"><a class="to_top" href="#"><span>ON TOP</span></a></div>        <div class="footer_col_right">            {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createBottomRightMenu',{'template': 'CyclogramFrontendBundle:Knp:knp_menu.html.twig'}) }}        </div>      </div>      <a href="http://www.kudos.hr" target="_blank" class="author">design by kudos studio</a> </footer>    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>    <script>window.jQuery || document.write('<script src={{ asset('js/vendor/jquery-1.9.1.min.js') }}><\/script>')</script>        <script src= {{ asset ('js/plugins.js') }}></script>        <script src= {{ asset ('js/main.js') }}></script>                   <script type="text/javascript">        $(document).ready(function(){           $('#general_settings_passwordSendSMS').click(function()                   {                            $('#general_settings_validationCheck').val("password-sms");                   });           $('#general_settings_passwordConfirm').click(function()                   {                            $('#general_settings_validationCheck').val("password");                   });           $('#general_settings_emailConfirm').click(function()                   {                            $('#general_settings_validationCheck').val("email");                   });           $('#general_settings_phoneSendSMS').click(function()                   {                            $('#general_settings_validationCheck').val("mobile-sms");                   });           $('#general_settings_phoneConfirm').click(function()                   {                            $('#general_settings_validationCheck').val("mobile");                   });           });        </script>  </body>      {% endblock body %}
+{%  extends '::base.html.twig' %}
+
+{% form_theme form _self %}
+
+
+{% block form_errors %}
+    {% spaceless %}
+        {% if errors|length > 0 %}
+            {% for error in errors %}
+                <p class="error_msg">{{ error.message }}</p>
+            {% endfor %}
+        {% endif %}
+    {% endspaceless %}
+{% endblock form_errors %}
+
+{% block form_widget_simple %}
+{% spaceless %}
+    {% set type = type|default('text') %}
+    {% if errors %}
+        {% set class_error = "has_error" %}
+        {% set attr = attr|merge({'class': class_error}) %} 
+    {% endif %}
+    <span class="input_container {% if errors %}has_error{% endif %}">
+        <span class="input_placeholder {% if errors %}has_error{% endif %}">
+            <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %} value="{{ value }}" {% endif %}/>
+            <span class="mark"></span>
+        </span>
+    </span>
+{% endspaceless %}
+{% endblock form_widget_simple %}
+
+{% block body %}
+  <body class="page_main">
+    <div class="site_container">
+
+    {% include '::header.html.twig' %}
+
+
+      <div class="panel">
+        <div class="panel_left">
+          {% include '::profile_info.html.twig' %}
+          <div class="menu_cont">
+              {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createSideSettingsMenu',{'template': 'CyclogramFrontendBundle:Knp:knp_side_menu.html.twig','currentClass': 'active'}) }}
+          </div>
+        </div>
+        <div class="panel_right">
+          <div class="dashboard_title general_settings"> 
+              <span class="align_to_middle">
+                  <h1>{% trans from "general_settings" %}general_title{% endtrans %}</h1>
+                  <p>{% trans from "general_settings" %}general_subtitle{% endtrans %}</p>
+              </span> 
+          </div>
+
+          <div class="dashboard_panel">
+          {% if message is defined %}
+            <p class="notice green nomargin margin_top"><span>{{ message }}</span></p>
+          {%  endif %}
+            <form action="{{ path('_settings') }}" method="POST", name="general_settings">
+              <ul class="settings_form">
+                <li class="left_text form-username">{% trans from "general_settings" %}txt_username{% endtrans %}</li>
+                
+                <li class="form_expanded form-username">
+                  <div class="wrapper">
+                    <div class="current_text">{{ participant.participantUserName }}</div>
+                    <div class="close_cont"><a href="#" data-form-cont=".form-username">Cancel</a></div>
+                    <div class="new_inputs_cont">
+                      <div class="for_label"><label>New username</label></div>
+                         {{ form_widget(form.newUserName) }}
+                         {{ form_errors(form.newUserName) }}
+                    </div>
+                    <div class="new_inputs_cont">
+                      <div class="for_label"><label>Enter password</label><a href="{{ path('_forgot_pass') }}" class="forgot">Forgot it?</a></div>
+                          {{ form_widget(form.newUserNamePassword) }}
+                          {{ form_errors(form.newUserNamePassword) }}
+                    </div>
+                    <div class="confirm_cont">
+                        {{ form_widget(form.userNameConfirm, {'attr':{'class' : 'btn_confirm'}}) }}
+                    </div>
+                  </div>
+                </li>
+                <li class="middle_input form-username">
+                    {{ form_widget(form.userName, {'attr' : {'class' : 'middle_input'}, 'value': participant.participantUsername }) }}
+                    {{ form_errors(form.userName) }}
+                </li>
+                <li class="edit_btn form-username"><a href="#" data-form-cont=".form-username">{% trans from "general_settings" %}txt_change{% endtrans %}</a></li>
+                <li class="left_text form-password">{% trans from "general_settings" %}txt_password{% endtrans %}</li>
+                <li class="form_expanded form-password">
+                  <div class="wrapper">
+                    <div class="close_cont"><a href="#" data-form-cont=".form-password">Cancel</a></div>
+                    <div class="new_inputs_cont with_margin">
+                      <div class="for_label"><label>Old password</label><a href="{{ path('_forgot_pass') }}" class="forgot">Forgot
+                          it?</a></div>
+                          {{ form_widget(form.oldPassword) }}
+                          {{ form_errors(form.oldPassword) }}
+                    </div>
+                    <div class="new_inputs_cont">
+                      <div class="for_label"><label>Type new password</label></div>
+                          {{ form_widget(form.newPassword.first) }}
+                          {{ form_errors(form.newPassword.first) }}
+                    </div>
+                    <div class="new_inputs_cont">
+                      <div class="for_label"><label>Confirm new password</label></div>
+                          {{ form_widget(form.newPassword.second) }}
+                          {{ form_errors(form.newPassword.second) }}
+                    </div>
+                    <div class="confirm_cont">
+                        {{ form_widget(form.passwordSendSMS, {'attr':{'class' : 'btn_confirm'}}) }}
+                    </div>
+                    <div class="new_inputs_cont">
+                      <div class="for_label"><label>Enter mobile code to confirm</label></div>
+                         {{ form_widget(form.passwordMobileComfirm) }}
+                         {{ form_errors(form.passwordMobileComfirm) }}
+                    </div>
+                    <div class="confirm_cont">
+                        {{ form_widget(form.passwordConfirm, {'attr':{'class' : 'btn_confirm disabled'}}) }}
+                  </div>
+                </li>
+                <li class="middle_input form-password">
+                    {{ form_widget(form.password, {'attr' : {'class' : 'middle_input', 'value' : 'password'}}) }}
+                    {{ form_errors(form.password) }}
+                <li class="edit_btn form-password"><a href="#" data-form-cont=".form-password">{% trans from "general_settings" %}txt_change{% endtrans %}</a></li>
+                <li class="left_text form-email">{% trans from "general_settings" %}txt_email{% endtrans %}</li>
+                <li class="form_expanded form-email">
+                  <div class="wrapper">
+                    <div class="current_text">{{ participant.participantEmail }}</div>
+                    <div class="close_cont"><a href="#" data-form-cont=".form-email">Cancel</a></div>
+                    <div class="new_inputs_cont">
+                      <div class="for_label"><label>New e-mail</label></div>
+                      <span class="input_container">
+                          {{ form_widget(form.newEmail.first) }}
+                          {{ form_errors(form.newEmail.first) }}
+                      </span>
+                    </div>
+                    <div class="new_inputs_cont">
+                      <div class="for_label"><label>Confirm new e-mail</label></div>
+                      <span class="input_container">
+                          {{ form_widget(form.newEmail.second) }}
+                          {{ form_errors(form.newEmail.second) }}
+                      </span>
+                    </div>
+                    <div class="confirm_cont">
+                        {{ form_widget(form.emailConfirm, {'attr':{'class' : 'btn_confirm'}}) }}
+                  </div>
+                </li>
+                <li class="middle_input form-email">
+                    {{ form_widget(form.email, {'attr' : {'class' : 'middle_input'}, 'value' : participant.participantEmail }) }}
+                    {{ form_errors(form.email) }}
+                <li class="edit_btn form-email"><a href="#" data-form-cont=".form-email">{% trans from "general_settings" %}txt_change{% endtrans %}</a></li>
+                <li class="left_text form-mobile">{% trans from "general_settings" %}txt_mobile_number{% endtrans %}</li>
+                <li class="form_expanded form-mobile">
+                  <div class="wrapper">
+                    <div class="current_text">{{ participant.participantMobileNumber }}</div>
+                    <div class="close_cont"><a href="#" data-form-cont=".form-mobile">Cancel</a></div>
+                    <div class="new_inputs_cont">
+                      <div class="for_label"><label>New phone number</label></div>
+                      <span class="input_container">
+                          {{ form_widget(form.newPhoneNumber) }}
+                          {{ form_errors(form.newPhoneNumber) }}
+                      </span>
+                      </div>
+                    <div class="new_inputs_cont">
+                      <div class="for_label"><label>Enter password to confirm change</label><a href="{{ path('_forgot_pass') }}" class="forgot">Forgot it?</a></div>
+                      <span class="input_container">
+                          {{ form_widget(form.newPhoneNumberPassword) }}
+                          {{ form_errors(form.newPhoneNumberPassword) }}
+                      </span>
+                    </div>
+                    <div class="confirm_cont">
+                        {{ form_widget(form.phoneSendSMS, {'attr':{'class' : 'btn_confirm'}}) }}
+                    <div class="new_inputs_cont">
+                      <div class="for_label"><label>Enter mobile code to confirm</label></div>
+                      <span class="input_container">
+                          {{ form_widget(form.newPhoneNumberSMS) }}
+                          {{ form_errors(form.newPhoneNumberSMS) }}
+                      </span>
+                    </div>
+                    <div class="confirm_cont">
+                        {{ form_widget(form.phoneConfirm, {'attr':{'class' : 'btn_confirm disabled'}}) }}
+                    </div>
+                  </div>
+                </li>
+                <li class="middle_input form-mobile">
+                    {{ form_widget(form.phoneNumber, {'attr' : {'class' : 'middle_input'}, 'value': participant.participantMobileNumber}) }}
+                    {{ form_errors(form.phoneNumber) }}
+                </li>
+                <li class="edit_btn form-mobile"><a href="#" data-form-cont=".form-mobile">{% trans from "general_settings" %}txt_edit{% endtrans %}</a></li>
+              </ul>
+              {{ form_rest(form) }}
+              {{ form_errors(form) }}
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer>
+      <div class="site_container">
+        <div class="footer_col_left">
+            {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createBottomLeftMenu',{'template': 'CyclogramFrontendBundle:Knp:knp_menu.html.twig'}) }}
+        </div>
+        <div class="footer_col_middle"><a class="to_top" href="#"><span>ON TOP</span></a></div>
+        <div class="footer_col_right">
+            {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createBottomRightMenu',{'template': 'CyclogramFrontendBundle:Knp:knp_menu.html.twig'}) }}
+        </div>
+      </div>
+    </footer>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src={{ asset('js/vendor/jquery-1.9.1.min.js') }}><\/script>')</script>
+        <script src= {{ asset ('js/plugins.js') }}></script>
+        <script src= {{ asset ('js/main.js') }}></script>
+                   <script type="text/javascript">
+        $(document).ready(function(){
+           $('#general_settings_userNameConfirm').click(function()
+                {
+                         $('#general_settings_validationCheck').val("username");
+                });
+
+           $('#general_settings_passwordSendSMS').click(function()
+                   {
+                            $('#general_settings_validationCheck').val("password-sms");
+                   });
+
+           $('#general_settings_passwordConfirm').click(function()
+                   {
+                            $('#general_settings_validationCheck').val("password");
+                   });
+
+           $('#general_settings_emailConfirm').click(function()
+                   {
+                            $('#general_settings_validationCheck').val("email");
+                   });
+
+           $('#general_settings_phoneSendSMS').click(function()
+                   {
+                            $('#general_settings_validationCheck').val("mobile-sms");
+                   });
+
+           $('#general_settings_phoneConfirm').click(function()
+                   {
+                            $('#general_settings_validationCheck').val("mobile");
+                   });
+           });
+
+           var error_form='{{ invalidFormClass }}';
+
+
+           if(error_form) {
+        	    var form = '.form-' + error_form;
+        	    $("li.form_expanded" + form).show();
+        	    $("li.middle_input" + form).hide();
+        	    $("li.edit_btn" + form).hide();
+           }
+
+
+        </script>
+  </body>
+{% endblock body %}

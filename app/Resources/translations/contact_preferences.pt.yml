@@ -1,0 +1,16 @@
+day_friday: day_friday
+day_monday: day_monday
+day_saturday: day_saturday
+day_sunday: day_sunday
+day_thursday: day_thursday
+day_tuesday: day_tuesday
+day_wednesday: day_wednesday
+reminder_orders: reminder_orders
+reminder_other_studies: reminder_other_studies
+reminder_study_task: reminder_study_task
+time_afternoon: time_afternoon
+time_early_am: time_early_am
+time_early_evening: time_early_evening
+time_late_night: time_late_night
+time_morning: time_morning
+time_night: time_night
