@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * ParticipantStudyReminderLink
  *
  * @ORM\Table(name="participant_study_reminder_link")
- * @ORM\Entity(repositoryClass="Cyclogram\Bundle\ProofPilotBundle\Repository\ParticipantStudyReminderLink")
+ * @ORM\Entity(repositoryClass="Cyclogram\Bundle\ProofPilotBundle\Repository\ParticipantStudyReminderLinkRepository")
  */
 class ParticipantStudyReminderLink
 {

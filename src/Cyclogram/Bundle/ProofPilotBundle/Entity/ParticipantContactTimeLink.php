@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * ParticipantContactTimeLink
  *
  * @ORM\Table(name="participant_contact_time_link")
- * @ORM\Entity(repositoryClass="Cyclogram\Bundle\ProofPilotBundle\Repository\ParticipantContactTimeLink")
+ * @ORM\Entity(repositoryClass="Cyclogram\Bundle\ProofPilotBundle\Repository\ParticipantContactTimeLinkRepository")
  */
 class ParticipantContactTimeLink
 {

@@ -151,15 +151,15 @@ class GeneralSettingsController  extends Controller
         $em = $this->getDoctrine()->getManager();
         
         $reminders = $em->getRepository('CyclogramProofPilotBundle:ParticipantStudyReminder')->findAll();
-        $reminderLinks = $em->getRepository('CyclogramProofPilotBundle:ParticipantStudyReminderLink')->findByParticipantId($participant);
+        $reminderLinks = $em->getRepository('CyclogramProofPilotBundle:ParticipantStudyReminderLink')->findByParticipant($participant);
         
         $remindersData = array();
         
         foreach($reminders as $reminder) {
             $reminderId = $reminder->getParticipantStudyReminderId();
             $reminderLinks = $em->getRepository('CyclogramProofPilotBundle:ParticipantStudyReminderLink')->findBy(
-                    array('participantId'=>$participant,
-                          'participantStudyReminderId'=>$reminder));
+                    array('participant'=>$participant,
+                          'participantStudyReminder'=>$reminder));
             $bySMS = false;
             $byEmail = false;
             if($reminderLinks) {
@@ -212,16 +212,16 @@ class GeneralSettingsController  extends Controller
                         $reminderSMS = $request->get('sms_' . $reminder_id);
                         $reminderEmail = $request->get('email_' . $reminder_id);
                             $reminderLinks = $em->getRepository('CyclogramProofPilotBundle:ParticipantStudyReminderLink')->findBy(
-                                    array('participantId'=>$participant,
-                                          'participantStudyReminderId'=>$reminder));
+                                    array('participant'=>$participant,
+                                          'participantStudyReminder'=>$reminder));
                             
                             if($reminderLinks) {
                                 $participantReminderLink = $reminderLinks[0];
                             } else {
                                 $participantReminderLink = new ParticipantStudyReminderLink();
                             }
-                            $participantReminderLink->setParticipantId($participant);
-                            $participantReminderLink->setParticipantStudyReminderId($reminder);
+                            $participantReminderLink->setParticipant($participant);
+                            $participantReminderLink->setParticipantStudyReminder($reminder);
                             if($reminderSMS) {
                                 $participantReminderLink->setBySMS(true);
                             } else {
@@ -260,8 +260,8 @@ class GeneralSettingsController  extends Controller
         foreach($reminders as $reminder) {
             $reminderId = $reminder->getParticipantStudyReminderId();
             $reminderLinks = $em->getRepository('CyclogramProofPilotBundle:ParticipantStudyReminderLink')->findBy(
-                    array('participantId'=>$participant,
-                            'participantStudyReminderId'=>$reminder));
+                    array('participant'=>$participant,
+                            'participantStudyReminder'=>$reminder));
             $bySMS = false;
             $byEmail = false;
             if($reminderLinks) {
