@@ -3354,7 +3354,7 @@ footer a.icon_update span {
 .mobile_reg div.center_align.bottom_margin {
 	margin-bottom: 15px;
 }
-.mobile_reg a.submit {
+.mobile_reg button.submit {
 	clear: both;
 	display: inline-block;
 	color: white;
@@ -3379,25 +3379,25 @@ footer a.icon_update span {
 	background: linear-gradient(to bottom, #e3624c 0%,#bc3a29 100%); /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e3624c', endColorstr='#bc3a29',GradientType=0 ); /* IE6-9 */
 }
-.mobile_reg a.submit.min_width {
+.mobile_reg button.submit.min_width {
 	min-width: 80px;
 }
-.mobile_reg a.submit.btn_login {
+.mobile_reg button.submit.btn_login {
 	width: 104px;
 	padding: 0px;
 	text-align: center;
 	line-height: 37px;
 	height: 37px;
 }
-.mobile_reg a.m1 , .mobile_reg a.m2 {
+.mobile_reg button.m1 , .mobile_reg button.m2 {
 	width: 174px;
 	padding-left: 0px;
 	padding-right: 0px;
 }
-.mobile_reg a.m2 {
+.mobile_reg button.m2 {
 	
 }
-.mobile_reg a.submit:hover {
+.mobile_reg button.submit:hover {
 	border-color: #892e1f;
 	background: #a24636; /* Old browsers */
 	background: -moz-linear-gradient(top, #a24636 0%, #85291e 100%); /* FF3.6+ */
@@ -3408,7 +3408,7 @@ footer a.icon_update span {
 	background: linear-gradient(to bottom, #a24636 0%,#85291e 100%); /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a24636', endColorstr='#85291e',GradientType=0 ); /* IE6-9 */
 }
-.mobile_reg a.gray {
+.mobile_reg button.gray {
 	border-color: #6e6e6e;
 	margin-right: 20px;
 	background: #7b7d7c; /* Old browsers */
@@ -3420,7 +3420,7 @@ footer a.icon_update span {
 	background: linear-gradient(to bottom, #7b7d7c 0%,#5c5d5f 100%); /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7b7d7c', endColorstr='#5c5d5f',GradientType=0 ); /* IE6-9 */
 }
-.mobile_reg a.submit.gray:hover {
+.mobile_reg button.submit.gray:hover {
 	border-color: #6e6e6e;
 	background: #5e5f5e; /* Old browsers */
 	background: -moz-linear-gradient(top, #5e5f5e 1%, #464748 100%); /* FF3.6+ */
@@ -3876,10 +3876,10 @@ footer a.icon_update span {
 .mobile_reg.login_form .loginform_right .actions_row  input.checkbox {
 	margin-right: 5px;
 }
-.mobile_reg.login_form .loginform_right .actions_row a.submit {
+.mobile_reg.login_form .loginform_right .actions_row button.submit {
 	float: right;
 }
-.mobile_reg.login_form .loginform_right .actions_row a.submit:hover {
+.mobile_reg.login_form .loginform_right .actions_row button.submit:hover {
 	border-color: #892e1f;
 	background: #a24636; /* Old browsers */
 	background: -moz-linear-gradient(top, #a24636 0%, #85291e 100%); /* FF3.6+ */
@@ -3890,7 +3890,7 @@ footer a.icon_update span {
 	background: linear-gradient(to bottom, #a24636 0%,#85291e 100%); /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a24636', endColorstr='#85291e',GradientType=0 ); /* IE6-9 */
 }
-.mobile_reg.login_form .loginform_right .actions_row a.submit.with_min_width {
+.mobile_reg.login_form .loginform_right .actions_row button.submit.with_min_width {
 	min-width: 70px;
 	text-align: center;
 }
@@ -5188,7 +5188,7 @@ footer a.icon_update span {
 	.mobile_reg.login_form h1 {
 		padding-right: 0px;
 	}
-	.mobile_reg.login_form .loginform_right .actions_row a.submit {
+	.mobile_reg.login_form .loginform_right .actions_row button.submit {
 		clear: both;
 		width: 100%;
 		box-sizing:border-box;
@@ -6075,7 +6075,7 @@ footer a.icon_update span {
 		width: 240px;
 	} 
 	
-	.mobile_reg a.submit {
+	.mobile_reg button.submit {
 		font-size: 15px;	
 		text-align: center;
 		width: 100%;
@@ -6086,11 +6086,11 @@ footer a.icon_update span {
 		-webkit-box-sizing:border-box;
 		margin-bottom: 20px;
 	}
-	.mobile_reg a.submit.min_width {
+	.mobile_reg button.submit.min_width {
 		margin-bottom: 0px;
 	}
 	
-	.mobile_reg a.submit.type2 {
+	.mobile_reg button.submit.type2 {
 		font-size: 13px;
 	}
 	
@@ -6098,16 +6098,16 @@ footer a.icon_update span {
 		position: relative;
 		height: 120px;
 	}
-	.mobile_reg a.submit.m1 ,
-	.mobile_reg a.submit.m2 {
+	.mobile_reg button.submit.m1 ,
+	.mobile_reg button.submit.m2 {
 		position: absolute;
 		left: 0px;
 		top: 0px;
 	}
-	.mobile_reg a.submit.m1  {
+	.mobile_reg button.submit.m1  {
 		top: 60px;
 	}
-	.mobile_reg a.submit.m2 {
+	.mobile_reg button.submit.m2 {
 		
 	}
 	
