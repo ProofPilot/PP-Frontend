@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * ParticipantTimezone
  *
  * @ORM\Table("participant_timezone")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Cyclogram\Bundle\ProofPilotBundle\Repository\ParticipantTimezoneRepository")
  */
 class ParticipantTimezone
 {

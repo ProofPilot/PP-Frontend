@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * ParticipantStudyReminderLink
  *
  * @ORM\Table(name="participant_study_reminder_link")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Cyclogram\Bundle\ProofPilotBundle\Repository\ParticipantStudyReminderLink")
  */
 class ParticipantStudyReminderLink
 {
@@ -29,7 +29,7 @@ class ParticipantStudyReminderLink
      *   @ORM\JoinColumn(name="participant_id", referencedColumnName="participant_id")
      * })
      */
-    private $participantId;
+    private $participant;
 
     /**
      * @var \ParticipantStudyReminder
@@ -39,7 +39,7 @@ class ParticipantStudyReminderLink
      *   @ORM\JoinColumn(name="participant_study_reminder_id", referencedColumnName="participant_study_reminder_id")
      * })
      */
-    private $participantStudyReminderId;
+    private $participantStudyReminder;
 
     /**
      * @var integer
@@ -79,49 +79,49 @@ class ParticipantStudyReminderLink
     }
 
     /**
-     * Set participantId
+     * Set participant
      *
-     * @param integer $participantId
+     * @param integer $participant
      * @return ParticipantStudyReminderLink
      */
-    public function setParticipantId(\Cyclogram\Bundle\ProofPilotBundle\Entity\Participant $participantId = null)
+    public function setParticipant(\Cyclogram\Bundle\ProofPilotBundle\Entity\Participant $participant = null)
     {
-        $this->participantId = $participantId;
+        $this->participant = $participant;
     
         return $this;
     }
 
     /**
-     * Get participantId
+     * Get participant
      *
      * @return \Cyclogram\Bundle\ProofPilotBundle\Entity\Participant
      */
-    public function getParticipantId()
+    public function getParticipant()
     {
-        return $this->participantId;
+        return $this->participant;
     }
 
     /**
-     * Set participantStudyReminderId
+     * Set participantStudyReminder
      *
-     * @param integer $participantStudyReminderId
+     * @param integer $participantStudyReminder
      * @return ParticipantStudyReminderLink
      */
-    public function setParticipantStudyReminderId(\Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantStudyReminder $participantStudyReminderId = null)
+    public function setParticipantStudyReminder(\Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantStudyReminder $participantStudyReminder = null)
     {
-        $this->participantStudyReminderId = $participantStudyReminderId;
+        $this->participantStudyReminder = $participantStudyReminder;
     
         return $this;
     }
 
     /**
-     * Get participantStudyReminderId
+     * Get participantStudyReminder
      *
      * @return \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantStudyReminder 
      */
-    public function getParticipantStudyReminderId()
+    public function getParticipantStudyReminder()
     {
-        return $this->participantStudyReminderId;
+        return $this->participantStudyReminder;
     }
 
     /**

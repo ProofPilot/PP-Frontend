@@ -7,15 +7,15 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * ParticipantContactTimeLink
  *
- * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Table(name="participant_contact_time_link")
+ * @ORM\Entity(repositoryClass="Cyclogram\Bundle\ProofPilotBundle\Repository\ParticipantContactTimeLink")
  */
 class ParticipantContactTimeLink
 {
     /**
      * @var integer
      *
-     * @ORM\Column(name="participantContactTimeLinkId", type="integer")
+     * @ORM\Column(name="participant_contact_time_link_id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
@@ -34,14 +34,14 @@ class ParticipantContactTimeLink
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="participantContactTimeStart", type="datetime")
+     * @ORM\Column(name="participant_contact_time_start", type="datetime")
      */
     private $participantContactTimeStart;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="participantContactTimeEnd", type="datetime")
+     * @ORM\Column(name="participant_contact_time_end", type="datetime")
      */
     private $participantContactTimeEnd;
 
@@ -58,7 +58,7 @@ class ParticipantContactTimeLink
     /**
      * @var integer
      *
-     * @ORM\Column(name="participantDayOfWeek", type="integer")
+     * @ORM\Column(name="participant_day_of_week", type="integer")
      */
     private $participantDayOfWeek;
 
@@ -70,7 +70,7 @@ class ParticipantContactTimeLink
      * @ORM\JoinColumn(name="participant_id", referencedColumnName="participant_id")
      * })
      */
-    private $participantId;
+    private $participant;
 
     /**
      * Set participantContactTimeLinkId
@@ -211,25 +211,25 @@ class ParticipantContactTimeLink
     }
 
     /**
-     * Set participantId
+     * Set participant
      *
-     * @param integer $participantId
+     * @param integer $participant
      * @return ParticipantContactTimeLink
      */
-    public function setParticipantId(\Cyclogram\Bundle\ProofPilotBundle\Entity\Participant $participantId = null)
+    public function setParticipant(\Cyclogram\Bundle\ProofPilotBundle\Entity\Participant $participant = null)
     {
-        $this->participantId = $participantId;
+        $this->participant = $participant;
     
         return $this;
     }
 
     /**
-     * Get participantId
+     * Get participant
      *
      * @return \Cyclogram\Bundle\ProofPilotBundle\Entity\Participant
      */
-    public function getParticipantId()
+    public function getParticipant()
     {
-        return $this->participantId;
+        return $this->participant;
     }
 }
