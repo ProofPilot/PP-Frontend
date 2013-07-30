@@ -1,5 +1,5 @@
-btn_confirm: btn_confirm   # FIXME
-btn_send_mobile_code: btn_send_mobile_code   # FIXME
+btn_confirm: btn_confirm
+btn_send_mobile_code: btn_send_mobile_code
 general_subtitle: general_subtitle
 general_title: general_title
 label_email: label_email
