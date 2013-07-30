@@ -49,20 +49,18 @@
           {%  endif %}
             <form action="{{ path('_settings') }}" method="POST", name="general_settings">
               <ul class="settings_form">
-              
-                {# username #}
                 <li class="left_text form-username">{% trans from "general_settings" %}txt_username{% endtrans %}</li>
                 <li class="form_expanded form-username" {{ showonerror('username',expandedFormClass) }}>
                   <div class="wrapper">
                     <div class="current_text">{{ participant.participantUserName }}</div>
                     <div class="close_cont"><a href="#" data-form-cont=".form-username">Cancel</a></div>
                     <div class="new_inputs_cont">
-                      <div class="for_label"><label>New username</label></div>
-                         {{ form_widget(form.newUserName) }}
-                         {{ form_errors(form.newUserName) }}
+                      <div class="for_label">{{ form_label(form.newUserName) }}</div>
+                      {{ form_widget(form.newUserName) }}
+                      {{ form_errors(form.newUserName) }}
                     </div>
                     <div class="new_inputs_cont">
-                      <div class="for_label"><label>Enter password</label><a href="{{ path('_forgot_pass') }}" class="forgot">Forgot it?</a></div>
+                      <div class="for_label">{{ form_label(form.newUserNamePassword) }}<a href="{{ path('_forgot_pass') }}" class="forgot">Forgot it?</a></div>
                           {{ form_widget(form.newUserNamePassword) }}
                           {{ form_errors(form.newUserNamePassword) }}
                     </div>
@@ -84,18 +82,17 @@
                   <div class="wrapper">
                     <div class="close_cont"><a href="#" data-form-cont=".form-password">Cancel</a></div>
                     <div class="new_inputs_cont with_margin">
-                      <div class="for_label"><label>Old password</label><a href="{{ path('_forgot_pass') }}" class="forgot">Forgot
-                          it?</a></div>
+                      <div class="for_label">{{ form_label(form.oldPassword) }}<a href="{{ path('_forgot_pass') }}" class="forgot">Forgot it?</a></div>
                           {{ form_widget(form.oldPassword) }}
                           {{ form_errors(form.oldPassword) }}
                     </div>
                     <div class="new_inputs_cont">
-                      <div class="for_label"><label>Type new password</label></div>
+                      <div class="for_label">{{ form_label(form.newPassword.first) }}</div>
                           {{ form_widget(form.newPassword.first) }}
                           {{ form_errors(form.newPassword.first) }}
                     </div>
                     <div class="new_inputs_cont">
-                      <div class="for_label"><label>Confirm new password</label></div>
+                      <div class="for_label">{{ form_label(form.newPassword.second) }}</div>
                           {{ form_widget(form.newPassword.second) }}
                           {{ form_errors(form.newPassword.second) }}
                     </div>
@@ -103,7 +100,7 @@
                         {{ form_widget(form.passwordSendSMS, {'attr':{'class' : 'btn_confirm'}}) }}
                     </div>
                     <div class="new_inputs_cont">
-                      <div class="for_label"><label>Enter mobile code to confirm</label></div>
+                      <div class="for_label">{{ form_label(form.passwordMobileComfirm) }}</div>
                          {{ form_widget(form.passwordMobileComfirm) }}
                          {{ form_errors(form.passwordMobileComfirm) }}
                     </div>
@@ -123,14 +120,14 @@
                     <div class="current_text">{{ participant.participantEmail }}</div>
                     <div class="close_cont"><a href="#" data-form-cont=".form-email">Cancel</a></div>
                     <div class="new_inputs_cont">
-                      <div class="for_label"><label>New e-mail</label></div>
+                      <div class="for_label">{{ form_label(form.newEmail.first) }}</div>
                       <span class="input_container">
                           {{ form_widget(form.newEmail.first) }}
                           {{ form_errors(form.newEmail.first) }}
                       </span>
                     </div>
                     <div class="new_inputs_cont">
-                      <div class="for_label"><label>Confirm new e-mail</label></div>
+                      <div class="for_label">{{ form_label(form.newEmail.second) }}</div>
                       <span class="input_container">
                           {{ form_widget(form.newEmail.second) }}
                           {{ form_errors(form.newEmail.second) }}
@@ -152,14 +149,14 @@
                     <div class="current_text">{{ participant.participantMobileNumber }}</div>
                     <div class="close_cont"><a href="#" data-form-cont=".form-mobile">Cancel</a></div>
                     <div class="new_inputs_cont">
-                      <div class="for_label"><label>New phone number</label></div>
+                      <div class="for_label">{{ form_label(form.newPhoneNumber) }}</div>
                       <span class="input_container">
                           {{ form_widget(form.newPhoneNumber) }}
                           {{ form_errors(form.newPhoneNumber) }}
                       </span>
                       </div>
                     <div class="new_inputs_cont">
-                      <div class="for_label"><label>Enter password to confirm change</label><a href="{{ path('_forgot_pass') }}" class="forgot">Forgot it?</a></div>
+                      <div class="for_label">{{ form_label(form.newPhoneNumberPassword) }}<a href="{{ path('_forgot_pass') }}" class="forgot">Forgot it?</a></div>
                       <span class="input_container">
                           {{ form_widget(form.newPhoneNumberPassword) }}
                           {{ form_errors(form.newPhoneNumberPassword) }}
@@ -168,7 +165,7 @@
                     <div class="confirm_cont">
                         {{ form_widget(form.phoneSendSMS, {'attr':{'class' : 'btn_confirm'}}) }}
                     <div class="new_inputs_cont">
-                      <div class="for_label"><label>Enter mobile code to confirm</label></div>
+                      <div class="for_label">{{ form_label(form.newPhoneNumberSMS) }}</div>
                       <span class="input_container">
                           {{ form_widget(form.newPhoneNumberSMS) }}
                           {{ form_errors(form.newPhoneNumberSMS) }}
