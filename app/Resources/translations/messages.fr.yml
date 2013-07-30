@@ -1,7 +1,15 @@
-'SMS Code:': 'SMS Code:'
+'': ''   # FIXME
+btn_confirm_pass: btn_confirm_pass   # FIXME
+btn_confrimcoe_login: btn_confrimcoe_login   # FIXME
+btn_save_pass: btn_save_pass   # FIXME
+btn_send_pass: btn_send_pass   # FIXME
+label_new_pass: label_new_pass   # FIXME
+label_repeat_pass: label_repeat_pass   # FIXME
+label_sms_code: label_sms_code   # FIXME
+'label_user_sms_code:': 'label_user_sms_code:'   # FIXME
+label_username: label_username   # FIXME
 txt_footer_top: txt_footer_top
 txt_header_login: txt_header_login
 txt_header_or: txt_header_or
 txt_header_register: txt_header_register
 txt_header_register_here: txt_header_register_here
-username: username

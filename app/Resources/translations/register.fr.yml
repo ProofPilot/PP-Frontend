@@ -1,8 +1,10 @@
 already_joined: already_joined
+btn_next: btn_next   # FIXME
+btn_save_mailing_address: btn_save_mailing_address   # FIXME
+btn_send_confirmation: btn_send_confirmation   # FIXME
 confirm_password: confirm_password
 create_password: create_password
 double_check: 'txt_double_check-you_entry'''
-email: email
 enter_address: enter_address
 enter_email: enter_email
 enter_mobile_phone: enter_mobile_phone
@@ -10,21 +12,24 @@ enter_sms_code: enter_sms_code
 label_address1: label_address1
 label_address2: label_address2
 label_city: label_city
+label_email: label_email   # FIXME
 label_firstname: label_firstname
 label_lastname: label_lastname
+label_password: label_password   # FIXME
+label_phone_small: label_phone_small   # FIXME
+label_phone_wide: label_phone_wide   # FIXME
+label_repeat_password: label_repeat_password   # FIXME
 label_state: label_state
+label_username: label_username   # FIXME
 label_zipcode: label_zipcode
 mail_confirmation_fail: mail_confirmation_fail
 min_charachters: min_charachters
 no_code: no_code
 ok_verify: ok_verify
 pick_user: pick_user
-send_confirmation: send_confirmation
 txt_check_email: txt_check_email
 txt_join: txt_join
 txt_join_with: txt_join_with
-txt_save_mailing_address: txt_save_mailing_address
 txt_subtitle_check_email: txt_subtitle_check_email
 txt_why: txt_why
-username: username
 wrong_back: wrong_back

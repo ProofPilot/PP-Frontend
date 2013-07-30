@@ -1,7 +1,5 @@
 dashboard_subtitle: 'Sua participação em um piscar de olhos. O que você precisa fazer agora e os próximos passos.'
-do_it: Faça-o
 do_it_now: 'Faça-o agora'
-last_access: last_access
 past_activity: past_activity
 past_activity.emai_confirmation_status: yuor_e-mail_address_has_been_confirmed
 past_activity.mobile_confirmation_status: your_mobile_telephone_number_has_been_confirmed

@@ -1,8 +1,10 @@
 already_joined: 'Já aderiu'
+btn_next: btn_next   # FIXME
+btn_save_mailing_address: btn_save_mailing_address   # FIXME
+btn_send_confirmation: btn_send_confirmation   # FIXME
 confirm_password: 'confirme a senha'
 create_password: 'Crie uma senha (minímo de 8 caracteres com pelo menos 2 números)'
 double_check: 'txt_double_check-you_entry'''
-email: email
 enter_address: enter_address
 enter_email: 'Por favor insira um endereço de e-mail válido'
 enter_mobile_phone: 'Digite o número do seu telefone celular'
@@ -10,21 +12,24 @@ enter_sms_code: "Digite o código de verificação que você recebeu em seu tele
 label_address1: label_address1
 label_address2: label_address2
 label_city: label_city
+label_email: label_email   # FIXME
 label_firstname: label_firstname
 label_lastname: label_lastname
+label_password: label_password   # FIXME
+label_phone_small: label_phone_small   # FIXME
+label_phone_wide: label_phone_wide   # FIXME
+label_repeat_password: label_repeat_password   # FIXME
 label_state: label_state
+label_username: label_username   # FIXME
 label_zipcode: label_zipcode
 mail_confirmation_fail: mail_confirmation_fail
 min_charachters: '(minímo de 8 caracteres)'
 no_code: 'Sem código? Enviar outro'
 ok_verify: 'OK, Verifique!'
 pick_user: 'Escolha o seu nome de usuário'
-send_confirmation: 'Enviar código de verificação para o celular'
 txt_check_email: txt_check_email
 txt_join: Junte
 txt_join_with: Junte-se
-txt_save_mailing_address: txt_save_mailing_address
 txt_subtitle_check_email: txt_subtitle_check_email
 txt_why: 'Por que?'
-username: usuário
 wrong_back: 'Incorreto, voltar'

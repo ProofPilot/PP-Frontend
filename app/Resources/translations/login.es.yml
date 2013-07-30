@@ -1,5 +1,3 @@
-btn_confrimcoe_login: 'Confirmación de código y acceso'
-btn_send_username_to_mobilephone: 'Enviar usuario a mi teléfono móbil'
 cant_remember_username: '¿No puede recordad su usuario?'
 doesnt_match_records: 'Lo sentimos, su entrada no concuerda con nuestros registros'
 email_sent_containing_password: 'Se ha enviado un e-mail que contiene un enlace para reiniciar su contraseña'
@@ -11,7 +9,6 @@ forgot_username: '¿Olvidó su usuario?'
 forgot_username_message: 'No hay problema. Ingrese su número de teléfono móbil que usó durante el registro and le envíaremos su usuario por mensajes de texto.'
 havent_joined: 'No se ha unido'
 new_password_selection: "<p>Haga click en el enlace del e-mail y será guiado atravez de la selección de una nueva contraseña. Necesitará su teléfono móbil para completar este proceso. </p>\n<p>Si no ha arrivado en pocos minutos revise la carpeta de correo basura.</p>"
-passsword_reset_email: 'Enviar el e-mail de reinicio de contraseña'
 send_another_code: '¿Sin código? Envie otro'
 txt_forgot_your_password: '¿Olvidó su contraseña?'
 txt_forgot_your_username: '¿Olvidó su usuario?'

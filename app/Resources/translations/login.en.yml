@@ -1,5 +1,3 @@
-btn_confrimcoe_login: 'Confirm code & login'
-btn_send_username_to_mobilephone: 'Send Username to my mobile phone'
 cant_remember_username: 'Can''t remember your Username?'
 doesnt_match_records: 'We''re sorry, your entry does not match our records'
 email_sent_containing_password: 'An e-mail has been sent containing a link to reset your password'
@@ -11,7 +9,6 @@ forgot_username: 'Forgot your Username'
 forgot_username_message: 'No problem. Enter the mobile telephone number you used to sign up and we will send your Username via text message.'
 havent_joined: 'Haven''t joined yet?'
 new_password_selection: "<p>Click on the link in the e-mail and you will be guided through the selection of a new password. You will need your mobile phone to complete this process.</p>\n<p>If it hasn't arrived within a few minutes, check your SPAM or junkmail folders</p>\n"
-passsword_reset_email: 'Send Password Reset E-mail'
 send_another_code: 'No code? Send another'
 txt_forgot_your_password: 'Forgot your password?'
 txt_forgot_your_username: 'Forgot your Username?'

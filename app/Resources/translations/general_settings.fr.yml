@@ -1,26 +1,26 @@
-confirm: confirm   # FIXME
-general_subtitle: general_subtitle   # FIXME
-general_title: general_title   # FIXME
-label_email: label_email   # FIXME
-label_new_email: label_new_email   # FIXME
-label_new_pass: label_new_pass   # FIXME
-label_new_phone_number: label_new_phone_number   # FIXME
-label_new_phone_number_pass: label_new_phone_number_pass   # FIXME
-label_new_phone_number_sms: label_new_phone_number_sms   # FIXME
-label_new_user_name: label_new_user_name   # FIXME
-label_new_user_name_pass: label_new_user_name_pass   # FIXME
-label_old_password: label_old_password   # FIXME
-label_password: label_password   # FIXME
-label_password_mobile_confirm: label_password_mobile_confirm   # FIXME
-label_phone_number: label_phone_number   # FIXME
-label_repeat_email: label_repeat_email   # FIXME
-label_repeat_pass: label_repeat_pass   # FIXME
-label_username: label_username   # FIXME
-last_access: last_access   # FIXME
-'send mobile code': 'send mobile code'   # FIXME
-txt_change: txt_change   # FIXME
-txt_edit: txt_edit   # FIXME
-txt_email: txt_email   # FIXME
-txt_mobile_number: txt_mobile_number   # FIXME
-txt_password: txt_password   # FIXME
-txt_username: txt_username   # FIXME
+btn_confirm: btn_confirm   # FIXME
+btn_send_mobile_code: btn_send_mobile_code   # FIXME
+general_subtitle: general_subtitle
+general_title: general_title
+label_email: label_email
+label_new_email: label_new_email
+label_new_pass: label_new_pass
+label_new_phone_number: label_new_phone_number
+label_new_phone_number_pass: label_new_phone_number_pass
+label_new_phone_number_sms: label_new_phone_number_sms
+label_new_user_name: label_new_user_name
+label_new_user_name_pass: label_new_user_name_pass
+label_old_password: label_old_password
+label_password: label_password
+label_password_mobile_confirm: label_password_mobile_confirm
+label_phone_number: label_phone_number
+label_repeat_email: label_repeat_email
+label_repeat_pass: label_repeat_pass
+label_username: label_username
+last_access: last_access
+txt_change: txt_change
+txt_edit: txt_edit
+txt_email: txt_email
+txt_mobile_number: txt_mobile_number
+txt_password: txt_password
+txt_username: txt_username

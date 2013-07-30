@@ -1,5 +1,3 @@
-btn_confrimcoe_login: txt_confirm_code_login
-btn_send_username_to_mobilephone: btn_send_username_to_mobilephone
 cant_remember_username: cant_remember_username
 doesnt_match_records: doesnt_match_records
 email_sent_containing_password: email_sent_containing_password
@@ -11,7 +9,6 @@ forgot_username: forgot_username
 forgot_username_message: forgot_username_message
 havent_joined: havent_joined
 new_password_selection: new_password_selection
-passsword_reset_email: passsword_reset_email
 send_another_code: text_send_another_code
 txt_forgot_your_password: txt_forgot_your_password
 txt_forgot_your_username: txt_forgot_your_username
