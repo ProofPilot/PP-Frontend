@@ -16,7 +16,7 @@ class StudyLanguage
     /**
      * @var integer
      *
-     * @ORM\Column(name="studyLanguageId", type="integer")
+     * @ORM\Column(name="study_language_id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
