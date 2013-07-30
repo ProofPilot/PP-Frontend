@@ -21,63 +21,122 @@ class GeneralSettingForm extends AbstractType
     
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('userName', 'text', array('label'=>'label_username'));
+        $builder->add('userName', 'text', array(
+                'label'=>'label_username'
+                ));
         
-            $builder->add('newUserName', 'text', array('label'=>'label_new_user_name', 'required' => false));
+            $builder->add('newUserName', 'text', array(
+                    'label'=>'label_new_user_name',
+                    'required' => false
+                    ));
 
-            $builder->add('newUserNamePassword', 'password', array('label'=>'label_new_user_name_pass', 'required' => false));
+            $builder->add('newUserNamePassword', 'password', array(
+                    'label'=>'label_new_user_name_pass', 
+                    'required' => false
+                    ));
 
-            $builder->add('userNameConfirm', 'submit', array('label' => 'confirm'));
+            $builder->add('userNameConfirm', 'submit', array(
+                    'label' => 'label_confirm'
+                    ));
 
             $builder->add('validationCheck' , 'hidden');
 
-            $builder->add('password', 'password', array('label'=>'label_password',
-                                                    'required' => false,
-                                                    'constraints' => new Length(array('min' => 8))));
+            $builder->add('password', 'password', array(
+                    'label'=>'label_password',
+                    'required' => false,
+                    'constraints' => new Length(array(
+                            'min' => 8
+                            ))
+                    ));
 
-            $builder->add('oldPassword', 'password', array('label'=>'label_old_password',
-                                                            'required' => false,
-                                                           ));
+            $builder->add('oldPassword', 'password', array(
+                    'label'=>'label_old_password',
+                    'required' => false
+                    ));
 
-            $builder->add('newPassword', 'repeated', array('type' => 'password',
-                                                           'required' => false,
-                                                           'invalid_message' => 'password_fields_must_match.',
-                                                           'first_options'  => array('label' => 'label_new_pass'),
-                                                           'second_options' => array('label' => 'label_repeat_pass'),
-                                                           'constraints' => new Length(array('min' => 8))));
+            $builder->add('newPassword', 'repeated', array(
+                    'type' => 'password',
+                    'required' => false,
+                    'invalid_message' => 'password_fields_must_match.',
+                    'first_options'  => array(
+                            'label' => 'label_new_pass'
+                            ),
+                    'second_options' => array(
+                            'label' => 'label_repeat_pass'
+                            ),
+                    'constraints' => new Length(array(
+                            'min' => 8
+                            ))
+                    ));
 
-            $builder->add('passwordMobileComfirm', 'text', array('label'=>'label_password_mobile_confirm',
-                                                                     'required' => false,
-                                                                     'constraints' => new Length(array('min' => 4))));
+            $builder->add('passwordMobileComfirm', 'text', array(
+                    'label'=>'label_password_mobile_confirm',
+                    'required' => false,
+                    'constraints' => new Length(array(
+                            'min' => 4
+                            ))
+                    ));
 
-            $builder->add('passwordSendSMS', 'submit', array('label' => 'send mobile code'));
+            $builder->add('passwordSendSMS', 'submit', array(
+                    'label' => 'label_send_mobile_code'
+                    ));
 
-            $builder->add('passwordConfirm', 'submit', array('label' => 'confirm'));
+            $builder->add('passwordConfirm', 'submit', array(
+                    'label' => 'label_confirm'
+                    ));
 
-        $builder->add('email', 'text', array('label'=>'label_email', 'required' => false,));
+        $builder->add('email', 'text', array(
+                'label'=>'label_email', 
+                'required' => false
+                ));
 
-            $builder->add('newEmail', 'repeated', array('type' => 'text',
-                                                        'label'=>'label_new_email',
-                                                         'required' => false,
-                                                         'invalid_message' => 'email_fields_must_match.',
-                                                         'first_options'  => array('label' => 'label_new_email'),
-                                                         'second_options' => array('label' => 'label_repeat_email')));
+            $builder->add('newEmail', 'repeated', array(
+                    'type' => 'text',
+                    'label'=>'label_new_email',
+                    'required' => false,
+                    'invalid_message' => 'email_fields_must_match.',
+                    'first_options'  => array(
+                            'label' => 'label_new_email'
+                            ),
+                    'second_options' => array(
+                            'label' => 'label_repeat_email'
+                            )
+                    ));
 
-            $builder->add('emailConfirm', 'submit', array('label' => 'confirm'));
+            $builder->add('emailConfirm', 'submit', array(
+                    'label' => 'label_confirm'
+                    ));
 
-        $builder->add('phoneNumber', 'text', array('label'=>'label_phone_number', 'required' => false,));
+        $builder->add('phoneNumber', 'text', array(
+                'label'=>'label_phone_number', 
+                'required' => false
+                ));
 
-            $builder->add('newPhoneNumber', 'text', array('label'=>'label_new_phone_number', 'required' => false,));
+            $builder->add('newPhoneNumber', 'text', array(
+                    'label'=>'label_new_phone_number', 
+                    'required' => false
+                    ));
 
-            $builder->add('newPhoneNumberPassword', 'password', array('label'=>'label_new_phone_number_pass', 'required' => false,));
+            $builder->add('newPhoneNumberPassword', 'password', array(
+                    'label'=>'label_new_phone_number_pass', 
+                    'required' => false
+                    ));
 
-            $builder->add('newPhoneNumberSMS', 'text', array('label'=>'label_new_phone_number_sms',
-                                                             'required' => false,'required' => false,
-                                                             'constraints' => new Length(array('min' => 4))));
+            $builder->add('newPhoneNumberSMS', 'text', array(
+                    'label'=>'label_new_phone_number_sms',
+                    'required' => false,'required' => false,
+                     'constraints' => new Length(array(
+                             'min' => 4
+                             ))
+                    ));
 
-            $builder->add('phoneSendSMS', 'submit', array('label' => 'send mobile code'));
+            $builder->add('phoneSendSMS', 'submit', array(
+                    'label' => 'label_send_mobile_code'
+                    ));
             
-            $builder->add('phoneConfirm', 'submit', array('label' => 'confirm'));
+            $builder->add('phoneConfirm', 'submit', array(
+                    'label' => 'label_confirm'
+                    ));
     }
     
     public function getName()

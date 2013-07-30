@@ -18,50 +18,49 @@ class MailingAddressForm extends AbstractType
     
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('participantFirstname', 
-                      'text', 
-                       array(
-                              'label'=>'label_firstname',
-                               'constraints' => new NotBlank(array('message'=>"error_not_blank"))
-                               ));
-        $builder->add('participantLastname', 
-                      'text', 
-                      array(
-                              'label'=>'label_lastname',
-                              'constraints' => new NotBlank(array('message'=>"error_not_blank"))
-                              ));
+        $builder->add('participantFirstname', 'text', array(
+                 'label'=>'label_firstname',
+                 'constraints' => new NotBlank(array(
+                          'message'=>"error_not_blank"
+                           ))
+                 ));
+        $builder->add('participantLastname', 'text', array(
+                 'label'=>'label_lastname',
+                 'constraints' => new NotBlank(array(
+                         'message'=>"error_not_blank"
+                         ))
+                 ));
         $builder->add('participantAddress1', 
-                      'text', 
-                      array(
+                      'text', array(
                               'label'=>'label_address1',
-                              'constraints' => new NotBlank(array('message'=>"error_not_blank"))
+                              'constraints' => new NotBlank(array(
+                                      'message'=>"error_not_blank"
+                                      ))
                               ));
-        $builder->add('participantAddress2', 
-                      'text', 
-                      array(
-                              'label'=>'label_address2', 
-                              'required'=>false));
-        $builder->add('participantZipcode', 
-                      'text', 
-                      array('label'=>'label_zipcode',
-                            'constraints' => new NotBlank(array('message'=>"error_not_blank"))
-                              ));
-        $builder->add('cityId', 
-                      'hidden');
-        $builder->add('city', 
-                      'text', 
-                      array(
-                              'label'=>'label_city',
-                              'constraints' => new NotBlank(array('message'=>"error_not_blank"))
-                              ));
-        $builder->add('stateId', 
-                      'hidden');
-        $builder->add('state', 
-                      'text', 
-                      array(
-                              'label'=>'label_state',
-                              'constraints' => new NotBlank(array('message'=>"error_not_blank"))
-                              ));
+        $builder->add('participantAddress2', 'text', array(
+                 'label'=>'label_address2', 
+                 'required'=>false
+                ));
+        $builder->add('participantZipcode', 'text', array(
+                'label'=>'label_zipcode',
+                'constraints' => new NotBlank(array(
+                        'message'=>"error_not_blank"
+                        ))
+                ));
+        $builder->add('cityId', 'hidden');
+        $builder->add('city', 'text', array(
+                'label'=>'label_city',
+                'constraints' => new NotBlank(array(
+                        'message'=>"error_not_blank"
+                         ))
+                ));
+        $builder->add('stateId', 'hidden');
+        $builder->add('state', 'text', array(
+                 'label'=>'label_state',
+                 'constraints' => new NotBlank(array(
+                          'message'=>"error_not_blank"
+                           ))
+                 ));
 
     }
     
