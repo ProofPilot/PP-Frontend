@@ -605,11 +605,13 @@
 		// has error delete btn
 		$('.mark').click(function() {
             $(this).css('display', 'none')
-                       .siblings()
-                           .removeClass('has_error')
-                               .val('')
-                                   .parents()
-                                        .removeClass('has_error').next('.error, .error_msg').css('display', 'none');
+                   .siblings()
+                   .removeClass('has_error')
+                   .val('')
+                   .parents()
+                   .removeClass('has_error')
+                   .next('.error, .error_msg')
+                   .css('display', 'none');
         });
 		
     });
