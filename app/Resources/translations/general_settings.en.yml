@@ -1,21 +1,21 @@
-btn_confirm: btn_confirm
-btn_send_mobile_code: btn_send_mobile_code
+btn_confirm: 'Confirm'
+btn_send_mobile_code: 'Send mobile code'
 general_subtitle: 'Start here to change the basics, then explore other settings to customize your experience.'
 general_title: 'General Settings'
 label_email: label_email
-label_new_email: label_new_email
-label_new_pass: label_new_pass
-label_new_phone_number: label_new_phone_number
-label_new_phone_number_pass: label_new_phone_number_pass
-label_new_phone_number_sms: label_new_phone_number_sms
-label_new_user_name: label_new_user_name
-label_new_user_name_pass: label_new_user_name_pass
-label_old_password: label_old_password
+label_new_email: 'New e-mail'
+label_new_pass: 'Type new password'
+label_new_phone_number: 'New phone number'
+label_new_phone_number_pass: 'Enter password to confirm change'
+label_new_phone_number_sms: 'Enter mobile code to confirm'
+label_new_user_name: 'New username'
+label_new_user_name_pass: 'Enter password'
+label_old_password: 'Old password'
 label_password: label_password
-label_password_mobile_confirm: label_password_mobile_confirm
+label_password_mobile_confirm: 'Enter mobile code to confirm'
 label_phone_number: label_phone_number
-label_repeat_email: label_repeat_email
-label_repeat_pass: label_repeat_pass
+label_repeat_email: 'Confirm new e-mail'
+label_repeat_pass: 'Confirm new password'
 label_username: label_username
 last_access: 'Last Access: '
 txt_change: Change
