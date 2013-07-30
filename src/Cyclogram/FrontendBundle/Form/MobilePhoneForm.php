@@ -49,6 +49,9 @@ class MobilePhoneForm extends AbstractType
                         'maxMessage'=>'error_max_phone_code_length'
                         ))
                 ));
+        $builder->add('sendCode', 'submit', array(
+                'label' => 'btn_send_confirmation'
+                ));
     }
 
     public function getName()

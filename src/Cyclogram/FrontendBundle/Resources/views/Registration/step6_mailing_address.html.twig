@@ -73,12 +73,12 @@
           <span class="error">{{ form_errors(form.state) }}</span>
 
 
-              {{ form_rest(form) }}
+             
               <span class="error">{{ form_errors(form) }}</span>
         </div>
         <div class="center_align">
-          <a id="register_submit" class="submit" href="#">{% trans from "register" %}txt_save_mailing_address{% endtrans %}</a>
-          <button type="submit" style="display:none" id="submit_button"></button>
+            {{ form_widget(form.saveMailingAddress, {'attr':{'class':'submit'}}) }}
+             {{ form_rest(form) }}
         </div>
       </form>
       <script type="text/javascript">
@@ -158,13 +158,6 @@
                      $("#mailing_address_stateId").val(suggestion.data);
             	}
             });
-
-           $('#register_submit').click(function()
-                {
-                         $('#submit_button').trigger('click');
-                        return false;
-                });
-           
         });
         </script> 
     </div>

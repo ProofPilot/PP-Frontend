@@ -61,7 +61,9 @@ class MailingAddressForm extends AbstractType
                           'message'=>"error_not_blank"
                            ))
                  ));
-
+        $builder->add('saveMailingAddress', 'submit', array(
+                'label' => 'btn_save_mailing_address'
+                ));
     }
     
     public function getName()

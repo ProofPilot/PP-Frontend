@@ -42,7 +42,10 @@ class RegistrationForm extends AbstractType
                             'label' => 'label_repeat_password'
                             ),
                 'invalid_message' => 'error_passwords_do_not_match'
-                ));     
+                ));  
+        $builder->add('next', 'submit', array(
+                'label'=>'btn_next'
+                ));
     }
 
     public function getName()

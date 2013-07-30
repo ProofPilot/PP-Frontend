@@ -135,12 +135,19 @@ class  SimpleRegistrationController extends Controller{
     
         $collectionConstraint = new Collection(array(
                 'fields' => array(
-                        'sms_code' => new Length(array('min' => 4)),
+                        'sms_code' => new Length(array(
+                                'min' => 4
+                                )),
                 )
         ));
         $error = "";
         $form = $this->createFormBuilder(null, array('constraints' => $collectionConstraint))
-        ->add('sms_code', 'text')
+        ->add('sms_code', 'text', array(
+                'label' => 'label_sms_code'
+                ))
+        ->add('confirmCode', 'submit', array(
+                'label' => 'btn_confrimcoe_login'
+                ))
         ->getForm();
 
         $nPic = rand ( 1, 4 );
