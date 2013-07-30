@@ -175,7 +175,15 @@ class LoginController extends Controller
         ));
         
         $form = $this->createFormBuilder(null, array('constraints' => $collectionConstraint))
-        ->add('user_sms', 'text', array('label' => "SMS Code:", 'data'=>"", 'attr' => array('class' => 'formElement')))
+        ->add('user_sms', 'text', array(
+                'label' => "label_user_sms_code:",
+                'attr' => array(
+                        'class' => 'formElement'
+                        )
+                ))
+         ->add('confirmCode', 'submit', array(
+                'label' => 'btn_confrimcoe_login'
+        ))
         ->getForm();
         
         if( $request->getMethod() == "POST" ){
