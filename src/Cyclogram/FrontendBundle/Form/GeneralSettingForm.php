@@ -41,13 +41,13 @@ class GeneralSettingForm extends AbstractType
 
             $builder->add('validationCheck' , 'hidden');
 
-            $builder->add('password', 'password', array(
-                    'label'=>'label_password',
-                    'required' => false,
-                    'constraints' => new Length(array(
-                            'min' => 8
-                            ))
-                    ));
+        $builder->add('password', 'password', array(
+                'label'=>'label_password',
+                'required' => false,
+                'constraints' => new Length(array(
+                        'min' => 8
+                        ))
+                ));
 
             $builder->add('oldPassword', 'password', array(
                     'label'=>'label_old_password',

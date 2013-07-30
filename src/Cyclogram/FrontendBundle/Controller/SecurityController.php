@@ -22,9 +22,6 @@ class SecurityController extends Controller
      */
     public function forgotPassAction($studyId=null)
     {
-        if ($this->get('security.context')->isGranted("ROLE_USER")){
-            return $this->redirect($this->generateURL("_main"));
-        }
         $request = $this->getRequest();
         
         $form = $this->createFormBuilder()
