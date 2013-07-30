@@ -1,3 +1,5 @@
+btn_select_all: 'Select All'
+btn_select_none: 'Select None'
 day_friday: Friday
 day_monday: Monday
 day_saturday: Saturday
@@ -14,3 +16,15 @@ time_early_evening: 'Early Evening (5PM-9PM)'
 time_late_night: 'Late Night (midnight-5AM)'
 time_morning: 'Morning (8AM-Noon)'
 time_night: 'Night (9PM-Midnight)'
+txt_check_here: 'Check Here'
+txt_close: Close
+txt_expand: Expand
+txt_how_to_receive_study_reminders: 'How would you like to receive STUDY REMINDERS'
+txt_how_what_day_is_best: 'Tell us what day is best for you to recieve communications from us.'
+txt_how_would_you_like_communicate: 'How would you like us to communicate with you?'
+txt_my_email: 'My e-mail:'
+txt_my_mobile_form: 'My mobile number:'
+txt_tell_us_convenient_time: 'Tell us when it''s most convienent for you to recieve reminders.'
+txt_what_day_of_week_suits: 'What DAY OF THE WEEK suits you best?'
+txt_what_time_of_day_suits: 'What TIME OF DAY suits you best?'
+txt_your_timezone_is: 'Your timezone is:'

@@ -1,3 +1,5 @@
+btn_select_all: btn_select_all
+btn_select_none: btn_select_none
 day_friday: day_friday
 day_monday: day_monday
 day_saturday: day_saturday
@@ -14,3 +16,15 @@ time_early_evening: time_early_evening
 time_late_night: time_late_night
 time_morning: time_morning
 time_night: time_night
+txt_check_here: txt_check_here
+txt_close: txt_close
+txt_expand: txt_expand
+txt_how_to_receive_study_reminders: txt_how_to_receive_study_reminders
+txt_how_what_day_is_best: txt_how_what_day_is_best
+txt_how_would_you_like_communicate: txt_how_would_you_like_communicate
+txt_my_email: txt_my_email   # FIXME
+txt_my_mobile_form: txt_my_mobile_form   # FIXME
+txt_tell_us_convenient_time: txt_tell_us_convenient_time
+txt_what_day_of_week_suits: txt_what_day_of_week_suits
+txt_what_time_of_day_suits: txt_what_time_of_day_suits
+txt_your_timezone_is: txt_your_timezone_is
