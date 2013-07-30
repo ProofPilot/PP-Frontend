@@ -28,13 +28,19 @@ class RegistrationForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('participantEmail', 'email', array(
-                 'label'=>'email'
+                 'label'=>'label_email'
                  ));
         $builder->add('participantUsername', 'text', array(
-                'label'=>'username'
+                'label'=>'label_username'
                 ));
         $builder->add('participantPassword', 'repeated', array(
-                'type' => 'password', 
+                'type' => 'password',
+                'first_options'  => array(
+                            'label' => 'label_password'
+                            ),
+                'second_options' => array(
+                            'label' => 'label_repeat_password'
+                            ),
                 'invalid_message' => 'error_passwords_do_not_match'
                 ));     
     }
