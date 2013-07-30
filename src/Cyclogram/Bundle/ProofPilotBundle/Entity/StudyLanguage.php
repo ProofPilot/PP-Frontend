@@ -25,7 +25,7 @@ class StudyLanguage
     /**
      * @var \Study
      *
-     * @ORM\ManyToOne(targetEntity="Study)
+     * @ORM\ManyToOne(targetEntity="Study")
      * @ORM\JoinColumns({
      * @ORM\JoinColumn(name="study_id", referencedColumnName="study_id")
      * })
