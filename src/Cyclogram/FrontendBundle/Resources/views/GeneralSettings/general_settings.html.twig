@@ -19,8 +19,8 @@
 
 
 {% block body %}
-    {%  if invalidFormClass is defined %}
-        {{ invalidFormClass }}
+    {%  if expandedFormClass is defined %}
+        {{ expandedFormClass }}
     {% endif %}
   <body class="page_main">
     <div class="site_container">
@@ -52,7 +52,7 @@
               
                 {# username #}
                 <li class="left_text form-username">{% trans from "general_settings" %}txt_username{% endtrans %}</li>
-                <li class="form_expanded form-username" {{ showonerror('username',invalidFormClass) }}>
+                <li class="form_expanded form-username" {{ showonerror('username',expandedFormClass) }}>
                   <div class="wrapper">
                     <div class="current_text">{{ participant.participantUserName }}</div>
                     <div class="close_cont"><a href="#" data-form-cont=".form-username">Cancel</a></div>
@@ -71,16 +71,16 @@
                     </div>
                   </div>
                 </li>
-                <li class="middle_input form-username" {{ hideonerror('username',invalidFormClass) }}>
+                <li class="middle_input form-username" {{ hideonerror('username',expandedFormClass) }}>
                     {{ form_widget(form.userName, {'attr' : {'class' : 'middle_input'}, 'value': participant.participantUsername }) }}
                     {{ form_errors(form.userName) }}
                 </li>
-                <li class="edit_btn form-username" {{ hideonerror('username',invalidFormClass) }}><a href="#" data-form-cont=".form-username">{% trans from "general_settings" %}txt_change{% endtrans %}</a></li>
+                <li class="edit_btn form-username" {{ hideonerror('username',expandedFormClass) }}><a href="#" data-form-cont=".form-username">{% trans from "general_settings" %}txt_change{% endtrans %}</a></li>
                 
                 
                 {# password #}
                 <li class="left_text form-password">{% trans from "general_settings" %}txt_password{% endtrans %}</li>
-                <li class="form_expanded form-password"  {{ showonerror('password',invalidFormClass) }}>
+                <li class="form_expanded form-password"  {{ showonerror('password',expandedFormClass) }}>
                   <div class="wrapper">
                     <div class="close_cont"><a href="#" data-form-cont=".form-password">Cancel</a></div>
                     <div class="new_inputs_cont with_margin">
@@ -111,14 +111,14 @@
                         {{ form_widget(form.passwordConfirm, {'attr':{'class' : 'btn_confirm disabled'}}) }}
                   </div>
                 </li>
-                <li class="middle_input form-password" {{ hideonerror('password',invalidFormClass) }}>
+                <li class="middle_input form-password" {{ hideonerror('password',expandedFormClass) }}>
                     {{ form_widget(form.password, {'attr' : {'class' : 'middle_input', 'value' : 'password'}}) }}
                     {{ form_errors(form.password) }}
-                <li class="edit_btn form-password" {{ hideonerror('password',invalidFormClass) }}><a href="#" data-form-cont=".form-password">{% trans from "general_settings" %}txt_change{% endtrans %}</a></li>
+                <li class="edit_btn form-password" {{ hideonerror('password',expandedFormClass) }}><a href="#" data-form-cont=".form-password">{% trans from "general_settings" %}txt_change{% endtrans %}</a></li>
                 
                 {# email #}                
                 <li class="left_text form-email">{% trans from "general_settings" %}txt_email{% endtrans %}</li>
-                <li class="form_expanded form-email"  {{ showonerror('email',invalidFormClass) }}>
+                <li class="form_expanded form-email"  {{ showonerror('email',expandedFormClass) }}>
                   <div class="wrapper">
                     <div class="current_text">{{ participant.participantEmail }}</div>
                     <div class="close_cont"><a href="#" data-form-cont=".form-email">Cancel</a></div>
@@ -140,14 +140,14 @@
                         {{ form_widget(form.emailConfirm, {'attr':{'class' : 'btn_confirm'}}) }}
                   </div>
                 </li>
-                <li class="middle_input form-email" {{ hideonerror('email',invalidFormClass) }}>
+                <li class="middle_input form-email" {{ hideonerror('email',expandedFormClass) }}>
                     {{ form_widget(form.email, {'attr' : {'class' : 'middle_input'}, 'value' : participant.participantEmail }) }}
                     {{ form_errors(form.email) }}
-                <li class="edit_btn form-email" {{ hideonerror('email',invalidFormClass) }}><a href="#" data-form-cont=".form-email">{% trans from "general_settings" %}txt_change{% endtrans %}</a></li>
+                <li class="edit_btn form-email" {{ hideonerror('email',expandedFormClass) }}><a href="#" data-form-cont=".form-email">{% trans from "general_settings" %}txt_change{% endtrans %}</a></li>
                 
                 {# mobile #}
                 <li class="left_text form-mobile">{% trans from "general_settings" %}txt_mobile_number{% endtrans %}</li>
-                <li class="form_expanded form-mobile"  {{ showonerror('mobile',invalidFormClass) }}>
+                <li class="form_expanded form-mobile"  {{ showonerror('mobile',expandedFormClass) }}>
                   <div class="wrapper">
                     <div class="current_text">{{ participant.participantMobileNumber }}</div>
                     <div class="close_cont"><a href="#" data-form-cont=".form-mobile">Cancel</a></div>
@@ -179,11 +179,11 @@
                     </div>
                   </div>
                 </li>
-                <li class="middle_input form-mobile" {{ hideonerror('mobile',invalidFormClass) }}>
+                <li class="middle_input form-mobile" {{ hideonerror('mobile',expandedFormClass) }}>
                     {{ form_widget(form.phoneNumber, {'attr' : {'class' : 'middle_input'}, 'value': participant.participantMobileNumber}) }}
                     {{ form_errors(form.phoneNumber) }}
                 </li>
-                <li class="edit_btn form-mobile" {{ hideonerror('mobile',invalidFormClass) }}><a href="#" data-form-cont=".form-mobile">{% trans from "general_settings" %}txt_edit{% endtrans %}</a></li>
+                <li class="edit_btn form-mobile" {{ hideonerror('mobile',expandedFormClass) }}><a href="#" data-form-cont=".form-mobile">{% trans from "general_settings" %}txt_edit{% endtrans %}</a></li>
               </ul>
               {{ form_rest(form) }}
               {{ form_errors(form) }}
@@ -207,7 +207,7 @@
     <script>window.jQuery || document.write('<script src={{ asset('js/vendor/jquery-1.9.1.min.js') }}><\/script>')</script>
         <script src= {{ asset ('js/plugins.js') }}></script>
         <script src= {{ asset ('js/main.js') }}></script>
-                   <script type="text/javascript">
+        <script type="text/javascript">
         $(document).ready(function(){
            $('#general_settings_userNameConfirm').click(function()
                 {
@@ -239,9 +239,6 @@
                             $('#general_settings_validationCheck').val("mobile");
                    });
            });
-
-
-
         </script>
   </body>
 {% endblock body %}
