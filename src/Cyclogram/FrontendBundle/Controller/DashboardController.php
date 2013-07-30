@@ -11,10 +11,10 @@ use Cyclogram\Bundle\ProofPilotBundle\Entity\Participant;
 class DashboardController extends Controller
 {
     /**
-     * @Route("/main", name="_main")
+     * @Route("/main/{studyId}", name="_main")
      * @Template()
      */
-    public function indexAction()
+    public function indexAction($studyId=0)
     {
         $participant = $this->get('security.context')->getToken()->getUser();
         $request = $this->getRequest();
@@ -23,11 +23,24 @@ class DashboardController extends Controller
 
         
         $session = $this->getRequest()->getSession();
-        
+
+        $study = null;
+        $studyLogo = "";
+        if ($studyId != null) {
+            $study = $em->getRepository('CyclogramProofPilotBundle:Study')->find($studyId);
+            $studyContent = $em->getRepository('CyclogramProofPilotBundle:StudyContent')->findOneBy(array('studyId'=>$studyId));
+            $studyLogo = $studyContent->getStudyLogo();
+            $studyLogo = "http://admin.dev1.proofpilot.net/2cd1c6ecec2c6d908b3ed66d4ea7b902/".$studyId."/".$studyLogo;
+        } else {
+            $study = null;
+        }
         
         $parameters = array();
         $parameters['surveycount'] = $surveyscount;
-    
+
+        $parameters['studyId'] = $studyId;
+        $parameters['studyLogo'] = $studyLogo;
+
         $parameters['text'] = array(
                 "title" => "title",
                 "content" => "content");
@@ -101,7 +114,7 @@ class DashboardController extends Controller
             $parameters["confirm_email"] = false;
             $parameters["email_alert"] = $this->get('translator')->trans('txt_please_verify_email', array(), 'dashboard');
         }
-    
+
         return $this->render('CyclogramFrontendBundle:Dashboard:main.html.twig', $parameters);
     
     }
