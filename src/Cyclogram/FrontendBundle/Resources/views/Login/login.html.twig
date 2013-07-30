@@ -22,12 +22,6 @@
         }
         
         $(document).ready(function(){
-            $('#login_submit').click(function()
-                {
-                        $('#submit_button').trigger('click');
-                        return false;
-                });
-
             $('#facebook_button').click(function()
                  { 
                          FB.login(null, {scope: "email"});

@@ -28,7 +28,11 @@ class SecurityController extends Controller
         $request = $this->getRequest();
         
         $form = $this->createFormBuilder()
-        ->add('participantUsername', 'text', array('label'=>'username'))
+        ->add('participantUsername', 'text', array(
+                'label'=>'label_username'
+                ))
+        ->add('sendPass', 'submit', array(
+                'label' => 'btn_send_pass'))
         ->getForm();
 
         $em = $this->getDoctrine()->getManager();
@@ -93,10 +97,19 @@ class SecurityController extends Controller
                 )
         ));
         $form = $this->createFormBuilder(null, array('constraints' => $collectionConstraint))
-        ->add('participantPassword', 'repeated',                   
-                        array('type' => 'password', 
-                            'invalid_message' => 'The password fields must match.',
-                      ))     
+        ->add('participantPassword', 'repeated', array(
+                'type' => 'password', 
+                'first_options'  => array(
+                        'label' => 'label_new_pass'
+                ),
+                'second_options' => array(
+                        'label' => 'label_repeat_pass'
+                ),
+                'invalid_message' => 'The password fields must match.',
+                      ))
+        ->add('savePass', 'submit', array(
+                'label' => 'btn_save_pass'
+                ))  
         ->getForm();
 
         $em = $this->getDoctrine()->getManager();
@@ -141,10 +154,10 @@ class SecurityController extends Controller
     }
     
     /**
-     * @Route("/confirm_reset/{id}", name="_confirm_pass_reset")
+     * @Route("/confirm_reset/{id}/{studyId}", name="_confirm_pass_reset")
      * @Template()
      */
-    public function confirmResetAction($id)
+    public function confirmResetAction($id, $studyId =null)
     {
         $request = $this->getRequest();
         
@@ -155,8 +168,11 @@ class SecurityController extends Controller
         ));
         $error = "";
         $form = $this->createFormBuilder(null, array('constraints' => $collectionConstraint))
-        ->add('sms_code', 'text')
-                ->getForm();
+        ->add('sms_code', 'text', array(
+                'label' => 'label_sms_code'))
+        ->add('confirmNewPass', 'submit', array(
+                'label' => 'btn_confirm_pass'))        
+        ->getForm();
         if( $request->getMethod() == "POST" ){
 
             $form->handleRequest($request);
@@ -175,7 +191,7 @@ class SecurityController extends Controller
                         $em->flush($participant);
                         $session->invalidate();
                         
-                        return $this->render('CyclogramFrontendBundle:Security:password_changed.html.twig');
+                        return $this->render('CyclogramFrontendBundle:Security:password_changed.html.twig', array("studyId"=>$studyId));
                     } else {
                         $session->invalidate();
                         $error = "Wrong SMS!";
@@ -184,7 +200,7 @@ class SecurityController extends Controller
             }
         }
         
-        return $this->render('CyclogramFrontendBundle:Security:confirm_reset.html.twig', array('error' => $error, 'form' => $form->createView(), 'id' => $id));
+        return $this->render('CyclogramFrontendBundle:Security:confirm_reset.html.twig', array('error' => $error, 'form' => $form->createView(), 'id' => $id, "studyId"=>$studyId));
     }
     
     /**
