@@ -36,7 +36,7 @@ class GeneralSettingForm extends AbstractType
                     ));
 
             $builder->add('userNameConfirm', 'submit', array(
-                    'label' => 'label_confirm'
+                    'label' => 'btn_confirm'
                     ));
 
             $builder->add('validationCheck' , 'hidden');
@@ -78,11 +78,11 @@ class GeneralSettingForm extends AbstractType
                     ));
 
             $builder->add('passwordSendSMS', 'submit', array(
-                    'label' => 'label_send_mobile_code'
+                    'label' => 'btn_send_mobile_code'
                     ));
 
             $builder->add('passwordConfirm', 'submit', array(
-                    'label' => 'label_confirm'
+                    'label' => 'btn_confirm'
                     ));
 
         $builder->add('email', 'text', array(
@@ -104,7 +104,7 @@ class GeneralSettingForm extends AbstractType
                     ));
 
             $builder->add('emailConfirm', 'submit', array(
-                    'label' => 'label_confirm'
+                    'label' => 'btn_confirm'
                     ));
 
         $builder->add('phoneNumber', 'text', array(
@@ -131,11 +131,11 @@ class GeneralSettingForm extends AbstractType
                     ));
 
             $builder->add('phoneSendSMS', 'submit', array(
-                    'label' => 'label_send_mobile_code'
+                    'label' => 'btn_send_mobile_code'
                     ));
             
             $builder->add('phoneConfirm', 'submit', array(
-                    'label' => 'label_confirm'
+                    'label' => 'btn_confirm'
                     ));
     }
     

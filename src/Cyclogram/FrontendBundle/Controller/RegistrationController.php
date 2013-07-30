@@ -358,7 +358,11 @@ class RegistrationController extends Controller
         ));
         $error = "";
         $form = $this->createFormBuilder(null, array('constraints' => $collectionConstraint))
-        ->add('sms_code', 'text')
+        ->add('sms_code', 'text', array(
+                'label' => ''))
+        ->add('confirmCode', 'submit', array(
+                'label' => 'btn_confrimcoe_login'
+        ))
         ->getForm();
         
         if( $request->getMethod() == "POST" ){

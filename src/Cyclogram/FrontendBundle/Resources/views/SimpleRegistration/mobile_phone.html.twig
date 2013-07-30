@@ -30,12 +30,15 @@
            {% if form is defined %}
               {{ form_errors(form.phone_small) }}
               {{ form_errors(form.phone_wide) }}
+
+           
+        </ul>
+        <div class="center_align">
+        {{ form_widget(form.sendCode, {'attr':{'class':'submit'}}) }}
               {{ form_errors(form) }}
               {{ form_rest(form) }}
-           {% endif %}
-        </ul>
-        <div class="center_align"><a href="#" class="submit" id="register_submit">{% trans from "register" %}send_confirmation{% endtrans %}</a></div>
-            <button type="submit" style="display:none" id="submit_button"></button>
+              {% endif %}
+        </div>
       </form>
     </div>
     {% include '::footer_reg.html.twig' %}
@@ -44,17 +47,5 @@
         <script src= {{ asset ('js/plugins.js') }}></script>
         <script src= {{ asset ('js/main.js') }}></script>
         <script src= {{ asset ('js/jquery.numeric.js') }}></script>
-        <script>
-        $(document).ready(function(){
-            $('#register_submit').click(function()
-                {
-                         $('#submit_button').trigger('click');
-                        return false;
-                });
-            $("#phone_phone_small").numeric();
-            $('#phone_phone_wide').numeric();
-            
-           });
-        </script>
   </body>
 {% endblock body %}

@@ -15,18 +15,10 @@
         <li>{{ phone }}</li>
       </ul>
       <div class="center_align m"> 
-        <a href={{ path('simplereg_step_2',{'id' : id, 'studyId' : studyId}) }} class="submit m1 gray">{% trans from "register" %}wrong_back{% endtrans %}</a>
-        <a href={{ path('simplereg_step_3',{'id' : id, 'studyId' : studyId}) }} class="submit m2">{% trans from "register" %}ok_verify{% endtrans %}</a>
+      <button onclick=location.href='{{ path('simplereg_step_2',{'id' : id, 'studyId' : studyId}) }}' class="submit m1 gray">{% trans from "register" %}wrong_back{% endtrans %}</button>
+      <button onclick=location.href='{{ path('simplereg_step_3',{'id' : id, 'studyId' : studyId}) }}' class="submit m2">{% trans from "register" %}ok_verify{% endtrans %}</button>
       </div>
     </div>
     {% include '::footer_reg.html.twig' %}
-    <script>
-        $(document).ready(function(){
-            $('#register_submit').click(function() {
-                $('#submit_button').trigger('click');
-                return false;
-            });
-        });
-    </script>
   </body>
 {% endblock body %}
