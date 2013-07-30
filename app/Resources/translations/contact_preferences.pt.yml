@@ -1,3 +1,4 @@
+btn_save_updates: btn_save_updates   # FIXME
 btn_select_all: btn_select_all
 btn_select_none: btn_select_none
 day_friday: day_friday
@@ -22,8 +23,8 @@ txt_expand: txt_expand
 txt_how_to_receive_study_reminders: txt_how_to_receive_study_reminders
 txt_how_what_day_is_best: txt_how_what_day_is_best
 txt_how_would_you_like_communicate: txt_how_would_you_like_communicate
-txt_my_email: txt_my_email   # FIXME
-txt_my_mobile_form: txt_my_mobile_form   # FIXME
+txt_my_email: txt_my_email
+txt_my_mobile_form: txt_my_mobile_form
 txt_tell_us_convenient_time: txt_tell_us_convenient_time
 txt_what_day_of_week_suits: txt_what_day_of_week_suits
 txt_what_time_of_day_suits: txt_what_time_of_day_suits

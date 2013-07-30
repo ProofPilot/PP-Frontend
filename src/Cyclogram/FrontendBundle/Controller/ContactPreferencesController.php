@@ -18,49 +18,15 @@ class ContactPreferencesController extends Controller
     public function contactPrefsAction()
     {
         $participant = $this->get('security.context')->getToken()->getUser();
+        
         $request = $this->getRequest();
         $em = $this->getDoctrine()->getManager();
     
+        //choices
         $reminders = $em->getRepository('CyclogramProofPilotBundle:ParticipantStudyReminder')->findAll();
-        $reminderLinks = $em->getRepository('CyclogramProofPilotBundle:ParticipantStudyReminderLink')->findByParticipant($participant);
-    
-        $remindersData = array();
-    
-        foreach($reminders as $reminder) {
-            $reminderId = $reminder->getParticipantStudyReminderId();
-            $reminderLinks = $em->getRepository('CyclogramProofPilotBundle:ParticipantStudyReminderLink')->findBy(
-                    array('participant'=>$participant,
-                            'participantStudyReminder'=>$reminder));
-            $bySMS = false;
-            $byEmail = false;
-            if($reminderLinks) {
-    
-                if($reminderLinks[0]->getBySMS() == true) {
-                    $bySMS = true;
-                }
-                if($reminderLinks[0]->getByEmail() == true) {
-                    $byEmail = true;
-                }
-            }
-    
-    
-            $remindersData[] = array(
-                    'reminder' => $reminder,
-                    'bySMS' => $bySMS,
-                    'byEmail' => $byEmail
-            );
-        }
-    
-    
-        $datetimes = $em->getRepository('CyclogramProofPilotBundle:ParticipantContactTime')->findAll();
         $timezones = $em->getRepository('CyclogramProofPilotBundle:ParticipantTimezone')->findAll();
-        $parameters = array();
-    
-         
-    
-        $parameters['datetimes'] = $datetimes;
-        $parameters['timezones'] = $timezones;
-        $parameters['weekdays'] =  array(
+        $contactTimes = $em->getRepository('CyclogramProofPilotBundle:ParticipantContactTime')->findAll();
+        $weekdays = array(
                 0=>'day_sunday',
                 1=>'day_monday',
                 2=>'day_tuesday',
@@ -69,92 +35,115 @@ class ContactPreferencesController extends Controller
                 5=>'day_friday',
                 6=>'day_saturday'
         );
-    
+        $parameters = array();
+        $parameters["expandedForm"] = '';
+        
+        
+        //first we process POST data if any
         if ($request->getMethod() == 'POST') {
-    
-    
+        
             $savedata = $request->get('savedata');
             switch($savedata) {
                 case 'reminders':
-                    $reminders = $em->getRepository('CyclogramProofPilotBundle:ParticipantStudyReminder')->findAll();
                     foreach($reminders as $reminder)
                     {
                         $reminder_id = $reminder->getParticipantStudyReminderId();
-                        $reminderSMS = $request->get('sms_' . $reminder_id);
-                        $reminderEmail = $request->get('email_' . $reminder_id);
-                        $reminderLinks = $em->getRepository('CyclogramProofPilotBundle:ParticipantStudyReminderLink')->findBy(
-                                array('participant'=>$participant,
-                                        'participantStudyReminder'=>$reminder));
-    
-                        if($reminderLinks) {
-                            $participantReminderLink = $reminderLinks[0];
-                        } else {
-                            $participantReminderLink = new ParticipantStudyReminderLink();
-                        }
-                        $participantReminderLink->setParticipant($participant);
-                        $participantReminderLink->setParticipantStudyReminder($reminder);
-                        if($reminderSMS) {
-                            $participantReminderLink->setBySMS(true);
-                        } else {
-                            $participantReminderLink->setBySMS(false);
-                        }
-                        if($reminderEmail) {
-                            $participantReminderLink->setByEmail(true);
-                        } else {
-                            $participantReminderLink->setByEmail(false);
-                        }
-                        $em->persist($participantReminderLink);
+                        $reminderSMS = $request->get('sms_' . $reminder_id) ? true : false;
+                        $reminderEmail = $request->get('email_' . $reminder_id) ? true : false;
+                        $reminderLink = $em->getRepository('CyclogramProofPilotBundle:ParticipantStudyReminderLink')
+                        ->getParticipantReminderLink($participant,$reminder);
+                        $reminderLink->setParticipant($participant);
+                        $reminderLink->setParticipantStudyReminder($reminder);
+                        $reminderLink->setBySMS($reminderSMS);
+                        $reminderLink->setByEmail($reminderEmail);
+                        $em->persist($reminderLink);
                         $em->flush();
-    
-    
-    
-    
                     }
+                    $parameters["expandedForm"] = 'reminders';
                     $parameters['message'] = 'Your contact prefernces have been saved';
                     break;
                 case 'date_of_week':
+                    foreach ($weekdays as $weekday=>$dayname)
+                    {
+                        $active = $request->get('weekday_' . $weekday) ? true : false;
+                        $em->getRepository('CyclogramProofPilotBundle:ParticipantContactWeekdayLink')
+                        ->updateParticipantContactWeekDay($participant, $weekday, $active);
+                    }
+                    $parameters["expandedForm"] = 'contactweekdays';
                     $parameters['message'] = 'Your contact prefernces have been saved';
                     break;
                 case 'time_of_day':
+                    foreach ($contactTimes as $contactTime)
+                    {
+                        $contactTimeId = $contactTime->getParticipantContactTimesId();
+                        $active = $request->get('contactTime_' . $contactTimeId) ? true : false;
+                        $timezoneid = $request->get('timezone');
+                        $timezone = $em->getRepository('CyclogramProofPilotBundle:ParticipantTimeZone')->find($timezoneid);
+                        $em->getRepository('CyclogramProofPilotBundle:ParticipantContactTimeLink')
+                        ->updateParticipantContactTimeLink($participant, $contactTime, $active, $timezone);
+                    }
+                    $parameters["expandedForm"] = 'contacttimes';
                     $parameters['message'] = 'Your contact prefernces have been saved';
                     break;
-    
+        
             }
-            $parameters['savedata'] = $savedata;
-    
-    
-    
         }
-    
+
+        
+        //actual data
         $remindersData = array();
-    
         foreach($reminders as $reminder) {
-            $reminderId = $reminder->getParticipantStudyReminderId();
-            $reminderLinks = $em->getRepository('CyclogramProofPilotBundle:ParticipantStudyReminderLink')->findBy(
-                    array('participant'=>$participant,
-                            'participantStudyReminder'=>$reminder));
-            $bySMS = false;
-            $byEmail = false;
-            if($reminderLinks) {
-    
-                if($reminderLinks[0]->getBySMS() == true) {
-                    $bySMS = true;
-                }
-                if($reminderLinks[0]->getByEmail() == true) {
-                    $byEmail = true;
-                }
-            }
-    
-    
+            $reminderLink = $em->getRepository('CyclogramProofPilotBundle:ParticipantStudyReminderLink')
+            ->getParticipantReminderLink($participant, $reminder);
             $remindersData[] = array(
                     'reminder' => $reminder,
-                    'bySMS' => $bySMS,
-                    'byEmail' => $byEmail
+                    'bySMS' => $reminderLink->getBySMS(),
+                    'byEmail' => $reminderLink->getByEmail()
             );
         }
+        
+        
+        //timeofday
+        $contactTimesData = array();
+        $weekDaysData = array();
+        $timezone = 1;
+        
+        foreach($contactTimes as $contactTime) {
+            $contactTimeLink = $em->getRepository('CyclogramProofPilotBundle:ParticipantContactTimeLink')
+            ->getParticipantContactTimeLink($participant, $contactTime);
+        
+            if($contactTimeLink)
+                $timezone = $contactTimeLink->getParticipantTimezone()->getParticipantTimezoneId();
+        
+            $contactTimeId = $contactTime->getParticipantContactTimesId();
+             
+            if(!isset($contactTimesData[$contactTimeId]) || $contactTimeLink) {
+                $contactTimesData[$contactTimeId] = array(
+                        'contactTime' => $contactTime,
+                        'active' => $contactTimeLink ? true : false
+                );
+            }
+        }
+        
+        foreach($weekdays as $weekday=>$dayname) {
+            $weekdayLink = $em->getRepository('CyclogramProofPilotBundle:ParticipantContactWeekdayLink')
+            ->getParticipantContactWeekdayLink($participant, $weekday);
+            
+            if(!isset($weekDaysData[$weekday]) || $weekdayLink) {
+                $weekDaysData[$weekday] = array (
+                        'dayname' => $dayname,
+                        'dayid' => $weekday,
+                        'active' => $weekdayLink ? true : false
+                );
+            }
+            
+        }
+
+        $parameters['timezones'] = $timezones;
         $parameters['remindersData'] = $remindersData;
-    
-    
+        $parameters['contactTimesData'] = $contactTimesData;
+        $parameters['weekDaysData'] = $weekDaysData;
+        $parameters['timezone'] = $timezone;
         $parameters["lastaccess"] = new \DateTime();
         $parameters["participant"] = $participant;
          

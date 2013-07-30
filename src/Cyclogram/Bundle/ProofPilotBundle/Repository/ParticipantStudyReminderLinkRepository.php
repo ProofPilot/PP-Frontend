@@ -1,6 +1,8 @@
 <?php
 namespace Cyclogram\Bundle\ProofPilotBundle\Repository;
 
+use Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantStudyReminderLink;
+
 use Doctrine\ORM\EntityRepository;
 
 /**
@@ -11,5 +13,33 @@ use Doctrine\ORM\EntityRepository;
  */
 class ParticipantStudyReminderLinkRepository extends EntityRepository
 {
+    
+    /**
+     * Get the participant study reminder link, if not found creates one
+     * @param unknown_type $participant
+     * @param unknown_type $reminder
+     * @return Ambigous <\Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantStudyReminderLink, \Doctrine\ORM\mixed, NULL, mixed, unknown>
+     */
+    public function getParticipantReminderLink ($participant, $reminder)
+    {
+        $query = $this->getEntityManager()
+        ->createQuery("
+                SELECT prl
+                FROM CyclogramProofPilotBundle:ParticipantStudyReminderLink prl
+                WHERE
+                prl.participant = :participant
+                AND 
+                prl.participantStudyReminder = :reminder
+                ")
+                ->setParameter("participant", $participant)
+                ->setParameter("reminder",$reminder);
+        
+        $result = $query->getOneOrNullResult();
+        
+        if(!$result)
+            $result = new ParticipantStudyReminderLink();
+        
+        return $result;
 
+    }
 }

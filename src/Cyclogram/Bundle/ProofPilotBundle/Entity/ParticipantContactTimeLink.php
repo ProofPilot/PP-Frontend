@@ -26,7 +26,7 @@ class ParticipantContactTimeLink
      *
      * @ORM\ManyToOne(targetEntity="ParticipantContactTime")
      * @ORM\JoinColumns({
-     * @ORM\JoinColumn(name="participant_contact_time_id", referencedColumnName="participant_contact_time_id")
+     * @ORM\JoinColumn(name="participant_contact_time", referencedColumnName="participant_contact_times_id")
      * })
      */
     private $participantContactTime;
@@ -50,17 +50,10 @@ class ParticipantContactTimeLink
      *
      * @ORM\ManyToOne(targetEntity="ParticipantTimezone")
      * @ORM\JoinColumns({
-     * @ORM\JoinColumn(name="participant_timezone_id", referencedColumnName="participant_timezone_id")
+     * @ORM\JoinColumn(name="participant_timezone", referencedColumnName="participant_timezone_id")
      * })
      */
     private $participantTimezone;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="participant_day_of_week", type="integer")
-     */
-    private $participantDayOfWeek;
 
     /**
      * @var \Participant
@@ -185,29 +178,6 @@ class ParticipantContactTimeLink
     public function getParticipantTimezone()
     {
         return $this->participantTimezone;
-    }
-
-    /**
-     * Set participantDayOfWeek
-     *
-     * @param integer $participantDayOfWeek
-     * @return ParticipantContactTimeLink
-     */
-    public function setParticipantDayOfWeek($participantDayOfWeek)
-    {
-        $this->participantDayOfWeek = $participantDayOfWeek;
-    
-        return $this;
-    }
-
-    /**
-     * Get participantDayOfWeek
-     *
-     * @return integer 
-     */
-    public function getParticipantDayOfWeek()
-    {
-        return $this->participantDayOfWeek;
     }
 
     /**

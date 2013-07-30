@@ -46,14 +46,14 @@ class ParticipantStudyReminderLink
      *
      * @ORM\Column(name="by_sms", type="integer")
      */
-    private $bySMS;
+    private $bySMS = false;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="by_email", type="integer")
      */
-    private $byEmail;
+    private $byEmail = false;
 
     /**
      * Set participantStudyReminderLinkId

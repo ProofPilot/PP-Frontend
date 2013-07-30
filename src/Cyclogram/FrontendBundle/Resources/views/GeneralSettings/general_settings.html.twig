@@ -2,20 +2,7 @@
 
 {% form_theme form '::fields_theme2.html.twig' %}
 
-{% from _self import showonerror,hideonerror %}
-
-{% macro showonerror(name, invalidclass) %}
-{% if invalidclass is defined and name == invalidclass %}
-    style="display:block"
-{% endif %}
-{% endmacro %}
-
-{% macro hideonerror(name, invalidclass) %}
-{% if invalidclass is defined and name == invalidclass %}
-    style="display:none"
-{% endif %}
-{% endmacro %}
-
+{% from '::macro.html.twig' import showonerror,hideonerror %}
 
 
 {% block body %}
