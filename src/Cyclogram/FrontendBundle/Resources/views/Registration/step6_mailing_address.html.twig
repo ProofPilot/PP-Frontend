@@ -1,7 +1,8 @@
 {%  extends '::base.html.twig' %}
 
+{% form_theme form '::fields_theme1.html.twig' %}
 
-    {% block stylesheets %}
+{% block stylesheets %}
 {#             {% stylesheets filter='cssrewrite' output="assetic/css/jqueryui.css" debug=false#}
 {#                 'css/jquery-ui-1.10.3/base/jquery.ui.core.min.css'#}
 {#                 'css/jquery-ui-1.10.3/base/jquery.ui.theme.min.css'#}
@@ -19,10 +20,10 @@
                 .autocomplete-suggestions strong { font-weight: normal; color: #3399FF; }
             
             </style>
-    {%  endblock stylesheets %}
+{%  endblock stylesheets %}
 
 
-    {% block javascripts %}
+{% block javascripts %}
 {#             {% javascripts output="assetic/js/jqueryui.js"  debug=false#}
 {#                 'js/jquery-ui-1.10.3/jquery.ui.core.min.js'#}
 {#                 'js/jquery-ui-1.10.3/jquery.ui.widget.min.js'#}
@@ -35,7 +36,7 @@
 {#             <script src="{{ asset('js/jquery-ui-1.10.3/jquery-ui.min.js') }}"></script>#}
 {#             {{ form_javascript(form) }}#}
             <script src="{{ asset('js/jquery.autocomplete.min.js') }}"></script>
-    {% endblock javascripts %}
+{% endblock javascripts %}
 
 {% block body %}
 <body class="has_image">
@@ -47,34 +48,29 @@
       <form novalidate method="post" action="{{ path('reg_step_6',{'id' : id, 'studyId' : studyId}) }}" name="mailing_address">
         <div class="loginform_right">
           <label>{% trans from "register" %}label_firstname{% endtrans %}</label>
-          <span>{{ form_widget(form.participantFirstname, {'attr' : {'class' : 'text'}}) }}</span>
-          <span class="error">{{ form_errors(form.participantFirstname) }}</span>
-{#           <span><input type="text" class="text"/></span>#}
+          {{ form_widget(form.participantFirstname, {'attr' : {'class' : 'text'}}) }}
+          {{ form_errors(form.participantFirstname) }}
           <label>{% trans from "register" %}label_lastname{% endtrans %}</label>
           {{ form_widget(form.participantLastname, {'attr' : {'class' : 'text'}}) }}
-          <span class="error">{{ form_errors(form.participantLastname) }}</span>
-{#           <input type="text" class="text"/>#}
+          {{ form_errors(form.participantLastname) }}
           <label>{% trans from "register" %}label_address1{% endtrans %}</label>
           {{ form_widget(form.participantAddress1, {'attr' : {'class' : 'text'}}) }}
-          <span class="error">{{ form_errors(form.participantAddress1) }}</span>
-{#           <input type="text" class="text"/>#}
+          {{ form_errors(form.participantAddress1) }}
           <label>{% trans from "register" %}label_address2{% endtrans %}</label>
           {{ form_widget(form.participantAddress2, {'attr' : {'class' : 'text'}}) }}
-          <span class="error">{{ form_errors(form.participantAddress2) }}</span>
-{#           <input type="text" class="text"/>#}
+          {{ form_errors(form.participantAddress2) }}
           <label>{% trans from "register" %}label_zipcode{% endtrans %}</label>
           {{ form_widget(form.participantZipcode, {'attr' : {'class' : 'text'}}) }}
-          <span class="error">{{ form_errors(form.participantZipcode) }}</span>
+          {{ form_errors(form.participantZipcode) }}
           <label>{% trans from "register" %}label_city{% endtrans %}</label>
           {{ form_widget(form.city, {'attr' : {'class' : 'text'}}) }}
-          <span class="error">{{ form_errors(form.city) }}</span>
+          {{ form_errors(form.city) }}
           <label>{% trans from "register" %}label_state{% endtrans %}</label>
           {{ form_widget(form.state, {'attr' : {'class' : 'text'}}) }}
-          <span class="error">{{ form_errors(form.state) }}</span>
+          {{ form_errors(form.state) }}
 
-
-              {{ form_rest(form) }}
-              <span class="error">{{ form_errors(form) }}</span>
+          {{ form_rest(form) }}
+          {{ form_errors(form) }}
         </div>
         <div class="center_align">
           <a id="register_submit" class="submit" href="#">{% trans from "register" %}txt_save_mailing_address{% endtrans %}</a>
@@ -169,6 +165,8 @@
         </script> 
     </div>
   </div>
+  
   {% include '::footer_reg.html.twig' %}
+  
 </body>
 {% endblock body %}
