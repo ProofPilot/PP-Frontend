@@ -1,8 +1,9 @@
 {% if app.user %}
     <div class="profile_info alt_bg">
     	<div class="wrapper">
-            {% if studyId is null %}
-    		    <a href="#" class="avatar"><img src="{{ user.avatar }}" width="80" height="82" alt="" title=""/></a>
+            {% if studyId == 1 %}
+    		{% else %}
+                <a href="#" class="avatar"><img src="{{ user.avatar }}" width="80" height="82" alt="" title=""/></a>
             {% endif %}
     		<ul class="user_info">
     			<li><a href="#">{{ user.name }}</a></li>

@@ -3,7 +3,7 @@
         <a class="site_logo" href="{{ path('_main') }}">ProofPilot</a>
     {% else %}
         {% if studyId == 1 and studyLogo is not null %}
-            <a class="logo knowathome" href="{{ path('_login') }}">
+            <a class="logo knowathome" href="{{ path('_main') }}">
                 <img src="{{ studyLogo }}" width="234" height="44" />
             </a>
         {% else  %}
