@@ -81,7 +81,7 @@ class RegistrationForm extends AbstractType
             ->checkIfEmailNotUsed($participant->getParticipantEmail());
         
         if($count)
-            $context->addViolationAt('participantEmail', 'email_already_registered');
+            $context->addViolationAt('participantEmail',  $this->container->get('translator')->trans('email_already_registered', array(), 'validators'));
     }
     
     public function validateUsername(Participant $participant, ExecutionContextInterface $context)
@@ -91,7 +91,7 @@ class RegistrationForm extends AbstractType
         ->checkIfUsernameNotUsed($participant->getParticipantUsername());
     
         if($count)
-            $context->addViolationAt('participantUsername', 'username_already_registered');
+            $context->addViolationAt('participantUsername',  $this->container->get('translator')->trans('username_already_registered', array(), 'validators'));
     }
 
 }

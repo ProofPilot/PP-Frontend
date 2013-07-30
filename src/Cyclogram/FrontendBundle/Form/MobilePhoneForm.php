@@ -103,7 +103,7 @@ class MobilePhoneForm extends AbstractType
         ->checkIfPhoneNotUsed($phone);
     
         if($count)
-            $context->addViolationAt('phone_wide', 'error_mobile_phone_already_registered');
+            $context->addViolationAt('phone_wide',  $this->container->get('translator')->trans('error_mobile_phone_already_registered', array(), 'validators'));
     }
     
 
