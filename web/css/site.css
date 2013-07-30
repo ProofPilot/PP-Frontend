@@ -1331,6 +1331,7 @@ header .header_menu span.text  , .footer_col_right span.text  {
 	display: none;
 	background:  url(../images/error.png) no-repeat 0px 0px;
 	background-size: 13px 13px;
+	cursor: pointer;
 }
 .lt-ie9  .panel .panel_right .dashboard_panel ul.settings_form li.form_expanded .new_inputs_cont span.input_container span.mark  {
 	background:  url(../images/100_error.png) no-repeat 0px 0px;
@@ -3556,6 +3557,7 @@ footer a.icon_update span {
 	display: none;
 	background:  url(../images/error.png) no-repeat 0px 0px;
 	background-size: 13px 13px;
+	cursor: pointer;
 }
 .lt-ie9  .mobile_reg.login_form .loginform_right  span.input_placeholder span.mark  {
 	background:  url(../images/100_error.png) no-repeat 0px 0px;
