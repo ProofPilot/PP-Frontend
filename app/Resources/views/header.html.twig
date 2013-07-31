@@ -1,5 +1,5 @@
 <header>
-    {% if app.user and studyId is null %}
+    {% if app.user and studyId is not defined %}
         <a class="site_logo" href="{{ path('_main') }}">ProofPilot</a>
     {% else %}
         {% if studyId == 1 and studyLogo is not null %}

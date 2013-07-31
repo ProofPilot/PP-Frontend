@@ -571,7 +571,7 @@ header .header_menu span.text  , .footer_col_right span.text  {
 	clear: both;
 }
 .panel .panel_left .menu_cont h2,
-.panel .panel_left .menu_cont a.icon_dashboard.unbranded {
+.panel .panel_left .menu_cont a.icon_dashboard {
     width: 100%;
     position: relative;
     height: 62px;
@@ -843,7 +843,7 @@ header .header_menu span.text  , .footer_col_right span.text  {
 	max-width: 738px; 
 }
 
-.panel .panel_right .dashboard_title.unbranded {
+.panel .panel_right .dashboard_title {
     float: left;
     width: 100%;
     border-bottom: 1px solid #e9e8df;

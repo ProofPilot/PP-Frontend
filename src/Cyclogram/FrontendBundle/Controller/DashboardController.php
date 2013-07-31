@@ -11,7 +11,7 @@ use Cyclogram\Bundle\ProofPilotBundle\Entity\Participant;
 class DashboardController extends Controller
 {
     /**
-     * @Route("/main/{studyId}", name="_main")
+     * @Route("/main/{studyId}", requirements={"studyId" = "\d+"}, name="_main")
      * @Template()
      */
     public function indexAction($studyId=0)
