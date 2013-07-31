@@ -329,9 +329,7 @@ class RegistrationController extends Controller
             $sms = $this->get('sms');
             $sentSms = $sms->sendSmsAction( array('message' => "Your SMS Verification code is $participantSMSCode", 'phoneNumber'=>"$customerMobileNumber") );
             if($sentSms)
-                $participant->setParticipantMobileSmsCodeConfirmed(true);
-                $em->persist($participant);
-                $em->flush($participant);
+
                 return $this->redirect(($this->generateUrl("reg_step_5", array('id'=> $participant->getParticipantId(), 'studyId' => $studyId))));
         }
         
@@ -364,6 +362,9 @@ class RegistrationController extends Controller
             if( $form->isValid() ) {
                 $value = $form->getData();
                 if ($value['sms_code'] == $userSMS) {
+                    $participant->setParticipantMobileSmsCodeConfirmed(true);
+                    $em->persist($participant);
+                    $em->flush($participant);
                      return $this->redirect( $this->generateUrl("reg_step_6", array('id' => $participant->getParticipantId(), 'studyId' => $studyId)) );
                 } else {
                     $error = "Wrong SMS!";

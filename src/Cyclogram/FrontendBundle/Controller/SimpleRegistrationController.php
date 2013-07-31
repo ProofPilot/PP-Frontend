@@ -111,10 +111,7 @@ class  SimpleRegistrationController extends Controller{
             $sms = $this->get('sms');
             $sentSms = $sms->sendSmsAction( array('message' => "Your SMS Verification code is $participantSMSCode", 'phoneNumber'=>"$customerMobileNumber") );
             if($sentSms)
-                $participant->setParticipantMobileSmsCodeConfirmed(true);
-            $em->persist($participant);
-            $em->flush($participant);
-            return $this->redirect(($this->generateUrl("simplereg_step_4", array('id'=> $participant->getParticipantId(), 'studyId' => $studyId))));
+                return $this->redirect(($this->generateUrl("simplereg_step_4", array('id'=> $participant->getParticipantId(), 'studyId' => $studyId))));
         }
     
         return $this->render('CyclogramFrontendBundle:SimpleRegistration:mobile_phone_verification.html.twig', array('phone' => $customerMobileNumber, 'studyId' => $studyId ));
@@ -171,6 +168,7 @@ class  SimpleRegistrationController extends Controller{
                     $em = $this->getDoctrine()->getManager();
                     
                     $participant->setParticipantEmailCode($parameters['code']);
+                    $participant->setParticipantMobileSmsCodeConfirmed(true);
                     $em->persist($participant);
                     $em->flush($participant);
                     
