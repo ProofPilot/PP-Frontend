@@ -1,7 +1,7 @@
 already_joined: 'Already joined? '
-btn_next: btn_next
-btn_save_mailing_address: btn_save_mailing_address
-btn_send_confirmation: btn_send_confirmation
+btn_next: next>
+btn_save_mailing_address: save and login
+btn_send_confirmation: send confirmation code to mobile
 confirm_password: 'Confirm Password'
 create_password: 'Create a password'
 double_check: 'Double Check You Entry'
