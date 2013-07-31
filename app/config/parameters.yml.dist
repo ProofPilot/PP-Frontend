@@ -1,5 +1,7 @@
 parameters:
     site_name: "ProofPilot"
+    admin_project_path: /proofpilot
+    admin_project_url:  http://proofpilot-bogdand.dyndns.org
     base_path: ""
     upload_path: "trim(`pwd`) . '/' . md5('attachments')"
     database_driver: pdo_mysql
@@ -30,3 +32,6 @@ parameters:
 #	Facebook secret is from my riv.a.ntsiv@gmail.com
     facebook.secret: 61577113f011589a7d217cc7972798a4
     facebook.appid: 584886061542799
+    
+    study_upload_path: %admin_project_path%/web/2cd1c6ecec2c6d908b3ed66d4ea7b902
+    study_image_url: %admin_project_url%/2cd1c6ecec2c6d908b3ed66d4ea7b902

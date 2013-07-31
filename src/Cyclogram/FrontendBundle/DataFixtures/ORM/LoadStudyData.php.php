@@ -2,15 +2,21 @@
 // src/Acme/HelloBundle/DataFixtures/ORM/LoadUserData.php
 
 namespace Cyclogram\FrontendBundle\DataFixtures\ORM;
+use Symfony\Component\DependencyInjection\ContainerAware;
+
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 
 use Cyclogram\Bundle\ProofPilotBundle\Entity\StudyContent;
 
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Component\DependencyInjection\Container;
 
-
-class LoadStudyData implements FixtureInterface
+class LoadStudyData extends ContainerAware implements FixtureInterface, ContainerAwareInterface
 {
+
+    protected $container;
+
     /**
      * {@inheritDoc}
      */
@@ -18,15 +24,17 @@ class LoadStudyData implements FixtureInterface
     {
 
         $studyContent = new StudyContent();
-        $language = $manager->getRepository('CyclogramProofPilotBundle:Language')->find(1);
-        $study = $manager->getRepository('CyclogramProofPilotBundle:Study')->find(1);
-        
-        
-        
+        $language = $manager
+                ->getRepository('CyclogramProofPilotBundle:Language')->find(1);
+        $study = $manager->getRepository('CyclogramProofPilotBundle:Study')
+                ->find(7);
+
         $studyContent->setStudy($study);
         $studyContent->setLanguage($language);
-        $studyContent->setStudyLogo('/images/tmp_sexpro.png');
-        $studyContent->setStudyGraphic('/images/tmp_img2.png');
+        $studyLogo = $this->container->getParameter('study_image_url') . '/' . $study->getStudyId(). '/logo-7-en.png';
+        $studyGraphic = $this->container->getParameter('study_image_url') . '/' . $study->getStudyId(). '/graphic-7-en.png';
+        $studyContent->setStudyLogo($studyLogo);
+        $studyContent->setStudyGraphic($studyGraphic);
         $studyContent->setStudyName("Sexual Health Promotion (SexPro) Study");
         $strAbout = <<<EOD
             <h2>About</h2>
@@ -72,7 +80,8 @@ EOD;
         <p style="color: #7e7e7e;">You can talk to the researcher(s) about any questions, concerns, or complaints you have about this study.</p>
 EOD;
         $studyContent->setStudyConsent($strStudyConsent);
-        $studyContent->setStudyConsentIntroduction($strStudyConsentIntroduction);
+        $studyContent
+                ->setStudyConsentIntroduction($strStudyConsentIntroduction);
         $studyContent->setStudyUrl("sexpro");
         $studyContent->setStudyTagline($strStudyTagline);
         $studyContent->setStudyDescription($strStudyDescription);
@@ -83,16 +92,20 @@ EOD;
         $manager->persist($studyContent);
         $manager->flush();
 
-        
         $studyContent = new StudyContent();
-        $language = $manager->getRepository('CyclogramProofPilotBundle:Language')->find(2);
-        $study = $manager->getRepository('CyclogramProofPilotBundle:Study')->find(1);
-        
+        $language = $manager
+                ->getRepository('CyclogramProofPilotBundle:Language')->find(2);
+        $study = $manager->getRepository('CyclogramProofPilotBundle:Study')
+                ->find(7);
+
         $studyContent->setStudy($study);
         $studyContent->setLanguage($language);
-        $studyContent->setStudyLogo('/images/tmp_sexpro.png');
-        $studyContent->setStudyGraphic('/images/tmp_img2.png');
-        $studyContent->setStudyName("Promoción Estudio de la Salud Sexual (SexPro)");
+        $studyLogo = $this->container->getParameter('study_image_url') . '/' . $study->getStudyId(). '/logo-7-es.png';
+        $studyGraphic = $this->container->getParameter('study_image_url') . '/' . $study->getStudyId(). '/graphic-7-es.png';
+        $studyContent->setStudyLogo($studyLogo);
+        $studyContent->setStudyGraphic($studyGraphic);
+        $studyContent
+                ->setStudyName("Promoción Estudio de la Salud Sexual (SexPro)");
         $strAbout = <<<EOD
             <h2>Sobre</h2>
             <p>El propósito de este estudio es conocer lo que los hombres y transexuales gusta y no les gusta de SexPro y cómo afecta a su comprensión de la protección sexual
@@ -110,7 +123,7 @@ EOD;
             <p>Usted recibirá instrucciones SexPro y empezar a utilizar SexPro ya sea en su primera visita de estudio o en su segunda visita de estudio, dependiendo de su
                 asignación a los grupos al azar.</p>
 EOD;
-       $strStudyTagline = <<<EOD
+        $strStudyTagline = <<<EOD
           <span>Herramienta en línea para la Promoción de la Salud Sexual/span>
 EOD;
         $strStudyDescription = <<<EOD
@@ -137,17 +150,19 @@ EOD;
         <p style="color: #7e7e7e;">Usted puede hablar con el investigador (s) sobre cualquier pregunta, inquietud o queja que tenga sobre este estudio.</p>
 EOD;
         $studyContent->setStudyConsent($strStudyConsent);
-        $studyContent->setStudyConsentIntroduction($strStudyConsentIntroduction);
+        $studyContent
+                ->setStudyConsentIntroduction($strStudyConsentIntroduction);
         $studyContent->setStudyUrl("sexpro");
         $studyContent->setStudyTagline($strStudyTagline);
         $studyContent->setStudyDescription($strStudyDescription);
         $studyContent->setStudyAbout($strAbout);
         $studyContent->setStudyWhatsInvolved($strWhatsInvolved);
         $studyContent->setStudyRequirements($strRequirements);
-        
+
         $manager->persist($studyContent);
         $manager->flush();
-        
-        
+
     }
+
+
 }
