@@ -29,6 +29,9 @@ class LoginController extends Controller
      */
     public function loginAction($studyId=null)
     {
+        if ($this->get('security.context')->isGranted("ROLE_USER")){
+            return $this->redirect($this->generateURL("_main"));
+        }
         $request = $this->getRequest();
         $session = $request->getSession();
 
