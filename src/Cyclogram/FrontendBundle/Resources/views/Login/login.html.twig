@@ -32,7 +32,7 @@
 {% endblock javascripts %}
 
 {% block body %}
-        <body class="has_image" {% if bgimage is defined %}style="background-image:{{ bgimage }}"{% endif %}>
+        <body class="has_image" {% if bgimage is defined %}style="background-image:url('{{ bgimage }}')"{% endif %}>
 		{{ facebook_initialize({'async': true, 'xfbml': true, 'fbAsyncInit': 'onFbInit();'}) }}
         {% include '::header_reg.html.twig' %}
 		

@@ -67,7 +67,7 @@ class LoginController extends Controller
             // last username entered by the user
             'last_username' => $session->get(SecurityContext::LAST_USERNAME),
             'error'         => $error,
-            'bgimage'       => $this->get('kernel')->getRootDir() . '/web/images/study/' . $studyId . '/' .$nPic,
+            'bgimage'       => $this->container->getParameter('admin_project_url') . '/images/study/' . $studyId . '/' .$nPic.'.jpg',
             'studyId'       => $studyId,
             'studyLogo'     => $studyLogo
         ));
@@ -218,7 +218,7 @@ class LoginController extends Controller
             'CyclogramFrontendBundle:Login:mobile_phone_login.html.twig',
             array(
                 "form"=>$form->createView(),
-                'bgimage'          => $this->get('kernel')->getRootDir() . '/web/images/study/' . $studyId . '/' .$nPic,
+                'bgimage'       => $this->container->getParameter('admin_project_url') . '/images/study/' . $studyId . '/' .$nPic.'.jpg',
                 'studyId'       => $studyId,
                 'studyLogo'     => $studyLogo
             ));
