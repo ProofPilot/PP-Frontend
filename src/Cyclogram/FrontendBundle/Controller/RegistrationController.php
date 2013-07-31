@@ -72,6 +72,15 @@ class RegistrationController extends Controller
 
         $form = $this->createForm(new RegistrationForm($this->container));
         $nPic = rand ( 1, 4 );
+        if ($studyId == null) {
+            $studyId = $session->get('studyId');
+        } else {
+            $session->set('studyId', $studyId);
+        }
+        
+        $bgimage = $this->container->getParameter('admin_project_url') . '/images/study/' . $studyId . '/' .$nPic.'.jpg';
+        if (empty($studyId))
+            $bgimage = null;
         
         if ($request->getMethod() == 'POST') {
             $form->handleRequest($request);
@@ -211,7 +220,7 @@ class RegistrationController extends Controller
            } else {
                $totalSteps = 4;
            }
-        return $this->render('CyclogramFrontendBundle:Registration:step1_register.html.twig', array ('form' => $form->createView(), 'studyId' => $studyId, 'totalSteps' => $totalSteps, 'nPic' => $nPic,'studyLogo'=>$studyLogo, 'sid'=>$sid, "svid"=>$svid));
+        return $this->render('CyclogramFrontendBundle:Registration:step1_register.html.twig', array ('form' => $form->createView(), 'studyId' => $studyId, 'totalSteps' => $totalSteps, 'bgimage' => $bgimage, 'studyLogo'=>$studyLogo, 'sid'=>$sid, "svid"=>$svid));
         
         }
 
@@ -239,7 +248,18 @@ class RegistrationController extends Controller
         
         $em = $this->getDoctrine()->getManager();
 
+        $request = $this->getRequest();
+        $session = $request->getSession();
         $nPic = rand ( 1, 4 );
+        if ($studyId == null) {
+            $studyId = $session->get('studyId');
+        } else {
+            $session->set('studyId', $studyId);
+        }
+        
+        $bgimage = $this->container->getParameter('admin_project_url') . '/images/study/' . $studyId . '/' .$nPic.'.jpg';
+        if (empty($studyId))
+            $bgimage = null;
         
         $participant->setParticipantEmailCode($parameters['code']);
         $em->persist($participant);
@@ -252,7 +272,7 @@ class RegistrationController extends Controller
                 $embedded,
                 true,
                 $parameters);
-        return $this->render('CyclogramFrontendBundle:Registration:step2_mail_confirm.html.twig', array('nPic' => $nPic, 'studyId' => $studyId));
+        return $this->render('CyclogramFrontendBundle:Registration:step2_mail_confirm.html.twig', array('bgimage' => $bgimage, 'studyId' => $studyId));
     }
     
     /**
@@ -262,6 +282,17 @@ class RegistrationController extends Controller
     public function step3Action($id, $studyId)
     {
         $em = $this->getDoctrine()->getManager();
+        $request = $this->getRequest();
+        $session = $request->getSession();
+        $nPic = rand ( 1, 4 );
+        if ($studyId == null) {
+            $studyId = $session->get('studyId');
+        } else {
+            $session->set('studyId', $studyId);
+        }
+        $bgimage = $this->container->getParameter('admin_project_url') . '/images/study/' . $studyId . '/' .$nPic.'.jpg';
+        if (empty($studyId))
+            $bgimage = null;
         $participant = $em->getRepository('CyclogramProofPilotBundle:Participant')->find($id);
         if (empty($participant)) {
             return $this->redirect( $this->generateUrl("_registration"));
@@ -290,10 +321,10 @@ class RegistrationController extends Controller
                 $em->flush();
                 
 //                 return $this->redirect( $this->generateUrl("reg_step_3") );
-                return $this->render('CyclogramFrontendBundle:Registration:step4_mobile_phone_2.html.twig', array('phone' => $participant->getParticipantMobileNumber(), 'id' => $participant->getParticipantId(), 'studyId' => $studyId));
+                return $this->render('CyclogramFrontendBundle:Registration:step4_mobile_phone_2.html.twig', array('bgimage' => $bgimage, 'phone' => $participant->getParticipantMobileNumber(), 'id' => $participant->getParticipantId(), 'studyId' => $studyId));
             }
         }
-        return $this->render('CyclogramFrontendBundle:Registration:step3_mobile_phone_1.html.twig', array("form" => $form->createView(), 'id' => $id , 'studyId' => $studyId));
+        return $this->render('CyclogramFrontendBundle:Registration:step3_mobile_phone_1.html.twig', array('bgimage' => $bgimage, "form" => $form->createView(), 'id' => $id , 'studyId' => $studyId));
     }
     
     /**
@@ -303,6 +334,17 @@ class RegistrationController extends Controller
     public function step4Action($id, $studyId)
     {
         $em = $this->getDoctrine()->getManager();
+        $request = $this->getRequest();
+        $session = $request->getSession();
+        $nPic = rand ( 1, 4 );
+        if ($studyId == null) {
+            $studyId = $session->get('studyId');
+        } else {
+            $session->set('studyId', $studyId);
+        }
+        $bgimage = $this->container->getParameter('admin_project_url') . '/images/study/' . $studyId . '/' .$nPic.'.jpg';
+        if (empty($studyId))
+            $bgimage = null;
         $participant = $em->getRepository('CyclogramProofPilotBundle:Participant')->find($id);
         if (empty($participant)) {
             return $this->redirect( $this->generateUrl("_registration"));
@@ -333,7 +375,7 @@ class RegistrationController extends Controller
                 return $this->redirect(($this->generateUrl("reg_step_5", array('id'=> $participant->getParticipantId(), 'studyId' => $studyId))));
         }
         
-        return $this->render('CyclogramFrontendBundle:Registration:step4_mobile_phone_2.html.twig', array('phone' => $customerMobileNumber, 'studyId' => $studyId ));
+        return $this->render('CyclogramFrontendBundle:Registration:step4_mobile_phone_2.html.twig', array('bgimage' => $bgimage, 'phone' => $customerMobileNumber, 'studyId' => $studyId ));
     }
     
     /**
@@ -343,6 +385,17 @@ class RegistrationController extends Controller
     public function step5Action($id, $studyId)
     {
         $em = $this->getDoctrine()->getManager();
+        $request = $this->getRequest();
+        $session = $request->getSession();
+        $nPic = rand ( 1, 4 );
+        if ($studyId == null) {
+            $studyId = $session->get('studyId');
+        } else {
+            $session->set('studyId', $studyId);
+        }
+        $bgimage = $this->container->getParameter('admin_project_url') . '/images/study/' . $studyId . '/' .$nPic.'.jpg';
+        if (empty($studyId))
+            $bgimage = null;
         $participant = $em->getRepository('CyclogramProofPilotBundle:Participant')->find($id);
         if (empty($participant)) {
             return $this->redirect( $this->generateUrl("_registration"));
@@ -371,7 +424,7 @@ class RegistrationController extends Controller
                 }
             }
         }
-        return $this->render('CyclogramFrontendBundle:Registration:step5_mobile_phone_3.html.twig', array('error' => $error, 'form' => $form->createView(), 'id' => $participant->getParticipantId(), 'studyId' => $studyId));
+        return $this->render('CyclogramFrontendBundle:Registration:step5_mobile_phone_3.html.twig', array('bgimage' => $bgimage, 'error' => $error, 'form' => $form->createView(), 'id' => $participant->getParticipantId(), 'studyId' => $studyId));
     }
     
     
@@ -382,6 +435,17 @@ class RegistrationController extends Controller
     public function step6Action($id, $studyId)
     {
         $em = $this->getDoctrine()->getManager();
+        $request = $this->getRequest();
+        $session = $request->getSession();
+        $nPic = rand ( 1, 4 );
+        if ($studyId == null) {
+            $studyId = $session->get('studyId');
+        } else {
+            $session->set('studyId', $studyId);
+        }
+        $bgimage = $this->container->getParameter('admin_project_url') . '/images/study/' . $studyId . '/' .$nPic.'.jpg';
+        if (empty($studyId))
+            $bgimage = null;
         $request = $this->getRequest();
         $participant = $em->getRepository('CyclogramProofPilotBundle:Participant')->find($id);
         
@@ -422,7 +486,7 @@ class RegistrationController extends Controller
                 return $this->redirect( $this->generateUrl("_main") );
             }
         }
-        return $this->render('CyclogramFrontendBundle:Registration:step6_mailing_address.html.twig', array ('id' => $participant->getParticipantId(), 'form' => $form->createView(), 'studyId' => $studyId));
+        return $this->render('CyclogramFrontendBundle:Registration:step6_mailing_address.html.twig', array ('bgimage' => $bgimage, 'id' => $participant->getParticipantId(), 'form' => $form->createView(), 'studyId' => $studyId));
     }
     
     /**

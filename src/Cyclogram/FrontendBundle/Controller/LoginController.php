@@ -41,8 +41,7 @@ class LoginController extends Controller
         } else {
             $session->set('studyId', $studyId);
         }
-    
-
+        
         $em = $this->getDoctrine()->getManager();
         $study = null;
         $studyLogo = "";
