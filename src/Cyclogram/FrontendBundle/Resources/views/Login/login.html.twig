@@ -32,11 +32,7 @@
 {% endblock javascripts %}
 
 {% block body %}
-    {% if studyId == 1 %}
-        <body class="knowathome{{ nPic }}">
-    {% else  %}
-        <body class="has_image">
-    {%  endif %}
+        <body class="has_image" {% if bgimage is defined %}style="background-image:{{ bgimage }}"{% endif %}>
 		{{ facebook_initialize({'async': true, 'xfbml': true, 'fbAsyncInit': 'onFbInit();'}) }}
         {% include '::header_reg.html.twig' %}
 		
