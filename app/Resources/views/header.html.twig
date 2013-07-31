@@ -1,8 +1,14 @@
-<header> 
-    {% if app.user %}
+<header>
+    {% if app.user and studyId is null %}
         <a class="site_logo" href="{{ path('_main') }}">ProofPilot</a>
     {% else %}
-        <a class="site_logo" href="{{ path('_login') }}">ProofPilot</a>
+        {% if studyId == 1 and studyLogo is not null %}
+            <a class="logo knowathome" href="{{ path('_main') }}">
+                <img src="{{ studyLogo }}" width="234" height="44" />
+            </a>
+        {% else  %}
+            <a class="site_logo" href="{{ path('_login') }}">ProofPilot</a>
+        {% endif %}
     {% endif %}
     {% if app.user %}
         {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createTopSettingsMenu',{'template': 'CyclogramFrontendBundle:Knp:top_menu.html.twig'}) }}

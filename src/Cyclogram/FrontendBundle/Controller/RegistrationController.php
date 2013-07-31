@@ -126,7 +126,7 @@ class RegistrationController extends Controller
 
                         $participantLevelRepo = $this->getDoctrine()
                             ->getRepository('CyclogramProofPilotBundle:ParticipantLevel');
-                        $participantLevel = $participantLevelRepo->findOneBy( array("participantLevelName"=>"Customer") );
+                        $participantLevel = $participantLevelRepo->find( 2 );
 
                         //Campaign
                         $ParticipantCampaignLinkCountData =  $this->getDoctrine()

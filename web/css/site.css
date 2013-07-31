@@ -15,7 +15,7 @@ body.has_image {
 body.knowathome1 {
     background: #161719 url(../images/study/1/1.jpg) no-repeat 50% 0px;
     background-size: cover;
-    
+
 }
 body.knowathome2 {
     background: #161719 url(../images/study/1/2.jpg) no-repeat 50% 0px;
@@ -571,7 +571,25 @@ header .header_menu span.text  , .footer_col_right span.text  {
 	clear: both;
 }
 .panel .panel_left .menu_cont h2,
-.panel .panel_left .menu_cont a.icon_dashboard {
+.panel .panel_left .menu_cont a.icon_dashboard.unbranded {
+    width: 100%;
+    position: relative;
+    height: 62px;
+    display: inline-block;
+    color: #363b3d !important;
+    font-size: 20px !important;
+    font-family: 'Roboto'  !important;
+    font-style: normal  !important;
+    font-weight: 700 !important;
+    text-transform: uppercase;
+    line-height: 62px;
+    text-indent: 54px;
+    background-color: white;
+
+    background-size: 24px 24px;
+}
+.panel .panel_left .menu_cont h2,
+.panel .panel_left .menu_cont a.icon_dashboard.branded {
 	width: 100%;
 	position: relative;
 	height: 62px;
@@ -825,7 +843,20 @@ header .header_menu span.text  , .footer_col_right span.text  {
 	max-width: 738px; 
 }
 
-.panel .panel_right .dashboard_title {
+.panel .panel_right .dashboard_title.unbranded {
+    float: left;
+    width: 100%;
+    border-bottom: 1px solid #e9e8df;
+    height: 117px;
+    padding-left: 100px;
+    padding-top: 37px;
+    height: 80px;
+    width: 638px;
+    width: 100%;
+    max-width: 638px;
+}
+
+.panel .panel_right .dashboard_title.branded {
 	float: left;
 	width: 100%;
 	border-bottom: 1px solid #e9e8df;

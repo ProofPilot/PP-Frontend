@@ -201,7 +201,7 @@ class LoginController extends Controller
                     $this->get('security.context')->setToken($token);
 
                     $this->get('custom_db')->getFactory('CommonCustom')->addEvent($participant->getParticipantId(),null,1,'login','Login succesfully', TRUE);
-                    return $this->redirect( $this->generateUrl("_main") );
+                    return $this->redirect( $this->generateUrl("_main", array("studyId"=>$studyId)) );
                 } else {
                     $this->get('custom_db')->getFactory('CommonCustom')->addEvent($participant->getParticipantId(),null,1,'login','Login failed', FALSE);
                     return $this->redirect( $this->generateUrl("_login") );
