@@ -31,8 +31,8 @@ class LoadStudyData extends ContainerAware implements FixtureInterface, Containe
 
         $studyContent->setStudy($study);
         $studyContent->setLanguage($language);
-        $studyLogo = $this->container->getParameter('study_image_url') . '/' . $study->getStudyId(). '/logo-7-en.png';
-        $studyGraphic = $this->container->getParameter('study_image_url') . '/' . $study->getStudyId(). '/graphic-7-en.png';
+        $studyLogo = '/logo-7-en.png';
+        $studyGraphic = '/graphic-7-en.png';
         $studyContent->setStudyLogo($studyLogo);
         $studyContent->setStudyGraphic($studyGraphic);
         $studyContent->setStudyName("Sexual Health Promotion (SexPro) Study");
@@ -100,8 +100,8 @@ EOD;
 
         $studyContent->setStudy($study);
         $studyContent->setLanguage($language);
-        $studyLogo = $this->container->getParameter('study_image_url') . '/' . $study->getStudyId(). '/logo-7-es.png';
-        $studyGraphic = $this->container->getParameter('study_image_url') . '/' . $study->getStudyId(). '/graphic-7-es.png';
+        $studyLogo = '/logo-7-es.png';
+        $studyGraphic = '/graphic-7-es.png';
         $studyContent->setStudyLogo($studyLogo);
         $studyContent->setStudyGraphic($studyGraphic);
         $studyContent
