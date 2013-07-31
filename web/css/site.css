@@ -43,7 +43,7 @@ footer .site_container {
 	color: white;
     bottom: 20px;
     text-align: center;
-    position: relative;
+    position: absolute;
     left: 50%;
     margin-left: -250px; 
 }
@@ -3304,7 +3304,7 @@ footer a.icon_update span {
 .mobile_reg {
 	width: 440px;
 	margin: 0px auto;
-	margin-top: 100px;
+	margin-top: 70px;
 	margin-bottom: 40px;
 	border-radius: 5px;
 	padding: 25px;
