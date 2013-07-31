@@ -18,7 +18,7 @@ class Version20130731090636 extends AbstractMigration
                 `participant_contact_weekday_link_id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT ,
                 `participant_id` INT(11) UNSIGNED NULL ,
                 `weekday_id` INT(11) UNSIGNED NULL ,
-                PRIMARY KEY (`participant_contact_weekdays_link_id`) ,
+                PRIMARY KEY (`participant_contact_weekday_link_id`) ,
                 INDEX `FK_patricipant_contact_weekdays_participant_idx` (`participant_id` ASC) ,
                 CONSTRAINT `FK_patricipant_contact_weekdays_participant`
                 FOREIGN KEY (`participant_id` )
