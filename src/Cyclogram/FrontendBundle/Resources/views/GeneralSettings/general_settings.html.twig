@@ -44,7 +44,7 @@
                       {{ form_errors(form.newUserName) }}
                     </div>
                     <div class="new_inputs_cont">
-                      <div class="for_label">{{ form_label(form.newUserNamePassword) }}<a href="{{ path('_forgot_pass') }}" class="forgot">Forgot it?</a></div>
+                      <div class="for_label">{{ form_label(form.newUserNamePassword) }}<a href="{{ path('_forgot_pass') }}" class="forgot">{% trans from "general_settings" %}txt_forgot_it{% endtrans %}</a></div>
                           {{ form_widget(form.newUserNamePassword) }}
                           {{ form_errors(form.newUserNamePassword) }}
                     </div>
@@ -66,7 +66,7 @@
                   <div class="wrapper">
                     <div class="close_cont"><a href="#" data-form-cont=".form-password">Cancel</a></div>
                     <div class="new_inputs_cont with_margin">
-                      <div class="for_label">{{ form_label(form.oldPassword) }}<a href="{{ path('_forgot_pass') }}" class="forgot">Forgot it?</a></div>
+                      <div class="for_label">{{ form_label(form.oldPassword) }}<a href="{{ path('_forgot_pass') }}" class="forgot">{% trans from "general_settings" %}txt_forgot_it{% endtrans %}</a></div>
                           {{ form_widget(form.oldPassword) }}
                           {{ form_errors(form.oldPassword) }}
                     </div>
@@ -140,7 +140,7 @@
                       </span>
                       </div>
                     <div class="new_inputs_cont">
-                      <div class="for_label">{{ form_label(form.newPhoneNumberPassword) }}<a href="{{ path('_forgot_pass') }}" class="forgot">Forgot it?</a></div>
+                      <div class="for_label">{{ form_label(form.newPhoneNumberPassword) }}<a href="{{ path('_forgot_pass') }}" class="forgot">{% trans from "general_settings" %}txt_forgot_it{% endtrans %}</a></div>
                       <span class="input_container">
                           {{ form_widget(form.newPhoneNumberPassword) }}
                           {{ form_errors(form.newPhoneNumberPassword) }}
@@ -149,7 +149,7 @@
                     <div class="confirm_cont">
                         {{ form_widget(form.phoneSendSMS, {'attr':{'class' : 'btn_confirm'}}) }}
                     <div class="new_inputs_cont">
-                      <div class="for_label">{{ form_label(form.newPhoneNumberSMS) }}</div>
+                      <div class="for_label"><label>{{ form_label(form.newPhoneNumberSMS) }}</label></div>
                       <span class="input_container">
                           {{ form_widget(form.newPhoneNumberSMS) }}
                           {{ form_errors(form.newPhoneNumberSMS) }}
