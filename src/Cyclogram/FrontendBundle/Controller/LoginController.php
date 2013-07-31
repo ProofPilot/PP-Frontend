@@ -4,6 +4,8 @@ namespace Cyclogram\FrontendBundle\Controller;
 
 
 
+use Cyclogram\FrontendBundle\Form\UserSmsCodeForm;
+
 use Symfony\Component\HttpFoundation\Response;
 
 use Doctrine\ORM\Mapping\Entity;
@@ -167,24 +169,7 @@ class LoginController extends Controller
             $study = null;
         }
         
-        $collectionConstraint = new Collection(array(
-                'fields' => array(
-                        'user_sms' => new Length(array('min'=>4))
-                ),
-                'allowExtraFields' => false
-        ));
-        
-        $form = $this->createFormBuilder(null, array('constraints' => $collectionConstraint))
-        ->add('user_sms', 'text', array(
-                'label' => "label_user_sms_code:",
-                'attr' => array(
-                        'class' => 'formElement'
-                        )
-                ))
-         ->add('confirmCode', 'submit', array(
-                'label' => 'btn_confrimcoe_login'
-        ))
-        ->getForm();
+        $form = $this->createForm(new UserSmsCodeForm($this->container));
         
         if( $request->getMethod() == "POST" ){
         
@@ -192,8 +177,8 @@ class LoginController extends Controller
         
             if( $form->isValid() ) {
         
-                $values = $request->request->get('form');
-                $userSms = $values['user_sms'];
+                $values = $form->getData();
+                $userSms = $values['sms_code'];
         
                 if( $participant->getParticipantMobileSmsCode() == $userSms ){
 

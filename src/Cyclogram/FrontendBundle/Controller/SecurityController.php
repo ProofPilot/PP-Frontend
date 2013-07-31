@@ -2,6 +2,8 @@
 
 namespace Cyclogram\FrontendBundle\Controller;
 
+use Cyclogram\FrontendBundle\Form\UserSmsCodeForm;
+
 use Symfony\Component\HttpFoundation\Session\Session;
 
 use Cyclogram\CyclogramCommon;
@@ -158,24 +160,15 @@ class SecurityController extends Controller
     {
         $request = $this->getRequest();
         
-        $collectionConstraint = new Collection(array(
-                'fields' => array(
-                        'sms_code' => new Length(array('min' => 4)),
-                )
-        ));
+
         $error = "";
-        $form = $this->createFormBuilder(null, array('constraints' => $collectionConstraint))
-        ->add('sms_code', 'text', array(
-                'label' => 'label_sms_code'))
-        ->add('confirmNewPass', 'submit', array(
-                'label' => 'btn_confirm_pass'))        
-        ->getForm();
+        $form = $this->createForm(new UserSmsCodeForm($this->container));
         if( $request->getMethod() == "POST" ){
 
             $form->handleRequest($request);
 
             if( $form->isValid() ) {
-                $value = $request->request->get('form');
+                $value = $form->getData();
                 $em = $this->getDoctrine()->getManager();
                 $participant = $em->getRepository("CyclogramProofPilotBundle:Participant")->find($id);
                 if (!empty($participant)){

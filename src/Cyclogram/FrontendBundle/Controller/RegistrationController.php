@@ -20,6 +20,8 @@
 
 namespace Cyclogram\FrontendBundle\Controller;
 
+use Cyclogram\FrontendBundle\Form\UserSmsCodeForm;
+
 use Symfony\Component\HttpKernel\EventListener\ResponseListener;
 
 use Symfony\Component\Config\Definition\Exception\DuplicateKeyException;
@@ -351,26 +353,16 @@ class RegistrationController extends Controller
         $userSMS = $participant->getParticipantMobileSmsCode();
         $request = $this->getRequest();
         
-        $collectionConstraint = new Collection(array(
-                'fields' => array(
-                        'sms_code' => new Length(array('min' => 4)),
-                )
-        ));
         $error = "";
-        $form = $this->createFormBuilder(null, array('constraints' => $collectionConstraint))
-        ->add('sms_code', 'text', array(
-                'label' => ''))
-        ->add('confirmCode', 'submit', array(
-                'label' => 'btn_confrimcoe_login'
-        ))
-        ->getForm();
+        $form = $this->createForm(new UserSmsCodeForm($this->container));
+
         
         if( $request->getMethod() == "POST" ){
         
             $form->handleRequest($request);
         
             if( $form->isValid() ) {
-                $value = $request->request->get('form');;
+                $value = $form->getData();
                 if ($value['sms_code'] == $userSMS) {
                      return $this->redirect( $this->generateUrl("reg_step_6", array('id' => $participant->getParticipantId(), 'studyId' => $studyId)) );
                 } else {
