@@ -1,3 +1,4 @@
+btn_confrimcoe_login: btn_confrimcoe_login   # FIXME
 cant_remember_username: 'Não consegue lembrar seu nome de usuário?'
 doesnt_match_records: 'Desculpe, seu nome de usuário não coincide com os nossos registros'
 email_sent_containing_password: 'Um código foi enviado para o número de celular associado a esta conta. Por favor, verifique o seu telefone e digite o código aqui para completar o processo de seleção de uma nova senha e continue.'
@@ -8,6 +9,7 @@ forgot_password_message: 'Sim, isso acontece com todos nós! Você não lembra s
 forgot_username: 'Esqueceu seu nome de usuário'
 forgot_username_message: 'Não tem problema. Digite o número do telefone celular que você usou para se inscrever e vamos enviar seu nome de usuário via mensagem de texto.'
 havent_joined: havent_joined
+label_sms_code: label_sms_code   # FIXME
 new_password_selection: 'Clique no link  em seu e-mail e você será guiado para criar uma nova senha. Você vai precisar do seu telefone celular para completar este processo. Se a mensagem não chegar em poucos minutos, verifique sua caixa de spam ou lixeira.'
 send_another_code: text_send_another_code
 txt_forgot_your_password: "Esqueceu seu nome de senha?\n"
