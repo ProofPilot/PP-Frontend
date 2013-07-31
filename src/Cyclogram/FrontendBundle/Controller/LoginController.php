@@ -41,7 +41,7 @@ class LoginController extends Controller
         } else {
             $session->set('studyId', $studyId);
         }
-
+    
 
         $em = $this->getDoctrine()->getManager();
         $study = null;
@@ -54,7 +54,9 @@ class LoginController extends Controller
         } else {
             $study = null;
         }
-        
+        $bgimage = $this->container->getParameter('admin_project_url') . '/images/study/' . $studyId . '/' .$nPic.'.jpg';
+        if (empty($studyId))
+            $bgimage = null;
         // get the login error if there is one
         if ($request->attributes->has(SecurityContext::AUTHENTICATION_ERROR)) {
             $error = $request->attributes->get(SecurityContext::AUTHENTICATION_ERROR);
@@ -67,7 +69,7 @@ class LoginController extends Controller
             // last username entered by the user
             'last_username' => $session->get(SecurityContext::LAST_USERNAME),
             'error'         => $error,
-            'bgimage'       => $this->container->getParameter('admin_project_url') . '/images/study/' . $studyId . '/' .$nPic.'.jpg',
+            'bgimage'       => $bgimage,
             'studyId'       => $studyId,
             'studyLogo'     => $studyLogo
         ));
@@ -177,6 +179,10 @@ class LoginController extends Controller
             $study = null;
         }
         
+        $bgimage = $this->container->getParameter('admin_project_url') . '/images/study/' . $studyId . '/' .$nPic.'.jpg';
+        if (empty($studyId))
+            $bgimage = null;
+        
         $form = $this->createForm(new UserSmsCodeForm($this->container));
         
         if( $request->getMethod() == "POST" ){
@@ -218,7 +224,7 @@ class LoginController extends Controller
             'CyclogramFrontendBundle:Login:mobile_phone_login.html.twig',
             array(
                 "form"=>$form->createView(),
-                'bgimage'       => $this->container->getParameter('admin_project_url') . '/images/study/' . $studyId . '/' .$nPic.'.jpg',
+                'bgimage'       => $bgimage,
                 'studyId'       => $studyId,
                 'studyLogo'     => $studyLogo
             ));
