@@ -45,7 +45,9 @@ class  SimpleRegistrationController extends Controller{
             $session->set('studyId', $studyId);
         }
     
-        $form = $this->createForm(new MobilePhoneForm($this->container));
+        $form = $this->createForm(new MobilePhoneForm($this->container), null, array(
+                'validation_groups' => array('registration')
+                ));
         if ($participant->getParticipantMobileNumber()){
             $phone = CyclogramCommon::parsePhoneNumber($participant->getParticipantMobileNumber());
         }

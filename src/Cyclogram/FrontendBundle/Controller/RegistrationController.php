@@ -299,7 +299,9 @@ class RegistrationController extends Controller
         }
         $request = $this->getRequest();
         
-        $form = $this->createForm(new MobilePhoneForm($this->container));
+        $form = $this->createForm(new MobilePhoneForm($this->container), null, array(
+                'validation_groups' => array('registration')
+                ));
         if ($participant->getParticipantMobileNumber()){
             $phone = CyclogramCommon::parsePhoneNumber($participant->getParticipantMobileNumber());
         }

@@ -1,14 +1,6 @@
 {%  extends '::base.html.twig' %}
 
-{% block body %}
-
-{% if studyId == 1 %}
-    <body class="knowathome{{ nPic }}">
-{% else  %}
-    <body class="has_image">
-{%  endif %}
-
-    {% include '::header_reg.html.twig' %}
+{% block content %}
     <div class="mobile_reg">
       <h1><span>{% trans from "register" %}txt_join{% endtrans %} 3/4:</span> {% trans from "register" %}double_check{% endtrans %}</h1>
       <ul class="confirm_list">
@@ -20,5 +12,4 @@
       </div>
     </div>
     {% include '::footer_reg.html.twig' %}
-  </body>
-{% endblock body %}
+{% endblock content %}

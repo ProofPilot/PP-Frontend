@@ -70,7 +70,14 @@ class MobilePhoneForm extends AbstractType
                               'cascade_validation' => true,
                               'translation_domain' => 'register',
                               'constraints' => array(
-                                        new Callback(array(array($this, 'validatePhone'))
+                                        new Callback(array(
+                                                'methods' => array(
+                                                        array($this, 'validatePhone')
+                                                        ),
+                                                'groups' => array(
+                                                        'registration'
+                                                        )
+                                                )
                                        ))
                         ));
     }

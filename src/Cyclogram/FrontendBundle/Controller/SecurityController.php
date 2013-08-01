@@ -133,6 +133,7 @@ class SecurityController extends Controller
         } else {
             $session->set('studyId', $studyId);
         }
+
         if ($studyId != null) {
 
             $study = $em->getRepository('CyclogramProofPilotBundle:Study')->find($studyId);
@@ -240,19 +241,18 @@ class SecurityController extends Controller
             $session->set('studyId', $studyId);
         }
         
+        
         $form = $this->createForm(new MobilePhoneForm($this->container));
 
         $em = $this->getDoctrine()->getManager();
         $study = null;
         $studyLogo = "";
-        $nPic = "";
         if ($studyId != null) {
             $study = $em->getRepository('CyclogramProofPilotBundle:Study')->find($studyId);
             $studyContent = $em->getRepository('CyclogramProofPilotBundle:StudyContent')->findOneBy(array('studyId'=>$studyId));
             $studyLogo = $studyContent->getStudyLogo();
             //JP: Need to fi this
             $studyLogo = "http://admin.dev1.proofpilot.net/2cd1c6ecec2c6d908b3ed66d4ea7b902/".$studyId."/".$studyLogo;
-
         } else {
             $study = null;
         }
