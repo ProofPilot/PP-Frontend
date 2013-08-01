@@ -8,6 +8,10 @@ _root:
         routeParameters:
             studyUrl: 'sexpro'
 
+CyclogramKnowatHomeBundle:
+    resource: "@CyclogramKnowatHomeBundle/Resources/config/routing.yml"
+    prefix:   /{_locale}/knowathome
+
 cyclogram_proof_pilot:
     resource: "@CyclogramProofPilotBundle/Controller/"
     type:     annotation
