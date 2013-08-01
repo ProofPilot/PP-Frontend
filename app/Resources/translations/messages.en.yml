@@ -1,13 +1,8 @@
-'': ''
-btn_confirm_pass: btn_confirm_pass
-btn_confrimcoe_login: btn_confrimcoe_login
-btn_save_pass: btn_save_pass
-btn_send_pass: btn_send_pass
-label_new_pass: label_new_pass
-label_repeat_pass: label_repeat_pass
-label_sms_code: label_sms_code
-'label_user_sms_code:': 'label_user_sms_code:'
-label_username: label_username
+btn_save_pass: 'Save password'
+btn_send_pass: 'Send password'
+label_new_pass: 'New password'
+label_repeat_pass: 'Repeat password'
+label_username: 'Username'
 txt_footer_top: 'ON TOP'
 txt_header_login: Login
 txt_header_or: or

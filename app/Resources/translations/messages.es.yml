@@ -1,12 +1,7 @@
-'': ''
-btn_confirm_pass: btn_confirm_pass
-btn_confrimcoe_login: btn_confrimcoe_login
 btn_save_pass: btn_save_pass
 btn_send_pass: btn_send_pass
 label_new_pass: label_new_pass
 label_repeat_pass: label_repeat_pass
-label_sms_code: label_sms_code
-'label_user_sms_code:': 'label_user_sms_code:'
 label_username: label_username
 txt_footer_top: ARRIBA
 txt_header_login: Login
