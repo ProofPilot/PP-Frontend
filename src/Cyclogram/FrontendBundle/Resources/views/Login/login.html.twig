@@ -31,15 +31,9 @@
 
 {% endblock javascripts %}
 
-{% block body %}
-    {% if studyId == 1 %}
-        <body class="knowathome{{ nPic }}">
-    {% else  %}
-        <body class="has_image">
-    {%  endif %}
+{% block content %}
 		{{ facebook_initialize({'async': true, 'xfbml': true, 'fbAsyncInit': 'onFbInit();'}) }}
-        {% include '::header_reg.html.twig' %}
-		
+
 		<div class="mobile_reg login_form">
 			
 			<div class="wrapper">
@@ -84,6 +78,4 @@
 			</div>
 		</div>
 		<div class="login_btn_placeholder">{% trans from "login" %}havent_joined{% endtrans %} <a href="{{ path('_registration') }}">Register</a></div>
-		{% include '::footer_reg.html.twig' %}
-    </body>
-{% endblock body %}
+{% endblock content %}

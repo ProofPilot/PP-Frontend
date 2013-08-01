@@ -45,8 +45,18 @@ class SecurityController extends Controller
         } else {
             $study = null;
         }
+        $request = $this->getRequest();
+        $session = $request->getSession();
+
         $nPic = rand ( 1, 4 );
-        
+        if ($studyId == null) {
+            $studyId = $session->get('studyId');
+        } else {
+            $session->set('studyId', $studyId);
+        }
+        $bgimage = $this->container->getParameter('admin_project_url') . '/images/study/' . $studyId . '/' .$nPic.'.jpg';
+        if (empty($studyId))
+            $bgimage = null;
         if( $request->getMethod() == "POST" ){
             $form->handleRequest($request);
             $em = $this->getDoctrine()->getManager();
@@ -71,14 +81,14 @@ class SecurityController extends Controller
                                               true,
                                               $parameters);
 
-                    return $this->render('CyclogramFrontendBundle:Security:reset_password_confirmation.html.twig', array("studyId"=>$studyId, "studyLogo"=>$studyLogo, "nPic"=>$nPic));
+                    return $this->render('CyclogramFrontendBundle:Security:reset_password_confirmation.html.twig', array("studyId"=>$studyId, "studyLogo"=>$studyLogo, 'bgimage' => $bgimage));
                 } else {
                     return $this->render('CyclogramFrontendBundle:Security:forgot_your_password.html.twig' , array("form" => $form->createView(), 
-                            "error" => $this->get('translator')->trans("doesnt_match_records", array(), "login"), "studyId"=>$studyId, "studyLogo"=>$studyLogo, "nPic"=>$nPic));
+                            "error" => $this->get('translator')->trans("doesnt_match_records", array(), "login"), "studyId"=>$studyId, "studyLogo"=>$studyLogo, 'bgimage' => $bgimage));
                 }
             }
         }
-        return $this->render('CyclogramFrontendBundle:Security:forgot_your_password.html.twig' , array("form" => $form->createView(), "studyId"=>$studyId, "studyLogo"=>$studyLogo, "nPic"=>$nPic));
+        return $this->render('CyclogramFrontendBundle:Security:forgot_your_password.html.twig' , array("form" => $form->createView(), "studyId"=>$studyId, "studyLogo"=>$studyLogo, 'bgimage' => $bgimage));
     }
     
     /**
@@ -114,11 +124,17 @@ class SecurityController extends Controller
         $em = $this->getDoctrine()->getManager();
         $study = null;
         $studyLogo = "";
-        $nPic = "";
+        $request = $this->getRequest();
+        $session = $request->getSession();
+
+        $nPic = rand ( 1, 4 );
+        if ($studyId == null) {
+            $studyId = $session->get('studyId');
+        } else {
+            $session->set('studyId', $studyId);
+        }
         if ($studyId != null) {
-            if($studyId==1){
-                $nPic = rand ( 1, 4 );
-            }
+
             $study = $em->getRepository('CyclogramProofPilotBundle:Study')->find($studyId);
             $studyContent = $em->getRepository('CyclogramProofPilotBundle:StudyContent')->findOneBy(array('studyId'=>$studyId));
             $studyLogo = $studyContent->getStudyLogo();
@@ -126,7 +142,9 @@ class SecurityController extends Controller
         } else {
             $study = null;
         }
-
+        $bgimage = $this->container->getParameter('admin_project_url') . '/images/study/' . $studyId . '/' .$nPic.'.jpg';
+        if (empty($studyId))
+            $bgimage = null;
         if( $request->getMethod() == "POST" ){
             $form->handleRequest($request);
             $em = $this->getDoctrine()->getManager();
@@ -149,7 +167,7 @@ class SecurityController extends Controller
                 }
             } 
        }
-        return $this->render('CyclogramFrontendBundle:Security:create_new_password.html.twig', array("form" => $form->createView(), 'id' => $id, "studyId"=>$studyId, "studyLogo"=>$studyLogo, "nPic"=>$nPic));
+        return $this->render('CyclogramFrontendBundle:Security:create_new_password.html.twig', array("form" => $form->createView(), 'id' => $id, "studyId"=>$studyId, "studyLogo"=>$studyLogo, 'bgimage' => $bgimage));
     }
     
     /**
@@ -159,7 +177,17 @@ class SecurityController extends Controller
     public function confirmResetAction($id, $studyId =null)
     {
         $request = $this->getRequest();
-        
+        $session = $request->getSession();
+
+        $nPic = rand ( 1, 4 );
+        if ($studyId == null) {
+            $studyId = $session->get('studyId');
+        } else {
+            $session->set('studyId', $studyId);
+        }
+        $bgimage = $this->container->getParameter('admin_project_url') . '/images/study/' . $studyId . '/' .$nPic.'.jpg';
+        if (empty($studyId))
+            $bgimage = null;
 
         $error = "";
         $form = $this->createForm(new UserSmsCodeForm($this->container));
@@ -181,7 +209,7 @@ class SecurityController extends Controller
                         $em->flush($participant);
                         $session->invalidate();
                         
-                        return $this->render('CyclogramFrontendBundle:Security:password_changed.html.twig', array("studyId"=>$studyId));
+                        return $this->render('CyclogramFrontendBundle:Security:password_changed.html.twig', array('bgimage' => $bgimage,"studyId"=>$studyId));
                     } else {
                         $session->invalidate();
                         $error = "Wrong SMS!";
@@ -190,7 +218,7 @@ class SecurityController extends Controller
             }
         }
         
-        return $this->render('CyclogramFrontendBundle:Security:confirm_reset.html.twig', array('error' => $error, 'form' => $form->createView(), 'id' => $id, "studyId"=>$studyId));
+        return $this->render('CyclogramFrontendBundle:Security:confirm_reset.html.twig', array('bgimage' => $bgimage,'error' => $error, 'form' => $form->createView(), 'id' => $id, "studyId"=>$studyId));
     }
     
     /**
@@ -203,6 +231,14 @@ class SecurityController extends Controller
             return $this->redirect($this->generateURL("_main"));
         }
         $request = $this->getRequest();
+        $session = $request->getSession();
+
+        $nPic = rand ( 1, 4 );
+        if ($studyId == null) {
+            $studyId = $session->get('studyId');
+        } else {
+            $session->set('studyId', $studyId);
+        }
         
         $form = $this->createForm(new MobilePhoneForm($this->container));
 
@@ -216,13 +252,13 @@ class SecurityController extends Controller
             $studyLogo = $studyContent->getStudyLogo();
             //JP: Need to fi this
             $studyLogo = "http://admin.dev1.proofpilot.net/2cd1c6ecec2c6d908b3ed66d4ea7b902/".$studyId."/".$studyLogo;
-            if( $studyId == 1 ){
-                $nPic = rand ( 1, 4 );
-            }
+
         } else {
             $study = null;
         }
-        
+        $bgimage = $this->container->getParameter('admin_project_url') . '/images/study/' . $studyId . '/' .$nPic.'.jpg';
+        if (empty($studyId))
+            $bgimage = null;
         if( $request->getMethod() == "POST" ){
             $form->handleRequest($request);
             $em = $this->getDoctrine()->getManager();
@@ -238,12 +274,12 @@ class SecurityController extends Controller
                     $sms = $this->get('sms');
                     $sentSms = $sms->sendSmsAction( array('message' => "Your username is $participantUsername , your email is $participantEmail", 'phoneNumber'=>$participant->getParticipantMobileNumber()) );
                     if($sentSms)
-                        return $this->render('CyclogramFrontendBundle:Security:username_sent.html.twig', array("studyId"=>$studyId, "studyLogo"=>$studyLogo, "nPic"=>$nPic));
+                        return $this->render('CyclogramFrontendBundle:Security:username_sent.html.twig', array("studyId"=>$studyId, "studyLogo"=>$studyLogo, 'bgimage' => $bgimage));
                 } else {
                     return $this->render('CyclogramFrontendBundle:Security:forgot_username.html.twig',array('form' => $form->createView(),"error" => $this->get('translator')->trans("doesnt_match_records", array(), "login"), "studyId"=>$studyId, "studyLogo"=>$studyLogo, "nPic"=>$nPic));
                 }
             }
         }
-        return $this->render('CyclogramFrontendBundle:Security:forgot_username.html.twig',array('form' => $form->createView(), "studyId"=>$studyId, "studyLogo"=>$studyLogo, "nPic"=>$nPic));
+        return $this->render('CyclogramFrontendBundle:Security:forgot_username.html.twig',array('form' => $form->createView(), "studyId"=>$studyId, "studyLogo"=>$studyLogo, 'bgimage' => $bgimage));
     }
 }

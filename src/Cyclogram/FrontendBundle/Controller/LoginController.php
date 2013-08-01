@@ -36,10 +36,12 @@ class LoginController extends Controller
         $session = $request->getSession();
 
         $nPic = rand ( 1, 4 );
-        $studyIdS = $session->get('studyId');
-        ( $studyIdS ) ? $studyId = $studyIdS : false;
-        $session->set('studyId', $studyId);
-
+        if ($studyId == null) {
+            $studyId = $session->get('studyId');
+        } else {
+            $session->set('studyId', $studyId);
+        }
+        
         $em = $this->getDoctrine()->getManager();
         $study = null;
         $studyLogo = "";
@@ -51,7 +53,9 @@ class LoginController extends Controller
         } else {
             $study = null;
         }
-        
+        $bgimage = $this->container->getParameter('admin_project_url') . '/images/study/' . $studyId . '/' .$nPic.'.jpg';
+        if (empty($studyId))
+            $bgimage = null;
         // get the login error if there is one
         if ($request->attributes->has(SecurityContext::AUTHENTICATION_ERROR)) {
             $error = $request->attributes->get(SecurityContext::AUTHENTICATION_ERROR);
@@ -64,7 +68,7 @@ class LoginController extends Controller
             // last username entered by the user
             'last_username' => $session->get(SecurityContext::LAST_USERNAME),
             'error'         => $error,
-            'nPic'          => $nPic,
+            'bgimage'       => $bgimage,
             'studyId'       => $studyId,
             'studyLogo'     => $studyLogo
         ));
@@ -94,10 +98,10 @@ class LoginController extends Controller
     }
 
     /**
-     * @Route("/doLogin", name="_do_login")
+     * @Route("/doLogin/{studyId}", name="_do_login")
      * @Template()
      */
-    public function doLoginAction(){
+    public function doLoginAction($studyId=null){
     
         $em = $this->getDoctrine()->getManager();
     
@@ -112,7 +116,9 @@ class LoginController extends Controller
 
         $request = $this->getRequest();
         $session = $request->getSession();
-        $studyId = $session->get('studyId');
+        if ($studyId == null) 
+            $studyId = $session->get('studyId');
+  
 
         if( $customerMobileNumber ){
     
@@ -158,8 +164,8 @@ class LoginController extends Controller
         $session = $request->getSession();
 
         $nPic = rand ( 1, 4 );
-        $studyIdS = $session->get('studyId');
-        ($studyId) ? $studyId  : $studyId = $studyIdS;
+        if ($studyId == null) 
+            $studyId = $session->get('studyId');
 
         $study = null;
         $studyLogo = "";
@@ -171,6 +177,10 @@ class LoginController extends Controller
         } else {
             $study = null;
         }
+        
+        $bgimage = $this->container->getParameter('admin_project_url') . '/images/study/' . $studyId . '/' .$nPic.'.jpg';
+        if (empty($studyId))
+            $bgimage = null;
         
         $form = $this->createForm(new UserSmsCodeForm($this->container));
         
@@ -213,7 +223,7 @@ class LoginController extends Controller
             'CyclogramFrontendBundle:Login:mobile_phone_login.html.twig',
             array(
                 "form"=>$form->createView(),
-                'nPic'          => $nPic,
+                'bgimage'       => $bgimage,
                 'studyId'       => $studyId,
                 'studyLogo'     => $studyLogo
             ));

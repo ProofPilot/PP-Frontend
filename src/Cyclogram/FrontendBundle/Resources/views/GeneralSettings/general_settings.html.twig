@@ -5,8 +5,7 @@
 {% from '::macro.html.twig' import showonerror,hideonerror %}
 
 
-{% block body %}
-  <body class="page_main">
+    {% block content %}
     <div class="site_container">
 
     {% include '::header.html.twig' %}
@@ -221,5 +220,4 @@
                    });
            });
         </script>
-  </body>
-{% endblock body %}
+    {% endblock content %}
