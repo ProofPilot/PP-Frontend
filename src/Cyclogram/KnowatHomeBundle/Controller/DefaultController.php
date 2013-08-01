@@ -64,7 +64,7 @@ class DefaultController extends Controller
 
     public function privacyAndSecurityAction()
     {
-        $em = $this->getDoctrine()->geManager();
+        $em = $this->getDoctrine()->getManager();
         $pageText = array();
 
         //GET STUDY INFO
@@ -87,12 +87,11 @@ class DefaultController extends Controller
             'fields' => array(
                 'name' => new NotBlank(),
                 'email' => new Email(),
-                'message' => new MinLength(array('limit'=>6))
             ),
             'allowExtraFields' => true
         ));
 
-        $formContact = $this->createFormBuilder(null, array('validation_constraint' => $collectionConstraint))
+        $formContact = $this->createFormBuilder()
             ->add('name', 'text', array('label'=>'Your name:'))
             ->add('email', 'email', array('label'=>'Your email:'))
             ->add('message', 'textarea', array('label'=>'Your message:'))
