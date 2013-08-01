@@ -1,0 +1,44 @@
+{% extends "CyclogramKnowatHomeBundle:Default:index.html.twig" %}
+
+{% block title %}
+    KnowAtHome
+{% endblock %}
+
+{% block stylesheetsCustom %}
+    <link rel="stylesheet" href="/bundles/cyclogramknowathome/css/knowathome.css" type="text/css" />
+{% endblock %}
+
+{% block javascriptsCustom %}
+    <script>
+        $(document).ready(function(){
+            {% set picN = app.session.get('picN') %}
+            $("body").anystretch("/bundles/cyclogramknowathome/images/website/backgrounds/{{picN}}.jpg");
+        });
+    </script>
+{% endblock %}
+
+{% block body %}
+    <div id="wrapper" class="container">
+
+        <div class="leftColumn columns six ">
+
+            <div class="logo" style="margin-bottom: 15px;">
+                <a href="{{ path("CyclogramKnowatHomeBundle_homepage") }}"><img src="/bundles/cyclogramknowathome/images/website/logo-white.png" border="0" /></a>
+            </div>
+
+            <h2>
+                You must accept the terms and conditions to participate in this study.
+            </h2>
+
+            <p>
+                Please go back and select "I Accept" if you'd like to continue.
+            </p>
+
+            <ul class="mainNavButtons">
+                <li><a class="NavButton" href="{{ path('CyclogramKnowatHomeBundle_disclaimer') }}">GO BACK</a></li>
+            </ul>
+
+        </div>
+
+    </div>
+{% endblock %}

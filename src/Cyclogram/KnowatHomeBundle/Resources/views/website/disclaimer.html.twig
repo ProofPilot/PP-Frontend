@@ -1,0 +1,80 @@
+{% extends "CyclogramKnowatHomeBundle:Default:index.html.twig" %}
+
+{% block title %}
+    {{ pageText.title }}
+{% endblock %}
+
+{% block stylesheetsCustom %}
+    <link rel="stylesheet" href="/bundles/cyclogramknowathome/css/knowathome.css" type="text/css" />
+{% endblock %}
+
+{% block javascriptsCustom %}
+    <script>
+        $(document).ready(function(){
+            {% set picN = app.session.get('picN') %}
+            $("body").anystretch("/bundles/cyclogramknowathome/images/website/backgrounds/{{picN}}.jpg");
+        });
+    </script>
+{% endblock %}
+
+{% block body %}
+    <div id="wrapper" class="container">
+
+        <div class="leftColumn columns six ">
+
+            <div class="logo" style="margin-bottom: 15px;">
+                <a href="{{ path("CyclogramKnowatHomeBundle_homepage") }}"><img src="/bundles/cyclogramknowathome/images/website/logo-white.png" border="0" /></a>
+            </div>
+
+            <div class="disclaimer columns six" style="margin-left: 0;">
+                <div class="disclaimerContent">
+
+                    {{ pageText.consent|raw }}
+
+                </div>
+            </div>
+
+            <div class="clear"> <br /> </div>
+
+            <p>Please check ONE of the following options:
+                <br />
+            </p>
+            <form action="" method="post" id="consentFrm">
+                <div style="margin-bottom: 1em;">
+                    <input type="radio" name="consent" id="consentYes" value="yes" /> <label for="consentYes">I am at least 18 years of age, agree to the above information and would like to participate in this research study.</label>
+                </div>
+                <div style="margin-bottom: 1em;">
+                    <input type="radio" name="consent" id="consentNo" value="no" /> <label for="consentNo">I would not like to continue as a participant in this research study.</label>
+                </div>
+            </form>
+
+            <script type="text/javascript">
+                $(document).ready(function(){
+                    $("a#continueBtn").click(function(){
+                        var consent = $("#consentFrm input:radio[name='consent']:checked").val();
+                        if( typeof consent == 'undefined' ){
+                            alert("Please select a valid option");
+                            return false;
+                        }
+                        if( consent == "yes" ){
+                            document.location.href = "{{ path('CyclogramKnowatHomeBundle_eligibility') }}";
+                        }else{
+                            document.location.href = "{{ path('CyclogramKnowatHomeBundle_notEligible') }}";
+                        }
+                    });
+                });
+            </script>
+
+            <div class="disclaimerButtons">
+                <a class="NavButton columns two" id="continueBtn" href="javascript:void(0);">Continue</a>
+            </div>
+
+            <!--<div class="disclaimerButtons columns six">
+                    <a class="NavButton columns two" href="{{ path("CyclogramKnowatHomeBundle_eligibility") }}">I AGREE</a>
+                    <a class="NavButton columns two" href="{{ path("CyclogramKnowatHomeBundle_notEligible") }}">I DO NOT AGREE</a>
+            </div>-->
+
+        </div>
+
+    </div>
+{% endblock %}

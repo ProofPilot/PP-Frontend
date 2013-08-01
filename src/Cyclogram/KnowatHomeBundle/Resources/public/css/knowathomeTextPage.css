@@ -1,0 +1,107 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    background-color: #FFF;
+
+    /*height:auto !important;*/
+    height:100%;
+
+    min-height:100%;
+
+    font-family: "museo-sans";
+}
+
+.container {
+
+    margin: 0 auto -2em;
+    position: relative;
+
+    /*height:auto !important;*/
+    height:100%;
+
+    min-height:100%;
+}
+
+body p {
+    color: #000;
+
+    font-family: "museo-sans";
+<<<<<<< HEAD
+<<<<<<< HEAD
+    font-size: 1.1em;
+=======
+    font-size: 1.3em;
+>>>>>>> a773f6d46c75db333382a9d97003c325690f8f67
+=======
+    /*font-size: 1.1em;*/
+    font-size: 1em;
+>>>>>>> 26d971b0b6b12b11f51a3e2adcf0a851d4bcae6d
+    font-weight: 300;
+    /*line-height: 20pt;*/
+}
+
+.scrollable {
+    overflow: auto;
+    /*max-height: 400px;*/
+}
+
+.leftColumn h1 {
+    font-size: 58px;
+    color: #FFF;
+    margin-bottom: 10px;
+}
+
+.leftColumn a img {
+    margin-top: 20px;
+}
+
+ul.mainNavButtons {
+    list-style: none;
+    margin: 1em auto 0;
+    padding: 0;
+    width: 100%;
+}
+
+/*ul.mainNavButtons li {
+    width: 275px;
+    text-align: center;
+    margin: auto;
+}*/
+
+.container a img {
+    margin-top: 20px;
+    width: 459px;
+    height: 77px;
+}
+
+h1 {
+    font-size: 58px;
+    color: #C70E3A;
+    margin-bottom: 10px;
+}
+
+h2 {
+    color: #000;
+    margin-bottom: 1em;
+<<<<<<< HEAD
+    font-weight: 700;
+    font-family: "museo-sans";
+<<<<<<< HEAD
+    font-size: 1.8em;
+=======
+
+    font-family: museo-sans;
+    font-weight: 700;
+>>>>>>> a773f6d46c75db333382a9d97003c325690f8f67
+=======
+    /*font-size: 1.8em;*/
+    font-size: 2em;
+>>>>>>> 26d971b0b6b12b11f51a3e2adcf0a851d4bcae6d
+}

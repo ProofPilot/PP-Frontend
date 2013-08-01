@@ -1,0 +1,191 @@
+{% extends "::base_knowathome.html.twig" %}
+
+{% block metaCustom %}
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+{% endblock %}
+
+{% block javascripts %}
+    <script src="/bundles/cyclogramknowathome/js/jquery-1.8.3.min.js"></script>
+    <!--<script src="/bundles/cyclogramknowathome/js/protoFluid3.02.js"></script>-->
+    <script src="/bundles/cyclogramknowathome/js/jquery.anystretch.min.js"></script>
+    <script src="/bundles/cyclogramknowathome/js/modernizr.js"></script>
+    <script type="text/javascript" src="//use.typekit.net/xop4omc.js"></script>
+    <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+        <script>
+
+            function getRandomNumber(min, max){
+                return ( Math.floor( Math.random() * (max - min + min) ) + min);
+            }
+
+        </script>
+{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="/bundles/cyclogramknowathome/css/smart-grid.min.css" type="text/css" />
+    <link rel="stylesheet" href="/bundles/cyclogramknowathome/css/knowathomeCommon.css" type="text/css" />
+
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+    <style type="text/css">
+
+        /*desktop*/
+        @media screen and (min-width: 1024px) and (min-height: 768px) {
+            .leftColumn {
+                float: left;
+                overflow: hidden;
+            }
+        }
+
+        /*@media screen and (min-width: 1024px) and (max-height: 768px) {
+            .leftColumn {
+                float: left;
+                overflow: hidden;
+            }
+        }*/
+
+        /*mobile portrait*/
+        @media screen and (orientation:portrait){
+
+            .logo img {
+                width: 285px;
+                height: 47px;
+            }
+            body p {
+                font-size: 2.8em;
+            }
+            .container .leftColumn {
+                margin: auto;
+                height: 90%;
+                padding: 10px;
+                padding-bottom: 3em;
+                overflow: scroll;
+            }
+            .footer .ribbonContainer a {
+                font-size: 1em;
+                padding: 5px 7px 0;
+            }
+            ul.mainNavButtons li {
+                width: 64% !important;
+            }
+            .disclaimerButtons {
+                text-align: center;
+                width: 60%;
+                margin: auto;
+            }
+            .disclaimerButtons a {
+                float: left !important;
+                margin: auto;
+                margin-bottom: 5px;
+            }
+            .footer .ribbonContainer a.footerNavFirstLnk {
+                margin-left: 0;
+            }
+            .leftColumn a img {
+                margin-top: 0.5% !important;
+            }
+            h2 {
+                margin-bottom: 0.2em !important;
+            }
+        }
+
+        @media screen and (max-device-width: 1280px) and (orientation:landscape){
+            html {
+                -webkit-text-size-adjust: none;
+            }
+            .logo img {
+                width: 300px;
+                height: 50px;
+            }
+            body p {
+                font-size: 2.8em;
+            }
+            .container .leftColumn {
+                float: left;
+
+                width: 65%;
+                padding: 0 10px;
+                padding-bottom: 2em;
+                overflow: scroll;
+                height: 90%;
+            }
+            ul.mainNavButtons li {
+                width: 60% !important;
+            }
+            .disclaimerButtons {
+                text-align: center;
+                width: 60%;
+                margin: auto;
+            }
+            .disclaimerButtons a {
+                float: left !important;
+                margin: auto;
+                margin-bottom: 5px;
+            }
+        }
+    </style>
+
+{% endblock %}
+
+{% block footer %}
+
+    {% set activeNavAbout = "" %}
+    {% set activeNavPrivacy = "" %}
+    {% set activeNavContactUs = "" %}
+    {% set hideRibbon = false %}
+
+    {% if path(app.request.attributes.get('_route')) == path('CyclogramKnowatHomeBundle_aboutStudy') %}
+        {% set activeNavAbout = "active" %}
+        {% set hideRibbon = true %}
+    {% endif %}
+
+    {% if path(app.request.attributes.get('_route')) == path('CyclogramKnowatHomeBundle_privacyAndSecurity') %}
+        {% set activeNavPrivacy = "active" %}
+        {% set hideRibbon = true %}
+    {% endif %}
+
+    {% if path(app.request.attributes.get('_route')) == path('CyclogramKnowatHomeBundle_contactUs') %}
+        {% set activeNavContactUs = "active" %}
+        {% set hideRibbon = true %}
+    {% endif %}
+
+    <div class="footer">
+        <div class="ribbonContainer container_16 container">
+            {% if hideRibbon != true %}
+                <!--<div class="footerLabel">
+                    <img src="/bundles/cyclogramknowathome/images/website/ribbon-trans.png" alt="ribbon" border="0" />
+                    <div class="text">
+                        Putting <span style="font-weight: 700;">The Test</span> to the test
+                    </div>
+                </div>-->
+            {% endif %}
+
+            <a href="{{ path('CyclogramKnowatHomeBundle_aboutStudy') }}" class="{{ activeNavAbout }} footerNavFirstLnk" >About</a>
+            <a href="{{ path('CyclogramKnowatHomeBundle_privacyAndSecurity') }}" class="{{ activeNavPrivacy }}" >Privacy</a>
+            <a href="{{ path('CyclogramKnowatHomeBundle_contactUs') }}" class="{{ activeNavContactUs }}" >Contact Us</a>
+
+        </div>
+        <!--<div class="bottomGradient">
+            &nbsp;
+        </div>-->
+    </div>
+
+    <!-- Piwik -->
+    <script type="text/javascript">
+        var _paq = _paq || [];
+        _paq.push(["trackPageView"]);
+        _paq.push(["enableLinkTracking"]);
+
+        (function() {
+            var u=(("https:" == document.location.protocol) ? "https" : "http") + "://analytics.proofpilot.net/";
+            _paq.push(["setTrackerUrl", u+"piwik.php"]);
+            _paq.push(["setSiteId", "2"]);
+            var d=document, g=d.createElement("script"), s=d.getElementsByTagName("script")[0]; g.type="text/javascript";
+            g.defer=true; g.async=true; g.src=u+"piwik.js"; s.parentNode.insertBefore(g,s);
+        })();
+    </script>
+    <!-- End Piwik Code -->
+    
+    <script>  var AWESM = AWESM || {};  AWESM.api_key = '494f9518ea7929e191c9a6e7411bc168a3609432faf34036dc7e38d48463ca1c';  (function() {    var js = document.createElement('script'); js.type = 'text/javascript'; js.async = true;    js.src = '//widgets.awe.sm/v3/widgets.js?key=' + AWESM.api_key + '&async=true';    var s = document.getElementsByTagName('script')[0];    s.parentNode.insertBefore(js,s);  })();</script>
+
+{% endblock %}
