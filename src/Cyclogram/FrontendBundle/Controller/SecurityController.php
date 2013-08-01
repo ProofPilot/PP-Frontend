@@ -176,7 +176,6 @@ class SecurityController extends Controller
         $request = $this->getRequest();
         $session = $request->getSession();
 
-        $nPic = rand ( 1, 4 );
         if ($studyId == null) {
             $studyId = $session->get('studyId');
         } else {
