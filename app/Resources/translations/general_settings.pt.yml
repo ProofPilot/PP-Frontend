@@ -21,7 +21,7 @@ last_access: 'Último Acesso:'
 txt_change: txt_change
 txt_edit: txt_edit
 txt_email: txt_email
-txt_forgot_it: txt_forgot_it   # FIXME
+txt_forgot_it: txt_forgot_it
 txt_mobile_number: txt_mobile_number
 txt_password: txt_password
 txt_username: txt_username

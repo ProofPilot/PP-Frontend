@@ -1,4 +1,4 @@
-btn_confrimcoe_login: btn_confrimcoe_login   # FIXME
+btn_confrimcoe_login: btn_confrimcoe_login
 cant_remember_username: cant_remember_username
 doesnt_match_records: doesnt_match_records
 email_sent_containing_password: email_sent_containing_password
@@ -9,7 +9,7 @@ forgot_password_message: forgot_password_message
 forgot_username: forgot_username
 forgot_username_message: forgot_username_message
 havent_joined: havent_joined
-label_sms_code: label_sms_code   # FIXME
+label_sms_code: label_sms_code
 new_password_selection: new_password_selection
 send_another_code: text_send_another_code
 txt_forgot_your_password: txt_forgot_your_password
