@@ -1,8 +1,6 @@
 {%  extends '::base.html.twig' %}
 
-{% block body %}
-  <body class="has_image">
-    {% include '::header_reg.html.twig' %}
+{% block content %}
     <div class="mobile_reg">
       <h1><span>{% trans from "register" %}txt_join{% endtrans %} 5/6:</span>{% trans from "register" %}enter_sms_code{% endtrans %}</h1>
       <br>
@@ -24,7 +22,4 @@
         <div class="center_align"><a href={{ path('reg_step_4',{'id' : id, 'studyId' : studyId}) }} class="repeat">{% trans from "register" %}no_code{% endtrans %}</a></div>
       </form>
     </div>
-    {% include '::footer_reg.html.twig' %}
-
-  </body>
-{% endblock body %}
+{% endblock content %}

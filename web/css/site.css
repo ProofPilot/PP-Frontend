@@ -1,3 +1,8 @@
+html, body {
+	min-height: 100%;
+	height: 100%;
+}
+
 body {
 	color: #515151;
 	font-size: 14px;
@@ -38,14 +43,20 @@ footer .site_container {
 	top: -25px;
 	color: #fff;
 }
-.cyclogram_reg {
-	width: 500px;
-	color: white;
-    bottom: 20px;
-    text-align: center;
-    position: absolute;
-    left: 50%;
-    margin-left: -250px; 
+
+.block_wrapper {
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;
+	margin: 0 auto -4em;
+}
+.push {
+	height: 50px;
+}
+.footer_reg {
+	text-align: center;
+	color: #fff;
+	height: 50px;
 }
 
 ul {
@@ -93,7 +104,7 @@ span em {
 .reg_header {
 	/*width: 998px;*/
 	margin: 0px auto;
-	
+	padding-top: 20px;
 	width: 100%;
 	/*max-width: 998px;*/
 }
@@ -108,7 +119,6 @@ span em {
 	background:  url(../images/logo.png) no-repeat 0px 50%;
 	background-size: 117px 22px;
 	
-	margin-top: 20px;
 	margin-left: 20px;
 }
 .lt-ie9 .reg_header a.logo {

@@ -38,9 +38,7 @@
             <script src="{{ asset('js/jquery.autocomplete.min.js') }}"></script>
 {% endblock javascripts %}
 
-{% block body %}
-<body class="has_image">
-  {% include '::header_reg.html.twig' %}
+{% block content %}
   <div class="mobile_reg login_form">
     <div class="wrapper">
       <h1><span>{% trans from "register" %}txt_join{% endtrans %} 6/6:</span> Mailing address</h1>
@@ -159,8 +157,4 @@
         </script> 
     </div>
   </div>
-  
-  {% include '::footer_reg.html.twig' %}
-  
-</body>
-{% endblock body %}
+{% endblock content %}
