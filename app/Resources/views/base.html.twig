@@ -37,9 +37,12 @@
 
   {% block body %}
   <body class="has_image" {% if studyId is defined %}{{ study_background(studyId)|raw }}{% endif %}>
+      <div class="block_wrapper">
       {% include '::header_reg.html.twig' %}
       {% block content %}
       {% endblock content %}
+      <div class="push"></div>
+      </div>
       {% include '::footer_reg.html.twig' %}
   </body>
   {% endblock body %}
