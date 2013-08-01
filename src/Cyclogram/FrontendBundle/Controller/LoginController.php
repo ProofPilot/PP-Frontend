@@ -35,7 +35,6 @@ class LoginController extends Controller
         $request = $this->getRequest();
         $session = $request->getSession();
 
-        $nPic = rand ( 1, 4 );
         if ($studyId == null) {
             $studyId = $session->get('studyId');
         } else {
@@ -49,13 +48,11 @@ class LoginController extends Controller
             $study = $em->getRepository('CyclogramProofPilotBundle:Study')->find($studyId);
             $studyContent = $em->getRepository('CyclogramProofPilotBundle:StudyContent')->findOneBy(array('studyId'=>$studyId));
             $studyLogo = $studyContent->getStudyLogo();
-            $studyLogo = "http://admin.dev1.proofpilot.net/2cd1c6ecec2c6d908b3ed66d4ea7b902/".$studyId."/".$studyLogo;
+            $studyLogo = $this->container->getParameter('admin_project_url') . "/2cd1c6ecec2c6d908b3ed66d4ea7b902/".$studyId."/".$studyLogo;
         } else {
             $study = null;
         }
-        $bgimage = $this->container->getParameter('admin_project_url') . '/images/study/' . $studyId . '/' .$nPic.'.jpg';
-        if (empty($studyId))
-            $bgimage = null;
+
         // get the login error if there is one
         if ($request->attributes->has(SecurityContext::AUTHENTICATION_ERROR)) {
             $error = $request->attributes->get(SecurityContext::AUTHENTICATION_ERROR);
@@ -68,7 +65,6 @@ class LoginController extends Controller
             // last username entered by the user
             'last_username' => $session->get(SecurityContext::LAST_USERNAME),
             'error'         => $error,
-            'bgimage'       => $bgimage,
             'studyId'       => $studyId,
             'studyLogo'     => $studyLogo
         ));
@@ -173,14 +169,10 @@ class LoginController extends Controller
             $study = $em->getRepository('CyclogramProofPilotBundle:Study')->find($studyId);
             $studyContent = $em->getRepository('CyclogramProofPilotBundle:StudyContent')->findOneBy(array('studyId'=>$studyId));
             $studyLogo = $studyContent->getStudyLogo();
-            $studyLogo = "http://admin.dev1.proofpilot.net/2cd1c6ecec2c6d908b3ed66d4ea7b902/".$studyId."/".$studyLogo;
+            $studyLogo = $this->container->getParameter('admin_project_url') . "/2cd1c6ecec2c6d908b3ed66d4ea7b902/".$studyId."/".$studyLogo;
         } else {
             $study = null;
         }
-        
-        $bgimage = $this->container->getParameter('admin_project_url') . '/images/study/' . $studyId . '/' .$nPic.'.jpg';
-        if (empty($studyId))
-            $bgimage = null;
         
         $form = $this->createForm(new UserSmsCodeForm($this->container));
         
@@ -223,7 +215,6 @@ class LoginController extends Controller
             'CyclogramFrontendBundle:Login:mobile_phone_login.html.twig',
             array(
                 "form"=>$form->createView(),
-                'bgimage'       => $bgimage,
                 'studyId'       => $studyId,
                 'studyLogo'     => $studyLogo
             ));

@@ -8,7 +8,13 @@ services:
         tags:
             - name: twig.extension
             
-            
+    twig.globals_extension:
+        class: Cyclogram\FrontendBundle\Twig\GlobalExtension
+        tags:
+            - name: twig.extension
+        arguments:
+            - @service_container
+
     lunetics_locale.switcher_controller:
         class: Cyclogram\FrontendBundle\Controller\LocaleController
         arguments:
