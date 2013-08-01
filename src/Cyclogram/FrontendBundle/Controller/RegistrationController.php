@@ -71,7 +71,6 @@ class RegistrationController extends Controller
         }
 
         $form = $this->createForm(new RegistrationForm($this->container));
-        $nPic = rand ( 1, 4 );
         if ($studyId == null) {
             $studyId = $session->get('studyId');
         } else {
@@ -246,7 +245,6 @@ class RegistrationController extends Controller
 
         $request = $this->getRequest();
         $session = $request->getSession();
-        $nPic = rand ( 1, 4 );
         if ($studyId == null) {
             $studyId = $session->get('studyId');
         } else {

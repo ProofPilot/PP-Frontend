@@ -38,7 +38,7 @@ class  SimpleRegistrationController extends Controller{
         }
         $request = $this->getRequest();
         $session = $request->getSession();
-        $nPic = rand ( 1, 4 );
+
         if ($studyId == null) {
             $studyId = $session->get('studyId');
         } else {
@@ -148,7 +148,7 @@ class  SimpleRegistrationController extends Controller{
         $userSMS = $participant->getParticipantMobileSmsCode();
         $request = $this->getRequest();
         $session = $request->getSession();
-        $nPic = rand ( 1, 4 );
+
         if ($studyId == null) {
             $studyId = $session->get('studyId');
         } else {
@@ -211,7 +211,7 @@ class  SimpleRegistrationController extends Controller{
                 }
             }
         }
-        return $this->render('CyclogramFrontendBundle:SimpleRegistration:mobile_phone_sms.html.twig', array('error' => $error, 'form' => $form->createView(), 'id' => $participant->getParticipantId(), 'studyId' => $studyId, 'nPic'=>$nPic, 'studyLogo'=>$studyLogo));
+        return $this->render('CyclogramFrontendBundle:SimpleRegistration:mobile_phone_sms.html.twig', array('error' => $error, 'form' => $form->createView(), 'id' => $participant->getParticipantId(), 'studyId' => $studyId, 'studyLogo'=>$studyLogo));
     }
     
     /**

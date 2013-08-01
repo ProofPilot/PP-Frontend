@@ -125,7 +125,6 @@ class SecurityController extends Controller
         $request = $this->getRequest();
         $session = $request->getSession();
 
-        $nPic = rand ( 1, 4 );
         if ($studyId == null) {
             $studyId = $session->get('studyId');
         } else {
@@ -226,7 +225,6 @@ class SecurityController extends Controller
         $request = $this->getRequest();
         $session = $request->getSession();
 
-        $nPic = rand ( 1, 4 );
         if ($studyId == null) {
             $studyId = $session->get('studyId');
         } else {
@@ -266,7 +264,7 @@ class SecurityController extends Controller
                     if($sentSms)
                         return $this->render('CyclogramFrontendBundle:Security:username_sent.html.twig', array("studyId"=>$studyId, "studyLogo"=>$studyLogo));
                 } else {
-                    return $this->render('CyclogramFrontendBundle:Security:forgot_username.html.twig',array('form' => $form->createView(),"error" => $this->get('translator')->trans("doesnt_match_records", array(), "login"), "studyId"=>$studyId, "studyLogo"=>$studyLogo, "nPic"=>$nPic));
+                    return $this->render('CyclogramFrontendBundle:Security:forgot_username.html.twig',array('form' => $form->createView(),"error" => $this->get('translator')->trans("doesnt_match_records", array(), "login"), "studyId"=>$studyId, "studyLogo"=>$studyLogo));
                 }
             }
         }
