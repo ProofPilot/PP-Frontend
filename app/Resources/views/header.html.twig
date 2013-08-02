@@ -1,14 +1,8 @@
 <header>
-    {% if app.user and studyId is not defined %}
-        <a class="site_logo" href="{{ path('_main') }}">ProofPilot</a>
+    {% if app.user %}
+        {{ dashboard_logo(studyId, path('_main'))|raw }}
     {% else %}
-        {% if studyId == 1 and studyLogo is defined %}
-            <a class="logo knowathome" href="{{ path('_main') }}">
-                <img src="{{ studyLogo }}" width="234" height="44" />
-            </a>
-        {% else  %}
-            <a class="site_logo" href="{{ path('_login') }}">ProofPilot</a>
-        {% endif %}
+        {{ dashboard_logo(studyId, path('_login'))|raw }}
     {% endif %}
     {% if app.user %}
         {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createTopSettingsMenu',{'template': 'CyclogramFrontendBundle:Knp:top_menu.html.twig'}) }}

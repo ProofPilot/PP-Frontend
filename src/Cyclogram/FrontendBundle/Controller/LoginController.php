@@ -34,21 +34,12 @@ class LoginController extends Controller
         }
         $request = $this->getRequest();
         $session = $request->getSession();
-
-        if ($studyId == null) {
-            $studyId = $session->get('studyId');
-        } else {
-            $session->set('studyId', $studyId);
-        }
         
         $em = $this->getDoctrine()->getManager();
         $study = null;
-        $studyLogo = "";
         if ($studyId != null) {
             $study = $em->getRepository('CyclogramProofPilotBundle:Study')->find($studyId);
             $studyContent = $em->getRepository('CyclogramProofPilotBundle:StudyContent')->findOneBy(array('studyId'=>$studyId));
-            $studyLogo = $studyContent->getStudyLogo();
-            $studyLogo = $this->container->getParameter('admin_project_url') . "/2cd1c6ecec2c6d908b3ed66d4ea7b902/".$studyId."/".$studyLogo;
         } else {
             $study = null;
         }
@@ -66,7 +57,6 @@ class LoginController extends Controller
             'last_username' => $session->get(SecurityContext::LAST_USERNAME),
             'error'         => $error,
             'studyId'       => $studyId,
-            'studyLogo'     => $studyLogo
         ));
     }
 
@@ -112,9 +102,7 @@ class LoginController extends Controller
 
         $request = $this->getRequest();
         $session = $request->getSession();
-        if ($studyId == null) 
-            $studyId = $session->get('studyId');
-  
+
 
         if( $customerMobileNumber ){
     
@@ -159,19 +147,6 @@ class LoginController extends Controller
         $request = $this->getRequest();
         $session = $request->getSession();
 
-        if ($studyId == null) 
-            $studyId = $session->get('studyId');
-
-        $study = null;
-        $studyLogo = "";
-        if ($studyId != null) {
-            $study = $em->getRepository('CyclogramProofPilotBundle:Study')->find($studyId);
-            $studyContent = $em->getRepository('CyclogramProofPilotBundle:StudyContent')->findOneBy(array('studyId'=>$studyId));
-            $studyLogo = $studyContent->getStudyLogo();
-            $studyLogo = $this->container->getParameter('admin_project_url') . "/2cd1c6ecec2c6d908b3ed66d4ea7b902/".$studyId."/".$studyLogo;
-        } else {
-            $study = null;
-        }
         
         $form = $this->createForm(new UserSmsCodeForm($this->container));
         
@@ -213,9 +188,7 @@ class LoginController extends Controller
         return $this->render(
             'CyclogramFrontendBundle:Login:mobile_phone_login.html.twig',
             array(
-                "form"=>$form->createView(),
-                'studyId'       => $studyId,
-                'studyLogo'     => $studyLogo
+                "form"=>$form->createView()
             ));
     }
 }

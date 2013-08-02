@@ -2,16 +2,20 @@
 
 namespace Cyclogram\FrontendBundle\Controller;
 
+
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Cyclogram\Bundle\ProofPilotBundle\Entity\Participant;
+use JMS\SecurityExtraBundle\Annotation\Secure;
 
 
 class DashboardController extends Controller
 {
     /**
      * @Route("/main/{studyId}", requirements={"studyId" = "\d+"}, name="_main")
+     * @Secure(roles="ROLE_USER")
      * @Template()
      */
     public function indexAction($studyId=0)
@@ -23,23 +27,9 @@ class DashboardController extends Controller
 
         
         $session = $this->getRequest()->getSession();
-
-        $study = null;
-        $studyLogo = "";
-        if ($studyId != null) {
-            $study = $em->getRepository('CyclogramProofPilotBundle:Study')->find($studyId);
-            $studyContent = $em->getRepository('CyclogramProofPilotBundle:StudyContent')->findOneBy(array('studyId'=>$studyId));
-            $studyLogo = $studyContent->getStudyLogo();
-            $studyLogo = "http://admin.dev1.proofpilot.net/2cd1c6ecec2c6d908b3ed66d4ea7b902/".$studyId."/".$studyLogo;
-        } else {
-            $study = null;
-        }
         
         $parameters = array();
         $parameters['surveycount'] = $surveyscount;
-
-        $parameters['studyId'] = $studyId;
-        $parameters['studyLogo'] = $studyLogo;
 
         $parameters['text'] = array(
                 "title" => "title",

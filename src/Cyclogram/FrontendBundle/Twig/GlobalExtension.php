@@ -16,7 +16,12 @@ class GlobalExtension extends \Twig_Extension
     {
         return array(
                 'study_background' => new \Twig_Function_Method($this, 'studyBackground'),
-                'study_logo' => new \Twig_Function_Method($this, 'studyLogo')
+                'study_logo' => new \Twig_Function_Method($this, 'studyLogo'),
+                'dashboard_logo' => new \Twig_Function_Method($this, 'dashboardLogo'),
+                "twigtest" => new \Twig_Function_Method($this, 'twigTest', array(
+                        'needs_environment' => true,
+                        'needs_context' => true
+                        ))
         );
     }
     
@@ -24,7 +29,6 @@ class GlobalExtension extends \Twig_Extension
     {
         return 'global_extension';
     }
-    
 
 
     public function setContainer($container)
@@ -34,40 +38,34 @@ class GlobalExtension extends \Twig_Extension
     
     public function studyBackground($studyId)
     {
-        if(!$studyId)
-            return "";
-
-        $study = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Study')->find($studyId);
-        if(!$study)
-            return "";
-
-        $hasRealGraphics =  $study->getStudyRealTimeGraphics();
-
-        if(!$hasRealGraphics)
-            return "";
-        
         $nPic = rand ( 1, 4 );
-        $url = $this->container->getParameter('admin_project_url') . '/images/study/' . $studyId . '/' .$nPic.'.jpg';
-        return "style=\"background-image:url('$url')\"";
+        if($studyId == 1)
+            return "style=\"background-image:url('/images/study/1/".$nPic.".jpg')\"";
+        else 
+            return "";
     }
     
     public function studyLogo($studyId)
     {
         $loginUrl = $this->container->get('router')->generate('_login');
-        if($studyId)
-        {
-            $study = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Study')->find($studyId);
-            if($study) 
-            {
-                $hasRealGraphics =  $study->getStudyRealTimeGraphics();
-                if($hasRealGraphics) {
-                    return "<a href=\"$loginUrl\" class=\"logo knowathome\"></a>";
-                }
-            }
-        }
-        
-        
-        
-        return "<a class=\"logo\" href=\"$loginUrl\">ProofPilot</a>";
+        if($studyId == 1)
+            return "<a href=\"$loginUrl\" class=\"logo knowathome\"></a>";
+        else
+            return "<a class=\"logo\" href=\"$loginUrl\">ProofPilot</a>";
+    }
+    
+    public function dashboardLogo($studyId, $url)
+    {
+        if($studyId == 1)
+            return "<a class=\"logo knowathome\" href=\"$url\">
+                 <img src=\"/2cd1c6ecec2c6d908b3ed66d4ea7b902/1/logo-1-en.png\" width=\"234\" height=\"44\" />
+            </a>";
+        else
+            return "<a class=\"site_logo\" href=\"$url\">ProofPilot</a>";
+    }
+    
+    public function twigTest(\Twig_Environment $environment, $context)
+    {
+        $b = $context;
     }
 }

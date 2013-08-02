@@ -29,7 +29,7 @@ class  SimpleRegistrationController extends Controller{
      * @Route("/simplereg_step2/{id}/{studyId}", name="simplereg_step_2", defaults={"studyId"=null})
      * @Template()
      */
-    public function simpleRegStep2Action($id, $studyId)
+    public function simpleRegStep2Action($id, $studyId=null)
     {
         $em = $this->getDoctrine()->getManager();
         $participant = $em->getRepository('CyclogramProofPilotBundle:Participant')->find($id);
@@ -37,14 +37,7 @@ class  SimpleRegistrationController extends Controller{
             return $this->redirect( $this->generateUrl("_registration"));
         }
         $request = $this->getRequest();
-        $session = $request->getSession();
 
-        if ($studyId == null) {
-            $studyId = $session->get('studyId');
-        } else {
-            $session->set('studyId', $studyId);
-        }
-    
         $form = $this->createForm(new MobilePhoneForm($this->container), null, array(
                 'validation_groups' => array('registration')
                 ));
@@ -54,18 +47,6 @@ class  SimpleRegistrationController extends Controller{
         if(!empty($phone)) {
             $form->get('phone_small')->setData($phone['country_code']);
             $form->get('phone_wide')->setData($phone['phone']);
-        }
-
-
-        $study = null;
-        $studyLogo = "";
-        if ($studyId != null) {
-            $study = $em->getRepository('CyclogramProofPilotBundle:Study')->find($studyId);
-            $studyContent = $em->getRepository('CyclogramProofPilotBundle:StudyContent')->findOneBy(array('studyId'=>$studyId));
-            $studyLogo = $studyContent->getStudyLogo();
-            $studyLogo = "http://admin.dev1.proofpilot.net/2cd1c6ecec2c6d908b3ed66d4ea7b902/".$studyId."/".$studyLogo;
-        } else {
-            $study = null;
         }
 
         if( $request->getMethod() == "POST" ){
@@ -80,11 +61,18 @@ class  SimpleRegistrationController extends Controller{
                 $em->persist($participant);
                 $em->flush();
     
-                //                 return $this->redirect( $this->generateUrl("reg_step_3") );
-                return $this->render('CyclogramFrontendBundle:SimpleRegistration:mobile_phone_verification.html.twig', array('phone' => $participant->getParticipantMobileNumber(), 'id' => $participant->getParticipantId(), 'studyId' => $studyId, 'studyLogo'=>$studyLogo));
+                return $this->render('CyclogramFrontendBundle:SimpleRegistration:mobile_phone_verification.html.twig', 
+                        array(
+                                'phone' => $participant->getParticipantMobileNumber(), 
+                                'id' => $participant->getParticipantId()
+                                ));
             }
         }
-        return $this->render('CyclogramFrontendBundle:SimpleRegistration:mobile_phone.html.twig', array("form" => $form->createView(), 'id' => $id, 'studyId' => $studyId, 'studyLogo'=>$studyLogo));
+        return $this->render('CyclogramFrontendBundle:SimpleRegistration:mobile_phone.html.twig', 
+                array(
+                        "form" => $form->createView(), 
+                        'id' => $id
+                        ));
     }
 
     /**
@@ -105,13 +93,7 @@ class  SimpleRegistrationController extends Controller{
     
         $customerMobileNumber = $participant->getParticipantMobileNumber();
         $request = $this->getRequest();
-        $session = $request->getSession();
 
-        if ($studyId == null) {
-            $studyId = $session->get('studyId');
-        } else {
-            $session->set('studyId', $studyId);
-        }
 
         if( $customerMobileNumber ){
     
@@ -127,10 +109,17 @@ class  SimpleRegistrationController extends Controller{
             $sms = $this->get('sms');
             $sentSms = $sms->sendSmsAction( array('message' => "Your SMS Verification code is $participantSMSCode", 'phoneNumber'=>"$customerMobileNumber") );
             if($sentSms)
-                return $this->redirect(($this->generateUrl("simplereg_step_4", array('id'=> $participant->getParticipantId(), 'studyId' => $studyId))));
+                return $this->redirect(($this->generateUrl("simplereg_step_4", 
+                        array(
+                                'id'=> $participant->getParticipantId(), 
+                                'studyId' => $studyId
+                                ))
+                        ));
         }
     
-        return $this->render('CyclogramFrontendBundle:SimpleRegistration:mobile_phone_verification.html.twig', array('phone' => $customerMobileNumber, 'studyId' => $studyId ));
+        return $this->render('CyclogramFrontendBundle:SimpleRegistration:mobile_phone_verification.html.twig', 
+                array(
+                        'phone' => $customerMobileNumber));
     }
     
     /**
@@ -147,28 +136,10 @@ class  SimpleRegistrationController extends Controller{
     
         $userSMS = $participant->getParticipantMobileSmsCode();
         $request = $this->getRequest();
-        $session = $request->getSession();
-
-        if ($studyId == null) {
-            $studyId = $session->get('studyId');
-        } else {
-            $session->set('studyId', $studyId);
-        }
-    
 
         $error = "";
         $form = $this->createForm(new UserSmsCodeForm($this->container));
 
-        $study = null;
-        $studyLogo = "";
-        if ($studyId != null) {
-            $study = $em->getRepository('CyclogramProofPilotBundle:Study')->find($studyId);
-            $studyContent = $em->getRepository('CyclogramProofPilotBundle:StudyContent')->findOneBy(array('studyId'=>$studyId));
-            $studyLogo = $studyContent->getStudyLogo();
-            $studyLogo = "http://admin.dev1.proofpilot.net/2cd1c6ecec2c6d908b3ed66d4ea7b902/".$studyId."/".$studyLogo;
-        } else {
-            $study = null;
-        }
 
         if( $request->getMethod() == "POST" ){
     
@@ -205,13 +176,20 @@ class  SimpleRegistrationController extends Controller{
                     $token = new UsernamePasswordToken($participant, null, 'main', array('ROLE_USER'));
                     $this->get('security.context')->setToken($token);
                     
-                    return $this->redirect( $this->generateUrl("_main") );
+                    return $this->redirect( $this->generateUrl("_main", array(
+                                'studyId'=>$studyId
+                            )) );
                 } else {
                     $error = "Wrong SMS!";
                 }
             }
         }
-        return $this->render('CyclogramFrontendBundle:SimpleRegistration:mobile_phone_sms.html.twig', array('error' => $error, 'form' => $form->createView(), 'id' => $participant->getParticipantId(), 'studyId' => $studyId, 'studyLogo'=>$studyLogo));
+        return $this->render('CyclogramFrontendBundle:SimpleRegistration:mobile_phone_sms.html.twig', 
+                array(
+                        'error' => $error, 
+                        'form' => $form->createView(), 
+                        'id' => $participant->getParticipantId()
+                        ));
     }
     
     /**

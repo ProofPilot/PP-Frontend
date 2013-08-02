@@ -4,6 +4,9 @@ imports:
     - { resource: facebook.yml }
     - { resource: services.yml }
     - { resource: knp.yml }
+    
+parameters:
+    twig.extension.routing.class: Cyclogram\FrontendBundle\Twig\RoutingExtension
 
 framework:
     #esi:             ~
