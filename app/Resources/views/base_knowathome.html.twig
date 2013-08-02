@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<!--[if !IE]><!--> <html>             <!--<![endif]-->
+    <head>
+        <meta charset="UTF-8" />
+        {% block metaCustom %}{% endblock %}
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {% block stylesheets %}{% endblock %}
+        {% block stylesheetsCustom %}{% endblock %}
+        <link rel="shortcut icon" href="{{ asset('favicon_new.ico') }}" />
+        {% block javascripts %}{% endblock %}
+        {% block javascriptsCustom %}{% endblock %}
+    </head>
+    <body>
+        {% block body %}{% endblock %}
+        {% block footer %}{% endblock %}
+    </body>
+</html>

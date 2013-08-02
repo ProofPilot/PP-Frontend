@@ -1,0 +1,53 @@
+CyclogramKnowatHomeBundle_homepage:
+    pattern:  /
+    defaults: { _controller: CyclogramKnowatHomeBundle:Default:index }
+
+CyclogramKnowatHomeBundle_aboutStudy:
+    pattern:  /aboutStudy
+    defaults: { _controller: CyclogramKnowatHomeBundle:Default:aboutStudy }
+
+CyclogramKnowatHomeBundle_privacyAndSecurity:
+    pattern:  /privacyAndSecurity
+    defaults: { _controller: CyclogramKnowatHomeBundle:Default:privacyAndSecurity }
+
+CyclogramKnowatHomeBundle_contactUs:
+    pattern:  /contactUs
+    defaults: { _controller: CyclogramKnowatHomeBundle:Default:contactUs }
+
+CyclogramKnowatHomeBundle_eligibility:
+    pattern:  /eligibility
+    defaults: { _controller: CyclogramKnowatHomeBundle:Default:eligibility }
+
+CyclogramKnowatHomeBundle_login:
+    pattern:  /login
+    defaults: { _controller: CyclogramKnowatHomeBundle:Default:login }
+
+CyclogramKnowatHomeBundle_notEligible:
+    pattern:  /notEligible
+    defaults: { _controller: CyclogramKnowatHomeBundle:Default:notEligible }
+
+CyclogramKnowatHomeBundle_disclaimer:
+    pattern:  /disclaimer
+    defaults: { _controller: CyclogramKnowatHomeBundle:Default:disclaimer }
+
+CyclogramKnowatHomeBundle_surveyResult:
+    pattern:  /eligibility-result
+    defaults: { _controller: CyclogramKnowatHomeBundle:Default:surveyResult }
+
+CyclogramKnowatHomeBundle_noConsent:
+    pattern:  /noConsent
+    defaults: { _controller: CyclogramKnowatHomeBundle:Default:noConsent }
+
+CyclogramKnowatHomeBundle_eligible:
+    pattern:  /eligible
+    defaults: { _controller: CyclogramKnowatHomeBundle:Default:eligible }
+
+do_login:
+        pattern: /doLogin
+        defaults: { _controller: CyclogramKnowatHomeBundle:Authentication:doLogin }
+
+login_check:
+        pattern: /login_check
+
+logout:
+   pattern: /logout

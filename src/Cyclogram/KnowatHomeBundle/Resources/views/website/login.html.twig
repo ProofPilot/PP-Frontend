@@ -1,0 +1,126 @@
+{% extends "CyclogramKnowatHomeBundle:Default:index.html.twig" %}
+
+{% block title %}
+    Returning Users- Login
+{% endblock %}
+
+{% block stylesheetsCustom %}
+    <link rel="stylesheet" href="/bundles/cyclogramknowathome/css/knowathome.css" type="text/css" />
+{% endblock %}
+
+{% block javascriptsCustom %}
+    <script>
+        $(document).ready(function(){
+            {% set picN = app.session.get('picN') %}
+            $("body").anystretch("/bundles/cyclogramknowathome/images/website/backgrounds/{{picN}}.jpg");
+        });
+    </script>
+{% endblock %}
+
+{% block body %}
+    <div id="wrapper" class="container">
+
+        <div class="leftColumn columns six ">
+
+            <div class="logo" style="margin-bottom: 15px;">
+                <a href="{{ path("CyclogramKnowatHomeBundle_homepage") }}"><img src="/bundles/cyclogramknowathome/images/website/logo-white.png" border="0" /></a>
+            </div>
+
+            <h2>Log In</h2>
+
+                <div class="clear"><br /></div>
+
+                <div class="formContainer">
+                    <form action="{{ path("login_check") }}" method="post" >
+
+<<<<<<< HEAD
+                        <!--<div class="frmRowContainer">
+                            <div class="frmRowLabel"><label for="username">Username:</label></div>
+
+                            <div class="frmRowInput"> <input size="30" type="text" id="username" name="_username" placeholder="Username" value="{{ last_username }}"/> </div>
+                        </div>
+
+                        <div class="clear">&nbsp;</div>
+
+                        <div class="frmRowContainer">
+                            <div class="frmRowLabel"><label for="password">Password:</label></div>
+                            <div class="frmRowInput"> <input size="30" type="password" id="password" name="_password" placeholder="Password" /> </div>
+                        </div>-->
+
+<<<<<<< HEAD
+=======
+>>>>>>> 26d971b0b6b12b11f51a3e2adcf0a851d4bcae6d
+                        <table width="100%" align="center">
+                            <tbody>
+
+                            <tr>
+                                <td width="20%">
+                                    <label for="username">Username:</label>
+                                </td>
+                                <td width="80%">
+                                    &nbsp;<input type="text" id="username" name="_username" placeholder="Username" value="{{ last_username }}"/>
+=======
+                        <table>
+                            <tbody>
+
+                            <tr>
+                                <td>
+                                    <label for="username">Username:</label>
+                                </td>
+                                <td>
+                                    <input type="text" id="username" name="_username" placeholder="Username" value="{{ last_username }}"/>
+>>>>>>> a773f6d46c75db333382a9d97003c325690f8f67
+                                </td>
+                            </tr>
+
+                            <tr>
+<<<<<<< HEAD
+                                <td width="20%">
+                                    <label for="password">Password:</label>
+                                </td>
+                                <td width="80%">
+                                    &nbsp;<input type="password" id="password" name="_password" placeholder="Password" />
+=======
+                                <td>
+                                    <label for="password">Password:</label>
+                                </td>
+                                <td>
+                                    <input type="password" id="password" name="_password" placeholder="Password" />
+>>>>>>> a773f6d46c75db333382a9d97003c325690f8f67
+                                </td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+
+                        <div class="clear">&nbsp;</div>
+                        <br />
+
+                        <input type="submit" class="submitBtn" value="LOG IN" style="margin: auto; font-size: 1.2em;" />
+                    </form>
+
+<<<<<<< HEAD
+                    <br />
+
+=======
+>>>>>>> a773f6d46c75db333382a9d97003c325690f8f67
+                    {% if error %}
+                        <div>{{ error.message }}</div>
+                    {% endif %}
+
+                    <div class="clear"></div>
+
+                    <div style="margin: auto; width: 90%; text-align: center;">
+                        <a href="{{ path("CyclogramKnowatHomeBundle_sendPasswordResetLink") }}" class="pinkLink">FORGOT YOUR PASSWORD?</a>
+
+                        <hr />
+
+                        New user? <a href="{{ path("CyclogramKnowatHomeBundle_eligibility") }}" class="pinkLink">ARE YOU ELIGIBLE?</a>
+                    </div>
+
+                </div>
+
+        </div>
+
+    </div>
+{% endblock %}

@@ -1,0 +1,11 @@
+parameters:
+#    cyclogram_knowat_home.example.class: Cyclogram\Bundle\KnowatHomeBundle\Example
+    cyclogram_estamp_database.class: Cyclogram\Bundle\ProofPilotBundle\Entity\Custom\DbCustom
+
+services:
+#    cyclogram_knowat_home.example:
+#        class: %cyclogram_knowat_home.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
+    custom_db:
+        class: %cyclogram_estamp_database.class%
+        arguments: [@database_connection]

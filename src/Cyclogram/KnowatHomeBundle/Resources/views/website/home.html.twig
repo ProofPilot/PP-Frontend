@@ -1,0 +1,50 @@
+{% extends "CyclogramKnowatHomeBundle:Default:index.html.twig" %}
+
+{% block title %}
+    {{ pageText.title }}
+{% endblock %}
+
+{% block stylesheetsCustom %}
+    <link rel="stylesheet" href="/bundles/cyclogramknowathome/css/knowathome.css" type="text/css" />
+{% endblock %}
+
+{% block javascriptsCustom %}
+    <script>
+        $(document).ready(function(){
+            {% set picN = app.session.get('picN') %}
+            $("body").anystretch("/bundles/cyclogramknowathome/images/website/backgrounds/{{picN}}.jpg");
+        });
+    </script>
+{% endblock %}
+
+{% block body %}
+    <div id="wrapper" class="container">
+
+            <div class="leftColumn columns six ">
+
+                <div class="logo" style="margin-bottom: 15px;">
+                    <a href="{{ path("CyclogramKnowatHomeBundle_homepage") }}"><img src="/bundles/cyclogramknowathome/images/website/logo-white.png" border="0" /></a>
+                </div>
+
+                <ul class="mainNavButtons">
+                    <li><a class="NavButton" href="{{ path('CyclogramKnowatHomeBundle_disclaimer') }}">ARE YOU ELIGIBLE?</a></li>
+
+                    <hr />
+
+                    <li><a class="NavButton" href="{{ path('_login', {studyId:studyId}) }}">RETURNING USERS</a></li>
+                </ul>
+
+                <br />
+
+                    <p>
+                        {{ pageText.description|raw }}
+
+                        <br />
+                        <br />
+                        <br />
+                    </p>
+
+            </div>
+
+    </div>
+{% endblock %}

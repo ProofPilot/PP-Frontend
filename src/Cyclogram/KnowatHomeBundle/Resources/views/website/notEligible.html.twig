@@ -1,0 +1,49 @@
+{% extends "CyclogramKnowatHomeBundle:Default:index.html.twig" %}
+
+{% block title %}
+    Not Eligible
+{% endblock %}
+
+{% block stylesheetsCustom %}
+    <link rel="stylesheet" href="/bundles/cyclogramknowathome/css/knowathome.css" type="text/css"
+          xmlns="http://www.w3.org/1999/html"/>
+{% endblock %}
+
+{% block javascriptsCustom %}
+    <script>
+        $(document).ready(function(){
+            {% set picN = app.session.get('picN') %}
+            $("body").anystretch("/bundles/cyclogramknowathome/images/website/backgrounds/{{picN}}.jpg");
+        });
+    </script>
+{% endblock %}
+
+{% block body %}
+    <div id="wrapper" class="container">
+
+        <div class="leftColumn columns six ">
+
+            <div class="logo" style="margin-bottom: 15px;">
+                <a href="{{ path("CyclogramKnowatHomeBundle_homepage") }}"><img src="/bundles/cyclogramknowathome/images/website/logo-white.png" border="0" /></a>
+            </div>
+
+            <h2>You are not eligible to participate in this study.</h2>
+
+            <p>
+                Thank you for your interest in this health study. Unfortunately, the system did not select you to participate any further.
+
+                <br><br>
+
+                If you want to learn more about HIV, where to get more information, or where to get tested in your area, please click on the following link: <a href="http://www.aidsvu.org" target="_blank">www.aidsvu.org</a>
+
+                <br><br>
+
+                To get more information about HIV, please visit: <a href="http://www.cdc.gov/hiv" target="_blank">www.cdc.gov/hiv</a>
+                <br><br>
+                Otherwise, you can close your browser window. Thank you for your time.
+            </p>
+
+        </div>
+
+    </div>
+{% endblock %}

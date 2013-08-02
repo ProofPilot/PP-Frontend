@@ -1,0 +1,75 @@
+{% extends "CyclogramKnowatHomeBundle:Default:index.html.twig" %}
+
+{% block title %}
+    Your Mobile Phone
+{% endblock %}
+
+{% block stylesheetsCustom %}
+    <link rel="stylesheet" href="/bundles/cyclogramknowathome/css/knowathome.css" type="text/css" />
+{% endblock %}
+
+{% block javascriptsCustom %}
+    <script>
+        $(document).ready(function(){
+            {% set picN = app.session.get('picN') %}
+            $("body").anystretch("/bundles/cyclogramknowathome/images/website/backgrounds/{{picN}}.jpg");
+        });
+    </script>
+{% endblock %}
+
+{% block body %}
+    <div id="wrapper" class="container">
+
+        <div class="leftColumn columns six ">
+
+            <div class="logo" style="margin-bottom: 15px;">
+                <a href="{{ path("CyclogramKnowatHomeBundle_homepage") }}"><img src="/bundles/cyclogramknowathome/images/website/logo-white.png" border="0" /></a>
+            </div>
+
+            <h2>Your Mobile Phone</h2>
+
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam facilisis, eros at tristique pretium, elit nisi imperdiet odio, ut varius lorem massa in ante.
+            </p>
+
+            <br />
+
+            <div class="formContainer">
+                <h4>Step <span class="highlighted">2</span> of <span class="highlighted">3</span> </h4>
+
+                <form action="{{ path('CyclogramKnowatHomeBundle_mobilePhone') }}" method="post" {{ form_enctype(form) }}>
+
+                    <table width="100%" align="center" cellspacing="5">
+                        <tbody>
+
+                        <tr>
+                            <td width="40%">
+                                {{ form_label(form.mobilePhone) }}
+                            </td>
+                            <td width="60%" align="left">
+                                {{ form_widget(form.mobilePhone) }}
+                                {{ form_errors(form.mobilePhone) }}
+                            </td>
+                        </tr>
+
+                        {{ form_rest(form) }}
+
+                        </tbody>
+
+                    </table>
+
+                    <div class="clear">&nbsp;</div>
+                    <br />
+
+                    <input type="submit" class="submitBtn" value="SEND CODE TO MOBILE PHONE" style="margin: auto; font-size: 1.2em;" />
+
+                    <br />
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+{% endblock %}

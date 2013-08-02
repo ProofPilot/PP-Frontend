@@ -1,0 +1,158 @@
+.footer {
+    background-color: #C70E3A;
+
+    position:fixed;
+    bottom:0;
+    z-index:999999;
+    width:100%;
+    float:left;
+    height: 2em;
+}
+
+.footer .ribbonContainer a {
+    color: #FFFFFF;
+    text-decoration: none;
+    font-size: 1em;
+
+    display: block;
+    float: left;
+    height: 2em;
+    padding: 0 15px;
+    padding-top: 5px;
+}
+
+.footer .ribbonContainer a.footerNavFirstLnk {
+    margin-left: 40px;
+}
+
+.footer .ribbonContainer a:hover {
+    text-decoration: underline;
+}
+
+.footer .ribbonContainer a.active {
+    color: #000000;
+    font-weight: 700;
+    background-color: #ffffff;
+}
+
+.footer .ribbonContainer {
+    /*padding-top: 4px;*/
+}
+
+.footerLabel {
+    display: inline;
+    margin-top: -44px;
+    margin-left: 30px;
+    float: left;
+
+    color: #FFFFFF;
+}
+
+.footerLabel img {
+    margin-left: -25px;
+}
+
+.footerLabel .text {
+    margin-top: -40px;
+    margin-left: 10px;
+    font-size: 14pt;
+}
+
+.highlighted {
+    font-weight: 900;
+}
+
+.NavButton {
+    background: none repeat scroll 0 0 #C70E3A;
+    border-radius: 4px;
+    color: #FFFFFF;
+    padding: 8px 15px;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+    font-family: "museo-sans";
+    font-size: 1em;
+    font-weight: 700;
+    min-width: 160px;
+    margin: auto;
+}
+
+.NavButton:hover {
+    text-decoration: underline;
+}
+
+hr {
+    margin-top: 25px;
+    margin-bottom: 25px;
+    width: 100%;
+    color: #FFF;
+    border: 1px solid #FFF;
+}
+
+.clear {
+    clear: both;
+}
+
+.contactUsFrmContainer {
+    margin-top: 25px;
+    padding: 10px;
+    background-color: #CCCCCC;
+    margin-left: 0 !important;
+    border-radius: 5px;
+    clear: both;
+}
+
+.contactUsFrmContainer textarea {
+    width: 98%;
+}
+
+.contactUsFrmContainer input {
+    width: 98%;
+    border: 0;
+    height: 1.6em;
+}
+
+.bottomGradient {
+    background-image: url("/bundles/cyclogramknowathome/images/website/bottom-grade.png");
+    /*background-attachment: fixed;
+    background-position: center bottom;*/
+    background-repeat: repeat-x;
+    /*height: 79px;*/
+    height: 4em;
+    width: 100%;
+    position: absolute;
+    bottom: 2em;
+    /*border: 1px solid red;*/
+}
+
+h3 {
+    margin-bottom: 1em;
+    font-size: 1.3em;
+}
+
+ul.mainNavButtons {
+    list-style: none;
+    margin: 1em auto 0;
+    padding: 0;
+    width: 100%;
+}
+
+ul.mainNavButtons li {
+    width: 42%;
+    text-align: center;
+    margin: auto;
+}
+
+.eligibility p {
+    font-size: 0.9em;
+}
+
+form div label {
+    color: #ffffff;
+    font-size: 1em;
+}
+
+.disclaimerButtons  {
+    margin: auto !important;
+    width: 200px;
+}

@@ -1,0 +1,162 @@
+{% extends "CyclogramKnowatHomeBundle:Default:index.html.twig" %}
+
+{%  block title %}
+    Register
+{% endblock %}
+
+{% block stylesheetsCustom %}
+    <link rel="stylesheet" href="/bundles/cyclogramknowathome/css/knowathome.css" type="text/css" />
+{% endblock %}
+
+{% block javascriptsCustom %}
+    <script>
+        $(document).ready(function(){
+            {% set picN = app.session.get('picN') %}
+            $("body").anystretch("/bundles/cyclogramknowathome/images/website/backgrounds/{{picN}}.jpg");
+        });
+    </script>
+{% endblock %}
+
+{% block body %}
+    <div id="wrapper" class="container">
+
+        <div class="leftColumn columns six ">
+
+            <div class="logo" style="margin-bottom: 15px;">
+                <a href="{{ path("CyclogramKnowatHomeBundle_homepage") }}"><img src="/bundles/cyclogramknowathome/images/website/logo-white.png" border="0" /></a>
+            </div>
+
+            <h2>Register</h2>
+
+                <div class="formContainer">
+                    <h4>Step <span class="highlighted">1</span> of <span class="highlighted">3</span> </h4>
+                    <br />
+                    <form action="{{ path("CyclogramKnowatHomeBundle_register") }}" method="post" {{ form_enctype(form) }} >
+
+<<<<<<< HEAD
+<<<<<<< HEAD
+                        <table width="100%" align="center">
+=======
+
+                        <table width="100%" align="center" cellspacing="5">
+>>>>>>> 26d971b0b6b12b11f51a3e2adcf0a851d4bcae6d
+                            <tbody>
+
+                            <tr>
+                                <td width="40%">
+                                    {{ form_label(form.reg_email) }}
+                                </td>
+                                <td width="60%">
+                                    {{ form_widget(form.reg_email) }}
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td width="40%">
+                                    {{ form_label(form.reg_username) }}
+                                </td>
+                                <td width="60%">
+                                    {{ form_widget(form.reg_username) }}
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td width="40%">
+                                    {{ form_label(form.reg_password) }}
+                                </td>
+                                <td width="60%">
+                                    {{ form_widget(form.reg_password) }}
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td width="40%">
+                                    {{ form_label(form.reg_password_check) }}
+                                </td>
+                                <td width="60%">
+                                    {{ form_widget(form.reg_password_check) }}
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="2" width="100%">
+                                    <br />
+                                </td>
+                            </tr>
+
+<<<<<<< HEAD
+                            </tbody>
+                        </table>
+
+                        <!--
+=======
+>>>>>>> a773f6d46c75db333382a9d97003c325690f8f67
+                        <div class="frmRowContainer">
+                            <div class="frmRowLabel">{{ form_label(form.reg_email) }}</div>
+
+                            <div class="frmRowInput">{{ form_widget(form.reg_email) }} </div>
+                            <span class="inputErrorMessage">{{ form_errors(form.reg_email) }}</span>
+                        </div>
+
+                        <div class="clear"></div>
+
+                        <div class="frmRowContainer">
+                            <div class="frmRowLabel">{{ form_label(form.reg_username) }}</div>
+
+                            <div class="frmRowInput">{{ form_widget(form.reg_username) }} </div>
+                            <span class="inputErrorMessage">{{ form_errors(form.reg_username) }}</span>
+                        </div>
+
+                        <div class="clear"></div>
+
+                        <div class="frmRowContainer">
+                            <div class="frmRowLabel">{{ form_label(form.reg_password) }}</div>
+
+                            <div class="frmRowInput">{{ form_widget(form.reg_password) }} </div>
+                            <span class="inputErrorMessage">{{ form_errors(form.reg_password) }}</span>
+                        </div>
+
+                        <div class="clear"></div>
+=======
+                            <tr>
+                                <td width="40%">
+>>>>>>> 26d971b0b6b12b11f51a3e2adcf0a851d4bcae6d
+
+                                </td>
+                                <td width="60%" style="text-align: center;">
+                                    <input type="submit" class="submitBtn" value="REGISTER" style="font-size: 1.2em;" />
+                                </td>
+                            </tr>
+
+<<<<<<< HEAD
+                            <div class="frmRowInput">{{ form_widget(form.reg_password_check) }} </div>
+                            <span class="inputErrorMessage">{{ form_errors(form.reg_password_check) }}</span>
+                        </div>
+<<<<<<< HEAD
+                        -->
+=======
+>>>>>>> a773f6d46c75db333382a9d97003c325690f8f67
+=======
+                            </tbody>
+                        </table>
+>>>>>>> 26d971b0b6b12b11f51a3e2adcf0a851d4bcae6d
+
+                        <div class="clear"></div>
+
+                        {{ form_rest(form) }}
+
+                    </form>
+
+                    <hr />
+<<<<<<< HEAD
+
+                    <div style="text-align: center;">Already Registered? <a href="{{ path("CyclogramKnowatHomeBundle_login") }}" class="pinkLink">LOG IN</a></div>
+=======
+                    Already Registered? <a href="{{ path("CyclogramKnowatHomeBundle_login") }}" class="pinkLink">LOG IN</a>
+>>>>>>> a773f6d46c75db333382a9d97003c325690f8f67
+                </div>
+
+        </div>
+
+    </div>
+{% endblock %}

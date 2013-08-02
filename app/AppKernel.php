@@ -18,6 +18,7 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Cyclogram\SexProBundle\CyclogramSexProBundle(),
             new Cyclogram\SmsBundle\CyclogramSmsBundle(),
+            new Cyclogram\KnowatHomeBundle\CyclogramKnowatHomeBundle(),
             new FOS\FacebookBundle\FOSFacebookBundle(),
             new Cyclogram\Bundle\ProofPilotBundle\CyclogramProofPilotBundle(),
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
