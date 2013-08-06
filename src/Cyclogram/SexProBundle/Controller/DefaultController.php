@@ -59,7 +59,7 @@ class DefaultController extends Controller
         $locale = $this->getRequest()->getLocale();
     
         $studyContent = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:StudyContent')
-        ->getStudyContent($studyId, $locale);
+        ->getStudyContentById($studyId, $locale);
     
     
         $parameters = array();
