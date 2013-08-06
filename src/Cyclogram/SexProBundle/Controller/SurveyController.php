@@ -37,8 +37,6 @@ class SurveyController extends Controller
         
         $parameters["lastaccess"] = new \DateTime("2013-07-01 10:05:00");
          
-        $parameters["user"] = array('avatar' => '/images/tmp_avatar.jpg', 'name' => 'Damien Sonser');
-        
         $parameters["about"] = array('title' => 'About this survey',
                 'info' => 'This survey helps researchers determine what you are up to now - so
                 that we can compare how and if things have changed in the future.

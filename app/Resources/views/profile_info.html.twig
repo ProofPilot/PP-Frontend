@@ -3,7 +3,9 @@
     	<div class="wrapper">
             {% if studyId is defined and studyId == 1 %}
     		{% else %}
-                <a href="#" class="avatar"><img src="{{ user.avatar }}" width="80" height="82" alt="" title=""/></a>
+    		    {% if user.avatar is defined %}
+                    <a href="#" class="avatar"><img src="{{ user.avatar }}" width="80" height="82" alt="" title=""/></a>
+                {% endif %}
             {% endif %}
     		<ul class="user_info">
     			<li><a href="#">{{ user.name }}</a></li>
