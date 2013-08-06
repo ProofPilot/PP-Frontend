@@ -57,6 +57,9 @@
     {%- if item.actsLikeLast %}
         {%- set classes = classes|merge([options.lastClass]) %}
     {%- endif %}
+    {%- if options.dashboardClass is defined %}
+        {%- set classes = classes|merge([options.dashboardClass]) %}
+    {%- endif %}
     {%- set attributes = item.attributes %}
     {%- if classes is not empty %}
         {%- set attributes = attributes|merge({'class': classes|join(' ')}) %}
