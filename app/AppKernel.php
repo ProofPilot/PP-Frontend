@@ -32,6 +32,7 @@ class AppKernel extends Kernel
             new JMS\TranslationBundle\JMSTranslationBundle(),
             new Cyclogram\FrontendBundle\CyclogramFrontendBundle(),
             new Sonata\IntlBundle\SonataIntlBundle(),
+            new Maxmind\Bundle\GeoipBundle\MaxmindGeoipBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
