@@ -454,13 +454,11 @@ class RegistrationController extends Controller
                 $participant->setParticipantAddress1($form['participantAddress1']);
                 $participant->setParticipantAddress2($form['participantAddress2']);
                 $participant->setParticipantZipcode($form['participantZipcode']);
-                $city = $em->getRepository('CyclogramProofPilotBundle:City')->findBy(array('cityId' => $form['cityId'], 'cityName' => $form['city']));
-                if ($city != null){
-                    $city = $em->getRepository('CyclogramProofPilotBundle:City')->find($form['cityId']);
-                    $participant->setCity($city);
-                } else {
+                $city = $em->getRepository('CyclogramProofPilotBundle:City')->findOneBy(array('cityId' => $form['cityId'], 'cityName' => $form['city']));
+                $city = $em->getRepository('CyclogramProofPilotBundle:City')->find($form['cityId']);
+                $participant->setCity($city);
+                if ($city->getCityName() != $form['city'])
                     $participant->setCityName($form['city']);
-                }
                 $state = $em->getRepository('CyclogramProofPilotBundle:State')->find($form['stateId']);
                 $participant->setState($state);
                 
