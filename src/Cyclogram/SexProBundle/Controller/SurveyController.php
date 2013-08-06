@@ -18,22 +18,19 @@ class SurveyController extends Controller
         $lime_em = $this->getDoctrine()->getManager('limesurvey');
         $locale = $this->getRequest()->getLocale();
 
-        $survey = $lime_em->getRepository('CyclogramProofPilotBundleLime:LimeSurveysLanguagesettings')->find(array('surveylsSurveyId' => $surveyId,'surveylsLanguage' => $locale));
-        if (empty($survey))
-            $survey = $lime_em->getRepository('CyclogramProofPilotBundleLime:LimeSurveysLanguagesettings')->find(array('surveylsSurveyId' => $surveyId,'surveylsLanguage' => 'en'));
         $parameters = array();
         
         $parameters['studyUrl'] = $studyUrl;
         $parameters['studyId'] = $studyId;
         
-        $surveyLocale = $this->getDoctrine()
+        $survey = $this->getDoctrine()
             ->getRepository("CyclogramProofPilotBundleLime:LimeSurveysLanguagesettings", "limesurvey")
-            ->getSurveyLocale($surveyId, $locale);
+            ->getSurvey($surveyId, $locale);
         
         $studyContent = $this->getDoctrine()->getRepository("CyclogramProofPilotBundle:StudyContent")->getStudyContentById($studyId, $locale);
 
         
-        $parameters['survey_url'] = "/lime/index.php/survey/index/sid/".$surveyId."/newtest/Y/lang/".$surveyLocale;
+        $parameters['survey_url'] = "/lime/index.php/survey/index/sid/".$surveyId."/newtest/Y/lang/".$survey->getSurveylsLanguage();
         
         $parameters["lastaccess"] = new \DateTime("2013-07-01 10:05:00");
          

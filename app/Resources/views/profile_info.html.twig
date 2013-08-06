@@ -8,7 +8,11 @@
                 {% endif %}
             {% endif %}
     		<ul class="user_info">
-    			<li><a href="#">{{ user.name }}</a></li>
+    			<li>
+    			    {% if user.name is defined %}
+        			    <a href="#">{{ user.name }}</a>
+    			    {% endif %}
+    			</li>
     			<li>
     				<p>{% trans from "general_settings" %}last_access{% endtrans %}<br />
     				<span>{{ lastaccess|format_datetime('dd MMMM yyyy, HH:mm') }}</span></p>

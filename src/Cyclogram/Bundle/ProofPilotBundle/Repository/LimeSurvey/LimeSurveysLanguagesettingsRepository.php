@@ -12,7 +12,7 @@ use Doctrine\ORM\EntityRepository;
  */
 class LimeSurveysLanguagesettingsRepository extends EntityRepository
 {
-    public function getSurveyLocale ($surveyId, $locale)
+    public function getSurvey($surveyId, $locale)
     {
         $fallbacks = array(
                 'en'=> array('en'),
@@ -41,7 +41,7 @@ class LimeSurveysLanguagesettingsRepository extends EntityRepository
         foreach($fallbacks[$locale] as $locale) {
             foreach($results as $result) {
                 if($result->getSurveylsLanguage() == $locale)
-                    return $result->getSurveylsLanguage();
+                    return $result;
             }
         }
     
