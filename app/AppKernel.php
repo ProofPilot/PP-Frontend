@@ -16,7 +16,7 @@ class AppKernel extends Kernel
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
-            new Cyclogram\SexProBundle\CyclogramSexProBundle(),
+            new Cyclogram\StudyBundle\CyclogramStudyBundle(),
             new Cyclogram\SmsBundle\CyclogramSmsBundle(),
             new Cyclogram\KnowatHomeBundle\CyclogramKnowatHomeBundle(),
             new FOS\FacebookBundle\FOSFacebookBundle(),

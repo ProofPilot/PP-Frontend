@@ -1,6 +1,6 @@
 <?php
 
-namespace Cyclogram\Bundle\SexProBundle\Tests\Controller;
+namespace Cyclogram\Bundle\StudyBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 

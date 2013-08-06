@@ -24,8 +24,8 @@ cyclogram_frontend:
     requirements:
         _locale: en|es|pt|fr|es_MX|pt_BR
 
-cyclogram_sex_pro:
-    resource: "@CyclogramSexProBundle/Controller/"
+cyclogram_study:
+    resource: "@CyclogramStudyBundle/Controller/"
     type:     annotation
     prefix: /{_locale}/{studyUrl}
     requirements:

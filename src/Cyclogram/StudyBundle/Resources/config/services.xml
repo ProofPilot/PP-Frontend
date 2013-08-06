@@ -6,7 +6,7 @@
 
     <!--
     <parameters>
-        <parameter key="cyclogram_sex_pro.example.class">Cyclogram\Bundle\SexProBundle\Example</parameter>
+        <parameter key="cyclogram_sex_pro.example.class">Cyclogram\Bundle\StudyBundle\Example</parameter>
     </parameters>
 
     <services>
