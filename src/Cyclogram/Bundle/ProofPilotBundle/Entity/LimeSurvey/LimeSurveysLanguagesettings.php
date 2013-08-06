@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
  * LimeSurveysLanguagesettings
  *
  * @ORM\Table(name="lime_surveys_languagesettings")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Cyclogram\Bundle\ProofPilotBundle\Repository\LimeSurvey\LimeSurveysLanguagesettingsRepository")
  */
 class LimeSurveysLanguagesettings
 {

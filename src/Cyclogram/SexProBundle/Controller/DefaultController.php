@@ -24,7 +24,9 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getManager();
         $language = $em->getRepository("CyclogramProofPilotBundle:Language")->findOneByLocale($locale);
         
-        $studyContent = $em->getRepository("CyclogramProofPilotBundle:StudyContent")->findOneBy(array('studyUrl' => $studyUrl, 'language' => $language->getLanguageId()));
+        $studyContent = $em->getRepository("CyclogramProofPilotBundle:StudyContent")->getStudyContent($studyUrl, $locale);
+        
+        //$studyContent = $em->getRepository("CyclogramProofPilotBundle:StudyContent")->findOneBy(array('studyUrl' => $studyUrl, 'language' => $language->getLanguageId()));
         if (empty($studyContent))
             throw new ResourceNotFoundException('404 Not found');
 

@@ -45,17 +45,17 @@ security:
                 target: _login
 
     access_control:
-        - { path: "^/[a-z]{2}/main$", roles: ROLE_USER }
-        - { path: "^/[a-z]{2}/secured/.*", role: [IS_AUTHENTICATED_FULLY] }
-        - { path: "^/[a-z]{2}/register$", role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: "^/[a-z]{2}-[a-z]{2}/main$", roles: ROLE_USER }
+        - { path: "^/[a-z]{2}-[a-z]{2}/secured/.*", role: [IS_AUTHENTICATED_FULLY] }
+        - { path: "^/[a-z]{2}-[a-z]{2}/register$", role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: "^/api$", roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: "^/r/", roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: "^/no-authorization", roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: "^/[a-z]{2}/doLogin$", roles: ROLE_USER }
-        - { path: "^/[a-z]{2}/loginSMS$", roles: ROLE_USER }
+        - { path: "^/[a-z]{2}-[a-z]{2}/doLogin$", roles: ROLE_USER }
+        - { path: "^/[a-z]{2}-[a-z]{2}/loginSMS$", roles: ROLE_USER }
         - { path: "^/$", roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: "^/[a-z]{2}/", roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: "^/[a-z]{2}/reg_step2$", roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: "^/[a-z]{2}/reg_step3$", roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: "^/[a-z]{2}/reg_step4$", roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: "^/[a-z]{2}-[a-z]{2}/", roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: "^/[a-z]{2}-[a-z]{2}/reg_step2$", roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: "^/[a-z]{2}-[a-z]{2}/reg_step3$", roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: "^/[a-z]{2}-[a-z]{2}/reg_step4$", roles: IS_AUTHENTICATED_ANONYMOUSLY }
         #- { path: ^/_internal/secure, roles: IS_AUTHENTICATED_ANONYMOUSLY, ip: 127.0.0.1 }

@@ -22,14 +22,14 @@ cyclogram_frontend:
     type:     annotation
     prefix:   /{_locale}
     requirements:
-        _locale: en|es|pt|fr
+        _locale: en|es|pt|fr|es_MX|pt_BR
 
 cyclogram_sex_pro:
     resource: "@CyclogramSexProBundle/Controller/"
     type:     annotation
     prefix: /{_locale}/{studyUrl}
     requirements:
-        _locale: en|es|pt|fr
+        _locale: en|es|pt|fr|es_MX|pt_BR
 
 fos_js_routing:
     resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"

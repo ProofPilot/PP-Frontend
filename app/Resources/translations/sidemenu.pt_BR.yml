@@ -1,0 +1,11 @@
+side_dasboard_menu:
+    activities: side_dasboard_menu.activities
+    dashboard: side_dasboard_menu.dashboard
+    measurements: side_dasboard_menu.measurements
+    survey: side_dasboard_menu.survey
+    treatment: side_dasboard_menu.treatment
+
+side_settings_menu:
+    contact_preferences: side_settings_menu.contact_preferences
+    general_settings: side_settings_menu.general_settings
+    shipping_information: side_settings_menu.shipping_information
