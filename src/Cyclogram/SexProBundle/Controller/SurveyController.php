@@ -29,6 +29,8 @@ class SurveyController extends Controller
         $surveyLocale = $this->getDoctrine()
             ->getRepository("CyclogramProofPilotBundleLime:LimeSurveysLanguagesettings", "limesurvey")
             ->getSurveyLocale($surveyId, $locale);
+        
+        $studyContent = $this->getDoctrine()->getRepository("CyclogramProofPilotBundle:StudyContent")->getStudyContentById($studyId, $locale);
 
         
         $parameters['survey_url'] = "/lime/index.php/survey/index/sid/".$surveyId."/newtest/Y/lang/".$surveyLocale;
@@ -50,7 +52,7 @@ class SurveyController extends Controller
         );
         
         $parameters["page"] = array(
-                'image' => '/images/tmp_banner_small.jpg',
+                'logo' => $this->container->getParameter('study_image_url') . '/' . $studyId. '/' .$studyContent->getStudyLogo(),
                 'title' => $survey->getSurveylsTitle()
         );
         
