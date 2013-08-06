@@ -2,6 +2,8 @@
 
 namespace Cyclogram\FrontendBundle\Controller;
 
+use Cyclogram\FrontendBundle\Form\UserSmsCodeForm;
+
 use Symfony\Component\HttpFoundation\Session\Session;
 
 use Cyclogram\CyclogramCommon;
@@ -17,20 +19,26 @@ use Cyclogram\FrontendBundle\Form\MobilePhoneForm;
 class SecurityController extends Controller
 {
     /**
-     * @Route("/forgot_pass", name="_forgot_pass")
+     * @Route("/forgot_pass/{studyId}", name="_forgot_pass")
      * @Template()
      */
-    public function forgotPassAction()
+    public function forgotPassAction($studyId=null)
     {
-        if ($this->get('security.context')->isGranted("ROLE_USER")){
-            return $this->redirect($this->generateURL("_main"));
-        }
         $request = $this->getRequest();
         
         $form = $this->createFormBuilder()
-        ->add('participantUsername', 'text', array('label'=>'username'))
+        ->add('participantUsername', 'text', array(
+                'label'=>'label_username'
+                ))
+        ->add('sendPass', 'submit', array(
+                'label' => 'btn_send_pass'))
         ->getForm();
-        
+
+        $em = $this->getDoctrine()->getManager();
+
+        $request = $this->getRequest();
+        $session = $request->getSession();
+
         if( $request->getMethod() == "POST" ){
             $form->handleRequest($request);
             $em = $this->getDoctrine()->getManager();
@@ -42,6 +50,7 @@ class SecurityController extends Controller
                 
                 if (!empty($participant)) {
                     $parameters['id'] = $participant->getParticipantId();
+                    $parameters['studyId'] = $studyId;
                     $embedded['logo_top'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_logo.png");
                     $embedded['logo_footer'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newletter_logo_footer.png");
                     $embedded['login_button'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_small_login.jpg");
@@ -54,21 +63,27 @@ class SecurityController extends Controller
                                               true,
                                               $parameters);
 
-                    return $this->render('CyclogramFrontendBundle:Security:reset_password_confirmation.html.twig');
+                    return $this->render('CyclogramFrontendBundle:Security:reset_password_confirmation.html.twig', array());
                 } else {
-                    return $this->render('CyclogramFrontendBundle:Security:forgot_your_password.html.twig' , array("form" => $form->createView(), 
-                            "error" => $this->get('translator')->trans("doesnt_match_records", array(), "login")));
+                    return $this->render('CyclogramFrontendBundle:Security:forgot_your_password.html.twig', 
+                            array(
+                                    "form" => $form->createView(), 
+                                    "error" => $this->get('translator')->trans("doesnt_match_records", array(), "login")
+                                     ));
                 }
             }
         }
-        return $this->render('CyclogramFrontendBundle:Security:forgot_your_password.html.twig' , array("form" => $form->createView()));
+        return $this->render('CyclogramFrontendBundle:Security:forgot_your_password.html.twig', 
+                array(
+                        "form" => $form->createView(), 
+                        ));
     }
     
     /**
-     * @Route("/create_pass/{id}" , name="_create_new_pass")
+     * @Route("/create_pass/{id}/{studyId}" , name="_create_new_pass")
      * @Template()
      */
-    public function createPassAction($id)
+    public function createPassAction($id, $studyId=null)
     {
         $request = $this->getRequest();
         $session = $this->getRequest()->getSession();
@@ -79,11 +94,25 @@ class SecurityController extends Controller
                 )
         ));
         $form = $this->createFormBuilder(null, array('constraints' => $collectionConstraint))
-        ->add('participantPassword', 'repeated',                   
-                        array('type' => 'password', 
-                            'invalid_message' => 'The password fields must match.',
-                      ))     
+        ->add('participantPassword', 'repeated', array(
+                'type' => 'password', 
+                'first_options'  => array(
+                        'label' => 'label_new_pass'
+                ),
+                'second_options' => array(
+                        'label' => 'label_repeat_pass'
+                ),
+                'invalid_message' => 'The password fields must match.',
+                      ))
+        ->add('savePass', 'submit', array(
+                'label' => 'btn_save_pass'
+                ))  
         ->getForm();
+
+        $em = $this->getDoctrine()->getManager();
+        $study = null;
+        $request = $this->getRequest();
+
         if( $request->getMethod() == "POST" ){
             $form->handleRequest($request);
             $em = $this->getDoctrine()->getManager();
@@ -106,32 +135,29 @@ class SecurityController extends Controller
                 }
             } 
        }
-        return $this->render('CyclogramFrontendBundle:Security:create_new_password.html.twig', array("form" => $form->createView(), 'id' => $id));
+        return $this->render('CyclogramFrontendBundle:Security:create_new_password.html.twig', 
+                array(
+                        "form" => $form->createView(), 
+                        'id' => $id, 
+                        ));
     }
     
     /**
-     * @Route("/confirm_reset/{id}", name="_confirm_pass_reset")
+     * @Route("/confirm_reset/{id}/{studyId}", name="_confirm_pass_reset")
      * @Template()
      */
-    public function confirmResetAction($id)
+    public function confirmResetAction($id, $studyId =null)
     {
         $request = $this->getRequest();
-        
-        $collectionConstraint = new Collection(array(
-                'fields' => array(
-                        'sms_code' => new Length(array('min' => 4)),
-                )
-        ));
+
         $error = "";
-        $form = $this->createFormBuilder(null, array('constraints' => $collectionConstraint))
-        ->add('sms_code', 'text')
-                ->getForm();
+        $form = $this->createForm(new UserSmsCodeForm($this->container));
         if( $request->getMethod() == "POST" ){
-        
+
             $form->handleRequest($request);
-        
+
             if( $form->isValid() ) {
-                $value = $request->request->get('form');
+                $value = $form->getData();
                 $em = $this->getDoctrine()->getManager();
                 $participant = $em->getRepository("CyclogramProofPilotBundle:Participant")->find($id);
                 if (!empty($participant)){
@@ -144,7 +170,7 @@ class SecurityController extends Controller
                         $em->flush($participant);
                         $session->invalidate();
                         
-                        return $this->render('CyclogramFrontendBundle:Security:password_changed.html.twig');
+                        return $this->render('CyclogramFrontendBundle:Security:password_changed.html.twig', array("studyId"=>$studyId));
                     } else {
                         $session->invalidate();
                         $error = "Wrong SMS!";
@@ -153,23 +179,25 @@ class SecurityController extends Controller
             }
         }
         
-        return $this->render('CyclogramFrontendBundle:Security:confirm_reset.html.twig', array('error' => $error, 'form' => $form->createView(), 'id' => $id));
+        return $this->render('CyclogramFrontendBundle:Security:confirm_reset.html.twig', array('error' => $error, 'form' => $form->createView(), 'id' => $id, "studyId"=>$studyId));
     }
     
     /**
-     * @Route("/forgot_username", name="_forgot_username")
+     * @Route("/forgot_username/{studyId}", name="_forgot_username")
      * @Template()
      */
-    public function forgotUserAction()
+    public function forgotUserAction($studyId=null)
     {
         if ($this->get('security.context')->isGranted("ROLE_USER")){
             return $this->redirect($this->generateURL("_main"));
         }
         $request = $this->getRequest();
-        
+
         $form = $this->createForm(new MobilePhoneForm($this->container));
 
-        
+        $em = $this->getDoctrine()->getManager();
+        $study = null;
+
         if( $request->getMethod() == "POST" ){
             $form->handleRequest($request);
             $em = $this->getDoctrine()->getManager();
@@ -185,12 +213,20 @@ class SecurityController extends Controller
                     $sms = $this->get('sms');
                     $sentSms = $sms->sendSmsAction( array('message' => "Your username is $participantUsername , your email is $participantEmail", 'phoneNumber'=>$participant->getParticipantMobileNumber()) );
                     if($sentSms)
-                        return $this->render('CyclogramFrontendBundle:Security:username_sent.html.twig');
+                        return $this->render('CyclogramFrontendBundle:Security:username_sent.html.twig', 
+                                array());
                 } else {
-                    return $this->render('CyclogramFrontendBundle:Security:forgot_username.html.twig',array('form' => $form->createView(),"error" => $this->get('translator')->trans("doesnt_match_records", array(), "login")));
+                    return $this->render('CyclogramFrontendBundle:Security:forgot_username.html.twig',
+                            array(
+                                    'form' => $form->createView(),
+                                    "error" => $this->get('translator')->trans("doesnt_match_records", array(), "login")
+                                    ));
                 }
             }
         }
-        return $this->render('CyclogramFrontendBundle:Security:forgot_username.html.twig',array('form' => $form->createView()));
+        return $this->render('CyclogramFrontendBundle:Security:forgot_username.html.twig',
+                array(
+                        'form' => $form->createView()
+                        ));
     }
 }

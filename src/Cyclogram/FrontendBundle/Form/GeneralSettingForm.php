@@ -21,63 +21,122 @@ class GeneralSettingForm extends AbstractType
     
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('userName', 'text', array('label'=>'label_username'));
+        $builder->add('userName', 'text', array(
+                'label'=>'label_username'
+                ));
         
-            $builder->add('newUserName', 'text', array('label'=>'label_new_user_name', 'required' => false));
+            $builder->add('newUserName', 'text', array(
+                    'label'=>'label_new_user_name',
+                    'required' => false
+                    ));
 
-            $builder->add('newUserNamePassword', 'password', array('label'=>'label_new_user_name_pass', 'required' => false));
+            $builder->add('newUserNamePassword', 'password', array(
+                    'label'=>'label_new_user_name_pass', 
+                    'required' => false
+                    ));
 
-            $builder->add('userNameConfirm', 'submit', array('label' => 'confirm'));
+            $builder->add('userNameConfirm', 'submit', array(
+                    'label' => 'btn_confirm'
+                    ));
 
             $builder->add('validationCheck' , 'hidden');
 
-        $builder->add('password', 'password', array('label'=>'label_password',
-                                                    'required' => false,
-                                                    'constraints' => new Length(array('min' => 8))));
+        $builder->add('password', 'password', array(
+                'label'=>'label_password',
+                'required' => false,
+                'constraints' => new Length(array(
+                        'min' => 8
+                        ))
+                ));
 
-            $builder->add('oldPassword', 'password', array('label'=>'label_old_password',
-                                                            'required' => false,
-                                                           'constraints' => new Length(array('min' => 8))));
+            $builder->add('oldPassword', 'password', array(
+                    'label'=>'label_old_password',
+                    'required' => false
+                    ));
 
-            $builder->add('newPassword', 'repeated', array('type' => 'password',
-                                                           'required' => false,
-                                                           'invalid_message' => 'password_fields_must_match.',
-                                                           'first_options'  => array('label' => 'label_new_pass'),
-                                                           'second_options' => array('label' => 'label_repeat_pass'),
-                                                           'constraints' => new Length(array('min' => 8))));
+            $builder->add('newPassword', 'repeated', array(
+                    'type' => 'password',
+                    'required' => false,
+                    'invalid_message' => 'password_fields_must_match.',
+                    'first_options'  => array(
+                            'label' => 'label_new_pass'
+                            ),
+                    'second_options' => array(
+                            'label' => 'label_repeat_pass'
+                            ),
+                    'constraints' => new Length(array(
+                            'min' => 8
+                            ))
+                    ));
 
-            $builder->add('passwordMobileComfirm', 'text', array('label'=>'label_password_mobile_confirm',
-                                                                     'required' => false,
-                                                                     'constraints' => new Length(array('min' => 4))));
+            $builder->add('passwordMobileComfirm', 'text', array(
+                    'label'=>'label_password_mobile_confirm',
+                    'required' => false,
+                    'constraints' => new Length(array(
+                            'min' => 4
+                            ))
+                    ));
 
-            $builder->add('passwordSendSMS', 'submit', array('label' => 'send mobile code'));
+            $builder->add('passwordSendSMS', 'submit', array(
+                    'label' => 'btn_send_mobile_code'
+                    ));
 
-            $builder->add('passwordConfirm', 'submit', array('label' => 'confirm'));
+            $builder->add('passwordConfirm', 'submit', array(
+                    'label' => 'btn_confirm'
+                    ));
 
-        $builder->add('email', 'text', array('label'=>'label_email', 'required' => false,));
+        $builder->add('email', 'text', array(
+                'label'=>'label_email', 
+                'required' => false
+                ));
 
-            $builder->add('newEmail', 'repeated', array('type' => 'text',
-                                                        'label'=>'label_new_email',
-                                                         'required' => false,
-                                                         'invalid_message' => 'email_fields_must_match.',
-                                                         'first_options'  => array('label' => 'label_new_email'),
-                                                         'second_options' => array('label' => 'label_repeat_email')));
+            $builder->add('newEmail', 'repeated', array(
+                    'type' => 'text',
+                    'label'=>'label_new_email',
+                    'required' => false,
+                    'invalid_message' => 'email_fields_must_match.',
+                    'first_options'  => array(
+                            'label' => 'label_new_email'
+                            ),
+                    'second_options' => array(
+                            'label' => 'label_repeat_email'
+                            )
+                    ));
 
-            $builder->add('emailConfirm', 'submit', array('label' => 'confirm'));
+            $builder->add('emailConfirm', 'submit', array(
+                    'label' => 'btn_confirm'
+                    ));
 
-        $builder->add('phoneNumber', 'text', array('label'=>'label_phone_number', 'required' => false,));
+        $builder->add('phoneNumber', 'text', array(
+                'label'=>'label_phone_number', 
+                'required' => false
+                ));
 
-            $builder->add('newPhoneNumber', 'text', array('label'=>'label_new_phone_number', 'required' => false,));
+            $builder->add('newPhoneNumber', 'text', array(
+                    'label'=>'label_new_phone_number', 
+                    'required' => false
+                    ));
 
-            $builder->add('newPhoneNumberPassword', 'password', array('label'=>'label_new_phone_number_pass', 'required' => false,));
+            $builder->add('newPhoneNumberPassword', 'password', array(
+                    'label'=>'label_new_phone_number_pass', 
+                    'required' => false
+                    ));
 
-            $builder->add('newPhoneNumberSMS', 'text', array('label'=>'label_new_phone_number_sms',
-                                                             'required' => false,'required' => false,
-                                                             'constraints' => new Length(array('min' => 4))));
+            $builder->add('newPhoneNumberSMS', 'text', array(
+                    'label'=>'label_new_phone_number_sms',
+                    'required' => false,'required' => false,
+                     'constraints' => new Length(array(
+                             'min' => 4
+                             ))
+                    ));
 
-            $builder->add('phoneSendSMS', 'submit', array('label' => 'send mobile code'));
+            $builder->add('phoneSendSMS', 'submit', array(
+                    'label' => 'btn_send_mobile_code'
+                    ));
             
-            $builder->add('phoneConfirm', 'submit', array('label' => 'confirm'));
+            $builder->add('phoneConfirm', 'submit', array(
+                    'label' => 'btn_confirm'
+                    ));
     }
     
     public function getName()
@@ -110,17 +169,17 @@ class GeneralSettingForm extends AbstractType
         $participant = $this->container->get('security.context')->getToken()->getUser();
         if ($data['validationCheck'] == 'username'){
             if (empty($data['newUserName'])) {
-                $context->addViolationAt('[newUserName]', 'Please fill this field !');
+                $context->addViolationAt('[newUserName]', $this->container->get('translator')->trans('please_fill_this_field', array(), 'validators'));
             }
             if (empty($data['newUserNamePassword'])) {
-                $context->addViolationAt('[newUserNamePassword]', 'Please fill this fields !');
+                $context->addViolationAt('[newUserNamePassword]',$this->container->get('translator')->trans('please_fill_this_field', array(), 'validators'));
             }
             $em = $this->container->get('doctrine')->getEntityManager();
             if (!empty($data['newUserName']) && ($participant->getParticipantUsername() == $data['newUserName'])){
-                $context->addViolationAt('[newUserName]', 'User with this username already exist!');
+                $context->addViolationAt('[newUserName]',$this->container->get('translator')->trans('username_already_registered', array(), 'validators'));
             }
             if (!empty($data['newUserNamePassword']) && $data['newUserNamePassword'] != $participant->getParticipantPassword()) {
-                $context->addViolationAt('[newUserNamePassword]', 'Password is wrong!');
+                $context->addViolationAt('[newUserNamePassword]', $this->container->get('translator')->trans('wrong_pass', array(), 'validators'));
             }
         }
     }
@@ -129,21 +188,21 @@ class GeneralSettingForm extends AbstractType
         $participant = $this->container->get('security.context')->getToken()->getUser();
         if ($data['validationCheck'] == 'password-sms'){
             if (empty($data['oldPassword'])) {
-                $context->addViolationAt('[oldPassword]', 'Please fill this field !');
+                $context->addViolationAt('[oldPassword]',$this->container->get('translator')->trans('please_fill_this_field', array(), 'validators'));
             }
             if (!empty($data['oldPassword']) && $data['oldPassword'] != $participant->getParticipantPassword()) {
-                $context->addViolationAt('[oldPassword]', 'Password is wrong!');
+                $context->addViolationAt('[oldPassword]', $this->container->get('translator')->trans('wrong_pass', array(), 'validators'));
             }
             if (empty($data['newPassword'])) {
-                $context->addViolationAt('[newPassword]', 'Please fill new password and confirm it!');
+                $context->addViolationAt('[newPassword]', $this->container->get('translator')->trans('please_fill_this_field', array(), 'validators'));
             }
         }
         if ($data['validationCheck'] == 'password'){
             if (empty($data['passwordMobileComfirm'])){
-                $context->addViolationAt('[passwordMobileComfirm]', 'Please fill this field !');
+                $context->addViolationAt('[passwordMobileComfirm]',$this->container->get('translator')->trans('please_fill_this_field', array(), 'validators'));
             }
             if(!empty($data['passwordMobileComfirm']) && $data['passwordMobileComfirm'] != $participant->getParticipantMobileSmsCode()){
-                $context->addViolationAt('[passwordMobileComfirm]', 'Wrong mobile code!');
+                $context->addViolationAt('[passwordMobileComfirm]', $this->container->get('translator')->trans('wrong_code', array(), 'validators'));
             }
         }
     }
@@ -152,10 +211,10 @@ class GeneralSettingForm extends AbstractType
         $participant = $this->container->get('security.context')->getToken()->getUser();
         if ($data['validationCheck'] == 'email'){
             if (empty($data['newEmail'])){
-                $context->addViolationAt('[newEmail]', 'Please fill this field !');
+                $context->addViolationAt('[newEmail]', $this->container->get('translator')->trans('please_fill_this_field', array(), 'validators'));
             }
             if (!empty($data['newEmail']) && ($participant->getParticipantEmail() == $data['newEmail'])){
-                $context->addViolationAt('[confirmEmail]', 'This email already exist !');
+                $context->addViolationAt('[confirmEmail]',  $this->container->get('translator')->trans('email_already_registered', array(), 'validators'));
             }
         }
     }
@@ -164,24 +223,24 @@ class GeneralSettingForm extends AbstractType
         $participant = $this->container->get('security.context')->getToken()->getUser();
         if ($data['validationCheck'] == 'mobile-sms'){
             if (empty($data['newPhoneNumber'])){
-                $context->addViolationAt('[newPhoneNumber]', 'Please fill this field !');
+                $context->addViolationAt('[newPhoneNumber]',$this->container->get('translator')->trans('please_fill_this_field', array(), 'validators'));
             }
             if (empty($data['newPhoneNumberPassword'])){
-                $context->addViolationAt('[newPhoneNumberPassword]', 'Please fill this field !');
+                $context->addViolationAt('[newPhoneNumberPassword]',$this->container->get('translator')->trans('please_fill_this_field', array(), 'validators'));
             }
             if (!empty($data['newPhoneNumber']) && ($participant->getParticipantMobileNumber() == $data['newPhoneNumber'])){
-                $context->addViolationAt('[newPhoneNumber]', 'This mobile number already exist!');
+                $context->addViolationAt('[newPhoneNumber]',  $this->container->get('translator')->trans('error_mobile_phone_already_registered', array(), 'validators'));
             }
             if (!empty($data['newPhoneNumberPassword']) && $data['newPhoneNumberPassword'] != $participant->getParticipantPassword()) {
-                $context->addViolationAt('[newPhoneNumberPassword]', 'Password is wrong!');
+                $context->addViolationAt('[newPhoneNumberPassword]',  $this->container->get('translator')->trans('wrong_pass', array(), 'validators'));
             }
         }
         if ($data['validationCheck'] == 'mobile') {
             if (empty($data['newPhoneNumberSMS'])){
-                $context->addViolationAt('[newPhoneNumberSMS]', 'Please fill this field !');
+                $context->addViolationAt('[newPhoneNumberSMS]',$this->container->get('translator')->trans('please_fill_this_field', array(), 'validators'));
             }
             if(!empty($data['newPhoneNumberSMS']) && ($data['newPhoneNumberSMS'] != $participant->getParticipantMobileSmsCode())){
-                $context->addViolationAt('[newPhoneNumberSMS]', 'Wrong mobile code!');
+                $context->addViolationAt('[newPhoneNumberSMS]',  $this->container->get('translator')->trans('wrong_code', array(), 'validators'));
             }
         }
     }

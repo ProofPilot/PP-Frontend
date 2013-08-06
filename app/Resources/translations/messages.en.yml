@@ -1,7 +1,10 @@
-'SMS Code:': 'SMS Code:'
+btn_save_pass: 'Save password'
+btn_send_pass: 'Send password'
+label_new_pass: 'New password'
+label_repeat_pass: 'Repeat password'
+label_username: 'Username'
 txt_footer_top: 'ON TOP'
 txt_header_login: Login
 txt_header_or: or
 txt_header_register: Register
 txt_header_register_here: 'Register Here'
-username: Username

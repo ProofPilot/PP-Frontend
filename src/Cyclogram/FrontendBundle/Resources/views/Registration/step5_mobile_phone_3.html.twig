@@ -1,38 +1,25 @@
 {%  extends '::base.html.twig' %}
 
-{% block body %}
-  <body class="has_image">
-    {% include '::header_reg.html.twig' %}
+{% block content %}
     <div class="mobile_reg">
       <h1><span>{% trans from "register" %}txt_join{% endtrans %} 5/6:</span>{% trans from "register" %}enter_sms_code{% endtrans %}</h1>
       <br>
       <form method="post" action="{{ path('reg_step_5',{'id' : id, 'studyId' : studyId}) }}">
         <ul class="form_fields">
           <li>
-          {% if form is defined %}
+
               {{ form_widget(form.sms_code, {'attr' : {'class' : 'default_input full', 'autocomplete': 'off'}}) }}
               {{ form_errors(form.sms_code) }}
-              {{ form_errors(form) }}
-              {{ form_rest(form) }}
-          {% else %}
-          <input name="" value="" class="default_input full" type="text", autocomplete="off">
-          {% endif %}
           {{ error }}
           </li>
         </ul>
-        <div class="center_align"><a href="main.html" class="submit" id="register_submit">{% trans from "login" %}btn_confrimcoe_login{% endtrans %}</a></div>
-            <button type="submit" style="display:none" id="submit_button"></button>
-        <div class="center_align"><a href={{ path('reg_step_3',{'id' : id, 'studyId' : studyId}) }} class="repeat">{% trans from "register" %}no_code{% endtrans %}</a></div>
+        <div class="center_align">
+              {{ form_widget(form.confirmCode,{'attr':{'class':'submit'}}) }}
+              {{ form_errors(form) }}
+              {{ form_rest(form) }}
+        </div>
+
+        <div class="center_align"><a href={{ path('reg_step_4',{'id' : id, 'studyId' : studyId}) }} class="repeat">{% trans from "register" %}no_code{% endtrans %}</a></div>
       </form>
     </div>
-    {% include '::footer_reg.html.twig' %}
-    <script>
-        $(document).ready(function(){
-            $('#register_submit').click(function() {
-                $('#submit_button').trigger('click');
-                return false;
-            });
-        });
-    </script>
-  </body>
-{% endblock body %}
+{% endblock content %}

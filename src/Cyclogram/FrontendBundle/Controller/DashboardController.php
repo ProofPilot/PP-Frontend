@@ -2,19 +2,23 @@
 
 namespace Cyclogram\FrontendBundle\Controller;
 
+
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Cyclogram\Bundle\ProofPilotBundle\Entity\Participant;
+use JMS\SecurityExtraBundle\Annotation\Secure;
 
 
 class DashboardController extends Controller
 {
     /**
-     * @Route("/main", name="_main")
+     * @Route("/main/{studyId}", requirements={"studyId" = "\d+"}, name="_main")
+     * @Secure(roles="ROLE_USER")
      * @Template()
      */
-    public function indexAction()
+    public function indexAction($studyId=0)
     {
         $participant = $this->get('security.context')->getToken()->getUser();
         $request = $this->getRequest();
@@ -24,10 +28,9 @@ class DashboardController extends Controller
         
         $session = $this->getRequest()->getSession();
         
-        
         $parameters = array();
         $parameters['surveycount'] = $surveyscount;
-    
+
         $parameters['text'] = array(
                 "title" => "title",
                 "content" => "content");
@@ -101,7 +104,7 @@ class DashboardController extends Controller
             $parameters["confirm_email"] = false;
             $parameters["email_alert"] = $this->get('translator')->trans('txt_please_verify_email', array(), 'dashboard');
         }
-    
+
         return $this->render('CyclogramFrontendBundle:Dashboard:main.html.twig', $parameters);
     
     }

@@ -2,6 +2,8 @@
 
 namespace Cyclogram\SexProBundle\Controller;
 
+use Cyclogram\Bundle\ProofPilotBundle\Entity\StudyContent;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -29,7 +31,8 @@ class DefaultController extends Controller
         
         $studyId = $studyContent->getStudyId();
         
-        $surveyId = 468727;
+        
+        $surveyId = $studyContent->getStudyElegibilitySurvey();
     
     
         $parameters = array();
@@ -38,8 +41,8 @@ class DefaultController extends Controller
         $parameters["studyUrl"] = $studyUrl;
         $parameters["studyId"] = $studyId;
         $parameters["surveyId"] = $surveyId;
-        $parameters["logo"] = '/' . md5("study") . '/' . $studyId . '/' . "logo-" . $studyId . "-" . $locale . ".png";
-        $parameters["graphic"] = '/' . md5("study") . '/' . $studyId . '/' . "graphic-" . $studyId . "-" . $locale . ".png";
+        $parameters["logo"] = $this->container->getParameter('study_image_url') . '/' . $studyId. '/' .$studyContent->getStudyLogo();
+        $parameters["graphic"] = $this->container->getParameter('study_image_url') . '/' .$studyId. '/' .$studyContent->getStudyGraphic();
         
     
         return $this->render('CyclogramSexProBundle:Default:page.html.twig', $parameters);
@@ -63,6 +66,8 @@ class DefaultController extends Controller
         $parameters["studycontent"] = $studyContent;
         $parameters["studyUrl"] = $studyUrl;
         $parameters["studyId"] = $studyId;
+        $parameters["logo"] = $this->container->getParameter('study_image_url') . '/' . $studyId. '/' .$studyContent->getStudyLogo();
+        $parameters["graphic"] = $this->container->getParameter('study_image_url') . '/' .$studyId. '/' .$studyContent->getStudyGraphic();
     
     
     

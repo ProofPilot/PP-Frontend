@@ -1,7 +1,10 @@
-'SMS Code:': 'Código SMS'
+btn_save_pass: btn_save_pass
+btn_send_pass: btn_send_pass
+label_new_pass: label_new_pass
+label_repeat_pass: label_repeat_pass
+label_username: label_username
 txt_footer_top: 'Na parte superior'
 txt_header_login: Logar
 txt_header_or: ou
 txt_header_register: Registre-se
 txt_header_register_here: txt_header_register_here
-username: usuário

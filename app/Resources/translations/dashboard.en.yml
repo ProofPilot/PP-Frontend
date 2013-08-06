@@ -1,7 +1,5 @@
 dashboard_subtitle: 'Your participation at a glance. What you need to do now and what’s next.'
-do_it: 'Do It'
 do_it_now: 'Do It Now'
-last_access: 'Last Access'
 past_activity: Past_activity
 past_activity.emai_confirmation_status: 'Your e-mail address has been confirmed'
 past_activity.mobile_confirmation_status: 'Your mobile telephone number has been confirmed'

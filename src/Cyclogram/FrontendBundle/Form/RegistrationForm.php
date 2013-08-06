@@ -27,17 +27,25 @@ class RegistrationForm extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(
-                'participantEmail', 
-                'email', 
-                 array(
-                         'label'=>'email'
-                         ));
-        $builder->add('participantUsername', 'text', array('label'=>'username'));
-        $builder->add('participantPassword', 'repeated',                   
-                        array('type' => 'password', 
-                              'invalid_message' => 'error_passwords_do_not_match')
-                      );     
+        $builder->add('participantEmail', 'email', array(
+                 'label'=>'label_email'
+                 ));
+        $builder->add('participantUsername', 'text', array(
+                'label'=>'label_username'
+                ));
+        $builder->add('participantPassword', 'repeated', array(
+                'type' => 'password',
+                'first_options'  => array(
+                            'label' => 'label_password'
+                            ),
+                'second_options' => array(
+                            'label' => 'label_repeat_password'
+                            ),
+                'invalid_message' => 'error_passwords_do_not_match'
+                ));  
+        $builder->add('next', 'submit', array(
+                'label'=>'btn_next'
+                ));
     }
 
     public function getName()
@@ -73,7 +81,7 @@ class RegistrationForm extends AbstractType
             ->checkIfEmailNotUsed($participant->getParticipantEmail());
         
         if($count)
-            $context->addViolationAt('participantEmail', 'email_already_registered');
+            $context->addViolationAt('participantEmail',  $this->container->get('translator')->trans('email_already_registered', array(), 'validators'));
     }
     
     public function validateUsername(Participant $participant, ExecutionContextInterface $context)
@@ -83,7 +91,7 @@ class RegistrationForm extends AbstractType
         ->checkIfUsernameNotUsed($participant->getParticipantUsername());
     
         if($count)
-            $context->addViolationAt('participantUsername', 'username_already_registered');
+            $context->addViolationAt('participantUsername',  $this->container->get('translator')->trans('username_already_registered', array(), 'validators'));
     }
 
 }

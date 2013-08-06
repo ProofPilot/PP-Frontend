@@ -4,6 +4,8 @@ namespace Cyclogram\FrontendBundle\Controller;
 
 
 
+use Cyclogram\FrontendBundle\Form\UserSmsCodeForm;
+
 use Symfony\Component\HttpFoundation\Response;
 
 use Doctrine\ORM\Mapping\Entity;
@@ -27,21 +29,21 @@ class LoginController extends Controller
      */
     public function loginAction($studyId=null)
     {
+        if ($this->get('security.context')->isGranted("ROLE_USER")){
+            return $this->redirect($this->generateURL("_main"));
+        }
         $request = $this->getRequest();
         $session = $request->getSession();
-
-        $nPic = rand ( 1, 4 );
-        $studyIdS = $session->get('studyId');
-        ( $studyIdS ) ? $studyId = $studyIdS : false;
-        $session->set('studyId', $studyId);
-
+        
         $em = $this->getDoctrine()->getManager();
+        $study = null;
         if ($studyId != null) {
             $study = $em->getRepository('CyclogramProofPilotBundle:Study')->find($studyId);
+            $studyContent = $em->getRepository('CyclogramProofPilotBundle:StudyContent')->findOneBy(array('studyId'=>$studyId));
         } else {
             $study = null;
         }
-        
+
         // get the login error if there is one
         if ($request->attributes->has(SecurityContext::AUTHENTICATION_ERROR)) {
             $error = $request->attributes->get(SecurityContext::AUTHENTICATION_ERROR);
@@ -54,8 +56,7 @@ class LoginController extends Controller
             // last username entered by the user
             'last_username' => $session->get(SecurityContext::LAST_USERNAME),
             'error'         => $error,
-            'nPic'          => $nPic,
-            'studyId'       => $studyId
+            'studyId'       => $studyId,
         ));
     }
 
@@ -83,10 +84,10 @@ class LoginController extends Controller
     }
 
     /**
-     * @Route("/doLogin", name="_do_login")
+     * @Route("/doLogin/{studyId}", name="_do_login")
      * @Template()
      */
-    public function doLoginAction(){
+    public function doLoginAction($studyId=null){
     
         $em = $this->getDoctrine()->getManager();
     
@@ -101,7 +102,7 @@ class LoginController extends Controller
 
         $request = $this->getRequest();
         $session = $request->getSession();
-        $studyId = $session->get('studyId');
+
 
         if( $customerMobileNumber ){
     
@@ -146,20 +147,8 @@ class LoginController extends Controller
         $request = $this->getRequest();
         $session = $request->getSession();
 
-        $nPic = rand ( 1, 4 );
-        $studyIdS = $session->get('studyId');
-        ($studyId) ? $studyId  : $studyId = $studyIdS;
         
-        $collectionConstraint = new Collection(array(
-                'fields' => array(
-                        'user_sms' => new Length(array('min'=>4))
-                ),
-                'allowExtraFields' => false
-        ));
-        
-        $form = $this->createFormBuilder(null, array('constraints' => $collectionConstraint))
-        ->add('user_sms', 'text', array('label' => "SMS Code:", 'data'=>"", 'attr' => array('class' => 'formElement')))
-        ->getForm();
+        $form = $this->createForm(new UserSmsCodeForm($this->container));
         
         if( $request->getMethod() == "POST" ){
         
@@ -167,8 +156,8 @@ class LoginController extends Controller
         
             if( $form->isValid() ) {
         
-                $values = $request->request->get('form');
-                $userSms = $values['user_sms'];
+                $values = $form->getData();
+                $userSms = $values['sms_code'];
         
                 if( $participant->getParticipantMobileSmsCode() == $userSms ){
 
@@ -188,7 +177,7 @@ class LoginController extends Controller
                     $this->get('security.context')->setToken($token);
 
                     $this->get('custom_db')->getFactory('CommonCustom')->addEvent($participant->getParticipantId(),null,1,'login','Login succesfully', TRUE);
-                    return $this->redirect( $this->generateUrl("_main") );
+                    return $this->redirect( $this->generateUrl("_main", array("studyId"=>$studyId)) );
                 } else {
                     $this->get('custom_db')->getFactory('CommonCustom')->addEvent($participant->getParticipantId(),null,1,'login','Login failed', FALSE);
                     return $this->redirect( $this->generateUrl("_login") );
@@ -199,9 +188,7 @@ class LoginController extends Controller
         return $this->render(
             'CyclogramFrontendBundle:Login:mobile_phone_login.html.twig',
             array(
-                "form"=>$form->createView(),
-                'nPic'          => $nPic,
-                'studyId'       => $studyId
+                "form"=>$form->createView()
             ));
     }
 }

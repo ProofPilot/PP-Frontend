@@ -1,7 +1,5 @@
 dashboard_subtitle: dashboard_subtitle
-do_it: do_it
 do_it_now: do_it_now
-last_access: last_access
 past_activity: past_activity
 past_activity.emai_confirmation_status: yuor_e-mail_address_has_been_confirmed
 past_activity.mobile_confirmation_status: your_mobile_telephone_number_has_been_confirmed

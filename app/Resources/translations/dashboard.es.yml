@@ -1,7 +1,5 @@
 dashboard_subtitle: 'El resúmen de su participación. Lo que tiene que hacer ahora y lo que está por venir.'
-do_it: Hazlo
 do_it_now: 'Hazlo Ahora'
-last_access: 'Último Acceso'
 past_activity: 'Actividad Anterior'
 past_activity.emai_confirmation_status: 'Su Email ha sido confirmado'
 past_activity.mobile_confirmation_status: 'Su número de telefóno móbil ha sido confirmado'

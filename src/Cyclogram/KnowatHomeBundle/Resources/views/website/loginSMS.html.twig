@@ -1,0 +1,65 @@
+{% extends "CyclogramKnowatHomeBundle:Default:index.html.twig" %}
+
+{% block title %}
+    Mobile Verification
+{% endblock %}
+
+{% block stylesheetsCustom %}
+    <link rel="stylesheet" href="/bundles/cyclogramknowathome/css/knowathome.css" type="text/css" />
+{% endblock %}
+
+{% block javascriptsCustom %}
+    <script>
+        $(document).ready(function(){
+            {% set picN = app.session.get('picN') %}
+            $("body").anystretch("/bundles/cyclogramknowathome/images/website/backgrounds/{{picN}}.jpg");
+        });
+    </script>
+{% endblock %}
+
+{% block body %}
+    <div id="wrapper" class="container">
+
+        <div class="leftColumn columns six ">
+
+            <div class="logo" style="margin-bottom: 15px;">
+                <a href="{{ path("CyclogramKnowatHomeBundle_homepage") }}"><img src="/bundles/cyclogramknowathome/images/website/logo-white.png" border="0" /></a>
+            </div>
+
+            <h2>Mobile Verification</h2>
+
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam facilisis, eros at tristique pretium, elit nisi imperdiet odio, ut varius lorem massa in ante.
+            </p>
+
+            <br />
+
+            <div class="formContainer columns five ">
+
+                <form action="{{ path('CyclogramKnowatHomeBundle_loginSMS') }}" method="post" {{ form_enctype(form) }}>
+
+                    <div class="frmRowContainer">
+                        <div class="frmRowLabel">{{ form_label(form.user_sms) }}</div>
+
+                        <div class="frmRowInput">{{ form_widget(form.user_sms) }} </div>
+                        <span class="inputErrorMessage">{{ form_errors(form.user_sms) }}</span>
+                    </div>
+
+                    <div class="clear">&nbsp;</div>
+                    <br />
+
+                    <input type="submit" class="submitBtn" value="CONFIRM MOBILE CODE" style="margin: auto;" />
+
+                    {{ form_rest(form) }}
+
+                </form>
+
+                <hr />
+
+                No code? <a href="{{ path("CyclogramKnowatHomeBundle_mobilePhone") }}" class="pinkLink">TRY AGAIN</a>
+            </div>
+
+        </div>
+
+    </div>
+{% endblock %}

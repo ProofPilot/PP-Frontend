@@ -1,14 +1,6 @@
 {%  extends '::base.html.twig' %}
 
-{% block body %}
-{{ studyId }}
-    {% if studyId == 1 %}
-        <body class="knowathome{{ nPic }}">
-    {% else  %}
-        <body class="has_image">
-    {%  endif %}
-
-    {% include '::header_reg.html.twig' %}
+{% block content %}
     <div class="mobile_reg">
     {% if error is defined %}
             <p class="error">{{ error }}</p></div>
@@ -17,15 +9,4 @@
       <span>{% trans from "register" %}txt_subtitle_check_email{% endtrans %}</span>
     {% endif %}
     </div>
-    {% include '::footer_reg.html.twig' %}
-        <script>
-        $(document).ready(function(){
-            $('#register_submit').click(function()
-                {
-                         $('#submit_button').trigger('click');
-                        return false;
-                });
-           });
-        </script>
-  </body>
-{% endblock body %}
+{% endblock content %}

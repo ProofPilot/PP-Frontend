@@ -1,12 +1,6 @@
 {%  extends '::base.html.twig' %}
 
-{% block body %}
-{% if studyId == 1 %}
-<body class="knowathome{{ nPic }}">
-{% else  %}
-<body class="has_image">
-{%  endif %}
-    {% include '::header_reg.html.twig' %}
+{% block content %}
     <div class="mobile_reg">
       <h1><span>{% trans from "register" %}txt_join{% endtrans %} 2/4:</span>{% trans from "register" %}enter_mobile_phone{% endtrans %}</h1>
       <p>{% trans from "register" %}enter_mobile_phone{% endtrans %}</p>
@@ -30,31 +24,20 @@
            {% if form is defined %}
               {{ form_errors(form.phone_small) }}
               {{ form_errors(form.phone_wide) }}
+
+           
+        </ul>
+        <div class="center_align">
+        {{ form_widget(form.sendCode, {'attr':{'class':'submit'}}) }}
               {{ form_errors(form) }}
               {{ form_rest(form) }}
-           {% endif %}
-        </ul>
-        <div class="center_align"><a href="#" class="submit" id="register_submit">{% trans from "register" %}send_confirmation{% endtrans %}</a></div>
-            <button type="submit" style="display:none" id="submit_button"></button>
+              {% endif %}
+        </div>
       </form>
     </div>
-    {% include '::footer_reg.html.twig' %}
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src={{ asset('js/vendor/jquery-1.9.1.min.js') }}><\/script>')</script>
-        <script src= {{ asset ('js/plugins.js') }}></script>
-        <script src= {{ asset ('js/main.js') }}></script>
-        <script src= {{ asset ('js/jquery.numeric.js') }}></script>
-        <script>
-        $(document).ready(function(){
-            $('#register_submit').click(function()
-                {
-                         $('#submit_button').trigger('click');
-                        return false;
-                });
-            $("#phone_phone_small").numeric();
-            $('#phone_phone_wide').numeric();
-            
-           });
-        </script>
-  </body>
-{% endblock body %}
+    <script src= {{ asset ('js/plugins.js') }}></script>
+    <script src= {{ asset ('js/main.js') }}></script>
+    <script src= {{ asset ('js/jquery.numeric.js') }}></script>
+{% endblock content %}

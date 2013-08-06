@@ -1,6 +1,8 @@
 <?php
 namespace Cyclogram\FrontendBundle\Listener;
 
+use Symfony\Component\HttpFoundation\Response;
+
 use Cyclogram\Bundle\ProofPilotBundle\Entity\Participant;
 
 use Symfony\Component\Routing\RouterInterface;
@@ -67,9 +69,7 @@ class SecurityListener
     public function onKernelResponse(FilterResponseEvent $event)
     {
         if (!empty($this->user) ) {
-            
             $roles = $this->user->getRoles();
-
             foreach ($roles as $role){
                 if ($role == 'FACEBOOK_REGISTERED')
                     $event->setResponse(new RedirectResponse($this->router->generate('_do_login')));
@@ -95,7 +95,7 @@ class SecurityListener
                     $event->setResponse(new RedirectResponse($redirectUrl));
                 }
             }
-            
         }
+
     }
 }

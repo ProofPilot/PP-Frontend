@@ -1,0 +1,25 @@
+{% macro showonerror(name, invalidclass) %}
+{% if invalidclass is defined and name == invalidclass %}
+    style="display:block"
+{% endif %}
+{% endmacro %}
+
+{% macro hideonerror(name, invalidclass) %}
+{% if invalidclass is defined and name == invalidclass %}
+    style="display:none"
+{% endif %}
+{% endmacro %}
+
+{% macro renderexpandbutton(name, invalidclass) %}
+{% if invalidclass is defined and name == invalidclass %}
+<a href="#" class="expand opened" data-text-closed="{% trans from "contact_preferences" %}txt_expand{% endtrans %}" data-text-expanded="{% trans from "contact_preferences" %}txt_close{% endtrans %}">{% trans from "contact_preferences" %}txt_close{% endtrans %}</a>
+{% else %}
+<a href="#" class="expand" data-text-closed="{% trans from "contact_preferences" %}txt_expand{% endtrans %}" data-text-expanded="{% trans from "contact_preferences" %}txt_close{% endtrans %}">{% trans from "contact_preferences" %}txt_expand{% endtrans %}</a>
+{% endif %}
+{% endmacro %}
+
+{% macro showexpanded(name, invalidclass) %}
+{% if invalidclass is defined and name == invalidclass %}
+    style="height:auto;display:block"
+{% endif %}
+{% endmacro %}

@@ -25,28 +25,33 @@ class MobilePhoneForm extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('phone_small', 
-                      'text', 
-                      array(
-                              'attr'=>array('maxlength'=>3),
-                              'constraints' => new Length(array(
-                                      'min'=>1,
-                                      'minMessage'=>'error_min_area_code_length',
-                                      'max'=>3,
-                                      'maxMessage'=>'error_max_area_code_length'
-                                       ))
-                        ));
-        $builder->add('phone_wide' , 
-                      'text', 
-                      array(
-                              'attr'=>array('maxlength'=>11),
-                              'constraints' => new Length(array(
-                                      'min'=>8,
-                                      'minMessage'=>'error_min_phone_code_length',
-                                      'max'=>11,
-                                      'maxMessage'=>'error_max_phone_code_length'
-                                       ))
-                       ));
+        $builder->add('phone_small', 'text', array(
+                 'label'=>'label_phone_small',
+                 'attr'=>array(
+                         'maxlength'=>3
+                         ),
+                 'constraints' => new Length(array(
+                         'min'=>1,
+                         'minMessage'=>'error_min_area_code_length',
+                         'max'=>3,
+                         'maxMessage'=>'error_max_area_code_length'
+                         ))
+                 ));
+        $builder->add('phone_wide' , 'text', array(
+                'label'=>'label_phone_wide',
+                'attr'=>array(
+                        'maxlength'=>11
+                        ),
+                'constraints' => new Length(array(
+                        'min'=>8,
+                        'minMessage'=>'error_min_phone_code_length',
+                        'max'=>11,
+                        'maxMessage'=>'error_max_phone_code_length'
+                        ))
+                ));
+        $builder->add('sendCode', 'submit', array(
+                'label' => 'btn_send_confirmation'
+                ));
     }
 
     public function getName()
@@ -63,8 +68,16 @@ class MobilePhoneForm extends AbstractType
                 ->setDefaults(
                         array('csrf_protection' => false,
                               'cascade_validation' => true,
+                              'translation_domain' => 'register',
                               'constraints' => array(
-                                        new Callback(array(array($this, 'validatePhone'))
+                                        new Callback(array(
+                                                'methods' => array(
+                                                        array($this, 'validatePhone')
+                                                        ),
+                                                'groups' => array(
+                                                        'registration'
+                                                        )
+                                                )
                                        ))
                         ));
     }
@@ -97,7 +110,7 @@ class MobilePhoneForm extends AbstractType
         ->checkIfPhoneNotUsed($phone);
     
         if($count)
-            $context->addViolationAt('phone_wide', 'error_mobile_phone_already_registered');
+            $context->addViolationAt('phone_wide',  $this->container->get('translator')->trans('error_mobile_phone_already_registered', array(), 'validators'));
     }
     
 

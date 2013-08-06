@@ -1,26 +1,14 @@
 {%  extends '::base.html.twig' %}
 
-{% block body %}
-  <body class="has_image">
-    {% include '::header_reg.html.twig' %}
+{% block content %}
     <div class="mobile_reg">
       <h1><span>{% trans from "register" %}txt_join{% endtrans %} 4/6:</span> {% trans from "register" %}double_check{% endtrans %}</h1>
       <ul class="confirm_list">
         <li>{{ phone }}</li>
       </ul>
       <div class="center_align m"> 
-        <a href={{ path('reg_step_3',{'id' : id, 'studyId' : studyId}) }} class="submit m1 gray">{% trans from "register" %}wrong_back{% endtrans %}</a> 
-        <a href={{ path('reg_step_4',{'id' : id, 'studyId' : studyId}) }} class="submit m2">{% trans from "register" %}ok_verify{% endtrans %}</a>
+       <button onclick=location.href='{{ path('reg_step_3',{'id' : id, 'studyId' : studyId}) }}' class="submit m1 gray">{% trans from "register" %}wrong_back{% endtrans %}</button>
+      <button onclick=location.href='{{ path('reg_step_4',{'id' : id, 'studyId' : studyId}) }}' class="submit m2">{% trans from "register" %}ok_verify{% endtrans %}</button>
       </div>
     </div>
-    {% include '::footer_reg.html.twig' %}
-    <script>
-        $(document).ready(function(){
-            $('#register_submit').click(function() {
-                $('#submit_button').trigger('click');
-                return false;
-            });
-        });
-    </script>
-  </body>
-{% endblock body %}
+{% endblock content %}

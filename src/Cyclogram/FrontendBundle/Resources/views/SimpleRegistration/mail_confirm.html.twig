@@ -1,24 +1,11 @@
 {%  extends '::base.html.twig' %}
 
-{% block body %}
-  <body class="has_image">
-    {% include '::header_reg.html.twig' %}
+{% block content %}
     <div class="mobile_reg">
     {% if error is defined %}
-            <p class="error">{{ error }}</p></div>
+            <p class="error">{{ error }}</p>
     {% else %}
       <h1><span>{% trans from "register" %}txt_join{% endtrans %} 2/6:</span> {% trans from "register" %}txt_check_email{% endtrans %}</h1>
     {% endif %}
     </div>
-    {% include '::footer_reg.html.twig' %}
-        <script>
-        $(document).ready(function(){
-            $('#register_submit').click(function()
-                {
-                         $('#submit_button').trigger('click');
-                        return false;
-                });
-           });
-        </script>
-  </body>
-{% endblock body %}
+{% endblock content %}

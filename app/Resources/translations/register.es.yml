@@ -1,8 +1,10 @@
 already_joined: '¿Ya es parte?'
+btn_next: btn_next
+btn_save_mailing_address: btn_save_mailing_address
+btn_send_confirmation: btn_send_confirmation
 confirm_password: 'Confirme contraseña'
 create_password: 'Crear una contraseña'
 double_check: 'Revise dos veces su entrada'
-email: Email
 enter_address: enter_address
 enter_email: 'Ingrese su e-mail'
 enter_mobile_phone: 'Ingrese su teléfono móbil'
@@ -10,21 +12,24 @@ enter_sms_code: 'Ingrese el código de verificación que recibió en su teléfon
 label_address1: label_address1
 label_address2: label_address2
 label_city: label_city
+label_email: label_email
 label_firstname: label_firstname
 label_lastname: label_lastname
+label_password: label_password
+label_phone_small: label_phone_small
+label_phone_wide: label_phone_wide
+label_repeat_password: label_repeat_password
 label_state: label_state
+label_username: label_username
 label_zipcode: label_zipcode
 mail_confirmation_fail: mail_confirmation_fail
 min_charachters: '(8 caractéres mínimo)'
 no_code: '¿Sin código? Enviar otro'
 ok_verify: 'Ok, ¡verifique!'
 pick_user: 'Escoja su usuario'
-send_confirmation: 'Enviar código de verificación al teléfono móbil'
 txt_check_email: txt_check_email
 txt_join: Unase
 txt_join_with: 'Unase con'
-txt_save_mailing_address: txt_save_mailing_address
 txt_subtitle_check_email: txt_subtitle_check_email
 txt_why: '¿Por qué?'
-username: Usuario
 wrong_back: 'erroneo devuelvase'
