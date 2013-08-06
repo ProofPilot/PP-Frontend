@@ -293,11 +293,23 @@ class RegistrationController extends Controller
         if ($participant->getParticipantMobileNumber()){
             $phone = CyclogramCommon::parsePhoneNumber($participant->getParticipantMobileNumber());
         }
+      
         if(!empty($phone)) {
             $form->get('phone_small')->setData($phone['country_code']);
             $form->get('phone_wide')->setData($phone['phone']);
         }
-        
+        $clientIp = $request->getClientIp();
+        if ($clientIp == '127.0.0.1') {
+            $form->get('phone_small')->setData(380);
+        }
+        $geoip = $this->get('maxmind.geoip')->lookup($clientIp);
+        if ($geoip != false) {
+            $countryCode = $geoip->getCountryCode();
+            if ($countryCode == 'US' && empty($phone)) {
+                $form->get('phone_small')->setData(1);
+            }
+            
+        }
         if( $request->getMethod() == "POST" ){
         
             $form->handleRequest($request);
