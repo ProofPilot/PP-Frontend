@@ -40,14 +40,14 @@ class MenuBuilder extends ContainerAware implements TranslationContainerInterfac
         $menu->addChild('side_dasboard_menu.dashboard', array('route' => '_main'))
                 ->setAttribute('class', 'icon_dashboard branded')->setExtra('translation_domain', 'sidemenu')->setAttribute("news", $surveyscount);
 
-        $menu->addChild('side_dasboard_menu.survey', array('route' => '_main'))
-                ->setAttribute('class', 'icon_survey')->setExtra('translation_domain', 'sidemenu');
-        $menu->addChild('side_dasboard_menu.activities', array('route' => '_main'))
-                ->setAttribute('class', 'icon_activities')->setExtra('translation_domain', 'sidemenu');
-        $menu->addChild('side_dasboard_menu.measurements', array('route' => '_main'))
-                ->setAttribute('class', 'icon_measurments');
-        $menu->addChild('side_dasboard_menu.treatment', array('route' => '_main'))
-                ->setAttribute('class', 'icon_treatment')->setExtra('translation_domain', 'sidemenu');
+//         $menu->addChild('side_dasboard_menu.survey', array('route' => '_main'))
+//                 ->setAttribute('class', 'icon_survey')->setExtra('translation_domain', 'sidemenu');
+//         $menu->addChild('side_dasboard_menu.activities', array('route' => '_main'))
+//                 ->setAttribute('class', 'icon_activities')->setExtra('translation_domain', 'sidemenu');
+//         $menu->addChild('side_dasboard_menu.measurements', array('route' => '_main'))
+//                 ->setAttribute('class', 'icon_measurments');
+//         $menu->addChild('side_dasboard_menu.treatment', array('route' => '_main'))
+//                 ->setAttribute('class', 'icon_treatment')->setExtra('translation_domain', 'sidemenu');
 
         return $menu;
     }
