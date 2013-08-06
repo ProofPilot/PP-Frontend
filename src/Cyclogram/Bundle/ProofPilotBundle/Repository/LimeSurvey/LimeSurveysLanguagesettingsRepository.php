@@ -16,8 +16,8 @@ class LimeSurveysLanguagesettingsRepository extends EntityRepository
     {
         $fallbacks = array(
                 'en'=> array('en'),
-                'es'=> array('es', 'en'),
-                'pt'=> array('pt', 'en'),
+                'es'=> array('es', 'es-MX', 'en'),
+                'pt'=> array('pt', 'pt-BR', 'en'),
                 'fr'=> array('fr', 'en'),
                 'pt_BR'=> array('pt-BR', 'pt', 'en'),
                 'es_MX'=> array('es-MX', 'es', 'en')

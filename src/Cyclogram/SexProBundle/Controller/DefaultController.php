@@ -22,7 +22,6 @@ class DefaultController extends Controller
     {
         $locale = $this->getRequest()->getLocale();
         $em = $this->getDoctrine()->getManager();
-        $language = $em->getRepository("CyclogramProofPilotBundle:Language")->findOneByLocale($locale);
         
         $studyContent = $em->getRepository("CyclogramProofPilotBundle:StudyContent")->getStudyContent($studyUrl, $locale);
         
