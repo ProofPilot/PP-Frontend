@@ -424,6 +424,8 @@ class RegistrationController extends Controller
                 $participant->setParticipantZipcode($form['participantZipcode']);
                 $city = $em->getRepository('CyclogramProofPilotBundle:City')->find($form['cityId']);
                 $participant->setCity($city);
+                if (strtolower(trim($city->getCityName())) != (strtolower(trim($form['city']))))
+                    $participant->setCityName($form['city']);
                 $state = $em->getRepository('CyclogramProofPilotBundle:State')->find($form['stateId']);
                 $participant->setState($state);
                 

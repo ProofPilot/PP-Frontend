@@ -1,7 +1,6 @@
 <?php
 
 namespace Cyclogram\Bundle\ProofPilotBundle\Entity;
-
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -38,7 +37,7 @@ class Participant implements AdvancedUserInterface
     {
         return serialize(array($this->facebookId, parent::serialize()));
     }
-    
+
     public function unserialize($data)
     {
         list($this->facebookId, $parentData) = unserialize($data);
@@ -257,6 +256,12 @@ class Participant implements AdvancedUserInterface
     protected $status;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="city", type="string", length=255, nullable=true)
+     */
+    protected $cityName;
+    /**
      * Get participantId
      *
      * @return integer 
@@ -275,7 +280,7 @@ class Participant implements AdvancedUserInterface
     public function setParticipantEmail($participantEmail)
     {
         $this->participantEmail = $participantEmail;
-    
+
         return $this;
     }
 
@@ -298,7 +303,7 @@ class Participant implements AdvancedUserInterface
     public function setParticipantFirstname($participantFirstname)
     {
         $this->participantFirstname = $participantFirstname;
-    
+
         return $this;
     }
 
@@ -321,7 +326,7 @@ class Participant implements AdvancedUserInterface
     public function setParticipantLastname($participantLastname)
     {
         $this->participantLastname = $participantLastname;
-    
+
         return $this;
     }
 
@@ -344,7 +349,7 @@ class Participant implements AdvancedUserInterface
     public function setParticipantPassword($participantPassword)
     {
         $this->participantPassword = $participantPassword;
-    
+
         return $this;
     }
 
@@ -367,7 +372,7 @@ class Participant implements AdvancedUserInterface
     public function setParticipantUsername($participantUsername)
     {
         $this->participantUsername = $participantUsername;
-    
+
         return $this;
     }
 
@@ -390,7 +395,7 @@ class Participant implements AdvancedUserInterface
     public function setRecoveryPasswordCode($recoveryPasswordCode)
     {
         $this->recoveryPasswordCode = $recoveryPasswordCode;
-    
+
         return $this;
     }
 
@@ -413,7 +418,7 @@ class Participant implements AdvancedUserInterface
     public function setParticipantEmailCode($participantEmailCode)
     {
         $this->participantEmailCode = $participantEmailCode;
-    
+
         return $this;
     }
 
@@ -436,7 +441,7 @@ class Participant implements AdvancedUserInterface
     public function setParticipantEmailConfirmed($participantEmailConfirmed)
     {
         $this->participantEmailConfirmed = $participantEmailConfirmed;
-    
+
         return $this;
     }
 
@@ -459,7 +464,7 @@ class Participant implements AdvancedUserInterface
     public function setParticipantMobileNumber($participantMobileNumber)
     {
         $this->participantMobileNumber = $participantMobileNumber;
-    
+
         return $this;
     }
 
@@ -482,7 +487,7 @@ class Participant implements AdvancedUserInterface
     public function setParticipantMobileSmsCode($participantMobileSmsCode)
     {
         $this->participantMobileSmsCode = $participantMobileSmsCode;
-    
+
         return $this;
     }
 
@@ -506,7 +511,7 @@ class Participant implements AdvancedUserInterface
             $participantMobileSmsCodeConfirmed)
     {
         $this->participantMobileSmsCodeConfirmed = $participantMobileSmsCodeConfirmed;
-    
+
         return $this;
     }
 
@@ -529,7 +534,7 @@ class Participant implements AdvancedUserInterface
     public function setParticipantBirthdate($participantBirthdate)
     {
         $this->participantBirthdate = $participantBirthdate;
-    
+
         return $this;
     }
 
@@ -577,7 +582,7 @@ class Participant implements AdvancedUserInterface
             $participantLastTouchDatetime)
     {
         $this->participantLastTouchDatetime = $participantLastTouchDatetime;
-    
+
         return $this;
     }
 
@@ -600,7 +605,7 @@ class Participant implements AdvancedUserInterface
     public function setParticipantDatetime($participantDatetime)
     {
         $this->participantDatetime = $participantDatetime;
-    
+
         return $this;
     }
 
@@ -623,7 +628,7 @@ class Participant implements AdvancedUserInterface
     public function setParticipantAddress1($participantAddress1)
     {
         $this->participantAddress1 = $participantAddress1;
-    
+
         return $this;
     }
 
@@ -646,7 +651,7 @@ class Participant implements AdvancedUserInterface
     public function setParticipantAddress2($participantAddress2)
     {
         $this->participantAddress2 = $participantAddress2;
-    
+
         return $this;
     }
 
@@ -669,7 +674,7 @@ class Participant implements AdvancedUserInterface
     public function setParticipantZipcode($participantZipcode)
     {
         $this->participantZipcode = $participantZipcode;
-    
+
         return $this;
     }
 
@@ -717,7 +722,7 @@ class Participant implements AdvancedUserInterface
             \Cyclogram\Bundle\ProofPilotBundle\Entity\Country $country = null)
     {
         $this->country = $country;
-    
+
         return $this;
     }
 
@@ -741,7 +746,7 @@ class Participant implements AdvancedUserInterface
             \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantRole $participantRole = null)
     {
         $this->participantRole = $participantRole;
-    
+
         return $this;
     }
 
@@ -765,7 +770,7 @@ class Participant implements AdvancedUserInterface
             \Cyclogram\Bundle\ProofPilotBundle\Entity\Race $race = null)
     {
         $this->race = $race;
-    
+
         return $this;
     }
 
@@ -789,7 +794,7 @@ class Participant implements AdvancedUserInterface
             \Cyclogram\Bundle\ProofPilotBundle\Entity\RecoveryQuestion $recoveryQuestion = null)
     {
         $this->recoveryQuestion = $recoveryQuestion;
-    
+
         return $this;
     }
 
@@ -813,7 +818,7 @@ class Participant implements AdvancedUserInterface
             \Cyclogram\Bundle\ProofPilotBundle\Entity\Sex $sex = null)
     {
         $this->sex = $sex;
-    
+
         return $this;
     }
 
@@ -837,7 +842,7 @@ class Participant implements AdvancedUserInterface
             \Cyclogram\Bundle\ProofPilotBundle\Entity\State $state = null)
     {
         $this->state = $state;
-    
+
         return $this;
     }
 
@@ -861,7 +866,7 @@ class Participant implements AdvancedUserInterface
             \Cyclogram\Bundle\ProofPilotBundle\Entity\Status $status = null)
     {
         $this->status = $status;
-    
+
         return $this;
     }
 
@@ -874,12 +879,12 @@ class Participant implements AdvancedUserInterface
     {
         return $this->status;
     }
-    
+
     public function __toString()
     {
         return $this->participantFirstname . ' ' . $this->participantLastname;
     }
-    
+
     public function isAccountNonExpired()
     {
         return true;
@@ -896,7 +901,7 @@ class Participant implements AdvancedUserInterface
     {
         return true;
     }
-    
+
     /**
      * @param string $facebookId
      * @return void
@@ -906,7 +911,7 @@ class Participant implements AdvancedUserInterface
         $this->facebookId = $facebookId;
         $this->salt = '';
     }
-    
+
     /**
      * @return string
      */
@@ -914,13 +919,13 @@ class Participant implements AdvancedUserInterface
     {
         return $this->facebookId;
     }
-    
+
     public function getUsername()
     {
         // TODO: Implement getUsername() method.
         return $this->getParticipantEmail();
     }
-    
+
     public function setFBData($fbdata)
     {
         if (isset($fbdata['id'])) {
@@ -935,42 +940,56 @@ class Participant implements AdvancedUserInterface
         if (isset($fbdata['email'])) {
             $this->setParticipantEmail($fbdata['email']);
         }
-        if( isset($fbdata['username'])) {
+        if (isset($fbdata['username'])) {
             $this->setParticipantUsername($fbdata['username']);
         }
-//         $this->setParticipantEmail("riv.a.ntsiv@gmail.com");
+        //         $this->setParticipantEmail("riv.a.ntsiv@gmail.com");
     }
 
     public function eraseCredentials()
     {
         // TODO: Implement eraseCredentials() method.
     }
-    
+
     public function getSalt()
     {
         // TODO: Implement getSalt() method.
     }
-    
+
     public function getPassword()
     {
         return $this->participantPassword;
     }
-    
-    public function getRoles(){
-        if(!empty($this->facebookId)) {
-            return array_merge($this->participantRoles, array('ROLE_FACEBOOK_USER'));
+
+    public function getRoles()
+    {
+        if (!empty($this->facebookId)) {
+            return array_merge($this->participantRoles,
+                    array('ROLE_FACEBOOK_USER'));
         } else {
             return array_merge($this->participantRoles, array('ROLE_USER'));
         }
     }
-    
-    public function setRoles($role){
-       $this->participantRoles = $role;
+
+    public function setRoles($role)
+    {
+        $this->participantRoles = $role;
     }
-    
+
     /* @UserInterface */
     public function equals(UserInterface $user)
     {
-        return ( $this->getUsername() === $user->getUsername() );
+        return ($this->getUsername() === $user->getUsername());
     }
+
+    public function getCityName()
+    {
+        return $this->cityName;
+    }
+
+    public function setCityName($cityName)
+    {
+        $this->cityName = $cityName;
+    }
+
 }
