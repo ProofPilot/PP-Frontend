@@ -9,15 +9,14 @@
 {% endblock %}
 
 {% block content %}
-   <div class="site_container">
-{#       {% include '::header.html.twig'%}#}
-      <div class="panel">
-            <div class="panel_left">
-            </div>
-            <div class="panel_right sf-reset">
-              {% include 'TwigBundle:Exception:exception.html.twig' %}
-            </div>
-      </div>
-   </div>
-{#    {% include '::footer.html.twig' %}#}
+    <div class="site_container">
+        {% include 'TwigBundle:Exception:exception.html.twig' %}
+    </div>
+    <style>
+        .site_container {
+            overflow-x: scroll;
+            padding: 20px 50px;
+            background: #fff;
+        }
+    </style>
 {% endblock %}
