@@ -23,6 +23,7 @@ footer .site_container {
 .footer_cyclogram {
 	position: absolute;
 	top: -25px;
+	right: 5px;
 	color: #fff;
 }
 
@@ -1866,10 +1867,11 @@ header .header_menu span.text  , .footer_col_right span.text  {
 	float: left;
 }
 .panel .panel_right .prev_next.for_mobile ul li.back_left {
-	padding-right: 15px;	
+	padding-right: 15px;
+	display: none;	
 }
 .panel .panel_right .prev_next.for_mobile ul li.next_right {
-	
+	display: none;
 }
 .panel .panel_right .prev_next.for_mobile ul li a {
 	margin: 0px !important;	
@@ -3932,6 +3934,11 @@ footer a.icon_update span {
 /* @media screen and (max-width: 1015px) */ 
 @media screen and (max-width: 1015px){
 	
+	iframe {
+		width: 100%;
+		margin-left: 0px !important;
+	}
+	
 	.panel .panel_right .dashboard_panel .prefs_wrapper .form_container .form_row {
 		height: auto;
 		line-height: 18px;
@@ -4100,6 +4107,7 @@ footer a.icon_update span {
 		-webkit-box-sizing:border-box; 	
 		width: 26%;
 		max-width: none;
+		display:none;
 	}
 	.panel .panel_left .study_desc {
 		box-sizing:border-box;
@@ -4112,7 +4120,7 @@ footer a.icon_update span {
 		box-sizing:border-box;
 		-moz-box-sizing:border-box;
 		-webkit-box-sizing:border-box; 	
-		width: 74%;
+		width: 100%;
 		max-width: none;
 			/*background: red;*/
 	}

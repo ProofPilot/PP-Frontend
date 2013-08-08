@@ -190,7 +190,7 @@
 							</div>
 						</div>
 						
-						<iframe src="{{ survey_url }}" id="iframe1" height="800" width="1013""></iframe>
+						<iframe src="{{ survey_url }}" id="iframe1" height="800" width="1014"></iframe>
 				    </div>
 			
 		</div>
@@ -213,11 +213,17 @@
     		}*/
      		$('#iframe1').load(function(){
 
-         		var frameHeight = $(this).contents().find("html").height();
+     			var frame = $(this);
+         		var frameSize = function() {
+         			var frameHeight = frame.contents().find("html").height();
+             		frame.height(frameHeight);
+                }
 
-         		$(this).height(frameHeight);
+         	    frameSize();
+         		
+         		$(window).resize(frameSize);
 
-     			var surveydata = $(this).contents().find('#surveydata');
+     			var surveydata = frame.contents().find('#surveydata');
 		    	var surveyId = surveydata.attr('surveyid');
 		    	var saveId = surveydata.attr('saveid');
 		    	var studyUrl = '{{ studyUrl }}';
@@ -225,8 +231,6 @@
 		    	if(surveyId !== undefined && saveId !== undefined) {
 		    	    window.location = '/' + '{{ app.request.locale }}' + '/surveyResponce?&studyUrl=' + studyUrl + '&surveyId=' + surveyId + '&saveId=' + saveId + '&studyId=' + studyId;
 		    	}
-
-
 
     		});
 		</script>
