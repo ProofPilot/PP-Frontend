@@ -183,6 +183,23 @@ class  SimpleRegistrationController extends Controller{
                             true,
                             $parameters);
                     
+                    $session = $this->getRequest()->getSession();
+                    if ($session->has('SurveyInfo')){
+                        $bag = $session->get('SurveyInfo');
+                        $surveyId = $bag->get('surveyId');
+                        $saveId = $bag->get('saveId');
+                    
+                        $participantLink = new ParticipantSurveyLink();
+                        $participantLink->setParticipantSurveyLinkElegibility(1);
+                        $participantLink->setParticipantSurveyLinkUniqid(uniqid());
+                        $participantLink->setParticipant($participant);
+                        $participantLink->setSidId($surveyId);
+                        $participantLink->setSaveId($saveId);
+                    
+                        $em->persist($participantLink);
+                        $em->flush($participantLink);
+                    }
+                    
                     $token = new UsernamePasswordToken($participant, null, 'main', array('ROLE_USER'));
                     $this->get('security.context')->setToken($token);
                     

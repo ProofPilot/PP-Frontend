@@ -34,14 +34,14 @@ class LimeController extends Controller
         
         $bag = new AttributeBag();
         $bag->setName("SurveyInfo");
+        $array = array();
+        $bag->initialize($array);
+        $bag->set('surveyId', $surveyId);
+        $bag->set('saveId', $saveId);
         $session->registerBag($bag);
-        
-        $session->getBag("SurveyInfo")->initialize(array());
-        $session->getBag("SurveyInfo")->set('surveyId', $surveyId);
-        $session->getBag("SurveyInfo")->set('saveId', $saveId);
+        $session->set('SurveyInfo', $bag);
         
         
-
         
         
         return $this->redirect(($this->generateUrl("_study", array(
