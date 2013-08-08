@@ -180,7 +180,7 @@ class Participant implements AdvancedUserInterface
      *
      * @ORM\ManyToOne(targetEntity="City")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="city_id", referencedColumnName="city_id")
+     *   @ORM\JoinColumn(name="city_id", referencedColumnName="city_id", nullable=true)
      * })
      */
     protected $city;
@@ -190,7 +190,7 @@ class Participant implements AdvancedUserInterface
      *
      * @ORM\ManyToOne(targetEntity="Country")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="country_id", referencedColumnName="country_id")
+     *   @ORM\JoinColumn(name="country_id", referencedColumnName="country_id", nullable=true)
      * })
      */
     protected $country;
@@ -230,7 +230,7 @@ class Participant implements AdvancedUserInterface
      *
      * @ORM\ManyToOne(targetEntity="Sex")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="sex_id", referencedColumnName="sex_id")
+     *   @ORM\JoinColumn(name="sex_id", referencedColumnName="sex_id", nullable=true)
      * })
      */
     protected $sex;
@@ -240,7 +240,7 @@ class Participant implements AdvancedUserInterface
      *
      * @ORM\ManyToOne(targetEntity="State")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="state_id", referencedColumnName="state_id")
+     *   @ORM\JoinColumn(name="state_id", referencedColumnName="state_id", nullable=true)
      * })
      */
     protected $state;
@@ -261,6 +261,27 @@ class Participant implements AdvancedUserInterface
      * @ORM\Column(name="city", type="string", length=255, nullable=true)
      */
     protected $cityName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="education", type="string", length=255, nullable=true)
+     */
+    protected $education;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="income", type="integer", nullable=true)
+     */
+    protected $income;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="age", type="integer", nullable=true)
+     */
+    protected $age;
     /**
      * Get participantId
      *
@@ -990,6 +1011,36 @@ class Participant implements AdvancedUserInterface
     public function setCityName($cityName)
     {
         $this->cityName = $cityName;
+    }
+
+    public function getEducation()
+    {
+        return $this->education;
+    }
+
+    public function setEducation($education)
+    {
+        $this->education = $education;
+    }
+
+    public function getIncome()
+    {
+        return $this->income;
+    }
+
+    public function setIncome($income)
+    {
+        $this->income = $income;
+    }
+
+    public function getAge()
+    {
+        return $this->age;
+    }
+
+    public function setAge($age)
+    {
+        $this->age = $age;
     }
 
 }

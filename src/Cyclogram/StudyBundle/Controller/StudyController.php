@@ -58,15 +58,7 @@ class StudyController extends Controller
      */
     public function studyAction($studyUrl, $studyId)
     {
-        $session = $this->getRequest()->getSession();
-        
-        
-
-        
-        $sutveyId = $session->getBag("SurveyInfo")->get('surveyId');
-        $saveId = $session->getBag("SurveyInfo")->get('saveId');
-        
-        echo "surveyId " . $surveyId . " saveid " . $saveId;
+        $session = $this->getRequest()->getSession();      
         
         
         $locale = $this->getRequest()->getLocale();
