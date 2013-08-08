@@ -2,6 +2,8 @@
 
 namespace Cyclogram\StudyBundle\Controller;
 
+use Symfony\Component\HttpFoundation\Session\Attribute\AttributeBag;
+
 use Cyclogram\Bundle\ProofPilotBundle\Entity\StudyContent;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -56,6 +58,17 @@ class StudyController extends Controller
      */
     public function studyAction($studyUrl, $studyId)
     {
+        $session = $this->getRequest()->getSession();
+        
+        
+
+        
+        $sutveyId = $session->getBag("SurveyInfo")->get('surveyId');
+        $saveId = $session->getBag("SurveyInfo")->get('saveId');
+        
+        echo "surveyId " . $surveyId . " saveid " . $saveId;
+        
+        
         $locale = $this->getRequest()->getLocale();
     
         $studyContent = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:StudyContent')

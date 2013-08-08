@@ -2,6 +2,10 @@
 
 namespace Cyclogram\FrontendBundle\Controller;
 
+use Symfony\Component\HttpFoundation\Session\Attribute\AttributeBag;
+
+use Symfony\Component\HttpFoundation\Session\Session;
+
 use Doctrine\ORM\EntityManager;
 
 use Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantSurveyLink;
@@ -26,17 +30,24 @@ class LimeController extends Controller
         
         $uniqId = uniqid();
         
-//         $ParticipantSurveyLink = new ParticipantSurveyLink();
-//         $ParticipantSurveyLink->setParticipant($this->getDoctrine()->getRepository('CyclogramProofPilotBundle:Participant')->find(1));
-//         $ParticipantSurveyLink->setParticipantSurveyLinkUniqid($uniqId);
-//         $ParticipantSurveyLink->setSaveId($saveId);
-//         $ParticipantSurveyLink->setSidId($surveyId);
+        $session = $this->getRequest()->getSession();
         
-//         $em = $this->getDoctrine()->getManager();
-//         $em->persist($ParticipantSurveyLink);
-//         $em->flush();
+        $bag = new AttributeBag();
+        $bag->setName("SurveyInfo");
+        $session->registerBag($bag);
         
-        return $this->redirect(($this->generateUrl("_study", array('studyId'=> $studyId, 'studyUrl' => $studyUrl))));
+        $session->getBag("SurveyInfo")->initialize(array());
+        $session->getBag("SurveyInfo")->set('surveyId', $surveyId);
+        $session->getBag("SurveyInfo")->set('saveId', $saveId);
+        
+        
+
+        
+        
+        return $this->redirect(($this->generateUrl("_study", array(
+                'studyId'=> $studyId, 
+                'studyUrl' => $studyUrl
+                ))));
 
         
     }
