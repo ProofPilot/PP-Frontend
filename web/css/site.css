@@ -3510,7 +3510,7 @@ footer a.icon_update span {
 	font-size: 12px;
 	color: #cb4937;
 }
-.mobile_reg input.default_input , .mobile_reg.login_form .loginform_right input.text, .mobile_reg .form_fields li.input_right input {
+.mobile_reg input.default_input , .mobile_reg.login_form .loginform_right input.text, .loginform_left input.text, .mobile_reg .form_fields li.input_right input {
 	height: 38px;
 	font-family: 'Roboto';
 	font-style: normal;
@@ -3566,9 +3566,19 @@ footer a.icon_update span {
 	text-align: center;
 	margin-top: -10px;
 }
-.mobile_reg.login_form .loginform_right  span.input_placeholder {
+.mobile_reg.login_form .loginform_right  span.input_placeholder, .loginform_left span.input_placeholder {
 	position: relative;
 	line-height: 38px;
+}
+.loginform_right .checkbox_placeholder {
+	margin-top: 20px;
+}
+.loginform_right .checkbox_placeholder input {
+	float: left;
+	margin-top: 3px;
+}
+.loginform_right .checkbox_placeholder div {
+	padding-left: 20px;
 }
 .mobile_reg.login_form .loginform_right  span.input_placeholder span.mark {
 	position: absolute;
@@ -3866,7 +3876,7 @@ footer a.icon_update span {
 	padding-left: 25px;
 
 }
-.mobile_reg.login_form .loginform_right label {
+.mobile_reg.login_form .loginform_right label, .loginform_left label {
 	color: #6f6f6f;
 	margin-bottom: 3px;
 	display: inline-block;
@@ -3882,13 +3892,13 @@ footer a.icon_update span {
 	margin-left: 10px;
 	display: inline-block;
 }
-.mobile_reg.login_form .loginform_right input.text {
+.mobile_reg.login_form .loginform_right input.text, .loginform_left input.text {
 	height: 32px;
 	line-height: 32px;
 	width: 249px;
 	padding-left: 10px;
 	padding-right: 10px;
-	width: 249px;
+	width: 240px;
 	margin-bottom: 15px;
 	margin-bottom: 12px;
 }
@@ -5208,7 +5218,7 @@ footer a.icon_update span {
 		padding-left: 0px;
 		padding-right: 0px;
 	}
-	.mobile_reg.login_form .loginform_right input.text {
+	.mobile_reg.login_form .loginform_right input.text, .loginform_left input.text {
 		width: 209px;
 	}
 	.reg_btn_placeholder, .login_btn_placeholder {

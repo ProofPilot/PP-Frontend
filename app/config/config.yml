@@ -31,6 +31,9 @@ framework:
 twig:
     debug:            %kernel.debug%
     strict_variables: %kernel.debug%
+    globals:
+        facebook_secret: %facebook.secret%
+        facebook_appid: '%facebook.appid%'
 #    form:
 #        resources:
 #            - 'CyclogramFrontendBundle:Form:fields.html.twig'

@@ -21,14 +21,17 @@ label_phone_wide: 'Phone wide'
 label_repeat_password: 'Repeat password'
 label_state: State
 label_username: Username
+label_voice: 'Voice phone number'
 label_zipcode: 'Zip Code'
 mail_confirmation_fail: 'Failed to confirm the email. No such user!'
 min_charachters: '(8 character min)'
 no_code: 'No Code? Send Another'
 ok_verify: 'OK, Verify!'
 pick_user: 'Pick your Username'
+txt_basics: 'The Basics'
 txt_check_email: 'Please check your email address'
 txt_join: JOIN
+txt_join_google: 'Join with Google'
 txt_join_with: 'Join with'
 txt_subtitle_check_email: 'Please check your email address'
 txt_why: 'Why?'
