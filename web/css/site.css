@@ -4842,7 +4842,7 @@ footer a.icon_update span {
 		margin: 0px;
 	}
 	footer .footer_col_left ul li,
-	footer .footer_col_right ul li  {
+	footer .footer_col_right ul li, .footer_cyclogram  {
 		width: 100%;
 		margin: 0px;
 		box-sizing:border-box;
