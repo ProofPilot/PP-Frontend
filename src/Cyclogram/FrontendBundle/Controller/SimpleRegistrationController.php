@@ -55,11 +55,12 @@ class  SimpleRegistrationController extends Controller{
         if ($clientIp == '127.0.0.1') {
             $form->get('phone_small')->setData(380);
         }
-        $geoip = $this->get('maxmind.geoip')->lookup($clientIp);
+        $geoip = $this->get('maxmind.geoip')->lookup('163.178.55.33');
         if ($geoip != false) {
             $countryCode = $geoip->getCountryCode();
-            if ($countryCode == 'US' && empty($phone)) {
-                $form->get('phone_small')->setData(1);
+            $country = $em->getRepository('CyclogramProofPilotBundle:Country')->findOneByCountryCode($countryCode);
+            if (isset($country)){
+                $form->get('phone_small')->setData($country->getDailingCode());
             }
         }
         if( $request->getMethod() == "POST" ){

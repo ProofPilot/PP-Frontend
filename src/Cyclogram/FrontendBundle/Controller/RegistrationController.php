@@ -278,10 +278,10 @@ class RegistrationController extends Controller
         $geoip = $this->get('maxmind.geoip')->lookup($clientIp);
         if ($geoip != false) {
             $countryCode = $geoip->getCountryCode();
-            if ($countryCode == 'US' && empty($phone)) {
-                $form->get('phone_small')->setData(1);
+            $country = $em->getRepository('CyclogramProofPilotBundle:Country')->findOneByCountryCode($countryCode);
+            if (isset($country)){
+                $form->get('phone_small')->setData($country->getDailingCode());
             }
-            
         }
         if( $request->getMethod() == "POST" ){
         
