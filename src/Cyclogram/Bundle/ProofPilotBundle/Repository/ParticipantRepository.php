@@ -89,5 +89,31 @@ class ParticipantRepository extends EntityRepository implements
                  ->getOneOrNullResult();
         return $result;
     }
+    
+    /**
+     * Get count of participants in arm within age/city group
+     * @param unknown_type $armName
+     * @param unknown_type $city
+     * @param unknown_type $minAge
+     * @param unknown_type $maxAge
+     */
+    public function countArmByCityAge($armName, $city, $minAge, $maxAge) {
+        return $this->getEntityManager()
+        ->createQuery('SELECT COUNT(p) FROM CyclogramProofPilotBundle:ParticipantArmLink pal
+                INNER JOIN pal.participant p
+                INNER JOIN pal.arm a
+                WHERE a.armName = :armname
+                AND p.location = :city
+                AND p.age >= :minage AND p.age < :maxage
+                AND p.participantMobileSmsCodeConfirmed = 1
+                ')
+                ->setParameters(array(
+                        'armname' => $armName,
+                        'minage' => $minAge,
+                        'maxage' => $maxAge,
+                        'city' => $city
+                 ))
+                 ->getSingleScalarResult();
+    }
 
 }

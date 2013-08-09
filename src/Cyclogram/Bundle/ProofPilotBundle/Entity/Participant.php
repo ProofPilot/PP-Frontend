@@ -282,6 +282,14 @@ class Participant implements AdvancedUserInterface
      * @ORM\Column(name="age", type="integer", nullable=true)
      */
     protected $age;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="location", type="string", length=255, nullable=true)
+     */
+    protected $location;
+
     /**
      * Get participantId
      *
@@ -1041,6 +1049,16 @@ class Participant implements AdvancedUserInterface
     public function setAge($age)
     {
         $this->age = $age;
+    }
+
+    public function getLocation()
+    {
+        return $this->location;
+    }
+
+    public function setLocation($location)
+    {
+        $this->location = $location;
     }
 
 }

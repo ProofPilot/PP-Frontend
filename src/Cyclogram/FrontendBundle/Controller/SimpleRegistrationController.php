@@ -2,6 +2,8 @@
 
 namespace Cyclogram\FrontendBundle\Controller;
 
+use Cyclogram\FrontendBundle\Service\LimeSurvey;
+
 use Cyclogram\FrontendBundle\Form\UserSmsCodeForm;
 
 use Symfony\Component\HttpKernel\EventListener\ResponseListener;
@@ -21,6 +23,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Cyclogram\FrontendBundle\Form\MobilePhoneForm;
 use Cyclogram\FrontendBundle\Form\RegistrationForm;
 use Cyclogram\Bundle\ProofPilotBundle\Entity\Participant;
+use Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantSurveyLink;
 
 
 class  SimpleRegistrationController extends Controller{
@@ -199,6 +202,9 @@ class  SimpleRegistrationController extends Controller{
                         $em->persist($participantLink);
                         $em->flush($participantLink);
                     }
+                    
+                    $ls = $this->get('fpp_ls');
+                    $ls->sexproRegistration($participant->getParticipantId());
                     
                     $token = new UsernamePasswordToken($participant, null, 'main', array('ROLE_USER'));
                     $this->get('security.context')->setToken($token);
