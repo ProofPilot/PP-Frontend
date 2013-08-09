@@ -31,7 +31,6 @@ pick_user: 'Pick your Username'
 txt_basics: 'The Basics'
 txt_check_email: 'Please check your email address'
 txt_join: JOIN
-txt_join_google: 'Join with Google'
 txt_join_with: 'Join with'
 txt_subtitle_check_email: 'Please check your email address'
 txt_why: 'Why?'
