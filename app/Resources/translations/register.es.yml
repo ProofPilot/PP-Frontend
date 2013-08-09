@@ -27,8 +27,10 @@ min_charachters: '(8 caractéres mínimo)'
 no_code: '¿Sin código? Enviar otro'
 ok_verify: 'Ok, ¡verifique!'
 pick_user: 'Escoja su usuario'
+txt_basics: txt_basics
 txt_check_email: txt_check_email
 txt_join: Unase
+txt_join_google: txt_join_google   # FIXME
 txt_join_with: 'Unase con'
 txt_subtitle_check_email: txt_subtitle_check_email
 txt_why: '¿Por qué?'
