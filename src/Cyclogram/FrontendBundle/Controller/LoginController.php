@@ -69,11 +69,21 @@ class LoginController extends Controller
     }
     
     /**
-     * @Route("/secured/", name="_fb_security_check")
+     * @Route("/check_facebook", name="facebook_login")
      */
-    public function facebookSecuredAction() {
+    public function facebookCheckAction()
+    {
         
     }
+    
+    /**
+     * @Route("/check_google", name="google_login")
+     */
+    public function googleCheckAction()
+    {
+    
+    }
+    
 
     /**
      * @Route("/logout", name="_logout" , options={"expose"=true})

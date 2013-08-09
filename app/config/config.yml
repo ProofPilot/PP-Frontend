@@ -1,7 +1,7 @@
 imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
-    - { resource: facebook.yml }
+    - { resource: oauth2.yml }    
     - { resource: services.yml }
     - { resource: knp.yml }
     
@@ -123,6 +123,7 @@ jms_translation:
             #extractors: [alias_of_the_extractor]
     locales: %locales%
 
+#JMS Aspect-oriented-programming
 jms_aop:
     cache_dir: %kernel.cache_dir%/jms_aop
     

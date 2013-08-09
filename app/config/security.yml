@@ -14,11 +14,10 @@ security:
     providers:
         chain_provider: 
             chain:
-                providers: [main, fos_facebook]
+                providers: [main]
         main:
             entity: { class: CyclogramProofPilotBundle:Participant }
-        fos_facebook:
-            id: my.facebook.user
+
 
     firewalls:
         dev:
@@ -26,14 +25,16 @@ security:
             security: false
 
         secured_area:
+            oauth:
+                resource_owners:
+                    facebook:          facebook_login
+                    google:            google_login
+                login_path: _login
+                failure_path: _login
+                oauth_user_provider:
+                    service: frontend.oauth_aware.user_provider.service
             pattern: ^/
             anonymous:  ~
-            fos_facebook:
-                provider: fos_facebook
-                check_path: _fb_security_check
-                login_path: _login
-                app_url: "http://apps.facebook.com/Proofpilot_sexpro/"
-                server_url: "http://localhost/facebookApp/"
             form_login:
                 provider: main
                 check_path: login_check

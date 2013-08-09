@@ -20,19 +20,67 @@
                           }
             });                            
         }
+
+        function fb_login() {
+            FB.getLoginStatus(function(response) {
+                if (response.status === 'connected') {
+                    // connected
+                    alert('Already connected, redirect to login page to create token.');
+                    document.location = "{{ url("hwi_oauth_service_redirect", {service: "facebook"}) }}";
+                } else {
+                    // not_authorized
+                    FB.login(function(response) {
+                        if (response.authResponse) {
+                            document.location = "{{ url("hwi_oauth_service_redirect", {service: "facebook"}) }}";
+                        } else {
+                            alert('Cancelled.');
+                        }
+                    });
+                }
+            });
+        }
+
+
+        
         
         $(document).ready(function(){
             $('#facebook_button').click(function()
                  { 
-                         FB.login(null, {scope: "email"});
+                     fb_login();
                  });
-           });
+
+            $('#expand_google_form').click(function()
+                {
+                    alert('hello');
+                });
+
+            
+        });
 </script> 
 
 {% endblock javascripts %}
 
 {% block content %}
-		{{ facebook_initialize({'async': true, 'xfbml': true, 'fbAsyncInit': 'onFbInit();'}) }}
+        <script type="text/javascript">
+            window.fbAsyncInit = function() {
+                FB.init({
+                    "appId":"584886061542799",
+                    "xfbml":true,
+                    "oauth":true,
+                    "status":true,
+                    "cookie":true,
+                    "logging":true});
+            };
+            
+            // Load the SDK asynchronously
+            (function(d, s, id){
+               var js, fjs = d.getElementsByTagName(s)[0];
+               if (d.getElementById(id)) {return;}
+               js = d.createElement(s); js.id = id;
+               js.src = "//connect.facebook.net/en_US/all.js";
+               fjs.parentNode.insertBefore(js, fjs);
+             }(document, 'script', 'facebook-jssdk'));
+        </script>
 
 		<div class="mobile_reg login_form">
 			
@@ -44,7 +92,10 @@
 				
 					<div class="btns_wapper">
 						<form>
-						{{ facebook_login_button({'autologoutlink': true}, 'CyclogramFrontendBundle:Facebook:loginButton.html.twig') }}
+{# 						{{ facebook_login_button({'autologoutlink': true}, 'CyclogramFrontendBundle:Facebook:loginButton.html.twig') }}#}
+						<a id="facebook_button" class="btn_reg fb" href="#">
+                            <span>Login with Facebook</span>
+                        </a>
 {# 							<a class="btn_reg fb" href="#"><span>Login with Facebook</span></a>#}
 						</form>
 						<form>
@@ -78,4 +129,8 @@
 			</div>
 		</div>
 		<div class="login_btn_placeholder">{% trans from "login" %}havent_joined{% endtrans %} <a href="{{ path('_registration') }}">Register</a></div>
+		
+{#         {% render(controller('HWIOAuthBundle:Connect:connect')) %}#}
+		
+		
 {% endblock content %}
