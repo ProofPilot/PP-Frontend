@@ -185,26 +185,16 @@ class  SimpleRegistrationController extends Controller{
                             $embedded,
                             true,
                             $parameters);
-                    
+                    $ls = $this->get('fpp_ls');
                     $session = $this->getRequest()->getSession();
                     if ($session->has('SurveyInfo')){
                         $bag = $session->get('SurveyInfo');
                         $surveyId = $bag->get('surveyId');
                         $saveId = $bag->get('saveId');
-                    
-                        $participantLink = new ParticipantSurveyLink();
-                        $participantLink->setParticipantSurveyLinkElegibility(1);
-                        $participantLink->setParticipantSurveyLinkUniqid(uniqid());
-                        $participantLink->setParticipant($participant);
-                        $participantLink->setSidId($surveyId);
-                        $participantLink->setSaveId($saveId);
-                    
-                        $em->persist($participantLink);
-                        $em->flush($participantLink);
+                        $ls->participantStudyLinkRegistration($surveyId, $saveId, $participant);
                     }
                     
-                    $ls = $this->get('fpp_ls');
-                    $ls->sexproRegistration($participant->getParticipantId());
+                    $ls->studyRegistration($participant->getParticipantId(), $studyId);
                     
                     $token = new UsernamePasswordToken($participant, null, 'main', array('ROLE_USER'));
                     $this->get('security.context')->setToken($token);
