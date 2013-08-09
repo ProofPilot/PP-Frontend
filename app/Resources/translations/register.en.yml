@@ -21,6 +21,7 @@ label_phone_wide: 'Phone wide'
 label_repeat_password: 'Repeat password'
 label_state: State
 label_username: Username
+label_voice: 'Voice phone number'
 label_zipcode: 'Zip Code'
 mail_confirmation_fail: 'Failed to confirm the email. No such user!'
 min_charachters: '(8 character min)'
