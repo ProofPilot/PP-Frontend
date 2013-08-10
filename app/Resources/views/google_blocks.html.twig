@@ -1,0 +1,30 @@
+{% block scripts_google %}
+<script type="text/javascript">
+
+function g_login() {
+    var parameters = {
+    	    client_id: "{{ google_clientid }}",
+    	    immediate: false,
+    	    response_type: "token",
+    	    scope: "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile"
+    	    };
+    gapi.auth.authorize(parameters, function(token) {
+
+        if(token)
+            document.location = "{{ url("hwi_oauth_service_redirect", {service: "google"}) }}";
+
+
+        });
+}
+
+
+(function() {
+    var po = document.createElement('script');
+    po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://plus.google.com/js/client:plusone.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(po, s);
+  })();
+
+</script>
+{% endblock scripts_google %}

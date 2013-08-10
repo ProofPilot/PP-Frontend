@@ -67,23 +67,7 @@ class LoginController extends Controller
     {
         // The security layer will intercept this request
     }
-    
-    /**
-     * @Route("/check_facebook", name="facebook_login")
-     */
-    public function facebookCheckAction()
-    {
-        
-    }
-    
-    /**
-     * @Route("/check_google", name="google_login")
-     */
-    public function googleCheckAction()
-    {
-    
-    }
-    
+
 
     /**
      * @Route("/logout", name="_logout" , options={"expose"=true})

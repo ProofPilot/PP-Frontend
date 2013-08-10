@@ -16,8 +16,8 @@ hwi_oauth:
     resource_owners:
         google:
             type:                google
-            client_id:           796264001693-svobjvmkur2ddpbnjquvjk1lf1ldqsk2.apps.googleusercontent.com
-            client_secret:       wQdG-6xfkhwFjW1VG0EIQPeV
+            client_id:           %google.client_id%
+            client_secret:       %google.client_secret%
             scope:               "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile"
         facebook:
             type:                facebook
@@ -26,7 +26,6 @@ hwi_oauth:
             scope:               email
             paths:
                 email:           email
-                facebookId:      id
             options:
                 display: popup
     http_client:

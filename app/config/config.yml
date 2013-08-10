@@ -34,6 +34,8 @@ twig:
     globals:
         facebook_secret: %facebook.secret%
         facebook_appid: '%facebook.appid%'
+        google_clientid: %google.client_id%
+        google_clientsecret: %google.client_secret%
 #    form:
 #        resources:
 #            - 'CyclogramFrontendBundle:Form:fields.html.twig'

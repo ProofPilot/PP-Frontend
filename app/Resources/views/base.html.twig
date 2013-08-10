@@ -53,7 +53,6 @@
   {% block body %}
   <body class="has_image" {% if studyId is defined %}{{ study_background(studyId)|raw }}{% endif %}>
       {% block scripts_facebook %}{% endblock scripts_facebook %}
-      {% block scripts_google %}{% endblock scripts_google %}
       <div class="block_wrapper">
       {% include '::header_reg.html.twig' %}
       {% block content %}
@@ -61,6 +60,7 @@
       <div class="push"></div>
       </div>
       {% include '::footer_reg.html.twig' %}
+      {% block scripts_google %}{% endblock scripts_google %}
   </body>
   {% endblock body %}
 

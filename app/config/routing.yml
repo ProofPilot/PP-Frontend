@@ -4,6 +4,12 @@ hwi_oauth_redirect:
 
 fos_js_routing:
     resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+    
+google_login:
+    pattern: /check_google
+    
+facebook_login:
+    pattern: /check_facebook
 
 _root:
     path: /{study}
