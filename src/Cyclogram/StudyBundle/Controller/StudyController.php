@@ -135,6 +135,12 @@ class StudyController extends Controller
     {
         $parameters = array();
         $parameters["studyId"] = $studyId;
+        $locale = $this->getRequest()->getLocale();
+        $em = $this->getDoctrine()->getManager();
+        
+        $studyContent = $em->getRepository("CyclogramProofPilotBundle:StudyContent")->getStudyContentById($studyId, $locale);
+        
+        $parameters["studyUrl"] = $studyContent->getStudyUrl();
         
         
         $locale = $this->getRequest()->getLocale();
