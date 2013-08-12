@@ -5,6 +5,7 @@ use Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantArmLink;
 
 use Symfony\Component\DependencyInjection\Container;
 use Cyclogram\Bundle\ProofPilotBundle\Entity\Participant;
+use Cyclogram\CyclogramCommon;
 
 class LimeSurvey
 {
@@ -15,15 +16,114 @@ class LimeSurvey
         $this->container = $container;
     }
     
-    private function sexproRegistration($participantId) {
+    private function knowAtHomeRegistration ($participant, $surveyId, $saveId) {
+        
+        
+        //insert participant_campaign_link
+        $em = $this->container->get('doctrine')->getEntityManager();
+        $campaignRepo = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Campaign');
+        $campaign = $campaignRepo->find(1);
+        
+        $participantLevelRepo = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:ParticipantLevel');
+        $participantLevel = $participantLevelRepo->find( 2 );
+        
+        //Campaign
+        $ParticipantCampaignLinkCountData =  $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:ParticipantCampaignLink')
+        ->findBy( array("participantCampaignLinkParticipantEmail"=>$participant->getParticipantEmail()) );
+        
+        $ParticipantCampaignLinkCount = ( is_array($ParticipantCampaignLinkCountData) ) ? count($ParticipantCampaignLinkCountData) : 0;
+        
+        $participantCampaignLinkId = CyclogramCommon::generateParticipantCampaignLinkID(
+                $participantLevel->getParticipantLevelId(),
+                $participant->getParticipantId(),
+                $campaign->getCampaignId(),
+                $ParticipantCampaignLinkCount
+        );
+        
+        $uniqId = uniqid();
+        
+        //ParticipantCampaignLink
+        $campaignLink = new \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantCampaignLink();
+        $campaignLink->setParticipant( $participant );
+        $campaignLink->setCampaign( $campaign );
+        $campaignLink->setParticipantLevel( $participantLevel );
+        $campaignLink->setParticipantSurveyLinkUniqid( $uniqId );
+        $campaignLink->setParticipantCampaignLinkId( $participantCampaignLinkId );
+        $campaignLink->setParticipantCampaignLinkParticipantEmail( $participant->getParticipantEmail() );
+        $campaignLink->setParticipantCampaignLinkIpAddress( $_SERVER['REMOTE_ADDR'] );
+        $campaignLink->setParticipantCampaignLinkDatetime( new \DateTime("now") );
+        
+        $em->persist( $campaignLink );
+        $em->flush();
+        
+        $this->participantSurveyLinkRegistration($surveyId, $saveId, $participant, $uniqId);
+        
+        //Add participants to Default Arm at the moment.
+        $armData = $em->getRepository('CyclogramProofPilotBundle:Arm')->find( 5 );
+        $armData = ( ! is_null( $armData )  ) ? $armData : false;
+        
+        $armStatus = $em->getRepository('CyclogramProofPilotBundle:Status')->find( 1 );
+        $armStatus = ( ! is_null( $armStatus ) ) ? $armStatus : false;
+        
+        $ArmParticipantLink = null;
+        if( $armData ){
+            $ArmParticipantLink = new \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantArmLink();
+            $ArmParticipantLink->setArm($armData);
+            $ArmParticipantLink->setParticipant($participant);
+            $ArmParticipantLink->setStatus($armStatus);
+            $ArmParticipantLink->setParticipantArmLinkDatetime( new \DateTime("now") );
+        }
+        $em->persist($ArmParticipantLink);
+        
+        $em->flush();
+    }
+    
+    private function sexproRegistration($participant, $surveyId, $saveId) {
+        
+        $em = $this->container->get('doctrine')->getEntityManager();
+        //insert participant_campaign_link
+        $campaignRepo = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Campaign');
+        $campaign = $campaignRepo->find(4);
+        
+        $participantLevelRepo = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:ParticipantLevel');
+        $participantLevel = $participantLevelRepo->find( 2 );
+        
+        //Campaign
+        $ParticipantCampaignLinkCountData =  $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:ParticipantCampaignLink')
+        ->findBy( array("participantCampaignLinkParticipantEmail"=>$participant->getParticipantEmail()) );
+        
+        $ParticipantCampaignLinkCount = ( is_array($ParticipantCampaignLinkCountData) ) ? count($ParticipantCampaignLinkCountData) : 0;
+        
+        $participantCampaignLinkId = CyclogramCommon::generateParticipantCampaignLinkID(
+                $participantLevel->getParticipantLevelId(),
+                $participant->getParticipantId(),
+                $campaign->getCampaignId(),
+                $ParticipantCampaignLinkCount
+        );
+        
+        $uniqId = uniqid();
+        
+        //ParticipantCampaignLink
+        $campaignLink = new \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantCampaignLink();
+        $campaignLink->setParticipant( $participant );
+        $campaignLink->setCampaign( $campaign );
+        $campaignLink->setParticipantLevel( $participantLevel );
+        $campaignLink->setParticipantSurveyLinkUniqid( $uniqId );
+        $campaignLink->setParticipantCampaignLinkId( $participantCampaignLinkId );
+        $campaignLink->setParticipantCampaignLinkParticipantEmail( $participant->getParticipantEmail() );
+        $campaignLink->setParticipantCampaignLinkIpAddress( $_SERVER['REMOTE_ADDR'] );
+        $campaignLink->setParticipantCampaignLinkDatetime( new \DateTime("now") );
+        
+        $em->persist( $campaignLink );
+        $em->flush();
+        
+        $this->participantSurveyLinkRegistration($surveyId, $saveId, $participant, $uniqId);
+        
         $surveyId = 468727;
         $sexProBaselineArm = 'SexProBaseLine';
         $sexPro3MonthArm = 'SexPro3Month';
         
         $em = $this->container->get('doctrine')->getEntityManager();
-        
-        $participant = $em->getRepository('CyclogramProofPilotBundle:Participant')->find($participantId);
-        
         $participantSurveyLink = $em->getRepository('CyclogramProofPilotBundle:ParticipantSurveyLink')->findOneBySidId($surveyId);
         if (isset($participantSurveyLink)) {
             $saveId = $participantSurveyLink->getSaveId();
@@ -81,18 +181,25 @@ class LimeSurvey
         }
     }
     
-    public function studyRegistration($participantId, $studyId) {
-        if ($studyId == 7)
-            $this->sexproRegistration($participantId);
+    public function studyRegistration($participant, $studyId, $surveyId, $saveId) {
+        
+        switch($studyId) {
+            case 7:
+                $this->sexproRegistration($participant, $surveyId, $saveId);
+                break;
+            case 1:
+                $this->knowAtHomeRegistration($participant, $surveyId, $saveId);
+                break;
+        }
         
     }
     
-    public function participantStudyLinkRegistration($surveyId, $saveId, $participant) {
+    private function participantSurveyLinkRegistration($surveyId, $saveId, $participant, $uniqId) {
         $em = $this->container->get('doctrine')->getEntityManager();
         
         $participantLink = $em->getRepository('CyclogramProofPilotBundle:ParticipantSurveyLink')->getParticipantSurveyLink($participant, $surveyId, $saveId);
         $participantLink->setParticipantSurveyLinkElegibility(1);
-        $participantLink->setParticipantSurveyLinkUniqid(uniqid());
+        $participantLink->setParticipantSurveyLinkUniqid($uniqId);
         $participantLink->setParticipant($participant);
         $participantLink->setSidId($surveyId);
         $participantLink->setSaveId($saveId);

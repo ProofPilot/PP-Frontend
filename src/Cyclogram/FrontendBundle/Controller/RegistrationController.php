@@ -48,10 +48,10 @@ class RegistrationController extends Controller
 {
 
     /**
-     * @Route("/register/{studyId}/{svid}/{sid}", name="_registration", defaults={"studyId"= null})
+     * @Route("/register/{studyId}", name="_registration", defaults={"studyId"= null})
      * @Template()
      */
-    public function step1Action($studyId=null, $svid=0, $sid=0)
+    public function step1Action($studyId=null)
     {
         if ($this->get('security.context')->isGranted("ROLE_USER")){
             return $this->redirect($this->generateURL("_main"));
@@ -100,76 +100,6 @@ class RegistrationController extends Controller
                     $em->persist($participant);
                     $em->flush();
 
-                    if($studyId == 1) {
-
-                        //insert participant_campaign_link
-                        $campaignRepo = $this->getDoctrine()
-                            ->getRepository('CyclogramProofPilotBundle:Campaign');
-                        $campaign = $campaignRepo->find(1);
-
-                        $participantLevelRepo = $this->getDoctrine()
-                            ->getRepository('CyclogramProofPilotBundle:ParticipantLevel');
-                        $participantLevel = $participantLevelRepo->find( 2 );
-
-                        //Campaign
-                        $ParticipantCampaignLinkCountData =  $this->getDoctrine()
-                            ->getRepository('CyclogramProofPilotBundle:ParticipantCampaignLink')->findBy( array("participantCampaignLinkParticipantEmail"=>$participant->getParticipantEmail()) );
-
-                        $ParticipantCampaignLinkCount = ( is_array($ParticipantCampaignLinkCountData) ) ? count($ParticipantCampaignLinkCountData) : 0;
-
-                        $participantCampaignLinkId = CyclogramCommon::generateParticipantCampaignLinkID(
-                            $participantLevel->getParticipantLevelId(),
-                            $participant->getParticipantId(),
-                            $campaign->getCampaignId(),
-                            $ParticipantCampaignLinkCount
-                        );
-
-                        $uniqId = uniqid();
-
-                        //ParticipantCampaignLink
-                        $campaignLink = new \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantCampaignLink();
-                        $campaignLink->setParticipant( $participant );
-                        $campaignLink->setCampaign( $campaign );
-                        $campaignLink->setParticipantLevel( $participantLevel );
-                        $campaignLink->setParticipantSurveyLinkUniqid( $uniqId );
-                        $campaignLink->setParticipantCampaignLinkId( $participantCampaignLinkId );
-                        $campaignLink->setParticipantCampaignLinkParticipantEmail( $participant->getParticipantEmail() );
-                        $campaignLink->setParticipantCampaignLinkIpAddress( $_SERVER['REMOTE_ADDR'] );
-                        $campaignLink->setParticipantCampaignLinkDatetime( new \DateTime("now") );
-
-                        $em->persist( $campaignLink );
-                        $em->flush();
-
-                        $participantSurveyLink = new \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantSurveyLink();
-                        $participantSurveyLink->setParticipant($participant);
-                        $participantSurveyLink->setSaveId($svid);
-                        $participantSurveyLink->setSidId($sid);
-                        $participantSurveyLink->setParticipantSurveyLinkUniqid( $uniqId );
-                        $participantSurveyLink->setParticipantSurveyLinkElegibility(1);
-
-                        $em->persist( $participantSurveyLink );
-                        $em->flush();
-
-                        //Add participants to Default Arm at the moment.
-                        $armData = $em->getRepository('CyclogramProofPilotBundle:Arm')->find( 5 );
-                        $armData = ( ! is_null( $armData )  ) ? $armData : false;
-
-                        $armStatus = $em->getRepository('CyclogramProofPilotBundle:Status')->find( 1 );
-                        $armStatus = ( ! is_null( $armStatus ) ) ? $armStatus : false;
-
-                        $ArmParticipantLink = null;
-                        if( $armData ){
-                            $ArmParticipantLink = new \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantArmLink();
-                            $ArmParticipantLink->setArm($armData);
-                            $ArmParticipantLink->setParticipant($participant);
-                            $ArmParticipantLink->setStatus($armStatus);
-                            $ArmParticipantLink->setParticipantArmLinkDatetime( new \DateTime("now") );
-                        }
-                        $em->persist($ArmParticipantLink);
-
-                        $em->flush();
-                    }
-
                     if (!empty($studyId)){
                         if ($study->getEmailVerificationRequired()) {
                             return $this->redirect( $this->generateUrl("reg_step_2", array('id' => $participant->getParticipantId(), 'studyId' => $studyId)));
@@ -197,9 +127,7 @@ class RegistrationController extends Controller
             return $this->render('CyclogramFrontendBundle:Registration:step1_register.html.twig', 
                     array (
                             'form' => $form->createView(), 
-                            'totalSteps' => $totalSteps, 
-                            'sid'=>$sid, 
-                            "svid"=>$svid));
+                            'totalSteps' => $totalSteps));
         
         }
 
@@ -437,21 +365,27 @@ class RegistrationController extends Controller
                 $em->flush($participant);
                 
                 $ls = $this->get('fpp_ls');
+                
+
                 $session = $this->getRequest()->getSession();
                 if ($session->has('SurveyInfo')){
                     $bag = $session->get('SurveyInfo');
                     $surveyId = $bag->get('surveyId');
                     $saveId = $bag->get('saveId');
-                    $ls->participantStudyLinkRegistration($surveyId, $saveId, $participant);
+                    
+                    if($studyId)
+                        $ls->studyRegistration($participant, $studyId, $surveyId, $saveId);
                 }
                 
-                $session = $this->getRequest()->getSession();
+
                 $resourceOwnerName = $session->get("resourceOwnerName");
                 $roles = array("ROLE_USER");
                 if($resourceOwnerName == "facebook") {
-                    array_push($roles, "ROLE_FACEBOOK_USER");
+                        $roles = array_merge($roles, array("ROLE_FACEBOOK_USER", "ROLE_PARTICIPANT"));
                 } else if($resourceOwnerName == "google") {
-                    array_push($roles, "ROLE_GOOGLE_USER");
+                        $roles = array_merge($roles, array("ROLE_GOOGLE_USER", "ROLE_PARTICIPANT"));
+                } else {
+                        $roles = array_merge($roles, array("ROLE_PARTICIPANT"));
                 }
                 $session->remove("resourceOwnerName");
                 

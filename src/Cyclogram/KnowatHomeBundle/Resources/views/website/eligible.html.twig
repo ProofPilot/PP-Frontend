@@ -28,8 +28,9 @@
 
         <h2>You Are Eligible</h2>
 
+        {% set redirectUrl = url_encode(path('_registration', {studyId:studyId})) %}
         <ul class="mainNavButtons">
-            <li><a class="NavButton" href="{{ path('_registration', {studyId:studyId, svid:svid, sid:sid}) }}">Next</a></li>
+            <li><a class="NavButton" href="{{ path('_record_survey', {surveyId:svid, saveId:sid, redirectUrl: redirectUrl}) }}">Next</a></li>
         </ul>
 
         <br />

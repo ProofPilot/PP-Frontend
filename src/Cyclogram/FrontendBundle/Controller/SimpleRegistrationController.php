@@ -187,15 +187,18 @@ class  SimpleRegistrationController extends Controller{
                             true,
                             $parameters);
                     $ls = $this->get('fpp_ls');
+                    
                     $session = $this->getRequest()->getSession();
                     if ($session->has('SurveyInfo')){
                         $bag = $session->get('SurveyInfo');
                         $surveyId = $bag->get('surveyId');
                         $saveId = $bag->get('saveId');
-                        $ls->participantStudyLinkRegistration($surveyId, $saveId, $participant);
+                        
+                        if($studyId)
+                            $ls->studyRegistration($participant, $studyId, $surveyId, $saveId);
                     }
                     
-                    $session = $this->getRequest()->getSession();
+
                     $resourceOwnerName = $session->get("resourceOwnerName");
                     $roles = array("ROLE_USER");
                     if($resourceOwnerName == "facebook") {

@@ -17,7 +17,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class LimeController extends Controller
 {
     /**
-     * @Route("/surveyResponce", name="_record_survey")
+     * @Route("/surveyResponse", name="_record_survey")
      */
     public function recordSurveyAction() {
         
@@ -25,10 +25,13 @@ class LimeController extends Controller
         
         $surveyId = $this->getRequest()->query->get('surveyId');
         $saveId = $this->getRequest()->query->get('saveId');
-        $studyUrl = $this->getRequest()->query->get('studyUrl');
-        $studyId = $this->getRequest()->query->get('studyId');
         
-        $uniqId = uniqid();
+        $redirectUrl = $this->getRequest()->query->get('redirectUrl');
+        
+        
+        //$studyUrl = $this->getRequest()->query->get('studyUrl');
+        //$studyId = $this->getRequest()->query->get('studyId');
+
         
         $session = $this->getRequest()->getSession();
         
@@ -42,12 +45,13 @@ class LimeController extends Controller
         $session->set('SurveyInfo', $bag);
         
         
+        return $this->redirect($redirectUrl);
         
         
-        return $this->redirect(($this->generateUrl("_study", array(
-                'studyId'=> $studyId, 
-                'studyUrl' => $studyUrl
-                ))));
+//         return $this->redirect(($this->generateUrl("_study", array(
+//                 'studyId'=> $studyId, 
+//                 'studyUrl' => $studyUrl
+//                 ))));
 
         
     }
