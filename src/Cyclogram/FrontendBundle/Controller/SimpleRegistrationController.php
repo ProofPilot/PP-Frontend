@@ -2,6 +2,8 @@
 
 namespace Cyclogram\FrontendBundle\Controller;
 
+use Cyclogram\FrontendBundle\Service\LimeSurvey;
+
 use Cyclogram\FrontendBundle\Form\UserSmsCodeForm;
 
 use Symfony\Component\HttpKernel\EventListener\ResponseListener;
@@ -21,6 +23,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Cyclogram\FrontendBundle\Form\MobilePhoneForm;
 use Cyclogram\FrontendBundle\Form\RegistrationForm;
 use Cyclogram\Bundle\ProofPilotBundle\Entity\Participant;
+use Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantSurveyLink;
 
 
 class  SimpleRegistrationController extends Controller{
@@ -55,8 +58,9 @@ class  SimpleRegistrationController extends Controller{
         $geoip = $this->get('maxmind.geoip')->lookup($clientIp);
         if ($geoip != false) {
             $countryCode = $geoip->getCountryCode();
-            if ($countryCode == 'US' && empty($phone)) {
-                $form->get('phone_small')->setData(1);
+            $country = $em->getRepository('CyclogramProofPilotBundle:Country')->findOneByCountryCode($countryCode);
+            if (isset($country)){
+                $form->get('phone_small')->setData($country->getDailingCode());
             }
         }
         if( $request->getMethod() == "POST" ){
@@ -182,22 +186,13 @@ class  SimpleRegistrationController extends Controller{
                             $embedded,
                             true,
                             $parameters);
-                    
+                    $ls = $this->get('fpp_ls');
                     $session = $this->getRequest()->getSession();
                     if ($session->has('SurveyInfo')){
                         $bag = $session->get('SurveyInfo');
                         $surveyId = $bag->get('surveyId');
                         $saveId = $bag->get('saveId');
-                    
-                        $participantLink = new ParticipantSurveyLink();
-                        $participantLink->setParticipantSurveyLinkElegibility(1);
-                        $participantLink->setParticipantSurveyLinkUniqid(uniqid());
-                        $participantLink->setParticipant($participant);
-                        $participantLink->setSidId($surveyId);
-                        $participantLink->setSaveId($saveId);
-                    
-                        $em->persist($participantLink);
-                        $em->flush($participantLink);
+                        $ls->participantStudyLinkRegistration($surveyId, $saveId, $participant);
                     }
                     
                     $session = $this->getRequest()->getSession();

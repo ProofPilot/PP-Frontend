@@ -92,16 +92,6 @@ class RegistrationController extends Controller
                     $date = new \DateTime();
                     $participant->setParticipantLastTouchDatetime($date);
                     $participant->setParticipantZipcode('');
-                    $country = $em->getRepository('CyclogramProofPilotBundle:Country')->find(1);
-                    $participant->setCountry($country);
-                    $state =  $em->getRepository('CyclogramProofPilotBundle:State')->find(35);
-                    $participant->setState($state);
-                    $city = $em->getRepository('CyclogramProofPilotBundle:City')->find(25420);
-                    $participant->setCity($city);
-                    $sex = $em->getRepository('CyclogramProofPilotBundle:Sex')->find(1);
-                    $participant->setSex($sex);
-                    $race = $em->getRepository('CyclogramProofPilotBundle:Race')->find(1);
-                    $participant->setRace($race);
                     $role = $em->getRepository('CyclogramProofPilotBundle:ParticipantRole')->find(1);
                     $participant->setParticipantRole($role);
                     $status = $em->getRepository('CyclogramProofPilotBundle:Status')->find(1);
@@ -288,10 +278,10 @@ class RegistrationController extends Controller
         $geoip = $this->get('maxmind.geoip')->lookup($clientIp);
         if ($geoip != false) {
             $countryCode = $geoip->getCountryCode();
-            if ($countryCode == 'US' && empty($phone)) {
-                $form->get('phone_small')->setData(1);
+            $country = $em->getRepository('CyclogramProofPilotBundle:Country')->findOneByCountryCode($countryCode);
+            if (isset($country)){
+                $form->get('phone_small')->setData($country->getDailingCode());
             }
-            
         }
         if( $request->getMethod() == "POST" ){
         
@@ -446,21 +436,13 @@ class RegistrationController extends Controller
                 $em->persist($participant);
                 $em->flush($participant);
                 
+                $ls = $this->get('fpp_ls');
                 $session = $this->getRequest()->getSession();
                 if ($session->has('SurveyInfo')){
                     $bag = $session->get('SurveyInfo');
                     $surveyId = $bag->get('surveyId');
                     $saveId = $bag->get('saveId');
-                
-                    $participantLink = new ParticipantSurveyLink();
-                    $participantLink->setParticipantSurveyLinkElegibility(1);
-                    $participantLink->setParticipantSurveyLinkUniqid(uniqid());
-                    $participantLink->setParticipant($participant);
-                    $participantLink->setSidId($surveyId);
-                    $participantLink->setSaveId($saveId);
-                
-                    $em->persist($participantLink);
-                    $em->flush($participantLink);
+                    $ls->participantStudyLinkRegistration($surveyId, $saveId, $participant);
                 }
                 
                 $session = $this->getRequest()->getSession();

@@ -1,7 +1,6 @@
 <?php
 
 namespace Cyclogram\Bundle\ProofPilotBundle\Entity;
-
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -35,7 +34,12 @@ class Country
      */
     protected $countryCode;
 
-
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="dailing_code", type="string", length=255, nullable=false)
+     */
+    protected $dailingCode;
 
     /**
      * Get countryId
@@ -56,7 +60,7 @@ class Country
     public function setCountryName($countryName)
     {
         $this->countryName = $countryName;
-    
+
         return $this;
     }
 
@@ -79,7 +83,7 @@ class Country
     public function setCountryCode($countryCode)
     {
         $this->countryCode = $countryCode;
-    
+
         return $this;
     }
 
@@ -92,9 +96,20 @@ class Country
     {
         return $this->countryCode;
     }
-    
-    public function __toString() 
+
+    public function __toString()
     {
-    	return $this->countryName;
+        return $this->countryName;
     }
+
+    public function getDailingCode()
+    {
+        return $this->dailingCode;
+    }
+
+    public function setDailingCode($dailingCode)
+    {
+        $this->dailingCode = $dailingCode;
+    }
+
 }
