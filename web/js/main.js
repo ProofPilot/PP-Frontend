@@ -603,16 +603,25 @@
 		});
 		
 		// has error delete btn
-		$('.mark').click(function() {
-            $(this).css('display', 'none')
-                   .siblings()
-                   .removeClass('has_error')
-                   .val('')
-                   .parents()
+		var removeError = function() {
+			if($(this).hasClass('text')) {
+				$(this).removeClass('has_error')
+                       .siblings()
+                       .hide()
+			} else {
+				$(this).hide()
+                .siblings()
+                .removeClass('has_error')
+                .removeData()
+			}
+			$(this).parents()
                    .removeClass('has_error')
                    .next('.error, .error_msg')
                    .css('display', 'none');
-        });
+		}
+		
+		$('input.has_error').keyup(removeError);
+		$('.mark').click(removeError);
 		
     });
 	
