@@ -2,10 +2,12 @@
 
 namespace Cyclogram\FrontendBundle\Controller;
 
-
+use Cyclogram\FrontendBundle\Exception\IncompleteUserException;
 
 use Cyclogram\FrontendBundle\Form\UserSmsCodeForm;
 
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 use Doctrine\ORM\Mapping\Entity;
@@ -18,6 +20,7 @@ use Cyclogram\CyclogramCommon;
 use Symfony\Component\Validator\Constraints\Collection;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Length;
+use HWI\Bundle\OAuthBundle\Security\Core\Authentication\Token\OAuthToken;
 
 
 class LoginController extends Controller
@@ -35,22 +38,32 @@ class LoginController extends Controller
         $request = $this->getRequest();
         $session = $request->getSession();
         
-        $em = $this->getDoctrine()->getManager();
-        $study = null;
-        if ($studyId != null) {
-            $study = $em->getRepository('CyclogramProofPilotBundle:Study')->find($studyId);
-            $studyContent = $em->getRepository('CyclogramProofPilotBundle:StudyContent')->findOneBy(array('studyId'=>$studyId));
-        } else {
-            $study = null;
-        }
+        $error = $this->getErrorForRequest($request);
 
-        // get the login error if there is one
-        if ($request->attributes->has(SecurityContext::AUTHENTICATION_ERROR)) {
-            $error = $request->attributes->get(SecurityContext::AUTHENTICATION_ERROR);
-        } else {
-            $error = $session->get(SecurityContext::AUTHENTICATION_ERROR);
-            $session->remove(SecurityContext::AUTHENTICATION_ERROR);
+        if(     $error &&
+                $error instanceof IncompleteUserException) {
+
+            $participantId = $error->getParticipantId();
+            $studyId = $error->getToken()->getAttribute("studyId");
+            $resourceOwner = $error->getToken()->getResourceOwnerName();
+            $session->set("resourceOwnerName",$resourceOwner);
+            
+            $participant = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:Participant')->find($participantId);
+            
+            if(!empty($studyId))
+                $study = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:Study')->find($studyId);
+            
+            if (!empty($studyId)){
+                if ($study->getEmailVerificationRequired()) {
+                    return $this->redirect( $this->generateUrl("reg_step_2", array('id' => $participant->getParticipantId(), 'studyId' => $studyId)));
+                } else {
+                    return $this->redirect( $this->generateUrl("simplereg_step_2", array('id' => $participant->getParticipantId(), 'studyId' => $studyId)));
+                }
+            } else {
+                return $this->redirect( $this->generateUrl("simplereg_step_2", array('id' => $participant->getParticipantId())) );
+            }
         }
+        
         
         return $this->render('CyclogramFrontendBundle:Login:login.html.twig', array(
             // last username entered by the user
@@ -90,6 +103,7 @@ class LoginController extends Controller
         }
     
         $participant = $this->get('security.context')->getToken()->getUser();
+        
         $participant->setParticipantEmail(strtolower($participant->getParticipantEmail()));
     
         $customerMobileNumber = $participant->getParticipantMobileNumber();
@@ -166,9 +180,21 @@ class LoginController extends Controller
 
                     $em->persist($participant);
                     $em->flush();
-
-                    $token = new \Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken($participant, $participant->getPassword(), 'main', $participant->getRoles());
+                    
+                    $currentToken = $this->get('security.context')->getToken();
+                    $roles = $currentToken->getRoles();
+                    
+                    
+                    $token = new OAuthToken($currentToken->getRawToken(), array_merge($roles, array("ROLE_PARTICIPANT")));
+                    $token->setResourceOwnerName($currentToken->getResourceOwnerName());
+                    $token->setUser($participant);
+                    $token->setAuthenticated(true);
+                    
+                   
                     $this->get('security.context')->setToken($token);
+
+//                     $token = new \Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken($participant, $participant->getPassword(), 'main', $participant->getRoles());
+//                     $this->get('security.context')->setToken($token);
 
                     $this->get('custom_db')->getFactory('CommonCustom')->addEvent($participant->getParticipantId(),null,1,'login','Login succesfully', TRUE);
                     return $this->redirect( $this->generateUrl("_main", array("studyId"=>$studyId)) );
@@ -184,5 +210,57 @@ class LoginController extends Controller
             array(
                 "form"=>$form->createView()
             ));
+    }
+    
+    /**
+     * Get the security error for a given request.
+     *
+     * @param Request $request
+     *
+     * @return string|\Exception
+     */
+    protected function getErrorForRequest(Request $request)
+    {
+        $session = $request->getSession();
+        if ($request->attributes->has(SecurityContext::AUTHENTICATION_ERROR)) {
+            $error = $request->attributes->get(SecurityContext::AUTHENTICATION_ERROR);
+        } elseif (null !== $session && $session->has(SecurityContext::AUTHENTICATION_ERROR)) {
+            $error = $session->get(SecurityContext::AUTHENTICATION_ERROR);
+            $session->remove(SecurityContext::AUTHENTICATION_ERROR);
+        } else {
+            $error = '';
+        }
+    
+        return $error;
+    }
+    
+    /**
+     * @param Request $request
+     * @param string  $service
+     *
+     * @return RedirectResponse
+     */
+    public function redirectToServiceAction(Request $request, $service)
+    {
+        // Check for a specified target path and store it before redirect if present
+        $param = $this->container->getParameter('hwi_oauth.target_path_parameter');
+    
+        $studyId = $request->get('studyId');
+        $extraParameters = array();
+        if($studyId)
+            $extraParameters["state"] = $studyId;
+    
+        if (!empty($param) && $request->hasSession() && $targetUrl = $request->get($param, null, true)) {
+            $providerKey = $this->container->getParameter('hwi_oauth.firewall_name');
+            $request->getSession()->set('_security.' . $providerKey . '.target_path', $targetUrl);
+        }
+    
+        return new RedirectResponse(
+                $this->container->get('hwi_oauth.security.oauth_utils')->getAuthorizationUrl(
+                        $service, 
+                        null, 
+                        $extraParameters)
+    
+        );
     }
 }

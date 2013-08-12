@@ -32,17 +32,24 @@ class Participant implements AdvancedUserInterface
      * @ORM\Column(name="facebookId", type="string", length=255)
      */
     protected $facebookId;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="googleId", type="string", length=255)
+     */
+    protected $googleId;
 
-    public function serialize()
-    {
-        return serialize(array($this->facebookId, parent::serialize()));
-    }
+//     public function serialize()
+//     {
+//         return serialize(array($this->facebookId, parent::serialize()));
+//     }
 
-    public function unserialize($data)
-    {
-        list($this->facebookId, $parentData) = unserialize($data);
-        parent::unserialize($parentData);
-    }
+//     public function unserialize($data)
+//     {
+//         list($this->facebookId, $parentData) = unserialize($data);
+//         parent::unserialize($parentData);
+//     }
 
     /**
      * @var string
@@ -984,17 +991,12 @@ class Participant implements AdvancedUserInterface
 
     public function getRoles()
     {
-        if (!empty($this->facebookId)) {
-            return array_merge($this->participantRoles,
-                    array('ROLE_FACEBOOK_USER'));
-        } else {
             return array_merge($this->participantRoles, array('ROLE_USER'));
-        }
     }
 
-    public function setRoles($role)
+    public function setRoles($roles)
     {
-        $this->participantRoles = $role;
+        $this->participantRoles = $roles;
     }
 
     /* @UserInterface */
@@ -1043,4 +1045,14 @@ class Participant implements AdvancedUserInterface
         $this->age = $age;
     }
 
+
+    public function getGoogleId()
+    {
+        return $this->googleId;
+    }
+
+    public function setGoogleId($googleId)
+    {
+        $this->googleId = $googleId;
+    }
 }

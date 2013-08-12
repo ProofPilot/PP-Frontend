@@ -463,7 +463,17 @@ class RegistrationController extends Controller
                     $em->flush($participantLink);
                 }
                 
-                $token = new UsernamePasswordToken($participant, null, 'main', array('ROLE_USER'));
+                $session = $this->getRequest()->getSession();
+                $resourceOwnerName = $session->get("resourceOwnerName");
+                $roles = array("ROLE_USER");
+                if($resourceOwnerName == "facebook") {
+                    array_push($roles, "ROLE_FACEBOOK_USER");
+                } else if($resourceOwnerName == "google") {
+                    array_push($roles, "ROLE_GOOGLE_USER");
+                }
+                $session->remove("resourceOwnerName");
+                
+                $token = new UsernamePasswordToken($participant, null, 'main', $roles);
                 $this->get('security.context')->setToken($token);
                 
                 return $this->redirect( $this->generateUrl("_main", array(

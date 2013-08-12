@@ -15,7 +15,7 @@ class DashboardController extends Controller
 {
     /**
      * @Route("/main/{studyId}", requirements={"studyId" = "\d+"}, name="_main")
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_PARTICIPANT")
      * @Template()
      */
     public function indexAction($studyId=0)
@@ -86,8 +86,11 @@ class DashboardController extends Controller
     
         $parameters["lastaccess"] = new \DateTime();
          
-        if($participant->getFacebookId())
+        if($this->get('security.context')->isGranted("ROLE_FACEBOOK_USER"))
             $parameters["user"]["avatar"] = "http://graph.facebook.com/" . $participant->getParticipantUsername() . "/picture?width=80&height=82";
+        
+        if($this->get('security.context')->isGranted("ROLE_GOOGLE_USER"))
+            $parameters["user"]["avatar"] = "https://plus.google.com/s2/photos/profile/" . $participant->getGoogleId() . "?sz=80";
         
         $parameters["user"]["name"] = $participant->getParticipantFirstname() . ' ' . $participant->getParticipantLastname();
         $parameters["user"]["last_access"] = $participant->getParticipantLastTouchDatetime();

@@ -10,6 +10,12 @@ google_login:
     
 facebook_login:
     pattern: /check_facebook
+    
+frontend_oauth_service_redirect:
+    pattern: /redirect/{service}
+    defaults:
+        _controller: CyclogramFrontendBundle:Login:redirectToService
+
 
 _root:
     path: /{study}

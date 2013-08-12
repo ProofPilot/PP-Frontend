@@ -10,6 +10,8 @@ security:
         ROLE_ADMIN:       ROLE_USER
         ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
         ROLE_FACEBOOK_USER: ROLE_USER
+        ROLE_GOOGLE_USER:   ROLE_USER
+        ROLE_PARTICIPANT:   ROLE_USER
 
     providers:
         chain_provider: 

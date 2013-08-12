@@ -4,14 +4,27 @@
                 FB.getLoginStatus(function(response) {
                     if (response.status === 'connected') {
                         // connected
-                        document.location = "{{ url("hwi_oauth_service_redirect", {service: "facebook"}) }}";
+                        document.location = "{{ url("frontend_oauth_service_redirect", {
+                            service: "facebook", 
+                            studyId: studyId, 
+                            _destination: path("_do_login", {studyId: studyId}) 
+                            }) | raw
+                        }}";
                     } else {
                         // not_authorized
-                        FB.login(function(response) {
-                            if (response.authResponse) {
-                                document.location = "{{ url("hwi_oauth_service_redirect", {service: "facebook"}) }}";
-                            } 
-                        });
+                        FB.login(
+                                function(response) {
+                                    if (response.authResponse) {
+                                        document.location = document.location = "{{ url("frontend_oauth_service_redirect", {
+                                                service: "facebook", 
+                                                studyId: studyId, 
+                                                _destination: path("_do_login", {studyId: studyId}) 
+                                                }) | raw
+                                            }}";
+                                    }
+                                },
+                                {scope: 'email, user_hometown, user_location'} 
+                        );
                     }
                 });
             }

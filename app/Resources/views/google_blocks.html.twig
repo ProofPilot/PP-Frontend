@@ -11,10 +11,20 @@ function g_login() {
     gapi.auth.authorize(parameters, function(token) {
 
         if(token)
-            document.location = "{{ url("hwi_oauth_service_redirect", {service: "google"}) }}";
+            document.location = "{{ url("frontend_oauth_service_redirect", {
+                service: "google", 
+                studyId: studyId, 
+                _destination: path("_do_login", {studyId: studyId}) 
+                }) | raw
+            }}";
 
 
         });
+}
+
+function gLogout() {
+
+	
 }
 
 
