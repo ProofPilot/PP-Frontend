@@ -5,7 +5,7 @@ past_activity.emai_confirmation_status: 'Su Email ha sido confirmado'
 past_activity.mobile_confirmation_status: 'Su número de telefóno móbil ha sido confirmado'
 past_activity.mobile_status: 'Su número de telefóno móbil ha sido confirmado'
 past_activity.welcome_study: 'Bienvenido al studio Know@Home: Poniendo a prueba la prueba'
-txt_dashboard: 'Tablero Principal'
+txt_dashboard: Escritorio
 txt_please_verify_email: "Porfavor verifique su dirección de e-mail.<br>\nPara participar en los estudios necesitamos un e-mail válido - Porfavor vaya al e-mail y haga click en el enlace."
 view_more: 'Ver más'
 what_next: '¿Que sigue?'

@@ -9,6 +9,6 @@ txt_eligible_dsc: 'EL resumen de su participación: Lo que necesita hacer ahora 
 txt_secure_text: '<p>ProofPilot usa una estrategia de la "seguridad primero". Entendemos que usted está compartiendo datos sensibles con nosotros y nuestros asociados. Mantenemos sus datos en servidodes seguros en un formato altamente encriptado. Nos tomamos su seguridad y privacidad muy seriamente. Conozca más en el enlace siguiente.</p>'
 txt_secure_title: '¿Es seguro?'
 txt_security_privacy: 'Seguridad &amp; Privacidad en ProofPilot'
-txt_to_do: '¿Qué quieres hacer?'
+txt_to_do: '¿Qué es lo que desea hacer?'
 txt_you_are_eligible: 'Eres elegible'
 warning_message: 'Antes de proceder, porfavor lea esta importante información y acepte al final de la página'

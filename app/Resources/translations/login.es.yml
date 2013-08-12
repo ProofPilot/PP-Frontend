@@ -16,8 +16,8 @@ txt_forgot_your_password: '¿Olvidó su contraseña?'
 txt_forgot_your_username: '¿Olvidó su usuario?'
 txt_form_password: Contraseña
 txt_form_username: Usuario
-txt_log_in: Login
-txt_login_button: LOGIN
+txt_log_in: Iniciar
+txt_login_button: Iniciar
 txt_login_error_message: 'Su entrada no concuerda con nuestros registros'
 txt_login_securely: 'Accese de manera sgura con sus cuentas.'
 txt_login_with: 'Accese con'

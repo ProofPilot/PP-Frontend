@@ -1,17 +1,17 @@
 bottom_left_menu:
-    fullscreen: bottom_left_menu.fullscreen
-    home: bottom_left_menu.home
-    update: bottom_left_menu.update
+    fullscreen: 'Tela completa'
+    home: Início
+    update: Atualizar
 
 bottom_right_menu:
-    help: bottom_right_menu.help
-    logout: bottom_right_menu.logout
-    my_settings: bottom_right_menu.my_settings
+    help: Ajuda
+    logout: Logout
+    my_settings: 'Minhas Preferências'
 
 top_menu:
-    contact_preferences: top_menu.contact_preferences
-    general_settings: top_menu.general_settings
-    help: top_menu.help
-    logout: top_menu.logout
-    settings: top_menu.settings
-    shipping_information: top_menu.shipping_information
+    contact_preferences: 'Preferencias de contacto'
+    general_settings: 'General settings'
+    help: Ajuda
+    logout: Sair
+    settings: Configurações
+    shipping_information: 'Informações de Entrega'

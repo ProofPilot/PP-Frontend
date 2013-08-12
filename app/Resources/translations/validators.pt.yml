@@ -1,14 +1,14 @@
-email_already_registered: 'The e-mail address is already registered'
-username_already_registered: 'Username is already registered'
-error_password_short: 'Password must be 8 characters min'
-error_not_valid_email: 'Email is not valid'
-error_passwords_do_not_match: 'Passwords do not match'
-error_not_blank: 'No blank values'
-error_min_area_code_length: 'Area code must be at least 1 digit'
-error_max_area_code_length: 'Area code must be max 3 digits'
-error_min_phone_code_length: 'Phone must be at least 8 digits'
-error_max_phone_code_length: 'Phone must be max 11 digits'
-error_mobile_phone_already_registered: 'Mobile phone is already registered'
-please_fill_this_field: 'Please fill this field'
-wrong_pass: 'You wrote a wrong password'
-wrong_code: 'You wrote a wrong code'
+email_already_registered: "O endereço de e-mail já está registrado\n"
+error_max_area_code_length: "Código de área deve ter no máximo 3 dígitos\n"
+error_max_phone_code_length: "Telefone deve ter no máximo 11 dígitos\n"
+error_min_area_code_length: 'Código de área deve ter de pelo menos 1 dígito'
+error_min_phone_code_length: "Telefone deve ter pelo menos 8 dígitos\n"
+error_mobile_phone_already_registered: 'Telefone celular já está registrado'
+error_not_blank: "Sem valores em branco\n"
+error_not_valid_email: "E-mail não é válido\n"
+error_password_short: "A senha deve ter no mínimo 8 caracteres\n"
+error_passwords_do_not_match: "As senhas não conferem\n"
+please_fill_this_field: 'Por favor, preencher este campo'
+username_already_registered: "Nome de usuário já está registrado\n"
+wrong_code: 'Você escreveu um código incorreto'
+wrong_pass: 'Você escreveu uma senha incorreta'
