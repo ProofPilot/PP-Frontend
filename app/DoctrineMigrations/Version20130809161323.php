@@ -14,8 +14,8 @@ class Version20130809161323 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != "mysql");
-        $this->addSql("ALTER TABLE `proofpilot`.`country` ADD COLUMN `dailing_code`  varchar(255) NULL AFTER `country_code`;");
-        $this->addSql("UPDATE `proofpilot`.`country` SET `dailing_code` = 1 WHERE `country_id`=1;");
+        $this->addSql("ALTER TABLE `proofpilot`.`country` ADD COLUMN `dialing_code`  varchar(255) NULL AFTER `country_code`;");
+        $this->addSql("UPDATE `proofpilot`.`country` SET `dialing_code` = 1 WHERE `country_id`=1;");
         $this->addSql("INSERT INTO `proofpilot`.`country`(`country_name`,`country_code`) VALUES ('AFGHANISTAN','AF');
                 INSERT INTO `proofpilot`.`country`(`country_name`,`country_code`) VALUES ('ALAND ISLANDS','AX');
                 INSERT INTO `proofpilot`.`country`(`country_name`,`country_code`) VALUES ('ALBANIA','AL');
@@ -47,7 +47,7 @@ class Version20130809161323 extends AbstractMigration
                 INSERT INTO `proofpilot`.`country`(`country_name`,`country_code`) VALUES ('BOSNIA AND HERZEGOVINA','BA');
                 INSERT INTO `proofpilot`.`country`(`country_name`,`country_code`) VALUES ('BOTSWANA','BW');
                 INSERT INTO `proofpilot`.`country`(`country_name`,`country_code`) VALUES ('BOUVET ISLAND','BV');
-                INSERT INTO `proofpilot`.`country`(`country_name`,`country_code`) VALUES ('BRAZIL','BR');
+                INSERT INTO `proofpilot`.`country`(`country_name`,`country_code`,`dialing_code`) VALUES ('BRAZIL','BR','55');
                 INSERT INTO `proofpilot`.`country`(`country_name`,`country_code`) VALUES ('BRITISH INDIAN OCEAN TERRITORY','IO');
                 INSERT INTO `proofpilot`.`country`(`country_name`,`country_code`) VALUES ('BRUNEI DARFSALAM','BN');
                 INSERT INTO `proofpilot`.`country`(`country_name`,`country_code`) VALUES ('BULGARIA','BG');
@@ -69,7 +69,7 @@ class Version20130809161323 extends AbstractMigration
                 INSERT INTO `proofpilot`.`country`(`country_name`,`country_code`) VALUES ('CONGO','CG');
                 INSERT INTO `proofpilot`.`country`(`country_name`,`country_code`) VALUES ('CONGO, THE DEMOCRATIC REPUBLIC OF THE','CD');
                 INSERT INTO `proofpilot`.`country`(`country_name`,`country_code`) VALUES ('COOK ISLANDS','CK');
-                INSERT INTO `proofpilot`.`country`(`country_name`,`country_code`, `dailing_code`) VALUES ('COSTA RICA','CR', 506);
+                INSERT INTO `proofpilot`.`country`(`country_name`,`country_code`, `dialing_code`) VALUES ('COSTA RICA','CR', 506);
                 INSERT INTO `proofpilot`.`country`(`country_name`,`country_code`) VALUES ('CÔTE D\'IVOIRE','CI');
                 INSERT INTO `proofpilot`.`country`(`country_name`,`country_code`) VALUES ('CROATIA','HR');
                 INSERT INTO `proofpilot`.`country`(`country_name`,`country_code`) VALUES ('CUBA','CU');
@@ -91,7 +91,7 @@ class Version20130809161323 extends AbstractMigration
                 INSERT INTO `proofpilot`.`country`(`country_name`,`country_code`) VALUES ('FAROE ISLANDS','FO');
                 INSERT INTO `proofpilot`.`country`(`country_name`,`country_code`) VALUES ('FIJI','FJ');
                 INSERT INTO `proofpilot`.`country`(`country_name`,`country_code`) VALUES ('FINLAND','FI');
-                INSERT INTO `proofpilot`.`country`(`country_name`,`country_code`, `dailing_code`) VALUES ('FRANCE','FR', 33);
+                INSERT INTO `proofpilot`.`country`(`country_name`,`country_code`, `dialing_code`) VALUES ('FRANCE','FR', 33);
                 INSERT INTO `proofpilot`.`country`(`country_name`,`country_code`) VALUES ('FRENCH GUIANA','GF');
                 INSERT INTO `proofpilot`.`country`(`country_name`,`country_code`) VALUES ('FRENCH POLYNESIA','PF');
                 INSERT INTO `proofpilot`.`country`(`country_name`,`country_code`) VALUES ('FRENCH SOUTHERN TERRITORIES','TF');
@@ -159,7 +159,7 @@ class Version20130809161323 extends AbstractMigration
                 INSERT INTO `proofpilot`.`country`(`country_name`,`country_code`) VALUES ('MAURITANIA','MR');
                 INSERT INTO `proofpilot`.`country`(`country_name`,`country_code`) VALUES ('MAURITIUS','MU');
                 INSERT INTO `proofpilot`.`country`(`country_name`,`country_code`) VALUES ('MAYOTTE','YT');
-                INSERT INTO `proofpilot`.`country`(`country_name`,`country_code`) VALUES ('MEXICO','MX');
+                INSERT INTO `proofpilot`.`country`(`country_name`,`country_code`,`dialing_code`) VALUES ('MEXICO','MX',52);
                 INSERT INTO `proofpilot`.`country`(`country_name`,`country_code`) VALUES ('MICRONESIA, FEDERATED STATES OF','FM');
                 INSERT INTO `proofpilot`.`country`(`country_name`,`country_code`) VALUES ('MOLDOVA, REPUBLIC OF','MD');
                 INSERT INTO `proofpilot`.`country`(`country_name`,`country_code`) VALUES ('MONACO','MC');
@@ -193,7 +193,7 @@ class Version20130809161323 extends AbstractMigration
                 INSERT INTO `proofpilot`.`country`(`country_name`,`country_code`) VALUES ('PHILIPPINES','PH');
                 INSERT INTO `proofpilot`.`country`(`country_name`,`country_code`) VALUES ('PITCAIRN','PN');
                 INSERT INTO `proofpilot`.`country`(`country_name`,`country_code`) VALUES ('POLAND','PL');
-                INSERT INTO `proofpilot`.`country`(`country_name`,`country_code`, `dailing_code`) VALUES ('PORTUGAL','PT', 351);
+                INSERT INTO `proofpilot`.`country`(`country_name`,`country_code`, `dialing_code`) VALUES ('PORTUGAL','PT', 351);
                 INSERT INTO `proofpilot`.`country`(`country_name`,`country_code`) VALUES ('PUERTO RICO','PR');
                 INSERT INTO `proofpilot`.`country`(`country_name`,`country_code`) VALUES ('QATAR','QA');
                 INSERT INTO `proofpilot`.`country`(`country_name`,`country_code`) VALUES ('RÉUNION','RE');
@@ -224,7 +224,7 @@ class Version20130809161323 extends AbstractMigration
                 INSERT INTO `proofpilot`.`country`(`country_name`,`country_code`) VALUES ('SOUTH AFRICA','ZA');
                 INSERT INTO `proofpilot`.`country`(`country_name`,`country_code`) VALUES ('SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS','GS');
                 INSERT INTO `proofpilot`.`country`(`country_name`,`country_code`) VALUES ('SOUTH SUDAN','SS');
-                INSERT INTO `proofpilot`.`country`(`country_name`,`country_code`, `dailing_code`) VALUES ('SPAIN','ES', 34);
+                INSERT INTO `proofpilot`.`country`(`country_name`,`country_code`, `dialing_code`) VALUES ('SPAIN','ES', 34);
                 INSERT INTO `proofpilot`.`country`(`country_name`,`country_code`) VALUES ('SRI LANKA','LK');
                 INSERT INTO `proofpilot`.`country`(`country_name`,`country_code`) VALUES ('SUDAN','SD');
                 INSERT INTO `proofpilot`.`country`(`country_name`,`country_code`) VALUES ('SURINAME','SR');
@@ -248,7 +248,7 @@ class Version20130809161323 extends AbstractMigration
                 INSERT INTO `proofpilot`.`country`(`country_name`,`country_code`) VALUES ('TURKS AND CAICOS ISLANDS','TC');
                 INSERT INTO `proofpilot`.`country`(`country_name`,`country_code`) VALUES ('TUVALU','TV');
                 INSERT INTO `proofpilot`.`country`(`country_name`,`country_code`) VALUES ('UGANDA','UG');
-                INSERT INTO `proofpilot`.`country`(`country_name`,`country_code`, `dailing_code`) VALUES ('UKRAINE','UA', 380);
+                INSERT INTO `proofpilot`.`country`(`country_name`,`country_code`, `dialing_code`) VALUES ('UKRAINE','UA', 380);
                 INSERT INTO `proofpilot`.`country`(`country_name`,`country_code`) VALUES ('UNITED ARAB EMIRATES','AE');
                 INSERT INTO `proofpilot`.`country`(`country_name`,`country_code`) VALUES ('UNITED KINGDOM','GB');
                 INSERT INTO `proofpilot`.`country`(`country_name`,`country_code`) VALUES ('UNITED STATES MINOR OUTLYING ISLANDS','UM');
@@ -270,6 +270,6 @@ class Version20130809161323 extends AbstractMigration
     {
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != "mysql");
-        $this->addSql("ALTER TABLE `proofpilot`.`country` DROP COLUMN `dailing_code`;");
+        $this->addSql("ALTER TABLE `proofpilot`.`country` DROP COLUMN `dialing_code`;");
     }
 }

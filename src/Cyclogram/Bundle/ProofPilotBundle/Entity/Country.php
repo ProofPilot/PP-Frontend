@@ -37,7 +37,7 @@ class Country
     /**
      * @var string
      *
-     * @ORM\Column(name="dailing_code", type="string", length=255, nullable=false)
+     * @ORM\Column(name="dialing_code", type="string", length=255, nullable=false)
      */
     protected $dailingCode;
 
