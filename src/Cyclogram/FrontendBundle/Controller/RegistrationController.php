@@ -263,7 +263,8 @@ class RegistrationController extends Controller
             $em->flush($participant);
         
             $sms = $this->get('sms');
-            $sentSms = $sms->sendSmsAction( array('message' => "Your SMS Verification code is $participantSMSCode", 'phoneNumber'=>"$customerMobileNumber") );
+            $message = $this->get('translator')->trans('sms_verification_message', array(), 'register');
+            $sentSms = $sms->sendSmsAction( array('message' => $message .' '. $participantSMSCode, 'phoneNumber'=>"$customerMobileNumber") );
             if($sentSms)
                 return $this->redirect(($this->generateUrl("reg_step_5", array(
                         'id'=> $participant->getParticipantId(), 
