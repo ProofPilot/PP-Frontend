@@ -177,6 +177,7 @@ class  SimpleRegistrationController extends Controller{
                     
                     $participant->setParticipantEmailCode($parameters['code']);
                     $participant->setParticipantMobileSmsCodeConfirmed(true);
+                    $participant->setLanguage($request->getLocale());
                     $em->persist($participant);
                     $em->flush($participant);
                     

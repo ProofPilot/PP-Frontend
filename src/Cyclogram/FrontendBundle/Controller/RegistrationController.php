@@ -329,6 +329,7 @@ class RegistrationController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $request = $this->getRequest();
+        
 
         $participant = $em->getRepository('CyclogramProofPilotBundle:Participant')->find($id);
         
@@ -355,6 +356,7 @@ class RegistrationController extends Controller
                 $participant->setParticipantAddress1($form['participantAddress1']);
                 $participant->setParticipantAddress2($form['participantAddress2']);
                 $participant->setParticipantZipcode($form['participantZipcode']);
+                $participant->setLanguage($request->getLocale());
                 $city = $em->getRepository('CyclogramProofPilotBundle:City')->find($form['cityId']);
                 $participant->setCity($city);
                 if (strtolower(trim($city->getCityName())) != (strtolower(trim($form['city']))))
