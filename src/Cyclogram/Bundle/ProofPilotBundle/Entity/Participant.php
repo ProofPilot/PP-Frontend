@@ -32,7 +32,7 @@ class Participant implements AdvancedUserInterface
      * @ORM\Column(name="facebookId", type="string", length=255)
      */
     protected $facebookId;
-    
+
     /**
      * @var string
      *
@@ -40,16 +40,16 @@ class Participant implements AdvancedUserInterface
      */
     protected $googleId;
 
-//     public function serialize()
-//     {
-//         return serialize(array($this->facebookId, parent::serialize()));
-//     }
+    //     public function serialize()
+    //     {
+    //         return serialize(array($this->facebookId, parent::serialize()));
+    //     }
 
-//     public function unserialize($data)
-//     {
-//         list($this->facebookId, $parentData) = unserialize($data);
-//         parent::unserialize($parentData);
-//     }
+    //     public function unserialize($data)
+    //     {
+    //         list($this->facebookId, $parentData) = unserialize($data);
+    //         parent::unserialize($parentData);
+    //     }
 
     /**
      * @var string
@@ -296,6 +296,13 @@ class Participant implements AdvancedUserInterface
      * @ORM\Column(name="location", type="string", length=255, nullable=true)
      */
     protected $location;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="language", type="string", length=255, nullable=true)
+     */
+    protected $language;
 
     /**
      * Get participantId
@@ -999,7 +1006,7 @@ class Participant implements AdvancedUserInterface
 
     public function getRoles()
     {
-            return array_merge($this->participantRoles, array('ROLE_USER'));
+        return array_merge($this->participantRoles, array('ROLE_USER'));
     }
 
     public function setRoles($roles)
@@ -1063,7 +1070,6 @@ class Participant implements AdvancedUserInterface
         $this->location = $location;
     }
 
-
     public function getGoogleId()
     {
         return $this->googleId;
@@ -1073,4 +1079,15 @@ class Participant implements AdvancedUserInterface
     {
         $this->googleId = $googleId;
     }
+
+    public function getLanguage()
+    {
+        return $this->language;
+    }
+
+    public function setLanguage($language)
+    {
+        $this->language = $language;
+    }
+
 }
