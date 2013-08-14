@@ -2,13 +2,13 @@
 {% block email_content %}
 			<td width="643" style="background-color: white;">
 			
-				<p style="margin: 0px; padding: 0px; margin-bottom: 25px; color: #ae4840; font-family: Arial; font-weight: bold; font-size: 40px;">{% trans from "email" %}confirm_verify_title{% endtrans %}</p>
+				<p style="margin: 0px; padding: 0px; margin-bottom: 25px; color: #ae4840; font-family: Arial; font-weight: bold; font-size: 40px;">{{ 'confirm_verify_title' | trans({}, "email", locale) }}</p>
 			            
 			            <p style="margin: 0px; padding: 0px; margin-bottom: 35px; color: #8b8b8b; font-family: Arial; font-size: 13px; line-height: 20px;">{% trans from "email" %}confirm_verify_text{% endtrans %}</p>
 				        {% if simple is defined %}
-				            <p style="margin: 0px; padding: 0px; margin-bottom: 35px; color: #8b8b8b; font-family: Arial; font-size: 13px; line-height: 20px;"><a href="{{ url('simpleemail_verify', {'email': email, 'code': code, 'confirmed' : confirmed, 'studyId' : studyId}) }}">{% trans from "email" %}confirm_verify_link{% endtrans %}</a></p>
+				            <p style="margin: 0px; padding: 0px; margin-bottom: 35px; color: #8b8b8b; font-family: Arial; font-size: 13px; line-height: 20px;"><a href="{{ url('simpleemail_verify', {'email': email, 'code': code, 'confirmed' : confirmed, 'studyId' : studyId}) }}">{{ 'confirm_verify_link' | trans({}, "email", locale) }}</a></p>
 				        {%  else  %}
-				            <p style="margin: 0px; padding: 0px; margin-bottom: 35px; color: #8b8b8b; font-family: Arial; font-size: 13px; line-height: 20px;"><a href="{{ url('email_verify', {'email': email, 'code': code, 'confirmed' : confirmed, 'studyId' : studyId}) }}">{% trans from "email" %}confirm_verify_link{% endtrans %}</a></p>
+				            <p style="margin: 0px; padding: 0px; margin-bottom: 35px; color: #8b8b8b; font-family: Arial; font-size: 13px; line-height: 20px;"><a href="{{ url('email_verify', {'email': email, 'code': code, 'confirmed' : confirmed, 'studyId' : studyId}) }}">{{ 'confirm_verify_link' | trans({}, "email", locale) }}</a></p>
 				        {% endif %}
 			</td>
 {% endblock %}

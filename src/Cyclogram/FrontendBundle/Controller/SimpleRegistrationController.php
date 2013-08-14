@@ -141,7 +141,7 @@ class  SimpleRegistrationController extends Controller{
      * @Route("/simplereg_step4/{id}/{studyId}", name="simplereg_step_4", defaults={"studyId"=null})
      * @Template()
      */
-    public function simpleRegStep5Action($id, $studyId)
+    public function simpleRegStep4Action($id, $studyId)
     {
         $em = $this->getDoctrine()->getManager();
         $participant = $em->getRepository('CyclogramProofPilotBundle:Participant')->find($id);
@@ -173,6 +173,7 @@ class  SimpleRegistrationController extends Controller{
                     $parameters['studyId'] = $studyId;
                     $parameters['simple'] = true;
                     
+                    
                     $em = $this->getDoctrine()->getManager();
                     
                     $participant->setParticipantEmailCode($parameters['code']);
@@ -180,6 +181,8 @@ class  SimpleRegistrationController extends Controller{
                     $participant->setLanguage($request->getLocale());
                     $em->persist($participant);
                     $em->flush($participant);
+                    
+                    $parameters['locale'] = $participant->getLanguage() ? $participant->getLanguage() : $request->getLocale();
                     
                     $cc->sendMail($participant->getParticipantEmail(),
                             'Please Verify your e-mail address',

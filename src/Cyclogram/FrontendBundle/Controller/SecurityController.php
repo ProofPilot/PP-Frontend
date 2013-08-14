@@ -51,6 +51,7 @@ class SecurityController extends Controller
                 if (!empty($participant)) {
                     $parameters['id'] = $participant->getParticipantId();
                     $parameters['studyId'] = $studyId;
+                    $parameters['locale'] = $participant->getLanguage() ? $participant->getLanguage() : $request->getLocale();
                     $embedded['logo_top'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_logo.png");
                     $embedded['logo_footer'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newletter_logo_footer.png");
                     $embedded['login_button'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_small_login.jpg");
@@ -124,9 +125,10 @@ class SecurityController extends Controller
                     $participant->setParticipantMobileSmsCode($participantSMSCode);                 
                     $em->persist($participant);
                     $em->flush($participant);
+                    $locale = $participant->getLanguage() ? $participant->getLanguage() : $request->getLocale();
                     
                     $sms = $this->get('sms');
-                    $message = $this->get('translator')->trans('pass_reset_code', array(), 'security');
+                    $message = $this->get('translator')->trans('pass_reset_code', array(), 'security', $locale);
                     $sentSms = $sms->sendSmsAction( array('message' => $message .' '. $participantSMSCode, 'phoneNumber'=> $participant->getParticipantMobileNumber()) );
                     if($sentSms){
 
@@ -223,9 +225,9 @@ class SecurityController extends Controller
                     $participantUsername = $participant->getParticipantUsername();
                     
                     $sms = $this->get('sms');
-
-                    $userNameText = $this->get('translator')->trans('user_name_sms_message', array(), 'security');
-                    $emailText = $this->get('translator')->trans('email_sms_message', array(), 'security');
+                    $locale = $participant->getLanguage() ? $participant->getLanguage() : $request->getLocale();
+                    $userNameText = $this->get('translator')->trans('user_name_sms_message', array(), 'security', $locale);
+                    $emailText = $this->get('translator')->trans('email_sms_message', array(), 'security', $locale);
                     $sentSms = $sms->sendSmsAction( array('message' =>  $userNameText.' '. $participantUsername .' '. $emailText .' '. $participantEmail, 'phoneNumber'=>$participant->getParticipantMobileNumber()) );
                     if($sentSms)
                         return $this->render('CyclogramFrontendBundle:Security:username_sent.html.twig', 
