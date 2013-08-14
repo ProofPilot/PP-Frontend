@@ -1,0 +1,3 @@
+email_sms_message: email_sms_message   # FIXME
+pass_reset_code: pass_reset_code
+user_name_sms_message: user_name_sms_message

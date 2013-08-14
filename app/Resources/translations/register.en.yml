@@ -28,6 +28,7 @@ min_charachters: '(8 character min)'
 no_code: 'No Code? Send Another'
 ok_verify: 'OK, Verify!'
 pick_user: 'Pick your Username'
+sms_verification_message: 'Your SMS verification message'   # FIXME
 txt_basics: 'The Basics'
 txt_check_email: 'Please check your email address'
 txt_join: JOIN

@@ -263,7 +263,8 @@ class RegistrationController extends Controller
             $em->flush($participant);
         
             $sms = $this->get('sms');
-            $sentSms = $sms->sendSmsAction( array('message' => "Your SMS Verification code is $participantSMSCode", 'phoneNumber'=>"$customerMobileNumber") );
+            $message = $this->get('translator')->trans('sms_verification_message', array(), 'register');
+            $sentSms = $sms->sendSmsAction( array('message' => $message .' '. $participantSMSCode, 'phoneNumber'=>"$customerMobileNumber") );
             if($sentSms)
                 return $this->redirect(($this->generateUrl("reg_step_5", array(
                         'id'=> $participant->getParticipantId(), 
@@ -328,6 +329,7 @@ class RegistrationController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $request = $this->getRequest();
+        
 
         $participant = $em->getRepository('CyclogramProofPilotBundle:Participant')->find($id);
         
@@ -354,6 +356,7 @@ class RegistrationController extends Controller
                 $participant->setParticipantAddress1($form['participantAddress1']);
                 $participant->setParticipantAddress2($form['participantAddress2']);
                 $participant->setParticipantZipcode($form['participantZipcode']);
+                $participant->setLanguage($request->getLocale());
                 $city = $em->getRepository('CyclogramProofPilotBundle:City')->find($form['cityId']);
                 $participant->setCity($city);
                 if (strtolower(trim($city->getCityName())) != (strtolower(trim($form['city']))))

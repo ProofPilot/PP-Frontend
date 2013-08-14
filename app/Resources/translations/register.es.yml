@@ -21,17 +21,17 @@ label_phone_wide: label_phone_wide
 label_repeat_password: label_repeat_password
 label_state: label_state
 label_username: label_username
-label_voice: label_voice   # FIXME
+label_voice: label_voice
 label_zipcode: label_zipcode
 mail_confirmation_fail: mail_confirmation_fail
 min_charachters: '(8 caractéres mínimo)'
 no_code: '¿Sin código? Enviar otro'
 ok_verify: 'Ok, ¡verifique!'
 pick_user: 'Escoja su usuario'
+sms_verification_message: sms_verification_message   # FIXME
 txt_basics: txt_basics
 txt_check_email: txt_check_email
 txt_join: Unase
-txt_join_google: txt_join_google
 txt_join_with: 'Unase con'
 txt_subtitle_check_email: txt_subtitle_check_email
 txt_why: '¿Por qué?'

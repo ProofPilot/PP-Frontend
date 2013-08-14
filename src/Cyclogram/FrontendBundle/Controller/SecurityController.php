@@ -126,7 +126,8 @@ class SecurityController extends Controller
                     $em->flush($participant);
                     
                     $sms = $this->get('sms');
-                    $sentSms = $sms->sendSmsAction( array('message' => "Your SMS Verification code is $participantSMSCode", 'phoneNumber'=> $participant->getParticipantMobileNumber()) );
+                    $message = $this->get('translator')->trans('pass_reset_code', array(), 'security');
+                    $sentSms = $sms->sendSmsAction( array('message' => $message .' '. $participantSMSCode, 'phoneNumber'=> $participant->getParticipantMobileNumber()) );
                     if($sentSms){
 
                         $session->set('password' ,$values['participantPassword']['first']);
@@ -222,7 +223,10 @@ class SecurityController extends Controller
                     $participantUsername = $participant->getParticipantUsername();
                     
                     $sms = $this->get('sms');
-                    $sentSms = $sms->sendSmsAction( array('message' => "Your username is $participantUsername , your email is $participantEmail", 'phoneNumber'=>$participant->getParticipantMobileNumber()) );
+
+                    $userNameText = $this->get('translator')->trans('user_name_sms_message', array(), 'security');
+                    $emailText = $this->get('translator')->trans('email_sms_message', array(), 'security');
+                    $sentSms = $sms->sendSmsAction( array('message' =>  $userNameText.' '. $participantUsername .' '. $emailText .' '. $participantEmail, 'phoneNumber'=>$participant->getParticipantMobileNumber()) );
                     if($sentSms)
                         return $this->render('CyclogramFrontendBundle:Security:username_sent.html.twig', 
                                 array());
