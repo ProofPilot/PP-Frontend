@@ -1,6 +1,8 @@
 <?php
 namespace Cyclogram\FrontendBundle\Service;
 
+use Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantInterventionLink;
+
 use Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantArmLink;
 
 use Symfony\Component\DependencyInjection\Container;
@@ -178,6 +180,15 @@ class LimeSurvey
             $participantArmLink->setParticipantArmLinkDatetime(new \DateTime());
             $em->persist($participantArmLink);
             $em->flush($participantArmLink);
+            
+            $participantInterventionLink = new ParticipantInterventionLink();
+            $intervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')->findOneByInterventionName('SexPro Baseline Survey');
+            $participantInterventionLink->setIntervention($intervention);
+            $participantInterventionLink->setParticipant($participant);
+            $participantInterventionLink->setParticipantInterventionLinkDatetimeStart( new \DateTime("now") );
+            $participantInterventionLink->setStatus($status);
+            $em->persist($participantInterventionLink);
+            $em->flush($participantInterventionLink);
         }
     }
     

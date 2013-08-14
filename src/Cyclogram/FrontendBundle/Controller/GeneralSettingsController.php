@@ -28,7 +28,7 @@ class GeneralSettingsController  extends Controller
         $participant = $this->get('security.context')->getToken()->getUser();
         $request = $this->getRequest();
         $em = $this->getDoctrine()->getManager();
-        $surveyscount = $em->getRepository('CyclogramProofPilotBundle:Participant')->getParticipantInterventions($participant);
+        $surveyscount = $em->getRepository('CyclogramProofPilotBundle:Participant')->getParticipantInterventionsCount($participant);
         
         $parameters["lastaccess"] = new \DateTime();
         $parameters["expandedFormClass"] = '';

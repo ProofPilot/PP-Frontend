@@ -23,9 +23,9 @@ class DashboardController extends Controller
         $participant = $this->get('security.context')->getToken()->getUser();
         $request = $this->getRequest();
         $em = $this->getDoctrine()->getManager();
-        $surveyscount = $em->getRepository('CyclogramProofPilotBundle:Participant')->getParticipantInterventions($participant);
+        $surveyscount = $em->getRepository('CyclogramProofPilotBundle:Participant')->getParticipantInterventionsCount($participant);
 
-        
+        $interventionsLinks = $em->getRepository('CyclogramProofPilotBundle:Participant')->getParticipantInterventions($participant);
         $session = $this->getRequest()->getSession();
         
         $parameters = array();
@@ -38,29 +38,11 @@ class DashboardController extends Controller
                 "activity" => "activity");
     
         $parameters["surveys"] = array(
-                array('title' => 'A survey title of some sort',
-                        'content' => 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt',
+                array('title' => 'Take the' . $interventionsLinks[0]->getIntervention()->getInterventionName(),
+                        'content' => 'Follow this link to begin your first follow-up survey.',
                         'icon' => 'icon_1',
-                        'image' => '/images/tmp_banner_1.jpg'
+                        'image' => '/images/sexpro_doit.png'
                 ),
-                array(
-                        'title' => 'An activity of some sort',
-                        'content' => 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt',
-                        'icon' => 'icon_2',
-                        'image' => '/images/tmp_banner_2.jpg'
-                ),
-                array(
-                        'title' => 'A measurement of some sort',
-                        'content' => 'After a pledge, confirm that you actually followed through on the pledge',
-                        'icon' => 'icon_3',
-                        'image' => '/images/tmp_banner_3.jpg'
-                ),
-                array(
-                        'title' => 'A Test of some sort',
-                        'content' => 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt',
-                        'icon' => 'icon_4',
-                        'image' => '/images/tmp_banner_4.jpg'
-                )
         );
         $parameters["actions"] = array(
                 array('activity' => $this->get('translator')->trans('past_activity.emai_confirmation_status', array(), 'dashboard'),

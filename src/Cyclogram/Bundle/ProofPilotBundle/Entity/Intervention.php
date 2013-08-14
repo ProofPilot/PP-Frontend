@@ -81,5 +81,14 @@ class Intervention
      */
     private $status;
 
+    public function getInterventionName()
+    {
+        return $this->interventionName;
+    }
+
+    public function setInterventionName($interventionName)
+    {
+        $this->interventionName = $interventionName;
+    }
 
 }

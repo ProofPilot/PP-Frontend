@@ -35,7 +35,7 @@ class ParticipantRepository extends EntityRepository implements
         return $class === 'Cyclogram\Bundle\ProofPilotBundle\Entity\Participant';
     }
     
-    public function getParticipantInterventions($userid){
+    public function getParticipantInterventionsCount($userid){
         return $this->getEntityManager()
         ->createQuery('SELECT COUNT (pi) FROM CyclogramProofPilotBundle:ParticipantInterventionLink pi
                 WHERE pi.participant = :userid')
@@ -44,6 +44,14 @@ class ParticipantRepository extends EntityRepository implements
         ->getSingleScalarResult();
     }
     
+    public function getParticipantInterventions($userid){
+        return $this->getEntityManager()
+        ->createQuery('SELECT pi FROM CyclogramProofPilotBundle:ParticipantInterventionLink pi
+                WHERE pi.participant = :userid')
+                ->setParameters(array(
+                        'userid' => $userid))
+                        ->getResult();
+    }
     
     public function checkIfEmailNotUsed($email) {
         $result = $this->getEntityManager()
