@@ -37,13 +37,15 @@ class DashboardController extends Controller
         $parameters['message'] = array(
                 "activity" => "activity");
     
-        $parameters["surveys"] = array(
-//                 array('title' => 'Take the' . $interventionsLinks[0]->getIntervention()->getInterventionName(),
-//                         'content' => 'Follow this link to begin your first follow-up survey.',
-//                         'icon' => 'icon_1',
-//                         'image' => '/images/sexpro_doit.png'
-//                 ),
-        );
+        $parameters["surveys"] = array();
+        foreach($interventionsLinks as $interventionsLink) {
+            $parameters["surveys"][] = array('title' => 'Take the' . $interventionsLinks[0]->getIntervention()->getInterventionName(),
+                        'content' => 'Follow this link to begin your first follow-up survey.',
+                        'icon' => 'icon_1',
+                        'image' => '/images/sexpro_doit.png'
+                );
+        }
+
         $parameters["actions"] = array(
                 array('activity' => $this->get('translator')->trans('past_activity.emai_confirmation_status', array(), 'dashboard'),
                         'class' => 'icon1 first'
