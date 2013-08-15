@@ -209,6 +209,7 @@
          	    frameSize();
          		
          		$(window).resize(frameSize);
+         		frame.contents().mouseover(frameSize);
 
      			var surveydata = frame.contents().find('#surveydata');
 		    	var surveyId = surveydata.attr('surveyid');
@@ -219,6 +220,7 @@
 		    	}
 
     		});
+
 		</script>
 
         
