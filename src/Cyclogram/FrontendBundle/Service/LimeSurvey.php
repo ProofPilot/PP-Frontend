@@ -205,7 +205,7 @@ class LimeSurvey
         
     }
     
-    private function participantSurveyLinkRegistration($surveyId, $saveId, $participant, $uniqId) {
+    public function participantSurveyLinkRegistration($surveyId, $saveId, $participant, $uniqId) {
         $em = $this->container->get('doctrine')->getEntityManager();
         
         $participantLink = $em->getRepository('CyclogramProofPilotBundle:ParticipantSurveyLink')->getParticipantSurveyLink($participant, $surveyId, $saveId);
@@ -215,7 +215,72 @@ class LimeSurvey
         $participantLink->setSidId($surveyId);
         $participantLink->setSaveId($saveId);
         
+        
+        
         $em->persist($participantLink);
         $em->flush($participantLink);
     }
+    
+    public function interventionLogic($participant, $studyId) {
+        
+        switch($studyId) {
+            case 7:
+                $this->sexProInterventionLogic($participant);
+                break;
+            default:
+                break;
+        }
+
+    }
+    
+    private function sexProInterventionLogic($participant) {
+        $em = $this->container->get('doctrine')->getEntityManager();
+        //get all participant intervention links
+        $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:Participant')->getParticipantInterventionLinks($participant);
+        foreach($interventionLinks as $interventionLink) {
+            $interventionTypeName = $interventionLink->getIntervention()->getInterventionType()->getInterventionTypeName();
+            $intervention = $interventionLink->getIntervention();
+            $status = $interventionLink->getStatus()->getStatusName();
+            switch($interventionTypeName) {
+                case "Survey & Observation":
+                    $surveyId = $intervention->getSidId();
+                    if($status == "Active") {
+                        $passed = $em->getRepository('CyclogramProofPilotBundle:ParticipantSurveyLink')->checkIfSurveyPassed($participant, $surveyId);
+                        
+                        if($passed) {
+                            $completedStatus = $em->getRepository('CyclogramProofPilotBundle:Status')->findOneByStatusName("Closed");
+                            $interventionLink->setStatus($completedStatus);
+                            $em->persist($interventionLink);
+                            $em->flush();
+                            $status = "Closed";
+                        }
+                    }
+                    
+                    if(($status == "Closed") && ($intervention->getInterventionName() == "SexPro Baseline Survey")) {
+                        $interventionLink = new ParticipantInterventionLink();
+                        $interventionLink->setParticipant($participant);
+                        $intervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')->findOneByInterventionName("SexPro Activity");
+                        $interventionLink->setIntervention($intervention);
+                        $interventionLink->setStatus($em->getRepository('CyclogramProofPilotBundle:Status')->findOneByStatusName("Active"));
+                        $interventionLink->setParticipantInterventionLinkDatetimeStart( new \DateTime("now") );
+                        $em->persist($interventionLink);
+                        $em->flush();
+                    }
+                   
+                    
+                    
+                    
+                    
+                    
+                    break;
+                case "Activity":
+                    break;
+            }
+
+
+        }
+        
+        
+    }
+    
 }

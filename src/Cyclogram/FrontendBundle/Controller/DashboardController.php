@@ -24,10 +24,16 @@ class DashboardController extends Controller
         $request = $this->getRequest();
         $locale = $this->getRequest()->getLocale();
         
+        
+        $this->get('fpp_ls')->interventionLogic($participant, $studyId);
+        
         $em = $this->getDoctrine()->getManager();
         $surveyscount = $em->getRepository('CyclogramProofPilotBundle:Participant')->getParticipantInterventionsCount($participant);
 
         $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:Participant')->getParticipantInterventionLinks($participant);
+        
+        
+        
         $session = $this->getRequest()->getSession();
         
         $parameters = array();
@@ -49,7 +55,18 @@ class DashboardController extends Controller
             $intervention["title"] = 'Take the ' . $interventionLink->getIntervention()->getInterventionName();
             $intervention["content"] = 'Follow this link to begin your first follow-up survey.';
             $intervention["url"] = $this->getInterventionUrl($interventionLink, $studyId, $studyContent->getStudyUrl(), $locale);
+            
+            if($interventionLink->getStatus()->getStatusName() != "Active" ) {
+                $intervention["status"] = "Completed";
+            } else {
+                $intervention["status"] = "Enabled";
+            }
+            
+            
+            
             $parameters["interventions"][] = $intervention;
+            
+            
 
         }
         

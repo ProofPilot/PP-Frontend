@@ -46,8 +46,9 @@ class ParticipantRepository extends EntityRepository implements
     
     public function getParticipantInterventionLinks($userid){
         return $this->getEntityManager()
-        ->createQuery('SELECT pil, i, it FROM CyclogramProofPilotBundle:ParticipantInterventionLink pil
+        ->createQuery('SELECT pil, i, it, s FROM CyclogramProofPilotBundle:ParticipantInterventionLink pil
                 INNER JOIN pil.intervention i
+                INNER JOIN pil.status s
                 INNER JOIN i.interventionType it
                 WHERE pil.participant = :userid')
                 ->setParameters(array(

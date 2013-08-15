@@ -26,15 +26,16 @@ class LimeController extends Controller
         $surveyId = $this->getRequest()->query->get('surveyId');
         $saveId = $this->getRequest()->query->get('saveId');
         
+        //If logged in save result immediately
+        $participant = $this->get('security.context')->getToken()->getUser();
+        if($participant) {
+            $this->get('fpp_ls')->participantSurveyLinkRegistration($surveyId, $saveId, $participant, uniqid());
+        }
         $redirectUrl = $this->getRequest()->query->get('redirectUrl');
-        
-        
-        //$studyUrl = $this->getRequest()->query->get('studyUrl');
-        //$studyId = $this->getRequest()->query->get('studyId');
+
 
         
         $session = $this->getRequest()->getSession();
-        
         $bag = new AttributeBag();
         $bag->setName("SurveyInfo");
         $array = array();
@@ -47,11 +48,6 @@ class LimeController extends Controller
         
         return $this->redirect($redirectUrl);
         
-        
-//         return $this->redirect(($this->generateUrl("_study", array(
-//                 'studyId'=> $studyId, 
-//                 'studyUrl' => $studyUrl
-//                 ))));
 
         
     }
