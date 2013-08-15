@@ -76,16 +76,16 @@ class LoginController extends Controller
     /**
      * @Route("/login_check/{studyId}", name="login_check")
      */
-    public function securityCheckAction($studyId)
+    public function securityCheckAction($studyId=null)
     {
         // The security layer will intercept this request
     }
 
 
     /**
-     * @Route("/logout", name="_logout" , options={"expose"=true})
+     * @Route("/logout/{studyId}", name="_logout" , options={"expose"=true})
      */
-    public function logoutAction()
+    public function logoutAction($studyId=null)
     {
         // The security layer will intercept this request
     }

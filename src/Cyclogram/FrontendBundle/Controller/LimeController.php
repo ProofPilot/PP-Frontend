@@ -2,6 +2,8 @@
 
 namespace Cyclogram\FrontendBundle\Controller;
 
+use Cyclogram\Bundle\ProofPilotBundle\Entity\Participant;
+
 use Symfony\Component\HttpFoundation\Session\Attribute\AttributeBag;
 
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -21,20 +23,17 @@ class LimeController extends Controller
      */
     public function recordSurveyAction() {
         
-        $participant = $this->get('security.context')->getToken()->getUser();
+        $loggedUser = $this->get('security.context')->getToken()->getUser();
         
         $surveyId = $this->getRequest()->query->get('surveyId');
         $saveId = $this->getRequest()->query->get('saveId');
         
         //If logged in save result immediately
-        $participant = $this->get('security.context')->getToken()->getUser();
-        if($participant) {
+        if(($loggedUser instanceof Participant) && ($this->get('security.context')->isGranted("ROLE_PARTICIPANT"))) {
             $this->get('fpp_ls')->participantSurveyLinkRegistration($surveyId, $saveId, $participant, uniqid());
         }
         $redirectUrl = $this->getRequest()->query->get('redirectUrl');
 
-
-        
         $session = $this->getRequest()->getSession();
         $bag = new AttributeBag();
         $bag->setName("SurveyInfo");

@@ -126,7 +126,7 @@ class LimeSurvey
         $sexPro3MonthArm = 'SexPro3Month';
         
         $em = $this->container->get('doctrine')->getEntityManager();
-        $participantSurveyLink = $em->getRepository('CyclogramProofPilotBundle:ParticipantSurveyLink')->findOneBySidId($surveyId);
+        $participantSurveyLink = $em->getRepository('CyclogramProofPilotBundle:ParticipantSurveyLink')->findOneBySaveId($saveId);
         if (isset($participantSurveyLink)) {
             $saveId = $participantSurveyLink->getSaveId();
             
