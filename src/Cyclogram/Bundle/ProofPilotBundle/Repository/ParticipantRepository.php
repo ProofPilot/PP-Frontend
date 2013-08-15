@@ -1,6 +1,8 @@
 <?php
 namespace Cyclogram\Bundle\ProofPilotBundle\Repository;
 
+use Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantInterventionLink;
+
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\Mapping as ORM;
@@ -54,6 +56,31 @@ class ParticipantRepository extends EntityRepository implements
                 ->setParameters(array(
                         'userid' => $userid))
                         ->getResult();
+    }
+    
+    public function addParticipantInterventionLink($participant, $intervention) {
+        $em = $this->getEntityManager();
+        
+        //check if intervention link already exists for a participant 
+        $hasInterventionLink = $em->createQuery('SELECT pil, i FROM CyclogramProofPilotBundle:ParticipantInterventionLink pil
+                INNER JOIN pil.intervention i
+                WHERE pil.participant = :participant
+                AND i.interventionName = :interventionName
+                ')
+                ->setParameter("participant", $participant)
+                ->setParameter("interventionName", $intervention->getInterventionName())
+                ->getOneOrNullResult();
+        
+        if(!$hasInterventionLink) {
+            $interventionLink = new ParticipantInterventionLink();
+            $interventionLink->setParticipant($participant);
+            $interventionLink->setIntervention($intervention);
+            $interventionLink->setStatus($em->getRepository('CyclogramProofPilotBundle:Status')->findOneByStatusName("Active"));
+            $interventionLink->setParticipantInterventionLinkDatetimeStart( new \DateTime("now") );
+            $em->persist($interventionLink);
+            $em->flush();
+        }
+
     }
     
     public function checkIfEmailNotUsed($email) {

@@ -257,21 +257,10 @@ class LimeSurvey
                     }
                     
                     if(($status == "Closed") && ($intervention->getInterventionName() == "SexPro Baseline Survey")) {
-                        $interventionLink = new ParticipantInterventionLink();
-                        $interventionLink->setParticipant($participant);
                         $intervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')->findOneByInterventionName("SexPro Activity");
-                        $interventionLink->setIntervention($intervention);
-                        $interventionLink->setStatus($em->getRepository('CyclogramProofPilotBundle:Status')->findOneByStatusName("Active"));
-                        $interventionLink->setParticipantInterventionLinkDatetimeStart( new \DateTime("now") );
-                        $em->persist($interventionLink);
-                        $em->flush();
+                        $em->getRepository('CyclogramProofPilotBundle:Participant')->addParticipantInterventionLink($participant, $intervention);
                     }
-                   
-                    
-                    
-                    
-                    
-                    
+
                     break;
                 case "Activity":
                     break;

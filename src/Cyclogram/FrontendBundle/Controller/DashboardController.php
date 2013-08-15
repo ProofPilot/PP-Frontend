@@ -128,7 +128,7 @@ class DashboardController extends Controller
         $typeName = $interventionLink->getIntervention()->getInterventionType()->getInterventionTypeName(); 
         switch($typeName) {
             case 'Activity':
-                return "";
+                return $intervention->getInterventionUrl();
             case 'Survey & Observation':
                 $surveyId = $intervention->getSidId();
                 $redirectPath = $this->get('router')->generate('_main', array('studyId'=>$studyId));

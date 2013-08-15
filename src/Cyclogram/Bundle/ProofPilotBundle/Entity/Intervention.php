@@ -113,4 +113,54 @@ class Intervention
     {
         $this->sidId = $sidId;
     }
+
+    public function getInterventionId()
+    {
+        return $this->interventionId;
+    }
+
+    public function setInterventionId($interventionId)
+    {
+        $this->interventionId = $interventionId;
+    }
+
+    public function getInterventionUrl()
+    {
+        return $this->interventionUrl;
+    }
+
+    public function setInterventionUrl($interventionUrl)
+    {
+        $this->interventionUrl = $interventionUrl;
+    }
+
+    public function getInterventionResponseUrl()
+    {
+        return $this->interventionResponseUrl;
+    }
+
+    public function setInterventionResponseUrl($interventionResponseUrl)
+    {
+        $this->interventionResponseUrl = $interventionResponseUrl;
+    }
+
+    public function getLanguage()
+    {
+        return $this->language;
+    }
+
+    public function setLanguage($language)
+    {
+        $this->language = $language;
+    }
+
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    }
 }
