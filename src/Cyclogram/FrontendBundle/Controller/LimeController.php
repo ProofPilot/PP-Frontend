@@ -30,7 +30,7 @@ class LimeController extends Controller
         
         //If logged in save result immediately
         if(($loggedUser instanceof Participant) && ($this->get('security.context')->isGranted("ROLE_PARTICIPANT"))) {
-            $this->get('fpp_ls')->participantSurveyLinkRegistration($surveyId, $saveId, $participant, uniqid());
+            $this->get('fpp_ls')->participantSurveyLinkRegistration($surveyId, $saveId, $loggedUser, uniqid());
         }
         $redirectUrl = $this->getRequest()->query->get('redirectUrl');
 
