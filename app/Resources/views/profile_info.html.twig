@@ -12,7 +12,7 @@
     			</li>
     			<li>
     				<p>{% trans from "general_settings" %}last_access{% endtrans %}<br />
-    				<span>{{ lastaccess|format_datetime('dd MMMM yyyy, HH:mm') }}</span></p>
+    				<span>{{ app.user.participantLastTouchDatetime|format_datetime('dd MMMM yyyy, HH:mm') }}</span></p>
     			</li>
     		</ul>
     	</div>

@@ -157,6 +157,9 @@ class StudyController extends Controller
     }
     
     /**
+     * Shows a survey. After completion of survey, survey results are saved in session, also
+     * it is required to specify the redirect url
+     * 
      * @Route("/survey/{studyId}/{surveyId}", name="_survey")
      * @Template()
      */
@@ -170,35 +173,31 @@ class StudyController extends Controller
         $parameters['studyUrl'] = $studyUrl;
         $parameters['studyId'] = $studyId;
     
-        $survey = $this->getDoctrine()
-        ->getRepository("CyclogramProofPilotBundleLime:LimeSurveysLanguagesettings", "limesurvey")
-        ->getSurvey($surveyId, $locale);
     
         $studyContent = $this->getDoctrine()->getRepository("CyclogramProofPilotBundle:StudyContent")->getStudyContentById($studyId, $locale);
     
     
-        $parameters['survey_url'] = "/lime/index.php/survey/index/sid/".$surveyId."/newtest/Y/lang/".$survey->getSurveylsLanguage();
-    
-        $parameters["lastaccess"] = new \DateTime("2013-07-01 10:05:00");
-         
-        $parameters["about"] = array('title' => 'About this survey',
-                'info' => 'This survey helps researchers determine what you are up to now - so
-                that we can compare how and if things have changed in the future.
-                Please answer as honestly as possible.&nbsp; '
-        );
-    
-        $parameters["list"] = array(
-                array('item' => '1. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.'),
-                array('item' => '2. Claritas est etiam processus dynamicus, qui sequitur mutationem consuetudium lectorum.'),
-                array('item' => '3. Eodem modo typi, qui nunc nobis videntur parum clari, fiant sollemnes in futurum.')
-        );
-    
-        $parameters["page"] = array(
-                'logo' => $this->container->getParameter('study_image_url') . '/' . $studyId. '/' .$studyContent->getStudyLogo(),
-                'title' => $survey->getSurveylsTitle()
-        );
+        $parameters['survey'] = $this->getSurveyData($surveyId, $locale);
+        $parameters['logo'] = $this->container->getParameter('study_image_url') . '/' . $studyId. '/' .$studyContent->getStudyLogo();
+
     
         return $this->render('CyclogramStudyBundle:Study:survey.html.twig', $parameters);
+    }
+    
+    
+    private function getSurveyData($surveyId, $locale)
+    {
+        $survey = $this->getDoctrine()
+            ->getRepository("CyclogramProofPilotBundleLime:LimeSurveysLanguagesettings", "limesurvey")
+            ->getSurvey($surveyId, $locale);
+        
+        $surveyData = array (
+                    'url' => "/lime/index.php/survey/index/sid/".$surveyId."/newtest/Y/lang/".$survey->getSurveylsLanguage(),
+                    'title' =>  $survey->getSurveylsTitle()
+                );
+        
+        return $surveyData;
+         
     }
 
 }

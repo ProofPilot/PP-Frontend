@@ -9,6 +9,7 @@ txt_dashboard: txt_dashboard
 txt_please_verify_email: txt_please_verify_email
 view_more: view_more
 what_next: what_next
+do_it: 'DO IT'
 
 what_next_list:
     collect_speciment: collect_specimen

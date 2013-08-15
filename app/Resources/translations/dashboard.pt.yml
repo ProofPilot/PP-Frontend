@@ -9,6 +9,7 @@ txt_dashboard: 'Painel de controle'
 txt_please_verify_email: "Por favor, verifique o seu endereço de e-mail. <br/>\nPara participar de estudos necessitamos de um endereço de e-mail válido - por favor, vá para o seu e-mail e clique no link"
 view_more: 'Ver mais'
 what_next: 'Qual é o próximo passo'
+do_it: 'DO IT'
 
 what_next_list:
     collect_speciment: 'Colectar espécimen'

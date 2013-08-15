@@ -44,10 +44,12 @@ class ParticipantRepository extends EntityRepository implements
         ->getSingleScalarResult();
     }
     
-    public function getParticipantInterventions($userid){
+    public function getParticipantInterventionLinks($userid){
         return $this->getEntityManager()
-        ->createQuery('SELECT pi FROM CyclogramProofPilotBundle:ParticipantInterventionLink pi
-                WHERE pi.participant = :userid')
+        ->createQuery('SELECT pil, i, it FROM CyclogramProofPilotBundle:ParticipantInterventionLink pil
+                INNER JOIN pil.intervention i
+                INNER JOIN i.interventionType it
+                WHERE pil.participant = :userid')
                 ->setParameters(array(
                         'userid' => $userid))
                         ->getResult();

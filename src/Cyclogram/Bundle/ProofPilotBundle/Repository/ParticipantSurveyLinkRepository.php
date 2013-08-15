@@ -27,4 +27,22 @@ class ParticipantSurveyLinkRepository extends EntityRepository
         }
     }
     
+    /**
+     * Check if participant has passed the survey 
+     * 
+     * @param unknown_type $participant
+     * @param unknown_type $surveyId
+     */
+    public function checkIfSurveyPassed($participant, $surveyId) {
+        $em = $this->getEntityManager();
+        $result = $em->createQuery('SELECT psl FROM CyclogramProofPilotBundle:ParticipantSurveyLink psl
+                WHERE psl.participant = :participant
+                AND psl.sidId = :surveyId
+                ')
+                ->setParameters(array(
+                        'surveyId' => $surveyId,
+                        'participant' => $participant
+                ))->getOneOrNullResult();
+        if($result) return true; else return false;
+    }
 }

@@ -5,7 +5,7 @@
 	
 		<div class="site_container">
 		{% block header %}
-{% include '::header.html.twig' with {'studyId' : studyId}%}
+            {% include '::header.html.twig' with {'studyId' : studyId}%}
         {% endblock header %}
 
 			<div class="panel alt_bg">
@@ -44,8 +44,8 @@
 				<div class="panel_right">
 					
 					<div class="dashboard_title white">
-						<div class="image"><img src="{{ page.logo }}" width="93" height="93" alt="" title=""/></div>
-						<h1>{{ page.title }}</h1>
+						<div class="image"><img src="{{ logo }}" width="93" height="93" alt="" title=""/></div>
+						<h1>{{ survey.title }}</h1>
 {# 						<p>{{ page.subtitle }}</p>#}
 					</div>
 					
@@ -190,7 +190,7 @@
 							</div>
 						</div>#}
 						
-						<iframe src="{{ survey_url }}" id="iframe1" height="800" width="1014"></iframe>
+						<iframe src="{{ survey.url }}" id="iframe1" height="800" width="1014"></iframe>
 				    </div>
 			
 		</div>
@@ -198,19 +198,6 @@
     {% include '::footer.html.twig' %}
 		
 		<script>
-    		/*function autoResize(id){
-    		    if(document.getElementById){
-    		        var iframe = document.getElementById(id);
-        		    var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
-        		    if(innerDoc.body.offsetHeight)
-        		    {
-            		    iframe.height = innerDoc.body.offsetHeight + 32 + 'px';
-        		    } else {
-        		        iframe.height = innerDoc.body.scrollHeight + 'px';
-        		    }
-
-    		    }
-    		}*/
      		$('#iframe1').load(function(){
 
      			var frame = $(this);
@@ -226,15 +213,14 @@
      			var surveydata = frame.contents().find('#surveydata');
 		    	var surveyId = surveydata.attr('surveyid');
 		    	var saveId = surveydata.attr('saveid');
-		    	var redirectUrl = '{{ path('_study',{studyId: studyId, studyUrl: studyUrl}) }}';
+		    	//var redirectUrl = '{{ path('_study',{studyId: studyId, studyUrl: studyUrl}) }}';
 		    	if(surveyId !== undefined && saveId !== undefined) {
-		    	    window.location = '/' + '{{ app.request.locale }}' + '/surveyResponse?&surveyId=' + surveyId + '&saveId=' + saveId + '&redirectUrl=' + encodeURIComponent(redirectUrl);
+		    	    window.location = '/' + '{{ app.request.locale }}' + '/surveyResponse?&surveyId=' + surveyId + '&saveId=' + saveId + '&redirectUrl=' + '{{ app.request.get('redirectUrl') }}';
 		    	}
 
     		});
 		</script>
 
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
         
         <style>
             .panel_right {

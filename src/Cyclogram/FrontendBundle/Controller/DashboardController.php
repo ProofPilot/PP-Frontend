@@ -18,14 +18,16 @@ class DashboardController extends Controller
      * @Secure(roles="ROLE_PARTICIPANT")
      * @Template()
      */
-    public function indexAction($studyId=0)
+    public function indexAction($studyId=null)
     {
         $participant = $this->get('security.context')->getToken()->getUser();
         $request = $this->getRequest();
+        $locale = $this->getRequest()->getLocale();
+        
         $em = $this->getDoctrine()->getManager();
         $surveyscount = $em->getRepository('CyclogramProofPilotBundle:Participant')->getParticipantInterventionsCount($participant);
 
-        $interventionsLinks = $em->getRepository('CyclogramProofPilotBundle:Participant')->getParticipantInterventions($participant);
+        $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:Participant')->getParticipantInterventionLinks($participant);
         $session = $this->getRequest()->getSession();
         
         $parameters = array();
@@ -36,15 +38,24 @@ class DashboardController extends Controller
                 "content" => "content");
         $parameters['message'] = array(
                 "activity" => "activity");
+        
+        
+        $studyContent = $this->getDoctrine()->getRepository("CyclogramProofPilotBundle:StudyContent")->getStudyContentById($studyId, $locale);
     
-        $parameters["surveys"] = array();
-        foreach($interventionsLinks as $interventionsLink) {
-            $parameters["surveys"][] = array('title' => 'Take the' . $interventionsLinks[0]->getIntervention()->getInterventionName(),
-                        'content' => 'Follow this link to begin your first follow-up survey.',
-                        'icon' => 'icon_1',
-                        'image' => '/images/sexpro_doit.png'
-                );
+        $parameters["interventions"] = array();
+        foreach($interventionLinks as $interventionLink) {
+            
+            $intervention = array();
+            $intervention["title"] = 'Take the ' . $interventionLink->getIntervention()->getInterventionName();
+            $intervention["content"] = 'Follow this link to begin your first follow-up survey.';
+            $intervention["url"] = $this->getInterventionUrl($interventionLink, $studyId, $studyContent->getStudyUrl(), $locale);
+            $parameters["interventions"][] = $intervention;
+
         }
+        
+        if($studyContent)
+            $parameters["logo"] = $this->container->getParameter('study_image_url') . '/' . $studyId. '/' .$studyContent->getStudyLogo();
+        
 
         $parameters["actions"] = array(
                 array('activity' => $this->get('translator')->trans('past_activity.emai_confirmation_status', array(), 'dashboard'),
@@ -92,5 +103,27 @@ class DashboardController extends Controller
 
         return $this->render('CyclogramFrontendBundle:Dashboard:main.html.twig', $parameters);
     
+    }
+    
+    
+    private function getInterventionUrl($interventionLink, $studyId, $studyUrl, $locale) {
+        $intervention = $interventionLink->getIntervention();
+        $typeName = $interventionLink->getIntervention()->getInterventionType()->getInterventionTypeName(); 
+        switch($typeName) {
+            case 'Activity':
+                return "";
+            case 'Survey & Observation':
+                $surveyId = $intervention->getSidId();
+                $redirectPath = $this->get('router')->generate('_main', array('studyId'=>$studyId));
+                $path = $this->get('router')->generate('_survey', array(
+                        'studyId'=>$studyId,
+                        'studyUrl'=>$studyUrl, 
+                        'surveyId'=>$surveyId,
+                        'redirectUrl'=>urlencode($redirectPath)
+                        
+                        ));
+                return $path;
+            
+        }
     }
 }

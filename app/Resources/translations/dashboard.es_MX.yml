@@ -9,6 +9,7 @@ txt_dashboard: 'Tablero Principal'
 txt_please_verify_email: "Porfavor verifique su dirección de e-mail.<br>\nPara participar en los estudios necesitamos un e-mail válido - Porfavor vaya al e-mail y haga click en el enlace."
 view_more: 'Ver más'
 what_next: '¿Que sigue?'
+do_it: 'DO IT'
 
 what_next_list:
     collect_speciment: 'Colectar espécimen'

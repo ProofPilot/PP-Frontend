@@ -90,5 +90,27 @@ class Intervention
     {
         $this->interventionName = $interventionName;
     }
+    
+    
 
+
+    public function getInterventionType()
+    {
+        return $this->interventionType;
+    }
+
+    public function setInterventionType($interventionType)
+    {
+        $this->interventionType = $interventionType;
+    }
+
+    public function getSidId()
+    {
+        return $this->sidId;
+    }
+
+    public function setSidId($sidId)
+    {
+        $this->sidId = $sidId;
+    }
 }

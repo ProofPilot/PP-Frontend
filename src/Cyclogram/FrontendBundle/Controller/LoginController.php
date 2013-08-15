@@ -74,9 +74,9 @@ class LoginController extends Controller
     }
 
     /**
-     * @Route("/login_check", name="login_check")
+     * @Route("/login_check/{studyId}", name="login_check")
      */
-    public function securityCheckAction()
+    public function securityCheckAction($studyId)
     {
         // The security layer will intercept this request
     }
@@ -185,16 +185,16 @@ class LoginController extends Controller
                     $roles = $currentToken->getRoles();
                     
                     
-                    $token = new OAuthToken($currentToken->getRawToken(), array_merge($roles, array("ROLE_PARTICIPANT")));
-                    $token->setResourceOwnerName($currentToken->getResourceOwnerName());
-                    $token->setUser($participant);
-                    $token->setAuthenticated(true);
+                    if($currentToken instanceof OAuthToken) {
                     
-                   
+                        $token = new OAuthToken($currentToken->getRawToken(), array_merge($roles, array("ROLE_PARTICIPANT")));
+                        $token->setResourceOwnerName($currentToken->getResourceOwnerName());
+                        $token->setUser($participant);
+                        $token->setAuthenticated(true);
+                    } else {
+                        $token = new \Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken($participant, $participant->getPassword(), 'main', array_merge($roles, array("ROLE_PARTICIPANT")));
+                    }
                     $this->get('security.context')->setToken($token);
-
-//                     $token = new \Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken($participant, $participant->getPassword(), 'main', $participant->getRoles());
-//                     $this->get('security.context')->setToken($token);
 
                     $this->get('custom_db')->getFactory('CommonCustom')->addEvent($participant->getParticipantId(),null,1,'login','Login succesfully', TRUE);
                     return $this->redirect( $this->generateUrl("_main", array("studyId"=>$studyId)) );
