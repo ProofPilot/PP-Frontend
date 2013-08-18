@@ -185,7 +185,7 @@ class  SimpleRegistrationController extends Controller{
                     $parameters['locale'] = $participant->getLanguage() ? $participant->getLanguage() : $request->getLocale();
                     
                     $cc->sendMail($participant->getParticipantEmail(),
-                            'Please Verify your e-mail address',
+                            $this->get('translator')->trans("email_title_verify", array(), "email", $parameters['locale']),
                              'CyclogramFrontendBundle:Email:email_confirmation.html.twig',
                             null,
                             $embedded,

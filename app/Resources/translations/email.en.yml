@@ -4,6 +4,8 @@ bottom_text: 'This message was sent to matt@cyclogram<br />If you would like to 
 confirm_verify_link: 'Please verify your email'
 confirm_verify_text: 'Yes, it''s part of any website registration and ProofPilot is no different. Please click on the link below to verify your e-mail address and get going'
 confirm_verify_title: 'Please Verify your e-mail address'
+email_reset_password: email_reset_password   # FIXME
+email_title_verify: email_title_verify   # FIXME
 reset_pass_link: 'Click here to reset your password'
 reset_pass_text: 'Yes, it happens to all of us: you can''t remember your password. That''s OK. Click this link to reset your password'
 reset_pass_title: 'Reset Your Password'

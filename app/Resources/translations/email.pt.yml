@@ -1,9 +1,11 @@
-bottom_no_reply: bottom_no_reply   # FIXME
-bottom_street: bottom_street   # FIXME
-bottom_text: bottom_text   # FIXME
+bottom_no_reply: bottom_no_reply
+bottom_street: bottom_street
+bottom_text: bottom_text
 confirm_verify_link: confirm_verify_link
 confirm_verify_text: confirm_verify_text
 confirm_verify_title: confirm_verify_title
+email_reset_password: email_reset_password   # FIXME
+email_title_verify: email_title_verify   # FIXME
 reset_pass_link: reset_pass_link
 reset_pass_text: reset_pass_text
 reset_pass_title: reset_pass_title

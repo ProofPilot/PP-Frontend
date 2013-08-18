@@ -152,6 +152,7 @@ class RegistrationController extends Controller
         $parameters['email'] = $participant->getParticipantEmail();
         $parameters['confirmed'] = 1;
         $parameters['studyId'] = $studyId;
+        $parameters['locale'] = $participant->getLanguage() ? $participant->getLanguage() : $request->getLocale();
         
         $em = $this->getDoctrine()->getManager();
 
@@ -163,7 +164,7 @@ class RegistrationController extends Controller
         $em->flush($participant);
         
         $cc->sendMail($participant->getParticipantEmail(),
-                'Please Verify your e-mail address',
+                $this->get('translator')->trans("email_title_verify", array(), "email", $parameters['locale']),
                 'CyclogramFrontendBundle:Email:email_confirmation.html.twig',
                 null,
                 $embedded,
