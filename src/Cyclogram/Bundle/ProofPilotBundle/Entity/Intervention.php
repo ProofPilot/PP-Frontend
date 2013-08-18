@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Intervention
  *
  * @ORM\Table(name="intervention")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Cyclogram\Bundle\ProofPilotBundle\Repository\InterventionRepository")
  */
 class Intervention
 {
@@ -80,6 +80,20 @@ class Intervention
      * })
      */
     private $status;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="intervention_title", type="string", length=255, nullable=true)
+     */
+    private $interventionTitle;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="intervention_descripton", type="string", length=750, nullable=true)
+     */
+    private $interventionDescripton;
 
     public function getInterventionName()
     {
@@ -162,5 +176,25 @@ class Intervention
     public function setStatus($status)
     {
         $this->status = $status;
+    }
+
+    public function getInterventionTitle()
+    {
+        return $this->interventionTitle;
+    }
+
+    public function setInterventionTitle($interventionTitle)
+    {
+        $this->interventionTitle = $interventionTitle;
+    }
+
+    public function getInterventionDescripton()
+    {
+        return $this->interventionDescripton;
+    }
+
+    public function setInterventionDescripton($interventionDescripton)
+    {
+        $this->interventionDescripton = $interventionDescripton;
     }
 }

@@ -51,9 +51,12 @@ class DashboardController extends Controller
         $parameters["interventions"] = array();
         foreach($interventionLinks as $interventionLink) {
             
+            $interventionId = $interventionLink->getIntervention()->getInterventionId();
+            $interventionContent = $this->getDoctrine()->getRepository("CyclogramProofPilotBundle:Intervention")->getInterventionContent($interventionId, $locale);
+            
             $intervention = array();
-            $intervention["title"] = 'Take the ' . $interventionLink->getIntervention()->getInterventionName();
-            $intervention["content"] = 'Follow this link to begin your first follow-up survey.';
+            $intervention["title"] = $interventionContent->getInterventionTitle();
+            $intervention["content"] = $interventionContent->getInterventionDescripton();
             $intervention["url"] = $this->getInterventionUrl($interventionLink, $studyId, $studyContent->getStudyUrl(), $locale);
             
             if($interventionLink->getStatus()->getStatusName() != "Active" ) {
@@ -61,13 +64,7 @@ class DashboardController extends Controller
             } else {
                 $intervention["status"] = "Enabled";
             }
-            
-            
-            
             $parameters["interventions"][] = $intervention;
-            
-            
-
         }
         
         if($studyContent)
