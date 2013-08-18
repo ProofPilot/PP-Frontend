@@ -1,7 +1,7 @@
 already_joined: '¿Ya es parte?'
-btn_next: btn_next
+btn_next: Siguiente
 btn_save_mailing_address: btn_save_mailing_address
-btn_send_confirmation: btn_send_confirmation
+btn_send_confirmation: 'enviar el código de confirmación al móvil'
 confirm_password: 'Confirme contraseña'
 create_password: 'Crear una contraseña'
 double_check: 'Revise dos veces su entrada'
@@ -28,7 +28,7 @@ min_charachters: '(8 caractéres mínimo)'
 no_code: '¿Sin código? Enviar otro'
 ok_verify: 'Ok, ¡verifique!'
 pick_user: 'Escoja su usuario'
-sms_verification_message: sms_verification_message   # FIXME
+sms_verification_message: sms_verification_message
 txt_basics: txt_basics
 txt_check_email: txt_check_email
 txt_join: Unase
