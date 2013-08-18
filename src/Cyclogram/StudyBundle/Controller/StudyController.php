@@ -146,6 +146,10 @@ class StudyController extends Controller
         $locale = $this->getRequest()->getLocale();
         $em = $this->getDoctrine()->getManager();
         
+        
+        $blockContent = $em->getRepository("CyclogramProofPilotBundle:StaticBlocks")->getBlockContent("security_privacy_title", $locale);
+        $parameters["title"] = $blockContent;
+        
         $blockContent = $em->getRepository("CyclogramProofPilotBundle:StaticBlocks")->getBlockContent("privacy_security", $locale);
         $parameters["content"] = $blockContent;
         
