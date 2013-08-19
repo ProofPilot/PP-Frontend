@@ -1,26 +1,26 @@
-btn_confrimcoe_login: btn_confrimcoe_login
-cant_remember_username: cant_remember_username
-doesnt_match_records: doesnt_match_records
-email_sent_containing_password: email_sent_containing_password
-enter_mobile_phone: enter_mobile_phone
-enter_sms_code: txt_enter_code_you_received_via_sms
-forgot_password: forgot_password
-forgot_password_message: forgot_password_message
-forgot_username: forgot_username
-forgot_username_message: forgot_username_message
-havent_joined: havent_joined
-label_sms_code: label_sms_code
-new_password_selection: new_password_selection
-send_another_code: text_send_another_code
-txt_forgot_your_password: txt_forgot_your_password
-txt_forgot_your_username: txt_forgot_your_username
-txt_form_password: txt_form_password
-txt_form_username: txt_form_username
-txt_log_in: txt_log_in
-txt_login_button: txt_login_button
-txt_login_error_message: txt_your_entry_does_not_match_our_records
-txt_login_securely: txt_login_securely
-txt_login_with: txt_login_with
-txt_or: txt_or
-txt_stay_logged_in: txt_stay_logged_in
-username_sent: username_sent
+btn_confrimcoe_login: 'confirmer le code et login'
+cant_remember_username: 'Vous avez oublié votre nom d''utilisateur?'
+doesnt_match_records: 'Nous sommes désolés, votre entrée ne correspond pas à nos dossiers'
+email_sent_containing_password: 'Un e-mail a été envoyé contenant un lien pour réinitialiser votre mot de passe'
+enter_mobile_phone: 'Un e-mail a été envoyé contenant un lien pour réinitialiser votre mot de passe'
+enter_sms_code: 'Entrez le code que vous avez reçu par SMS'
+forgot_password: 'Vous avez oublié votre mot de passe?'
+forgot_password_message: "Il arrive à chacun d'entre nous plus de temps que nous aimerions bien l'admettre.\nPas de problème, nous vous guiderons à travers la création d'un nouveau mot de passe, tout en protégeant votre vie privée et la sécurité."
+forgot_username: 'Nom d''utilisateur oublié?'
+forgot_username_message: 'Pas de problème. Entrez le numéro de téléphone portable que vous avez utilisé pour vous inscrire et nous vous enverrons votre nom d''utilisateur par message texte.'
+havent_joined: 'N''ont pas encore adhéré?'
+label_sms_code: 'code SMS'
+new_password_selection: "<p> Cliquez sur le lien dans l'e-mail et vous serez guidé à travers la sélection d'un nouveau mot de passe. Vous aurez besoin de votre téléphone mobile pour compléter ce processus. </ P>\n<p> Si cela n'est pas arrivé au bout de quelques minutes, vérifiez votre Spam ou dossiers junkmail </ p>"
+send_another_code: 'Pas de code? Envoyer un autre'
+txt_forgot_your_password: 'Vous avez oublié votre mot de passe?'
+txt_forgot_your_username: 'Oublié?'
+txt_form_password: 'Mot de passe'
+txt_form_username: 'Nom d''utilisateur'
+txt_log_in: Connexion
+txt_login_button: Connexion
+txt_login_error_message: 'Votre entrée ne correspond pas à nos dossiers'
+txt_login_securely: 'Accès sécurisé à vos comptes.'
+txt_login_with: Connexion
+txt_or: ou
+txt_stay_logged_in: 'Restez connecté'
+username_sent: 'Votre nom d''utilisateur a été envoyé au numéro de téléphone mobile sur disque'

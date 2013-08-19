@@ -2,6 +2,12 @@
 
 namespace Cyclogram\FrontendBundle\Controller;
 
+use Cyclogram\Bundle\ProofPilotBundle\Entity\Participant;
+
+use Symfony\Component\HttpFoundation\Session\Attribute\AttributeBag;
+
+use Symfony\Component\HttpFoundation\Session\Session;
+
 use Doctrine\ORM\EntityManager;
 
 use Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantSurveyLink;
@@ -13,30 +19,34 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class LimeController extends Controller
 {
     /**
-     * @Route("/surveyResponce", name="_record_survey")
+     * @Route("/surveyResponse", name="_record_survey")
      */
     public function recordSurveyAction() {
         
-        $participant = $this->get('security.context')->getToken()->getUser();
+        $loggedUser = $this->get('security.context')->getToken()->getUser();
         
         $surveyId = $this->getRequest()->query->get('surveyId');
         $saveId = $this->getRequest()->query->get('saveId');
-        $studyUrl = $this->getRequest()->query->get('studyUrl');
-        $studyId = $this->getRequest()->query->get('studyId');
         
-        $uniqId = uniqid();
+        //If logged in save result immediately
+        if(($loggedUser instanceof Participant) && ($this->get('security.context')->isGranted("ROLE_PARTICIPANT"))) {
+            $this->get('fpp_ls')->participantSurveyLinkRegistration($surveyId, $saveId, $loggedUser, uniqid());
+        }
+        $redirectUrl = $this->getRequest()->query->get('redirectUrl');
+
+        $session = $this->getRequest()->getSession();
+        $bag = new AttributeBag();
+        $bag->setName("SurveyInfo");
+        $array = array();
+        $bag->initialize($array);
+        $bag->set('surveyId', $surveyId);
+        $bag->set('saveId', $saveId);
+        $session->registerBag($bag);
+        $session->set('SurveyInfo', $bag);
         
-//         $ParticipantSurveyLink = new ParticipantSurveyLink();
-//         $ParticipantSurveyLink->setParticipant($this->getDoctrine()->getRepository('CyclogramProofPilotBundle:Participant')->find(1));
-//         $ParticipantSurveyLink->setParticipantSurveyLinkUniqid($uniqId);
-//         $ParticipantSurveyLink->setSaveId($saveId);
-//         $ParticipantSurveyLink->setSidId($surveyId);
         
-//         $em = $this->getDoctrine()->getManager();
-//         $em->persist($ParticipantSurveyLink);
-//         $em->flush();
+        return $this->redirect($redirectUrl);
         
-        return $this->redirect(($this->generateUrl("_study", array('studyId'=> $studyId, 'studyUrl' => $studyUrl))));
 
         
     }

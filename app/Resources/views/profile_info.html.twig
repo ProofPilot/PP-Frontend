@@ -1,11 +1,8 @@
 {% if app.user %}
     <div class="profile_info alt_bg">
     	<div class="wrapper">
-            {% if studyId is defined and studyId == 1 %}
-    		{% else %}
-    		    {% if user.avatar is defined %}
+    		{% if user.avatar is defined %}
                     <a href="#" class="avatar"><img src="{{ user.avatar }}" width="80" height="82" alt="" title=""/></a>
-                {% endif %}
             {% endif %}
     		<ul class="user_info">
     			<li>
@@ -15,7 +12,7 @@
     			</li>
     			<li>
     				<p>{% trans from "general_settings" %}last_access{% endtrans %}<br />
-    				<span>{{ lastaccess|format_datetime('dd MMMM yyyy, HH:mm') }}</span></p>
+    				<span>{{ app.user.participantLastTouchDatetime|format_datetime('dd MMMM yyyy, HH:mm') }}</span></p>
     			</li>
     		</ul>
     	</div>

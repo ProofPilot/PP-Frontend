@@ -1,27 +1,27 @@
-btn_confirm: btn_confirm
-btn_send_mobile_code: btn_send_mobile_code
-general_subtitle: general_subtitle
-general_title: general_title
-label_email: label_email
-label_new_email: label_new_email
-label_new_pass: label_new_pass
-label_new_phone_number: label_new_phone_number
-label_new_phone_number_pass: label_new_phone_number_pass
-label_new_phone_number_sms: label_new_phone_number_sms
-label_new_user_name: label_new_user_name
-label_new_user_name_pass: label_new_user_name_pass
-label_old_password: label_old_password
-label_password: label_password
+btn_confirm: Confirmar
+btn_send_mobile_code: 'Enviar código ao celular'
+general_subtitle: 'Clique aqui para mudar o básico, e depois explore outras configurações para personalizar a sua experiência.'
+general_title: 'Configurações Gerais'
+label_email: Email
+label_new_email: 'Novo Email'
+label_new_pass: 'Digite a nova senha'
+label_new_phone_number: 'Novo número de telefone'
+label_new_phone_number_pass: 'Entre om a senha para confirmar a mudança'
+label_new_phone_number_sms: 'Entre com o código para confirmar'
+label_new_user_name: 'Novo Usuário'
+label_new_user_name_pass: 'Digitar senha'
+label_old_password: 'senha anterior'
+label_password: Senha
 label_password_mobile_confirm: label_password_mobile_confirm
-label_phone_number: label_phone_number
-label_repeat_email: label_repeat_email
-label_repeat_pass: label_repeat_pass
-label_username: label_username
+label_phone_number: 'Número de telefone'
+label_repeat_email: 'Confirme o novo email'
+label_repeat_pass: 'Confirme a nova senha'
+label_username: Usuário
 last_access: 'Último Acesso:'
-txt_change: txt_change
-txt_edit: txt_edit
-txt_email: txt_email
-txt_forgot_it: txt_forgot_it
-txt_mobile_number: txt_mobile_number
-txt_password: txt_password
-txt_username: txt_username
+txt_change: Mudar
+txt_edit: Editar
+txt_email: Email
+txt_forgot_it: 'Esqueceu?'
+txt_mobile_number: 'Número de Celular'
+txt_password: Senha
+txt_username: Usuário

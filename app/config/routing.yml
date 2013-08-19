@@ -1,3 +1,22 @@
+hwi_oauth_redirect:
+    resource: "@HWIOAuthBundle/Resources/config/routing/redirect.xml"
+    prefix:   /connect
+
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+    
+google_login:
+    pattern: /check_google
+    
+facebook_login:
+    pattern: /check_facebook
+    
+frontend_oauth_service_redirect:
+    pattern: /redirect/{service}
+    defaults:
+        _controller: CyclogramFrontendBundle:Login:redirectToService
+
+
 _root:
     path: /{study}
     requirements:
@@ -26,6 +45,5 @@ cyclogram_study:
     requirements:
         _locale: en|es|pt|fr|es_MX|pt_BR
 
-fos_js_routing:
-    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+
     

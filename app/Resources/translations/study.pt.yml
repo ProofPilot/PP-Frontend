@@ -8,7 +8,7 @@ txt_decline_btn: 'Recuso – Talvez mais tarde'
 txt_eligible_dsc: 'Sua participação em um piscar de olhos. O que você precisa fazer agora e os próximos passos.'
 txt_secure_text: '<p>ProofPilot pensa na segurança em primeiro lugar. Entendemos que você estará compartilhando alguns dados sensíveis conosco e nossos parceiros. Armazenamos seus dados em servidores seguros em um formato altamente criptografado. Levamos a sua segurança e privacidade a sério. Saiba mais sobre segurança pelo link abaixo. </P'
 txt_secure_title: 'É seguro?'
-txt_security_privacy: txt_security_privacy
+txt_security_privacy: 'Segurança e Privacidade com ProofPilot'
 txt_to_do: 'Oue você quer fazer?'
 txt_you_are_eligible: 'Você é elegível'
-warning_message: warning_message
+warning_message: 'Antes de prosseguir, por favor leia esta informação importante e aceite na parte inferior da página'

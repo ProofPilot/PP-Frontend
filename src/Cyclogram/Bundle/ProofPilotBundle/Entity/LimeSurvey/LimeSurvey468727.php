@@ -1,7 +1,6 @@
 <?php
 
 namespace Cyclogram\Bundle\ProofPilotBundle\Entity\LimeSurvey;
-
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -54,21 +53,40 @@ class LimeSurvey468727
      *
      * @ORM\Column(name="468727X596X5526", type="decimal", nullable=true)
      */
-    private $468727x596x5526;
+    private $age;
 
     /**
      * @var string
      *
      * @ORM\Column(name="468727X596X5527", type="string", length=5, nullable=true)
      */
-    private $468727x596x5527;
+    private $consentFormSigned;
 
     /**
      * @var string
      *
      * @ORM\Column(name="468727X596X5528", type="string", length=5, nullable=true)
      */
-    private $468727x596x5528;
+    private $location;
 
+    public function getAge()
+    {
+        return $this->age;
+    }
+
+    public function setAge($age)
+    {
+        $this->age = $age;
+    }
+
+    public function getLocation()
+    {
+        return $this->location;
+    }
+
+    public function setLocation($location)
+    {
+        $this->location = $location;
+    }
 
 }

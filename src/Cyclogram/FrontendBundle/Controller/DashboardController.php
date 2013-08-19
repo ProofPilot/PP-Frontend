@@ -15,16 +15,24 @@ class DashboardController extends Controller
 {
     /**
      * @Route("/main/{studyId}", requirements={"studyId" = "\d+"}, name="_main")
-     * @Secure(roles="ROLE_USER")
+     * @Secure(roles="ROLE_PARTICIPANT")
      * @Template()
      */
-    public function indexAction($studyId=0)
+    public function indexAction($studyId=null)
     {
         $participant = $this->get('security.context')->getToken()->getUser();
         $request = $this->getRequest();
+        $locale = $this->getRequest()->getLocale();
+        
+        
+        $this->get('fpp_ls')->interventionLogic($participant, $studyId);
+        
         $em = $this->getDoctrine()->getManager();
-        $surveyscount = $em->getRepository('CyclogramProofPilotBundle:Participant')->getParticipantInterventions($participant);
+        $surveyscount = $em->getRepository('CyclogramProofPilotBundle:Participant')->getParticipantInterventionsCount($participant);
 
+        $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:Participant')->getParticipantInterventionLinks($participant);
+        
+        
         
         $session = $this->getRequest()->getSession();
         
@@ -36,32 +44,33 @@ class DashboardController extends Controller
                 "content" => "content");
         $parameters['message'] = array(
                 "activity" => "activity");
+        
+        
+        $studyContent = $this->getDoctrine()->getRepository("CyclogramProofPilotBundle:StudyContent")->getStudyContentById($studyId, $locale);
     
-        $parameters["surveys"] = array(
-                array('title' => 'A survey title of some sort',
-                        'content' => 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt',
-                        'icon' => 'icon_1',
-                        'image' => '/images/tmp_banner_1.jpg'
-                ),
-                array(
-                        'title' => 'An activity of some sort',
-                        'content' => 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt',
-                        'icon' => 'icon_2',
-                        'image' => '/images/tmp_banner_2.jpg'
-                ),
-                array(
-                        'title' => 'A measurement of some sort',
-                        'content' => 'After a pledge, confirm that you actually followed through on the pledge',
-                        'icon' => 'icon_3',
-                        'image' => '/images/tmp_banner_3.jpg'
-                ),
-                array(
-                        'title' => 'A Test of some sort',
-                        'content' => 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt',
-                        'icon' => 'icon_4',
-                        'image' => '/images/tmp_banner_4.jpg'
-                )
-        );
+        $parameters["interventions"] = array();
+        foreach($interventionLinks as $interventionLink) {
+            
+            $interventionId = $interventionLink->getIntervention()->getInterventionId();
+            $interventionContent = $this->getDoctrine()->getRepository("CyclogramProofPilotBundle:Intervention")->getInterventionContent($interventionId, $locale);
+            
+            $intervention = array();
+            $intervention["title"] = $interventionContent->getInterventionTitle();
+            $intervention["content"] = $interventionContent->getInterventionDescripton();
+            $intervention["url"] = $this->getInterventionUrl($interventionLink, $studyId, $studyContent->getStudyUrl(), $locale);
+            
+            if($interventionLink->getStatus()->getStatusName() != "Active" ) {
+                $intervention["status"] = "Completed";
+            } else {
+                $intervention["status"] = "Enabled";
+            }
+            $parameters["interventions"][] = $intervention;
+        }
+        
+        if($studyContent)
+            $parameters["logo"] = $this->container->getParameter('study_image_url') . '/' . $studyId. '/' .$studyContent->getStudyLogo();
+        
+
         $parameters["actions"] = array(
                 array('activity' => $this->get('translator')->trans('past_activity.emai_confirmation_status', array(), 'dashboard'),
                         'class' => 'icon1 first'
@@ -86,8 +95,11 @@ class DashboardController extends Controller
     
         $parameters["lastaccess"] = new \DateTime();
          
-        if($participant->getFacebookId())
+        if($this->get('security.context')->isGranted("ROLE_FACEBOOK_USER"))
             $parameters["user"]["avatar"] = "http://graph.facebook.com/" . $participant->getParticipantUsername() . "/picture?width=80&height=82";
+        
+        if($this->get('security.context')->isGranted("ROLE_GOOGLE_USER"))
+            $parameters["user"]["avatar"] = "https://plus.google.com/s2/photos/profile/" . $participant->getGoogleId() . "?sz=80";
         
         $parameters["user"]["name"] = $participant->getParticipantFirstname() . ' ' . $participant->getParticipantLastname();
         $parameters["user"]["last_access"] = $participant->getParticipantLastTouchDatetime();
@@ -105,5 +117,27 @@ class DashboardController extends Controller
 
         return $this->render('CyclogramFrontendBundle:Dashboard:main.html.twig', $parameters);
     
+    }
+    
+    
+    private function getInterventionUrl($interventionLink, $studyId, $studyUrl, $locale) {
+        $intervention = $interventionLink->getIntervention();
+        $typeName = $interventionLink->getIntervention()->getInterventionType()->getInterventionTypeName(); 
+        switch($typeName) {
+            case 'Activity':
+                return $intervention->getInterventionUrl();
+            case 'Survey & Observation':
+                $surveyId = $intervention->getSidId();
+                $redirectPath = $this->get('router')->generate('_main', array('studyId'=>$studyId));
+                $path = $this->get('router')->generate('_survey', array(
+                        'studyId'=>$studyId,
+                        'studyUrl'=>$studyUrl, 
+                        'surveyId'=>$surveyId,
+                        'redirectUrl'=>urlencode($redirectPath)
+                        
+                        ));
+                return $path;
+            
+        }
     }
 }

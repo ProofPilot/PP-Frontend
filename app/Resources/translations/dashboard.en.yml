@@ -1,14 +1,15 @@
 dashboard_subtitle: 'Your participation at a glance. What you need to do now and what’s next.'
+do_it: 'DO IT'
 do_it_now: 'Do It Now'
-past_activity: Past_activity
-past_activity.emai_confirmation_status: 'Your e-mail address has been confirmed'
-past_activity.mobile_confirmation_status: 'Your mobile telephone number has been confirmed'
-past_activity.mobile_status: 'Your mobile telephone number has been confirmed'
-past_activity.welcome_study: 'Welcome to the study Know@Home: Putting the test to the test'
+
+past_activity:
+    emai_confirmation_status: 'Your e-mail address has been confirmed'
+    mobile_confirmation_status: 'Your mobile telephone number has been confirmed'
+    mobile_status: 'Your mobile telephone number has been confirmed'
+    welcome_study: 'Welcome to the study Know@Home: Putting the test to the test'
+
 txt_dashboard: Dashboard
 txt_please_verify_email: "Please verify your e-mail address.<br/>\nTo participate in studies we need a valid e-mail address - please go to your e-mail and click the link.\n"
-view_more: 'View more'
-what_next: 'What Next?'
 
 what_next_list:
     collect_speciment: 'Collect specimen'

@@ -4,7 +4,7 @@ label_new_pass: label_new_pass
 label_repeat_pass: label_repeat_pass
 label_username: label_username
 txt_footer_top: ARRIBA
-txt_header_login: Login
+txt_header_login: Iniciar
 txt_header_or: ó
 txt_header_register: Registro
 txt_header_register_here: 'Regístrese aquí'

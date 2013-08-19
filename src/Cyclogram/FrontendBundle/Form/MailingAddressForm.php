@@ -61,6 +61,12 @@ class MailingAddressForm extends AbstractType
                           'message'=>"error_not_blank"
                            ))
                  ));
+        $builder->add('voice', 'text', array(
+                'label'=>'label_state',
+                'constraints' => new NotBlank(array(
+                        'message'=>"error_not_blank"
+                ))
+        ));
         $builder->add('saveMailingAddress', 'submit', array(
                 'label' => 'btn_save_mailing_address'
                 ));

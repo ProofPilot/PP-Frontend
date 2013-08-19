@@ -1,39 +1,28 @@
 {% extends '::base.html.twig' %}
 
+{% use '::facebook_blocks.html.twig' %}
+{% use '::google_blocks.html.twig' %}
+
+
 {% block javascripts %}
 
 <script type="text/javascript">
-        function goLogIn(){
-            window.location = "{{ path('_fb_security_check') }}";
-        }
-
-        function onFbInit() {
-            if (typeof(FB) != 'undefined' && FB != null ) {
-                FB.Event.subscribe('auth.statusChange', function(response) {
-                    setTimeout(goLogIn, 500);
-                });
-            }
-            FB.Event.subscribe('auth.logout',
-                     function(response) {
-                         if (response.status === 'unknown')  {
-                            window.location = "{{ path('_logout') }}";
-                          }
-            });                            
-        }
-        
         $(document).ready(function(){
             $('#facebook_button').click(function()
                  { 
-                         FB.login(null, {scope: "email"});
+                     fb_login();
                  });
-           });
+
+            $('#google_button').click(function()
+                {
+                    g_login();
+                });
+        });
 </script> 
 
 {% endblock javascripts %}
 
 {% block content %}
-		{{ facebook_initialize({'async': true, 'xfbml': true, 'fbAsyncInit': 'onFbInit();'}) }}
-
 		<div class="mobile_reg login_form">
 			
 			<div class="wrapper">
@@ -44,11 +33,14 @@
 				
 					<div class="btns_wapper">
 						<form>
-						{{ facebook_login_button({'autologoutlink': true}, 'CyclogramFrontendBundle:Facebook:loginButton.html.twig') }}
-{# 							<a class="btn_reg fb" href="#"><span>Login with Facebook</span></a>#}
+                           <a class="btn_reg fb" id="facebook_button" href="#">
+                               <span>{% trans from "login" %}txt_login_with{% endtrans %} Facebook</span>
+                           </a>
 						</form>
 						<form>
-							<a id="expand_google_form" class="btn_reg google" href="#"><span>Login with Google</span></a>
+							<a class="btn_reg google" id="google_button" href="#">
+							    <span>{% trans from "login" %}txt_login_with{% endtrans %} Google</span>
+							</a>
 						</form>	
 					</div>
 					<div class="notice2"><p><span>{% trans from "login" %}txt_login_securely{% endtrans %}</span></p></div>

@@ -1,10 +1,10 @@
-btn_save_pass: btn_save_pass
-btn_send_pass: btn_send_pass
-label_new_pass: label_new_pass
-label_repeat_pass: label_repeat_pass
-label_username: label_username
-txt_footer_top: 'Na parte superior'
-txt_header_login: Logar
+btn_save_pass: 'Salvar senha'
+btn_send_pass: 'Enviar senha'
+label_new_pass: 'Nova senha'
+label_repeat_pass: 'Repita a senha'
+label_username: Usuário
+txt_footer_top: 'No topo'
+txt_header_login: Entrar
 txt_header_or: ou
-txt_header_register: Registre-se
-txt_header_register_here: txt_header_register_here
+txt_header_register: Cadastre-se
+txt_header_register_here: 'Cadastre-se aqui'

@@ -20,6 +20,8 @@
 
 namespace Cyclogram\FrontendBundle\Controller;
 
+use Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantSurveyLink;
+
 use Cyclogram\FrontendBundle\Form\UserSmsCodeForm;
 
 use Symfony\Component\HttpKernel\EventListener\ResponseListener;
@@ -46,10 +48,10 @@ class RegistrationController extends Controller
 {
 
     /**
-     * @Route("/register/{studyId}/{svid}/{sid}", name="_registration", defaults={"studyId"= null})
+     * @Route("/register/{studyId}", name="_registration", defaults={"studyId"= null})
      * @Template()
      */
-    public function step1Action($studyId=null, $svid=0, $sid=0)
+    public function step1Action($studyId=null)
     {
         if ($this->get('security.context')->isGranted("ROLE_USER")){
             return $this->redirect($this->generateURL("_main"));
@@ -90,16 +92,6 @@ class RegistrationController extends Controller
                     $date = new \DateTime();
                     $participant->setParticipantLastTouchDatetime($date);
                     $participant->setParticipantZipcode('');
-                    $country = $em->getRepository('CyclogramProofPilotBundle:Country')->find(1);
-                    $participant->setCountry($country);
-                    $state =  $em->getRepository('CyclogramProofPilotBundle:State')->find(35);
-                    $participant->setState($state);
-                    $city = $em->getRepository('CyclogramProofPilotBundle:City')->find(25420);
-                    $participant->setCity($city);
-                    $sex = $em->getRepository('CyclogramProofPilotBundle:Sex')->find(1);
-                    $participant->setSex($sex);
-                    $race = $em->getRepository('CyclogramProofPilotBundle:Race')->find(1);
-                    $participant->setRace($race);
                     $role = $em->getRepository('CyclogramProofPilotBundle:ParticipantRole')->find(1);
                     $participant->setParticipantRole($role);
                     $status = $em->getRepository('CyclogramProofPilotBundle:Status')->find(1);
@@ -107,76 +99,6 @@ class RegistrationController extends Controller
 
                     $em->persist($participant);
                     $em->flush();
-
-                    if($studyId == 1) {
-
-                        //insert participant_campaign_link
-                        $campaignRepo = $this->getDoctrine()
-                            ->getRepository('CyclogramProofPilotBundle:Campaign');
-                        $campaign = $campaignRepo->find(1);
-
-                        $participantLevelRepo = $this->getDoctrine()
-                            ->getRepository('CyclogramProofPilotBundle:ParticipantLevel');
-                        $participantLevel = $participantLevelRepo->find( 2 );
-
-                        //Campaign
-                        $ParticipantCampaignLinkCountData =  $this->getDoctrine()
-                            ->getRepository('CyclogramProofPilotBundle:ParticipantCampaignLink')->findBy( array("participantCampaignLinkParticipantEmail"=>$participant->getParticipantEmail()) );
-
-                        $ParticipantCampaignLinkCount = ( is_array($ParticipantCampaignLinkCountData) ) ? count($ParticipantCampaignLinkCountData) : 0;
-
-                        $participantCampaignLinkId = CyclogramCommon::generateParticipantCampaignLinkID(
-                            $participantLevel->getParticipantLevelId(),
-                            $participant->getParticipantId(),
-                            $campaign->getCampaignId(),
-                            $ParticipantCampaignLinkCount
-                        );
-
-                        $uniqId = uniqid();
-
-                        //ParticipantCampaignLink
-                        $campaignLink = new \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantCampaignLink();
-                        $campaignLink->setParticipant( $participant );
-                        $campaignLink->setCampaign( $campaign );
-                        $campaignLink->setParticipantLevel( $participantLevel );
-                        $campaignLink->setParticipantSurveyLinkUniqid( $uniqId );
-                        $campaignLink->setParticipantCampaignLinkId( $participantCampaignLinkId );
-                        $campaignLink->setParticipantCampaignLinkParticipantEmail( $participant->getParticipantEmail() );
-                        $campaignLink->setParticipantCampaignLinkIpAddress( $_SERVER['REMOTE_ADDR'] );
-                        $campaignLink->setParticipantCampaignLinkDatetime( new \DateTime("now") );
-
-                        $em->persist( $campaignLink );
-                        $em->flush();
-
-                        $participantSurveyLink = new \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantSurveyLink();
-                        $participantSurveyLink->setParticipant($participant);
-                        $participantSurveyLink->setSaveId($svid);
-                        $participantSurveyLink->setSidId($sid);
-                        $participantSurveyLink->setParticipantSurveyLinkUniqid( $uniqId );
-                        $participantSurveyLink->setParticipantSurveyLinkElegibility(1);
-
-                        $em->persist( $participantSurveyLink );
-                        $em->flush();
-
-                        //Add participants to Default Arm at the moment.
-                        $armData = $em->getRepository('CyclogramProofPilotBundle:Arm')->find( 5 );
-                        $armData = ( ! is_null( $armData )  ) ? $armData : false;
-
-                        $armStatus = $em->getRepository('CyclogramProofPilotBundle:Status')->find( 1 );
-                        $armStatus = ( ! is_null( $armStatus ) ) ? $armStatus : false;
-
-                        $ArmParticipantLink = null;
-                        if( $armData ){
-                            $ArmParticipantLink = new \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantArmLink();
-                            $ArmParticipantLink->setArm($armData);
-                            $ArmParticipantLink->setParticipant($participant);
-                            $ArmParticipantLink->setStatus($armStatus);
-                            $ArmParticipantLink->setParticipantArmLinkDatetime( new \DateTime("now") );
-                        }
-                        $em->persist($ArmParticipantLink);
-
-                        $em->flush();
-                    }
 
                     if (!empty($studyId)){
                         if ($study->getEmailVerificationRequired()) {
@@ -205,9 +127,7 @@ class RegistrationController extends Controller
             return $this->render('CyclogramFrontendBundle:Registration:step1_register.html.twig', 
                     array (
                             'form' => $form->createView(), 
-                            'totalSteps' => $totalSteps, 
-                            'sid'=>$sid, 
-                            "svid"=>$svid));
+                            'totalSteps' => $totalSteps));
         
         }
 
@@ -232,6 +152,7 @@ class RegistrationController extends Controller
         $parameters['email'] = $participant->getParticipantEmail();
         $parameters['confirmed'] = 1;
         $parameters['studyId'] = $studyId;
+        $parameters['locale'] = $participant->getLanguage() ? $participant->getLanguage() : $request->getLocale();
         
         $em = $this->getDoctrine()->getManager();
 
@@ -243,7 +164,7 @@ class RegistrationController extends Controller
         $em->flush($participant);
         
         $cc->sendMail($participant->getParticipantEmail(),
-                'Please Verify your e-mail address',
+                $this->get('translator')->trans("email_title_verify", array(), "email", $parameters['locale']),
                 'CyclogramFrontendBundle:Email:email_confirmation.html.twig',
                 null,
                 $embedded,
@@ -286,10 +207,10 @@ class RegistrationController extends Controller
         $geoip = $this->get('maxmind.geoip')->lookup($clientIp);
         if ($geoip != false) {
             $countryCode = $geoip->getCountryCode();
-            if ($countryCode == 'US' && empty($phone)) {
-                $form->get('phone_small')->setData(1);
+            $country = $em->getRepository('CyclogramProofPilotBundle:Country')->findOneByCountryCode($countryCode);
+            if (isset($country)){
+                $form->get('phone_small')->setData($country->getDailingCode());
             }
-            
         }
         if( $request->getMethod() == "POST" ){
         
@@ -343,7 +264,8 @@ class RegistrationController extends Controller
             $em->flush($participant);
         
             $sms = $this->get('sms');
-            $sentSms = $sms->sendSmsAction( array('message' => "Your SMS Verification code is $participantSMSCode", 'phoneNumber'=>"$customerMobileNumber") );
+            $message = $this->get('translator')->trans('sms_verification_message', array(), 'register');
+            $sentSms = $sms->sendSmsAction( array('message' => $message .' '. $participantSMSCode, 'phoneNumber'=>"$customerMobileNumber") );
             if($sentSms)
                 return $this->redirect(($this->generateUrl("reg_step_5", array(
                         'id'=> $participant->getParticipantId(), 
@@ -408,6 +330,7 @@ class RegistrationController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $request = $this->getRequest();
+        
 
         $participant = $em->getRepository('CyclogramProofPilotBundle:Participant')->find($id);
         
@@ -434,6 +357,7 @@ class RegistrationController extends Controller
                 $participant->setParticipantAddress1($form['participantAddress1']);
                 $participant->setParticipantAddress2($form['participantAddress2']);
                 $participant->setParticipantZipcode($form['participantZipcode']);
+                $participant->setLanguage($request->getLocale());
                 $city = $em->getRepository('CyclogramProofPilotBundle:City')->find($form['cityId']);
                 $participant->setCity($city);
                 if (strtolower(trim($city->getCityName())) != (strtolower(trim($form['city']))))
@@ -444,7 +368,32 @@ class RegistrationController extends Controller
                 $em->persist($participant);
                 $em->flush($participant);
                 
-                $token = new UsernamePasswordToken($participant, null, 'main', array('ROLE_USER'));
+                $ls = $this->get('fpp_ls');
+                
+
+                $session = $this->getRequest()->getSession();
+                if ($session->has('SurveyInfo')){
+                    $bag = $session->get('SurveyInfo');
+                    $surveyId = $bag->get('surveyId');
+                    $saveId = $bag->get('saveId');
+                    
+                    if($studyId)
+                        $ls->studyRegistration($participant, $studyId, $surveyId, $saveId);
+                }
+                
+
+                $resourceOwnerName = $session->get("resourceOwnerName");
+                $roles = array("ROLE_USER");
+                if($resourceOwnerName == "facebook") {
+                        $roles = array_merge($roles, array("ROLE_FACEBOOK_USER", "ROLE_PARTICIPANT"));
+                } else if($resourceOwnerName == "google") {
+                        $roles = array_merge($roles, array("ROLE_GOOGLE_USER", "ROLE_PARTICIPANT"));
+                } else {
+                        $roles = array_merge($roles, array("ROLE_PARTICIPANT"));
+                }
+                $session->remove("resourceOwnerName");
+                
+                $token = new UsernamePasswordToken($participant, null, 'main', $roles);
                 $this->get('security.context')->setToken($token);
                 
                 return $this->redirect( $this->generateUrl("_main", array(

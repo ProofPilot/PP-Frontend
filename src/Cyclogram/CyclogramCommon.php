@@ -196,6 +196,7 @@ class CyclogramCommon {
     }
     
     public function sendMail($to, $subject, $body, $attachment = null, $embedded = null, $renderTemplate = false, $renderParams = null) {
+        return true;
 //         $control_mail = $this->container->getParameter('control_mail');
         $templating = $this->container->get('templating');
         

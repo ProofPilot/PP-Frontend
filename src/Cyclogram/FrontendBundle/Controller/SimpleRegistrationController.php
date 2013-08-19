@@ -2,6 +2,8 @@
 
 namespace Cyclogram\FrontendBundle\Controller;
 
+use Cyclogram\FrontendBundle\Service\LimeSurvey;
+
 use Cyclogram\FrontendBundle\Form\UserSmsCodeForm;
 
 use Symfony\Component\HttpKernel\EventListener\ResponseListener;
@@ -21,6 +23,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Cyclogram\FrontendBundle\Form\MobilePhoneForm;
 use Cyclogram\FrontendBundle\Form\RegistrationForm;
 use Cyclogram\Bundle\ProofPilotBundle\Entity\Participant;
+use Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantSurveyLink;
 
 
 class  SimpleRegistrationController extends Controller{
@@ -55,8 +58,9 @@ class  SimpleRegistrationController extends Controller{
         $geoip = $this->get('maxmind.geoip')->lookup($clientIp);
         if ($geoip != false) {
             $countryCode = $geoip->getCountryCode();
-            if ($countryCode == 'US' && empty($phone)) {
-                $form->get('phone_small')->setData(1);
+            $country = $em->getRepository('CyclogramProofPilotBundle:Country')->findOneByCountryCode($countryCode);
+            if (isset($country)){
+                $form->get('phone_small')->setData($country->getDailingCode());
             }
         }
         if( $request->getMethod() == "POST" ){
@@ -117,7 +121,8 @@ class  SimpleRegistrationController extends Controller{
             $em->flush($participant);
     
             $sms = $this->get('sms');
-            $sentSms = $sms->sendSmsAction( array('message' => "Your SMS Verification code is $participantSMSCode", 'phoneNumber'=>"$customerMobileNumber") );
+            $message = $this->get('translator')->trans('sms_verification_message', array(), 'register');
+            $sentSms = $sms->sendSmsAction( array('message' => $message . ' ' . $participantSMSCode, 'phoneNumber'=>"$customerMobileNumber") );
             if($sentSms)
                 return $this->redirect(($this->generateUrl("simplereg_step_4", 
                         array(
@@ -136,7 +141,7 @@ class  SimpleRegistrationController extends Controller{
      * @Route("/simplereg_step4/{id}/{studyId}", name="simplereg_step_4", defaults={"studyId"=null})
      * @Template()
      */
-    public function simpleRegStep5Action($id, $studyId)
+    public function simpleRegStep4Action($id, $studyId)
     {
         $em = $this->getDoctrine()->getManager();
         $participant = $em->getRepository('CyclogramProofPilotBundle:Participant')->find($id);
@@ -168,22 +173,51 @@ class  SimpleRegistrationController extends Controller{
                     $parameters['studyId'] = $studyId;
                     $parameters['simple'] = true;
                     
+                    
                     $em = $this->getDoctrine()->getManager();
                     
                     $participant->setParticipantEmailCode($parameters['code']);
                     $participant->setParticipantMobileSmsCodeConfirmed(true);
+                    $participant->setLanguage($request->getLocale());
                     $em->persist($participant);
                     $em->flush($participant);
                     
+                    $parameters['locale'] = $participant->getLanguage() ? $participant->getLanguage() : $request->getLocale();
+                    
                     $cc->sendMail($participant->getParticipantEmail(),
-                            'Please Verify your e-mail address',
+                            $this->get('translator')->trans("email_title_verify", array(), "email", $parameters['locale']),
                              'CyclogramFrontendBundle:Email:email_confirmation.html.twig',
                             null,
                             $embedded,
                             true,
                             $parameters);
+                    $ls = $this->get('fpp_ls');
                     
-                    $token = new UsernamePasswordToken($participant, null, 'main', array('ROLE_USER'));
+                    $session = $this->getRequest()->getSession();
+                    if ($session->has('SurveyInfo')){
+                        $bag = $session->get('SurveyInfo');
+                        $surveyId = $bag->get('surveyId');
+                        $saveId = $bag->get('saveId');
+                        
+                        if($studyId)
+                            $ls->studyRegistration($participant, $studyId, $surveyId, $saveId);
+                    }
+                    
+
+                    $resourceOwnerName = $session->get("resourceOwnerName");
+                    $roles = array("ROLE_USER");
+                    if($resourceOwnerName == "facebook") {
+                        $roles = array_merge($roles, array("ROLE_FACEBOOK_USER", "ROLE_PARTICIPANT"));
+                    } else if($resourceOwnerName == "google") {
+                        $roles = array_merge($roles, array("ROLE_GOOGLE_USER", "ROLE_PARTICIPANT"));
+                    } else {
+                        $roles = array_merge($roles, array("ROLE_PARTICIPANT"));
+                    }
+                    $session->remove("resourceOwnerName");
+                        
+                    
+                    
+                    $token = new UsernamePasswordToken($participant, null, 'main', $roles);
                     $this->get('security.context')->setToken($token);
                     
                     return $this->redirect( $this->generateUrl("_main", array(

@@ -1,6 +1,8 @@
 <?php
 namespace Cyclogram\Bundle\ProofPilotBundle\Repository;
 
+use Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantInterventionLink;
+
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\Mapping as ORM;
@@ -35,7 +37,7 @@ class ParticipantRepository extends EntityRepository implements
         return $class === 'Cyclogram\Bundle\ProofPilotBundle\Entity\Participant';
     }
     
-    public function getParticipantInterventions($userid){
+    public function getParticipantInterventionsCount($userid){
         return $this->getEntityManager()
         ->createQuery('SELECT COUNT (pi) FROM CyclogramProofPilotBundle:ParticipantInterventionLink pi
                 WHERE pi.participant = :userid')
@@ -44,6 +46,42 @@ class ParticipantRepository extends EntityRepository implements
         ->getSingleScalarResult();
     }
     
+    public function getParticipantInterventionLinks($userid){
+        return $this->getEntityManager()
+        ->createQuery('SELECT pil, i, it, s FROM CyclogramProofPilotBundle:ParticipantInterventionLink pil
+                INNER JOIN pil.intervention i
+                INNER JOIN pil.status s
+                INNER JOIN i.interventionType it
+                WHERE pil.participant = :userid')
+                ->setParameters(array(
+                        'userid' => $userid))
+                        ->getResult();
+    }
+    
+    public function addParticipantInterventionLink($participant, $intervention) {
+        $em = $this->getEntityManager();
+        
+        //check if intervention link already exists for a participant 
+        $hasInterventionLink = $em->createQuery('SELECT pil, i FROM CyclogramProofPilotBundle:ParticipantInterventionLink pil
+                INNER JOIN pil.intervention i
+                WHERE pil.participant = :participant
+                AND i.interventionName = :interventionName
+                ')
+                ->setParameter("participant", $participant)
+                ->setParameter("interventionName", $intervention->getInterventionName())
+                ->getOneOrNullResult();
+        
+        if(!$hasInterventionLink) {
+            $interventionLink = new ParticipantInterventionLink();
+            $interventionLink->setParticipant($participant);
+            $interventionLink->setIntervention($intervention);
+            $interventionLink->setStatus($em->getRepository('CyclogramProofPilotBundle:Status')->findOneByStatusName("Active"));
+            $interventionLink->setParticipantInterventionLinkDatetimeStart( new \DateTime("now") );
+            $em->persist($interventionLink);
+            $em->flush();
+        }
+
+    }
     
     public function checkIfEmailNotUsed($email) {
         $result = $this->getEntityManager()
@@ -88,6 +126,32 @@ class ParticipantRepository extends EntityRepository implements
                         ))
                  ->getOneOrNullResult();
         return $result;
+    }
+    
+    /**
+     * Get count of participants in arm within age/city group
+     * @param unknown_type $armName
+     * @param unknown_type $city
+     * @param unknown_type $minAge
+     * @param unknown_type $maxAge
+     */
+    public function countArmByCityAge($armName, $city, $minAge, $maxAge) {
+        return $this->getEntityManager()
+        ->createQuery('SELECT COUNT(p) FROM CyclogramProofPilotBundle:ParticipantArmLink pal
+                INNER JOIN pal.participant p
+                INNER JOIN pal.arm a
+                WHERE a.armName = :armname
+                AND p.location = :city
+                AND p.age >= :minage AND p.age < :maxage
+                AND p.participantMobileSmsCodeConfirmed = 1
+                ')
+                ->setParameters(array(
+                        'armname' => $armName,
+                        'minage' => $minAge,
+                        'maxage' => $maxAge,
+                        'city' => $city
+                 ))
+                 ->getSingleScalarResult();
     }
 
 }

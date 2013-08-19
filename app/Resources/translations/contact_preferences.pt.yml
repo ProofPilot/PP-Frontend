@@ -1,31 +1,31 @@
-btn_save_updates: btn_save_updates
-btn_select_all: btn_select_all
-btn_select_none: btn_select_none
-day_friday: day_friday
-day_monday: day_monday
-day_saturday: day_saturday
-day_sunday: day_sunday
-day_thursday: day_thursday
-day_tuesday: day_tuesday
-day_wednesday: day_wednesday
-reminder_orders: reminder_orders
-reminder_other_studies: reminder_other_studies
-reminder_study_task: reminder_study_task
-time_afternoon: time_afternoon
-time_early_am: time_early_am
-time_early_evening: time_early_evening
-time_late_night: time_late_night
-time_morning: time_morning
-time_night: time_night
-txt_check_here: txt_check_here
-txt_close: txt_close
-txt_expand: txt_expand
-txt_how_to_receive_study_reminders: txt_how_to_receive_study_reminders
-txt_how_what_day_is_best: txt_how_what_day_is_best
-txt_how_would_you_like_communicate: txt_how_would_you_like_communicate
-txt_my_email: txt_my_email
-txt_my_mobile_form: txt_my_mobile_form
-txt_tell_us_convenient_time: txt_tell_us_convenient_time
-txt_what_day_of_week_suits: txt_what_day_of_week_suits
-txt_what_time_of_day_suits: txt_what_time_of_day_suits
-txt_your_timezone_is: txt_your_timezone_is
+btn_save_updates: 'Salvar Atualizações'
+btn_select_all: 'Selecionar Todos'
+btn_select_none: 'Selecionar Nenhum'
+day_friday: Sexta-feira
+day_monday: Segunda-feira
+day_saturday: Sabado
+day_sunday: Domingo
+day_thursday: Quinta-feira
+day_tuesday: Terça-feira
+day_wednesday: Quarta-feira
+reminder_orders: 'Envie-me lembretes de tarefas para estudos por'
+reminder_other_studies: 'Comunicar comigo sobre minhas encomendas por'
+reminder_study_task: 'Envie-me informações sobre outros estudos em que eu possa ser qualificado'
+time_afternoon: 'Tarde (12:00 -17:00)'
+time_early_am: 'Início da manhã (5:00hs - 8:00hs)'
+time_early_evening: 'Início da noite (17:00hs-21:00hs)'
+time_late_night: 'Tarde da noite (0:00hs - 05:00hs)'
+time_morning: 'Manhã (08:00hs-12:00hs)'
+time_night: 'Noite (21:00hs-0:00hs)'
+txt_check_here: 'Noite (21:00hs 0:00hs)'
+txt_close: Fechar
+txt_expand: Aumentar
+txt_how_to_receive_study_reminders: 'Como você gostaria de receber LEMBRETES DE ESTUDOS'
+txt_how_what_day_is_best: 'Diga-nos o dia é melhor para você para receber comunicações de nós.'
+txt_how_would_you_like_communicate: 'Diga-nos o melhor dia  para você receber nossas comunicações.'
+txt_my_email: 'Meu e-mail:'
+txt_my_mobile_form: 'Telefone móvel'
+txt_tell_us_convenient_time: 'Diga-nos quando é mais conveniente para que você receba nossos lembretes.'
+txt_what_day_of_week_suits: 'Que DIA DA SEMANA é mais conveniente?'
+txt_what_time_of_day_suits: 'Que HORA DO DIA é melhor para você?'
+txt_your_timezone_is: 'Seu fuso horário é:'

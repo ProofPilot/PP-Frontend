@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * ParticipantSurveyLink
  *
  * @ORM\Table(name="participant_survey_link")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Cyclogram\Bundle\ProofPilotBundle\Repository\ParticipantSurveyLinkRepository")
  */
 class ParticipantSurveyLink
 {

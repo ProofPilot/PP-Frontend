@@ -19,7 +19,6 @@ class AppKernel extends Kernel
             new Cyclogram\StudyBundle\CyclogramStudyBundle(),
             new Cyclogram\SmsBundle\CyclogramSmsBundle(),
             new Cyclogram\KnowatHomeBundle\CyclogramKnowatHomeBundle(),
-            new FOS\FacebookBundle\FOSFacebookBundle(),
             new Cyclogram\Bundle\ProofPilotBundle\CyclogramProofPilotBundle(),
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
@@ -33,6 +32,7 @@ class AppKernel extends Kernel
             new Cyclogram\FrontendBundle\CyclogramFrontendBundle(),
             new Sonata\IntlBundle\SonataIntlBundle(),
             new Maxmind\Bundle\GeoipBundle\MaxmindGeoipBundle(),
+            new HWI\Bundle\OAuthBundle\HWIOAuthBundle()
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

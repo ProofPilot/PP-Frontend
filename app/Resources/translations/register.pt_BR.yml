@@ -1,35 +1,38 @@
-already_joined: 'Já aderiu'
-btn_next: btn_next
-btn_save_mailing_address: btn_save_mailing_address
-btn_send_confirmation: btn_send_confirmation
+already_joined: 'Já se registrou?'
+btn_next: próximo>
+btn_save_mailing_address: 'guardar e entrar'
+btn_send_confirmation: 'enviar código de confirmação para o celular'
 confirm_password: 'confirme a senha'
 create_password: 'Crie uma senha (minímo de 8 caracteres com pelo menos 2 números)'
-double_check: 'txt_double_check-you_entry'''
-enter_address: enter_address
+double_check: 'Verifique novamente a sua entrada'
+enter_address: 'Por favor, insira seu endereço, para que possamos enviar seu kit de teste:'
 enter_email: 'Por favor insira um endereço de e-mail válido'
 enter_mobile_phone: 'Digite o número do seu telefone celular'
-enter_sms_code: "Digite o código de verificação que você recebeu em seu telefone\n"
-label_address1: label_address1
-label_address2: label_address2
-label_city: label_city
-label_email: label_email
-label_firstname: label_firstname
-label_lastname: label_lastname
-label_password: label_password
-label_phone_small: label_phone_small
-label_phone_wide: label_phone_wide
-label_repeat_password: label_repeat_password
-label_state: label_state
-label_username: label_username
-label_zipcode: label_zipcode
-mail_confirmation_fail: mail_confirmation_fail
+enter_sms_code: "Digite o código de verificação que você recebeu no seu telefone\n"
+label_address1: Rua
+label_address2: Complemento
+label_city: Cidade
+label_email: Email
+label_firstname: 'Primeiro Nome'
+label_lastname: 'Último Nome'
+label_password: Senha
+label_phone_small: Fone
+label_phone_wide: telefone
+label_repeat_password: 'Repita a senha'
+label_state: Estado
+label_username: Usuário
+label_voice: label_voice   # FIXME
+label_zipcode: CEP
+mail_confirmation_fail: 'Falha ao confirmar o e-mail. O usuário não existe!'
 min_charachters: '(minímo de 8 caracteres)'
-no_code: 'Sem código? Enviar outro'
+no_code: 'Nenhum código? Enviar outro'
 ok_verify: 'OK, Verifique!'
 pick_user: 'Escolha o seu nome de usuário'
-txt_check_email: txt_check_email
-txt_join: Junte
+sms_verification_message: sms_verification_message   # FIXME
+txt_basics: txt_basics   # FIXME
+txt_check_email: 'Por favor, verifique o seu endereço de e-mail'
+txt_join: Junte-se
 txt_join_with: Junte-se
-txt_subtitle_check_email: txt_subtitle_check_email
+txt_subtitle_check_email: 'Por favor, verifique o seu endereço de e-mail'
 txt_why: 'Por que?'
 wrong_back: 'Incorreto, voltar'

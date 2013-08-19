@@ -37,3 +37,4 @@
 *.stackdump
 
 /app/app.sqlite
+/web/app_custom.php

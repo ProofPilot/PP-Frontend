@@ -33,16 +33,23 @@ class Participant implements AdvancedUserInterface
      */
     protected $facebookId;
 
-    public function serialize()
-    {
-        return serialize(array($this->facebookId, parent::serialize()));
-    }
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="googleId", type="string", length=255)
+     */
+    protected $googleId;
 
-    public function unserialize($data)
-    {
-        list($this->facebookId, $parentData) = unserialize($data);
-        parent::unserialize($parentData);
-    }
+    //     public function serialize()
+    //     {
+    //         return serialize(array($this->facebookId, parent::serialize()));
+    //     }
+
+    //     public function unserialize($data)
+    //     {
+    //         list($this->facebookId, $parentData) = unserialize($data);
+    //         parent::unserialize($parentData);
+    //     }
 
     /**
      * @var string
@@ -180,7 +187,7 @@ class Participant implements AdvancedUserInterface
      *
      * @ORM\ManyToOne(targetEntity="City")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="city_id", referencedColumnName="city_id")
+     *   @ORM\JoinColumn(name="city_id", referencedColumnName="city_id", nullable=true)
      * })
      */
     protected $city;
@@ -190,7 +197,7 @@ class Participant implements AdvancedUserInterface
      *
      * @ORM\ManyToOne(targetEntity="Country")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="country_id", referencedColumnName="country_id")
+     *   @ORM\JoinColumn(name="country_id", referencedColumnName="country_id", nullable=true)
      * })
      */
     protected $country;
@@ -230,7 +237,7 @@ class Participant implements AdvancedUserInterface
      *
      * @ORM\ManyToOne(targetEntity="Sex")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="sex_id", referencedColumnName="sex_id")
+     *   @ORM\JoinColumn(name="sex_id", referencedColumnName="sex_id", nullable=true)
      * })
      */
     protected $sex;
@@ -240,7 +247,7 @@ class Participant implements AdvancedUserInterface
      *
      * @ORM\ManyToOne(targetEntity="State")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="state_id", referencedColumnName="state_id")
+     *   @ORM\JoinColumn(name="state_id", referencedColumnName="state_id", nullable=true)
      * })
      */
     protected $state;
@@ -261,6 +268,42 @@ class Participant implements AdvancedUserInterface
      * @ORM\Column(name="city", type="string", length=255, nullable=true)
      */
     protected $cityName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="education", type="string", length=255, nullable=true)
+     */
+    protected $education;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="income", type="integer", nullable=true)
+     */
+    protected $income;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="age", type="integer", nullable=true)
+     */
+    protected $age;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="location", type="string", length=255, nullable=true)
+     */
+    protected $location;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="language", type="string", length=255, nullable=true)
+     */
+    protected $language;
+
     /**
      * Get participantId
      *
@@ -963,17 +1006,12 @@ class Participant implements AdvancedUserInterface
 
     public function getRoles()
     {
-        if (!empty($this->facebookId)) {
-            return array_merge($this->participantRoles,
-                    array('ROLE_FACEBOOK_USER'));
-        } else {
-            return array_merge($this->participantRoles, array('ROLE_USER'));
-        }
+        return array_merge($this->participantRoles, array('ROLE_USER'));
     }
 
-    public function setRoles($role)
+    public function setRoles($roles)
     {
-        $this->participantRoles = $role;
+        $this->participantRoles = $roles;
     }
 
     /* @UserInterface */
@@ -990,6 +1028,66 @@ class Participant implements AdvancedUserInterface
     public function setCityName($cityName)
     {
         $this->cityName = $cityName;
+    }
+
+    public function getEducation()
+    {
+        return $this->education;
+    }
+
+    public function setEducation($education)
+    {
+        $this->education = $education;
+    }
+
+    public function getIncome()
+    {
+        return $this->income;
+    }
+
+    public function setIncome($income)
+    {
+        $this->income = $income;
+    }
+
+    public function getAge()
+    {
+        return $this->age;
+    }
+
+    public function setAge($age)
+    {
+        $this->age = $age;
+    }
+
+    public function getLocation()
+    {
+        return $this->location;
+    }
+
+    public function setLocation($location)
+    {
+        $this->location = $location;
+    }
+
+    public function getGoogleId()
+    {
+        return $this->googleId;
+    }
+
+    public function setGoogleId($googleId)
+    {
+        $this->googleId = $googleId;
+    }
+
+    public function getLanguage()
+    {
+        return $this->language;
+    }
+
+    public function setLanguage($language)
+    {
+        $this->language = $language;
     }
 
 }

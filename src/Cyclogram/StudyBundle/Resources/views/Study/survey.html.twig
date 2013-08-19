@@ -5,7 +5,7 @@
 	
 		<div class="site_container">
 		{% block header %}
-{% include '::header.html.twig' with {'studyId' : studyId}%}
+            {% include '::header.html.twig' with {'studyId' : studyId}%}
         {% endblock header %}
 
 			<div class="panel alt_bg">
@@ -44,8 +44,8 @@
 				<div class="panel_right">
 					
 					<div class="dashboard_title white">
-						<div class="image"><img src="{{ page.logo }}" width="93" height="93" alt="" title=""/></div>
-						<h1>{{ page.title }}</h1>
+						<div class="image"><img src="{{ logo }}" width="93" height="93" alt="" title=""/></div>
+						<h1>{{ survey.title }}</h1>
 {# 						<p>{{ page.subtitle }}</p>#}
 					</div>
 					
@@ -176,7 +176,7 @@
 			<div class="dashboard_panel">
 						
 						
-						<div class="mobile about_box">
+						{#<div class="mobile about_box">
 							<a href="#" class="expander" id="about_expander"><span>{{ about.title }}</span></a>
 							<div class="text_desc">
 						
@@ -188,9 +188,9 @@
         						{% endfor %}
 						
 							</div>
-						</div>
+						</div>#}
 						
-						<iframe src="{{ survey_url }}" id="iframe1" height="800" width="1013""></iframe>
+						<iframe src="{{ survey.url }}" id="iframe1" height="800" width="1014"></iframe>
 				    </div>
 			
 		</div>
@@ -198,40 +198,31 @@
     {% include '::footer.html.twig' %}
 		
 		<script>
-    		/*function autoResize(id){
-    		    if(document.getElementById){
-    		        var iframe = document.getElementById(id);
-        		    var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
-        		    if(innerDoc.body.offsetHeight)
-        		    {
-            		    iframe.height = innerDoc.body.offsetHeight + 32 + 'px';
-        		    } else {
-        		        iframe.height = innerDoc.body.scrollHeight + 'px';
-        		    }
-
-    		    }
-    		}*/
      		$('#iframe1').load(function(){
 
-         		var frameHeight = $(this).contents().find("html").height();
+     			var frame = $(this);
+         		var frameSize = function() {
+         			var frameHeight = frame.contents().find("html").height();
+             		frame.height(frameHeight);
+                }
 
-         		$(this).height(frameHeight);
+         	    frameSize();
+         		
+         		$(window).resize(frameSize);
+         		frame.contents().mouseover(frameSize);
 
-     			var surveydata = $(this).contents().find('#surveydata');
+     			var surveydata = frame.contents().find('#surveydata');
 		    	var surveyId = surveydata.attr('surveyid');
 		    	var saveId = surveydata.attr('saveid');
-		    	var studyUrl = '{{ studyUrl }}';
-		    	var studyId = {{ studyId }};
+		    	//var redirectUrl = '{{ path('_study',{studyId: studyId, studyUrl: studyUrl}) }}';
 		    	if(surveyId !== undefined && saveId !== undefined) {
-		    	    window.location = '/' + '{{ app.request.locale }}' + '/surveyResponce?&studyUrl=' + studyUrl + '&surveyId=' + surveyId + '&saveId=' + saveId + '&studyId=' + studyId;
+		    	    window.location = '/' + '{{ app.request.locale }}' + '/surveyResponse?&surveyId=' + surveyId + '&saveId=' + saveId + '&redirectUrl=' + '{{ app.request.get('redirectUrl') }}';
 		    	}
 
-
-
     		});
+
 		</script>
 
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
         
         <style>
             .panel_right {
@@ -242,7 +233,8 @@
                 margin-left: -8px;
             }
             .dashboard_panel {
-                margin-bottom: -5px;
+                margin-bottom: -6px;
+                width: 100%;
             }
         </style>
     </body>
