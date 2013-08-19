@@ -33,9 +33,7 @@ class GeneralSettingsController  extends Controller
         $parameters["lastaccess"] = new \DateTime();
         $parameters["expandedFormClass"] = '';
          
-        if(!$participant->getFacebookId())
-            $parameters["user"]["avatar"] = "/images/tmp_avatar.jpg";
-        else
+        if($participant->getFacebookId())
             $parameters["user"]["avatar"] = "http://graph.facebook.com/" . $participant->getParticipantUsername() . "/picture?width=80&height=82";
 
         $form = $this->createForm(new GeneralSettingForm($this->container));

@@ -42,77 +42,31 @@ class MenuBuilder extends ContainerAware implements TranslationContainerInterfac
         $menu->addChild('side_dasboard_menu.dashboard', array(
                 'route' => '_main'
                 ))
-                ->setAttribute('class', 'icon_dashboard branded')->setExtra('translation_domain', 'sidemenu')->setAttribute("news", $surveyscount);
-        $menu->addChild('side_dasboard_menu.survey', array(
-                'route' => '_main',
-                'routeParameters' => array(
-                        'studyId' => $studyId
-                        )))
-                ->setAttribute('class', 'icon_survey')->setExtra('translation_domain', 'sidemenu');
-        $menu->addChild('side_dasboard_menu.activities', array(
-                'route' => '_main',
-                'routeParameters' => array(
-                        'studyId' => $studyId
-                        )))
-                ->setAttribute('class', 'icon_activities')->setExtra('translation_domain', 'sidemenu');
-        $menu->addChild('side_dasboard_menu.measurements', array(
-                'route' => '_main',
-                'routeParameters' => array(
-                        'studyId' => $studyId
-                        )))
-                ->setAttribute('class', 'icon_measurments');
-        $menu->addChild('side_dasboard_menu.treatment', array(
-                'route' => '_main',
-                'routeParameters' => array(
-                        'studyId' => $studyId
-                        )))
-                ->setAttribute('class', 'icon_treatment')->setExtra('translation_domain', 'sidemenu');
-
-        return $menu;
-    }
-
-    public function createSideDashboardMenuUnbranded(FactoryInterface $factory, array $options)
-    {
-        $participant = $this->container->get('security.context')->getToken()->getUser();
-        $em = $this->container->get('doctrine')->getManager();
-        $surveyscount = $em->getRepository('CyclogramProofPilotBundle:Participant')->getParticipantInterventions($participant);
-        
-        $studyId = $this->container->get('request')->get('studyId');
-        
-        $menu = $factory->createItem('root');
-        $menu->setChildrenAttribute('class', 'left_menu');
-
-        $menu->addChild('side_dasboard_menu.dashboard', array(
-                'route' => '_main',
-                'routeParameters' => array(
-                        'studyId' => $studyId
-                        )))
-            ->setAttribute('class', 'icon_dashboard unbranded')->setExtra('translation_domain', 'sidemenu')->setAttribute("news", $surveyscount);
-
-        $menu->addChild('side_dasboard_menu.survey', array(
-                'route' => '_main',
-                'routeParameters' => array(
-                        'studyId' => $studyId
-                        )))
-            ->setAttribute('class', 'icon_survey')->setExtra('translation_domain', 'sidemenu');
-        $menu->addChild('side_dasboard_menu.activities', array(
-                'route' => '_main',
-                'routeParameters' => array(
-                        'studyId' => $studyId
-                        )))
-            ->setAttribute('class', 'icon_activities')->setExtra('translation_domain', 'sidemenu');
-        $menu->addChild('side_dasboard_menu.measurements', array(
-                'route' => '_main',
-                'routeParameters' => array(
-                        'studyId' => $studyId
-                        )))
-            ->setAttribute('class', 'icon_measurments');
-        $menu->addChild('side_dasboard_menu.treatment', array(
-                'route' => '_main',
-                'routeParameters' => array(
-                        'studyId' => $studyId
-                        )))
-            ->setAttribute('class', 'icon_treatment')->setExtra('translation_domain', 'sidemenu');
+                ->setAttribute('class', 'icon_dashboard')->setExtra('translation_domain', 'sidemenu')->setAttribute("news", $surveyscount);
+//         $menu->addChild('side_dasboard_menu.survey', array(
+//                 'route' => '_main',
+//                 'routeParameters' => array(
+//                         'studyId' => $studyId
+//                         )))
+//                 ->setAttribute('class', 'icon_survey')->setExtra('translation_domain', 'sidemenu');
+//         $menu->addChild('side_dasboard_menu.activities', array(
+//                 'route' => '_main',
+//                 'routeParameters' => array(
+//                         'studyId' => $studyId
+//                         )))
+//                 ->setAttribute('class', 'icon_activities')->setExtra('translation_domain', 'sidemenu');
+//         $menu->addChild('side_dasboard_menu.measurements', array(
+//                 'route' => '_main',
+//                 'routeParameters' => array(
+//                         'studyId' => $studyId
+//                         )))
+//                 ->setAttribute('class', 'icon_measurments');
+//         $menu->addChild('side_dasboard_menu.treatment', array(
+//                 'route' => '_main',
+//                 'routeParameters' => array(
+//                         'studyId' => $studyId
+//                         )))
+//                 ->setAttribute('class', 'icon_treatment')->setExtra('translation_domain', 'sidemenu');
 
         return $menu;
     }
@@ -209,14 +163,14 @@ class MenuBuilder extends ContainerAware implements TranslationContainerInterfac
                 ->setAttribute('class', 'submenu_icon_contact')
                 ->setAttribute("nospan", true)
                 ->setExtra('translation_domain', 'generalmenus');
-        $menu['top_menu.settings']
-                ->addChild('top_menu.shipping_information',
-                        array(
-                              'route' => '_survey_eligibility', 
-                              'routeParameters' => array('studyUrl' => 'sexpro')))
-                ->setAttribute('class', 'submenu_icon_shipping')
-                ->setAttribute("nospan", true)
-                ->setExtra('translation_domain', 'generalmenus');
+//         $menu['top_menu.settings']
+//                 ->addChild('top_menu.shipping_information',
+//                         array(
+//                               'route' => '_survey_eligibility', 
+//                               'routeParameters' => array('studyUrl' => 'sexpro')))
+//                 ->setAttribute('class', 'submenu_icon_shipping')
+//                 ->setAttribute("nospan", true)
+//                 ->setExtra('translation_domain', 'generalmenus');
 
         return $menu;
     }

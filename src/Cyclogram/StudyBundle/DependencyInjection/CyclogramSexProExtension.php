@@ -1,6 +1,6 @@
 <?php
 
-namespace Cyclogram\SexProBundle\DependencyInjection;
+namespace Cyclogram\StudyBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;

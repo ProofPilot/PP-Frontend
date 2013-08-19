@@ -17,7 +17,7 @@ services:
             container: "@service_container"
             
 #    fos_facebook.helper:
-#        class: Cyclogram\SexProBundle\Templating\Helper\FacebookHelper
+#        class: Cyclogram\StudyBundle\Templating\Helper\FacebookHelper
 #        arguments:
 #            - @templating
 #            - @fos_facebook.api

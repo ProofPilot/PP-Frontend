@@ -195,6 +195,17 @@ class SecurityController extends Controller
 
         $form = $this->createForm(new MobilePhoneForm($this->container));
 
+        $clientIp = $request->getClientIp();
+        if ($clientIp == '127.0.0.1') {
+            $form->get('phone_small')->setData(380);
+        }
+        $geoip = $this->get('maxmind.geoip')->lookup($clientIp);
+        if ($geoip != false) {
+            $countryCode = $geoip->getCountryCode();
+            if ($countryCode == 'US') {
+                $form->get('phone_small')->setData(1);
+            }
+        }
         $em = $this->getDoctrine()->getManager();
         $study = null;
 

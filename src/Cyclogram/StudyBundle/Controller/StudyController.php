@@ -1,6 +1,6 @@
 <?php
 
-namespace Cyclogram\SexProBundle\Controller;
+namespace Cyclogram\StudyBundle\Controller;
 
 use Cyclogram\Bundle\ProofPilotBundle\Entity\StudyContent;
 
@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
 
-class DefaultController extends Controller
+class StudyController extends Controller
 {
     /**
      * @Route("", name="_page")
@@ -22,9 +22,10 @@ class DefaultController extends Controller
     {
         $locale = $this->getRequest()->getLocale();
         $em = $this->getDoctrine()->getManager();
-        $language = $em->getRepository("CyclogramProofPilotBundle:Language")->findOneByLocale($locale);
         
-        $studyContent = $em->getRepository("CyclogramProofPilotBundle:StudyContent")->findOneBy(array('studyUrl' => $studyUrl, 'language' => $language->getLanguageId()));
+        $studyContent = $em->getRepository("CyclogramProofPilotBundle:StudyContent")->getStudyContent($studyUrl, $locale);
+        
+        //$studyContent = $em->getRepository("CyclogramProofPilotBundle:StudyContent")->findOneBy(array('studyUrl' => $studyUrl, 'language' => $language->getLanguageId()));
         if (empty($studyContent))
             throw new ResourceNotFoundException('404 Not found');
 
@@ -45,7 +46,7 @@ class DefaultController extends Controller
         $parameters["graphic"] = $this->container->getParameter('study_image_url') . '/' .$studyId. '/' .$studyContent->getStudyGraphic();
         
     
-        return $this->render('CyclogramSexProBundle:Default:page.html.twig', $parameters);
+        return $this->render('CyclogramStudyBundle:Study:page.html.twig', $parameters);
     
     }
     
@@ -58,7 +59,7 @@ class DefaultController extends Controller
         $locale = $this->getRequest()->getLocale();
     
         $studyContent = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:StudyContent')
-        ->getStudyContent($studyId, $locale);
+        ->getStudyContentById($studyId, $locale);
     
     
         $parameters = array();
@@ -85,7 +86,7 @@ class DefaultController extends Controller
                         'text' => 'You can talk to the researcher(s) about any questions, concerns, or complaints you have about this study.')
         );
     
-        return $this->render('CyclogramSexProBundle:Default:study.html.twig', $parameters);
+        return $this->render('CyclogramStudyBundle:Study:study_eligibility.html.twig', $parameters);
     }
     
     
@@ -116,7 +117,7 @@ class DefaultController extends Controller
                 )
         );
         
-        return $this->render('CyclogramSexProBundle:Default:_newsletter.html.twig', $parameters);
+        return $this->render('CyclogramStudyBundle:Email:_newsletter.html.twig', $parameters);
     }
     
 
@@ -200,8 +201,52 @@ class DefaultController extends Controller
                            exerci.'
         );
         
-        return $this->render('CyclogramSexProBundle:Default:is_it_secure.html.twig', $parameters);
+        return $this->render('CyclogramStudyBundle:Study:is_it_secure.html.twig', $parameters);
     }
     
+    /**
+     * @Route("/survey/{studyId}/{surveyId}", name="_survey")
+     * @Template()
+     */
+    public function surveyAction($studyUrl, $studyId, $surveyId)
+    {
+        $lime_em = $this->getDoctrine()->getManager('limesurvey');
+        $locale = $this->getRequest()->getLocale();
+    
+        $parameters = array();
+    
+        $parameters['studyUrl'] = $studyUrl;
+        $parameters['studyId'] = $studyId;
+    
+        $survey = $this->getDoctrine()
+        ->getRepository("CyclogramProofPilotBundleLime:LimeSurveysLanguagesettings", "limesurvey")
+        ->getSurvey($surveyId, $locale);
+    
+        $studyContent = $this->getDoctrine()->getRepository("CyclogramProofPilotBundle:StudyContent")->getStudyContentById($studyId, $locale);
+    
+    
+        $parameters['survey_url'] = "/lime/index.php/survey/index/sid/".$surveyId."/newtest/Y/lang/".$survey->getSurveylsLanguage();
+    
+        $parameters["lastaccess"] = new \DateTime("2013-07-01 10:05:00");
+         
+        $parameters["about"] = array('title' => 'About this survey',
+                'info' => 'This survey helps researchers determine what you are up to now - so
+                that we can compare how and if things have changed in the future.
+                Please answer as honestly as possible.&nbsp; '
+        );
+    
+        $parameters["list"] = array(
+                array('item' => '1. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.'),
+                array('item' => '2. Claritas est etiam processus dynamicus, qui sequitur mutationem consuetudium lectorum.'),
+                array('item' => '3. Eodem modo typi, qui nunc nobis videntur parum clari, fiant sollemnes in futurum.')
+        );
+    
+        $parameters["page"] = array(
+                'logo' => $this->container->getParameter('study_image_url') . '/' . $studyId. '/' .$studyContent->getStudyLogo(),
+                'title' => $survey->getSurveylsTitle()
+        );
+    
+        return $this->render('CyclogramStudyBundle:Study:survey.html.twig', $parameters);
+    }
 
 }

@@ -1,35 +1,30 @@
 _root:
-    pattern: /
+    path: /{study}
+    requirements:
+        study: "[0-9a-zA-Z ]*"
     defaults:
         _controller: lunetics_locale.switcher_controller:switchAction
         route: _page
         statusCode: 301
         useReferrer: false
-        routeParameters:
-            studyUrl: 'sexpro'
 
 CyclogramKnowatHomeBundle:
     resource: "@CyclogramKnowatHomeBundle/Resources/config/routing.yml"
     prefix:   /{_locale}/knowathome
-
-cyclogram_proof_pilot:
-    resource: "@CyclogramProofPilotBundle/Controller/"
-    type:     annotation
-    prefix:   /
 
 cyclogram_frontend:
     resource: "@CyclogramFrontendBundle/Controller/"
     type:     annotation
     prefix:   /{_locale}
     requirements:
-        _locale: en|es|pt|fr
+        _locale: en|es|pt|fr|es_MX|pt_BR
 
-cyclogram_sex_pro:
-    resource: "@CyclogramSexProBundle/Controller/"
+cyclogram_study:
+    resource: "@CyclogramStudyBundle/Controller/"
     type:     annotation
     prefix: /{_locale}/{studyUrl}
     requirements:
-        _locale: en|es|pt|fr
+        _locale: en|es|pt|fr|es_MX|pt_BR
 
 fos_js_routing:
     resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"

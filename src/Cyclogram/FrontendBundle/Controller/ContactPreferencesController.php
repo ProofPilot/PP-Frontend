@@ -147,9 +147,7 @@ class ContactPreferencesController extends Controller
         $parameters["lastaccess"] = new \DateTime();
         $parameters["participant"] = $participant;
          
-        if(!$participant->getFacebookId())
-            $parameters["user"]["avatar"] = "/images/tmp_avatar.jpg";
-        else
+        if($participant->getFacebookId())
             $parameters["user"]["avatar"] = "http://graph.facebook.com/" . $participant->getParticipantUsername() . "/picture?width=80&height=82";
     
         $parameters["user"]["name"] = $participant->getParticipantFirstname() . ' ' . $participant->getParticipantLastname();

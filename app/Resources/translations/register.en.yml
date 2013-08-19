@@ -12,15 +12,15 @@ enter_sms_code: ' Enter verification code you received on your phone'
 label_address1: 'Street Address'
 label_address2: 'Street Address #2'
 label_city: City
-label_email: 'Email'
+label_email: Email
 label_firstname: 'First Name'
 label_lastname: 'Last Name'
-label_password: 'Password'
+label_password: Password
 label_phone_small: 'Phone small'
 label_phone_wide: 'Phone wide'
 label_repeat_password: 'Repeat password'
 label_state: State
-label_username: 'Username'
+label_username: Username
 label_zipcode: 'Zip Code'
 mail_confirmation_fail: 'Failed to confirm the email. No such user!'
 min_charachters: '(8 character min)'

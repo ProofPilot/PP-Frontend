@@ -1,0 +1,26 @@
+btn_confrimcoe_login: btn_confrimcoe_login
+cant_remember_username: '¿No puede recordad su usuario?'
+doesnt_match_records: 'Lo sentimos, su entrada no concuerda con nuestros registros'
+email_sent_containing_password: 'Se ha enviado un e-mail que contiene un enlace para reiniciar su contraseña'
+enter_mobile_phone: 'Ingrese el número de teléfono móbil'
+enter_sms_code: 'Ingrese el código que recibió vía mensaje de texto'
+forgot_password: '¿Olvidó su contraseña?'
+forgot_password_message: 'Nos sucede a todos nosotros mas veces de las que nos gusta adminir. No hay problema, nosotros te guiaremos a crear una nueva contraseña mientras protegemos su privacidad y seguridad.'
+forgot_username: '¿Olvidó su usuario?'
+forgot_username_message: 'No hay problema. Ingrese su número de teléfono móbil que usó durante el registro and le envíaremos su usuario por mensajes de texto.'
+havent_joined: 'No se ha unido'
+label_sms_code: label_sms_code
+new_password_selection: "<p>Haga click en el enlace del e-mail y será guiado atravez de la selección de una nueva contraseña. Necesitará su teléfono móbil para completar este proceso. </p>\n<p>Si no ha arrivado en pocos minutos revise la carpeta de correo basura.</p>"
+send_another_code: '¿Sin código? Envie otro'
+txt_forgot_your_password: '¿Olvidó su contraseña?'
+txt_forgot_your_username: '¿Olvidó su usuario?'
+txt_form_password: Contraseña
+txt_form_username: Usuario
+txt_log_in: Login
+txt_login_button: LOGIN
+txt_login_error_message: 'Su entrada no concuerda con nuestros registros'
+txt_login_securely: 'Accese de manera sgura con sus cuentas.'
+txt_login_with: 'Accese con'
+txt_or: ó
+txt_stay_logged_in: 'Permanezca conectado'
+username_sent: 'Su usuario ha sido enviado al teléfono móbil'

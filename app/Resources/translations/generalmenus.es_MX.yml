@@ -1,0 +1,17 @@
+bottom_left_menu:
+    fullscreen: 'Pantalla completa'
+    home: Inicio
+    update: Actualizar
+
+bottom_right_menu:
+    help: Ayuda
+    logout: Salir
+    my_settings: 'Mis preferencias'
+
+top_menu:
+    contact_preferences: 'Preferencias de contacto'
+    general_settings: 'Preferencias Generales'
+    help: Ayuda
+    logout: Salir
+    settings: Preferencias
+    shipping_information: 'Información de envío'
