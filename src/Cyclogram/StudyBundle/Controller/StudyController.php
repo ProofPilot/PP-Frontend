@@ -75,7 +75,11 @@ class StudyController extends Controller
                 //move this to LimeSurvey service
                 $KoCEligible = $this->getKoCEligibilityriteria($surveyResult);
                 //redirect to eligible page
-                return $this->redirect($this->generateUrl("_study", array("studyId"=>12, "studyUrl"=>"kocsocialmedia")));
+                if($KoCEligible){
+                    return $this->redirect($this->generateUrl("_study", array("studyId"=>12, "studyUrl"=>"kocsocialmedia")));
+                }else{
+                    return new Response("Not Eligible");
+                }
             break;
         }
 
