@@ -114,9 +114,6 @@ class StudyController extends Controller
             $isEligible = false;
             $reason[] = "No sex in the last 12 months";
         }
-        
-        var_dump($reason);
-        die("here");
 
         return $isEligible;
     }
