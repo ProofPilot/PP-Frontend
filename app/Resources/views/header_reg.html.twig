@@ -1,5 +1,5 @@
 <div class="reg_header">
-    {% if app.user and studyId is not defined %}
+    {% if is_granted('ROLE_PARTICIPANT') and studyId is not defined %}
     	<a href="{{ path('_main') }}" class="logo">ProofPilot</a>
     {% else  %}
         {{ study_logo(studyId)|raw}}
