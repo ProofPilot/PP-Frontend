@@ -110,10 +110,13 @@ class StudyController extends Controller
             $reason[] = "Race Not Black/African American";
         }
 
-        if( isset($surveyResponse['382539X701X6988SQ005']) && $surveyResponse['382539X701X6988SQ005'] != "Y" ){
+        if( isset($surveyResponse['382539X701X6988SQ005']) && $surveyResponse['382539X701X6988SQ005'] == "Y" ){
             $isEligible = false;
             $reason[] = "No sex in the last 12 months";
         }
+        
+        var_dump($reason);
+        die("here");
 
         return $isEligible;
     }
