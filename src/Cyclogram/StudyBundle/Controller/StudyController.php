@@ -95,22 +95,22 @@ class StudyController extends Controller
             $reason[] = "Less than 18 years";
         }
 
-        if( isset($surveyResult['382539X701X6987']) && $surveyResult['382539X701X6987'] != "A1" ){
+        if( isset($surveyResponse['382539X701X6987']) && $surveyResponse['382539X701X6987'] != "A1" ){
             $isEligible = false;
             $reason[] = "Sex not male";
         }
 
-        if( isset($surveyResult['382539X701X6984other']) && ! empty($surveyResult['382539X701X6984other']) ){
+        if( isset($surveyResponse['382539X701X6984other']) && ! empty($surveyResponse['382539X701X6984other']) ){
             $isEligible = false;
             $reason[] = "Parish is other";
         }
 
-        if( isset($surveyResult['382539X701X6986SQ003']) && $surveyResult['382539X701X6986SQ003'] != "Y" ){
+        if( isset($surveyResponse['382539X701X6986SQ003']) && $surveyResponse['382539X701X6986SQ003'] != "Y" ){
             $isEligible = false;
             $reason[] = "Race Not Black/African American";
         }
 
-        if( isset($surveyResult['382539X701X6988SQ005']) && $surveyResult['382539X701X6988SQ005'] != "Y" ){
+        if( isset($surveyResponse['382539X701X6988SQ005']) && $surveyResponse['382539X701X6988SQ005'] != "Y" ){
             $isEligible = false;
             $reason[] = "No sex in the last 12 months";
         }
