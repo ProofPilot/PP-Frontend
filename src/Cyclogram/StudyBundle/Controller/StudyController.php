@@ -78,9 +78,9 @@ class StudyController extends Controller
                 if( $KoCEligible ){
                     return $this->redirect($this->generateUrl("_study", array("studyId"=>12, "studyUrl"=>"kocsocialmedia")));
                 }else{
-                    return $this->redirect($this->generateUrl("_page", array("studyUrl"=>"kocsocialmedia")));
+                    return $this->redirect($this->generateUrl("_page", array("studyUrl"=>"kocsocialmedia","studyId"=>"")));
                 }
-                
+
             break;
         }
 
