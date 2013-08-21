@@ -77,138 +77,138 @@ class LimeSurvey692294
      */
     private $refurl;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="692294X119X1615", type="string", length=5, nullable=true)
-     */
-    private $692294x119x1615;
+//     /**
+//      * @var string
+//      *
+//      * @ORM\Column(name="692294X119X1615", type="string", length=5, nullable=true)
+//      */
+//     private $692294x119x1615;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="692294X119X1615other", type="text", nullable=true)
-     */
-    private $692294x119x1615other;
+//     /**
+//      * @var string
+//      *
+//      * @ORM\Column(name="692294X119X1615other", type="text", nullable=true)
+//      */
+//     private $692294x119x1615other;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="692294X119X1616", type="string", length=5, nullable=true)
-     */
-    private $692294x119x1616;
+//     /**
+//      * @var string
+//      *
+//      * @ORM\Column(name="692294X119X1616", type="string", length=5, nullable=true)
+//      */
+//     private $692294x119x1616;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="692294X119X16171", type="string", length=5, nullable=true)
-     */
-    private $692294x119x16171;
+//     /**
+//      * @var string
+//      *
+//      * @ORM\Column(name="692294X119X16171", type="string", length=5, nullable=true)
+//      */
+//     private $692294x119x16171;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="692294X119X16172", type="string", length=5, nullable=true)
-     */
-    private $692294x119x16172;
+//     /**
+//      * @var string
+//      *
+//      * @ORM\Column(name="692294X119X16172", type="string", length=5, nullable=true)
+//      */
+//     private $692294x119x16172;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="692294X119X16173", type="string", length=5, nullable=true)
-     */
-    private $692294x119x16173;
+//     /**
+//      * @var string
+//      *
+//      * @ORM\Column(name="692294X119X16173", type="string", length=5, nullable=true)
+//      */
+//     private $692294x119x16173;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="692294X119X16174", type="string", length=5, nullable=true)
-     */
-    private $692294x119x16174;
+//     /**
+//      * @var string
+//      *
+//      * @ORM\Column(name="692294X119X16174", type="string", length=5, nullable=true)
+//      */
+//     private $692294x119x16174;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="692294X119X16175", type="string", length=5, nullable=true)
-     */
-    private $692294x119x16175;
+//     /**
+//      * @var string
+//      *
+//      * @ORM\Column(name="692294X119X16175", type="string", length=5, nullable=true)
+//      */
+//     private $692294x119x16175;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="692294X119X1617other", type="text", nullable=true)
-     */
-    private $692294x119x1617other;
+//     /**
+//      * @var string
+//      *
+//      * @ORM\Column(name="692294X119X1617other", type="text", nullable=true)
+//      */
+//     private $692294x119x1617other;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="692294X119X1618", type="text", nullable=true)
-     */
-    private $692294x119x1618;
+//     /**
+//      * @var string
+//      *
+//      * @ORM\Column(name="692294X119X1618", type="text", nullable=true)
+//      */
+//     private $692294x119x1618;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="692294X119X1619", type="text", nullable=true)
-     */
-    private $692294x119x1619;
+//     /**
+//      * @var string
+//      *
+//      * @ORM\Column(name="692294X119X1619", type="text", nullable=true)
+//      */
+//     private $692294x119x1619;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="692294X119X1620", type="text", nullable=true)
-     */
-    private $692294x119x1620;
+//     /**
+//      * @var string
+//      *
+//      * @ORM\Column(name="692294X119X1620", type="text", nullable=true)
+//      */
+//     private $692294x119x1620;
 
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="692294X119X1621", type="datetime", nullable=true)
-     */
-    private $692294x119x1621;
+//     /**
+//      * @var \DateTime
+//      *
+//      * @ORM\Column(name="692294X119X1621", type="datetime", nullable=true)
+//      */
+//     private $692294x119x1621;
 
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="692294X119X1622", type="decimal", nullable=true)
-     */
-    private $692294x119x1622;
+//     /**
+//      * @var float
+//      *
+//      * @ORM\Column(name="692294X119X1622", type="decimal", nullable=true)
+//      */
+//     private $692294x119x1622;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="692294X119X16231", type="string", length=5, nullable=true)
-     */
-    private $692294x119x16231;
+//     /**
+//      * @var string
+//      *
+//      * @ORM\Column(name="692294X119X16231", type="string", length=5, nullable=true)
+//      */
+//     private $692294x119x16231;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="692294X119X16232", type="string", length=5, nullable=true)
-     */
-    private $692294x119x16232;
+//     /**
+//      * @var string
+//      *
+//      * @ORM\Column(name="692294X119X16232", type="string", length=5, nullable=true)
+//      */
+//     private $692294x119x16232;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="692294X119X16233", type="string", length=5, nullable=true)
-     */
-    private $692294x119x16233;
+//     /**
+//      * @var string
+//      *
+//      * @ORM\Column(name="692294X119X16233", type="string", length=5, nullable=true)
+//      */
+//     private $692294x119x16233;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="692294X119X16234", type="string", length=5, nullable=true)
-     */
-    private $692294x119x16234;
+//     /**
+//      * @var string
+//      *
+//      * @ORM\Column(name="692294X119X16234", type="string", length=5, nullable=true)
+//      */
+//     private $692294x119x16234;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="692294X119X1819", type="string", length=1, nullable=true)
-     */
-    private $692294x119x1819;
+//     /**
+//      * @var string
+//      *
+//      * @ORM\Column(name="692294X119X1819", type="string", length=1, nullable=true)
+//      */
+//     private $692294x119x1819;
 
 
 }

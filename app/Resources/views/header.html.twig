@@ -1,10 +1,10 @@
 <header>
-    {% if app.user %}
+    {% if is_granted('ROLE_PARTICIPANT')  %}
         {{ dashboard_logo(studyId, path('_main'))|raw }}
     {% else %}
         {{ dashboard_logo(studyId, path('_login'))|raw }}
     {% endif %}
-    {% if app.user %}
+    {% if is_granted('ROLE_PARTICIPANT')  %}
         {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createTopSettingsMenu',{'template': 'CyclogramFrontendBundle:Knp:top_menu.html.twig'}) }}
         {% else %}
             <ul class="header_menu">
@@ -17,7 +17,7 @@
 </header>
 <div class="mobile_header_menu nologin">
         <ul>
-        {% if app.user %}
+        {% if is_granted('ROLE_PARTICIPANT')  %}
             <li class="logo"><a class="site_logo" href="{{ path('_main') }}">ProofPilot</a></li>
         {% else %}
             <li class="logo"><a class="site_logo" href="{{ path('_login') }}">ProofPilot</a></li>
@@ -27,7 +27,7 @@
 </div>
 <div class="mobile_sitemenu register nologin">
         <div class="menu_wrapper">
-        {% if app.user %}
+        {% if is_granted('ROLE_PARTICIPANT')  %}
             <a class="close" href="#"></a> <a class="logo" href="#">ProofPilot</a>
         {% else %}
             <a class="close" href="#"></a> <a class="logo" href="#">ProofPilot</a>
