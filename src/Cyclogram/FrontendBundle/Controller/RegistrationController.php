@@ -53,8 +53,8 @@ class RegistrationController extends Controller
      */
     public function step1Action($studyId=null)
     {
-        if ($this->get('security.context')->isGranted("ROLE_USER")){
-            return $this->redirect($this->generateURL("_main"));
+        if ($this->get('security.context')->isGranted("ROLE_PARTICIPANT")){
+            return $this->redirect($this->get('router')->generate("_main", array('studyId'=>$studyId)));
         }
         $request = $this->getRequest();
         $session = $request->getSession();
