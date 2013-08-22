@@ -1,15 +1,19 @@
 <?php
 namespace Cyclogram\FrontendBundle\Twig;
 
+use Symfony\Component\Security\Core\SecurityContext;
+
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class GlobalExtension extends \Twig_Extension
 {
     private $container;
+    private $securityContext;
     
-    public function __construct(ContainerInterface $container)
+    public function __construct(ContainerInterface $container, SecurityContext $securityContext)
     {
         $this->container = $container;
+        $this->securityContext = $securityContext;
     }
     
     public function getFunctions()
@@ -21,7 +25,8 @@ class GlobalExtension extends \Twig_Extension
                 "twigtest" => new \Twig_Function_Method($this, 'twigTest', array(
                         'needs_environment' => true,
                         'needs_context' => true
-                        ))
+                        )),
+                'is_enrolled_in_study' => new \Twig_Function_Method($this, 'isEnrolledInStudy')
         );
     }
     
@@ -67,5 +72,11 @@ class GlobalExtension extends \Twig_Extension
     public function twigTest(\Twig_Environment $environment, $context)
     {
         $b = $context;
+    }
+    
+    public function isEnrolledInStudy($studyId)
+    {
+        $participant = $this->securityContext->getToken()->getUser();
+        return $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Participant')->isEnrolledInStudy($participant, $studyId);
     }
 }

@@ -14,6 +14,7 @@ services:
             - name: twig.extension
         arguments:
             - @service_container
+            - @security.context
 
     lunetics_locale.switcher_controller:
         class: Cyclogram\FrontendBundle\Controller\LocaleController

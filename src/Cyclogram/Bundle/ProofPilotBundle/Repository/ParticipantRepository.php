@@ -153,5 +153,24 @@ class ParticipantRepository extends EntityRepository implements
                  ))
                  ->getSingleScalarResult();
     }
+    
+    
+    public function isEnrolledInStudy($participant, $studyId) {
+        $result = $this->getEntityManager()
+        ->createQuery('SELECT COUNT(a) FROM CyclogramProofPilotBundle:ParticipantArmLink pal
+                INNER JOIN pal.arm a
+                INNER JOIN a.study s
+                WHERE s.studyId = :studyid
+                AND pal.participant = :participant
+                ')
+                ->setParameter('studyid', $studyId)
+                ->setParameter('participant', $participant)
+                ->getSingleScalarResult();
+        if($result)
+            return true;
+        else
+            return false;
+        
+    }
 
 }

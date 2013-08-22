@@ -170,17 +170,22 @@ class GeneralSettingForm extends AbstractType
         if ($data['validationCheck'] == 'username'){
             if (empty($data['newUserName'])) {
                 $context->addViolationAt('[newUserName]', $this->container->get('translator')->trans('please_fill_this_field', array(), 'validators'));
+            } else {
+                //check if username already exists
+                $existing  = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Participant')->findOneBy(array('participantUsername'=>$data['newUserName']));
+                if($existing) {
+                     $context->addViolationAt('[newUserName]',$this->container->get('translator')->trans('username_already_registered', array(), 'validators'));
+                }
             }
+
             if (empty($data['newUserNamePassword'])) {
                 $context->addViolationAt('[newUserNamePassword]',$this->container->get('translator')->trans('please_fill_this_field', array(), 'validators'));
             }
-            $em = $this->container->get('doctrine')->getEntityManager();
-            if (!empty($data['newUserName']) && ($participant->getParticipantUsername() == $data['newUserName'])){
-                $context->addViolationAt('[newUserName]',$this->container->get('translator')->trans('username_already_registered', array(), 'validators'));
-            }
+
             if (!empty($data['newUserNamePassword']) && $data['newUserNamePassword'] != $participant->getParticipantPassword()) {
                 $context->addViolationAt('[newUserNamePassword]', $this->container->get('translator')->trans('wrong_pass', array(), 'validators'));
             }
+            
         }
     }
 
@@ -212,29 +217,42 @@ class GeneralSettingForm extends AbstractType
         if ($data['validationCheck'] == 'email'){
             if (empty($data['newEmail'])){
                 $context->addViolationAt('[newEmail]', $this->container->get('translator')->trans('please_fill_this_field', array(), 'validators'));
-            }
-            if (!empty($data['newEmail']) && ($participant->getParticipantEmail() == $data['newEmail'])){
-                $context->addViolationAt('[confirmEmail]',  $this->container->get('translator')->trans('email_already_registered', array(), 'validators'));
+            } else {
+                //check if email already exists
+                $existing  = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Participant')->findOneBy(array('participantEmail'=>$data['newEmail']));
+                if($existing) {
+                    $context->addViolationAt('[newEmail]',  $this->container->get('translator')->trans('email_already_registered', array(), 'validators'));
+                }
             }
         }
     }
 
     public function isPhoneValid($data, ExecutionContextInterface $context){
         $participant = $this->container->get('security.context')->getToken()->getUser();
+        $securityContext = $this->container->get('security.context');
         if ($data['validationCheck'] == 'mobile-sms'){
+            
             if (empty($data['newPhoneNumber'])){
                 $context->addViolationAt('[newPhoneNumber]',$this->container->get('translator')->trans('please_fill_this_field', array(), 'validators'));
+            } else {
+                //check if phone already exists
+                $existing  = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Participant')->findOneBy(array('participantMobileNumber'=>$data['newPhoneNumber']));
+                if($existing) { 
+                    $context->addViolationAt('[newPhoneNumber]',  $this->container->get('translator')->trans('error_mobile_phone_already_registered', array(), 'validators'));
+                }
             }
-            if (empty($data['newPhoneNumberPassword'])){
-                $context->addViolationAt('[newPhoneNumberPassword]',$this->container->get('translator')->trans('please_fill_this_field', array(), 'validators'));
-            }
-            if (!empty($data['newPhoneNumber']) && ($participant->getParticipantMobileNumber() == $data['newPhoneNumber'])){
-                $context->addViolationAt('[newPhoneNumber]',  $this->container->get('translator')->trans('error_mobile_phone_already_registered', array(), 'validators'));
-            }
-            if (!empty($data['newPhoneNumberPassword']) && $data['newPhoneNumberPassword'] != $participant->getParticipantPassword()) {
-                $context->addViolationAt('[newPhoneNumberPassword]',  $this->container->get('translator')->trans('wrong_pass', array(), 'validators'));
+            
+            if (!$securityContext->isGranted('ROLE_FACEBOOK_USER') && !$securityContext->isGranted('ROLE_GOOGLE_USER')){
+                
+                if(empty($data['newPhoneNumberPassword'])) {
+                    $context->addViolationAt('[newPhoneNumberPassword]', $this->container->get('translator')->trans('please_fill_this_field', array(), 'validators'));
+                }
+                if (!empty($data['newPhoneNumberPassword']) && $data['newPhoneNumberPassword'] != $participant->getParticipantPassword()) {
+                    $context->addViolationAt('[newPhoneNumberPassword]',  $this->container->get('translator')->trans('wrong_pass', array(), 'validators'));
+                }
             }
         }
+        
         if ($data['validationCheck'] == 'mobile') {
             if (empty($data['newPhoneNumberSMS'])){
                 $context->addViolationAt('[newPhoneNumberSMS]',$this->container->get('translator')->trans('please_fill_this_field', array(), 'validators'));

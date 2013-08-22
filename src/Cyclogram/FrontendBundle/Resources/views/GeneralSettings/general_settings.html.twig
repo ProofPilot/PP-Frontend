@@ -32,6 +32,9 @@
           {%  endif %}
             <form action="{{ path('_settings') }}" method="POST", name="general_settings">
               <ul class="settings_form">
+              
+              {% if not is_granted('ROLE_FACEBOOK_USER') and not is_granted('ROLE_GOOGLE_USER') %}
+              
                 <li class="left_text form-username">{% trans from "general_settings" %}txt_username{% endtrans %}</li>
                 <li class="form_expanded form-username" {{ showonerror('username',expandedFormClass) }}>
                   <div class="wrapper">
@@ -95,9 +98,14 @@
                     {{ form_widget(form.password, {'attr' : {'class' : 'middle_input', 'value' : 'password'}}) }}
                     {{ form_errors(form.password) }}
                 <li class="edit_btn form-password" {{ hideonerror('password',expandedFormClass) }}><a href="#" data-form-cont=".form-password">{% trans from "general_settings" %}txt_change{% endtrans %}</a></li>
+                    {% set emailReadOnly = false %}
+                {% else %}
+                    {% set emailReadOnly = true %}
+                {% endif %}
                 
                 {# email #}                
                 <li class="left_text form-email">{% trans from "general_settings" %}txt_email{% endtrans %}</li>
+                {% if not is_granted('ROLE_FACEBOOK_USER') and not is_granted('ROLE_GOOGLE_USER') %}
                 <li class="form_expanded form-email"  {{ showonerror('email',expandedFormClass) }}>
                   <div class="wrapper">
                     <div class="current_text">{{ participant.participantEmail }}</div>
@@ -120,10 +128,13 @@
                         {{ form_widget(form.emailConfirm, {'attr':{'class' : 'btn_confirm'}}) }}
                   </div>
                 </li>
+                {% endif %}
                 <li class="middle_input form-email" {{ hideonerror('email',expandedFormClass) }}>
-                    {{ form_widget(form.email, {'attr' : {'class' : 'middle_input'}, 'value' : participant.participantEmail }) }}
+                    {{ form_widget(form.email, {'attr' : {'class' : 'middle_input', 'readonly' : 'readonly'}, 'value' : participant.participantEmail }) }}
                     {{ form_errors(form.email) }}
+                {% if not is_granted('ROLE_FACEBOOK_USER') and not is_granted('ROLE_GOOGLE_USER') %}
                 <li class="edit_btn form-email" {{ hideonerror('email',expandedFormClass) }}><a href="#" data-form-cont=".form-email">{% trans from "general_settings" %}txt_change{% endtrans %}</a></li>
+                {% endif %}
                 
                 {# mobile #}
                 <li class="left_text form-mobile">{% trans from "general_settings" %}txt_mobile_number{% endtrans %}</li>
@@ -138,6 +149,7 @@
                           {{ form_errors(form.newPhoneNumber) }}
                       </span>
                       </div>
+                      {% if not is_granted('ROLE_FACEBOOK_USER') and not is_granted('ROLE_GOOGLE_USER') %}
                     <div class="new_inputs_cont">
                       <div class="for_label">{{ form_label(form.newPhoneNumberPassword) }}<a href="{{ path('_forgot_pass') }}" class="forgot">{% trans from "general_settings" %}txt_forgot_it{% endtrans %}</a></div>
                       <span class="input_container">
@@ -145,6 +157,7 @@
                           {{ form_errors(form.newPhoneNumberPassword) }}
                       </span>
                     </div>
+                    {% endif %}
                     <div class="confirm_cont">
                         {{ form_widget(form.phoneSendSMS, {'attr':{'class' : 'btn_confirm'}}) }}
                     <div class="new_inputs_cont">
@@ -158,6 +171,7 @@
                         {{ form_widget(form.phoneConfirm, {'attr':{'class' : 'btn_confirm disabled'}}) }}
                     </div>
                   </div>
+                  
                 </li>
                 <li class="middle_input form-mobile" {{ hideonerror('mobile',expandedFormClass) }}>
                     {{ form_widget(form.phoneNumber, {'attr' : {'class' : 'middle_input'}, 'value': participant.participantMobileNumber}) }}
@@ -165,7 +179,8 @@
                 </li>
                 <li class="edit_btn form-mobile" {{ hideonerror('mobile',expandedFormClass) }}><a href="#" data-form-cont=".form-mobile">{% trans from "general_settings" %}txt_edit{% endtrans %}</a></li>
               </ul>
-              {{ form_rest(form) }}
+              {{ form_widget(form.validationCheck) }}
+{#               {{ form_rest(form) }}#}
               {{ form_errors(form) }}
             </form>
           </div>
