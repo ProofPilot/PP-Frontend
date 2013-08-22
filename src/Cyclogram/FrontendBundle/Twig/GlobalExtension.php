@@ -10,10 +10,10 @@ class GlobalExtension extends \Twig_Extension
     private $container;
     private $securityContext;
     
-    public function __construct(ContainerInterface $container, SecurityContext $securityContext)
+    public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
-        $this->securityContext = $securityContext;
+        $this->securityContext = $this->container->get('security.context');
     }
     
     public function getFunctions()
