@@ -36,30 +36,30 @@
               {% if not is_granted('ROLE_FACEBOOK_USER') and not is_granted('ROLE_GOOGLE_USER') %}
               
                 <li class="left_text form-username">{% trans from "general_settings" %}txt_username{% endtrans %}</li>
-                <li class="form_expanded form-username" {{ showonerror('username',expandedFormClass) }}>
-                  <div class="wrapper">
-                    <div class="current_text">{{ participant.participantUserName }}</div>
-                    <div class="close_cont"><a href="#" data-form-cont=".form-username">Cancel</a></div>
-                    <div class="new_inputs_cont">
-                      <div class="for_label">{{ form_label(form.newUserName) }}</div>
-                      {{ form_widget(form.newUserName) }}
-                      {{ form_errors(form.newUserName) }}
-                    </div>
-                    <div class="new_inputs_cont">
-                      <div class="for_label">{{ form_label(form.newUserNamePassword) }}<a href="{{ path('_forgot_pass') }}" class="forgot">{% trans from "general_settings" %}txt_forgot_it{% endtrans %}</a></div>
-                          {{ form_widget(form.newUserNamePassword) }}
-                          {{ form_errors(form.newUserNamePassword) }}
-                    </div>
-                    <div class="confirm_cont">
-                        {{ form_widget(form.userNameConfirm, {'attr':{'class' : 'btn_confirm'}}) }}
-                    </div>
-                  </div>
-                </li>
+{#                 <li class="form_expanded form-username" {{ showonerror('username',expandedFormClass) }}>#}
+{#                   <div class="wrapper">#}
+{#                     <div class="current_text">{{ participant.participantUserName }}</div>#}
+{#                     <div class="close_cont"><a href="#" data-form-cont=".form-username">Cancel</a></div>#}
+{#                     <div class="new_inputs_cont">#}
+{#                       <div class="for_label">{{ form_label(form.newUserName) }}</div>#}
+{#                       {{ form_widget(form.newUserName) }}#}
+{#                       {{ form_errors(form.newUserName) }}#}
+{#                     </div>#}
+{#                     <div class="new_inputs_cont">#}
+{#                       <div class="for_label">{{ form_label(form.newUserNamePassword) }}<a href="{{ path('_forgot_pass') }}" class="forgot">{% trans from "general_settings" %}txt_forgot_it{% endtrans %}</a></div>#}
+{#                           {{ form_widget(form.newUserNamePassword) }}#}
+{#                           {{ form_errors(form.newUserNamePassword) }}#}
+{#                     </div>#}
+{#                     <div class="confirm_cont">#}
+{#                         {{ form_widget(form.userNameConfirm, {'attr':{'class' : 'btn_confirm'}}) }}#}
+{#                     </div>#}
+{#                   </div>#}
+{#                 </li>#}
                 <li class="middle_input form-username" {{ hideonerror('username',expandedFormClass) }}>
-                    {{ form_widget(form.userName, {'attr' : {'class' : 'middle_input'}, 'value': participant.participantUsername }) }}
+                    {{ form_widget(form.userName, {'attr' : {'class' : 'middle_input', 'readonly' : 'readonly'}, 'value': participant.participantUsername }) }}
                     {{ form_errors(form.userName) }}
                 </li>
-                <li class="edit_btn form-username" {{ hideonerror('username',expandedFormClass) }}><a href="#" data-form-cont=".form-username">{% trans from "general_settings" %}txt_change{% endtrans %}</a></li>
+{#                 <li class="edit_btn form-username" {{ hideonerror('username',expandedFormClass) }}><a href="#" data-form-cont=".form-username">{% trans from "general_settings" %}txt_change{% endtrans %}</a></li>#}
                 
                 
                 {# password #}
