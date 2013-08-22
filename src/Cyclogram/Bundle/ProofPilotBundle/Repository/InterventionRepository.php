@@ -39,4 +39,33 @@ class InterventionRepository extends EntityRepository {
         }
     
     }
+    
+    public function getInterventionStudyId ($interventionId) 
+    {
+        $results = $this->getEntityManager()
+        ->createQuery("
+                SELECT ail, a, i, s
+                FROM CyclogramProofPilotBundle:ArmInterventionLink ail
+                INNER JOIN ail.arm a
+                INNER JOIN ail.intervention i
+                INNER JOIN a.study s
+                WHERE
+                i.interventionId = :interventionid
+                ")
+                ->setParameter('interventionid', $interventionId)
+                ->getResult();
+        
+        $studies = array();
+        foreach($results as $result) {
+            $studies[$result->getArm()->getStudy()->getStudyId()] = $result->getArm()->getStudy()->getStudyId();
+        }
+        if($studies)
+        {
+            $ids = array_values($studies);
+            return $ids[0];
+        }
+            
+    }
+    
+
 }

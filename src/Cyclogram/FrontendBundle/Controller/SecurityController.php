@@ -19,10 +19,10 @@ use Cyclogram\FrontendBundle\Form\MobilePhoneForm;
 class SecurityController extends Controller
 {
     /**
-     * @Route("/forgot_pass/{studyId}", name="_forgot_pass")
+     * @Route("/forgot_pass", name="_forgot_pass")
      * @Template()
      */
-    public function forgotPassAction($studyId=null)
+    public function forgotPassAction()
     {
         $request = $this->getRequest();
         
@@ -50,7 +50,6 @@ class SecurityController extends Controller
                 
                 if (!empty($participant)) {
                     $parameters['id'] = $participant->getParticipantId();
-                    $parameters['studyId'] = $studyId;
                     $parameters['locale'] = $participant->getLanguage() ? $participant->getLanguage() : $request->getLocale();
                     $embedded['logo_top'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_logo.png");
                     $embedded['logo_footer'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newletter_logo_footer.png");
@@ -81,10 +80,10 @@ class SecurityController extends Controller
     }
     
     /**
-     * @Route("/create_pass/{id}/{studyId}" , name="_create_new_pass")
+     * @Route("/create_pass/{id}" , name="_create_new_pass")
      * @Template()
      */
-    public function createPassAction($id, $studyId=null)
+    public function createPassAction($id)
     {
         $request = $this->getRequest();
         $session = $this->getRequest()->getSession();
@@ -146,10 +145,10 @@ class SecurityController extends Controller
     }
     
     /**
-     * @Route("/confirm_reset/{id}/{studyId}", name="_confirm_pass_reset")
+     * @Route("/confirm_reset/{id}", name="_confirm_pass_reset")
      * @Template()
      */
-    public function confirmResetAction($id, $studyId =null)
+    public function confirmResetAction($id)
     {
         $request = $this->getRequest();
 
@@ -173,7 +172,7 @@ class SecurityController extends Controller
                         $em->flush($participant);
                         $session->invalidate();
                         
-                        return $this->render('CyclogramFrontendBundle:Security:password_changed.html.twig', array("studyId"=>$studyId));
+                        return $this->render('CyclogramFrontendBundle:Security:password_changed.html.twig');
                     } else {
                         $session->invalidate();
                         $error = "Wrong SMS!";
@@ -186,13 +185,13 @@ class SecurityController extends Controller
     }
     
     /**
-     * @Route("/forgot_username/{studyId}", name="_forgot_username")
+     * @Route("/forgot_username", name="_forgot_username")
      * @Template()
      */
-    public function forgotUserAction($studyId=null)
+    public function forgotUserAction()
     {
         if ($this->get('security.context')->isGranted("ROLE_PARTICIPANT")){
-            return $this->redirect($this->get('router')->generate("_main", array('studyId'=>$studyId)));
+            return $this->redirect($this->get('router')->generate("_main"));
         }
         $request = $this->getRequest();
 

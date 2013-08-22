@@ -30,7 +30,7 @@ class LimeController extends Controller
         
         //If logged in save result immediately
         if(($loggedUser instanceof Participant) && ($this->get('security.context')->isGranted("ROLE_PARTICIPANT"))) {
-            $this->get('fpp_ls')->participantSurveyLinkRegistration($surveyId, $saveId, $loggedUser, uniqid());
+            $this->get('study_logic')->participantSurveyLinkRegistration($surveyId, $saveId, $loggedUser, uniqid());
         }
         $redirectUrl = $this->getRequest()->query->get('redirectUrl');
 
@@ -46,8 +46,50 @@ class LimeController extends Controller
         
         
         return $this->redirect($redirectUrl);
-        
+    }
+    
+    /**
+     * Shows a survey. After completion of survey, survey results are saved in session, also
+     * it is required to specify the redirect url
+     *
+     * @Route("/survey/{studyId}/{surveyId}", name="_survey")
+     * @Template()
+     */
+    public function surveyAction($studyId, $surveyId)
+    {
+        $lime_em = $this->getDoctrine()->getManager('limesurvey');
+        $locale = $this->getRequest()->getLocale();
+    
+        $parameters = array();
+    
 
-        
+        $parameters['studyId'] = $studyId;
+    
+    
+        $studyContent = $this->getDoctrine()->getRepository("CyclogramProofPilotBundle:StudyContent")->getStudyContentById($studyId, $locale);
+    
+    
+        $parameters['survey'] = $this->getSurveyData($surveyId, $locale);
+        $parameters['logo'] = $this->container->getParameter('study_image_url') . '/' . $studyId. '/' .$studyContent->getStudyLogo();
+    
+    
+        return $this->render('CyclogramStudyBundle:Study:survey.html.twig', $parameters);
+    }
+    
+    
+    
+    private function getSurveyData($surveyId, $locale)
+    {
+        $survey = $this->getDoctrine()
+        ->getRepository("CyclogramProofPilotBundleLime:LimeSurveysLanguagesettings", "limesurvey")
+        ->getSurvey($surveyId, $locale);
+    
+        $surveyData = array (
+                'url' => "/lime/index.php/survey/index/sid/".$surveyId."/newtest/Y/lang/".$survey->getSurveylsLanguage(),
+                'title' =>  $survey->getSurveylsTitle()
+        );
+    
+        return $surveyData;
+         
     }
 }

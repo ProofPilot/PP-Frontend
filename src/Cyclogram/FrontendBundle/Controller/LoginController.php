@@ -27,13 +27,13 @@ class LoginController extends Controller
 {
 
     /**
-     * @Route("/login/{studyId}", name="_login")
+     * @Route("/login", name="_login")
      * @Template()
      */
-    public function loginAction($studyId=null)
+    public function loginAction()
     {
         if ($this->get('security.context')->isGranted("ROLE_PARTICIPANT")){
-            return $this->redirect($this->get('router')->generate("_main", array('studyId'=>$studyId)));
+            return $this->redirect($this->get('router')->generate("_main"));
         }
         $request = $this->getRequest();
         $session = $request->getSession();
@@ -69,32 +69,31 @@ class LoginController extends Controller
             // last username entered by the user
             'last_username' => $session->get(SecurityContext::LAST_USERNAME),
             'error'         => $error,
-            'studyId'       => $studyId,
         ));
     }
 
     /**
-     * @Route("/login_check/{studyId}", name="login_check")
+     * @Route("/login_check", name="login_check")
      */
-    public function securityCheckAction($studyId=null)
+    public function securityCheckAction()
     {
         // The security layer will intercept this request
     }
 
 
     /**
-     * @Route("/logout/{studyId}", name="_logout" , options={"expose"=true})
+     * @Route("/logout", name="_logout" , options={"expose"=true})
      */
-    public function logoutAction($studyId=null)
+    public function logoutAction()
     {
         // The security layer will intercept this request
     }
 
     /**
-     * @Route("/doLogin/{studyId}", name="_do_login")
+     * @Route("/doLogin", name="_do_login")
      * @Template()
      */
-    public function doLoginAction($studyId=null){
+    public function doLoginAction(){
     
         $em = $this->getDoctrine()->getManager();
     
@@ -131,17 +130,17 @@ class LoginController extends Controller
             $sentSms = $sms->sendSmsAction( array('message' => "Your SMS Verification code is $participantSMSCode", 'phoneNumber'=>"$customerMobileNumber") );
     
             if($sentSms)
-                return $this->redirect(($this->generateUrl("login_sms", array("studyId"=>$studyId))));
+                return $this->redirect(($this->generateUrl("login_sms")));
         }
 
-        return $this->redirect(($this->generateUrl("login_sms", array("studyId"=>$studyId))));
+        return $this->redirect(($this->generateUrl("login_sms")));
     }
 
     /**
-     * @Route("/login_sms/{studyId}", name="login_sms" )
+     * @Route("/login_sms", name="login_sms" )
      * @Template()
      */
-    public function loginSMSAction($studyId=null)
+    public function loginSMSAction()
     {
         $em = $this->getDoctrine()->getManager();
         
@@ -197,7 +196,7 @@ class LoginController extends Controller
                     $this->get('security.context')->setToken($token);
 
                     $this->get('custom_db')->getFactory('CommonCustom')->addEvent($participant->getParticipantId(),null,1,'login','Login succesfully', TRUE);
-                    return $this->redirect( $this->generateUrl("_main", array("studyId"=>$studyId)) );
+                    return $this->redirect( $this->generateUrl("_main") );
                 } else {
                     $this->get('custom_db')->getFactory('CommonCustom')->addEvent($participant->getParticipantId(),null,1,'login','Login failed', FALSE);
                     return $this->redirect( $this->generateUrl("_login") );

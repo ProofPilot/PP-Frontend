@@ -24,6 +24,6 @@ services:
             - %lunetics_locale.switcher.redirect_to_route%
             - %lunetics_locale.switcher.redirect_statuscode%
 
-    fpp_ls:
-        class: Cyclogram\FrontendBundle\Service\LimeSurvey
+    study_logic:
+        class: Cyclogram\FrontendBundle\Service\StudyLogic
         arguments: [@service_container]

@@ -37,9 +37,9 @@ class RoutingExtension extends \Twig_Extension
 
     public function getPath($context, $name, $parameters = array(), $relative = false)
     {
-        if(isset($context["studyId"]) && !isset($parameters["studyId"])) {
-            $parameters["studyId"] = $context["studyId"];
-        }
+//         if(isset($context["studyId"]) && !isset($parameters["studyId"])) {
+//             $parameters["studyId"] = $context["studyId"];
+//         }
         
         return $this->generator->generate($name, $parameters, $relative ? UrlGeneratorInterface::RELATIVE_PATH : UrlGeneratorInterface::ABSOLUTE_PATH);
     }

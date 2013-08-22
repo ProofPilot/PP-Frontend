@@ -172,5 +172,28 @@ class ParticipantRepository extends EntityRepository implements
             return false;
         
     }
+    
+    /**
+     * Get all enrolled studies of participant
+     * @param unknown_type $participant
+     * @return unknown
+     */
+    public function getEnrolledStudies($participant) {
+        $results = $this->getEntityManager()
+        ->createQuery('SELECT pal FROM CyclogramProofPilotBundle:ParticipantArmLink pal
+                INNER JOIN pal.arm a
+                INNER JOIN a.study s
+                WHERE pal.participant = :participant
+                ')
+                ->setParameter('participant', $participant)
+                ->getResult();
+        $studies = array();
+        foreach($results as $result) {
+            $study = $result->getArm()->getStudy();
+            $studies[$study->getStudyId()] = $study;
+        }
+        
+        return $studies;
+    }
 
 }
