@@ -194,8 +194,6 @@ class  SimpleRegistrationController extends Controller{
                     $ls = $this->get('study_logic');
                     
                     $session = $this->getRequest()->getSession();
-                    var_dump($session->has('SurveyInfo'));
-                    die("test");
                     if ($session->has('SurveyInfo')){
                         $bag = $session->get('SurveyInfo');
                         $surveyId = $bag->get('surveyId');
