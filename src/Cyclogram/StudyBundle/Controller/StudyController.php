@@ -167,7 +167,7 @@ class StudyController extends Controller
         $bag->set('saveId', $svid);
         $session->registerBag($bag);
         $session->set('SurveyInfo', $bag);
-        
+
         //get specific study criteria
         switch($studyId){
             case 12:

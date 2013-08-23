@@ -234,7 +234,7 @@ class StudyLogic
 
         //participant intervention link
         $activeStatus = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Status')->find(12);
-        $intervention = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Intervention')->find(9);
+        $intervention = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Intervention')->find(9,1);
 
         $participantInterventionLink = new \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantInterventionLink();
         $participantInterventionLink->setParticipant($participant);

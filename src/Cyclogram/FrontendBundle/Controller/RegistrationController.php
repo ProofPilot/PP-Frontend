@@ -364,6 +364,7 @@ class RegistrationController extends Controller
                 $participant->setState($state);
                 
                 $em->persist($participant);
+                $em->persist($participant);
                 $em->flush($participant);
                 
                 $ls = $this->get('study_logic');
