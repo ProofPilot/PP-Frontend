@@ -141,8 +141,73 @@ class StudyController extends Controller
         
         return $this->render('CyclogramStudyBundle:Study:is_it_secure.html.twig', $parameters);
     }
-    
 
+    /**
+     * @Route("/studySurveyResponse/{studyId}/{sid}/{svid}", name="_studySurveyResponse")
+     * @Template()
+     */
+    public function studySurveyResponseAction($studyId, $sid, $svid){
+
+        $session = $this->getRequest()->getSession();
+
+        $locale = $this->getRequest()->getLocale();
+
+        //get study
+        $studyContent = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:StudyContent')
+            ->getStudyContentById($studyId, $locale);
+
+        //get db data
+        $surveyResult = $this->get('custom_db')->getFactory('ElegibilityCustom')->getSurveyResponseData($svid, $sid);
+
+        //get specific study criteria
+        switch($studyId){
+            case '12':
+                //move this to LimeSurvey service
+                $KoCEligible = $this->getKoCEligibilityriteria($surveyResult);
+                //redirect to eligible page
+                if( $KoCEligible ){
+                    return $this->redirect($this->generateUrl("_study", array("studyId"=>12, "studyUrl"=>"kocsocialmedia")));
+                }else{
+                    return $this->redirect($this->generateUrl("_page", array("studyUrl"=>"kocsocialmedia")));
+                }
+
+                break;
+        }
+
+        return new Response("");
+    }
+
+    private function getKoCEligibilityriteria($surveyResponse){
+        $isEligible = true;
+        $reason = array();
+
+        if( isset($surveyResponse['382539X701X6985']) && intval($surveyResponse['382539X701X6985']) < 18 ){
+            $isEligible = false;
+            $reason[] = "Less than 18 years";
+        }
+
+        if( isset($surveyResponse['382539X701X6987']) && $surveyResponse['382539X701X6987'] != "A1" ){
+            $isEligible = false;
+            $reason[] = "Sex not male";
+        }
+
+        if( isset($surveyResponse['382539X701X6984other']) && ! empty($surveyResponse['382539X701X6984other']) ){
+            $isEligible = false;
+            $reason[] = "Parish is other";
+        }
+
+        if( isset($surveyResponse['382539X701X6986SQ003']) && $surveyResponse['382539X701X6986SQ003'] != "Y" ){
+            $isEligible = false;
+            $reason[] = "Race Not Black/African American";
+        }
+
+        if( isset($surveyResponse['382539X701X6988SQ005']) && $surveyResponse['382539X701X6988SQ005'] == "Y" ){
+            $isEligible = false;
+            $reason[] = "No sex in the last 12 months";
+        }
+
+        return $isEligible;
+    }
 
 
 }

@@ -193,6 +193,11 @@ class StudyLogic
             $em->flush($participantInterventionLink);
         }
     }
+
+    private function kOcSocialMediaRegistration(){
+
+        return;
+    }
     
     public function studyRegistration($participant, $studyId, $surveyId, $saveId) {
         
