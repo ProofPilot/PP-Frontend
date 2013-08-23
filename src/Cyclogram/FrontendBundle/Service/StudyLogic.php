@@ -234,8 +234,8 @@ class StudyLogic
 
         //participant intervention link
         $activeStatus = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Status')->find(12);
-        $intervention = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Intervention')->find(9,1);
-
+        $intervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')->findOneByInterventionName('KOC Social Media Survey');
+        
         $participantInterventionLink = new \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantInterventionLink();
         $participantInterventionLink->setParticipant($participant);
         $participantInterventionLink->setStatus($activeStatus);
