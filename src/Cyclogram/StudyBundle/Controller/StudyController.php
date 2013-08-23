@@ -166,10 +166,11 @@ class StudyController extends Controller
                 $KoCEligible = $this->getKoCEligibilityriteria($surveyResult);
                 //redirect to eligible page
                 if( $KoCEligible ){
-                    //return $this->redirect($this->generateUrl("_study", array("studyId"=>12, "studyUrl"=>"kocsocialmedia")));
-                    return $this->redirect("http://www.google.com/");
+                     $redirectUrl = $this->redirect($this->generateUrl("_study", array("studyId"=>12, "studyUrl"=>"kocsocialmedia")));
+                     return $this->render('CyclogramStudyBundle:Study:surveyResponse.twig', array("redirectUrl"=>$redirectUrl));
                 }else{
-                    return $this->redirect($this->generateUrl("_page", array("studyUrl"=>"kocsocialmedia")));
+                    $redirectUrl = $this->redirect($this->generateUrl("_page", array("studyUrl"=>"kocsocialmedia")));
+                    return $this->render('CyclogramStudyBundle:Study:surveyResponse.html.twig', array("redirectUrl"=>$redirectUrl));
                 }
 
                 break;
