@@ -194,9 +194,57 @@ class StudyLogic
         }
     }
 
-    private function kOcSocialMediaRegistration(){
+    private function kOcSocialMediaRegistration($participant, $surveyId=null, $saveId=null){
 
-        return;
+        $em = $this->container->get('doctrine')->getEntityManager();
+        $campaignRepo = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Campaign');
+        $campaign = $campaignRepo->find(12);
+
+        $participantLevelRepo = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:ParticipantLevel');
+        $participantLevel = $participantLevelRepo->find( 2 );
+
+        //Campaign
+        $ParticipantCampaignLinkCountData =  $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:ParticipantCampaignLink')
+            ->findBy( array("participantCampaignLinkParticipantEmail"=>$participant->getParticipantEmail()) );
+
+        $ParticipantCampaignLinkCount = ( is_array($ParticipantCampaignLinkCountData) ) ? count($ParticipantCampaignLinkCountData) : 0;
+
+        $participantCampaignLinkId = CyclogramCommon::generateParticipantCampaignLinkID(
+            $participantLevel->getParticipantLevelId(),
+            $participant->getParticipantId(),
+            $campaign->getCampaignId(),
+            $ParticipantCampaignLinkCount
+        );
+
+        $uniqId = uniqid();
+        
+        //ParticipantCampaignLink
+        $campaignLink = new \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantCampaignLink();
+        $campaignLink->setParticipant( $participant );
+        $campaignLink->setCampaign( $campaign );
+        $campaignLink->setParticipantLevel( $participantLevel );
+        $campaignLink->setParticipantSurveyLinkUniqid( $uniqId );
+        $campaignLink->setParticipantCampaignLinkId( $participantCampaignLinkId );
+        $campaignLink->setParticipantCampaignLinkParticipantEmail( $participant->getParticipantEmail() );
+        $campaignLink->setParticipantCampaignLinkIpAddress( $_SERVER['REMOTE_ADDR'] );
+        $campaignLink->setParticipantCampaignLinkDatetime( new \DateTime("now") );
+
+        $em->persist( $campaignLink );
+        $em->flush();
+
+        //participant intervention link
+        $activeStatus = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Status')->find(12);
+        $intervention = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Intervention')->find(9);
+
+        $participantInterventionLink = new \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantInterventionLink();
+        $participantInterventionLink->setParticipant($participant);
+        $participantInterventionLink->setStatus($activeStatus);
+        $participantInterventionLink->setIntervention($intervention);
+        $participantInterventionLink->setParticipantInterventionLinkDatetimeStart( new \DateTime("now") );
+        $participantInterventionLink->setParticipantInterventionLinkName("");
+
+        $em->persist($participantInterventionLink);
+        $em->flush();
     }
     
     public function studyRegistration($participant, $studyId, $surveyId, $saveId) {
@@ -207,6 +255,9 @@ class StudyLogic
                 break;
             case 1:
                 $this->knowAtHomeRegistration($participant, $surveyId, $saveId);
+                break;
+            case 12:
+                $this->kOcSocialMediaRegistration($participant, $surveyId, $saveId);
                 break;
         }
         
