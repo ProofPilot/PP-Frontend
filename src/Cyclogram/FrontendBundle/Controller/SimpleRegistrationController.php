@@ -157,7 +157,7 @@ class  SimpleRegistrationController extends Controller{
 
 
         if( $request->getMethod() == "POST" ){
-    
+
             $form->handleRequest($request);
 
             if( $form->isValid() ) {

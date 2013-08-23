@@ -159,6 +159,15 @@ class StudyController extends Controller
         //get db data
         $surveyResult = $this->get('custom_db')->getFactory('ElegibilityCustom')->getSurveyResponseData($svid, $sid);
 
+        $bag = new AttributeBag();
+        $bag->setName("SurveyInfo");
+        $array = array();
+        $bag->initialize($array);
+        $bag->set('surveyId', $sid);
+        $bag->set('saveId', $svid);
+        $session->registerBag($bag);
+        $session->set('SurveyInfo', $bag);
+        
         //get specific study criteria
         switch($studyId){
             case 12:

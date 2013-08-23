@@ -245,6 +245,8 @@ class StudyLogic
 
         $em->persist($participantInterventionLink);
         $em->flush();
+
+        $this->participantSurveyLinkRegistration($surveyId, $saveId, $participant, $uniqId);
     }
     
     public function studyRegistration($participant, $studyId, $surveyId, $saveId) {
