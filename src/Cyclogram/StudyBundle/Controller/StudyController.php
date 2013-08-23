@@ -191,10 +191,7 @@ class StudyController extends Controller
     private function getKoCEligibilityriteria($surveyResponse){
         $isEligible = true;
         $reason = array();
-
-        var_dump( $surveyResponse );
-        die( "here" );
-
+        
         if( isset($surveyResponse['382539X701X6985']) && intval($surveyResponse['382539X701X6985']) < 18 ){
             $isEligible = false;
             $reason[] = "Less than 18 years";
