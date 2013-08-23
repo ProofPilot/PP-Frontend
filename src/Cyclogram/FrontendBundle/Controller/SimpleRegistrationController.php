@@ -148,7 +148,7 @@ class  SimpleRegistrationController extends Controller{
         if (empty($participant)) {
             return $this->redirect( $this->generateUrl("_registration"));
         }
-    
+
         $userSMS = $participant->getParticipantMobileSmsCode();
         $request = $this->getRequest();
 
@@ -159,7 +159,7 @@ class  SimpleRegistrationController extends Controller{
         if( $request->getMethod() == "POST" ){
     
             $form->handleRequest($request);
-    
+
             if( $form->isValid() ) {
                 $value = $form->getData();
                 if ($value['sms_code'] == $userSMS) {

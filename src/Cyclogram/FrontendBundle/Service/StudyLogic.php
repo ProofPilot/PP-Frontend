@@ -196,6 +196,8 @@ class StudyLogic
 
     private function kOcSocialMediaRegistration($participant, $surveyId=null, $saveId=null){
 
+        die("here");
+
         $em = $this->container->get('doctrine')->getEntityManager();
         $campaignRepo = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Campaign');
         $campaign = $campaignRepo->find(12);
