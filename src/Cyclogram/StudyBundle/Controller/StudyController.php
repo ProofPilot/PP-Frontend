@@ -72,7 +72,7 @@ class StudyController extends Controller
         $parameters["studyId"] = $studyContent->getStudy()->getStudyId();
         $parameters["logo"] = $this->container->getParameter('study_image_url') . '/' . $studyContent->getStudy()->getStudyId() . '/' .$studyContent->getStudyLogo();
         $parameters["graphic"] = $this->container->getParameter('study_image_url') . '/' . $studyContent->getStudy()->getStudyId() . '/' .$studyContent->getStudyGraphic();
-    
+
         return $this->render('CyclogramStudyBundle:Study:study_eligibility.html.twig', $parameters);
     }
     
