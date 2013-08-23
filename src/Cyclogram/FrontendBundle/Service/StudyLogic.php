@@ -250,7 +250,7 @@ class StudyLogic
         $participantArmLink->setParticipant($participant);
         $participantArmLink->setStatus($activeStatus);
         $participantArmLink->setParticipantArmLinkDatetime( new \DateTime("now") );
-        $participantArmLink->setArm($this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Status')->find(9));
+        $participantArmLink->setArm( $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Arm')->find(9));
 
         $em->persist($participantArmLink);
         $em->flush();
