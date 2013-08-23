@@ -217,7 +217,7 @@ class StudyLogic
         );
 
         $uniqId = uniqid();
-        
+
         //ParticipantCampaignLink
         $campaignLink = new \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantCampaignLink();
         $campaignLink->setParticipant( $participant );
