@@ -138,6 +138,7 @@ class RegistrationController extends Controller
     public function step2Action($id, $studyId)
     {
         $em = $this->getDoctrine()->getManager();
+        $request = $this->getRequest();
         $participant = $em->getRepository("CyclogramProofPilotBundle:Participant")->find($id);
         if ($participant->getParticipantEmailConfirmed() == true) {
            return $this->redirect( $this->generateUrl("_login"));
@@ -155,9 +156,6 @@ class RegistrationController extends Controller
         $parameters['locale'] = $participant->getLanguage() ? $participant->getLanguage() : $request->getLocale();
         
         $em = $this->getDoctrine()->getManager();
-
-        $request = $this->getRequest();
-
         
         $participant->setParticipantEmailCode($parameters['code']);
         $em->persist($participant);
