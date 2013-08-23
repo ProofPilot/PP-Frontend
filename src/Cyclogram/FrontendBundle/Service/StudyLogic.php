@@ -1,6 +1,8 @@
 <?php
 namespace Cyclogram\FrontendBundle\Service;
 
+use Cyclogram\Bundle\ProofPilotBundle\Entity\Study;
+
 use Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantInterventionLink;
 
 use Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantArmLink;
@@ -9,7 +11,7 @@ use Symfony\Component\DependencyInjection\Container;
 use Cyclogram\Bundle\ProofPilotBundle\Entity\Participant;
 use Cyclogram\CyclogramCommon;
 
-class LimeSurvey
+class StudyLogic
 {
     private $container;
     
@@ -221,16 +223,20 @@ class LimeSurvey
         $em->flush($participantLink);
     }
     
-    public function interventionLogic($participant, $studyId) {
+    public function interventionLogic($participant) {
         
-        switch($studyId) {
-            case 7:
-                $this->sexProInterventionLogic($participant);
-                break;
-            default:
-                break;
+        $studies = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Participant')
+        ->getEnrolledStudies($participant);
+        
+        foreach ($studies as $study) {
+            switch($study->getStudyId()) {
+                case 7:
+                    $this->sexProInterventionLogic($participant);
+                    break;
+                default:
+                    break;
+            }
         }
-
     }
     
     private function sexProInterventionLogic($participant) {

@@ -620,7 +620,9 @@
                    .css('display', 'none');
 		}
 		
-		$('input.has_error').keyup(removeError);
+		$('input.has_error').keyup(function() {
+			$(this).next().trigger('click');
+		});
 		$('.mark').click(removeError);
 		
     });

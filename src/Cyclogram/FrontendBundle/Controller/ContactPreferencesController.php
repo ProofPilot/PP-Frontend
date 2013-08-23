@@ -12,10 +12,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class ContactPreferencesController extends Controller
 {
     /**
-     * @Route("/contact_prefs/{studyId}", name="_contact_prefs", defaults={"studyId"= null})
+     * @Route("/contact_prefs", name="_contact_prefs")
      * @Template()
      */
-    public function contactPrefsAction($studyId)
+    public function contactPrefsAction()
     {
         $participant = $this->get('security.context')->getToken()->getUser();
         

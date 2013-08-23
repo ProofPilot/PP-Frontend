@@ -214,7 +214,7 @@
      			var surveydata = frame.contents().find('#surveydata');
 		    	var surveyId = surveydata.attr('surveyid');
 		    	var saveId = surveydata.attr('saveid');
-		    	//var redirectUrl = '{{ path('_study',{studyId: studyId, studyUrl: studyUrl}) }}';
+
 		    	if(surveyId !== undefined && saveId !== undefined) {
 		    	    window.location = '/' + '{{ app.request.locale }}' + '/surveyResponse?&surveyId=' + surveyId + '&saveId=' + saveId + '&redirectUrl=' + '{{ app.request.get('redirectUrl') }}';
 		    	}

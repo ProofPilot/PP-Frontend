@@ -14,39 +14,28 @@ use JMS\SecurityExtraBundle\Annotation\Secure;
 class DashboardController extends Controller
 {
     /**
-     * @Route("/main/{studyId}", requirements={"studyId" = "\d+"}, name="_main")
+     * @Route("/main", name="_main")
      * @Secure(roles="ROLE_PARTICIPANT")
      * @Template()
      */
-    public function indexAction($studyId=null)
+    public function indexAction()
     {
         $participant = $this->get('security.context')->getToken()->getUser();
         $request = $this->getRequest();
         $locale = $this->getRequest()->getLocale();
         
         
-        $this->get('fpp_ls')->interventionLogic($participant, $studyId);
+        $this->get('study_logic')->interventionLogic($participant);
         
         $em = $this->getDoctrine()->getManager();
         $surveyscount = $em->getRepository('CyclogramProofPilotBundle:Participant')->getParticipantInterventionsCount($participant);
-
         $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:Participant')->getParticipantInterventionLinks($participant);
-        
-        
-        
+
         $session = $this->getRequest()->getSession();
         
         $parameters = array();
         $parameters['surveycount'] = $surveyscount;
 
-        $parameters['text'] = array(
-                "title" => "title",
-                "content" => "content");
-        $parameters['message'] = array(
-                "activity" => "activity");
-        
-        
-        $studyContent = $this->getDoctrine()->getRepository("CyclogramProofPilotBundle:StudyContent")->getStudyContentById($studyId, $locale);
     
         $parameters["interventions"] = array();
         foreach($interventionLinks as $interventionLink) {
@@ -57,7 +46,7 @@ class DashboardController extends Controller
             $intervention = array();
             $intervention["title"] = $interventionContent->getInterventionTitle();
             $intervention["content"] = $interventionContent->getInterventionDescripton();
-            $intervention["url"] = $this->getInterventionUrl($interventionLink, $studyId, $studyContent->getStudyUrl(), $locale);
+            $intervention["url"] = $this->getInterventionUrl($interventionLink, $locale);
             
             if($interventionLink->getStatus()->getStatusName() != "Active" ) {
                 $intervention["status"] = "Completed";
@@ -67,8 +56,7 @@ class DashboardController extends Controller
             $parameters["interventions"][] = $intervention;
         }
         
-        if($studyContent)
-            $parameters["logo"] = $this->container->getParameter('study_image_url') . '/' . $studyId. '/' .$studyContent->getStudyLogo();
+        $parameters["logo"] = $this->container->getParameter('study_image_url') . '/7/logo-7-en.png';
         
 
         $parameters["actions"] = array(
@@ -120,18 +108,21 @@ class DashboardController extends Controller
     }
     
     
-    private function getInterventionUrl($interventionLink, $studyId, $studyUrl, $locale) {
+    private function getInterventionUrl($interventionLink, $locale) {
         $intervention = $interventionLink->getIntervention();
+
+        $studyId = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:Intervention')
+            ->getInterventionStudyId($intervention->getInterventionId());
+        
         $typeName = $interventionLink->getIntervention()->getInterventionType()->getInterventionTypeName(); 
         switch($typeName) {
             case 'Activity':
                 return $intervention->getInterventionUrl();
             case 'Survey & Observation':
                 $surveyId = $intervention->getSidId();
-                $redirectPath = $this->get('router')->generate('_main', array('studyId'=>$studyId));
+                $redirectPath = $this->get('router')->generate('_main');
                 $path = $this->get('router')->generate('_survey', array(
                         'studyId'=>$studyId,
-                        'studyUrl'=>$studyUrl, 
                         'surveyId'=>$surveyId,
                         'redirectUrl'=>urlencode($redirectPath)
                         

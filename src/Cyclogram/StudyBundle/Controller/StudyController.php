@@ -36,10 +36,10 @@ class StudyController extends Controller
         
         
         $surveyId = $studyContent->getStudyElegibilitySurvey();
-
-
+    
+    
         $parameters = array();
-
+    
         $parameters["studycontent"] = $studyContent;
         $parameters["studyUrl"] = $studyUrl;
         $parameters["studyId"] = $studyId;
@@ -47,117 +47,32 @@ class StudyController extends Controller
         $parameters["logo"] = $this->container->getParameter('study_image_url') . '/' . $studyId. '/' .$studyContent->getStudyLogo();
         $parameters["graphic"] = $this->container->getParameter('study_image_url') . '/' .$studyId. '/' .$studyContent->getStudyGraphic();
         
-
+    
         return $this->render('CyclogramStudyBundle:Study:page.html.twig', $parameters);
-
-    }
-
-    /**
-     * @Route("/studySurveyResponse/{studyId}/{sid}/{svid}", name="_studySurveyResponse")
-     * @Template()
-     */
-    public function studySurveyResponseAction($studyId, $sid, $svid){
-
-        $session = $this->getRequest()->getSession();
-
-        $locale = $this->getRequest()->getLocale();
-
-        //get study
-        $studyContent = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:StudyContent')
-            ->getStudyContentById($studyId, $locale);
-
-        //get db data
-        $surveyResult = $this->get('custom_db')->getFactory('ElegibilityCustom')->getSurveyResponseData($svid, $sid);
-
-        //get specific study criteria
-        switch($studyId){
-            case '12':
-                //move this to LimeSurvey service
-                $KoCEligible = $this->getKoCEligibilityriteria($surveyResult);
-                //redirect to eligible page
-                if( $KoCEligible ){
-                    return $this->redirect($this->generateUrl("_study", array("studyId"=>12, "studyUrl"=>"kocsocialmedia")));
-                }else{
-                    return $this->redirect($this->generateUrl("_page", array("studyUrl"=>"kocsocialmedia")));
-                }
-
-            break;
-        }
-
-        return new Response("");
-    }
-
-    private function getKoCEligibilityriteria($surveyResponse){
-        $isEligible = true;
-        $reason = array();
-
-        if( isset($surveyResponse['382539X701X6985']) && intval($surveyResponse['382539X701X6985']) < 18 ){
-            $isEligible = false;
-            $reason[] = "Less than 18 years";
-        }
-
-        if( isset($surveyResponse['382539X701X6987']) && $surveyResponse['382539X701X6987'] != "A1" ){
-            $isEligible = false;
-            $reason[] = "Sex not male";
-        }
-
-        if( isset($surveyResponse['382539X701X6984other']) && ! empty($surveyResponse['382539X701X6984other']) ){
-            $isEligible = false;
-            $reason[] = "Parish is other";
-        }
-
-        if( isset($surveyResponse['382539X701X6986SQ003']) && $surveyResponse['382539X701X6986SQ003'] != "Y" ){
-            $isEligible = false;
-            $reason[] = "Race Not Black/African American";
-        }
-
-        if( isset($surveyResponse['382539X701X6988SQ005']) && $surveyResponse['382539X701X6988SQ005'] == "Y" ){
-            $isEligible = false;
-            $reason[] = "No sex in the last 12 months";
-        }
-
-        return $isEligible;
+    
     }
     
     /**
-     * @Route("/study/{studyId}", name="_study")
+     * @Route("/study", name="_study")
      * @Template()
      */
-    public function studyAction($studyUrl, $studyId)
+    public function studyAction($studyUrl)
     {
         $session = $this->getRequest()->getSession();      
         
         
         $locale = $this->getRequest()->getLocale();
-
-        $studyContent = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:StudyContent')
-        ->getStudyContentById($studyId, $locale);
-
-
+    
+        $studyContent = $this->getDoctrine()->getRepository("CyclogramProofPilotBundle:StudyContent")->getStudyContent($studyUrl, $locale);
+    
         $parameters = array();
-
+    
         $parameters["studycontent"] = $studyContent;
         $parameters["studyUrl"] = $studyUrl;
-        $parameters["studyId"] = $studyId;
-        $parameters["logo"] = $this->container->getParameter('study_image_url') . '/' . $studyId. '/' .$studyContent->getStudyLogo();
-        $parameters["graphic"] = $this->container->getParameter('study_image_url') . '/' .$studyId. '/' .$studyContent->getStudyGraphic();
+        $parameters["studyId"] = $studyContent->getStudy()->getStudyId();
+        $parameters["logo"] = $this->container->getParameter('study_image_url') . '/' . $studyContent->getStudy()->getStudyId() . '/' .$studyContent->getStudyLogo();
+        $parameters["graphic"] = $this->container->getParameter('study_image_url') . '/' . $studyContent->getStudy()->getStudyId() . '/' .$studyContent->getStudyGraphic();
     
-    
-    
-        $parameters["content"] = array(
-                array('title' => 'What’s Involved?',
-                        'text' => 'Taking part in this study is your choice.  You may choose either to take part or not to take part in the study.  If you decide to take part in this
-                        study, you may leave the study at any time.  No matter what decision you make, there will be no penalty to you in any way. You can still get your care
-                        from our institution the way you usually do.We will tell you about new information or changes in the study that may affect your health or your willingness
-                        to continue in the study.'),
-                array('title' => 'What are my rights if I take part in this study?',
-                        'text' => 'Taking part in this study is your choice. You may choose either to take part or not to take part in the study. If you decide to take part in this study,
-                        you may leave the study at any time.  No matter what decision you make, there will be no penalty to you in any way. You can still get your care from our
-                        institution the way you usually do.'),
-                array('title' => 'Who can answer my questions about the study?',
-                        'text' => 'You can talk to the researcher(s) about any questions, concerns, or complaints you have about this study.')
-        );
-
         return $this->render('CyclogramStudyBundle:Study:study_eligibility.html.twig', $parameters);
     }
     
@@ -227,48 +142,7 @@ class StudyController extends Controller
         return $this->render('CyclogramStudyBundle:Study:is_it_secure.html.twig', $parameters);
     }
     
-    /**
-     * Shows a survey. After completion of survey, survey results are saved in session, also
-     * it is required to specify the redirect url
-     * 
-     * @Route("/survey/{studyId}/{surveyId}", name="_survey")
-     * @Template()
-     */
-    public function surveyAction($studyUrl, $studyId, $surveyId)
-    {
-        $lime_em = $this->getDoctrine()->getManager('limesurvey');
-        $locale = $this->getRequest()->getLocale();
-
-        $parameters = array();
-
-        $parameters['studyUrl'] = $studyUrl;
-        $parameters['studyId'] = $studyId;
 
 
-        $studyContent = $this->getDoctrine()->getRepository("CyclogramProofPilotBundle:StudyContent")->getStudyContentById($studyId, $locale);
-
-
-        $parameters['survey'] = $this->getSurveyData($surveyId, $locale);
-        $parameters['logo'] = $this->container->getParameter('study_image_url') . '/' . $studyId. '/' .$studyContent->getStudyLogo();
-
-
-        return $this->render('CyclogramStudyBundle:Study:survey.html.twig', $parameters);
-    }
-    
-    
-    private function getSurveyData($surveyId, $locale)
-    {
-        $survey = $this->getDoctrine()
-            ->getRepository("CyclogramProofPilotBundleLime:LimeSurveysLanguagesettings", "limesurvey")
-            ->getSurvey($surveyId, $locale);
-        
-        $surveyData = array (
-                    'url' => "/lime/index.php/survey/index/sid/".$surveyId."/newtest/Y/lang/".$survey->getSurveylsLanguage(),
-                    'title' =>  $survey->getSurveylsTitle()
-                );
-        
-        return $surveyData;
-         
-    }
 
 }

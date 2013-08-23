@@ -191,7 +191,7 @@ class  SimpleRegistrationController extends Controller{
                             $embedded,
                             true,
                             $parameters);
-                    $ls = $this->get('fpp_ls');
+                    $ls = $this->get('study_logic');
                     
                     $session = $this->getRequest()->getSession();
                     if ($session->has('SurveyInfo')){
@@ -220,9 +220,7 @@ class  SimpleRegistrationController extends Controller{
                     $token = new UsernamePasswordToken($participant, null, 'main', $roles);
                     $this->get('security.context')->setToken($token);
                     
-                    return $this->redirect( $this->generateUrl("_main", array(
-                                'studyId'=>$studyId
-                            )) );
+                    return $this->redirect( $this->generateUrl("_main") );
                 } else {
                     $error = "Wrong SMS!";
                 }

@@ -54,7 +54,7 @@ class RegistrationController extends Controller
     public function step1Action($studyId=null)
     {
         if ($this->get('security.context')->isGranted("ROLE_PARTICIPANT")){
-            return $this->redirect($this->get('router')->generate("_main", array('studyId'=>$studyId)));
+            return $this->redirect($this->get('router')->generate("_main"));
         }
         $request = $this->getRequest();
         $session = $request->getSession();
@@ -368,7 +368,7 @@ class RegistrationController extends Controller
                 $em->persist($participant);
                 $em->flush($participant);
                 
-                $ls = $this->get('fpp_ls');
+                $ls = $this->get('study_logic');
                 
 
                 $session = $this->getRequest()->getSession();
@@ -396,9 +396,7 @@ class RegistrationController extends Controller
                 $token = new UsernamePasswordToken($participant, null, 'main', $roles);
                 $this->get('security.context')->setToken($token);
                 
-                return $this->redirect( $this->generateUrl("_main", array(
-                        'studyId'=>$studyId
-                        )) );
+                return $this->redirect( $this->generateUrl("_main") );
             }
         }
         return $this->render('CyclogramFrontendBundle:Registration:step6_mailing_address.html.twig', array ('id' => $participant->getParticipantId(), 'form' => $form->createView(), 'studyId' => $studyId));

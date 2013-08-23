@@ -20,10 +20,10 @@ class GeneralSettingsController  extends Controller
 {
 
     /**
-     * @Route("/general_settings/{studyId}", name="_settings", defaults={"studyId"= null})
+     * @Route("/general_settings", name="_settings")
      * @Template()
      */
-    public function generalSettingsAction($studyId)
+    public function generalSettingsAction()
     {
         $participant = $this->get('security.context')->getToken()->getUser();
         $request = $this->getRequest();
