@@ -192,6 +192,9 @@ class StudyController extends Controller
         $isEligible = true;
         $reason = array();
 
+        var_dump( $surveyResponse );
+        die( "here" );
+
         if( isset($surveyResponse['382539X701X6985']) && intval($surveyResponse['382539X701X6985']) < 18 ){
             $isEligible = false;
             $reason[] = "Less than 18 years";
@@ -202,7 +205,7 @@ class StudyController extends Controller
             $reason[] = "Sex not male";
         }
 
-        if( isset($surveyResponse['382539X701X6984other']) && ! empty($surveyResponse['382539X701X6984other']) ){
+        if( isset($surveyResponse['382539X701X6984']) &&  ! in_array($surveyResponse['382539X701X6984'], array("A1","A2","A3","A4","A5","A6","A7"))){
             $isEligible = false;
             $reason[] = "Parish is other";
         }
