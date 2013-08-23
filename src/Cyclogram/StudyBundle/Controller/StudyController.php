@@ -166,7 +166,8 @@ class StudyController extends Controller
                 $KoCEligible = $this->getKoCEligibilityriteria($surveyResult);
                 //redirect to eligible page
                 if( $KoCEligible ){
-                    return $this->redirect($this->generateUrl("_study", array("studyId"=>12, "studyUrl"=>"kocsocialmedia")));
+                    //return $this->redirect($this->generateUrl("_study", array("studyId"=>12, "studyUrl"=>"kocsocialmedia")));
+                    return $this->redirect("http://www.google.com/");
                 }else{
                     return $this->redirect($this->generateUrl("_page", array("studyUrl"=>"kocsocialmedia")));
                 }
