@@ -41,3 +41,4 @@ parameters:
 
     url_assets: '//cdn.proofpilot.com/admin'
     assets_version: '0'
+    google_analytics_account: 'UA-39509758-2'

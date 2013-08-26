@@ -2,7 +2,11 @@
 
 namespace Cyclogram\Bundle\ProofPilotBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 use Doctrine\ORM\Mapping as ORM;
+
+use Cyclogram\Bundle\ProofPilotBundle\Entity\StudyOrganizationLink;
 
 /**
  * Organization
@@ -123,7 +127,19 @@ class Organization
      * })
      */
     private $status;
-
+    
+    
+    
+    /**
+     * @ORM\OneToMany(targetEntity="StudyOrganizationLink", mappedBy="organization")
+     * @var unknown_type
+     */
+    private $studyOrganizationLinks;
+    
+    
+    public function __construct() {
+        $this->studyOrganizationLinks = new ArrayCollection();
+    }
 
 
     /**
@@ -437,5 +453,15 @@ class Organization
     
     public function __toString() {
     	return $this->organizationName;
+    }
+
+    public function getStudyOrganizationLinks()
+    {
+        return $this->studyOrganizationLinks;
+    }
+
+    public function setStudyOrganizationLinks($studyOrganizationLinks)
+    {
+        $this->studyOrganizationLinks = $studyOrganizationLinks;
     }
 }
