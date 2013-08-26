@@ -117,6 +117,7 @@ class StudyLogic
         $campaignLink->setParticipantCampaignLinkParticipantEmail( $participant->getParticipantEmail() );
         $campaignLink->setParticipantCampaignLinkIpAddress( $_SERVER['REMOTE_ADDR'] );
         $campaignLink->setParticipantCampaignLinkDatetime( new \DateTime("now") );
+        $campaignLink->setSite( $em->getRepository('CyclogramProofPilotBundle:Site')->find(3) );
         
         $em->persist( $campaignLink );
         $em->flush();
