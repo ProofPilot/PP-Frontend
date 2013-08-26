@@ -15,33 +15,6 @@ class ParticipantCampaignLink
     /**
      * @var string
      *
-     * @ORM\Column(name="participant_campaign_link_id", type="string", length=255, nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
-     */
-    private $participantCampaignLinkId;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="participant_campaign_link_participant_email", type="string", length=255, nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
-     */
-    private $participantCampaignLinkParticipantEmail;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="participant_campaign_link_ip_address", type="string", length=45, nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
-     */
-    private $participantCampaignLinkIpAddress;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="participant_campaign_link_referral_code", type="string", length=45, nullable=true)
      */
     private $participantCampaignLinkReferralCode;
@@ -68,111 +41,73 @@ class ParticipantCampaignLink
     private $participantSurveyLinkUniqid;
 
     /**
-     * @var \Campaign
+     * @var string
      *
+     * @ORM\Column(name="participant_campaign_link_id", type="string", length=255)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="Campaign")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="campaign_id", referencedColumnName="campaign_id")
-     * })
      */
-    private $campaign;
+    private $participantCampaignLinkId;
 
     /**
-     * @var \Participant
+     * @var string
      *
+     * @ORM\Column(name="participant_campaign_link_participant_email", type="string", length=255)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="Participant")
+     */
+    private $participantCampaignLinkParticipantEmail;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="participant_campaign_link_ip_address", type="string", length=45)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
+     */
+    private $participantCampaignLinkIpAddress;
+
+    /**
+     * @var \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantLevel
+     *
+     * @ORM\OneToOne(targetEntity="Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantLevel")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="participant_id", referencedColumnName="participant_id")
+     *   @ORM\JoinColumn(name="participant_level_id", referencedColumnName="participant_level_id", unique=true)
+     * })
+     */
+    private $participantLevel;
+
+    /**
+     * @var \Cyclogram\Bundle\ProofPilotBundle\Entity\Participant
+     *
+     * @ORM\OneToOne(targetEntity="Cyclogram\Bundle\ProofPilotBundle\Entity\Participant")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="participant_id", referencedColumnName="participant_id", unique=true)
      * })
      */
     private $participant;
 
     /**
-     * @var \ParticipantLevel
+     * @var \Cyclogram\Bundle\ProofPilotBundle\Entity\Campaign
      *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="ParticipantLevel")
+     * @ORM\OneToOne(targetEntity="Cyclogram\Bundle\ProofPilotBundle\Entity\Campaign")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="participant_level_id", referencedColumnName="participant_level_id")
+     *   @ORM\JoinColumn(name="campaign_id", referencedColumnName="campaign_id", unique=true)
      * })
      */
-    private $participantLevel;
-
-
+    private $campaign;
 
     /**
-     * Set participantCampaignLinkId
+     * @var \Cyclogram\Bundle\ProofPilotBundle\Entity\Site
      *
-     * @param string $participantCampaignLinkId
-     * @return ParticipantCampaignLink
+     * @ORM\ManyToOne(targetEntity="Cyclogram\Bundle\ProofPilotBundle\Entity\Site")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="site_id", referencedColumnName="site_id")
+     * })
      */
-    public function setParticipantCampaignLinkId($participantCampaignLinkId)
-    {
-        $this->participantCampaignLinkId = $participantCampaignLinkId;
-    
-        return $this;
-    }
+    private $site;
 
-    /**
-     * Get participantCampaignLinkId
-     *
-     * @return string 
-     */
-    public function getParticipantCampaignLinkId()
-    {
-        return $this->participantCampaignLinkId;
-    }
 
-    /**
-     * Set participantCampaignLinkParticipantEmail
-     *
-     * @param string $participantCampaignLinkParticipantEmail
-     * @return ParticipantCampaignLink
-     */
-    public function setParticipantCampaignLinkParticipantEmail($participantCampaignLinkParticipantEmail)
-    {
-        $this->participantCampaignLinkParticipantEmail = $participantCampaignLinkParticipantEmail;
-    
-        return $this;
-    }
-
-    /**
-     * Get participantCampaignLinkParticipantEmail
-     *
-     * @return string 
-     */
-    public function getParticipantCampaignLinkParticipantEmail()
-    {
-        return $this->participantCampaignLinkParticipantEmail;
-    }
-
-    /**
-     * Set participantCampaignLinkIpAddress
-     *
-     * @param string $participantCampaignLinkIpAddress
-     * @return ParticipantCampaignLink
-     */
-    public function setParticipantCampaignLinkIpAddress($participantCampaignLinkIpAddress)
-    {
-        $this->participantCampaignLinkIpAddress = $participantCampaignLinkIpAddress;
-    
-        return $this;
-    }
-
-    /**
-     * Get participantCampaignLinkIpAddress
-     *
-     * @return string 
-     */
-    public function getParticipantCampaignLinkIpAddress()
-    {
-        return $this->participantCampaignLinkIpAddress;
-    }
 
     /**
      * Set participantCampaignLinkReferralCode
@@ -267,26 +202,95 @@ class ParticipantCampaignLink
     }
 
     /**
-     * Set campaign
+     * Set participantCampaignLinkId
      *
-     * @param \Cyclogram\Bundle\ProofPilotBundle\Entity\Campaign $campaign
+     * @param string $participantCampaignLinkId
      * @return ParticipantCampaignLink
      */
-    public function setCampaign(\Cyclogram\Bundle\ProofPilotBundle\Entity\Campaign $campaign)
+    public function setParticipantCampaignLinkId($participantCampaignLinkId)
     {
-        $this->campaign = $campaign;
+        $this->participantCampaignLinkId = $participantCampaignLinkId;
     
         return $this;
     }
 
     /**
-     * Get campaign
+     * Get participantCampaignLinkId
      *
-     * @return \Cyclogram\Bundle\ProofPilotBundle\Entity\Campaign 
+     * @return string 
      */
-    public function getCampaign()
+    public function getParticipantCampaignLinkId()
     {
-        return $this->campaign;
+        return $this->participantCampaignLinkId;
+    }
+
+    /**
+     * Set participantCampaignLinkParticipantEmail
+     *
+     * @param string $participantCampaignLinkParticipantEmail
+     * @return ParticipantCampaignLink
+     */
+    public function setParticipantCampaignLinkParticipantEmail($participantCampaignLinkParticipantEmail)
+    {
+        $this->participantCampaignLinkParticipantEmail = $participantCampaignLinkParticipantEmail;
+    
+        return $this;
+    }
+
+    /**
+     * Get participantCampaignLinkParticipantEmail
+     *
+     * @return string 
+     */
+    public function getParticipantCampaignLinkParticipantEmail()
+    {
+        return $this->participantCampaignLinkParticipantEmail;
+    }
+
+    /**
+     * Set participantCampaignLinkIpAddress
+     *
+     * @param string $participantCampaignLinkIpAddress
+     * @return ParticipantCampaignLink
+     */
+    public function setParticipantCampaignLinkIpAddress($participantCampaignLinkIpAddress)
+    {
+        $this->participantCampaignLinkIpAddress = $participantCampaignLinkIpAddress;
+    
+        return $this;
+    }
+
+    /**
+     * Get participantCampaignLinkIpAddress
+     *
+     * @return string 
+     */
+    public function getParticipantCampaignLinkIpAddress()
+    {
+        return $this->participantCampaignLinkIpAddress;
+    }
+
+    /**
+     * Set participantLevel
+     *
+     * @param \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantLevel $participantLevel
+     * @return ParticipantCampaignLink
+     */
+    public function setParticipantLevel(\Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantLevel $participantLevel = null)
+    {
+        $this->participantLevel = $participantLevel;
+    
+        return $this;
+    }
+
+    /**
+     * Get participantLevel
+     *
+     * @return \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantLevel 
+     */
+    public function getParticipantLevel()
+    {
+        return $this->participantLevel;
     }
 
     /**
@@ -295,7 +299,7 @@ class ParticipantCampaignLink
      * @param \Cyclogram\Bundle\ProofPilotBundle\Entity\Participant $participant
      * @return ParticipantCampaignLink
      */
-    public function setParticipant(\Cyclogram\Bundle\ProofPilotBundle\Entity\Participant $participant)
+    public function setParticipant(\Cyclogram\Bundle\ProofPilotBundle\Entity\Participant $participant = null)
     {
         $this->participant = $participant;
     
@@ -313,25 +317,48 @@ class ParticipantCampaignLink
     }
 
     /**
-     * Set participantLevel
+     * Set campaign
      *
-     * @param \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantLevel $participantLevel
+     * @param \Cyclogram\Bundle\ProofPilotBundle\Entity\Campaign $campaign
      * @return ParticipantCampaignLink
      */
-    public function setParticipantLevel(\Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantLevel $participantLevel)
+    public function setCampaign(\Cyclogram\Bundle\ProofPilotBundle\Entity\Campaign $campaign = null)
     {
-        $this->participantLevel = $participantLevel;
+        $this->campaign = $campaign;
     
         return $this;
     }
 
     /**
-     * Get participantLevel
+     * Get campaign
      *
-     * @return \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantLevel 
+     * @return \Cyclogram\Bundle\ProofPilotBundle\Entity\Campaign 
      */
-    public function getParticipantLevel()
+    public function getCampaign()
     {
-        return $this->participantLevel;
+        return $this->campaign;
+    }
+
+    /**
+     * Set site
+     *
+     * @param \Cyclogram\Bundle\ProofPilotBundle\Entity\Site $site
+     * @return ParticipantCampaignLink
+     */
+    public function setSite(\Cyclogram\Bundle\ProofPilotBundle\Entity\Site $site = null)
+    {
+        $this->site = $site;
+    
+        return $this;
+    }
+
+    /**
+     * Get site
+     *
+     * @return \Cyclogram\Bundle\ProofPilotBundle\Entity\Site 
+     */
+    public function getSite()
+    {
+        return $this->site;
     }
 }
