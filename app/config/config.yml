@@ -39,6 +39,7 @@ twig:
         facebook_appid: '%facebook.appid%'
         google_clientid: %google.client_id%
         google_clientsecret: %google.client_secret%
+        google_analytics_account: %google_analytics_account%
 #    form:
 #        resources:
 #            - 'CyclogramFrontendBundle:Form:fields.html.twig'

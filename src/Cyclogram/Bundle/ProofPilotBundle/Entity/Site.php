@@ -34,6 +34,16 @@ class Site
      * @ORM\Column(name="site_url", type="string", length=255, nullable=true)
      */
     private $siteUrl;
+    
+    /**
+     * @var \Status
+     *
+     * @ORM\ManyToOne(targetEntity="Organization")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="organization_id", referencedColumnName="organization_id")
+     * })
+     */
+    private $organization;
 
     /**
      * @var \Status
@@ -124,5 +134,15 @@ class Site
     public function getStatus()
     {
         return $this->status;
+    }
+
+    public function getOrganization()
+    {
+        return $this->organization;
+    }
+
+    public function setOrganization($organization)
+    {
+        $this->organization = $organization;
     }
 }

@@ -26,7 +26,8 @@ class GlobalExtension extends \Twig_Extension
                         'needs_environment' => true,
                         'needs_context' => true
                         )),
-                'is_enrolled_in_study' => new \Twig_Function_Method($this, 'isEnrolledInStudy')
+                'is_enrolled_in_study' => new \Twig_Function_Method($this, 'isEnrolledInStudy'),
+                'google_campaign_info' => new \Twig_Function_Method($this, 'getGoogleCampaignInfo')
         );
     }
     
@@ -79,4 +80,21 @@ class GlobalExtension extends \Twig_Extension
         $participant = $this->securityContext->getToken()->getUser();
         return $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Participant')->isEnrolledInStudy($participant, $studyId);
     }
+    
+    public function getGoogleCampaignInfo($studyId)
+    {
+        $campaignParameters = $this->container->get('doctrine')->getRepository("CyclogramProofPilotBundle:Campaign")->getDefaultCampaignParameters($studyId);
+        
+        if(empty($campaignParameters))
+            return "";
+            
+        $str = "utm_source=" . urlencode($campaignParameters["siteName"]);
+        $str .= "&utm_medium=" . urlencode($campaignParameters["campaignTypeName"]);
+        $str .= "&utm_term=" . urlencode($campaignParameters["placementName"]);
+        $str .= "&utm_content=" . urlencode($campaignParameters["affinityName"]);
+        $str .= "&utm_campaign="  . urlencode($campaignParameters["campaignName"]);
+
+        return $str;
+    }
+
 }
