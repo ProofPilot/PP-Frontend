@@ -172,7 +172,7 @@ class StudyController extends Controller
         switch($studyId){
             case 12:
                 //move this to LimeSurvey service
-                $KoCEligible = $this->getKoCEligibilityriteria($surveyResult);
+                $KoCEligible = $this->getKoCSocialMediaEligibilityriteria($surveyResult);
                 //redirect to eligible page
                 if( $KoCEligible ){
                      $redirectUrl = $this->generateUrl("_study", array("studyId"=>12, "studyUrl"=>"kocsocialmedia"));
@@ -188,7 +188,7 @@ class StudyController extends Controller
         return new Response("");
     }
 
-    private function getKoCEligibilityriteria($surveyResponse){
+    private function getKoCSocialMediaEligibilityriteria($surveyResponse){
         $isEligible = true;
         $reason = array();
         
