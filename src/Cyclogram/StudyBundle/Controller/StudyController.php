@@ -170,18 +170,26 @@ class StudyController extends Controller
 
         //get specific study criteria
         switch($studyId){
-            case 12:
-                //move this to LimeSurvey service
-                $KoCEligible = $this->getKoCSocialMediaEligibilityriteria($surveyResult);
-                //redirect to eligible page
+            case 8:
+                $KoCEligible = $this->getKoCEligibilityriteria($surveyResult);
                 if( $KoCEligible ){
-                     $redirectUrl = $this->generateUrl("_study", array("studyId"=>12, "studyUrl"=>"kocsocialmedia"));
+                    $redirectUrl = $this->generateUrl("_study", array("studyId"=>$studyId, "studyUrl"=>"koc"));
+                    return $this->render('CyclogramStudyBundle:Study:surveyResponse.html.twig', array("redirectUrl"=>$redirectUrl));
+                }else{
+                    $redirectUrl = $this->generateUrl("_page", array("studyUrl"=>"koc"));
+                    return $this->render('CyclogramStudyBundle:Study:surveyResponse.html.twig', array("redirectUrl"=>$redirectUrl));
+                }
+                break;
+            case 12:
+                $KoCSMEligible = $this->getKoCSocialMediaEligibilityriteria($surveyResult);
+                //redirect to eligible page
+                if( $KoCSMEligible ){
+                     $redirectUrl = $this->generateUrl("_study", array("studyId"=>$studyId, "studyUrl"=>"kocsocialmedia"));
                      return $this->render('CyclogramStudyBundle:Study:surveyResponse.html.twig', array("redirectUrl"=>$redirectUrl));
                 }else{
                     $redirectUrl = $this->generateUrl("_page", array("studyUrl"=>"kocsocialmedia"));
                     return $this->render('CyclogramStudyBundle:Study:surveyResponse.html.twig', array("redirectUrl"=>$redirectUrl));
                 }
-
                 break;
         }
 
@@ -220,5 +228,31 @@ class StudyController extends Controller
         return $isEligible;
     }
 
+    private function getKoCEligibilityriteria($surveyResponse){
+        $isEligible = true;
+        $reason = array();
+
+        if( isset($surveyResponse['362142X497X4260']) && ! in_array($surveyResponse['362142X497X4260'], array("A1","A2","A3","A4","A5","A6","A7")) ){
+            $isEligible = false;
+            $reason[] = "Parish";
+        }
+
+        if( isset($surveyResponse['362142X497X4265']) && $surveyResponse['362142X497X4265'] != "A1" ){
+            $isEligible = false;
+            $reason[] = "Gender";
+        }
+
+        if( isset($surveyResponse['362142X497X4269SQ005']) && $surveyResponse['362142X497X4269SQ005'] == "Y" ){
+            $isEligible = false;
+            $reason[] = "Sex in last 12 months with a male";
+        }
+
+        if( isset($surveyResponse['362142X497X4263SQ003']) && $surveyResponse['362142X497X4263SQ003'] != "Y" ){
+            $isEligible = false;
+            $reason[] = "Race not African American/Black";
+        }
+
+        return $isEligible;
+    }
 
 }

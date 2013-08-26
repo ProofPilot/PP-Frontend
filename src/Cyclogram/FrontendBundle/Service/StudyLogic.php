@@ -197,11 +197,9 @@ class StudyLogic
 
     private function kOcRegistration($participant, $surveyId=null, $saveId=null){
         $em = $this->container->get('doctrine')->getEntityManager();
-        $campaignRepo = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Campaign');
-        $campaign = $campaignRepo->find(12);
+        $campaign = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Campaign')->find(16);
 
-        $participantLevelRepo = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:ParticipantLevel');
-        $participantLevel = $participantLevelRepo->find( 2 );
+        $participantLevel = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:ParticipantLevel')->find(2);
 
         //Campaign
         $ParticipantCampaignLinkCountData =  $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:ParticipantCampaignLink')
@@ -218,7 +216,8 @@ class StudyLogic
 
         $uniqId = uniqid();
 
-        $site = $em->getRepository('CyclogramProofPilotBundle:Site')->find(1);
+        //Check this site
+        $site = $em->getRepository('CyclogramProofPilotBundle:Site')->find(4);
 
         //ParticipantCampaignLink
         $campaignLink = new \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantCampaignLink();
@@ -233,6 +232,60 @@ class StudyLogic
         $campaignLink->setSite($site);
 
         $em->persist( $campaignLink );
+        $em->flush();
+
+        $participantArmLink = new \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantArmLink();
+        $participantArmLink->setParticipant($participant);
+        $participantArmLink->setStatus( $em->getRepository('CyclogramProofPilotBundle:Status')->find(1) );
+        $participantArmLink->setParticipantArmLinkDatetime( new \DateTime("now") );
+        $participantArmLink->setArm( $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Arm')->find(13));
+
+        $em->persist($participantArmLink);
+        $em->flush();
+
+        $timeNow = new \DateTime("now");
+
+        //create interventions
+        $participantInterventionLink = new \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantInterventionLink();
+        $participantInterventionLink->setParticipant($participant);
+        $participantInterventionLink->setStatus( $em->getRepository('CyclogramProofPilotBundle:Status')->find(1) );
+        $participantInterventionLink->setIntervention( $em->getRepository('CyclogramProofPilotBundle:Intervention')->findOneByInterventionName('KOC Baseline') );
+        $participantInterventionLink->setParticipantInterventionLinkDatetimeStart( $timeNow );
+        $participantInterventionLink->setParticipantInterventionLinkName("");
+        $em->persist($participantInterventionLink);
+        $em->flush();
+
+        $participantInterventionLink = new \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantInterventionLink();
+        $participantInterventionLink->setParticipant($participant);
+        $participantInterventionLink->setStatus( $em->getRepository('CyclogramProofPilotBundle:Status')->find(1) );
+        $participantInterventionLink->setIntervention( $em->getRepository('CyclogramProofPilotBundle:Intervention')->findOneByInterventionName('Local Technology Use Survey') );
+        $participantInterventionLink->setParticipantInterventionLinkName("");
+        //One day after
+        $timeNowPlusOneDay = new \DateTime( strtotime("+1 day", $timeNow->format("U")) );
+        $participantInterventionLink->setParticipantInterventionLinkDatetimeStart( $timeNowPlusOneDay );
+        $em->persist($participantInterventionLink);
+        $em->flush();
+        
+        $participantInterventionLink = new \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantInterventionLink();
+        $participantInterventionLink->setParticipant($participant);
+        $participantInterventionLink->setStatus( $em->getRepository('CyclogramProofPilotBundle:Status')->find(1) );
+        $participantInterventionLink->setIntervention( $em->getRepository('CyclogramProofPilotBundle:Intervention')->findOneByInterventionName('King of Condoms Condom Pick Up Survey') );
+        $participantInterventionLink->setParticipantInterventionLinkName("");
+        //3 days from registration
+        $timeNowPlusThreeDay = new \DateTime( strtotime("+3 day", $timeNow->format("U")) );
+        $participantInterventionLink->setParticipantInterventionLinkDatetimeStart( $timeNowPlusThreeDay );
+        $em->persist($participantInterventionLink);
+        $em->flush();
+
+        $participantInterventionLink = new \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantInterventionLink();
+        $participantInterventionLink->setParticipant($participant);
+        $participantInterventionLink->setStatus( $em->getRepository('CyclogramProofPilotBundle:Status')->find(1) );
+        $participantInterventionLink->setIntervention( $em->getRepository('CyclogramProofPilotBundle:Intervention')->findOneByInterventionName('King of Condoms Follow Up Survey') );
+        $participantInterventionLink->setParticipantInterventionLinkName("");
+        //30 days from registration
+        $timeNowPlusThirtyDay = new \DateTime( strtotime("+30 day", $timeNow->format("U")) );
+        $participantInterventionLink->setParticipantInterventionLinkDatetimeStart( $timeNowPlusThirtyDay );
+        $em->persist($participantInterventionLink);
         $em->flush();
     }
 
