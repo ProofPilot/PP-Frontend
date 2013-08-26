@@ -159,6 +159,15 @@ class StudyController extends Controller
         //get db data
         $surveyResult = $this->get('custom_db')->getFactory('ElegibilityCustom')->getSurveyResponseData($svid, $sid);
 
+        $bag = new AttributeBag();
+        $bag->setName("SurveyInfo");
+        $array = array();
+        $bag->initialize($array);
+        $bag->set('surveyId', $sid);
+        $bag->set('saveId', $svid);
+        $session->registerBag($bag);
+        $session->set('SurveyInfo', $bag);
+
         //get specific study criteria
         switch($studyId){
             case 12:
@@ -182,7 +191,7 @@ class StudyController extends Controller
     private function getKoCEligibilityriteria($surveyResponse){
         $isEligible = true;
         $reason = array();
-
+        
         if( isset($surveyResponse['382539X701X6985']) && intval($surveyResponse['382539X701X6985']) < 18 ){
             $isEligible = false;
             $reason[] = "Less than 18 years";
@@ -193,7 +202,7 @@ class StudyController extends Controller
             $reason[] = "Sex not male";
         }
 
-        if( isset($surveyResponse['382539X701X6984other']) && ! empty($surveyResponse['382539X701X6984other']) ){
+        if( isset($surveyResponse['382539X701X6984']) &&  ! in_array($surveyResponse['382539X701X6984'], array("A1","A2","A3","A4","A5","A6","A7"))){
             $isEligible = false;
             $reason[] = "Parish is other";
         }

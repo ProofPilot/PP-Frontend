@@ -233,8 +233,8 @@ class StudyLogic
         $em->flush();
 
         //participant intervention link
-        $activeStatus = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Status')->find(12);
-        $intervention = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Intervention')->find(9);
+        $activeStatus = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Status')->find(1);
+        $intervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')->findOneByInterventionName('KOC Social Media Survey');
 
         $participantInterventionLink = new \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantInterventionLink();
         $participantInterventionLink->setParticipant($participant);
@@ -245,6 +245,17 @@ class StudyLogic
 
         $em->persist($participantInterventionLink);
         $em->flush();
+
+        $participantArmLink = new \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantArmLink();
+        $participantArmLink->setParticipant($participant);
+        $participantArmLink->setStatus($activeStatus);
+        $participantArmLink->setParticipantArmLinkDatetime( new \DateTime("now") );
+        $participantArmLink->setArm( $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Arm')->find(9));
+
+        $em->persist($participantArmLink);
+        $em->flush();
+
+        $this->participantSurveyLinkRegistration($surveyId, $saveId, $participant, $uniqId);
     }
     
     public function studyRegistration($participant, $studyId, $surveyId, $saveId) {
