@@ -85,13 +85,14 @@ class DashboardController extends Controller
     
         $parameters["lastaccess"] = new \DateTime();
          
-        if($this->get('security.context')->isGranted("ROLE_FACEBOOK_USER"))
-            $parameters["user"]["avatar"] = "http://graph.facebook.com/" . $participant->getParticipantUsername() . "/picture?width=80&height=82";
+//         if($this->get('security.context')->isGranted("ROLE_FACEBOOK_USER"))
+//             $parameters["user"]["avatar"] = "http://graph.facebook.com/" . $participant->getParticipantUsername() . "/picture?width=80&height=82";
         
-        if($this->get('security.context')->isGranted("ROLE_GOOGLE_USER"))
-            $parameters["user"]["avatar"] = "https://plus.google.com/s2/photos/profile/" . $participant->getGoogleId() . "?sz=80";
+//         if($this->get('security.context')->isGranted("ROLE_GOOGLE_USER"))
+//             $parameters["user"]["avatar"] = "https://plus.google.com/s2/photos/profile/" . $participant->getGoogleId() . "?sz=80";
         
         $parameters["user"]["name"] = $participant->getParticipantFirstname() . ' ' . $participant->getParticipantLastname();
+        $parameters["username"] = $participant->getParticipantUsername();
         $parameters["user"]["last_access"] = $participant->getParticipantLastTouchDatetime();
         
         

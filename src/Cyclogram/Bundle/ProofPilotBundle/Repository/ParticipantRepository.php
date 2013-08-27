@@ -38,23 +38,37 @@ class ParticipantRepository extends EntityRepository implements
     }
     
     public function getParticipantInterventionsCount($userid){
+        $currentDate = new \DateTime();
+        
         return $this->getEntityManager()
-        ->createQuery('SELECT COUNT (pi) FROM CyclogramProofPilotBundle:ParticipantInterventionLink pi
-                WHERE pi.participant = :userid')
+        ->createQuery('SELECT COUNT (pil) FROM CyclogramProofPilotBundle:ParticipantInterventionLink pil
+                WHERE pil.participant = :userid
+                AND pil.participantInterventionLinkDatetimeStart <= :currentDate
+                AND pil.participantInterventionLinkDatetimeEnd >= :currentDate
+                ')
         ->setParameters(array(
-                        'userid' => $userid))
+                        'userid' => $userid,
+                        'currentDate' => $currentDate
+                ))
         ->getSingleScalarResult();
     }
     
     public function getParticipantInterventionLinks($userid){
+        
+        $currentDate = new \DateTime();
+        
         return $this->getEntityManager()
         ->createQuery('SELECT pil, i, it, s FROM CyclogramProofPilotBundle:ParticipantInterventionLink pil
                 INNER JOIN pil.intervention i
                 INNER JOIN pil.status s
                 INNER JOIN i.interventionType it
-                WHERE pil.participant = :userid')
+                WHERE pil.participant = :userid
+                AND pil.participantInterventionLinkDatetimeStart <= :currentDate
+                AND pil.participantInterventionLinkDatetimeEnd >= :currentDate
+                ')
                 ->setParameters(array(
-                        'userid' => $userid))
+                        'userid' => $userid,
+                        'currentDate' => $currentDate))
                         ->getResult();
     }
     
