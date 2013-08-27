@@ -265,7 +265,7 @@ class StudyLogic
         $participantInterventionLink->setParticipantInterventionLinkDatetimeStart( $timeNowPlusOneDay );
         $em->persist($participantInterventionLink);
         $em->flush();
-        
+
         $participantInterventionLink = new \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantInterventionLink();
         $participantInterventionLink->setParticipant($participant);
         $participantInterventionLink->setStatus( $em->getRepository('CyclogramProofPilotBundle:Status')->find(1) );
@@ -364,6 +364,9 @@ class StudyLogic
                 break;
             case 1:
                 $this->knowAtHomeRegistration($participant, $surveyId, $saveId);
+                break;
+            case 8:
+                $this->kOcRegistration($participant, $surveyId, $saveId);
                 break;
             case 12:
                 $this->kOcSocialMediaRegistration($participant, $surveyId, $saveId);
