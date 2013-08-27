@@ -36,12 +36,16 @@ class DashboardController extends Controller
         $parameters = array();
         $parameters['surveycount'] = $surveyscount;
 
-    
+
         $parameters["interventions"] = array();
         foreach($interventionLinks as $interventionLink) {
             
             $interventionId = $interventionLink->getIntervention()->getInterventionId();
             $interventionContent = $this->getDoctrine()->getRepository("CyclogramProofPilotBundle:Intervention")->getInterventionContent($interventionId, $locale);
+            
+            $studyId = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:Intervention')
+                ->getInterventionStudyId($interventionId);
+            $study = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:StudyContent')->findOneByStudyId($studyId);
             
             $intervention = array();
             $intervention["title"] = $interventionContent->getInterventionTitle();
@@ -56,8 +60,8 @@ class DashboardController extends Controller
             $parameters["interventions"][] = $intervention;
         }
         
-        $parameters["logo"] = $this->container->getParameter('study_image_url') . '/7/logo-7-en.png';
-        
+        //$parameters["logo"] = $this->container->getParameter('study_image_url') . '/7/logo-7-en.png';
+        $parameters["logo"] = $this->container->getParameter('study_image_url') . "/" . $studyId . "/" . $study->getStudyLogo();
 
         $parameters["actions"] = array(
                 array('activity' => $this->get('translator')->trans('past_activity.emai_confirmation_status', array(), 'dashboard'),
