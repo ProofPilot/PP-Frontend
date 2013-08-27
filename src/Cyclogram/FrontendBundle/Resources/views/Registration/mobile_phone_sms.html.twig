@@ -2,7 +2,7 @@
 
 {% block content %}
     <div class="mobile_reg">
-      <h1><span>{% trans from "register" %}txt_join{% endtrans %} 4/4:</span>{% trans from "register" %}enter_sms_code{% endtrans %}</h1>
+      <h1><span>{% trans from "register" %}txt_join{% endtrans %} {{ current }}/{{ steps }}:</span>{% trans from "register" %}enter_sms_code{% endtrans %}</h1>
       <br>
       <form method="post" action="{{ path('_register_verify_sms',{'id' : id, 'studyId' : studyId}) }}">
         <ul class="form_fields">

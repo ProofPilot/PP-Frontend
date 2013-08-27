@@ -2,7 +2,7 @@
 
 {% block content %}
     <div class="mobile_reg">
-      <h1><span>{% trans from "register" %}txt_join{% endtrans %} 3/4:</span> {% trans from "register" %}double_check{% endtrans %}</h1>
+      <h1><span>{% trans from "register" %}txt_join{% endtrans %} {{ current }}/{{ steps }}:</span> {% trans from "register" %}double_check{% endtrans %}</h1>
       <ul class="confirm_list">
         <li>{{ phone }}</li>
       </ul>
