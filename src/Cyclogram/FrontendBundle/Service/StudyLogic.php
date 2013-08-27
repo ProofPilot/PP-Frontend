@@ -261,7 +261,7 @@ class StudyLogic
         $participantInterventionLink->setIntervention( $em->getRepository('CyclogramProofPilotBundle:Intervention')->findOneByInterventionName('Local Technology Use Survey') );
         $participantInterventionLink->setParticipantInterventionLinkName("");
         //One day after
-        $timeNowPlusOneDay = new \DateTime( strtotime("+1 day", $timeNow->format("U")) );
+        $timeNowPlusOneDay = new \DateTime( date("Y-m-d H:i:sP", strtotime("+1 day", $timeNow->format("U"))) );
         $participantInterventionLink->setParticipantInterventionLinkDatetimeStart( $timeNowPlusOneDay );
         $em->persist($participantInterventionLink);
         $em->flush();
@@ -272,7 +272,7 @@ class StudyLogic
         $participantInterventionLink->setIntervention( $em->getRepository('CyclogramProofPilotBundle:Intervention')->findOneByInterventionName('King of Condoms Condom Pick Up Survey') );
         $participantInterventionLink->setParticipantInterventionLinkName("");
         //3 days from registration
-        $timeNowPlusThreeDay = new \DateTime( strtotime("+3 day", $timeNow->format("U")) );
+        $timeNowPlusThreeDay = new \DateTime( date("Y-m-d H:i:sP", strtotime("+3 day", $timeNow->format("U"))) );
         $participantInterventionLink->setParticipantInterventionLinkDatetimeStart( $timeNowPlusThreeDay );
         $em->persist($participantInterventionLink);
         $em->flush();
@@ -283,12 +283,12 @@ class StudyLogic
         $participantInterventionLink->setIntervention( $em->getRepository('CyclogramProofPilotBundle:Intervention')->findOneByInterventionName('King of Condoms Follow Up Survey') );
         $participantInterventionLink->setParticipantInterventionLinkName("");
         //30 days from registration
-        $timeNowPlusThirtyDay = new \DateTime( strtotime("+30 day", $timeNow->format("U")) );
+        $timeNowPlusThirtyDay = new \DateTime( date("Y-m-d H:i:sP", strtotime("+30 day", $timeNow->format("U"))) );
         $participantInterventionLink->setParticipantInterventionLinkDatetimeStart( $timeNowPlusThirtyDay );
         $em->persist($participantInterventionLink);
         $em->flush();
     }
-
+    
     private function kOcSocialMediaRegistration($participant, $surveyId=null, $saveId=null){
 
         $em = $this->container->get('doctrine')->getEntityManager();
