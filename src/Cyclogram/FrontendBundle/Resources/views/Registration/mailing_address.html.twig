@@ -41,9 +41,9 @@
 {% block content %}
   <div class="mobile_reg login_form">
     <div class="wrapper">
-      <h1><span>{% trans from "register" %}txt_join{% endtrans %} 6/6:</span> Mailing address</h1>
+      <h1><span>{% trans from "register" %}txt_join{% endtrans %} {{ current }}/{{ steps }}:</span> Mailing address</h1>
       <div style="margin-bottom: 20px;">{% trans from "register" %}enter_address{% endtrans %}</div>
-      <form novalidate method="post" action="{{ path('reg_step_6',{'id' : id, 'studyId' : studyId}) }}" name="mailing_address">
+      <form novalidate method="post" action="{{ path('_register_mailaddress',{'id' : id, 'studyId' : studyId}) }}" name="mailing_address">
         <div class="loginform_left" style="padding-top: 0px;">
           <label>{% trans from "register" %}label_firstname{% endtrans %}</label>
           {{ form_widget(form.participantFirstname, {'attr' : {'class' : 'text'}}) }}

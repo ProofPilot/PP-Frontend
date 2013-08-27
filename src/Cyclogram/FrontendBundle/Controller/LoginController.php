@@ -55,12 +55,12 @@ class LoginController extends Controller
             
             if (!empty($studyId)){
                 if ($study->getEmailVerificationRequired()) {
-                    return $this->redirect( $this->generateUrl("reg_step_2", array('id' => $participant->getParticipantId(), 'studyId' => $studyId)));
+                    return $this->redirect( $this->generateUrl("_register_email", array('id' => $participant->getParticipantId(), 'studyId' => $studyId)));
                 } else {
-                    return $this->redirect( $this->generateUrl("simplereg_step_2", array('id' => $participant->getParticipantId(), 'studyId' => $studyId)));
+                    return $this->redirect( $this->generateUrl("_register_mobile", array('id' => $participant->getParticipantId(), 'studyId' => $studyId)));
                 }
             } else {
-                return $this->redirect( $this->generateUrl("simplereg_step_2", array('id' => $participant->getParticipantId())) );
+                return $this->redirect( $this->generateUrl("_register_mobile", array('id' => $participant->getParticipantId())) );
             }
         }
         

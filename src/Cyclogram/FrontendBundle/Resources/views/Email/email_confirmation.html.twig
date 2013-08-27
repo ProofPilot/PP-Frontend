@@ -1,9 +1,9 @@
 {%  extends 'CyclogramFrontendBundle:Email:email.html.twig' %}
 {% block email_content %}
 {% if studyId is defined %}
-    {% set confirmurl = url('email_verify', {'email': email, 'code': code, 'confirmed' : true, 'studyId' : studyId})  %}
+    {% set confirmurl = url('email_verify', {'email': email, 'code': code, 'studyId' : studyId})  %}
 {% else %}
-    {% set confirmurl = url('email_verify', {'email': email, 'code': code, 'confirmed' : true })  %}
+    {% set confirmurl = url('email_verify', {'email': email, 'code': code })  %}
 {% endif %}
             <td width="643" style="background-color: white;">
                 <p style="margin: 0px; padding: 0px; margin-bottom: 25px; color: #ae4840; font-family: Arial; font-weight: bold; font-size: 40px;">{{ 'confirm_verify_title' | trans({}, "email", locale) }}</p>
