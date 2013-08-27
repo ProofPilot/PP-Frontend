@@ -44,7 +44,6 @@ class ParticipantRepository extends EntityRepository implements
         ->createQuery('SELECT COUNT (pil) FROM CyclogramProofPilotBundle:ParticipantInterventionLink pil
                 WHERE pil.participant = :userid
                 AND pil.participantInterventionLinkDatetimeStart <= :currentDate
-                AND pil.participantInterventionLinkDatetimeEnd >= :currentDate
                 ')
         ->setParameters(array(
                         'userid' => $userid,
@@ -64,7 +63,6 @@ class ParticipantRepository extends EntityRepository implements
                 INNER JOIN i.interventionType it
                 WHERE pil.participant = :userid
                 AND pil.participantInterventionLinkDatetimeStart <= :currentDate
-                AND pil.participantInterventionLinkDatetimeEnd >= :currentDate
                 ')
                 ->setParameters(array(
                         'userid' => $userid,
