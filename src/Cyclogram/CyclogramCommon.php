@@ -248,6 +248,7 @@ class CyclogramCommon {
     }
     
     public static function parsePhoneNumber($phone){
+        //TODO:support all country codes - requires some good parsing logic
         $full_phone = array();
         if(substr($phone, 0 , 1) == '1'){
             $full_phone['country_code'] = substr($phone, 0 , 1);

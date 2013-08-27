@@ -51,6 +51,7 @@ class DashboardController extends Controller
             $intervention["title"] = $interventionContent->getInterventionTitle();
             $intervention["content"] = $interventionContent->getInterventionDescripton();
             $intervention["url"] = $this->getInterventionUrl($interventionLink, $locale);
+            $intervention["logo"] = $this->container->getParameter('study_image_url') . "/" . $studyId . "/" . $study->getStudyLogo();
             
             if($interventionLink->getStatus()->getStatusName() != "Active" ) {
                 $intervention["status"] = "Completed";
@@ -60,9 +61,6 @@ class DashboardController extends Controller
             $parameters["interventions"][] = $intervention;
         }
         
-        //$parameters["logo"] = $this->container->getParameter('study_image_url') . '/7/logo-7-en.png';
-        $parameters["logo"] = $this->container->getParameter('study_image_url') . "/" . $studyId . "/" . $study->getStudyLogo();
-
         $parameters["actions"] = array(
                 array('activity' => $this->get('translator')->trans('past_activity.emai_confirmation_status', array(), 'dashboard'),
                         'class' => 'icon1 first'

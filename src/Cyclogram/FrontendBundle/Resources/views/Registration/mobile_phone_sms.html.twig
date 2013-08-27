@@ -4,7 +4,7 @@
     <div class="mobile_reg">
       <h1><span>{% trans from "register" %}txt_join{% endtrans %} 4/4:</span>{% trans from "register" %}enter_sms_code{% endtrans %}</h1>
       <br>
-      <form method="post" action="{{ path('simplereg_step_4',{'id' : id, 'studyId' : studyId}) }}">
+      <form method="post" action="{{ path('_register_verify_sms',{'id' : id, 'studyId' : studyId}) }}">
         <ul class="form_fields">
           <li>
 
@@ -19,7 +19,7 @@
               {{ form_errors(form) }}
               {{ form_rest(form) }}
             </div>
-        <div class="center_align"><a href={{ path('simplereg_step_3',{'id' : id}) }} class="repeat">{% trans from "register" %}no_code{% endtrans %}</a></div>
+        <div class="center_align"><a href={{ path('_register_sms',{'id' : id}) }} class="repeat">{% trans from "register" %}no_code{% endtrans %}</a></div>
       </form>
     </div>
 {% endblock content %}
