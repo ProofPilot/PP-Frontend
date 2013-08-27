@@ -72,10 +72,6 @@ class SurveyController extends Controller
         if($this->get('security.context')->isGranted("ROLE_PARTICIPANT")) {
             $loggedUser = $this->get('security.context')->getToken()->getUser();
             $logic->participantSurveyLinkRegistration($surveyId, $saveId, $loggedUser, uniqid());
-            
-            if($isEligible) {
-                $logic->studyRegistration($loggedUser, $studyId, $surveyId, $saveId);
-            }
         }
         
         //store surveyid and saveid in session

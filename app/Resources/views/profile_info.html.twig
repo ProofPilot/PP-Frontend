@@ -7,7 +7,7 @@
     		<ul class="user_info">
     			<li>
     			    {% if is_granted('ROLE_FACEBOOK_USER') or is_granted('ROLE_GOOGLE_USER') %}
-        			    <a href="#">{{ app.user.participantFirstname ~ ' ' ~ participant.participantLastName }}</a>
+        			    <a href="#">{{ app.user.participantFirstname ~ ' ' ~ app.user.participantLastName }}</a>
     			    {% else %}
     			        <a href="#">{{ app.user.participantUsername }}</a>
     			    {% endif %}

@@ -331,9 +331,7 @@ class RegistrationController extends Controller
     
                     $this->confirmParticipantEmail($participant, $studyId);
     
-                    $this->registerInStudy($participant, $studyId);
-    
-                    return $this->redirectToDashboard($participant);
+                    return $this->registerAndRedirect($participant, $studyId);
                 } else {
                     $error = "Wrong SMS!";
                 }
@@ -399,10 +397,7 @@ class RegistrationController extends Controller
                 $em->persist($participant);
                 $em->flush($participant);
                 
-                
-                $this->registerInStudy($participant, $studyId);
-                
-                return $this->redirectToDashboard($participant);
+                return $this->registerAndRedirect($participant, $studyId);
             }
         }
         return $this->render('CyclogramFrontendBundle:Registration:mailing_address.html.twig', 
@@ -415,6 +410,32 @@ class RegistrationController extends Controller
                         ));
     }
     
+    /**
+     * @Route("/register/study/{studyId}", name="_register_in_study")
+     * @Template()
+     */
+    public function registerInStudyAction($studyId)
+    {
+        $this->checkStudyEligibility($studyId);
+        $logic = $this->get('study_logic');
+        
+        if($this->get('security.context')->isGranted("ROLE_PARTICIPANT")) {
+            $participant = $this->get('security.context')->getToken()->getUser();
+            
+            $session = $this->getRequest()->getSession();
+            if ($session->has('SurveyInfo')){
+                $bag = $session->get('SurveyInfo');
+                $surveyId = $bag->get('surveyId');
+                $saveId = $bag->get('saveId');
+            
+                $logic->studyRegistration($participant, $studyId, $surveyId, $saveId);
+                return $this->redirect($this->generateUrl('_main'));
+            }
+        } 
+        
+        return $this->redirect($this->generateUrl('_register_start', array('studyId'=>$studyId)));
+
+    }
     
     /**
      * @Route("/register/email_verify/{email}/{code}/{studyId}", name="email_verify", defaults={"studyId"=null})
@@ -495,11 +516,24 @@ class RegistrationController extends Controller
      * Automatically log in participant and redirect to dashboard
      * @param Participant $participant
      */
-    private function redirectToDashboard(Participant $participant)
+    private function registerAndRedirect(Participant $participant, $studyId)
     {
     
         $session = $this->getRequest()->getSession();
-    
+        
+        //if studyId passed also register participant in study
+        if($studyId) {
+            $ls = $this->get('study_logic');
+
+            if ($session->has('SurveyInfo')){
+                $bag = $session->get('SurveyInfo');
+                $surveyId = $bag->get('surveyId');
+                $saveId = $bag->get('saveId');
+
+                $ls->studyRegistration($participant, $studyId, $surveyId, $saveId);
+            }
+        }
+
         $resourceOwnerName = $session->get("resourceOwnerName");
     
         echo "ResourceOwner :" . $resourceOwnerName;
@@ -520,21 +554,6 @@ class RegistrationController extends Controller
         return $this->redirect( $this->generateUrl("_main") );
     }
     
-    
-    private function registerInStudy(Participant $participant, $studyId)
-    {
-        $ls = $this->get('study_logic');
-    
-        $session = $this->getRequest()->getSession();
-        if ($session->has('SurveyInfo')){
-            $bag = $session->get('SurveyInfo');
-            $surveyId = $bag->get('surveyId');
-            $saveId = $bag->get('saveId');
-    
-            if($studyId)
-                $ls->studyRegistration($participant, $studyId, $surveyId, $saveId);
-        }
-    }
     
     /**
      * Check study eligibility
