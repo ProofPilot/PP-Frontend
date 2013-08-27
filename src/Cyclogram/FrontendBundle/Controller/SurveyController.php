@@ -37,8 +37,7 @@ class SurveyController extends Controller
         $parameters['studyId'] = $studyId;
         $parameters['survey'] = $this->getSurveyData($surveyId, $locale);
         $parameters['logo'] = $this->container->getParameter('study_image_url') . '/' . $studyId. '/' .$studyContent->getStudyLogo();
-    
-    
+
         return $this->render('CyclogramFrontendBundle:Survey:survey.html.twig', $parameters);
     }
     
@@ -50,9 +49,8 @@ class SurveyController extends Controller
         
         $request = $this->getRequest();
         $locale = $request->getLocale();
+        $logic = $this->get('study_logic');
         
-        
-        $loggedUser = $this->get('security.context')->getToken()->getUser();
         
         $studyId = $this->getRequest()->query->get('studyId');
         $surveyId = $this->getRequest()->query->get('surveyId');
@@ -70,9 +68,14 @@ class SurveyController extends Controller
         
         $isEligible = $sl->checkEligibility($studyId, $surveyResult);
 
-        
-        if(($loggedUser instanceof Participant) && ($this->get('security.context')->isGranted("ROLE_PARTICIPANT"))) {
-            $this->get('study_logic')->participantSurveyLinkRegistration($surveyId, $saveId, $loggedUser, uniqid());
+        //if the user is already logged in 
+        if($this->get('security.context')->isGranted("ROLE_PARTICIPANT")) {
+            $loggedUser = $this->get('security.context')->getToken()->getUser();
+            $logic->participantSurveyLinkRegistration($surveyId, $saveId, $loggedUser, uniqid());
+            
+            if($isEligible) {
+                $logic->studyRegistration($loggedUser, $studyId, $surveyId, $saveId);
+            }
         }
         
         //store surveyid and saveid in session
@@ -83,6 +86,7 @@ class SurveyController extends Controller
         $bag->initialize($array);
         $bag->set('surveyId', $surveyId);
         $bag->set('saveId', $saveId);
+        $bag->set('studyId', $studyId);
         $session->registerBag($bag);
         $session->set('SurveyInfo', $bag);
         

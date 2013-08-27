@@ -58,6 +58,8 @@ class RegistrationController extends Controller
         if ($this->get('security.context')->isGranted("ROLE_PARTICIPANT")){
             return $this->redirect($this->get('router')->generate("_main"));
         }
+        $this->checkStudyEligibility($studyId);
+        
         $request = $this->getRequest();
         $session = $request->getSession();
 
@@ -141,6 +143,8 @@ class RegistrationController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $request = $this->getRequest();
+        $this->checkStudyEligibility($studyId);
+        
         $participant = $em->getRepository("CyclogramProofPilotBundle:Participant")->find($id);
         if ($participant->getParticipantEmailConfirmed() == true) {
            return $this->redirect( $this->generateUrl("_login"));
@@ -167,6 +171,7 @@ class RegistrationController extends Controller
         if (empty($participant)) {
             throw new \Exception("Wrong participant id");
         }
+        $this->checkStudyEligibility($studyId);
     
         $request = $this->getRequest();
         $session = $request->getSession();
@@ -236,6 +241,8 @@ class RegistrationController extends Controller
         $request = $this->getRequest();
         $session = $request->getSession();
         $em = $this->getDoctrine()->getManager();
+        $this->checkStudyEligibility($studyId);
+        
         $participant = $em->getRepository('CyclogramProofPilotBundle:Participant')->find($id);
     
         if (empty($participant)) {
@@ -283,6 +290,7 @@ class RegistrationController extends Controller
         $request = $this->getRequest();
         $session = $request->getSession();
         $em = $this->getDoctrine()->getManager();
+        $this->checkStudyEligibility($studyId);
         $participant = $em->getRepository('CyclogramProofPilotBundle:Participant')->find($id);
     
         if (empty($participant)) {
@@ -351,6 +359,7 @@ class RegistrationController extends Controller
         $em = $this->getDoctrine()->getManager();
         $request = $this->getRequest();
         $session = $request->getSession();
+        $this->checkStudyEligibility($studyId);
         
 
         $participant = $em->getRepository('CyclogramProofPilotBundle:Participant')->find($id);
@@ -524,6 +533,35 @@ class RegistrationController extends Controller
     
             if($studyId)
                 $ls->studyRegistration($participant, $studyId, $surveyId, $saveId);
+        }
+    }
+    
+    /**
+     * Check study eligibility
+     * @param unknown_type $studyId
+     * @throws \Exception
+     */
+    private function checkStudyEligibility($studyId)
+    {
+        if(!$studyId)
+            return;
+        
+        $session = $this->getRequest()->getSession();
+        if ($session->has('SurveyInfo')){
+            $bag = $session->get('SurveyInfo');
+            $surveyId = $bag->get('surveyId');
+            $saveId = $bag->get('saveId');
+            if($studyId != $bag->get('studyId'))
+                throw new \Exception("You have not passed eligibility test");
+            
+            $surveyResult = $this->get('custom_db')->getFactory('ElegibilityCustom')->getSurveyResponseData($saveId, $surveyId);
+            $sl = $this->get('study_logic');
+            
+            $isEligible = $sl->checkEligibility($studyId, $surveyResult);
+            if(!$isEligible)
+                throw new \Exception("You have not passed eligibility test");
+        } else {
+            throw new \Exception("You have not passed eligibility test");
         }
     }
 
