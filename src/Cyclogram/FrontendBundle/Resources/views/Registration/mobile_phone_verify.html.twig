@@ -1,0 +1,14 @@
+{%  extends '::base.html.twig' %}
+
+{% block content %}
+    <div class="mobile_reg">
+      <h1><span>{% trans from "register" %}txt_join{% endtrans %} {{ current }}/{{ steps }}:</span> {% trans from "register" %}double_check{% endtrans %}</h1>
+      <ul class="confirm_list">
+        <li>{{ phone }}</li>
+      </ul>
+      <div class="center_align m"> 
+      <button onclick=location.href='{{ path('_register_mobile',{'id' : id, 'studyId' : studyId}) }}' class="submit m1 gray">{% trans from "register" %}wrong_back{% endtrans %}</button>
+      <button onclick=location.href='{{ path('_register_sms',{'id' : id, 'studyId' : studyId}) }}' class="submit m2">{% trans from "register" %}ok_verify{% endtrans %}</button>
+      </div>
+    </div>
+{% endblock content %}

@@ -51,6 +51,7 @@ class DashboardController extends Controller
             $intervention["title"] = $interventionContent->getInterventionTitle();
             $intervention["content"] = $interventionContent->getInterventionDescripton();
             $intervention["url"] = $this->getInterventionUrl($interventionLink, $locale);
+            $intervention["logo"] = $this->container->getParameter('study_image_url') . "/" . $studyId . "/" . $study->getStudyLogo();
             
             if($interventionLink->getStatus()->getStatusName() != "Active" ) {
                 $intervention["status"] = "Completed";
@@ -60,9 +61,6 @@ class DashboardController extends Controller
             $parameters["interventions"][] = $intervention;
         }
         
-        //$parameters["logo"] = $this->container->getParameter('study_image_url') . '/7/logo-7-en.png';
-        $parameters["logo"] = $this->container->getParameter('study_image_url') . "/" . $studyId . "/" . $study->getStudyLogo();
-
         $parameters["actions"] = array(
                 array('activity' => $this->get('translator')->trans('past_activity.emai_confirmation_status', array(), 'dashboard'),
                         'class' => 'icon1 first'
@@ -87,13 +85,14 @@ class DashboardController extends Controller
     
         $parameters["lastaccess"] = new \DateTime();
          
-        if($this->get('security.context')->isGranted("ROLE_FACEBOOK_USER"))
-            $parameters["user"]["avatar"] = "http://graph.facebook.com/" . $participant->getParticipantUsername() . "/picture?width=80&height=82";
+//         if($this->get('security.context')->isGranted("ROLE_FACEBOOK_USER"))
+//             $parameters["user"]["avatar"] = "http://graph.facebook.com/" . $participant->getParticipantUsername() . "/picture?width=80&height=82";
         
-        if($this->get('security.context')->isGranted("ROLE_GOOGLE_USER"))
-            $parameters["user"]["avatar"] = "https://plus.google.com/s2/photos/profile/" . $participant->getGoogleId() . "?sz=80";
+//         if($this->get('security.context')->isGranted("ROLE_GOOGLE_USER"))
+//             $parameters["user"]["avatar"] = "https://plus.google.com/s2/photos/profile/" . $participant->getGoogleId() . "?sz=80";
         
         $parameters["user"]["name"] = $participant->getParticipantFirstname() . ' ' . $participant->getParticipantLastname();
+        $parameters["username"] = $participant->getParticipantUsername();
         $parameters["user"]["last_access"] = $participant->getParticipantLastTouchDatetime();
         
         

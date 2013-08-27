@@ -453,4 +453,99 @@ class StudyLogic
         
     }
     
+    //  *********************  ELIGIBILITY CRITERIAS
+    public function checkEligibility($studyId, $surveyResult)
+    {
+        switch($studyId){
+            case 8:
+                $KoCEligible = $this->getKoCEligibilityriteria($surveyResult);
+                if( $KoCEligible ){
+                    return true;
+                }else{
+                    return false;
+                }
+                break;
+            case 12:
+                $KoCSMEligible = $this->getKoCSocialMediaEligibilityriteria($surveyResult);
+                if( $KoCSMEligible ){
+                    return true;
+                }else{
+                    return false;
+                }
+                break;
+            default:
+               return true; //For all other studies at the moment we always assume user is eligible 
+        }
+    }
+    
+    
+    
+    /**
+     * Determine KoC Social Media Eligibility
+     * @param unknown_type $surveyResponse
+     */
+    private function getKoCSocialMediaEligibilityriteria($surveyResponse){
+        $isEligible = true;
+        $reason = array();
+    
+        if( isset($surveyResponse['382539X701X6985']) && intval($surveyResponse['382539X701X6985']) < 18 ){
+            $isEligible = false;
+            $reason[] = "Less than 18 years";
+        }
+    
+        if( isset($surveyResponse['382539X701X6987']) && $surveyResponse['382539X701X6987'] != "A1" ){
+            $isEligible = false;
+            $reason[] = "Sex not male";
+        }
+    
+        if( isset($surveyResponse['382539X701X6984']) &&  ! in_array($surveyResponse['382539X701X6984'], array("A1","A2","A3","A4","A5","A6","A7"))){
+            $isEligible = false;
+            $reason[] = "Parish is other";
+        }
+    
+        if( isset($surveyResponse['382539X701X6986SQ003']) && $surveyResponse['382539X701X6986SQ003'] != "Y" ){
+            $isEligible = false;
+            $reason[] = "Race Not Black/African American";
+        }
+    
+        if( isset($surveyResponse['382539X701X6988SQ005']) && $surveyResponse['382539X701X6988SQ005'] == "Y" ){
+            $isEligible = false;
+            $reason[] = "No sex in the last 12 months";
+        }
+    
+        return $isEligible;
+    }
+    
+    /**
+     * Determine KoC Eligibility
+     * @param unknown_type $surveyResponse
+     * @return boolean
+     */
+    private function getKoCEligibilityriteria($surveyResponse){
+        $isEligible = true;
+        $reason = array();
+    
+        if( isset($surveyResponse['362142X497X4260']) && ! in_array($surveyResponse['362142X497X4260'], array("A1","A2","A3","A4","A5","A6","A7")) ){
+            $isEligible = false;
+            $reason[] = "Parish";
+        }
+    
+        if( isset($surveyResponse['362142X497X4265']) && $surveyResponse['362142X497X4265'] != "A1" ){
+            $isEligible = false;
+            $reason[] = "Gender";
+        }
+    
+        if( isset($surveyResponse['362142X497X4269SQ005']) && $surveyResponse['362142X497X4269SQ005'] == "Y" ){
+            $isEligible = false;
+            $reason[] = "Sex in last 12 months with a male";
+        }
+    
+        if( isset($surveyResponse['362142X497X4263SQ003']) && $surveyResponse['362142X497X4263SQ003'] != "Y" ){
+            $isEligible = false;
+            $reason[] = "Race not African American/Black";
+        }
+    
+        return $isEligible;
+    }
+    
 }

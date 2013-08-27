@@ -216,7 +216,7 @@
 		    	var saveId = surveydata.attr('saveid');
 
 		    	if(surveyId !== undefined && saveId !== undefined) {
-		    	    window.location = '/' + '{{ app.request.locale }}' + '/surveyResponse?&surveyId=' + surveyId + '&saveId=' + saveId + '&redirectUrl=' + '{{ app.request.get('redirectUrl') }}';
+		    	    window.location = '/' + '{{ app.request.locale }}' + '/surveyResponse?&studyId={{ studyId }}&surveyId=' + surveyId + '&saveId=' + saveId + '&redirectUrl=' + '{{ app.request.get('redirectUrl') }}';
 		    	}
 
     		});

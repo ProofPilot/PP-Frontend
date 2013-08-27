@@ -6,7 +6,6 @@
 * (c)2012-2013 Cyclogram, Inc, West Hollywood, CA <crew@proofpilot.com>
 * ALL RIGHTS RESERVED
 *
-* This software is provided by the copyright holders to Manila Consulting for use on the
 * Center for Disease Control's Evaluation of Rapid HIV Self-Testing among MSM in High
 * Prevalence Cities until 2016 or the project is completed.
 *
@@ -19,6 +18,8 @@
 */
 
 namespace Cyclogram\FrontendBundle\Controller;
+
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
 use Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantSurveyLink;
 
@@ -48,14 +49,17 @@ class RegistrationController extends Controller
 {
 
     /**
-     * @Route("/register/{studyId}", name="_registration", defaults={"studyId"= null})
+     * @Route("/register/{studyId}", name="_register", defaults={"studyId"= null})
      * @Template()
      */
-    public function step1Action($studyId=null)
+    public function registerStartAction($studyId=null)
     {
+        //TODO: move the check to action
         if ($this->get('security.context')->isGranted("ROLE_PARTICIPANT")){
             return $this->redirect($this->get('router')->generate("_main"));
         }
+        $this->checkStudyEligibility($studyId);
+        
         $request = $this->getRequest();
         $session = $request->getSession();
 
@@ -102,12 +106,12 @@ class RegistrationController extends Controller
 
                     if (!empty($studyId)){
                         if ($study->getEmailVerificationRequired()) {
-                            return $this->redirect( $this->generateUrl("reg_step_2", array('id' => $participant->getParticipantId(), 'studyId' => $studyId)));
+                            return $this->redirect( $this->generateUrl("_register_email", array('id' => $participant->getParticipantId(), 'studyId' => $studyId)));
                         } else {
-                            return $this->redirect( $this->generateUrl("simplereg_step_2", array('id' => $participant->getParticipantId(), 'studyId' => $studyId)));
+                            return $this->redirect( $this->generateUrl("_register_mobile", array('id' => $participant->getParticipantId(), 'studyId' => $studyId)));
                         }
                     } else {
-                        return $this->redirect( $this->generateUrl("simplereg_step_2", array('id' => $participant->getParticipantId())) );
+                        return $this->redirect( $this->generateUrl("_register_mobile", array('id' => $participant->getParticipantId())) );
                     }
                     
 
@@ -124,7 +128,7 @@ class RegistrationController extends Controller
                $totalSteps = 4;
            }
            
-            return $this->render('CyclogramFrontendBundle:Registration:step1_register.html.twig', 
+            return $this->render('CyclogramFrontendBundle:Registration:start.html.twig', 
                     array (
                             'form' => $form->createView(), 
                             'totalSteps' => $totalSteps));
@@ -132,72 +136,59 @@ class RegistrationController extends Controller
         }
 
     /**
-     * @Route("/reg_step2/{id}/{studyId}", name="reg_step_2", defaults={"studyId"=null})
+     * @Route("/register/email/{id}/{studyId}", name="_register_email", defaults={"studyId"=null})
      * @Template()
     */
-    public function step2Action($id, $studyId)
+    public function registerSendEmailAction($id, $studyId)
     {
         $em = $this->getDoctrine()->getManager();
         $request = $this->getRequest();
+        $this->checkStudyEligibility($studyId);
+        
         $participant = $em->getRepository("CyclogramProofPilotBundle:Participant")->find($id);
         if ($participant->getParticipantEmailConfirmed() == true) {
            return $this->redirect( $this->generateUrl("_login"));
         }
         
-        $cc = $this->get('cyclogram.common');
+        $participant->setLanguage($request->getLocale());
         
-        $embedded['logo_top'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_logo.png");
-        $embedded['logo_footer'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newletter_logo_footer.png");
-        $embedded['login_button'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_small_login.jpg");
-        $parameters['code'] = substr(md5( md5( $participant->getParticipantEmail() . md5(microtime()))), 0, 4);
-        $parameters['email'] = $participant->getParticipantEmail();
-        $parameters['confirmed'] = 1;
-        $parameters['studyId'] = $studyId;
-        $parameters['locale'] = $participant->getLanguage() ? $participant->getLanguage() : $request->getLocale();
-        
-        $em = $this->getDoctrine()->getManager();
-        
-        $participant->setParticipantEmailCode($parameters['code']);
+        $this->confirmParticipantEmail($participant, $studyId);
         $em->persist($participant);
         $em->flush($participant);
-        
-        $cc->sendMail($participant->getParticipantEmail(),
-                $this->get('translator')->trans("email_title_verify", array(), "email", $parameters['locale']),
-                'CyclogramFrontendBundle:Email:email_confirmation.html.twig',
-                null,
-                $embedded,
-                true,
-                $parameters);
-        return $this->render('CyclogramFrontendBundle:Registration:step2_mail_confirm.html.twig');
+
+        return $this->render('CyclogramFrontendBundle:Registration:email_confirm.html.twig');
     }
     
     /**
-     * @Route("/reg_step3/{id}/{studyId}", name="reg_step_3", defaults={"studyId"=null})
+     * @Route("/register/mobile/{id}/{studyId}", name="_register_mobile", defaults={"studyId"=null})
      * @Template()
      */
-    public function step3Action($id, $studyId)
+    public function registerMobileAction($id, $studyId=null)
     {
         $em = $this->getDoctrine()->getManager();
-        $request = $this->getRequest();
-        $session = $request->getSession();
-
+    
         $participant = $em->getRepository('CyclogramProofPilotBundle:Participant')->find($id);
         if (empty($participant)) {
-            return $this->redirect( $this->generateUrl("_registration"));
+            throw new \Exception("Wrong participant id");
         }
+        $this->checkStudyEligibility($studyId);
+    
         $request = $this->getRequest();
-        
+        $session = $request->getSession();
+    
         $form = $this->createForm(new MobilePhoneForm($this->container), null, array(
                 'validation_groups' => array('registration')
-                ));
+        ));
+    
         if ($participant->getParticipantMobileNumber()){
             $phone = CyclogramCommon::parsePhoneNumber($participant->getParticipantMobileNumber());
         }
-      
+    
         if(!empty($phone)) {
             $form->get('phone_small')->setData($phone['country_code']);
             $form->get('phone_wide')->setData($phone['phone']);
         }
+    
         $clientIp = $request->getClientIp();
         if ($clientIp == '127.0.0.1') {
             $form->get('phone_small')->setData(380);
@@ -210,130 +201,169 @@ class RegistrationController extends Controller
                 $form->get('phone_small')->setData($country->getDailingCode());
             }
         }
+    
         if( $request->getMethod() == "POST" ){
-        
+    
             $form->handleRequest($request);
-        
+    
             if( $form->isValid() ) {
-        
+    
                 $values = $form->getData();
                 $userPhone = $values['phone_small'].$values['phone_wide'];
                 $participant->setParticipantMobileNumber($userPhone);
                 $em->persist($participant);
                 $em->flush();
-                
-                return $this->render('CyclogramFrontendBundle:Registration:step4_mobile_phone_2.html.twig', array(
-                        'phone' => $participant->getParticipantMobileNumber(), 
-                        'id' => $participant->getParticipantId()
+    
+                return $this->render('CyclogramFrontendBundle:Registration:mobile_phone_verify.html.twig',
+                        array(
+                                'phone' => $participant->getParticipantMobileNumber(),
+                                'id' => $participant->getParticipantId(),
+                                'steps' => $session->get("6step", false) ? 6 : 4,
+                                'current' => $session->get("6step", false) ? 4 : 3
                         ));
             }
         }
-        return $this->render('CyclogramFrontendBundle:Registration:step3_mobile_phone_1.html.twig', array(
-                "form" => $form->createView(), 
-                'id' => $id ));
+        return $this->render('CyclogramFrontendBundle:Registration:mobile_phone.html.twig',
+                array(
+                        "form" => $form->createView(),
+                        'id' => $id,
+                        'steps' => $session->get("6step", false) ? 6 : 4,
+                        'current' => $session->get("6step", false) ? 3 : 2
+                ));
     }
     
     /**
-     * @Route("/reg_step4/{id}/{studyId}", name="reg_step_4", defaults={"studyId"=null})
+     * @Route("/register/sms/{id}/{studyId}", name="_register_sms", defaults={"studyId"=null})
      * @Template()
      */
-    public function step4Action($id, $studyId)
+    public function registerSendSMSAction($id, $studyId)
     {
-        $em = $this->getDoctrine()->getManager();
         $request = $this->getRequest();
-
-        $participant = $em->getRepository('CyclogramProofPilotBundle:Participant')->find($id);
-        if (empty($participant)) {
-            return $this->redirect( $this->generateUrl("_registration"));
-        }
+        $session = $request->getSession();
+        $em = $this->getDoctrine()->getManager();
+        $this->checkStudyEligibility($studyId);
         
+        $participant = $em->getRepository('CyclogramProofPilotBundle:Participant')->find($id);
+    
+        if (empty($participant)) {
+            return $this->redirect( $this->generateUrl("_register"));
+        }
+    
         if ($participant->getParticipantMobileSmsCodeConfirmed() == true) {
             return $this->redirect( $this->generateUrl("_login"));
         }
-        
+    
         $customerMobileNumber = $participant->getParticipantMobileNumber();
-        $request = $this->getRequest();
-        
+    
+    
+    
         if( $customerMobileNumber ){
-        
+    
             $participantSMSCode = CyclogramCommon::getAutoGeneratedCode(4);
             $participant->setParticipantMobileSmsCode($participantSMSCode);
             $em->persist($participant);
             $em->flush($participant);
-        
+    
             $sms = $this->get('sms');
             $message = $this->get('translator')->trans('sms_verification_message', array(), 'register');
-            $sentSms = $sms->sendSmsAction( array('message' => $message .' '. $participantSMSCode, 'phoneNumber'=>"$customerMobileNumber") );
+            $sentSms = $sms->sendSmsAction( array('message' => $message . ' ' . $participantSMSCode, 'phoneNumber'=>"$customerMobileNumber") );
             if($sentSms)
-                return $this->redirect(($this->generateUrl("reg_step_5", array(
-                        'id'=> $participant->getParticipantId(), 
-                        'studyId' => $studyId))));
+                return $this->redirect(($this->generateUrl("_register_verify_sms",
+                        array(
+                                'id'=> $participant->getParticipantId(),
+                                'studyId' => $studyId
+                        ))
+                ));
         }
-        
-        return $this->render('CyclogramFrontendBundle:Registration:step4_mobile_phone_2.html.twig', array(
-                'phone' => $customerMobileNumber));
+    
+        return $this->render('CyclogramFrontendBundle:Registration:mobile_phone_verify.html.twig',
+                array(
+                        'phone' => $customerMobileNumber));
     }
     
     /**
-     * @Route("/reg_step5/{id}/{studyId}", name="reg_step_5", defaults={"studyId"=null})
+     * @Route("/register/verify_sms/{id}/{studyId}", name="_register_verify_sms", defaults={"studyId"=null})
      * @Template()
      */
-    public function step5Action($id, $studyId)
+    public function registerVerifySMSAction($id, $studyId)
     {
+        $request = $this->getRequest();
+        $session = $request->getSession();
         $em = $this->getDoctrine()->getManager();
-        $request = $this->getRequest();
-
+        $this->checkStudyEligibility($studyId);
         $participant = $em->getRepository('CyclogramProofPilotBundle:Participant')->find($id);
+    
         if (empty($participant)) {
-            return $this->redirect( $this->generateUrl("_registration"));
+            return $this->redirect( $this->generateUrl("_register"));
         }
-        
+    
         $userSMS = $participant->getParticipantMobileSmsCode();
-        $request = $this->getRequest();
-        
+    
+    
         $error = "";
         $form = $this->createForm(new UserSmsCodeForm($this->container));
-
-        
+    
+    
         if( $request->getMethod() == "POST" ){
-        
+    
             $form->handleRequest($request);
-        
+    
             if( $form->isValid() ) {
                 $value = $form->getData();
                 if ($value['sms_code'] == $userSMS) {
+    
+                    //Make Participant SMS code confirmed
                     $participant->setParticipantMobileSmsCodeConfirmed(true);
+                    $participant->setLanguage($request->getLocale());
                     $em->persist($participant);
                     $em->flush($participant);
-                     return $this->redirect( $this->generateUrl("reg_step_6", array(
-                             'id' => $participant->getParticipantId(), 
-                             'studyId' => $studyId)) );
+    
+                    $steps6 = $session->get("6step", false);
+    
+                    if($steps6) {
+                        //on 6step we redirect
+                        return $this->redirect($this->generateUrl("_register_mailaddress",
+                                array(
+                                        'id'=> $id,
+                                        'studyId' => $studyId
+                                )));
+                    }
+    
+                    $this->confirmParticipantEmail($participant, $studyId);
+    
+                    return $this->registerAndRedirect($participant, $studyId);
                 } else {
                     $error = "Wrong SMS!";
                 }
             }
         }
-        return $this->render('CyclogramFrontendBundle:Registration:step5_mobile_phone_3.html.twig', array(
-                'error' => $error, 
-                'form' => $form->createView(), 
-                'id' => $participant->getParticipantId()));
+        return $this->render('CyclogramFrontendBundle:Registration:mobile_phone_sms.html.twig',
+                array(
+                        'error' => $error,
+                        'form' => $form->createView(),
+                        'id' => $participant->getParticipantId(),
+                        'steps' => $session->get("6step", false) ? 6 : 4,
+                        'current' => $session->get("6step", false) ? 5 : 4
+                ));
     }
     
     
     /**
-     * @Route("/reg_step6/{id}/{studyId}", name="reg_step_6", defaults={"studyId"=null})
+     * @Route("/register/mailaddress/{id}/{studyId}", name="_register_mailaddress", defaults={"studyId"=null})
      * @Template()
      */
-    public function step6Action($id, $studyId)
+    public function registerMailAddressAction($id, $studyId)
     {
         $em = $this->getDoctrine()->getManager();
         $request = $this->getRequest();
+        $session = $request->getSession();
+        $this->checkStudyEligibility($studyId);
         
 
         $participant = $em->getRepository('CyclogramProofPilotBundle:Participant')->find($id);
         
         if (empty($participant)) {
-            return $this->redirect( $this->generateUrl("_registration"));
+            return $this->redirect( $this->generateUrl("_register"));
         }
         $collectionConstraint = new Collection(array(
                 'participantFirstname'     =>  new NotBlank(),
@@ -367,167 +397,191 @@ class RegistrationController extends Controller
                 $em->persist($participant);
                 $em->flush($participant);
                 
-                $ls = $this->get('study_logic');
-                
-
-                $session = $this->getRequest()->getSession();
-                if ($session->has('SurveyInfo')){
-                    $bag = $session->get('SurveyInfo');
-                    $surveyId = $bag->get('surveyId');
-                    $saveId = $bag->get('saveId');
-                    
-                    if($studyId)
-                        $ls->studyRegistration($participant, $studyId, $surveyId, $saveId);
-                }
-                
-
-                $resourceOwnerName = $session->get("resourceOwnerName");
-                $roles = array("ROLE_USER");
-                if($resourceOwnerName == "facebook") {
-                        $roles = array_merge($roles, array("ROLE_FACEBOOK_USER", "ROLE_PARTICIPANT"));
-                } else if($resourceOwnerName == "google") {
-                        $roles = array_merge($roles, array("ROLE_GOOGLE_USER", "ROLE_PARTICIPANT"));
-                } else {
-                        $roles = array_merge($roles, array("ROLE_PARTICIPANT"));
-                }
-                $session->remove("resourceOwnerName");
-                
-                $token = new UsernamePasswordToken($participant, null, 'main', $roles);
-                $this->get('security.context')->setToken($token);
-                
-                return $this->redirect( $this->generateUrl("_main") );
+                return $this->registerAndRedirect($participant, $studyId);
             }
         }
-        return $this->render('CyclogramFrontendBundle:Registration:step6_mailing_address.html.twig', array ('id' => $participant->getParticipantId(), 'form' => $form->createView(), 'studyId' => $studyId));
+        return $this->render('CyclogramFrontendBundle:Registration:mailing_address.html.twig', 
+                array (
+                        'id' => $participant->getParticipantId(), 
+                        'form' => $form->createView(), 
+                        'studyId' => $studyId,
+                        'steps' => 6,
+                        'current' => 6
+                        ));
     }
     
     /**
-     * @Route("/email_verify/{email}/{code}/{confirmed}/{studyId}", name="email_verify", defaults={"studyId"=null})
+     * @Route("/register/study/{studyId}", name="_register_in_study")
      * @Template()
      */
-    public function confirmEmailAction($email, $code, $confirmed, $studyId)
+    public function registerInStudyAction($studyId)
+    {
+        $this->checkStudyEligibility($studyId);
+        $logic = $this->get('study_logic');
+        
+        if($this->get('security.context')->isGranted("ROLE_PARTICIPANT")) {
+            $participant = $this->get('security.context')->getToken()->getUser();
+            
+            $session = $this->getRequest()->getSession();
+            if ($session->has('SurveyInfo')){
+                $bag = $session->get('SurveyInfo');
+                $surveyId = $bag->get('surveyId');
+                $saveId = $bag->get('saveId');
+            
+                $logic->studyRegistration($participant, $studyId, $surveyId, $saveId);
+                return $this->redirect($this->generateUrl('_main'));
+            }
+        } 
+        
+        return $this->redirect($this->generateUrl('_register_start', array('studyId'=>$studyId)));
+
+    }
+    
+    /**
+     * @Route("/register/email_verify/{email}/{code}/{studyId}", name="email_verify", defaults={"studyId"=null})
+     * @Template()
+     */
+    public function confirmEmailAction($email, $code, $studyId)
     {
         $request = $this->getRequest();
+        $session = $this->getRequest()->getSession();
         $em = $this->getDoctrine()->getManager();
+    
         $participant = $em->getRepository('CyclogramProofPilotBundle:Participant')->findOneBy(array('participantEmailCode' =>$code, 'participantEmail' => $email));
+    
         if ($participant) {
             $participant->setParticipantEmailConfirmed(true);
             $em->persist($participant);
             $em->flush($participant);
-            
-            return $this->redirect( $this->generateUrl("reg_step_3", array(
-                    'id' => $participant->getParticipantId(),
-                    'studyId' => $studyId
+    
+            if(!empty($studyId)) {
+                $study = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:Study')->find($studyId);
+                if($study && $study->getEmailVerificationRequired() ) {
+                    $session->set('6step', true);
+                    return $this->redirect( $this->generateUrl("_register_mobile", array(
+                            'id' => $participant->getParticipantId(),
+                            'studyId' => $studyId
                     )));
+                }
+            } 
+            
+            $session->set('confirmed', "Congratilations!!! Your e-mail is confirmed!");
+            return $this->redirect( $this->generateUrl("_main") );
+    
         } else {
             $error = $this->get('translator')->trans('mail_confirmation_fail', array(), 'register');
-            return $this->render('CyclogramFrontendBundle:Registration:step2_mail_confirm.html.twig', array('error' => $error));
+            return $this->render('CyclogramFrontendBundle:Registration:mail_confirm.html.twig', array('error' => $error));
         }
-       
+         
     }
     
+    /**
+     * Send email to confirm participant has indicated a real email address
+     * @param Participant $participant
+     */
+    private function confirmParticipantEmail(Participant $participant, $studyId)
+    {
+        $em = $this->getDoctrine()->getManager();
+    
+        $embedded['logo_top'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_logo.png");
+        $embedded['logo_footer'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newletter_logo_footer.png");
+        $embedded['login_button'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_small_login.jpg");
+        $cc = $this->get('cyclogram.common');
+    
+        $parameters['code'] = substr(md5( md5( $participant->getParticipantEmail() . md5(microtime()))), 0, 4);
+        $participant->setParticipantEmailCode($parameters['code']);
+        $em->persist($participant);
+        $em->flush($participant);
+    
+        $parameters['email'] = $participant->getParticipantEmail();
+    
+        if($studyId)
+            $parameters['studyId'] = $studyId;
+    
+        //        $parameters['confirmed'] = 1;
+        //        $parameters['simple'] = true;  //TODO :wassap?
+    
+        $parameters['locale'] = $participant->getLanguage() ? $participant->getLanguage() : $request->getLocale();
+    
+        $cc->sendMail($participant->getParticipantEmail(),
+                $this->get('translator')->trans("email_title_verify", array(), "email", $parameters['locale']),
+                'CyclogramFrontendBundle:Email:email_confirmation.html.twig',
+                null,
+                $embedded,
+                true,
+                $parameters);
+    }
     
     /**
-     * @Route("/get_city_state_ajax/{zipcode}", name="_get_city_state_by_zip", options={"expose"=true})
+     * Automatically log in participant and redirect to dashboard
+     * @param Participant $participant
      */
-    public function getCityAndStateByZipCode($zipcode)
+    private function registerAndRedirect(Participant $participant, $studyId)
     {
-        $em = $this->getDoctrine()->getEntityManager();
-        $results = $em->createQuery("
-                SELECT c.cityId, c.cityName, s.stateId, s.stateName
-                FROM CyclogramProofPilotBundle:City c
-                INNER JOIN c.state s
-                WHERE c.cityZipcode = :zipcode
-                ")
-                ->setParameter('zipcode', $zipcode)
-                ->getResult();
+    
+        $session = $this->getRequest()->getSession();
         
-//         foreach($results as $result ) {
-//             $json[] = array (
-//                     'cityId' => $result["cityId"],
-//                     'cityName' => $result["cityName"],
-//                     'stateId' => $result["stateId"],
-//                     'stateName' => $result["stateName"]
-//                     );
-//         }
-        return new Response(json_encode($results));
+        //if studyId passed also register participant in study
+        if($studyId) {
+            $ls = $this->get('study_logic');
+
+            if ($session->has('SurveyInfo')){
+                $bag = $session->get('SurveyInfo');
+                $surveyId = $bag->get('surveyId');
+                $saveId = $bag->get('saveId');
+
+                $ls->studyRegistration($participant, $studyId, $surveyId, $saveId);
+            }
+        }
+
+        $resourceOwnerName = $session->get("resourceOwnerName");
+    
+        echo "ResourceOwner :" . $resourceOwnerName;
+    
+        $roles = array("ROLE_USER");
+        if($resourceOwnerName == "facebook") {
+            $roles = array_merge($roles, array("ROLE_FACEBOOK_USER", "ROLE_PARTICIPANT"));
+        } else if($resourceOwnerName == "google") {
+            $roles = array_merge($roles, array("ROLE_GOOGLE_USER", "ROLE_PARTICIPANT"));
+        } else {
+            $roles = array_merge($roles, array("ROLE_PARTICIPANT"));
+        }
+        $session->remove("resourceOwnerName");
+    
+        $token = new UsernamePasswordToken($participant, null, 'main', $roles);
+        $this->get('security.context')->setToken($token);
+    
+        return $this->redirect( $this->generateUrl("_main") );
+    }
+    
+    
+    /**
+     * Check study eligibility
+     * @param unknown_type $studyId
+     * @throws \Exception
+     */
+    private function checkStudyEligibility($studyId)
+    {
+        if(!$studyId)
+            return;
         
-    }
-    
-    
-    /**
-     * @Route("/search_city_ajax", name="searchCityWithAjax", options={"expose"=true})
-     */
-    public function searchCityWithAjaxAction(Request $request)
-    {
-        if ($term = trim($request->get('query')))
-        {
-            $termUpper = strtoupper($term);
-            $em = $this->getDoctrine()->getEntityManager();
-    
-            $repository = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:City');
-    
-            $qb = $repository->createQueryBuilder('c');
-            $query = $qb
-            ->select('c.cityName, c.cityId')
-            ->where("UPPER(c.cityName) like '%$termUpper%'")
-            ->getQuery();
-    
-            $cities = $query->getResult();
+        $session = $this->getRequest()->getSession();
+        if ($session->has('SurveyInfo')){
+            $bag = $session->get('SurveyInfo');
+            $surveyId = $bag->get('surveyId');
+            $saveId = $bag->get('saveId');
+            if($studyId != $bag->get('studyId'))
+                throw new \Exception("You have not passed eligibility test");
             
-            foreach($cities as $city) {
-                $suggestions[] = array(
-                        'value' => $city["cityName"],
-                        'data' =>  $city["cityId"]
-                        ); 
-            }
+            $surveyResult = $this->get('custom_db')->getFactory('ElegibilityCustom')->getSurveyResponseData($saveId, $surveyId);
+            $sl = $this->get('study_logic');
             
-            $json = array(
-                    'query' => $term,
-                    'suggestions' => $suggestions
-                    );
-    
-            return new Response(json_encode($json), 200);
+            $isEligible = $sl->checkEligibility($studyId, $surveyResult);
+            if(!$isEligible)
+                throw new \Exception("You have not passed eligibility test");
+        } else {
+            throw new \Exception("You have not passed eligibility test");
         }
-    
-        return new Response('', 200);
     }
-    
-    /**
-     * @Route("/search_state_ajax", name="searchStateWithAjax", options={"expose"=true})
-     */
-    public function searchStateWithAjaxAction(Request $request)
-    {
-        if ($term = trim($request->get('query')))
-        {
-            $termUpper = strtoupper($term);
-            $em = $this->getDoctrine()->getEntityManager();
-    
-            $repository = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:State');
-    
-            $qb = $repository->createQueryBuilder('s');
-            $query = $qb
-            ->select('s.stateName, s.stateId')
-            ->where("UPPER(s.stateName) like '%$termUpper%'")
-            ->getQuery();
-    
-            $states = $query->getResult();
-            
-            foreach($states as $state) {
-                $suggestions[] = array(
-                        'value' => $state["stateName"],
-                        'data' =>  $state["stateId"]
-                        ); 
-            }
-            
-            $json = array(
-                    'query' => $term,
-                    'suggestions' => $suggestions
-                    );
-            
-            return new Response(json_encode($json), 200);
-        }
-    
-        return new Response('', 200);
-    }
+
 }
