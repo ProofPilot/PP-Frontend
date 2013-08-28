@@ -1,0 +1,2 @@
+page_body: "<h1>Oops! An Error Occurred</h1>\n        <h2>The server returned a %status_code% %status_text%\".</h2>\n\n        <div>\n            Something is broken. Please e-mail us at support@cyclogram.com and let us know\n            what you were doing when this error occurred. We will fix it as soon\n            as possible. Sorry for any inconvenience caused.\n        </div>"
+page_title: 'Error occurred'
