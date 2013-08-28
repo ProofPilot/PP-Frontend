@@ -20,17 +20,15 @@
 	
 	function resize_text_box(){
 		
-		var cont_height = $(".featured_box .banner_box").height();
+		var cont_height = $(".featured_box").height();
 		
 		$(".featured_box .text_box").each(function(){
-		
-			var this_text_box = $(this);
 			
-			var text_height   = $("span", this_text_box).height();
+			var text_height = $(this).height();
 			
-			var new_margin	  = (cont_height - text_height) / 2;
+			var new_margin = (cont_height - text_height) / 2;
 			
-			$(this_text_box).css('padding-top' , new_margin);
+			$(this).css('margin-top' , new_margin);
 			
 		});
 		
