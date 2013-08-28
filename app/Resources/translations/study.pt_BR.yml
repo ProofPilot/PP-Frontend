@@ -1,5 +1,5 @@
 btn_log_in: Entrar
-btn_start_enrollment: 'INCIAR INSCRIÇÃO DO ESTUDO'
+btn_start_enrollment: 'Inicie a inclusão no estudo'
 txt_about: 'Sobre este estudo'
 txt_about_proofpilot_text: "<p>ProofPilot é uma plataforma para criar, gerenciar e participar de pesquisas on-line. Ajudamos os pesquisadores a iniciarem facilmente estudos dos quais você, o participante, pode participar ao responder algumas perguntas importantes sobre a saúde, o comportamento humano e políticas públicas e sociais. Saiba mais sobre ProofPilot no link abaixo.</p>\n<p><a href=\"/\">www.proofpilot.com</a></p>"
 txt_about_proofpilot_title: 'Sobre o Proofpilot'
@@ -9,6 +9,6 @@ txt_eligible_dsc: 'Sua participação em um piscar de olhos. O que você precisa
 txt_secure_text: '<p>ProofPilot pensa na segurança em primeiro lugar. Entendemos que você estará compartilhando alguns dados confidenciais conosco e os nossos parceiros. Armazenamos seus dados em servidores seguros em um formato altamente criptografado. Levamos a sua segurança e privacidade a sério. Saiba mais sobre segurança no link abaixo. </P'
 txt_secure_title: 'É seguro?'
 txt_security_privacy: 'Segurança e Privacidade com ProofPilot'
-txt_to_do: 'O que você quer fazer?'
+txt_to_do: 'Que você quer fazer?'
 txt_you_are_eligible: 'Você está qualificado'
-warning_message: 'Antes de prosseguir, por favor leia esta informação importante e aceite na parte inferior da página'
+warning_message: 'Antes de prosseguir, por favor leia esta informação importante e clique em "recuso" ou "aceito" na parte inferior da página.'
