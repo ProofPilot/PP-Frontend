@@ -91,9 +91,13 @@ class StudyController extends Controller
             }
         }
 
-        $siteId = $this->getDoctrine()->getRepository("CyclogramProofPilotBundle:CampaignSiteLink")->getSiteIdByParameters($campaignName, $siteName);
-        $session->save("referralSite", $siteId);
-        echo "REFERRAL SITE ID: " . $siteId;
+        if($campaignName && $siteName) {
+            $siteId = $this->getDoctrine()->getRepository("CyclogramProofPilotBundle:CampaignSiteLink")->getSiteIdByParameters($campaignName, $siteName);
+            $session->save("referralSite", $siteId);
+            echo "REFERRAL SITE ID: " . $siteId;
+        } else {
+            echo "Failed to determine default campaign & site";
+        }
 
 
     
