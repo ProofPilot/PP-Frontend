@@ -59,7 +59,7 @@ class StudyController extends Controller
         
         $studyContent = $em->getRepository("CyclogramProofPilotBundle:StudyContent")->getStudyContent($studyUrl, $locale);
         
-        //$studyContent = $em->getRepository("CyclogramProofPilotBundle:StudyContent")->findOneBy(array('studyUrl' => $studyUrl, 'language' => $language->getLanguageId()));
+
         if (empty($studyContent))
             throw new ResourceNotFoundException('404 Not found');
 
@@ -69,38 +69,39 @@ class StudyController extends Controller
         
         $parameters = array();
         
+        $campaignParameters = $this->container->get('doctrine')->getRepository("CyclogramProofPilotBundle:Campaign")->getDefaultCampaignParameters($studyId);
+        if(!$campaignParameters)
+            throw new \Exception("Cannot determine default campaign parameters");
         
         //depending on request parameters get campaign and site name
         if($this->getRequest()->get('utm_source') && $this->getRequest()->get('utm_campaign')) {
             $campaignName = $this->getRequest()->get('utm_campaign');
             $siteName = $this->getRequest()->get('utm_source');
+            $csl = $this->getDoctrine()->getRepository("CyclogramProofPilotBundle:CampaignSiteLink")->getCSLParameters($campaignName, $siteName);
+            if (!$csl)
+                throw new \Exception("Referral URL parameters are wrong");
+            $siteId = $csl->getSite()->getSiteId();
+            $campaignId = $csl->getCampaign()->getCampaignId();
+                    
         } else {
-            $campaignParameters = $this->container->get('doctrine')->getRepository("CyclogramProofPilotBundle:Campaign")->getDefaultCampaignParameters($studyId);
-            if(!empty($campaignParameters)) {
-                $campaignName = $campaignParameters["campaignName"];
-                $siteName = $campaignParameters["siteName"];
-                
-                $str = "utm_source=" . urlencode($campaignParameters["siteName"]);
-                $str .= "&utm_medium=" . urlencode($campaignParameters["campaignTypeName"]);
-                $str .= "&utm_term=" . urlencode($campaignParameters["placementName"]);
-                $str .= "&utm_content=" . urlencode($campaignParameters["affinityName"]);
-                $str .= "&utm_campaign="  . urlencode($campaignParameters["campaignName"]);
-                
-                $parameters["google_pars"] = $str;
-                
-            }
+            $campaignName = $campaignParameters["campaignName"];
+            $campaignId = $campaignParameters["campaignId"];
+            $siteName = $campaignParameters["siteName"];
+            $siteId =  $campaignParameters["siteId"];
+            
+            $str = "utm_source=" . urlencode($campaignParameters["siteName"]);
+            $str .= "&utm_medium=" . urlencode($campaignParameters["campaignTypeName"]);
+            $str .= "&utm_term=" . urlencode($campaignParameters["placementName"]);
+            $str .= "&utm_content=" . urlencode($campaignParameters["affinityName"]);
+            $str .= "&utm_campaign="  . urlencode($campaignParameters["campaignName"]);
+            
+            $parameters["google_pars"] = $str;
         }
+        
+        //save referral site&campaign in session
+        $session->set('referralSite', $siteId);
+        $session->set('referralCampaign', $campaignId);
 
-        if(!empty($campaignName) && !empty($siteName)) {
-            $siteId = $this->getDoctrine()->getRepository("CyclogramProofPilotBundle:CampaignSiteLink")->getSiteIdByParameters($campaignName, $siteName);
-            $session->save("referralSite", $siteId);
-            echo "REFERRAL SITE ID: " . $siteId;
-        } else {
-            echo "Failed to determine default campaign & site";
-        }
-
-
-    
         $parameters["studycontent"] = $studyContent;
         $parameters["studyUrl"] = $studyUrl;
         $parameters["studyId"] = $studyId;

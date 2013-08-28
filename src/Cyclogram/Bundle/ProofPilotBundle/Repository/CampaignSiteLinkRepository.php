@@ -11,11 +11,11 @@ class CampaignSiteLinkRepository extends EntityRepository
      * Gets the default campaign for study
      * @param unknown_type $studyId
      */
-    public function getSiteIdByParameters ($campaignName, $siteName)
+    public function getCSLParameters ($campaignName, $siteName)
     {
         $query = $this->getEntityManager()
         ->createQuery("
-                SELECT csl, site
+                SELECT csl, site, c
                 FROM CyclogramProofPilotBundle:CampaignSiteLink csl
                 INNER JOIN csl.campaign c
                 LEFT JOIN c.campaignType ct
@@ -36,7 +36,7 @@ class CampaignSiteLinkRepository extends EntityRepository
         if(empty($results))
             return null;
         else
-            return $results[0]->getSite()->getSiteId();
+            return $results[0];
     
     }
 }

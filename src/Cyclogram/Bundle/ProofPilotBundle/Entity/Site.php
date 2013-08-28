@@ -34,9 +34,16 @@ class Site
      * @ORM\Column(name="site_url", type="string", length=255, nullable=true)
      */
     private $siteUrl;
-    
+
     /**
-     * @var \Status
+     * @var boolean
+     *
+     * @ORM\Column(name="site_default", type="boolean", nullable=false)
+     */
+    private $siteDefault;
+
+    /**
+     * @var \Organization
      *
      * @ORM\ManyToOne(targetEntity="Organization")
      * @ORM\JoinColumns({
@@ -114,6 +121,52 @@ class Site
     }
 
     /**
+     * Set siteDefault
+     *
+     * @param boolean $siteDefault
+     * @return Site
+     */
+    public function setSiteDefault($siteDefault)
+    {
+        $this->siteDefault = $siteDefault;
+    
+        return $this;
+    }
+
+    /**
+     * Get siteDefault
+     *
+     * @return boolean 
+     */
+    public function getSiteDefault()
+    {
+        return $this->siteDefault;
+    }
+
+    /**
+     * Set organization
+     *
+     * @param \Cyclogram\Bundle\ProofPilotBundle\Entity\Organization $organization
+     * @return Site
+     */
+    public function setOrganization(\Cyclogram\Bundle\ProofPilotBundle\Entity\Organization $organization = null)
+    {
+        $this->organization = $organization;
+    
+        return $this;
+    }
+
+    /**
+     * Get organization
+     *
+     * @return \Cyclogram\Bundle\ProofPilotBundle\Entity\Organization 
+     */
+    public function getOrganization()
+    {
+        return $this->organization;
+    }
+
+    /**
      * Set status
      *
      * @param \Cyclogram\Bundle\ProofPilotBundle\Entity\Status $status
@@ -134,15 +187,5 @@ class Site
     public function getStatus()
     {
         return $this->status;
-    }
-
-    public function getOrganization()
-    {
-        return $this->organization;
-    }
-
-    public function setOrganization($organization)
-    {
-        $this->organization = $organization;
     }
 }

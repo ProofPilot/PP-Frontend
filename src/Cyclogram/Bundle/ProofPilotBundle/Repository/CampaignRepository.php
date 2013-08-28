@@ -14,7 +14,7 @@ class CampaignRepository extends EntityRepository
     {
         $query = $this->getEntityManager()
         ->createQuery("
-                SELECT csl.campaignSiteLinkId, c.campaignName, ct.campaignTypeName, p.placementName, site.siteName, a.affinityName
+                SELECT csl.campaignSiteLinkId, c.campaignId, c.campaignName, ct.campaignTypeName, p.placementName, site.siteId, site.siteName, a.affinityName
                 FROM CyclogramProofPilotBundle:CampaignSiteLink csl
                 INNER JOIN csl.campaign c
                 LEFT JOIN c.campaignType ct
@@ -33,6 +33,7 @@ class CampaignRepository extends EntityRepository
                 WHERE
                 study.studyId = :studyId
                 AND site_status.statusName = 'Active'
+                AND site.siteDefault = true
                 AND campaign_status.statusName = 'Active'
                 AND organization_status.statusName = 'Active'
                 AND placement_status.statusName = 'Active'
