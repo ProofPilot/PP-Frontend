@@ -27,3 +27,9 @@ services:
     study_logic:
         class: Cyclogram\FrontendBundle\Service\StudyLogic
         arguments: [@service_container]
+        
+    study_controller_listener:
+        class: Cyclogram\StudyBundle\Listener\ControllerListener
+        tags:
+            - { name: kernel.event_listener, event: kernel.controller, method: onKernelController } 
+

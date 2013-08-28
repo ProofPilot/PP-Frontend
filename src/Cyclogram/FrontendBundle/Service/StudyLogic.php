@@ -18,7 +18,7 @@ class StudyLogic
     private $supportedStudies = array(
             'sexpro',
             'koc',
-            'kocsm'
+            'kocsocialmedia'
             );
 
     public function __construct (Container $container)

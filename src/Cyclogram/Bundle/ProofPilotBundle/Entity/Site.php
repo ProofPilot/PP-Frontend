@@ -45,7 +45,7 @@ class Site
     /**
      * @var \Organization
      *
-     * @ORM\ManyToOne(targetEntity="Organization")
+     * @ORM\ManyToOne(targetEntity="Organization", inversedBy="sites")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="organization_id", referencedColumnName="organization_id")
      * })

@@ -2,6 +2,8 @@
 
 namespace Cyclogram\StudyBundle\Controller;
 
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+
 use Symfony\Component\HttpFoundation\Session\Attribute\AttributeBag;
 
 use Cyclogram\Bundle\ProofPilotBundle\Entity\StudyContent;
@@ -25,25 +27,57 @@ class StudyController extends Controller
         $locale = $this->getRequest()->getLocale();
         
         $studyContent = $this->getDoctrine()->getRepository("CyclogramProofPilotBundle:StudyContent")->getStudyContent($studyUrl, $locale);
+        if (empty($studyContent))
+            throw new NotFoundHttpException();
+        
         $study = $studyContent->getStudy();
         $studyId = $studyContent->getStudyId();
+        $this->parameters["studycontent"] = $studyContent;
+        $this->parameters['studyUrl'] = $studyUrl;
+        $this->parameters['studyId'] = $studyId;
+        $this->parameters['surveyId'] = $studyContent->getStudyElegibilitySurvey();
+        $this->parameters["logo"] = $this->container->getParameter('study_image_url') . '/' . $studyId. '/' .$studyContent->getStudyLogo();
+        $this->parameters["graphic"] = $this->container->getParameter('study_image_url') . '/' .$studyId. '/' .$studyContent->getStudyGraphic();
         
         $logic = $this->get('study_logic');
+        
+        //check if study is supported
         if(!$logic->supports($study->getStudyCode())) {
-            $this->parameters["unsupportedStudy"] = $study->getStudyCode();
-            $this->parameters["supported"] = $logic->getSupportedStudies();
-            $this->parameters["studycontent"] = $studyContent;
-            $this->parameters['studyUrl'] = $studyUrl;
-            $this->parameters['studyId'] = $studyId;
-            $this->parameters["logo"] = $this->container->getParameter('study_image_url') . '/' . $studyId. '/' .$studyContent->getStudyLogo();
-            $this->parameters["graphic"] = $this->container->getParameter('study_image_url') . '/' .$studyId. '/' .$studyContent->getStudyGraphic();
+            $this->parameters["errorMessage"] = "Study with code '" . $study->getStudyCode() . "' not supported by the system.";
+            $this->parameters["errorChoicesMessage"] = "Supported codes are:";
+            $this->parameters["errorChoices"] = $logic->getSupportedStudies();
             return true;
         }
+        
+        //check if study has at least one "Site" organization linked
+        if(!$sol = $this->getDoctrine()->getRepository("CyclogramProofPilotBundle:Study")->getOrganizationLinks($studyId)) {
+            $this->parameters["errorMessage"] = "Study '" . $study->getStudyCode() . "' has no organization with role Site linked";
+            return true;
+        } else {
+            $this->parameters["siteOrganization"] = $sol[0]["organizationName"];
+        }
+        
+        //check if organization has any default sites
+        if(!$defaultSites = $this->getDoctrine()->getRepository("CyclogramProofPilotBundle:Study")->getDefaultSites($studyId)) {
+            $this->parameters["errorMessage"] = "Organization '" . $this->parameters["siteOrganization"] . "' has no default sites.";
+            return true;
+        } else {
+            $this->parameters["defaultSite"] = $defaultSites[0]["siteName"];
+        }
+
+        //check for default campaigns
+        if(!$campaignParameters = $this->container->get('doctrine')->getRepository("CyclogramProofPilotBundle:Campaign")->getDefaultCampaignParameters($studyId)) {
+            $this->parameters["errorMessage"] = "No campains are linked with site  '" . $this->parameters["defaultSite"] . "'";
+            return true;
+        } else {
+            $this->parameters["campaignParameters"] = $campaignParameters;
+        }
+        
         return false;
     }
     
     public function errorAction()
-    {
+    {   
         return $this->render('CyclogramStudyBundle:Study:error.html.twig', $this->parameters);
     }
     
@@ -56,23 +90,7 @@ class StudyController extends Controller
         $locale = $this->getRequest()->getLocale();
         $em = $this->getDoctrine()->getManager();
         $session = $this->getRequest()->getSession();
-        
-        $studyContent = $em->getRepository("CyclogramProofPilotBundle:StudyContent")->getStudyContent($studyUrl, $locale);
-        
 
-        if (empty($studyContent))
-            throw new ResourceNotFoundException('404 Not found');
-
-        $studyId = $studyContent->getStudyId();
-
-        $surveyId = $studyContent->getStudyElegibilitySurvey();
-        
-        $parameters = array();
-        
-        $campaignParameters = $this->container->get('doctrine')->getRepository("CyclogramProofPilotBundle:Campaign")->getDefaultCampaignParameters($studyId);
-        if(!$campaignParameters)
-            throw new \Exception("Cannot determine default campaign parameters");
-        
         //depending on request parameters get campaign and site name
         if($this->getRequest()->get('utm_source') && $this->getRequest()->get('utm_campaign')) {
             $campaignName = $this->getRequest()->get('utm_campaign');
@@ -84,33 +102,25 @@ class StudyController extends Controller
             $campaignId = $csl->getCampaign()->getCampaignId();
                     
         } else {
-            $campaignName = $campaignParameters["campaignName"];
-            $campaignId = $campaignParameters["campaignId"];
-            $siteName = $campaignParameters["siteName"];
-            $siteId =  $campaignParameters["siteId"];
+            $campaignName = $this->parameters["campaignParameters"]["campaignName"];
+            $campaignId = $this->parameters["campaignParameters"]["campaignId"];
+            $siteName = $this->parameters["campaignParameters"]["siteName"];
+            $siteId =  $this->parameters["campaignParameters"]["siteId"];
             
-            $str = "utm_source=" . urlencode($campaignParameters["siteName"]);
-            $str .= "&utm_medium=" . urlencode($campaignParameters["campaignTypeName"]);
-            $str .= "&utm_term=" . urlencode($campaignParameters["placementName"]);
-            $str .= "&utm_content=" . urlencode($campaignParameters["affinityName"]);
-            $str .= "&utm_campaign="  . urlencode($campaignParameters["campaignName"]);
+            $str = "utm_source=" . urlencode($this->parameters["campaignParameters"]["siteName"]);
+            $str .= "&utm_medium=" . urlencode($this->parameters["campaignParameters"]["campaignTypeName"]);
+            $str .= "&utm_term=" . urlencode($this->parameters["campaignParameters"]["placementName"]);
+            $str .= "&utm_content=" . urlencode($this->parameters["campaignParameters"]["affinityName"]);
+            $str .= "&utm_campaign="  . urlencode($this->parameters["campaignParameters"]["campaignName"]);
             
-            $parameters["google_pars"] = $str;
+            $this->parameters["google_pars"] = $str;
         }
         
         //save referral site&campaign in session
         $session->set('referralSite', $siteId);
         $session->set('referralCampaign', $campaignId);
 
-        $parameters["studycontent"] = $studyContent;
-        $parameters["studyUrl"] = $studyUrl;
-        $parameters["studyId"] = $studyId;
-        $parameters["surveyId"] = $surveyId;
-        $parameters["logo"] = $this->container->getParameter('study_image_url') . '/' . $studyId. '/' .$studyContent->getStudyLogo();
-        $parameters["graphic"] = $this->container->getParameter('study_image_url') . '/' .$studyId. '/' .$studyContent->getStudyGraphic();
-        
-
-        return $this->render('CyclogramStudyBundle:Study:page.html.twig', $parameters);
+        return $this->render('CyclogramStudyBundle:Study:page.html.twig', $this->parameters);
 
     }
     
@@ -120,22 +130,7 @@ class StudyController extends Controller
      */
     public function studyAction($studyUrl)
     {
-        $session = $this->getRequest()->getSession();      
-        
-        
-        $locale = $this->getRequest()->getLocale();
-    
-        $studyContent = $this->getDoctrine()->getRepository("CyclogramProofPilotBundle:StudyContent")->getStudyContent($studyUrl, $locale);
-    
-        $parameters = array();
-    
-        $parameters["studycontent"] = $studyContent;
-        $parameters["studyUrl"] = $studyUrl;
-        $parameters["studyId"] = $studyContent->getStudy()->getStudyId();
-        $parameters["logo"] = $this->container->getParameter('study_image_url') . '/' . $studyContent->getStudy()->getStudyId() . '/' .$studyContent->getStudyLogo();
-        $parameters["graphic"] = $this->container->getParameter('study_image_url') . '/' . $studyContent->getStudy()->getStudyId() . '/' .$studyContent->getStudyGraphic();
-
-        return $this->render('CyclogramStudyBundle:Study:study_eligibility.html.twig', $parameters);
+        return $this->render('CyclogramStudyBundle:Study:study_eligibility.html.twig', $this->parameters);
     }
     
     
@@ -172,36 +167,26 @@ class StudyController extends Controller
 
     
     /**
-     * @Route("/is_it_secure/{studyId}", name="_secure")
+     * @Route("/is_it_secure", name="_secure")
      * @Template()
      */
-    public function isItSecureAction($studyId)
+    public function isItSecureAction()
     {
-        $parameters = array();
-        $parameters["studyId"] = $studyId;
-        $locale = $this->getRequest()->getLocale();
-        $em = $this->getDoctrine()->getManager();
-        
-        $studyContent = $em->getRepository("CyclogramProofPilotBundle:StudyContent")->getStudyContentById($studyId, $locale);
-        
-        $parameters["studyUrl"] = $studyContent->getStudyUrl();
-        
-        
         $locale = $this->getRequest()->getLocale();
         $em = $this->getDoctrine()->getManager();
         
         
         $blockContent = $em->getRepository("CyclogramProofPilotBundle:StaticBlocks")->getBlockContent("security_privacy_title", $locale);
-        $parameters["title"] = $blockContent;
+        $this->parameters["title"] = $blockContent;
         
         $blockContent = $em->getRepository("CyclogramProofPilotBundle:StaticBlocks")->getBlockContent("privacy_security", $locale);
-        $parameters["content"] = $blockContent;
+        $this->parameters["content"] = $blockContent;
         
         $blockContent = $em->getRepository("CyclogramProofPilotBundle:StaticBlocks")->getBlockContent("about_proofpilot", $locale);
-        $parameters["about"] = $blockContent;
+        $this->parameters["about"] = $blockContent;
 
         
-        return $this->render('CyclogramStudyBundle:Study:is_it_secure.html.twig', $parameters);
+        return $this->render('CyclogramStudyBundle:Study:is_it_secure.html.twig', $this->parameters);
     }
 
 

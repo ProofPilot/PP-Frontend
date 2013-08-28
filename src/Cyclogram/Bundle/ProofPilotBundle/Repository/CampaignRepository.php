@@ -28,6 +28,7 @@ class CampaignRepository extends EntityRepository
                 INNER JOIN site.organization o
                 INNER JOIN o.status organization_status
                 INNER JOIN o.studyOrganizationLinks sol
+                INNER JOIN sol.status sol_status
                 INNER JOIN sol.studyOrganizationRole role
                 INNER JOIN sol.study study
                 WHERE
@@ -36,6 +37,7 @@ class CampaignRepository extends EntityRepository
                 AND site.siteDefault = true
                 AND campaign_status.statusName = 'Active'
                 AND organization_status.statusName = 'Active'
+                AND sol_status.statusName = 'Active'
                 AND placement_status.statusName = 'Active'
                 AND affinity_status.statusName = 'Active'
                 AND role.studyOrganizationRoleName = 'Site'
