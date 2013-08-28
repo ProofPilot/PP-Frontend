@@ -16,6 +16,37 @@ use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
 class StudyController extends Controller
 {
+    private $parameters = array();
+
+    
+    public function preExecute()
+    {
+        $studyUrl = $this->getRequest()->get('studyUrl');
+        $locale = $this->getRequest()->getLocale();
+        
+        $studyContent = $this->getDoctrine()->getRepository("CyclogramProofPilotBundle:StudyContent")->getStudyContent($studyUrl, $locale);
+        $study = $studyContent->getStudy();
+        $studyId = $studyContent->getStudyId();
+        
+        $logic = $this->get('study_logic');
+        if(!$logic->supports($study->getStudyCode())) {
+            $this->parameters["unsupportedStudy"] = $study->getStudyCode();
+            $this->parameters["supported"] = $logic->getSupportedStudies();
+            $this->parameters["studycontent"] = $studyContent;
+            $this->parameters['studyUrl'] = $studyUrl;
+            $this->parameters['studyId'] = $studyId;
+            $this->parameters["logo"] = $this->container->getParameter('study_image_url') . '/' . $studyId. '/' .$studyContent->getStudyLogo();
+            $this->parameters["graphic"] = $this->container->getParameter('study_image_url') . '/' .$studyId. '/' .$studyContent->getStudyGraphic();
+            return true;
+        }
+        return false;
+    }
+    
+    public function errorAction()
+    {
+        return $this->render('CyclogramStudyBundle:Study:error.html.twig', $this->parameters);
+    }
+    
     /**
      * @Route("", name="_page")
      * @Template()
@@ -24,6 +55,7 @@ class StudyController extends Controller
     {
         $locale = $this->getRequest()->getLocale();
         $em = $this->getDoctrine()->getManager();
+        $session = $this->getRequest()->getSession();
         
         $studyContent = $em->getRepository("CyclogramProofPilotBundle:StudyContent")->getStudyContent($studyUrl, $locale);
         
@@ -31,14 +63,39 @@ class StudyController extends Controller
         if (empty($studyContent))
             throw new ResourceNotFoundException('404 Not found');
 
-        
         $studyId = $studyContent->getStudyId();
-        
-        
+
         $surveyId = $studyContent->getStudyElegibilitySurvey();
-    
-    
+        
         $parameters = array();
+        
+        
+        //depending on request parameters get campaign and site name
+        if($this->getRequest()->get('utm_source') && $this->getRequest()->get('utm_campaign')) {
+            $campaignName = $this->getRequest()->get('utm_campaign');
+            $siteName = $this->getRequest()->get('utm_source');
+        } else {
+            $campaignParameters = $this->container->get('doctrine')->getRepository("CyclogramProofPilotBundle:Campaign")->getDefaultCampaignParameters($studyId);
+            if(!empty($campaignParameters)) {
+                $campaignName = $campaignParameters["campaignName"];
+                $siteName = $campaignParameters["siteName"];
+                
+                $str = "utm_source=" . urlencode($campaignParameters["siteName"]);
+                $str .= "&utm_medium=" . urlencode($campaignParameters["campaignTypeName"]);
+                $str .= "&utm_term=" . urlencode($campaignParameters["placementName"]);
+                $str .= "&utm_content=" . urlencode($campaignParameters["affinityName"]);
+                $str .= "&utm_campaign="  . urlencode($campaignParameters["campaignName"]);
+                
+                $parameters["google_pars"] = $str;
+                
+            }
+        }
+
+        $siteId = $this->getDoctrine()->getRepository("CyclogramProofPilotBundle:CampaignSiteLink")->getSiteIdByParameters($campaignName, $siteName);
+        $session->save("referralSite", $siteId);
+        echo "REFERRAL SITE ID: " . $siteId;
+
+
     
         $parameters["studycontent"] = $studyContent;
         $parameters["studyUrl"] = $studyUrl;

@@ -27,7 +27,7 @@ class GlobalExtension extends \Twig_Extension
                         'needs_context' => true
                         )),
                 'is_enrolled_in_study' => new \Twig_Function_Method($this, 'isEnrolledInStudy'),
-                'google_campaign_info' => new \Twig_Function_Method($this, 'getGoogleCampaignInfo')
+//                 'google_campaign_info' => new \Twig_Function_Method($this, 'getGoogleCampaignInfo')
         );
     }
     
@@ -81,20 +81,20 @@ class GlobalExtension extends \Twig_Extension
         return $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Participant')->isEnrolledInStudy($participant, $studyId);
     }
     
-    public function getGoogleCampaignInfo($studyId)
-    {
-        $campaignParameters = $this->container->get('doctrine')->getRepository("CyclogramProofPilotBundle:Campaign")->getDefaultCampaignParameters($studyId);
+//     public function getGoogleCampaignInfo($studyId)
+//     {
+//         $campaignParameters = $this->container->get('doctrine')->getRepository("CyclogramProofPilotBundle:Campaign")->getDefaultCampaignParameters($studyId);
         
-        if(empty($campaignParameters))
-            return "";
+//         if(empty($campaignParameters))
+//             return "";
             
-        $str = "utm_source=" . urlencode($campaignParameters["siteName"]);
-        $str .= "&utm_medium=" . urlencode($campaignParameters["campaignTypeName"]);
-        $str .= "&utm_term=" . urlencode($campaignParameters["placementName"]);
-        $str .= "&utm_content=" . urlencode($campaignParameters["affinityName"]);
-        $str .= "&utm_campaign="  . urlencode($campaignParameters["campaignName"]);
+//         $str = "utm_source=" . urlencode($campaignParameters["siteName"]);
+//         $str .= "&utm_medium=" . urlencode($campaignParameters["campaignTypeName"]);
+//         $str .= "&utm_term=" . urlencode($campaignParameters["placementName"]);
+//         $str .= "&utm_content=" . urlencode($campaignParameters["affinityName"]);
+//         $str .= "&utm_campaign="  . urlencode($campaignParameters["campaignName"]);
 
-        return $str;
-    }
+//         return $str;
+//     }
 
 }

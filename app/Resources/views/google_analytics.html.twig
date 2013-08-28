@@ -6,11 +6,8 @@
   _gaq.push(['_setDomainName', '{{ app.request.host }}']);
 
   {% spaceless %}
-  {% if (studyId is defined) and (app.request.query.get('utm_source') is empty) %}
-      {% set str = google_campaign_info(studyId) %}
-      {% if str is not empty %}
-         _gaq.push(['_set', 'campaignParams', '{{ str|raw }}']);
-      {% endif %}
+  {% if google_pars is defined %}
+         _gaq.push(['_set', 'campaignParams', '{{ google_pars|raw }}']);
   {% endif %}
   {% endspaceless %}
 
