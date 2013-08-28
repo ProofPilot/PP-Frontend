@@ -91,7 +91,7 @@ class StudyController extends Controller
             }
         }
 
-        if($campaignName && $siteName) {
+        if(!empty($campaignName) && !empty($siteName)) {
             $siteId = $this->getDoctrine()->getRepository("CyclogramProofPilotBundle:CampaignSiteLink")->getSiteIdByParameters($campaignName, $siteName);
             $session->save("referralSite", $siteId);
             echo "REFERRAL SITE ID: " . $siteId;
