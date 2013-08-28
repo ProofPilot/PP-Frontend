@@ -433,7 +433,7 @@ class RegistrationController extends Controller
             }
         } 
         
-        return $this->redirect($this->generateUrl('_register_start', array('studyId'=>$studyId)));
+        return $this->redirect($this->generateUrl('_register', array('studyId'=>$studyId)));
 
     }
     
