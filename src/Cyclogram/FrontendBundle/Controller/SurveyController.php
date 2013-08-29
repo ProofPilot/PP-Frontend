@@ -89,9 +89,9 @@ class SurveyController extends Controller
         if($isEligible)
             return $this->redirect($redirectUrl);
         else
-            return $this->redirect($this->generateUrl('_study', array(
-                        'studyUrl' => $studyContent->getStudyUrl()
-                    
+            return $this->redirect($this->generateUrl('_page', array(
+                        'studyUrl' => $studyContent->getStudyUrl(),
+                        'eligible' => false
                     )));
     }
     
