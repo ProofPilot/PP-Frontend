@@ -147,18 +147,18 @@ class ParticipantRepository extends EntityRepository implements
      * @param unknown_type $minAge
      * @param unknown_type $maxAge
      */
-    public function countArmByCityAge($armName, $city, $minAge, $maxAge) {
+    public function countArmByCityAge($armCode, $city, $minAge, $maxAge) {
         return $this->getEntityManager()
         ->createQuery('SELECT COUNT(p) FROM CyclogramProofPilotBundle:ParticipantArmLink pal
                 INNER JOIN pal.participant p
                 INNER JOIN pal.arm a
-                WHERE a.armName = :armname
+                WHERE a.armCode = :armcode
                 AND p.location = :city
                 AND p.age >= :minage AND p.age < :maxage
                 AND p.participantMobileSmsCodeConfirmed = 1
                 ')
                 ->setParameters(array(
-                        'armname' => $armName,
+                        'armcode' => $armCode,
                         'minage' => $minAge,
                         'maxage' => $maxAge,
                         'city' => $city

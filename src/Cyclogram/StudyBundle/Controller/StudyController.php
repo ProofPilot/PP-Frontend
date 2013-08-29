@@ -74,6 +74,22 @@ class StudyController extends Controller
             $this->parameters["campaignParameters"] = $campaignParameters;
         }
         
+        //check if required arms exist
+        if(!$this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Study')->checkStudyArms($logic->getArmCodes($this->parameters['studyCode']))) {
+            $this->parameters["errorMessage"] = "Not all required arms found for study  '" .  $this->parameters['studyCode']  . "'";
+            $this->parameters["errorChoicesMessage"] = "Required arms are:";
+            $this->parameters["errorChoices"] = $logic->getArmCodes($this->parameters['studyCode']);
+            return true;
+        } 
+        
+        //check if required interventions exist
+        if(!$this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Study')->checkStudyInterventions($logic->getInterventionCodes($this->parameters['studyCode']))) {
+            $this->parameters["errorMessage"] = "Not all required interventions found for study  '" .  $this->parameters['studyCode']  . "'";
+            $this->parameters["errorChoicesMessage"] = "Required interventions are:";
+            $this->parameters["errorChoices"] = $logic->getInterventionCodes($this->parameters['studyCode']);
+            return true;
+        }
+        
         return false;
     }
     

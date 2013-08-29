@@ -65,6 +65,54 @@ class StudyRepository extends EntityRepository
                 ->getResult();
     }
     
+    /**
+     * Check if system contains required arms
+     * @param unknown_type $studyId
+     * @return boolean
+     */
+    public function checkStudyArms($arm_codes)
+    {
+        foreach($arm_codes as $armcode) {
+            $arm = $this->getEntityManager()
+            ->createQuery("
+                    SELECT a
+                    FROM CyclogramProofPilotBundle:Arm a
+                    INNER JOIN a.study s
+                    WHERE
+                    a.armCode = :armcode
+                    ")
+                    ->setParameter('armcode', $armcode)
+                    ->getOneOrNullResult();
+            if(!$arm)
+                return false;
+        }
+        return true;
+    }
+    
+    
+    /**
+     * Check if system contains required interventions
+     * @param unknown_type $studyId
+     * @return boolean
+     */
+    public function checkStudyInterventions($intervention_codes)
+    {
+        foreach($intervention_codes as $interventionCode) {
+            $intervention = $this->getEntityManager()
+            ->createQuery("
+                    SELECT i
+                    FROM CyclogramProofPilotBundle:Intervention i
+                    INNER JOIN i.study s
+                    WHERE
+                    i.interventionCode = :interventioncode
+                    ")
+                    ->setParameter('interventioncode', $interventionCode)
+                    ->getOneOrNullResult();
+            if(!$intervention)
+                return false;
+        }
+        return true;
+    }
      
 
 
