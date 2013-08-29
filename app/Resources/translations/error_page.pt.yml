@@ -1,2 +1,2 @@
-page_body: "<h1>Oops! An Error Occurred</h1>\n        <h2>The server returned a \"%status_code% %status_text%\".</h2>\n\n        <div>\n            Something is broken. Please e-mail us at support@cyclogram.com and let us know\n            what you were doing when this error occurred. We will fix it as soon\n            as possible. Sorry for any inconvenience caused.\n        </div>"
-page_title: 'Error occurred'
+page_body: "<h1> Ops! Ocorreu um erro </ h1>\n\_\_\_\_\_\_\_\_ <h2> O servidor retornou um status_code%%%% status_text \". </ h2>\n\n\_\_\_\_\_\_\_\_ <div>\n\_\_\_\_\_\_\_\_\_\_\_\_ Algo está quebrado. Envie um e-mail para support@cyclogram.com e deixe-nos saber\n\_\_\_\_\_\_\_\_\_\_\_\_ o que você estava fazendo quando ocorreu este erro. Nós vamos corrigi-lo o mais rapidamente\n\_\_\_\_\_\_\_\_\_\_\_\_ quanto possível. Desculpe por qualquer inconveniente causado.\n\_\_\_\_\_\_\_\_ </ div>"
+page_title: ':9 Um erro ocorreu'
