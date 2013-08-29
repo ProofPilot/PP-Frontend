@@ -5,7 +5,7 @@
 	
 		<div class="site_container">
 		{% block header %}
-            {% include '::header.html.twig' with {'studyId' : studyId}%}
+            {% include '::header.html.twig' with {'studyCode' : studyCode}%}
         {% endblock header %}
 
 			<div class="panel alt_bg">
@@ -216,7 +216,7 @@
 		    	var saveId = surveydata.attr('saveid');
 
 		    	if(surveyId !== undefined && saveId !== undefined) {
-		    	    window.location = '/' + '{{ app.request.locale }}' + '/surveyResponse?&studyId={{ studyId }}&surveyId=' + surveyId + '&saveId=' + saveId + '&redirectUrl=' + '{{ app.request.get('redirectUrl') }}';
+		    	    window.location = '/' + '{{ app.request.locale }}' + '/surveyResponse?&studyCode={{ studyCode }}&surveyId=' + surveyId + '&saveId=' + saveId + '&redirectUrl=' + '{{ app.request.get('redirectUrl') }}';
 		    	}
 
     		});

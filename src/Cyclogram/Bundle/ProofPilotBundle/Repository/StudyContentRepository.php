@@ -47,7 +47,7 @@ class StudyContentRepository extends EntityRepository
         
     }
     
-    public function getStudyContentById ($studyId, $locale)
+    public function getStudyContentByCode ($studyCode, $locale)
     {
         $fallbacks = array(
                 'en'=> array('en'),
@@ -67,10 +67,10 @@ class StudyContentRepository extends EntityRepository
                 JOIN sc.language l
                 JOIN sc.study s
                 WHERE
-                sc.studyId = :studyid
+                s.studyCode = :studycode
                 AND l.locale IN (:locales)
                 ")
-                ->setParameter('studyid', $studyId)
+                ->setParameter('studycode', $studyCode)
                 ->setParameter('locales', $fallbacks[$locale])
                 ->getResult();
     

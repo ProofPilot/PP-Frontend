@@ -13,8 +13,8 @@ function g_login() {
         if(token)
             document.location = "{{ url("frontend_oauth_service_redirect", {
                 service: "google", 
-                studyId: studyId, 
-                _destination: path("_do_login", {studyId: studyId}) 
+                studyCode: studyCode, 
+                _destination: path("_do_login", {studyCode: studyCode}) 
                 }) | raw
             }}";
 

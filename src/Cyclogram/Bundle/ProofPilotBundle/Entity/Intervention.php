@@ -24,7 +24,7 @@ class Intervention
     /**
      * @var string
      *
-     * @ORM\Column(name="intervention_name", type="string", length=45, nullable=false)
+     * @ORM\Column(name="intervention_name", type="string", length=100, nullable=true)
      */
     private $interventionName;
 
@@ -50,38 +50,6 @@ class Intervention
     private $interventionResponseUrl;
 
     /**
-     * @var \Language
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="Language")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="language_id", referencedColumnName="language_id")
-     * })
-     */
-    private $language;
-
-    /**
-     * @var \InterventionType
-     *
-     * @ORM\ManyToOne(targetEntity="InterventionType")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="intervention_type_id", referencedColumnName="intervention_type_id")
-     * })
-     */
-    private $interventionType;
-
-    /**
-     * @var \Status
-     *
-     * @ORM\ManyToOne(targetEntity="Status")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="status_id", referencedColumnName="status_id")
-     * })
-     */
-    private $status;
-    
-    /**
      * @var string
      *
      * @ORM\Column(name="intervention_title", type="string", length=255, nullable=true)
@@ -95,106 +63,330 @@ class Intervention
      */
     private $interventionDescripton;
 
-    public function getInterventionName()
-    {
-        return $this->interventionName;
-    }
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="intervention_code", type="string", length=45, nullable=false)
+     */
+    private $interventionCode;
 
-    public function setInterventionName($interventionName)
+    /**
+     * @var \InterventionType
+     *
+     * @ORM\ManyToOne(targetEntity="InterventionType")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="intervention_type_id", referencedColumnName="intervention_type_id")
+     * })
+     */
+    private $interventionType;
+
+    /**
+     * @var \Language
+     *
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\OneToOne(targetEntity="Language")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="language_id", referencedColumnName="language_id")
+     * })
+     */
+    private $language;
+
+    /**
+     * @var \Status
+     *
+     * @ORM\ManyToOne(targetEntity="Status")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="status_id", referencedColumnName="status_id")
+     * })
+     */
+    private $status;
+
+    /**
+     * @var \Study
+     *
+     * @ORM\ManyToOne(targetEntity="Study")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="study_id", referencedColumnName="study_id")
+     * })
+     */
+    private $study;
+
+
+
+    /**
+     * Set interventionId
+     *
+     * @param integer $interventionId
+     * @return Intervention
+     */
+    public function setInterventionId($interventionId)
     {
-        $this->interventionName = $interventionName;
-    }
+        $this->interventionId = $interventionId;
     
-    
-
-
-    public function getInterventionType()
-    {
-        return $this->interventionType;
+        return $this;
     }
 
-    public function setInterventionType($interventionType)
-    {
-        $this->interventionType = $interventionType;
-    }
-
-    public function getSidId()
-    {
-        return $this->sidId;
-    }
-
-    public function setSidId($sidId)
-    {
-        $this->sidId = $sidId;
-    }
-
+    /**
+     * Get interventionId
+     *
+     * @return integer 
+     */
     public function getInterventionId()
     {
         return $this->interventionId;
     }
 
-    public function setInterventionId($interventionId)
+    /**
+     * Set interventionName
+     *
+     * @param string $interventionName
+     * @return Intervention
+     */
+    public function setInterventionName($interventionName)
     {
-        $this->interventionId = $interventionId;
+        $this->interventionName = $interventionName;
+    
+        return $this;
     }
 
+    /**
+     * Get interventionName
+     *
+     * @return string 
+     */
+    public function getInterventionName()
+    {
+        return $this->interventionName;
+    }
+
+    /**
+     * Set interventionUrl
+     *
+     * @param string $interventionUrl
+     * @return Intervention
+     */
+    public function setInterventionUrl($interventionUrl)
+    {
+        $this->interventionUrl = $interventionUrl;
+    
+        return $this;
+    }
+
+    /**
+     * Get interventionUrl
+     *
+     * @return string 
+     */
     public function getInterventionUrl()
     {
         return $this->interventionUrl;
     }
 
-    public function setInterventionUrl($interventionUrl)
+    /**
+     * Set sidId
+     *
+     * @param string $sidId
+     * @return Intervention
+     */
+    public function setSidId($sidId)
     {
-        $this->interventionUrl = $interventionUrl;
+        $this->sidId = $sidId;
+    
+        return $this;
     }
 
+    /**
+     * Get sidId
+     *
+     * @return string 
+     */
+    public function getSidId()
+    {
+        return $this->sidId;
+    }
+
+    /**
+     * Set interventionResponseUrl
+     *
+     * @param string $interventionResponseUrl
+     * @return Intervention
+     */
+    public function setInterventionResponseUrl($interventionResponseUrl)
+    {
+        $this->interventionResponseUrl = $interventionResponseUrl;
+    
+        return $this;
+    }
+
+    /**
+     * Get interventionResponseUrl
+     *
+     * @return string 
+     */
     public function getInterventionResponseUrl()
     {
         return $this->interventionResponseUrl;
     }
 
-    public function setInterventionResponseUrl($interventionResponseUrl)
+    /**
+     * Set interventionTitle
+     *
+     * @param string $interventionTitle
+     * @return Intervention
+     */
+    public function setInterventionTitle($interventionTitle)
     {
-        $this->interventionResponseUrl = $interventionResponseUrl;
+        $this->interventionTitle = $interventionTitle;
+    
+        return $this;
     }
 
-    public function getLanguage()
-    {
-        return $this->language;
-    }
-
-    public function setLanguage($language)
-    {
-        $this->language = $language;
-    }
-
-    public function getStatus()
-    {
-        return $this->status;
-    }
-
-    public function setStatus($status)
-    {
-        $this->status = $status;
-    }
-
+    /**
+     * Get interventionTitle
+     *
+     * @return string 
+     */
     public function getInterventionTitle()
     {
         return $this->interventionTitle;
     }
 
-    public function setInterventionTitle($interventionTitle)
+    /**
+     * Set interventionDescripton
+     *
+     * @param string $interventionDescripton
+     * @return Intervention
+     */
+    public function setInterventionDescripton($interventionDescripton)
     {
-        $this->interventionTitle = $interventionTitle;
+        $this->interventionDescripton = $interventionDescripton;
+    
+        return $this;
     }
 
+    /**
+     * Get interventionDescripton
+     *
+     * @return string 
+     */
     public function getInterventionDescripton()
     {
         return $this->interventionDescripton;
     }
 
-    public function setInterventionDescripton($interventionDescripton)
+    /**
+     * Set interventionCode
+     *
+     * @param string $interventionCode
+     * @return Intervention
+     */
+    public function setInterventionCode($interventionCode)
     {
-        $this->interventionDescripton = $interventionDescripton;
+        $this->interventionCode = $interventionCode;
+    
+        return $this;
+    }
+
+    /**
+     * Get interventionCode
+     *
+     * @return string 
+     */
+    public function getInterventionCode()
+    {
+        return $this->interventionCode;
+    }
+
+    /**
+     * Set interventionType
+     *
+     * @param \Cyclogram\Bundle\ProofPilotBundle\Entity\InterventionType $interventionType
+     * @return Intervention
+     */
+    public function setInterventionType(\Cyclogram\Bundle\ProofPilotBundle\Entity\InterventionType $interventionType = null)
+    {
+        $this->interventionType = $interventionType;
+    
+        return $this;
+    }
+
+    /**
+     * Get interventionType
+     *
+     * @return \Cyclogram\Bundle\ProofPilotBundle\Entity\InterventionType 
+     */
+    public function getInterventionType()
+    {
+        return $this->interventionType;
+    }
+
+    /**
+     * Set language
+     *
+     * @param \Cyclogram\Bundle\ProofPilotBundle\Entity\Language $language
+     * @return Intervention
+     */
+    public function setLanguage(\Cyclogram\Bundle\ProofPilotBundle\Entity\Language $language)
+    {
+        $this->language = $language;
+    
+        return $this;
+    }
+
+    /**
+     * Get language
+     *
+     * @return \Cyclogram\Bundle\ProofPilotBundle\Entity\Language 
+     */
+    public function getLanguage()
+    {
+        return $this->language;
+    }
+
+    /**
+     * Set status
+     *
+     * @param \Cyclogram\Bundle\ProofPilotBundle\Entity\Status $status
+     * @return Intervention
+     */
+    public function setStatus(\Cyclogram\Bundle\ProofPilotBundle\Entity\Status $status = null)
+    {
+        $this->status = $status;
+    
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return \Cyclogram\Bundle\ProofPilotBundle\Entity\Status 
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * Set study
+     *
+     * @param \Cyclogram\Bundle\ProofPilotBundle\Entity\Study $study
+     * @return Intervention
+     */
+    public function setStudy(\Cyclogram\Bundle\ProofPilotBundle\Entity\Study $study = null)
+    {
+        $this->study = $study;
+    
+        return $this;
+    }
+
+    /**
+     * Get study
+     *
+     * @return \Cyclogram\Bundle\ProofPilotBundle\Entity\Study 
+     */
+    public function getStudy()
+    {
+        return $this->study;
     }
 }

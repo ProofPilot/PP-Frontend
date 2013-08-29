@@ -1,5 +1,5 @@
-{% if studyId is not defined %}
-    {% set studyId = app.request.get('studyId') %}
+{% if studyCode is not defined %}
+    {% set studyCode = app.request.get('studyCode') %}
 {% endif %}
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
@@ -41,7 +41,7 @@
   </head>
 
   {% block body %}
-  <body class="has_image" {% if studyId is defined %}{{ study_background(studyId)|raw }}{% endif %}>
+  <body class="has_image" {% if studyCode is defined %}{{ study_background(studyCode)|raw }}{% endif %}>
       {% block scripts_facebook %}{% endblock scripts_facebook %}
       <div class="block_wrapper">
       {% include '::header_reg.html.twig' %}

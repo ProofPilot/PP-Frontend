@@ -93,7 +93,7 @@ class OAuthListener extends AbstractAuthenticationListener
 
         $token = new OAuthToken($accessToken);
         $token->setResourceOwnerName($resourceOwner->getName());
-        $token->setAttribute("studyId", $request->get("state"));
+        $token->setAttribute("studyCode", $request->get("state"));
 
 
         return $this->authenticationManager->authenticate($token);

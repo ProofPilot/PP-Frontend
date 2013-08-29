@@ -1,7 +1,7 @@
 {%  extends 'CyclogramFrontendBundle:Email:email.html.twig' %}
 {% block email_content %}
-{% if studyId is defined %}
-    {% set confirmurl = url('email_verify', {'email': email, 'code': code, 'studyId' : studyId})  %}
+{% if studyCode is defined %}
+    {% set confirmurl = url('email_verify', {'email': email, 'code': code, 'studyCode' : studyCode})  %}
 {% else %}
     {% set confirmurl = url('email_verify', {'email': email, 'code': code })  %}
 {% endif %}

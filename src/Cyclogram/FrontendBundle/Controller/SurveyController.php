@@ -23,18 +23,19 @@ class SurveyController extends Controller
      * Shows a survey. After completion of survey, survey results are saved in session, also
      * it is required to specify the redirect url
      *
-     * @Route("/survey/{studyId}/{surveyId}", name="_survey")
+     * @Route("/survey/{studyCode}/{surveyId}", name="_survey")
      * @Template()
      */
-    public function surveyAction($studyId, $surveyId)
+    public function surveyAction($studyCode, $surveyId)
     {
         $lime_em = $this->getDoctrine()->getManager('limesurvey');
         $locale = $this->getRequest()->getLocale();
 
-        $studyContent = $this->getDoctrine()->getRepository("CyclogramProofPilotBundle:StudyContent")->getStudyContentById($studyId, $locale);
+        $studyContent = $this->getDoctrine()->getRepository("CyclogramProofPilotBundle:StudyContent")->getStudyContentByCode($studyCode, $locale);
+        $studyId = $studyContent->getStudy()->getStudyId();
 
         $parameters = array();
-        $parameters['studyId'] = $studyId;
+        $parameters['studyCode'] = $studyCode;
         $parameters['survey'] = $this->getSurveyData($surveyId, $locale);
         $parameters['logo'] = $this->container->getParameter('study_image_url') . '/' . $studyId. '/' .$studyContent->getStudyLogo();
 
@@ -52,21 +53,20 @@ class SurveyController extends Controller
         $logic = $this->get('study_logic');
         
         
-        $studyId = $this->getRequest()->query->get('studyId');
+        $studyCode = $this->getRequest()->query->get('studyCode');
         $surveyId = $this->getRequest()->query->get('surveyId');
         $saveId = $this->getRequest()->query->get('saveId');
         $redirectUrl = $this->getRequest()->query->get('redirectUrl');
         
         
-        $studyContent = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:StudyContent')->getStudyContentById($studyId, $locale);
+        $studyContent = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:StudyContent')->getStudyContentByCode($studyCode, $locale);
         
         //get db data
         $surveyResult = $this->get('custom_db')->getFactory('ElegibilityCustom')->getSurveyResponseData($saveId, $surveyId);
         
-        
         $sl = $this->get('study_logic');
         
-        $isEligible = $sl->checkEligibility($studyId, $surveyResult);
+        $isEligible = $sl->checkEligibility($studyCode, $surveyResult);
 
         //if the user is already logged in 
         if($this->get('security.context')->isGranted("ROLE_PARTICIPANT")) {
@@ -82,7 +82,7 @@ class SurveyController extends Controller
         $bag->initialize($array);
         $bag->set('surveyId', $surveyId);
         $bag->set('saveId', $saveId);
-        $bag->set('studyId', $studyId);
+        $bag->set('studyCode', $studyCode);
         $session->registerBag($bag);
         $session->set('SurveyInfo', $bag);
         

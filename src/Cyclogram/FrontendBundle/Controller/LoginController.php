@@ -44,20 +44,20 @@ class LoginController extends Controller
                 $error instanceof IncompleteUserException) {
 
             $participantId = $error->getParticipantId();
-            $studyId = $error->getToken()->getAttribute("studyId");
+            $studyCode = $error->getToken()->getAttribute("studyCode");
             $resourceOwner = $error->getToken()->getResourceOwnerName();
             $session->set("resourceOwnerName",$resourceOwner);
             
             $participant = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:Participant')->find($participantId);
             
-            if(!empty($studyId))
-                $study = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:Study')->find($studyId);
+            if(!empty($studyCode))
+                $study = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
             
-            if (!empty($studyId)){
+            if (!empty($studyCode)){
                 if ($study->getEmailVerificationRequired()) {
-                    return $this->redirect( $this->generateUrl("_register_email", array('id' => $participant->getParticipantId(), 'studyId' => $studyId)));
+                    return $this->redirect( $this->generateUrl("_register_email", array('id' => $participant->getParticipantId(), 'studyCode' => $studyCode)));
                 } else {
-                    return $this->redirect( $this->generateUrl("_register_mobile", array('id' => $participant->getParticipantId(), 'studyId' => $studyId)));
+                    return $this->redirect( $this->generateUrl("_register_mobile", array('id' => $participant->getParticipantId(), 'studyCode' => $studyCode)));
                 }
             } else {
                 return $this->redirect( $this->generateUrl("_register_mobile", array('id' => $participant->getParticipantId())) );
@@ -244,10 +244,10 @@ class LoginController extends Controller
         // Check for a specified target path and store it before redirect if present
         $param = $this->container->getParameter('hwi_oauth.target_path_parameter');
     
-        $studyId = $request->get('studyId');
+        $studyCode = $request->get('studyCode');
         $extraParameters = array();
-        if($studyId)
-            $extraParameters["state"] = $studyId;
+        if($studyCode)
+            $extraParameters["state"] = $studyCode;
     
         if (!empty($param) && $request->hasSession() && $targetUrl = $request->get($param, null, true)) {
             $providerKey = $this->container->getParameter('hwi_oauth.firewall_name');
@@ -426,7 +426,13 @@ class LoginController extends Controller
             }
         }
     
-        return $this->render('CyclogramFrontendBundle:Login:confirm_reset.html.twig', array('error' => $error, 'form' => $form->createView(), 'id' => $id, "studyId"=>$studyId));
+        return $this->render('CyclogramFrontendBundle:Login:confirm_reset.html.twig', 
+                array(
+                        'error' => $error, 
+                        'form' => $form->createView(), 
+                        'id' => $id, 
+                        "studyCode"=>$studyCode
+                        ));
     }
     
     /**

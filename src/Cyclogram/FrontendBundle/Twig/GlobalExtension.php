@@ -42,27 +42,27 @@ class GlobalExtension extends \Twig_Extension
         $this->container = $container;
     }
     
-    public function studyBackground($studyId)
+    public function studyBackground($studyCode)
     {
         $nPic = rand ( 1, 4 );
-        if($studyId == 1)
+        if($studyCode == 'kah')
             return "style=\"background-image:url('/images/study/1/".$nPic.".jpg')\"";
         else 
             return "";
     }
     
-    public function studyLogo($studyId)
+    public function studyLogo($studyCode)
     {
         $loginUrl = $this->container->get('router')->generate('_login');
-        if($studyId == 1)
+        if($studyCode == 'kah')
             return "<a href=\"$loginUrl\" class=\"logo knowathome\"></a>";
         else
             return "<a class=\"logo\" href=\"$loginUrl\">ProofPilot</a>";
     }
     
-    public function dashboardLogo($studyId, $url)
+    public function dashboardLogo($studyCode, $url)
     {
-        if($studyId == 1)
+        if($studyCode == 'kah')
             return "<a class=\"logo knowathome\" href=\"$url\">
                  <img src=\"/2cd1c6ecec2c6d908b3ed66d4ea7b902/1/logo-1-en.png\" width=\"234\" height=\"44\" />
             </a>";
@@ -75,10 +75,10 @@ class GlobalExtension extends \Twig_Extension
         $b = $context;
     }
     
-    public function isEnrolledInStudy($studyId)
+    public function isEnrolledInStudy($studyCode)
     {
         $participant = $this->securityContext->getToken()->getUser();
-        return $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Participant')->isEnrolledInStudy($participant, $studyId);
+        return $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Participant')->isEnrolledInStudy($participant, $studyCode);
     }
     
 //     public function getGoogleCampaignInfo($studyId)

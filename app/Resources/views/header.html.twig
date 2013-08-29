@@ -1,8 +1,8 @@
 <header>
     {% if is_granted('ROLE_PARTICIPANT')  %}
-        {{ dashboard_logo(studyId, path('_main'))|raw }}
+        {{ dashboard_logo(studyCode, path('_main'))|raw }}
     {% else %}
-        {{ dashboard_logo(studyId, path('_login'))|raw }}
+        {{ dashboard_logo(studyCode, path('_login'))|raw }}
     {% endif %}
     {% if is_granted('ROLE_PARTICIPANT')  %}
         {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createTopSettingsMenu',{'template': 'CyclogramFrontendBundle:Knp:top_menu.html.twig'}) }}

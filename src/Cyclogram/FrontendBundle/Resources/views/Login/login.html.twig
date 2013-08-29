@@ -53,10 +53,10 @@
 				
 				<div class="loginform_right">
 					<form action="{{ path('login_check') }}" method="post">
-					    <a class="forgot" href="{{ path('_forgot_username', {'studyId': studyId}) }}">{% trans from "login" %}txt_forgot_your_username{% endtrans %}</a>
+					    <a class="forgot" href="{{ path('_forgot_username', {'studyCode': studyCode}) }}">{% trans from "login" %}txt_forgot_your_username{% endtrans %}</a>
 						<label for="reg_field_1">{% trans from "login" %}txt_form_username{% endtrans %}</label>
 						<span class="input_placeholder "><input type="text" class="text " value="{{ last_username }}" id="reg_field_1" name="_username" ><span class="mark"></span></span>
-						<label for="reg_field_2">{% trans from "login" %}txt_form_password{% endtrans %}</label><a class="forgot" tabIndex="-1" href="{{ path('_forgot_pass', {'studyId': studyId}) }}">{% trans from "login" %}txt_forgot_your_password{% endtrans %}</a>
+						<label for="reg_field_2">{% trans from "login" %}txt_form_password{% endtrans %}</label><a class="forgot" tabIndex="-1" href="{{ path('_forgot_pass', {'studyCode': studyCode}) }}">{% trans from "login" %}txt_forgot_your_password{% endtrans %}</a>
 						<span class="input_placeholder"><input type="password" class="text" name="_password" id="reg_field_2"><span class="mark"></span></span>
 						{% if error %}<div><p class="error">{%  trans from "login" %}txt_login_error_message{% endtrans %}</p></div>{% endif %}
 						<div class="actions_row">

@@ -30,23 +30,30 @@ class StudyLogic
         return in_array(strtolower($studyCode), $this->supportedStudies) ? true : false;
     }
     
-    public function studyRegistration($participant, $studyId, $surveyId, $saveId) {
+    /**
+     * 
+     * @param unknown_type $participant
+     * @param unknown_type $studyCode
+     * @param unknown_type $surveyId
+     * @param unknown_type $saveId
+     */
+    public function studyRegistration($participant, $studyCode, $surveyId, $saveId) {
     
         $uniqId = uniqid();
         $this->campaignRegistration($participant, $uniqId);
         $this->participantSurveyLinkRegistration($surveyId, $saveId, $participant, $uniqId);
     
-        switch($studyId) {
-            case 7:
+        switch($studyCode) {
+            case 'sexpro':
                 $this->sexproRegistration($participant, $surveyId, $saveId);
                 break;
-            case 1:
+            case 'kah':
                 $this->knowAtHomeRegistration($participant, $surveyId, $saveId);
                 break;
-            case 8:
+            case 'koc':
                 $this->kOcRegistration($participant, $surveyId, $saveId);
                 break;
-            case 12:
+            case 'kocsocialmedia':
                 $this->kOcSocialMediaRegistration($participant, $surveyId, $saveId);
                 break;
         }
@@ -56,7 +63,7 @@ class StudyLogic
     /**
      * Link participant with campaign
      * @param unknown_type $participant
-     * @param unknown_type $studyId
+     * @param unknown_type $uniqId
      */
     private function campaignRegistration($participant, $uniqId)
     {
@@ -328,8 +335,8 @@ class StudyLogic
         ->getEnrolledStudies($participant);
         
         foreach ($studies as $study) {
-            switch($study->getStudyId()) {
-                case 7:
+            switch($study->getStudyCode()) {
+                case 'sexpro':
                     $this->sexProInterventionLogic($participant);
                     break;
                 default:
@@ -377,10 +384,10 @@ class StudyLogic
         
     }
     
-    public function checkEligibility($studyId, $surveyResult)
+    public function checkEligibility($studyCode, $surveyResult)
     {
-        switch($studyId){
-            case 8:
+        switch($studyCode){
+            case 'koc':
                 $KoCEligible = $this->getKoCEligibilityriteria($surveyResult);
                 if( $KoCEligible ){
                     return true;
@@ -388,7 +395,7 @@ class StudyLogic
                     return false;
                 }
                 break;
-            case 12:
+            case 'kocsocialmedia':
                 $KoCSMEligible = $this->getKoCSocialMediaEligibilityriteria($surveyResult);
                 if( $KoCSMEligible ){
                     return true;

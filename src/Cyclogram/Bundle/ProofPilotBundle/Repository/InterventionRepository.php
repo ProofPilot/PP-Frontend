@@ -40,7 +40,7 @@ class InterventionRepository extends EntityRepository {
     
     }
     
-    public function getInterventionStudyId ($interventionId) 
+    public function getInterventionStudyCode ($interventionId) 
     {
         $results = $this->getEntityManager()
         ->createQuery("
@@ -57,7 +57,7 @@ class InterventionRepository extends EntityRepository {
         
         $studies = array();
         foreach($results as $result) {
-            $studies[$result->getArm()->getStudy()->getStudyId()] = $result->getArm()->getStudy()->getStudyId();
+            $studies[$result->getArm()->getStudy()->getStudyCode()] = $result->getArm()->getStudy()->getStudyCode();
         }
         if($studies)
         {

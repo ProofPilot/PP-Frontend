@@ -35,6 +35,7 @@ class StudyController extends Controller
         $this->parameters["studycontent"] = $studyContent;
         $this->parameters['studyUrl'] = $studyUrl;
         $this->parameters['studyId'] = $studyId;
+        $this->parameters['studyCode'] = $study->getStudyCode();
         $this->parameters['surveyId'] = $studyContent->getStudyElegibilitySurvey();
         $this->parameters["logo"] = $this->container->getParameter('study_image_url') . '/' . $studyId. '/' .$studyContent->getStudyLogo();
         $this->parameters["graphic"] = $this->container->getParameter('study_image_url') . '/' .$studyId. '/' .$studyContent->getStudyGraphic();
@@ -42,7 +43,7 @@ class StudyController extends Controller
         $logic = $this->get('study_logic');
         
         //check if study is supported
-        if(!$logic->supports($study->getStudyCode())) {
+        if(!$logic->supports($this->parameters['studyCode'])) {
             $this->parameters["errorMessage"] = "Study with code '" . $study->getStudyCode() . "' not supported by the system.";
             $this->parameters["errorChoicesMessage"] = "Supported codes are:";
             $this->parameters["errorChoices"] = $logic->getSupportedStudies();

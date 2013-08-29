@@ -49,16 +49,16 @@ class RegistrationController extends Controller
 {
 
     /**
-     * @Route("/register/{studyId}", name="_register", defaults={"studyId"= null})
+     * @Route("/register/{studyCode}", name="_register", defaults={"studyCode"= null})
      * @Template()
      */
-    public function registerStartAction($studyId=null)
+    public function registerStartAction($studyCode=null)
     {
         //TODO: move the check to action
         if ($this->get('security.context')->isGranted("ROLE_PARTICIPANT")){
             return $this->redirect($this->get('router')->generate("_main"));
         }
-        $this->checkStudyEligibility($studyId);
+        $this->checkStudyEligibility($studyCode);
         
         $request = $this->getRequest();
         $session = $request->getSession();
@@ -67,8 +67,8 @@ class RegistrationController extends Controller
 
         $form = $this->createForm(new RegistrationForm($this->container));
         
-        if(!empty($studyId))
-            $study = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:Study')->find($studyId);
+        if(!empty($studyCode))
+            $study = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
 
         if ($request->getMethod() == 'POST') {
             $form->handleRequest($request);
@@ -104,11 +104,11 @@ class RegistrationController extends Controller
                     $em->persist($participant);
                     $em->flush();
 
-                    if (!empty($studyId)){
+                    if (!empty($studyCode)){
                         if ($study->getEmailVerificationRequired()) {
-                            return $this->redirect( $this->generateUrl("_register_email", array('id' => $participant->getParticipantId(), 'studyId' => $studyId)));
+                            return $this->redirect( $this->generateUrl("_register_email", array('id' => $participant->getParticipantId(), 'studyCode' => $studyCode)));
                         } else {
-                            return $this->redirect( $this->generateUrl("_register_mobile", array('id' => $participant->getParticipantId(), 'studyId' => $studyId)));
+                            return $this->redirect( $this->generateUrl("_register_mobile", array('id' => $participant->getParticipantId(), 'studyCode' => $studyCode)));
                         }
                     } else {
                         return $this->redirect( $this->generateUrl("_register_mobile", array('id' => $participant->getParticipantId())) );
@@ -136,14 +136,14 @@ class RegistrationController extends Controller
         }
 
     /**
-     * @Route("/register/email/{id}/{studyId}", name="_register_email", defaults={"studyId"=null})
+     * @Route("/register/email/{id}/{studyCode}", name="_register_email", defaults={"studyCode"=null})
      * @Template()
     */
-    public function registerSendEmailAction($id, $studyId)
+    public function registerSendEmailAction($id, $studyCode)
     {
         $em = $this->getDoctrine()->getManager();
         $request = $this->getRequest();
-        $this->checkStudyEligibility($studyId);
+        $this->checkStudyEligibility($studyCode);
         
         $participant = $em->getRepository("CyclogramProofPilotBundle:Participant")->find($id);
         if ($participant->getParticipantEmailConfirmed() == true) {
@@ -152,7 +152,7 @@ class RegistrationController extends Controller
         
         $participant->setLanguage($request->getLocale());
         
-        $this->confirmParticipantEmail($participant, $studyId);
+        $this->confirmParticipantEmail($participant, $studyCode);
         $em->persist($participant);
         $em->flush($participant);
 
@@ -160,10 +160,10 @@ class RegistrationController extends Controller
     }
     
     /**
-     * @Route("/register/mobile/{id}/{studyId}", name="_register_mobile", defaults={"studyId"=null})
+     * @Route("/register/mobile/{id}/{studyCode}", name="_register_mobile", defaults={"studyCode"=null})
      * @Template()
      */
-    public function registerMobileAction($id, $studyId=null)
+    public function registerMobileAction($id, $studyCode=null)
     {
         $em = $this->getDoctrine()->getManager();
     
@@ -171,7 +171,7 @@ class RegistrationController extends Controller
         if (empty($participant)) {
             throw new \Exception("Wrong participant id");
         }
-        $this->checkStudyEligibility($studyId);
+        $this->checkStudyEligibility($studyCode);
     
         $request = $this->getRequest();
         $session = $request->getSession();
@@ -233,15 +233,15 @@ class RegistrationController extends Controller
     }
     
     /**
-     * @Route("/register/sms/{id}/{studyId}", name="_register_sms", defaults={"studyId"=null})
+     * @Route("/register/sms/{id}/{studyCode}", name="_register_sms", defaults={"studyCode"=null})
      * @Template()
      */
-    public function registerSendSMSAction($id, $studyId)
+    public function registerSendSMSAction($id, $studyCode)
     {
         $request = $this->getRequest();
         $session = $request->getSession();
         $em = $this->getDoctrine()->getManager();
-        $this->checkStudyEligibility($studyId);
+        $this->checkStudyEligibility($studyCode);
         
         $participant = $em->getRepository('CyclogramProofPilotBundle:Participant')->find($id);
     
@@ -271,7 +271,7 @@ class RegistrationController extends Controller
                 return $this->redirect(($this->generateUrl("_register_verify_sms",
                         array(
                                 'id'=> $participant->getParticipantId(),
-                                'studyId' => $studyId
+                                'studyCode' => $studyCode
                         ))
                 ));
         }
@@ -282,15 +282,15 @@ class RegistrationController extends Controller
     }
     
     /**
-     * @Route("/register/verify_sms/{id}/{studyId}", name="_register_verify_sms", defaults={"studyId"=null})
+     * @Route("/register/verify_sms/{id}/{studyCode}", name="_register_verify_sms", defaults={"studyCode"=null})
      * @Template()
      */
-    public function registerVerifySMSAction($id, $studyId)
+    public function registerVerifySMSAction($id, $studyCode)
     {
         $request = $this->getRequest();
         $session = $request->getSession();
         $em = $this->getDoctrine()->getManager();
-        $this->checkStudyEligibility($studyId);
+        $this->checkStudyEligibility($studyCode);
         $participant = $em->getRepository('CyclogramProofPilotBundle:Participant')->find($id);
     
         if (empty($participant)) {
@@ -325,13 +325,13 @@ class RegistrationController extends Controller
                         return $this->redirect($this->generateUrl("_register_mailaddress",
                                 array(
                                         'id'=> $id,
-                                        'studyId' => $studyId
+                                        'studyCode' => $studyCode
                                 )));
                     }
     
-                    $this->confirmParticipantEmail($participant, $studyId);
+                    $this->confirmParticipantEmail($participant, $studyCode);
     
-                    return $this->registerAndRedirect($participant, $studyId);
+                    return $this->registerAndRedirect($participant, $studyCode);
                 } else {
                     $error = "Wrong SMS!";
                 }
@@ -349,15 +349,15 @@ class RegistrationController extends Controller
     
     
     /**
-     * @Route("/register/mailaddress/{id}/{studyId}", name="_register_mailaddress", defaults={"studyId"=null})
+     * @Route("/register/mailaddress/{id}/{studyCode}", name="_register_mailaddress", defaults={"studyCode"=null})
      * @Template()
      */
-    public function registerMailAddressAction($id, $studyId)
+    public function registerMailAddressAction($id, $studyCode)
     {
         $em = $this->getDoctrine()->getManager();
         $request = $this->getRequest();
         $session = $request->getSession();
-        $this->checkStudyEligibility($studyId);
+        $this->checkStudyEligibility($studyCode);
         
 
         $participant = $em->getRepository('CyclogramProofPilotBundle:Participant')->find($id);
@@ -397,26 +397,26 @@ class RegistrationController extends Controller
                 $em->persist($participant);
                 $em->flush($participant);
                 
-                return $this->registerAndRedirect($participant, $studyId);
+                return $this->registerAndRedirect($participant, $studyCode);
             }
         }
         return $this->render('CyclogramFrontendBundle:Registration:mailing_address.html.twig', 
                 array (
                         'id' => $participant->getParticipantId(), 
                         'form' => $form->createView(), 
-                        'studyId' => $studyId,
+                        'studyCode' => $studyCode,
                         'steps' => 6,
                         'current' => 6
                         ));
     }
     
     /**
-     * @Route("/register/study/{studyId}", name="_register_in_study")
+     * @Route("/register/study/{studyCode}", name="_register_in_study")
      * @Template()
      */
-    public function registerInStudyAction($studyId)
+    public function registerInStudyAction($studyCode)
     {
-        $this->checkStudyEligibility($studyId);
+        $this->checkStudyEligibility($studyCode);
         $logic = $this->get('study_logic');
         
         if($this->get('security.context')->isGranted("ROLE_PARTICIPANT")) {
@@ -428,20 +428,20 @@ class RegistrationController extends Controller
                 $surveyId = $bag->get('surveyId');
                 $saveId = $bag->get('saveId');
             
-                $logic->studyRegistration($participant, $studyId, $surveyId, $saveId);
+                $logic->studyRegistration($participant, $studyCode, $surveyId, $saveId);
                 return $this->redirect($this->generateUrl('_main'));
             }
         } 
         
-        return $this->redirect($this->generateUrl('_register', array('studyId'=>$studyId)));
+        return $this->redirect($this->generateUrl('_register', array('studyCode'=>$studyCode)));
 
     }
     
     /**
-     * @Route("/register/email_verify/{email}/{code}/{studyId}", name="email_verify", defaults={"studyId"=null})
+     * @Route("/register/email_verify/{email}/{code}/{studyCode}", name="email_verify", defaults={"studyCode"=null})
      * @Template()
      */
-    public function confirmEmailAction($email, $code, $studyId)
+    public function confirmEmailAction($email, $code, $studyCode)
     {
         $request = $this->getRequest();
         $session = $this->getRequest()->getSession();
@@ -454,13 +454,13 @@ class RegistrationController extends Controller
             $em->persist($participant);
             $em->flush($participant);
     
-            if(!empty($studyId)) {
-                $study = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:Study')->find($studyId);
+            if(!empty($studyCode)) {
+                $study = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:Study')->find($studyCode);
                 if($study && $study->getEmailVerificationRequired() ) {
                     $session->set('6step', true);
                     return $this->redirect( $this->generateUrl("_register_mobile", array(
                             'id' => $participant->getParticipantId(),
-                            'studyId' => $studyId
+                            'studyCode' => $studyCode
                     )));
                 }
             } 
@@ -479,7 +479,7 @@ class RegistrationController extends Controller
      * Send email to confirm participant has indicated a real email address
      * @param Participant $participant
      */
-    private function confirmParticipantEmail(Participant $participant, $studyId)
+    private function confirmParticipantEmail(Participant $participant, $studyCode)
     {
         $em = $this->getDoctrine()->getManager();
     
@@ -495,8 +495,8 @@ class RegistrationController extends Controller
     
         $parameters['email'] = $participant->getParticipantEmail();
     
-        if($studyId)
-            $parameters['studyId'] = $studyId;
+        if($studyCode)
+            $parameters['studyCode'] = $studyCode;
     
         //        $parameters['confirmed'] = 1;
         //        $parameters['simple'] = true;  //TODO :wassap?
@@ -516,13 +516,13 @@ class RegistrationController extends Controller
      * Automatically log in participant and redirect to dashboard
      * @param Participant $participant
      */
-    private function registerAndRedirect(Participant $participant, $studyId)
+    private function registerAndRedirect(Participant $participant, $studyCode)
     {
     
         $session = $this->getRequest()->getSession();
         
-        //if studyId passed also register participant in study
-        if($studyId) {
+        //if studyCode passed also register participant in study
+        if($studyCode) {
             $ls = $this->get('study_logic');
 
             if ($session->has('SurveyInfo')){
@@ -530,7 +530,7 @@ class RegistrationController extends Controller
                 $surveyId = $bag->get('surveyId');
                 $saveId = $bag->get('saveId');
 
-                $ls->studyRegistration($participant, $studyId, $surveyId, $saveId);
+                $ls->studyRegistration($participant, $studyCode, $surveyId, $saveId);
             }
         }
 
@@ -557,12 +557,12 @@ class RegistrationController extends Controller
     
     /**
      * Check study eligibility
-     * @param unknown_type $studyId
+     * @param unknown_type $studyCode
      * @throws \Exception
      */
-    private function checkStudyEligibility($studyId)
+    private function checkStudyEligibility($studyCode)
     {
-        if(!$studyId)
+        if(!$studyCode)
             return;
         
         $session = $this->getRequest()->getSession();
@@ -570,13 +570,13 @@ class RegistrationController extends Controller
             $bag = $session->get('SurveyInfo');
             $surveyId = $bag->get('surveyId');
             $saveId = $bag->get('saveId');
-            if($studyId != $bag->get('studyId'))
+            if($studyCode != $bag->get('studyCode'))
                 throw new \Exception("You have not passed eligibility test");
             
             $surveyResult = $this->get('custom_db')->getFactory('ElegibilityCustom')->getSurveyResponseData($saveId, $surveyId);
             $sl = $this->get('study_logic');
             
-            $isEligible = $sl->checkEligibility($studyId, $surveyResult);
+            $isEligible = $sl->checkEligibility($studyCode, $surveyResult);
             if(!$isEligible)
                 throw new \Exception("You have not passed eligibility test");
         } else {
