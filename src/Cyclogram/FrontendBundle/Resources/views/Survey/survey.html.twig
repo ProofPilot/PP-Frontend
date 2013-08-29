@@ -197,12 +197,13 @@
 	</div>	
     {% include '::footer.html.twig' %}
 		
-		<script>
+		<script type="text/javascript">
      		$('#iframe1').load(function(){
      		    location.href='#';
      			var frame = $(this);
          		var frameSize = function() {
          			var frameHeight = frame.contents().find("html").height();
+         			frame.contents().find("html").css('overflow', 'hidden');
              		frame.height(frameHeight);
                 }
 
