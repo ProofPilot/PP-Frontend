@@ -96,7 +96,7 @@ class StudyLogic
                 $this->kOcRegistration($participant, $surveyId, $saveId);
                 break;
             case 'kocsocialmedia':
-                $this->kOcSocialMediaRegistration($participant, $surveyId, $saveId);
+                $this->kOcSocialMediaRegistration($participant, $surveyId, $saveId, $uniqId);
                 break;
         }
     
