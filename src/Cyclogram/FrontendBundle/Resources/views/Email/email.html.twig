@@ -37,7 +37,7 @@
 				<a href="#" style="color: #bcbfc2; font-family: Arial; font-size: 12px; text-decoration: none;">Our Security</a>
 			</td>
 			<td align="right">
-				<a href="{{ siteurl}}"><img src="{{ images.login_button }}" width="85" height="32" alt="" title="" style="display: block;" /></a>
+				{% if siteurl is defined %}<a href="{{ siteurl}}">{% else %}<a href="#"> {% endif %}<img src="{{ images.login_button }}" width="85" height="32" alt="" title="" style="display: block;" /></a>
 			</td>
 		</tr>
 {# 		<tr>#}
