@@ -21,6 +21,7 @@ use Symfony\Component\Validator\Constraints\Collection;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Length;
 use HWI\Bundle\OAuthBundle\Security\Core\Authentication\Token\OAuthToken;
+use Cyclogram\FrontendBundle\Form\MobilePhoneForm;
 
 
 class LoginController extends Controller

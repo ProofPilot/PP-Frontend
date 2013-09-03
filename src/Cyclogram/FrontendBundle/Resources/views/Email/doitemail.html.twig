@@ -1,0 +1,22 @@
+{%  extends 'CyclogramFrontendBundle:Email:email.html.twig' %}
+{% block email_content %}
+    <div class="choices_box">
+        {% for intervention in interventions %}
+            <div class="featured_box">
+                <div class="banner_box"><span class="icon_1"><span></span></span><img src="{{ intervention.logo }}"  title="" alt="" height="126"  width="126"></div>
+                <div class="text_box"> 
+                        <h4>{{ intervention.title }}</h4>
+                        <p>{{ intervention.content }}</p>
+                </div>
+                <div class="mobile featured_box_s_desc">
+{#                   <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt</p>#}
+                </div>
+                {% if loginurl is defined %}
+                    <div class="button_box"> <a href="{{ siteurl }}"><span>To take a survey you need to login first</span></a> </div>
+                {% elseif intervention.status == "Enabled" %}
+                    <div class="button_box"> <a href="{{ intervention.url }}"><span>{% trans from "dashboard" %}do_it{% endtrans %}</span></a> </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+{% endblock email_content %}
