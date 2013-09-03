@@ -107,7 +107,7 @@ class StudyRepository extends EntityRepository
                     i.interventionCode = :interventioncode
                     ")
                     ->setParameter('interventioncode', $interventionCode)
-                    ->getOneOrNullResult();
+                    ->getResult();
             if(!$intervention)
                 return false;
         }
