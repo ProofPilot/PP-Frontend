@@ -14,16 +14,16 @@ class DoItEmailCommand extends ContainerAwareCommand
     protected function configure(){
         
         $this->setName('send:doitemail')
+        ->addArgument('sendTime', InputArgument::REQUIRED, 'send time')
         ->setDescription('Send email with doit tasks');
     }
     
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-//         $participantId = $input->getArgument('participantId');
+        $time = $input->getArgument('sendTime');
        
         $cc = $this->getContainer()->get('cyclogram.common');
         $em = $this->getContainer()->get('doctrine')->getManager();
-        $time = date('H:i');
         
         $embedded['logo_top'] = realpath($this->getContainer()->getParameter('kernel.root_dir') . "/../web/images/newsletter_logo.png");
         $embedded['logo_footer'] = realpath($this->getContainer()->getParameter('kernel.root_dir') . "/../web/images/newletter_logo_footer.png");
@@ -32,27 +32,28 @@ class DoItEmailCommand extends ContainerAwareCommand
         $participantContactWeekDayLinks = $em->getRepository('CyclogramProofPilotBundle:ParticipantContactWeekdayLink')->findByWeekdayId(date( "w"));
         foreach ($participantContactWeekDayLinks as $participantDay){
             $participantContactTimeLink = $em->getRepository('CyclogramProofPilotBundle:ParticipantContactTimeLink')->findOneByParticipant($participantDay->getParticipant());
-            $conatctTime = null;
-            switch ($participantContactTimeLink->getParticipantContactTime()->getParticipantContactTimesName()){
-                case 'time_early_am':
-                    $contactTime = '5:00';
-                    break;
-                case 'time_morning':
-                    $contactTime = '09:00';
-                    break;
-                case 'time_afternoon':
-                    $contactTime = $time;
-                    break;
-                case 'time_early_evening':
-                    $contactTime = '17:00';
-                    break;
-                case 'time_night':
-                     $contactTime = '21:00';
-                     break;
-                case 'time_late_night':
-                     $contactTime = '01:00';
-                     break;
-            }
+            $contactTime = $participantContactTimeLink->getParticipantContactTime()->getParticipantContactTimesName();
+            //             $conatctTime = null;
+//             switch ($participantContactTimeLink->getParticipantContactTime()->getParticipantContactTimesName()){
+//                 case 'time_early_am':
+//                     $contactTime = '5:00';
+//                     break;
+//                 case 'time_morning':
+//                     $contactTime = '09:00';
+//                     break;
+//                 case 'time_afternoon':
+//                     $contactTime = $time;
+//                     break;
+//                 case 'time_early_evening':
+//                     $contactTime = '17:00';
+//                     break;
+//                 case 'time_night':
+//                      $contactTime = '21:00';
+//                      break;
+//                 case 'time_late_night':
+//                      $contactTime = '01:00';
+//                      break;
+//             }
             
           if ($time == $contactTime) {
               $participant = $participantDay->getParticipant();
