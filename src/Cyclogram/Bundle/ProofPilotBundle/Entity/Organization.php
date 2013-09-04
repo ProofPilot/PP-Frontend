@@ -129,6 +129,14 @@ class Organization
     private $status;
     
     
+    /**
+     * @ORM\OneToMany(targetEntity="Site", mappedBy="organization")
+     * @var unknown_type
+     * @var unknown_type
+     */
+    private $sites;
+    
+    
     
     /**
      * @ORM\OneToMany(targetEntity="StudyOrganizationLink", mappedBy="organization")
@@ -463,5 +471,15 @@ class Organization
     public function setStudyOrganizationLinks($studyOrganizationLinks)
     {
         $this->studyOrganizationLinks = $studyOrganizationLinks;
+    }
+
+    public function getSites()
+    {
+        return $this->sites;
+    }
+
+    public function setSites($sites)
+    {
+        $this->sites = $sites;
     }
 }

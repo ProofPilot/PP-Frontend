@@ -1638,7 +1638,7 @@ header .header_menu span.text  , .footer_col_right span.text  {
 }
 .panel .panel_right .dashboard_panel .choices_box .featured_box  .text_box p {
 	color: #727272;
-	font-size: 13px;
+	font-size: 12px;
 }
 .panel .panel_right .dashboard_panel .choices_box .featured_box  .button_box {
 	float: right;

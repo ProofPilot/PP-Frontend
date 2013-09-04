@@ -62,10 +62,14 @@ class LocaleController
         $statusCode = $request->attributes->get('statusCode', $this->statusCode);
         $useReferrer = $request->attributes->get('useReferrer', $this->useReferrer);
         $redirectToRoute = $request->attributes->get('route', $this->redirectToRoute);
-        //$routeParameters = $request->attributes->get('routeParameters', array());
-        $routeParameters = array(
-                "studyUrl" => $studyUrl
-                );
+        
+        $queryParameters = $request->query->all();
+
+        $routeParameters = array_merge(
+                $queryParameters,  
+                array(
+                     "studyUrl" => $studyUrl
+                ));
 
         $metaValidator = $this->metaValidator;
         if (!$metaValidator->isAllowed($_locale)) {

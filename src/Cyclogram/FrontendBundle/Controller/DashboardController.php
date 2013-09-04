@@ -43,15 +43,15 @@ class DashboardController extends Controller
             $interventionId = $interventionLink->getIntervention()->getInterventionId();
             $interventionContent = $this->getDoctrine()->getRepository("CyclogramProofPilotBundle:Intervention")->getInterventionContent($interventionId, $locale);
             
-            $studyId = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:Intervention')
-                ->getInterventionStudyId($interventionId);
-            $study = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:StudyContent')->findOneByStudyId($studyId);
+            $study = $interventionLink->getIntervention()->getStudy();
+            $studyId = $study->getStudyId();
+            $studyContent = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:StudyContent')->findOneByStudyId($studyId);
             
             $intervention = array();
             $intervention["title"] = $interventionContent->getInterventionTitle();
             $intervention["content"] = $interventionContent->getInterventionDescripton();
             $intervention["url"] = $this->getInterventionUrl($interventionLink, $locale);
-            $intervention["logo"] = $this->container->getParameter('study_image_url') . "/" . $studyId . "/" . $study->getStudyLogo();
+            $intervention["logo"] = $this->container->getParameter('study_image_url') . "/" . $studyId . "/" . $studyContent->getStudyLogo();
             
             if($interventionLink->getStatus()->getStatusName() != "Active" ) {
                 $intervention["status"] = "Completed";
@@ -114,8 +114,8 @@ class DashboardController extends Controller
     private function getInterventionUrl($interventionLink, $locale) {
         $intervention = $interventionLink->getIntervention();
 
-        $studyId = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:Intervention')
-            ->getInterventionStudyId($intervention->getInterventionId());
+        $studyCode = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:Intervention')
+            ->getInterventionStudyCode($intervention->getInterventionId());
         
         $typeName = $interventionLink->getIntervention()->getInterventionType()->getInterventionTypeName(); 
         switch($typeName) {
@@ -125,7 +125,7 @@ class DashboardController extends Controller
                 $surveyId = $intervention->getSidId();
                 $redirectPath = $this->get('router')->generate('_main');
                 $path = $this->get('router')->generate('_survey', array(
-                        'studyId'=>$studyId,
+                        'studyCode'=>$studyCode,
                         'surveyId'=>$surveyId,
                         'redirectUrl'=>urlencode($redirectPath)
                         

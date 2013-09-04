@@ -1,7 +1,7 @@
 {% extends '::base.html.twig' %}
 
 {% block body %}
-<body class="page_main" {% if studyId is defined and studyId == 1 %}style="background: none; background-color: #878681 !important;"{% endif %}>
+<body class="page_main" {% if studyCode is defined and studyCode == 'kah' %}style="background: none; background-color: #878681 !important;"{% endif %}>
     {% block content %}
     {% endblock content %}
 </body>

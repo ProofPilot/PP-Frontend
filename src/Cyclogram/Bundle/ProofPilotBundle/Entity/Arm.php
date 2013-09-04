@@ -24,6 +24,13 @@ class Arm
     /**
      * @var string
      *
+     * @ORM\Column(name="arm_code", type="string", length=45, nullable=false)
+     */
+    private $armCode;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="arm_name", type="string", length=45, nullable=false)
      */
     private $armName;
@@ -48,6 +55,13 @@ class Arm
      * @ORM\Column(name="arm_description", type="string", length=2000, nullable=true)
      */
     private $armDescription;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="arm_default", type="boolean", nullable=false)
+     */
+    private $armDefault;
 
     /**
      * @var \Status
@@ -79,6 +93,29 @@ class Arm
     public function getArmId()
     {
         return $this->armId;
+    }
+
+    /**
+     * Set armCode
+     *
+     * @param string $armCode
+     * @return Arm
+     */
+    public function setArmCode($armCode)
+    {
+        $this->armCode = $armCode;
+    
+        return $this;
+    }
+
+    /**
+     * Get armCode
+     *
+     * @return string 
+     */
+    public function getArmCode()
+    {
+        return $this->armCode;
     }
 
     /**
@@ -171,6 +208,29 @@ class Arm
     public function getArmDescription()
     {
         return $this->armDescription;
+    }
+
+    /**
+     * Set armDefault
+     *
+     * @param boolean $armDefault
+     * @return Arm
+     */
+    public function setArmDefault($armDefault)
+    {
+        $this->armDefault = $armDefault;
+    
+        return $this;
+    }
+
+    /**
+     * Get armDefault
+     *
+     * @return boolean 
+     */
+    public function getArmDefault()
+    {
+        return $this->armDefault;
     }
 
     /**

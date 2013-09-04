@@ -31,7 +31,7 @@ class MenuBuilder extends ContainerAware implements TranslationContainerInterfac
     public function createSideDashboardMenu(FactoryInterface $factory,
             array $options)
     {
-        $studyId = $this->container->get('request')->get('studyId');
+        $studyCode = $this->container->get('request')->get('studyCode');
         
         $participant = $this->container->get('security.context')->getToken()->getUser();
         $em = $this->container->get('doctrine')->getManager();
@@ -46,25 +46,25 @@ class MenuBuilder extends ContainerAware implements TranslationContainerInterfac
 //         $menu->addChild('side_dasboard_menu.survey', array(
 //                 'route' => '_main',
 //                 'routeParameters' => array(
-//                         'studyId' => $studyId
+//                         'studyCode' => $studyCode
 //                         )))
 //                 ->setAttribute('class', 'icon_survey')->setExtra('translation_domain', 'sidemenu');
 //         $menu->addChild('side_dasboard_menu.activities', array(
 //                 'route' => '_main',
 //                 'routeParameters' => array(
-//                         'studyId' => $studyId
+//                         'studyCode' => $studyCode
 //                         )))
 //                 ->setAttribute('class', 'icon_activities')->setExtra('translation_domain', 'sidemenu');
 //         $menu->addChild('side_dasboard_menu.measurements', array(
 //                 'route' => '_main',
 //                 'routeParameters' => array(
-//                         'studyId' => $studyId
+//                         'studyCode' => $studyCode
 //                         )))
 //                 ->setAttribute('class', 'icon_measurments');
 //         $menu->addChild('side_dasboard_menu.treatment', array(
 //                 'route' => '_main',
 //                 'routeParameters' => array(
-//                         'studyId' => $studyId
+//                         'studyCode' => $studyCode
 //                         )))
 //                 ->setAttribute('class', 'icon_treatment')->setExtra('translation_domain', 'sidemenu');
 
@@ -74,7 +74,7 @@ class MenuBuilder extends ContainerAware implements TranslationContainerInterfac
     public function createBottomRightMenu(FactoryInterface $factory,
             array $options)
     {
-        $studyId = $this->container->get('request')->get('studyId');
+        $studyCode = $this->container->get('request')->get('studyCode');
         
         $menu = $factory->createItem('root');
 
@@ -85,7 +85,7 @@ class MenuBuilder extends ContainerAware implements TranslationContainerInterfac
         $menu->addChild('bottom_right_menu.my_settings', array(
                 'route' => '_settings',
                 'routeParameters' => array(
-                        'studyId' => $studyId
+                        'studyCode' => $studyCode
                         )))
                 ->setAttribute('class', 'icon_settings')->setExtra('translation_domain', 'generalmenus');
 
@@ -95,26 +95,26 @@ class MenuBuilder extends ContainerAware implements TranslationContainerInterfac
     public function createBottomLeftMenu(FactoryInterface $factory,
             array $options)
     {
-        $studyId = $this->container->get('request')->get('studyId');
+        $studyCode = $this->container->get('request')->get('studyCode');
         
         $menu = $factory->createItem('root');
 
         $menu->addChild('bottom_left_menu.home', array(
                 'route' => '_main',
                 'routeParameters' => array(
-                        'studyId' => $studyId
+                        'studyCode' => $studyCode
                         )))
                 ->setAttribute('class', 'icon_home')->setExtra('translation_domain', 'generalmenus');
         $menu->addChild('bottom_left_menu.fullscreen', array(
                 'route' => '_main',
                 'routeParameters' => array(
-                        'studyId' => $studyId
+                        'studyCode' => $studyCode
                         )))
                 ->setAttribute('class', 'icon_fullscreen')->setExtra('translation_domain', 'generalmenus');
         $menu->addChild('bottom_left_menu.update', array(
                 'route' => '_main',
                 'routeParameters' => array(
-                        'studyId' => $studyId
+                        'studyCode' => $studyCode
                         )))
                 ->setAttribute('class', 'icon_update')->setExtra('translation_domain', 'generalmenus');
 
@@ -124,7 +124,7 @@ class MenuBuilder extends ContainerAware implements TranslationContainerInterfac
     public function createTopSettingsMenu(FactoryInterface $factory,
             array $options)
     {
-        $studyId = $this->container->get('request')->get('studyId');
+        $studyCode = $this->container->get('request')->get('studyCode');
         
         $menu = $factory->createItem('root');
         $menu->setChildrenAttribute('class', 'header_menu');
@@ -138,7 +138,7 @@ class MenuBuilder extends ContainerAware implements TranslationContainerInterfac
         $menu->addChild('top_menu.settings', array(
                 'route' => '_settings',
                 'routeParameters' => array(
-                        'studyId' => $studyId
+                        'studyCode' => $studyCode
                         )))
                 ->setAttribute('class', 'icon_settings')
                 ->setAttribute("dropdown", true)
@@ -148,7 +148,7 @@ class MenuBuilder extends ContainerAware implements TranslationContainerInterfac
                         array(
                             'route' => '_settings',
                             'routeParameters' => array(
-                            'studyId' => $studyId
+                            'studyCode' => $studyCode
                         )))
                 ->setAttribute('class', 'submenu_icon_general')
                 ->setAttribute("nospan", true)
@@ -158,7 +158,7 @@ class MenuBuilder extends ContainerAware implements TranslationContainerInterfac
                         array(
                             'route' => '_contact_prefs',
                             'routeParameters' => array(
-                            'studyId' => $studyId
+                            'studyCode' => $studyCode
                         )))
                 ->setAttribute('class', 'submenu_icon_contact')
                 ->setAttribute("nospan", true)
@@ -178,7 +178,7 @@ class MenuBuilder extends ContainerAware implements TranslationContainerInterfac
     public function createSideSettingsMenu(FactoryInterface $factory,
             array $options)
     {
-        $studyId = $this->container->get('request')->get('studyId');
+        $studyCode = $this->container->get('request')->get('studyCode');
         
         $menu = $factory->createItem('root');
         $menu->setChildrenAttribute('class', 'left_menu')->setExtra('translation_domain', 'sidemenu');
@@ -187,14 +187,14 @@ class MenuBuilder extends ContainerAware implements TranslationContainerInterfac
                         array(
                             'route' => '_settings',
                             'routeParameters' => array(
-                            'studyId' => $studyId
+                            'studyCode' => $studyCode
                         )))
                 ->setAttribute('class', 'icon_general_settings')->setExtra('translation_domain', 'sidemenu');
         $menu->addChild('side_settings_menu.contact_preferences',
                        array(
                             'route' => '_contact_prefs',
                             'routeParameters' => array(
-                            'studyId' => $studyId
+                            'studyCode' => $studyCode
                         )))
                 ->setAttribute('class', 'icon_contact_prefs')->setExtra('translation_domain', 'sidemenu');
 

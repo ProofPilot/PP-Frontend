@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Study
  *
  * @ORM\Table(name="study")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Cyclogram\Bundle\ProofPilotBundle\Repository\StudyRepository")
  */
 class Study
 {
@@ -128,6 +128,13 @@ class Study
      * })
      */
     private $status;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="study_code", type="string", length=45, nullable=true)
+     */
+    private $studyCode;
 
     /**
      * Constructor
@@ -498,4 +505,14 @@ class Study
         $this->emailVerificationRequired = $emailVerificationRequired;
     }
 
+
+    public function getStudyCode()
+    {
+        return $this->studyCode;
+    }
+
+    public function setStudyCode($studyCode)
+    {
+        $this->studyCode = $studyCode;
+    }
 }
