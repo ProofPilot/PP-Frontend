@@ -4,15 +4,15 @@
 	<title>NEWSLETTER</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	    <link href="//fonts.googleapis.com/css?family=Roboto:300" rel="stylesheet" type="text/css" />
-{#     <link href="//fonts.googleapis.com/css?family=Roboto:400" rel="stylesheet" type="text/css" />#}
-{#     <link href="//fonts.googleapis.com/css?family=Roboto:500" rel="stylesheet" type="text/css" />#}
-{#     <link href="//fonts.googleapis.com/css?family=Roboto:700" rel="stylesheet" type="text/css" />#}
-{#     <link href="//fonts.googleapis.com/css?family=Roboto:900" rel="stylesheet" type="text/css" />#}
-{#     <link rel="icon" href="{{ asset('images/favicon.ico') }}" type="image/x-icon"/>#}
-{#     <link rel="shortcut icon" href="{{ asset('images/favicon.ico') }}" type="image/x-icon"/>#}
-{#     <link rel="stylesheet" href={{ asset('css/normalize.css') }} />#}
-{#     <link rel="stylesheet" href={{ asset('css/main.css') }} />#}
-{#     <link rel="stylesheet" href={{ asset('css/site.css') }}>#}
+    <link href="//fonts.googleapis.com/css?family=Roboto:400" rel="stylesheet" type="text/css" />
+    <link href="//fonts.googleapis.com/css?family=Roboto:500" rel="stylesheet" type="text/css" />
+    <link href="//fonts.googleapis.com/css?family=Roboto:700" rel="stylesheet" type="text/css" />
+    <link href="//fonts.googleapis.com/css?family=Roboto:900" rel="stylesheet" type="text/css" />
+    <link rel="icon" href="web/images/favicon.ico" type="image/x-icon"/>
+    <link rel="shortcut icon" href="web/images/favicon.ico" type="image/x-icon"/>
+    <link rel="stylesheet" href="web/css/normalize.css" />
+    <link rel="stylesheet" href="web/css/main.css" />
+    <link rel="stylesheet" href="web/css/site.css">
 	<style type="text/css">
 		html { margin: 0px; padding: 0px; }
 		body { margin: 0px; padding: 0px; }
@@ -28,16 +28,16 @@
 				<a href="#"><img src="{{ images.logo_top }}" width="105" height="50" alt="" title="" style="display: block;" /></a>
 			</td>
 			<td width="110">
-				<a href="#" style="color: #bcbfc2; font-family: Arial; font-size: 12px; text-decoration: none;">My Dashboard</a>
+				<a href="{{ host }}/{{ locale }}/main" style="color: #bcbfc2; font-family: Arial; font-size: 12px; text-decoration: none;">{{ 'my_dahsboard' | trans({}, "email", locale) }}</a>
 			</td>
 			<td>
-				<a href="#" style="color: #bcbfc2; font-family: Arial; font-size: 12px; text-decoration: none;">Communication Preferences</a>
+				<a href="{{ host }}/{{ locale }}/main/contact_prefs" style="color: #bcbfc2; font-family: Arial; font-size: 12px; text-decoration: none;">{{ 'communictaion_preferences' | trans({}, "email", locale) }}</a>
 			</td>
 			<td>
-				<a href="#" style="color: #bcbfc2; font-family: Arial; font-size: 12px; text-decoration: none;">Our Security</a>
+				<a href="{{ host }}/{{ locale }}/main" style="color: #bcbfc2; font-family: Arial; font-size: 12px; text-decoration: none;">{{ 'our_security' | trans({}, "email", locale) }}</a>
 			</td>
 			<td align="right">
-				{% if siteurl is defined %}<a href="{{ siteurl}}">{% else %}<a href="#"> {% endif %}<img src="{{ images.login_button }}" width="85" height="32" alt="" title="" style="display: block;" /></a>
+				{% if siteurl is defined %}<a href="{{ siteurl }}">{% else %}<a href="#"> {% endif %}<img src="{{ images.login_button }}" width="85" height="32" alt="" title="" style="display: block;" /></a>
 			</td>
 		</tr>
 {# 		<tr>#}

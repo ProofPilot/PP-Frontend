@@ -25,6 +25,7 @@ class TestController extends Controller
         $parameters['code'] = 155;
         $parameters['email'] = "ok@ok.com";
         $parameters['confirmed'] = 1;
+        $parameters['host'] = $this->container->getParameter('site_url');
 
         try{
             $cc->sendMail(

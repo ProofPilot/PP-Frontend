@@ -12,6 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Cyclogram\FrontendBundle\Form\GeneralSettingForm;
 use Cyclogram\CyclogramCommon;
 use Cyclogram\Bundle\ProofPilotBundle\Entity\Participant;
+use JMS\SecurityExtraBundle\Annotation\Secure;
 
 /**
  * @Route("/main")
@@ -21,6 +22,7 @@ class GeneralSettingsController  extends Controller
 
     /**
      * @Route("/general_settings", name="_settings")
+     * @Secure(roles="ROLE_PARTICIPANT")
      * @Template()
      */
     public function generalSettingsAction()

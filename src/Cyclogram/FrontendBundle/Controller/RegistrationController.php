@@ -502,6 +502,7 @@ class RegistrationController extends Controller
         //        $parameters['simple'] = true;  //TODO :wassap?
     
         $parameters['locale'] = $participant->getLanguage() ? $participant->getLanguage() : $request->getLocale();
+        $parameters['host'] = $this->container->getParameter('site_url');
     
         $cc->sendMail($participant->getParticipantEmail(),
                 $this->get('translator')->trans("email_title_verify", array(), "email", $parameters['locale']),
