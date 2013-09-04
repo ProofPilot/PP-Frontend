@@ -481,6 +481,7 @@ class RegistrationController extends Controller
      */
     private function confirmParticipantEmail(Participant $participant, $studyCode)
     {
+        return true;
         $em = $this->getDoctrine()->getManager();
     
         $embedded['logo_top'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_logo.png");
