@@ -1,5 +1,6 @@
 {%  extends 'CyclogramFrontendBundle:Email:email.html.twig' %}
 {% block email_content %}
+<div class="site_container">
 <div class="dashboard_panel">
     <div class="choices_box">
         {% for intervention in interventions %}
@@ -12,9 +13,10 @@
                 <div class="mobile featured_box_s_desc">
 {#                   <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt</p>#}
                 </div>
-                    <div class="button_box"> <a href="{{ siteurl }}"><span>To take a survey you need to login first</span></a> </div>
+                    <div class="button_box"> <a href="{{ siteurl }}"><span>Do it</span></a> </div>
             </div>
         {% endfor %}
     </div>
     </div>
+</div>
 {% endblock email_content %}
