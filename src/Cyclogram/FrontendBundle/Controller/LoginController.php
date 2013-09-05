@@ -28,13 +28,22 @@ class LoginController extends Controller
 {
 
     /**
-     * @Route("/login", name="_login")
+     * @Route("/login/{surveyUrl}", name="_login", defaults={"surveyUrl"= null})
      * @Template()
      */
-    public function loginAction()
+    public function loginAction($surveyUrl=null)
     {
+        $session =$this->getRequest()->getSession();
+        if (!is_null($surveyUrl)) {
+
+            $session->set('surveyUrl', urldecode($surveyUrl));
+        }
+        if ($session->has('_security.secured_area.target_path')) {
+         
+        }
+        
         if ($this->get('security.context')->isGranted("ROLE_PARTICIPANT")){
-            return $this->redirect($this->get('router')->generate("_main"));
+            return $this->redirect($this->get('router')->generate("_main", array('surveyUrl' => $surveyUrl)));
         }
         $request = $this->getRequest();
         $session = $request->getSession();
@@ -195,8 +204,12 @@ class LoginController extends Controller
                         $token = new \Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken($participant, $participant->getPassword(), 'main', array_merge($roles, array("ROLE_PARTICIPANT")));
                     }
                     $this->get('security.context')->setToken($token);
-
+                    
                     $this->get('custom_db')->getFactory('CommonCustom')->addEvent($participant->getParticipantId(),null,1,'login','Login succesfully', TRUE);
+                    if ($session->has('_security.secured_area.target_path'))
+                        return $this->redirect($session->get('_security.secured_area.target_path'));
+                    if ($session->has('surveyUrl')) 
+                        return $this->redirect( $this->container->getParameter('site_url').$session->get('surveyUrl'));
                     return $this->redirect( $this->generateUrl("_main") );
                 } else {
                     $this->get('custom_db')->getFactory('CommonCustom')->addEvent($participant->getParticipantId(),null,1,'login','Login failed', FALSE);
@@ -297,6 +310,7 @@ class LoginController extends Controller
                 if (!empty($participant)) {
                     $parameters['id'] = $participant->getParticipantId();
                     $parameters['locale'] = $participant->getLanguage() ? $participant->getLanguage() : $request->getLocale();
+                    $parameters['host'] = $this->container->getParameter('site_url');
                     $embedded['logo_top'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_logo.png");
                     $embedded['logo_footer'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newletter_logo_footer.png");
                     $embedded['login_button'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_small_login.jpg");
