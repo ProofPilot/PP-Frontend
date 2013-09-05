@@ -24,6 +24,12 @@ class DoItEmailCommand extends ContainerAwareCommand
        
         $cc = $this->getContainer()->get('cyclogram.common');
         $em = $this->getContainer()->get('doctrine')->getManager();
+//         $time = new \DateTime('now');
+        
+//         $timezone = date_default_timezone_get();
+//         $offset = $this->get_timezone_offset( 'America/New_york', $timezone ) / 3600;
+//         $date = date('H:i');
+//         $date = strtotime($date);
         
         $embedded['logo_top'] = realpath($this->getContainer()->getParameter('kernel.root_dir') . "/../web/images/newsletter_logo.png");
         $embedded['logo_footer'] = realpath($this->getContainer()->getParameter('kernel.root_dir') . "/../web/images/newletter_logo_footer.png");
@@ -132,4 +138,18 @@ class DoItEmailCommand extends ContainerAwareCommand
     
         }
     }
+    
+//     private function get_timezone_offset($participantTimeZone, $serverTimeZone = null) {
+//         if($serverTimeZone === null) {
+//             if(!is_string($serverTimeZone = date_default_timezone_get())) {
+//                 return false; // A UTC timestamp was returned -- bail out!
+//             }
+//         }
+//         $serverTimeZone = new \DateTimeZone($serverTimeZone);
+//         $participantTimeZone = new \DateTimeZone($participantTimeZone);
+//         $serverDateTime = new \DateTime("now", $serverTimeZone);
+//         $participantDateTime = new \DateTime("now", $participantTimeZone);
+//         $offset = $serverTimeZone->getOffset($serverDateTime) - $participantTimeZone->getOffset($participantDateTime);
+//         return $offset;
+//     }
 }

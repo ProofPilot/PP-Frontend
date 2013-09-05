@@ -14,12 +14,14 @@ use JMS\SecurityExtraBundle\Annotation\Secure;
 class DashboardController extends Controller
 {
     /**
-     * @Route("/main", name="_main")
+     * @Route("/main/{surveyUrl}", name="_main", defaults={"surveyUrl"= null})
      * @Secure(roles="ROLE_PARTICIPANT")
      * @Template()
      */
-    public function indexAction()
+    public function indexAction($surveyUrl=null)
     {
+        if (!is_null($surveyUrl)) 
+            return $this->redirect( $this->container->getParameter('site_url').urldecode($surveyUrl));
         $participant = $this->get('security.context')->getToken()->getUser();
         $request = $this->getRequest();
         $locale = $this->getRequest()->getLocale();
