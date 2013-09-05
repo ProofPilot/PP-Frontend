@@ -5,14 +5,16 @@ namespace Cyclogram\FrontendBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-
+use JMS\SecurityExtraBundle\Annotation\Secure;
 /**
  * @Route("/main")
+ * 
  */
 class ContactPreferencesController extends Controller
 {
     /**
      * @Route("/contact_prefs", name="_contact_prefs")
+     * @Secure(roles="ROLE_PARTICIPANT")
      * @Template()
      */
     public function contactPrefsAction()
@@ -147,8 +149,8 @@ class ContactPreferencesController extends Controller
         $parameters["lastaccess"] = new \DateTime();
         $parameters["participant"] = $participant;
          
-        if($participant->getFacebookId())
-            $parameters["user"]["avatar"] = "http://graph.facebook.com/" . $participant->getParticipantUsername() . "/picture?width=80&height=82";
+//         if($participant->getFacebookId())
+//             $parameters["user"]["avatar"] = "http://graph.facebook.com/" . $participant->getParticipantUsername() . "/picture?width=80&height=82";
     
         $parameters["user"]["name"] = $participant->getParticipantFirstname() . ' ' . $participant->getParticipantLastname();
         $parameters["user"]["last_access"] = $participant->getParticipantLastTouchDatetime();

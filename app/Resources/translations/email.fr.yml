@@ -1,11 +1,15 @@
 bottom_no_reply: bottom_no_reply
 bottom_street: bottom_street
 bottom_text: bottom_text
+communictaion_preferences: communictaion_preferences   # FIXME
 confirm_verify_link: confirm_verify_link
 confirm_verify_text: confirm_verify_text
 confirm_verify_title: confirm_verify_title
-email_reset_password: email_reset_password   # FIXME
-email_title_verify: email_title_verify   # FIXME
+do_it_task_email_title: do_it_task_email_title   # FIXME
+email_reset_password: email_reset_password
+email_title_verify: email_title_verify
+my_dahsboard: my_dahsboard   # FIXME
+our_security: our_security   # FIXME
 reset_pass_link: reset_pass_link
 reset_pass_text: reset_pass_text
 reset_pass_title: reset_pass_title
