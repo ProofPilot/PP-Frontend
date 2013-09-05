@@ -4,16 +4,19 @@
 <div class="dashboard_panel">
     <div class="choices_box">
         {% for intervention in interventions %}
-            <div class="featured_box">
-                <div class="banner_box"><span class="icon_1"><span></span></span><img src="{{ intervention.logo }}"  title="" alt="" height="126"  width="126"></div>
-                <div class="text_box"> 
+            <div class="featured_box" style="background-color: white; overflow: hidden;">
+                <div class="banner_box" style="float: left; margin-right: 20px;"><span class="icon_1"><span></span></span><img src="{{ intervention.logo }}"  title="" alt="" height="126"  width="126"></div>
+                <div class="text_box" style="padding-top: 10px; float: left;"> 
                         <h4>{{ intervention.title }}</h4>
                         <p>{{ intervention.content }}</p>
                 </div>
                 <div class="mobile featured_box_s_desc">
 {#                   <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt</p>#}
                 </div>
-                    <div class="button_box"> <a href="{{ siteurl }}"><span>Do it</span></a> </div>
+                    <div class="button_box" style="float: right; padding-top: 30px; padding-right: 5px;"><a href="{{ siteurl }}" style="background: linear-gradient(to bottom, #97C52C 0%, #7EA61F 100%) repeat scroll 0 0 transparent;
+                    border: 1px solid #7EA61F; border-radius: 3px 3px 3px 3px; color: #FFFFFF; display: inline-block;font-family: 'Roboto'; font-size: 16px;
+                    font-style: normal; font-weight: 700; height: 41px; line-height: 41px; min-width: 90px; padding-left: 25px; padding-right: 25px; text-decoration: none;">
+                    <span style="padding-left: 30px;">Do it</span></a></div>
             </div>
         {% endfor %}
     </div>
