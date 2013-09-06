@@ -1,7 +1,6 @@
 <?php
 
 namespace Cyclogram\Bundle\ProofPilotBundle\Entity;
-
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -32,18 +31,28 @@ class ParticipantContactTimeLink
     private $participantContactTime;
 
     /**
-     * @var \DateTime
+     * @var \ParticipantContactTime
      *
-     * @ORM\Column(name="participant_contact_time_start", type="datetime")
+     * @ORM\ManyToOne(targetEntity="ParticipantContactTime")
+     * @ORM\JoinColumns({
+     * @ORM\JoinColumn(name="server_contact_time", referencedColumnName="participant_contact_times_id")
+     * })
      */
-    private $participantContactTimeStart;
+    private $serverContactTime;
 
     /**
-     * @var \DateTime
+     * @var integer
      *
-     * @ORM\Column(name="participant_contact_time_end", type="datetime")
+     * @ORM\Column(name="server_weekday", type="integer", length=45)
      */
-    private $participantContactTimeEnd;
+    private $serverWeekday;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="participant_weekday", type="integer", length=45)
+     */
+    private $participantWeekday;
 
     /**
      * @var \ParticipantTimezone
@@ -71,10 +80,11 @@ class ParticipantContactTimeLink
      * @param integer $participantContactTimeLinkId
      * @return ParticipantContactTimeLink
      */
-    public function setParticipantContactTimeLinkId($participantContactTimeLinkId)
+    public function setParticipantContactTimeLinkId(
+            $participantContactTimeLinkId)
     {
         $this->participantContactTimeLinkId = $participantContactTimeLinkId;
-    
+
         return $this;
     }
 
@@ -94,10 +104,11 @@ class ParticipantContactTimeLink
      * @param integer $participantContactTime
      * @return ParticipantContactTimeLink
      */
-    public function setParticipantContactTime(\Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantContactTime $participantContactTime = null)
+    public function setParticipantContactTime(
+            \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantContactTime $participantContactTime = null)
     {
         $this->participantContactTime = $participantContactTime;
-    
+
         return $this;
     }
 
@@ -112,61 +123,16 @@ class ParticipantContactTimeLink
     }
 
     /**
-     * Set participantContactTimeStart
-     *
-     * @param \DateTime $participantContactTimeStart
-     * @return ParticipantContactTimeLink
-     */
-    public function setParticipantContactTimeStart($participantContactTimeStart)
-    {
-        $this->participantContactTimeStart = $participantContactTimeStart;
-    
-        return $this;
-    }
-
-    /**
-     * Get participantContactTimeStart
-     *
-     * @return \DateTime 
-     */
-    public function getParticipantContactTimeStart()
-    {
-        return $this->participantContactTimeStart;
-    }
-
-    /**
-     * Set participantContactTimeEnd
-     *
-     * @param \DateTime $participantContactTimeEnd
-     * @return ParticipantContactTimeLink
-     */
-    public function setParticipantContactTimeEnd($participantContactTimeEnd)
-    {
-        $this->participantContactTimeEnd = $participantContactTimeEnd;
-    
-        return $this;
-    }
-
-    /**
-     * Get participantContactTimeEnd
-     *
-     * @return \DateTime 
-     */
-    public function getParticipantContactTimeEnd()
-    {
-        return $this->participantContactTimeEnd;
-    }
-
-    /**
      * Set participantTimezone
      *
      * @param integer $participantTimezone
      * @return ParticipantContactTimeLink
      */
-    public function setParticipantTimezone(\Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantTimezone $participantTimezone = null)
+    public function setParticipantTimezone(
+            \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantTimezone $participantTimezone = null)
     {
         $this->participantTimezone = $participantTimezone;
-    
+
         return $this;
     }
 
@@ -186,10 +152,11 @@ class ParticipantContactTimeLink
      * @param integer $participant
      * @return ParticipantContactTimeLink
      */
-    public function setParticipant(\Cyclogram\Bundle\ProofPilotBundle\Entity\Participant $participant = null)
+    public function setParticipant(
+            \Cyclogram\Bundle\ProofPilotBundle\Entity\Participant $participant = null)
     {
         $this->participant = $participant;
-    
+
         return $this;
     }
 
@@ -202,4 +169,47 @@ class ParticipantContactTimeLink
     {
         return $this->participant;
     }
+
+    /**
+     * Get serverContactTime
+     *
+     * @return \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantContactTime
+     */
+    public function getServerContactTime()
+    {
+        return $this->serverContactTime;
+    }
+
+    /**
+     * Set serverContactTime
+     *
+     * @param integer $serverContactTime
+     * @return ParticipantContactTimeLink
+     */
+    public function setServerContactTime(
+            \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantContactTime $serverContactTime = null)
+    {
+        $this->serverContactTime = $serverContactTime;
+    }
+
+    public function getServerWeekday()
+    {
+        return $this->serverWeekday;
+    }
+
+    public function setServerWeekday($serverWeekday)
+    {
+        $this->serverWeekday = $serverWeekday;
+    }
+
+    public function getParticipantWeekday()
+    {
+        return $this->participantWeekday;
+    }
+
+    public function setParticipantWeekday($participantWeekday)
+    {
+        $this->participantWeekday = $participantWeekday;
+    }
+
 }
