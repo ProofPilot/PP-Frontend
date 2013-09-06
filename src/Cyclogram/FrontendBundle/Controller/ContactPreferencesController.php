@@ -43,51 +43,36 @@ class ContactPreferencesController extends Controller
         
         //first we process POST data if any
         if ($request->getMethod() == 'POST') {
-        
-            $savedata = $request->get('savedata');
-            switch($savedata) {
-                case 'reminders':
-                    foreach($reminders as $reminder)
-                    {
-                        $reminder_id = $reminder->getParticipantStudyReminderId();
-                        $reminderSMS = $request->get('sms_' . $reminder_id) ? true : false;
-                        $reminderEmail = $request->get('email_' . $reminder_id) ? true : false;
-                        $reminderLink = $em->getRepository('CyclogramProofPilotBundle:ParticipantStudyReminderLink')
-                        ->getParticipantReminderLink($participant,$reminder);
-                        $reminderLink->setParticipant($participant);
-                        $reminderLink->setParticipantStudyReminder($reminder);
-                        $reminderLink->setBySMS($reminderSMS);
-                        $reminderLink->setByEmail($reminderEmail);
-                        $em->persist($reminderLink);
-                        $em->flush();
-                    }
-                    $parameters["expandedForm"] = 'reminders';
-                    $parameters['message'] = 'Your contact prefernces have been saved';
-                    break;
-                case 'date_of_week':
-                    foreach ($weekdays as $weekday=>$dayname)
-                    {
-                        $active = $request->get('weekday_' . $weekday) ? true : false;
-                        $em->getRepository('CyclogramProofPilotBundle:ParticipantContactWeekdayLink')
-                        ->updateParticipantContactWeekDay($participant, $weekday, $active);
-                    }
-                    $parameters["expandedForm"] = 'contactweekdays';
-                    $parameters['message'] = 'Your contact prefernces have been saved';
-                    break;
-                case 'time_of_day':
-                    foreach ($contactTimes as $contactTime)
-                    {
-                        $contactTimeId = $contactTime->getParticipantContactTimesId();
-                        $active = $request->get('contactTime_' . $contactTimeId) ? true : false;
-                        $timezoneid = $request->get('timezone');
-                        $timezone = $em->getRepository('CyclogramProofPilotBundle:ParticipantTimeZone')->find($timezoneid);
-                        $em->getRepository('CyclogramProofPilotBundle:ParticipantContactTimeLink')
-                        ->updateParticipantContactTimeLink($participant, $contactTime, $active, $timezone);
-                    }
+            foreach($reminders as $reminder)
+            {
+                $reminder_id = $reminder->getParticipantStudyReminderId();
+                $reminderSMS = $request->get('sms_' . $reminder_id) ? true : false;
+                $reminderEmail = $request->get('email_' . $reminder_id) ? true : false;
+                $reminderLink = $em->getRepository('CyclogramProofPilotBundle:ParticipantStudyReminderLink')
+                ->getParticipantReminderLink($participant,$reminder);
+                $reminderLink->setParticipant($participant);
+                $reminderLink->setParticipantStudyReminder($reminder);
+                $reminderLink->setBySMS($reminderSMS);
+                $reminderLink->setByEmail($reminderEmail);
+                $em->persist($reminderLink);
+                $em->flush();
+            }
+            
+            foreach ($weekdays as $weekday=>$dayname)
+            {
+                foreach ($contactTimes as $contactTime)
+                {
+                    $isWeekdayActive = $request->get('weekday_' . $weekday) ? true : false;
+                    $contactTimeId = $contactTime->getParticipantContactTimesId();
+                    $isContactTimeActive = $request->get('contactTime_' . $contactTimeId) ? true : false;
+                    $timezoneid = $request->get('timezone');
+                    $timezone = $em->getRepository('CyclogramProofPilotBundle:ParticipantTimeZone')->find($timezoneid);
+                    $em->getRepository('CyclogramProofPilotBundle:ParticipantContactTimeLink')
+                    ->updateParticipantContactTimeLink($participant, $contactTime, $weekday, $timezone, $isWeekdayActive, $isContactTimeActive);
                     $parameters["expandedForm"] = 'contacttimes';
                     $parameters['message'] = 'Your contact prefernces have been saved';
-                    break;
-        
+                    
+                }
             }
         }
 
@@ -112,7 +97,7 @@ class ContactPreferencesController extends Controller
         
         foreach($contactTimes as $contactTime) {
             $contactTimeLink = $em->getRepository('CyclogramProofPilotBundle:ParticipantContactTimeLink')
-            ->getParticipantContactTimeLink($participant, $contactTime);
+            ->getParticipantContactTimeLinkByTime($participant, $contactTime);
         
             if($contactTimeLink)
                 $timezone = $contactTimeLink->getParticipantTimezone()->getParticipantTimezoneId();
@@ -128,14 +113,14 @@ class ContactPreferencesController extends Controller
         }
         
         foreach($weekdays as $weekday=>$dayname) {
-            $weekdayLink = $em->getRepository('CyclogramProofPilotBundle:ParticipantContactWeekdayLink')
-            ->getParticipantContactWeekdayLink($participant, $weekday);
+            $contactTimeLinkDay = $em->getRepository('CyclogramProofPilotBundle:ParticipantContactTimeLink')
+            ->getParticipantContactTimeLinkByDay($participant, $weekday);
             
-            if(!isset($weekDaysData[$weekday]) || $weekdayLink) {
+            if(!isset($weekDaysData[$weekday])) {
                 $weekDaysData[$weekday] = array (
                         'dayname' => $dayname,
                         'dayid' => $weekday,
-                        'active' => $weekdayLink ? true : false
+                        'active' => $contactTimeLinkDay? true : false
                 );
             }
             
@@ -149,8 +134,8 @@ class ContactPreferencesController extends Controller
         $parameters["lastaccess"] = new \DateTime();
         $parameters["participant"] = $participant;
          
-//         if($participant->getFacebookId())
-//             $parameters["user"]["avatar"] = "http://graph.facebook.com/" . $participant->getParticipantUsername() . "/picture?width=80&height=82";
+        if($participant->getFacebookId())
+            $parameters["user"]["avatar"] = "http://graph.facebook.com/" . $participant->getParticipantUsername() . "/picture?width=80&height=82";
     
         $parameters["user"]["name"] = $participant->getParticipantFirstname() . ' ' . $participant->getParticipantLastname();
         $parameters["user"]["last_access"] = $participant->getParticipantLastTouchDatetime();

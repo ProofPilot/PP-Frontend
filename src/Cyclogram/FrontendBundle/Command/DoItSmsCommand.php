@@ -32,9 +32,9 @@ class DoItSmsCommand extends ContainerAwareCommand
         
         foreach ($participants as $participant){
             $locale = $participant->getLanguage();
-            $participantContactWeekDayLinks = $em->getRepository('CyclogramProofPilotBundle:ParticipantContactWeekdayLink')->findBy(array('weekdayId' => date( "w"), 'participant' => $participant));
-            foreach ($participantContactWeekDayLinks as $participantDay){
-                $participantContactTimeLink = $em->getRepository('CyclogramProofPilotBundle:ParticipantContactTimeLink')->findOneByParticipant($participantDay->getParticipant());
+//             $participantContactWeekDayLinks = $em->getRepository('CyclogramProofPilotBundle:ParticipantContactWeekdayLink')->findBy(array('weekdayId' => date( "w"), 'participant' => $participant));
+//             foreach ($participantContactWeekDayLinks as $participantDay){
+                $participantContactTimeLink = $em->getRepository('CyclogramProofPilotBundle:ParticipantContactTimeLink')->findOneByParticipant($participant);
                 $contactTime = $participantContactTimeLink->getParticipantContactTime()->getParticipantContactTimesName();
 
                 if ($time == $contactTime) {
@@ -65,7 +65,7 @@ class DoItSmsCommand extends ContainerAwareCommand
                     }
                 }
                
-            }
+//             }
         }
     }
     
