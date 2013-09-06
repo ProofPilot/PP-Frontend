@@ -32,7 +32,7 @@
 				<a href="{{ host }}/{{ locale }}/sexpro/is_it_secure" style="color: #bcbfc2; font-family: Arial; font-size: 12px; text-decoration: none;">{{ 'our_security' | trans({}, "email", locale) }}</a>
 			</td>
 			<td align="right">
-				{% if siteurl is defined %}<a href="{{ siteurl }}">{% else %}<a href="#"> {% endif %}<img src="{{ images.login_button }}" width="85" height="32" alt="" title="" style="display: block;" /></a>
+				{% if siteurl is defined %}<a href="{{ host }}/{{ locale }}/login">{% else %}<a href="#"> {% endif %}<img src="{{ images.login_button }}" width="85" height="32" alt="" title="" style="display: block;" /></a>
 			</td>
 		</tr>
 {# 		<tr>#}

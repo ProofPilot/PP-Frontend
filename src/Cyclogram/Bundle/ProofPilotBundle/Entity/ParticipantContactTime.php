@@ -30,6 +30,20 @@ class ParticipantContactTime implements TranslationContainerInterface
     private $participantContactTimesName;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="participant_contact_times_range_start", type="time", length=45)
+     */
+    private $participantContactTimesRangeStart;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="participant_contact_times_range_end", type="time", length=45)
+     */
+    private $participantContactTimesRangeEnd;
+
+    /**
      * Set participantContactTimesId
      *
      * @param integer $participantContactTimesId
@@ -77,29 +91,29 @@ class ParticipantContactTime implements TranslationContainerInterface
     }
     public static function getTranslationMessages()
     {
-        $messages =  array(
-                'time_early_am',
-                'time_morning',
-                'time_afternoon',
-                'time_early_evening',
-                'time_night',
-                'time_late_night',
-                'day_sunday',
-                'day_monday',
-                'day_tuesday',
-                'day_wednesday',
-                'day_thursday',
-                'day_friday',
-                'day_saturday'
-        );
-        
+        $messages = array('time_early_am', 'time_morning', 'time_afternoon',
+                'time_early_evening', 'time_night', 'time_late_night',
+                'day_sunday', 'day_monday', 'day_tuesday', 'day_wednesday',
+                'day_thursday', 'day_friday', 'day_saturday');
+
         $translations = array();
-        
-        foreach($messages as $message) {
-            $translations[] = new \JMS\TranslationBundle\Model\Message($message, "contact_preferences");
+
+        foreach ($messages as $message) {
+            $translations[] = new \JMS\TranslationBundle\Model\Message(
+                    $message, "contact_preferences");
         }
-        
+
         return $translations;
     }
+
+    public function getParticipantContactTimesRangeStart()
+    {
+        return $this->participantContactTimesRangeStart;
+    }
+    public function getParticipantContactTimesRangeEnd()
+    {
+        return $this->participantContactTimesRangeEnd;
+    }
+
 
 }

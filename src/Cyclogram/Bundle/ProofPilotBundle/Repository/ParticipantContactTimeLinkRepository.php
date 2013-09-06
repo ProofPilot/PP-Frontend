@@ -41,10 +41,10 @@ class ParticipantContactTimeLinkRepository extends EntityRepository
     
     
     
-    public function updateParticipantContactTimeLink($participant, $contactTime, $active, $timezone)
+    public function updateParticipantContactTimeLink($participant, $contactTime, $contactDay, $activeTime, $activeWeek, $timezone)
     {
         $em = $this->getEntityManager();
-        if(!$active) {
+        if(!$activeTime) {
             $em->createQuery("
                     DELETE FROM CyclogramProofPilotBundle:ParticipantContactTimeLink pctl
                     WHERE
@@ -55,6 +55,17 @@ class ParticipantContactTimeLinkRepository extends EntityRepository
                     ->setParameter("participant", $participant)
                     ->setParameter("contacttime", $contactTime)
                     ->execute();
+        }elseif (!$activeWeek){
+            $em->createQuery("
+                    DELETE FROM CyclogramProofPilotBundle:ParticipantContactTimeLink pctl
+                    WHERE
+                    pctl.participant = :participant
+                    AND
+                    pctl.participantWeekday = :contactday
+                    ")
+                    ->setParameter("participant", $participant)
+                    ->setParameter("contactday", $contactDay)
+                    ->execute();
         } else {
             $contactTimeLinks = $em->createQuery("
                 SELECT COUNT(pctl)
@@ -63,9 +74,12 @@ class ParticipantContactTimeLinkRepository extends EntityRepository
                 pctl.participant = :participant
                 AND
                 pctl.participantContactTime = :contacttime
+                AND  pctl.participantWeekday = :contactday
+                
             ")
             ->setParameter("participant", $participant)
             ->setParameter("contacttime", $contactTime)
+            ->setParameter("contactday", $contactDay)
             ->getSingleScalarResult();
             
             if(!$contactTimeLinks) {
@@ -73,8 +87,6 @@ class ParticipantContactTimeLinkRepository extends EntityRepository
                 $contactTimeLink->setParticipant($participant);
                 $contactTimeLink->setParticipantContactTime($contactTime);
                 $contactTimeLink->setParticipantTimezone($timezone);
-                $contactTimeLink->setParticipantContactTimeStart(new \DateTime());
-                $contactTimeLink->setParticipantContactTimeEnd(new \DateTime());
                 $em->persist($contactTimeLink);
                 $em->flush();
             } else {
