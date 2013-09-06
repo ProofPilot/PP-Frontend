@@ -7,8 +7,8 @@
             <div class="featured_box" style="background-color: white; overflow: hidden;">
                 <div class="banner_box" style="float: left; margin-right: 20px;"><span class="icon_1"><span></span></span><img src="{{ intervention.logo }}"  title="" alt="" height="126"  width="126"></div>
                 <div class="text_box" style="padding-top: 10px; float: left;"> 
-                        <h4>{{ intervention.title }}</h4>
-                        <p>{{ intervention.content }}</p>
+                        <h4>{{ intervention.title|raw}}</h4>
+                        <p>{{ intervention.content|raw }}</p>
                 </div>
                 <div class="mobile featured_box_s_desc">
                 </div>
