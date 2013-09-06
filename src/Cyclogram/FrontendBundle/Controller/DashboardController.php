@@ -59,8 +59,9 @@ class DashboardController extends Controller
                 $intervention["status"] = "Completed";
             } else {
                 $intervention["status"] = "Enabled";
+                $parameters["interventions"][] = $intervention;
             }
-            $parameters["interventions"][] = $intervention;
+
         }
         
         $parameters["actions"] = array(

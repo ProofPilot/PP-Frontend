@@ -377,6 +377,9 @@ class StudyLogic
                 case 'sexpro':
                     $this->sexProInterventionLogic($participant);
                     break;
+                case 'kocsocialmedia':
+                    $this->kocSMInterventionLogic($participant);
+                    break;
                 default:
                     break;
             }
@@ -415,11 +418,36 @@ class StudyLogic
                 case "Activity":
                     break;
             }
-
-
         }
-        
-        
+    }
+    
+    private function kocSMInterventionLogic($participant) {
+        $em = $this->container->get('doctrine')->getEntityManager();
+        //get all participant intervention links
+        $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:Participant')->getParticipantInterventionLinks($participant);
+        foreach($interventionLinks as $interventionLink) {
+            $interventionTypeName = $interventionLink->getIntervention()->getInterventionType()->getInterventionTypeName();
+            $intervention = $interventionLink->getIntervention();
+            $status = $interventionLink->getStatus()->getStatusName();
+            switch($interventionTypeName) {
+                case "Survey & Observation":
+                    $surveyId = $intervention->getSidId();
+                    if($status == "Active") {
+                        $passed = $em->getRepository('CyclogramProofPilotBundle:ParticipantSurveyLink')->checkIfSurveyPassed($participant, $surveyId);
+    
+                        if($passed) {
+                            $completedStatus = $em->getRepository('CyclogramProofPilotBundle:Status')->findOneByStatusName("Completed");
+                            $interventionLink->setStatus($completedStatus);
+                            $em->persist($interventionLink);
+                            $em->flush();
+                        }
+                    }
+    
+                    break;
+                case "Activity":
+                    break;
+            }
+        }
     }
     
     public function checkEligibility($studyCode, $surveyResult)
