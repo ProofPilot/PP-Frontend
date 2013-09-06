@@ -1231,7 +1231,7 @@ header .header_menu span.text  , .footer_col_right span.text  {
 .panel .panel_right .dashboard_panel .prefs_wrapper .form_container .form_row ul.col_4 li.form_label  {
 	
 }
-.panel .panel_right .dashboard_panel .prefs_wrapper a.btn.save_updates {
+.panel .panel_right .dashboard_panel a.btn.save_updates {
 	clear: both;
 	float: right;
 	color: white;
@@ -1241,7 +1241,7 @@ header .header_menu span.text  , .footer_col_right span.text  {
 	padding-left: 25px !important;
 	margin-top: 15px;
 } 
-.panel .panel_right .dashboard_panel .prefs_wrapper a.btn.save_updates span {
+.panel .panel_right .dashboard_panel a.btn.save_updates span {
 	padding-left: 25px !important;
 }
 .panel .panel_right .dashboard_panel ul.settings_form {
@@ -1928,7 +1928,7 @@ header .header_menu span.text  , .footer_col_right span.text  {
 	display: none;
 }
 .panel .panel_right .dashboard_panel .btns_box a , .panel .panel_right  .btns_box.for_mobile  a  , .panel .panel_right .prev_next.for_mobile ul li a ,
-.panel .panel_right .dashboard_panel .prefs_wrapper a.btn.save_updates {
+.panel .panel_right .dashboard_panel a.btn.save_updates {
 	display: inline-block;
 	color: white;
 	font-family: 'Roboto';
@@ -1944,7 +1944,7 @@ header .header_menu span.text  , .footer_col_right span.text  {
 }
 
 .panel .panel_right .dashboard_panel .btns_box a span , .panel .panel_right  .btns_box.for_mobile  a span  , .panel .panel_right .prev_next.for_mobile ul li a span ,
-.panel .panel_right .dashboard_panel .prefs_wrapper a.btn.save_updates span {
+.panel .panel_right .dashboard_panel a.btn.save_updates span {
 	display: inline-block;
 	padding-left: 22px;
 		line-height: 16px;
@@ -1966,12 +1966,12 @@ header .header_menu span.text  , .footer_col_right span.text  {
 	background:  url(../images/100_icon_save.png) no-repeat 0px 50%;
 }
 .panel a.complete span ,
-.panel .panel_right .dashboard_panel .prefs_wrapper a.btn.save_updates span {
+.panel .panel_right .dashboard_panel a.btn.save_updates span {
 	background:  url(../images/icon_complete.png) no-repeat 0px 50%;
 	background-size: 16px 12px;
 } 
 .lt-ie9 .panel a.complete span,
-.lt-ie9 .panel .panel_right .dashboard_panel .prefs_wrapper a.btn.save_updates span {
+.lt-ie9 .panel .panel_right .dashboard_panel a.btn.save_updates span {
 	background:  url(../images/100_icon_complete.png) no-repeat 0px 50%;
 }
 
@@ -2161,7 +2161,7 @@ div.panel div.panel_right div.prev_next ul li a.next span {
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#6e8993', endColorstr='#526e79',GradientType=0 ); /* IE6-9 */
 }
 .panel .panel_right .dashboard_panel .btns_box.wide a.complete , .panel .panel_right  .btns_box.for_mobile.wide a.complete,
-.panel .panel_right .dashboard_panel .prefs_wrapper a.btn.save_updates {
+.panel .panel_right .dashboard_panel a.btn.save_updates {
 	padding-left: 15px;
 	border: 1px solid #7ea61f;
 	background: #97c42c; /* Old browsers */
@@ -2175,7 +2175,7 @@ div.panel div.panel_right div.prev_next ul li a.next span {
 }
 .panel .panel_right .dashboard_panel .btns_box.wide a.complete:hover , 
 .panel .panel_right  .btns_box.for_mobile.wide a.complete:hover ,
-.panel .panel_right .dashboard_panel .prefs_wrapper a.btn.save_updates:hover {
+.panel .panel_right .dashboard_panel a.btn.save_updates:hover {
 	border: 1px solid #608016;
 	background: #6e8f20; /* Old browsers */
 	background: -moz-linear-gradient(top, #6e8f20 0%, #5d7a17 100%); /* FF3.6+ */
@@ -5145,7 +5145,7 @@ footer a.icon_update span {
 		top: 30px;
 		right: 20px;
 	}
-	.panel .panel_right .dashboard_panel .prefs_wrapper a.btn.save_updates {
+	.panel .panel_right .dashboard_panel a.btn.save_updates {
 		width: 100%;
 		box-sizing:border-box;
 		-moz-box-sizing:border-box;

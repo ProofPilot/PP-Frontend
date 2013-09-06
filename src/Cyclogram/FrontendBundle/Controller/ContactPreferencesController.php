@@ -38,7 +38,7 @@ class ContactPreferencesController extends Controller
                 6=>'day_saturday'
         );
         $parameters = array();
-        $parameters["expandedForm"] = '';
+        $parameters["expanded"] = '';
         
         
         //first we process POST data if any
@@ -68,12 +68,13 @@ class ContactPreferencesController extends Controller
                     $timezoneid = $request->get('timezone');
                     $timezone = $em->getRepository('CyclogramProofPilotBundle:ParticipantTimeZone')->find($timezoneid);
                     $em->getRepository('CyclogramProofPilotBundle:ParticipantContactTimeLink')
-                    ->updateParticipantContactTimeLink($participant, $contactTime, $weekday, $timezone, $isWeekdayActive, $isContactTimeActive);
+                        ->updateParticipantContactTimeLink($participant, $contactTime, $weekday, $timezone, $isWeekdayActive, $isContactTimeActive);
                     $parameters["expandedForm"] = 'contacttimes';
                     $parameters['message'] = 'Your contact prefernces have been saved';
                     
                 }
             }
+            $parameters["expanded"] = "expanded";
         }
 
         
@@ -89,41 +90,37 @@ class ContactPreferencesController extends Controller
             );
         }
         
+                
         
         //timeofday
-        $contactTimesData = array();
-        $weekDaysData = array();
+        $contactTimesData = array(); $selectedTimes = array();
+        $weekDaysData = array(); $selectedWeekDays = array();
         $timezone = 1;
         
+        $participantCTLinks = $em->getRepository('CyclogramProofPilotBundle:ParticipantContactTimeLink')->getParticipantContactTimeLinks($participant);
+
+        foreach($participantCTLinks as $link) {
+            $timezone = $link->getParticipantTimezone()->getParticipantTimezoneId();
+            $selectedTimes[$link->getParticipantContactTime()->getParticipantContactTimesId()] = 1;
+            $selectedWeekDays[$link->getParticipantWeekday()] = 1;
+        }
+        $selectedTimes = array_keys($selectedTimes);
+        $selectedWeekDays = array_keys($selectedWeekDays);
+
         foreach($contactTimes as $contactTime) {
-            $contactTimeLink = $em->getRepository('CyclogramProofPilotBundle:ParticipantContactTimeLink')
-            ->getParticipantContactTimeLinkByTime($participant, $contactTime);
-        
-            if($contactTimeLink)
-                $timezone = $contactTimeLink->getParticipantTimezone()->getParticipantTimezoneId();
-        
             $contactTimeId = $contactTime->getParticipantContactTimesId();
-             
-            if(!isset($contactTimesData[$contactTimeId]) || $contactTimeLink) {
-                $contactTimesData[$contactTimeId] = array(
-                        'contactTime' => $contactTime,
-                        'active' => $contactTimeLink ? true : false
-                );
-            }
+            $contactTimesData[$contactTimeId] = array(
+                    'contactTime' => $contactTime,
+                    'active' => in_array($contactTimeId, $selectedTimes) ? true : false
+            );
         }
         
-        foreach($weekdays as $weekday=>$dayname) {
-            $contactTimeLinkDay = $em->getRepository('CyclogramProofPilotBundle:ParticipantContactTimeLink')
-            ->getParticipantContactTimeLinkByDay($participant, $weekday);
-            
-            if(!isset($weekDaysData[$weekday])) {
-                $weekDaysData[$weekday] = array (
-                        'dayname' => $dayname,
-                        'dayid' => $weekday,
-                        'active' => $contactTimeLinkDay? true : false
-                );
-            }
-            
+        foreach($weekdays as $key=>$dayname) {
+            $weekDaysData[$key] = array (
+                    'dayname' => $dayname,
+                    'dayid' => $key,
+                    'active' => in_array($key, $selectedWeekDays) ? true : false
+            );
         }
 
         $parameters['timezones'] = $timezones;
@@ -133,9 +130,10 @@ class ContactPreferencesController extends Controller
         $parameters['timezone'] = $timezone;
         $parameters["lastaccess"] = new \DateTime();
         $parameters["participant"] = $participant;
+        
          
-        if($participant->getFacebookId())
-            $parameters["user"]["avatar"] = "http://graph.facebook.com/" . $participant->getParticipantUsername() . "/picture?width=80&height=82";
+        //if($participant->getFacebookId())
+        //    $parameters["user"]["avatar"] = "http://graph.facebook.com/" . $participant->getParticipantUsername() . "/picture?width=80&height=82";
     
         $parameters["user"]["name"] = $participant->getParticipantFirstname() . ' ' . $participant->getParticipantLastname();
         $parameters["user"]["last_access"] = $participant->getParticipantLastTouchDatetime();
