@@ -364,4 +364,9 @@ class DefaultController extends Controller
         return $this->render('CyclogramKnowatHomeBundle:website:noConsent.html.twig');
     }
 
+    public function  ajaxStateValidationAction(){
+
+        return new \Symfony\Component\HttpFoundation\Response("test");
+    }
+
 }
