@@ -41,10 +41,12 @@ class ParticipantRepository extends EntityRepository implements
         $currentDate = new \DateTime();
         
         return $this->getEntityManager()
-        ->createQuery('SELECT COUNT (pil) FROM CyclogramProofPilotBundle:ParticipantInterventionLink pil
+        ->createQuery("SELECT COUNT (pil) FROM CyclogramProofPilotBundle:ParticipantInterventionLink pil
+                INNER JOIN pil.status intervention_status
                 WHERE pil.participant = :userid
                 AND pil.participantInterventionLinkDatetimeStart <= :currentDate
-                ')
+                AND intervention_status.statusName = 'Active'
+                ")
         ->setParameters(array(
                         'userid' => $userid,
                         'currentDate' => $currentDate
