@@ -42,6 +42,10 @@ CyclogramKnowatHomeBundle_eligible:
     pattern:  /eligible
     defaults: { _controller: CyclogramKnowatHomeBundle:Default:eligible }
 
+CyclogramKnowatHomeBundle_ajaxStateValidation:
+    pattern:  /ajaxStateValidation
+    defaults: { _controller: CyclogramKnowatHomeBundle:Default:ajaxStateValidation }
+
 do_login:
         pattern: /doLogin
         defaults: { _controller: CyclogramKnowatHomeBundle:Authentication:doLogin }
