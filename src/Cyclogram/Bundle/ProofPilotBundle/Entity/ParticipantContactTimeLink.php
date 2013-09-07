@@ -67,7 +67,7 @@ class ParticipantContactTimeLink
     /**
      * @var \Participant
      *
-     * @ORM\ManyToOne(targetEntity="Participant")
+     * @ORM\ManyToOne(targetEntity="Participant", inversedBy="contacttimelinks")
      * @ORM\JoinColumns({
      * @ORM\JoinColumn(name="participant_id", referencedColumnName="participant_id")
      * })

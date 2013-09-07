@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantStudyReminderLink;
 
 /**
  * Participant
@@ -303,6 +304,22 @@ class Participant implements AdvancedUserInterface
      * @ORM\Column(name="language", type="string", length=255, nullable=true)
      */
     protected $language;
+    
+    
+    /**
+     * @ORM\OneToMany(targetEntity="ParticipantStudyReminderLink", mappedBy="participant")
+     * @var unknown_type
+     * @var unknown_type
+     */
+    protected $studyreminderlinks;
+    
+    
+    /**
+     * @ORM\OneToMany(targetEntity="ParticipantContactTimeLink", mappedBy="participant")
+     * @var unknown_type
+     * @var unknown_type
+     */
+    protected $contacttimelinks;
 
     /**
      * Get participantId
@@ -1090,4 +1107,14 @@ class Participant implements AdvancedUserInterface
         $this->language = $language;
     }
 
+
+    public function getStudyreminderlinks()
+    {
+        return $this->studyreminderlinks;
+    }
+
+    public function getContacttimelinks()
+    {
+        return $this->contacttimelinks;
+    }
 }
