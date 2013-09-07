@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * ParticipantContactTime
  *
  * @ORM\Table(name="participant_contact_time")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Cyclogram\Bundle\ProofPilotBundle\Repository\ParticipantContactTimeRepository")
  */
 class ParticipantContactTime implements TranslationContainerInterface
 {
