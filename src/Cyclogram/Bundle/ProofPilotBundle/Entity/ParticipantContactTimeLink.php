@@ -30,22 +30,7 @@ class ParticipantContactTimeLink
      */
     private $participantContactTime;
 
-    /**
-     * @var \ParticipantContactTime
-     *
-     * @ORM\ManyToOne(targetEntity="ParticipantContactTime")
-     * @ORM\JoinColumns({
-     * @ORM\JoinColumn(name="server_contact_time", referencedColumnName="participant_contact_times_id")
-     * })
-     */
-    private $serverContactTime;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="server_weekday", type="integer", length=45)
-     */
-    private $serverWeekday;
 
     /**
      * @var integer
@@ -170,37 +155,6 @@ class ParticipantContactTimeLink
         return $this->participant;
     }
 
-    /**
-     * Get serverContactTime
-     *
-     * @return \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantContactTime
-     */
-    public function getServerContactTime()
-    {
-        return $this->serverContactTime;
-    }
-
-    /**
-     * Set serverContactTime
-     *
-     * @param integer $serverContactTime
-     * @return ParticipantContactTimeLink
-     */
-    public function setServerContactTime(
-            \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantContactTime $serverContactTime = null)
-    {
-        $this->serverContactTime = $serverContactTime;
-    }
-
-    public function getServerWeekday()
-    {
-        return $this->serverWeekday;
-    }
-
-    public function setServerWeekday($serverWeekday)
-    {
-        $this->serverWeekday = $serverWeekday;
-    }
 
     public function getParticipantWeekday()
     {
