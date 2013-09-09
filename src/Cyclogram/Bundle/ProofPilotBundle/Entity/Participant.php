@@ -983,7 +983,7 @@ class Participant implements AdvancedUserInterface
     public function getUsername()
     {
         // TODO: Implement getUsername() method.
-        return $this->getParticipantEmail();
+        return $this->getParticipantUsername();
     }
 
     public function setFBData($fbdata)
