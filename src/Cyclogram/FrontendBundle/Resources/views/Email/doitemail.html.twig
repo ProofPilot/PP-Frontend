@@ -1,5 +1,6 @@
 {%  extends 'CyclogramFrontendBundle:Email:email.html.twig' %}
 {% block email_content %}
+<td>
 <div class="site_container">
 <div class="dashboard_panel">
     <div class="choices_box">
@@ -8,17 +9,18 @@
                 <div class="banner_box" style="float: left; margin-right: 20px;"><span class="icon_1"><span></span></span><img src="{{ intervention.logo }}"  title="" alt="" height="126"  width="126"></div>
                 <div class="text_box" style="padding-top: 10px; float: left;"> 
                         <h4>{{ intervention.title|raw}}</h4>
-                        <p>{{ intervention.content|raw }}</p>
+                        <p style="font-size: 12px;">{{ intervention.content|raw }}</p>
                 </div>
                 <div class="mobile featured_box_s_desc">
                 </div>
                     <div class="button_box" style="float: right; padding-top: 30px; padding-right: 5px;"><a href="{{ siteurl }}" style="background: linear-gradient(to bottom, #97C52C 0%, #7EA61F 100%) repeat scroll 0 0 transparent;
-                    border: 1px solid #7EA61F; border-radius: 3px 3px 3px 3px; color: #FFFFFF; display: inline-block;font-family: 'Roboto'; font-size: 16px;
-                    font-style: normal; font-weight: 700; height: 41px; line-height: 41px; min-width: 90px; padding-left: 25px; padding-right: 25px; text-decoration: none;">
-                    <span style="padding-left: 30px;">{{ 'do_it' | trans({}, "email", locale) }}</span></a></div>
+                    border: 1px solid #7EA61F; border-radius: 3px 3px 3px 3px; color: #FFFFFF; display: inline-block; font-size: 16px;
+                    font-weight: 700; height: 41px; line-height: 41px; padding-left: 25px; padding-right: 25px; text-decoration: none;">
+                    <span>{{ 'do_it' | trans({}, "dashboard", locale) }}</span></a></div>
             </div>
         {% endfor %}
     </div>
     </div>
 </div>
+</td>
 {% endblock email_content %}
