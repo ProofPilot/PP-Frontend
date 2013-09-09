@@ -95,8 +95,7 @@ class TestController extends Controller
             $parameters['email'] = $participant->getParticipantEmail();
             $parameters['locale'] = $participant->getLanguage();
             $parameters['host'] = $this->container->getParameter('site_url');
-            $parameters['siteurl'] = $this->container->getParameter('site_url').$this->container->get('router')->generate('_login', array('_locale' => $locale,
-                    'surveyUrl' => urlencode($this->getInterventionUrl($interventionLink, $locale))));
+            $parameters['siteurl'] = $this->container->getParameter('site_url').$this->getInterventionUrl($interventionLink, $locale);
             
                               $send = $cc->sendMail(
                           $participant->getParticipantEmail(),
@@ -124,7 +123,7 @@ class TestController extends Controller
             case 'Survey & Observation':
                 $surveyId = $intervention->getSidId();
                 $redirectPath = $this->container->get('router')->generate('_main', array('_locale' => $locale));
-                $path = $this->container->get('router')->generate('_survey', array(
+                $path = $this->container->get('router')->generate('_survey_protected', array(
                         '_locale' => $locale,
                         'studyCode' => $studyCode,
                         'surveyId' => $surveyId,

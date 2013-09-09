@@ -127,8 +127,7 @@ class DoItNotificationCommand extends ContainerAwareCommand
             $parameters['email'] = $participant->getParticipantEmail();
             $parameters['locale'] = $participant->getLanguage();
             $parameters['host'] = $this->getContainer()->getParameter('site_url');
-            $parameters['siteurl'] = $this->getContainer()->getParameter('site_url').$this->getContainer()->get('router')->generate('_login', array('_locale' => $locale,
-                    'surveyUrl' => urlencode($this->getInterventionUrl($interventionLink, $locale))));
+            $parameters['siteurl'] = $this->getContainer()->getParameter('site_url').$this->getInterventionUrl($interventionLink, $locale);
         
             $send = $cc->sendMail(
                     $participant->getParticipantEmail(),
@@ -169,8 +168,7 @@ class DoItNotificationCommand extends ContainerAwareCommand
                 $intervention = array();
                 $interventionTitle = strip_tags($interventionContent->getInterventionName());
         
-                $interventionUrl = $cc::generateGoogleShorURL($this->getContainer()->getParameter('site_url').$this->getContainer()->get('router')->generate('_login', array('_locale' => $locale,
-                        'surveyUrl' => urlencode($this->getInterventionUrl($interventionLink, $locale)))));
+                $interventionUrl = $cc::generateGoogleShorURL($this->getContainer()->getParameter('site_url').$this->getInterventionUrl($interventionLink, $locale));
                 $sms = $this->getContainer()->get('sms');
                 $message = $this->getContainer()->get('translator')->trans('sms_title', array(), 'security', $locale);
                 $sentSms = $sms->sendSmsAction( array('message' => $message .': '. $interventionTitle.' '.$interventionUrl, 'phoneNumber'=> $participant->getParticipantMobileNumber()) );
@@ -194,7 +192,7 @@ class DoItNotificationCommand extends ContainerAwareCommand
             case 'Survey & Observation':
                 $surveyId = $intervention->getSidId();
                 $redirectPath = $this->getContainer()->get('router')->generate('_main', array('_locale' => $locale));
-                $path = $this->getContainer()->get('router')->generate('_survey', array(
+                $path = $this->getContainer()->get('router')->generate('_survey_protected', array(
                         '_locale' => $locale,
                         'studyCode' => $studyCode,
                         'surveyId' => $surveyId,
