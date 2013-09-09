@@ -43,22 +43,22 @@ class StudyController extends Controller
         $logic = $this->get('study_logic');
         
         //check if study is supported
-        if(!$logic->supports($this->parameters['studyCode'])) {
-            $this->parameters["errorMessage"] = "Study with code '" . $study->getStudyCode() . "' not supported by the system.";
-            $this->parameters["errorChoicesMessage"] = "Supported codes are:";
-            $this->parameters["errorChoices"] = $logic->getSupportedStudies();
-            return true;
-        }
+//         if(!$logic->supports($this->parameters['studyCode'])) {
+//             $this->parameters["errorMessage"] = "Study with code '" . $study->getStudyCode() . "' not supported by the system.";
+//             $this->parameters["errorChoicesMessage"] = "Supported codes are:";
+//             $this->parameters["errorChoices"] = $logic->getSupportedStudies();
+//             return true;
+//         }
         
-        //check if study has at least one "Site" organization linked
-        if(!$sol = $this->getDoctrine()->getRepository("CyclogramProofPilotBundle:Study")->getOrganizationLinks($studyId)) {
-            $this->parameters["errorMessage"] = "Study '" . $study->getStudyCode() . "' has no organization with role Site linked";
-            return true;
-        } else {
-            $this->parameters["siteOrganization"] = $sol[0]["organizationName"];
-        }
+//         //check if study has at least one "Site" organization linked
+//         if(!$sol = $this->getDoctrine()->getRepository("CyclogramProofPilotBundle:Study")->getOrganizationLinks($studyId)) {
+//             $this->parameters["errorMessage"] = "Study '" . $study->getStudyCode() . "' has no organization with role Site linked";
+//             return true;
+//         } else {
+//             $this->parameters["siteOrganization"] = $sol[0]["organizationName"];
+//         }
         
-        //check if organization has any default sites
+//         //check if organization has any default sites
         if(!$defaultSites = $this->getDoctrine()->getRepository("CyclogramProofPilotBundle:Study")->getDefaultSites($studyId)) {
             $this->parameters["errorMessage"] = "Organization '" . $this->parameters["siteOrganization"] . "' has no default sites.";
             return true;
@@ -74,21 +74,21 @@ class StudyController extends Controller
             $this->parameters["campaignParameters"] = $campaignParameters;
         }
         
-        //check if required arms exist
-        if(!$this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Study')->checkStudyArms($logic->getArmCodes($this->parameters['studyCode']))) {
-            $this->parameters["errorMessage"] = "Not all required arms found for study  '" .  $this->parameters['studyCode']  . "'";
-            $this->parameters["errorChoicesMessage"] = "Required arms are:";
-            $this->parameters["errorChoices"] = $logic->getArmCodes($this->parameters['studyCode']);
-            return true;
-        } 
+         //check if required arms exist
+//         if(!$this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Study')->checkStudyArms($logic->getArmCodes($this->parameters['studyCode']))) {
+//             $this->parameters["errorMessage"] = "Not all required arms found for study  '" .  $this->parameters['studyCode']  . "'";
+//             $this->parameters["errorChoicesMessage"] = "Required arms are:";
+//             $this->parameters["errorChoices"] = $logic->getArmCodes($this->parameters['studyCode']);
+//             return true;
+//         } 
         
         //check if required interventions exist
-        if(!$this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Study')->checkStudyInterventions($logic->getInterventionCodes($this->parameters['studyCode']))) {
-            $this->parameters["errorMessage"] = "Not all required interventions found for study  '" .  $this->parameters['studyCode']  . "'";
-            $this->parameters["errorChoicesMessage"] = "Required interventions are:";
-            $this->parameters["errorChoices"] = $logic->getInterventionCodes($this->parameters['studyCode']);
-            return true;
-        }
+//         if(!$this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Study')->checkStudyInterventions($logic->getInterventionCodes($this->parameters['studyCode']))) {
+//             $this->parameters["errorMessage"] = "Not all required interventions found for study  '" .  $this->parameters['studyCode']  . "'";
+//             $this->parameters["errorChoicesMessage"] = "Required interventions are:";
+//             $this->parameters["errorChoices"] = $logic->getInterventionCodes($this->parameters['studyCode']);
+//             return true;
+//         }
         
         return false;
     }

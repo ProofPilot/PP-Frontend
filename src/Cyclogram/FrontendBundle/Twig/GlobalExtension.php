@@ -27,6 +27,7 @@ class GlobalExtension extends \Twig_Extension
                         'needs_context' => true
                         )),
                 'is_enrolled_in_study' => new \Twig_Function_Method($this, 'isEnrolledInStudy'),
+                'is_stytdy_logic_implemented' => new \Twig_Function_Method($this, 'isStytdyLogicImplemented')
 //                 'google_campaign_info' => new \Twig_Function_Method($this, 'getGoogleCampaignInfo')
         );
     }
@@ -79,6 +80,12 @@ class GlobalExtension extends \Twig_Extension
     {
         $participant = $this->securityContext->getToken()->getUser();
         return $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Participant')->isEnrolledInStudy($participant, $studyCode);
+    }
+    
+    public function isStytdyLogicImplemented($studyCode) {
+        $logic = $this->container->get('study_logic');
+        if ($logic->supports($studyCode))
+            return true;
     }
     
 //     public function getGoogleCampaignInfo($studyId)
