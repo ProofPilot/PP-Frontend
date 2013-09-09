@@ -172,8 +172,8 @@ class DoItNotificationCommand extends ContainerAwareCommand
                 $interventionUrl = $cc::generateGoogleShorURL($this->getContainer()->getParameter('site_url').$this->getContainer()->get('router')->generate('_login', array('_locale' => $locale,
                         'surveyUrl' => urlencode($this->getInterventionUrl($interventionLink, $locale)))));
                 $sms = $this->getContainer()->get('sms');
-                $message = $this->getContainer()->get('translator')->trans('You have active doit task: ', array(), 'security', $locale);
-                $sentSms = $sms->sendSmsAction( array('message' => $message .' '. $interventionTitle.' '.$interventionUrl, 'phoneNumber'=> $participant->getParticipantMobileNumber()) );
+                $message = $this->getContainer()->get('translator')->trans('sms_title', array(), 'security', $locale);
+                $sentSms = $sms->sendSmsAction( array('message' => $message .': '. $interventionTitle.' '.$interventionUrl, 'phoneNumber'=> $participant->getParticipantMobileNumber()) );
                 return $sentSms;
             }
         }
