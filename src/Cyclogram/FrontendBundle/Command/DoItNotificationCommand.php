@@ -92,6 +92,8 @@ class DoItNotificationCommand extends ContainerAwareCommand
         $embedded['logo_top'] = realpath($this->getContainer()->getParameter('kernel.root_dir') . "/../web/images/newsletter_logo.png");
         $embedded['logo_footer'] = realpath($this->getContainer()->getParameter('kernel.root_dir') . "/../web/images/newletter_logo_footer.png");
         $embedded['login_button'] = realpath($this->getContainer()->getParameter('kernel.root_dir') . "/../web/images/newsletter_small_login.jpg");
+        $embedded['white_top'] = realpath($this->getContainer()->getParameter('kernel.root_dir') . "/../web/images/newsletter_white_top.png");
+        $embedded['white_bottom'] = realpath($this->getContainer()->getParameter('kernel.root_dir') . "/../web/images/newsletter_white_bottom.png");
         
         $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:Participant')->getParticipantInterventionLinks($participant);
         
@@ -172,9 +174,10 @@ class DoItNotificationCommand extends ContainerAwareCommand
                 $sms = $this->getContainer()->get('sms');
                 $message = $this->getContainer()->get('translator')->trans('You have active doit task: ', array(), 'security', $locale);
                 $sentSms = $sms->sendSmsAction( array('message' => $message .' '. $interventionTitle.' '.$interventionUrl, 'phoneNumber'=> $participant->getParticipantMobileNumber()) );
+                return $sentSms;
             }
-        
         }
+        return false;
     }
     
     
