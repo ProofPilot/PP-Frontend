@@ -75,8 +75,6 @@ class ParticipantContactTimeLinkRepository extends EntityRepository
                 $contactTimeLink->setParticipantContactTime($contactTime);
                 $contactTimeLink->setParticipantTimezone($timezone);
                 $contactTimeLink->setParticipantWeekday($contactDay);
-                $contactTimeLink->setServerContactTime($contactTime);
-                $contactTimeLink->setServerWeekday($contactDay);
                 $em->persist($contactTimeLink);
                 $em->flush();
             } else {

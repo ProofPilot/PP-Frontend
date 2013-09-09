@@ -242,8 +242,38 @@ class ParticipantRepository extends EntityRepository implements
         $results = $query->getResult();
         
         return $results;
+    }
     
+    /**
+     * Get all participants who should receive SMS notifications with the specified parameters
+     * @param int $reminderId  - reminder which is being sent
+     * @param int $timeZoneId - time zone currently processed
+     * @param int $contactTimeId - time frame
+     */
+    public function getParticipantsForSmsNotifications($reminderId, $timeZoneId, $contactTimeId, $weekDayId)
+    {
+        $query = $this->getEntityManager()
+        ->createQuery("
+                SELECT p
+                FROM CyclogramProofPilotBundle:Participant p
+                INNER JOIN p.contacttimelinks pctl
+                INNER JOIN pctl.participantTimezone ptz
+                INNER JOIN pctl.participantContactTime pct
+                INNER JOIN p.studyreminderlinks psrl
+                INNER JOIN psrl.participantStudyReminder psr
+                WHERE psrl.bySMS = 1
+                AND ptz.participantTimezoneId = :timeZoneId
+                AND pct.participantContactTimesId = :contactTimeId
+                AND psr.participantStudyReminderId = :reminderId
+                AND pctl.participantWeekday = :weekDayId
+                ")
+                ->setParameter("timeZoneId", $timeZoneId)
+                ->setParameter("contactTimeId", $contactTimeId)
+                ->setParameter("reminderId", $reminderId)
+                ->setParameter("weekDayId", $weekDayId);
+        $results = $query->getResult();
     
+        return $results;
     }
 
 }
