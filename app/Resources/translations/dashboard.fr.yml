@@ -1,6 +1,7 @@
 dashboard_subtitle: dashboard_subtitle
 do_it: 'DO IT'
 do_it_now: do_it_now
+no_do_it: no_do_it   # FIXME
 
 past_activity:
     emai_confirmation_status: yuor_e-mail_address_has_been_confirmed
