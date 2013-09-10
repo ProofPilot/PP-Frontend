@@ -36,7 +36,7 @@ class ParticipantRepository extends EntityRepository implements
         return $class === 'Cyclogram\Bundle\ProofPilotBundle\Entity\Participant';
     }
     
-    public function getParticipantInterventionsCount($userid){
+    public function getActiveParticipantInterventionsCount($userid){
         $currentDate = new \DateTime();
         
         return $this->getEntityManager()
@@ -64,6 +64,25 @@ class ParticipantRepository extends EntityRepository implements
                 INNER JOIN i.interventionType it
                 WHERE pil.participant = :userid
                 AND pil.participantInterventionLinkDatetimeStart <= :currentDate
+                ')
+                ->setParameters(array(
+                        'userid' => $userid,
+                        'currentDate' => $currentDate))
+                        ->getResult();
+    }
+    
+    public function getActiveParticipantInterventionLinks($userid){
+    
+        $currentDate = new \DateTime();
+    
+        return $this->getEntityManager()
+        ->createQuery('SELECT pil, i, it, s FROM CyclogramProofPilotBundle:ParticipantInterventionLink pil
+                INNER JOIN pil.intervention i
+                INNER JOIN pil.status s
+                INNER JOIN i.interventionType it
+                WHERE pil.participant = :userid
+                AND pil.participantInterventionLinkDatetimeStart <= :currentDate
+                AND s.statusId = 1
                 ')
                 ->setParameters(array(
                         'userid' => $userid,
