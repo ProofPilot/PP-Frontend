@@ -290,9 +290,8 @@
 		setTimeout(function() { window.scrollTo(0, 1) }, 100);
 		
 		// open_why_popup
-		$("#open_why_popup, #why_popup .why_close").bind('click', function(){
-			$("#why_popup").toggleClass('active');	
-			return false;
+		$("#open_why_popup, #why_popup .why_close").on('click', function(){
+			$("#why_popup").toggleClass('active');
 		});
 		
 		// about this box expander
