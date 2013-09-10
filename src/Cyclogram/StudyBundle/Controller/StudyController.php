@@ -40,7 +40,7 @@ class StudyController extends Controller
         $this->parameters["logo"] = $this->container->getParameter('study_image_url') . '/' . $studyId. '/' .$studyContent->getStudyLogo();
         $this->parameters["graphic"] = $this->container->getParameter('study_image_url') . '/' .$studyId. '/' .$studyContent->getStudyGraphic();
         
-        $logic = $this->get('study_logic');
+//         $logic = $this->get('study_logic');
         
         //check if study is supported
 //         if(!$logic->supports($this->parameters['studyCode'])) {
@@ -60,16 +60,25 @@ class StudyController extends Controller
         
 //         //check if organization has any default sites
         if(!$defaultSites = $this->getDoctrine()->getRepository("CyclogramProofPilotBundle:Study")->getDefaultSites($studyId)) {
-            $this->parameters["errorMessage"] = "Organization '" . $this->parameters["siteOrganization"] . "' has no default sites.";
-            return true;
+            $this->parameters["defaultSite"] = "Sexpro Default";
+//             $this->parameters["errorMessage"] = "Organization '" . $this->parameters["siteOrganization"] . "' has no default sites.";
+//             return true;
         } else {
             $this->parameters["defaultSite"] = $defaultSites[0]["siteName"];
         }
 
         //check for default campaigns
         if(!$campaignParameters = $this->container->get('doctrine')->getRepository("CyclogramProofPilotBundle:Campaign")->getDefaultCampaignParameters($studyId)) {
-            $this->parameters["errorMessage"] = "No campains are linked with site  '" . $this->parameters["defaultSite"] . "'";
-            return true;
+//             $this->parameters["errorMessage"] = "No campains are linked with site  '" . $this->parameters["defaultSite"] . "'";
+//             return true;
+            $this->parameters["campaignParameters"]["campaignSiteLinkId"] = 4;
+            $this->parameters["campaignParameters"]["campaignId"] = 4;
+            $this->parameters["campaignParameters"]["campaignName"] = "SexPro";
+            $this->parameters["campaignParameters"]["campaignTypeName"] = "Clinic";
+            $this->parameters["campaignParameters"]["placementName"] = "SexPro";
+            $this->parameters["campaignParameters"]["siteId"] = 3;
+            $this->parameters["campaignParameters"]["siteName"] = $this->parameters["defaultSite"];
+            $this->parameters["campaignParameters"]["affinityName"] = "No Affinity";
         } else {
             $this->parameters["campaignParameters"] = $campaignParameters;
         }
