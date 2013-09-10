@@ -1,6 +1,7 @@
 dashboard_subtitle: 'El resúmen de su participación. Lo que tiene que hacer ahora y lo que está por venir.'
 do_it: 'DO IT'
 do_it_now: 'Hazlo Ahora'
+no_do_it: no_do_it   # FIXME
 
 past_activity:
     emai_confirmation_status: 'Su Email ha sido confirmado'

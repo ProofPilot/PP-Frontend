@@ -1,6 +1,7 @@
 dashboard_subtitle: 'Your participation at a glance. What you need to do now and what’s next.'
 do_it: 'DO IT'
 do_it_now: 'Do It Now'
+no_do_it: 'You have no study tasks right now'
 
 past_activity:
     emai_confirmation_status: 'Your e-mail address has been confirmed'
