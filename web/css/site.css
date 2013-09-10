@@ -83,7 +83,9 @@ span em {
 	max-width: 998px;
 	margin: 0px auto;	
 }
-
+#open_why_popup {
+	cursor: pointer;
+}
 .reg_header {
 	/*width: 998px;*/
 	margin: 0px auto;
@@ -3737,6 +3739,9 @@ footer a.icon_update span {
 }
 .mobile_reg.login_form .why_popup.active {
 	display: block; 
+}
+.why_login {
+	top: 10px !important;
 }
 .mobile_reg.login_form .why_popup .why_popup_content {
 	width: 247px;
