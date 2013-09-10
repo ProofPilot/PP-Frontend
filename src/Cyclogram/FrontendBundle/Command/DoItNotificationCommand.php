@@ -105,12 +105,11 @@ class DoItNotificationCommand extends ContainerAwareCommand
         $embedded['white_top'] = realpath($this->getContainer()->getParameter('kernel.root_dir') . "/../web/images/newsletter_white_top.png");
         $embedded['white_bottom'] = realpath($this->getContainer()->getParameter('kernel.root_dir') . "/../web/images/newsletter_white_bottom.png");
         
-        $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:Participant')->getParticipantInterventionLinks($participant);
+        $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:Participant')->getActiveParticipantInterventionLinks($participant);
         
         $parameters["interventions"] = array();
         if (!empty($interventionLinks)){
             foreach($interventionLinks as $interventionLink) {
-                if($interventionLink->getStatus()->getStatusName() == "Active" ) {
                     $interventionId = $interventionLink->getIntervention()->getInterventionId();
                     $interventionContent = $this->getContainer()->get('doctrine')->getRepository("CyclogramProofPilotBundle:Intervention")->getInterventionContent($interventionId, $locale);
             
@@ -125,8 +124,6 @@ class DoItNotificationCommand extends ContainerAwareCommand
                     $intervention["url"] = $this->getInterventionUrl($interventionLink, $locale);
                     $intervention["logo"] = $this->getContainer()->getParameter('study_image_url') . "/" . $studyId . "/" . $studyContent->getStudyLogo();
                     $parameters["interventions"][] = $intervention;
-                }
-
             }
         
             $parameters['email'] = $participant->getParticipantEmail();
@@ -161,7 +158,7 @@ class DoItNotificationCommand extends ContainerAwareCommand
         
         $locale = $participant->getLanguage();
         
-        $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:Participant')->getParticipantInterventionLinks($participant);
+        $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:Participant')->getActiveParticipantInterventionLinks($participant);
         
         $interventions = array();
         if (!empty($interventionLinks)){
@@ -175,7 +172,6 @@ class DoItNotificationCommand extends ContainerAwareCommand
         
                 $intervention = array();
                 $interventionTitle = strip_tags($interventionContent->getInterventionName());
-                if($interventionLink->getStatus()->getStatusName() == "Active" ) {
                     $interventionUrl = $cc::generateGoogleShorURL($this->getContainer()->getParameter('site_url').$this->getInterventionUrl($interventionLink, $locale));
                     $sms = $this->getContainer()->get('sms');
                     $message = $this->getContainer()->get('translator')->trans('sms_title', array(), 'security', $locale);
@@ -185,13 +181,9 @@ class DoItNotificationCommand extends ContainerAwareCommand
                     } else {
                         return array('send' => false, 'message' => 'sms not send');
                     }
-                } else {
-                return array('send' => false, 'message' => '');
-                }
-                
             }
         }
-        return false;
+        return array('send' => false, 'message' => '');
     }
     
     

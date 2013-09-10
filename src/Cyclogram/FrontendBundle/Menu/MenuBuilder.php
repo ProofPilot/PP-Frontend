@@ -35,7 +35,7 @@ class MenuBuilder extends ContainerAware implements TranslationContainerInterfac
         
         $participant = $this->container->get('security.context')->getToken()->getUser();
         $em = $this->container->get('doctrine')->getManager();
-        $surveyscount = $em->getRepository('CyclogramProofPilotBundle:Participant')->getParticipantInterventionsCount($participant);
+        $surveyscount = $em->getRepository('CyclogramProofPilotBundle:Participant')->getActiveParticipantInterventionsCount($participant);
         $menu = $factory->createItem('root');
         $menu->setChildrenAttribute('class', 'left_menu');
 

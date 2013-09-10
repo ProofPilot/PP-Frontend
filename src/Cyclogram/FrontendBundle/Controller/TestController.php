@@ -57,7 +57,7 @@ class TestController extends Controller
         $cc = $this->get('cyclogram.common');
 
         
-        $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:Participant')->getParticipantInterventionLinks($participant);
+        $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:Participant')->getActiveParticipantInterventionLinks($participant);
         $embedded['logo_top'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_logo.png");
         $embedded['logo_footer'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newletter_logo_footer.png");
         $embedded['login_button'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_small_login.jpg");
@@ -82,14 +82,7 @@ class TestController extends Controller
         
                 $intervention["url"] = $this->getInterventionUrl($interventionLink, $locale);
                 $intervention["logo"] = $this->container->getParameter('study_image_url') . "/" . $studyId . "/" . $studyContent->getStudyLogo();
-        
-                if($interventionLink->getStatus()->getStatusName() != "Active" ) {
-                    $intervention["status"] = "Completed";
-                } else {
-                    $intervention["status"] = "Enabled";
-                }
                 $parameters["interventions"][] = $intervention;
-                $user = $this->container->get('security.context')->getToken();
             }
         
             $parameters['email'] = $participant->getParticipantEmail();
@@ -105,8 +98,12 @@ class TestController extends Controller
                           $embedded,
                           true,
                           $parameters);
-//                   if ($send) $output->writeln("send");
-                              return new Response("Completed");
+                  if ($send) 
+                      return new Response("Completed");
+                  else 
+                      return new Response("Email not send");
+        } else {
+            return new Response("Cant send email. No active tasks");
         }
     }
     
