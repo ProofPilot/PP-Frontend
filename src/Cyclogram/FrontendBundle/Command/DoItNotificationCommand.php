@@ -53,12 +53,17 @@ class DoItNotificationCommand extends ContainerAwareCommand
                         $weekDayInTz //weekday in timezone
                     );
             foreach($participants as $participant) {
-                $output->writeln($participant->getParticipantEmail()); 
                 $result = $this->sendDoItNowEmail($participant);
-                if($result)
+                if($result['send'] == true){
+                    $output->writeln($participant->getParticipantEmail());
                     $output->writeln("sent email");
-                else
-                    $output->writeln("email not sent");
+                } else {
+                    if (!empty($result['message']))
+                    {
+                        $output->writeln($participant->getParticipantEmail());
+                        $output->writeln($result['message']);
+                    }
+                }
             }
             
             $output->writeln("Looking for participants with SMS notification... ");
@@ -70,12 +75,17 @@ class DoItNotificationCommand extends ContainerAwareCommand
                     $weekDayInTz //weekday in timezone
             );
             foreach($participants as $participant) {
-                $output->writeln($participant->getParticipantUsername()." phone number: ".$participant->getParticipantMobileNumber());
                 $result = $this->sendDoItNowSMS($participant);
-                if($result)
+                if($result['send'] == true){
+                    $output->writeln($participant->getParticipantUsername()." phone number: ".$participant->getParticipantMobileNumber());
                     $output->writeln("sent sms");
-                else
-                    $output->writeln("sms not sent");
+                } else {
+                    if (!empty($result['message']))
+                    {
+                        $output->writeln($participant->getParticipantUsername()." phone number: ".$participant->getParticipantMobileNumber());
+                        $output->writeln($result['message']);
+                    }
+                }
             }
             
             $output->writeln("\n");
@@ -100,49 +110,47 @@ class DoItNotificationCommand extends ContainerAwareCommand
         $parameters["interventions"] = array();
         if (!empty($interventionLinks)){
             foreach($interventionLinks as $interventionLink) {
-        
-                $interventionId = $interventionLink->getIntervention()->getInterventionId();
-                $interventionContent = $this->getContainer()->get('doctrine')->getRepository("CyclogramProofPilotBundle:Intervention")->getInterventionContent($interventionId, $locale);
-        
-                $study = $interventionLink->getIntervention()->getStudy();
-                $studyId = $study->getStudyId();
-                $studyContent = $this->getContainer()->get('doctrine')->getRepository('CyclogramProofPilotBundle:StudyContent')->findOneByStudyId($studyId);
-        
-                $intervention = array();
-                $intervention["title"] = $interventionContent->getInterventionTitle();
-                $intervention["content"] = $interventionContent->getInterventionDescripton();
-        
-                $intervention["url"] = $this->getInterventionUrl($interventionLink, $locale);
-                $intervention["logo"] = $this->getContainer()->getParameter('study_image_url') . "/" . $studyId . "/" . $studyContent->getStudyLogo();
-        
-                if($interventionLink->getStatus()->getStatusName() != "Active" ) {
-                    $intervention["status"] = "Completed";
-                } else {
-                    $intervention["status"] = "Enabled";
+                if($interventionLink->getStatus()->getStatusName() == "Active" ) {
+                    $interventionId = $interventionLink->getIntervention()->getInterventionId();
+                    $interventionContent = $this->getContainer()->get('doctrine')->getRepository("CyclogramProofPilotBundle:Intervention")->getInterventionContent($interventionId, $locale);
+            
+                    $study = $interventionLink->getIntervention()->getStudy();
+                    $studyId = $study->getStudyId();
+                    $studyContent = $this->getContainer()->get('doctrine')->getRepository('CyclogramProofPilotBundle:StudyContent')->findOneByStudyId($studyId);
+            
+                    $intervention = array();
+                    $intervention["title"] = $interventionContent->getInterventionTitle();
+                    $intervention["content"] = $interventionContent->getInterventionDescripton();
+            
+                    $intervention["url"] = $this->getInterventionUrl($interventionLink, $locale);
+                    $intervention["logo"] = $this->getContainer()->getParameter('study_image_url') . "/" . $studyId . "/" . $studyContent->getStudyLogo();
+                    $parameters["interventions"][] = $intervention;
                 }
-                $parameters["interventions"][] = $intervention;
-                $user = $this->getContainer()->get('security.context')->getToken();
+
             }
         
             $parameters['email'] = $participant->getParticipantEmail();
             $parameters['locale'] = $participant->getLanguage();
             $parameters['host'] = $this->getContainer()->getParameter('site_url');
             $parameters['siteurl'] = $this->getContainer()->getParameter('site_url').$this->getInterventionUrl($interventionLink, $locale);
-        
-            $send = $cc->sendMail(
-                    $participant->getParticipantEmail(),
-                    $this->getContainer()->get('translator')->trans("do_it_task_email_title", array(), "email", $parameters['locale']),
-                    'CyclogramFrontendBundle:Email:doitemail.html.twig',
-                    null,
-                    $embedded,
-                    true,
-                    $parameters);
-            if ($send) 
-                return true;
-        } else {
-            return false;
+            if (!empty($parameters["interventions"])){
+                $send = $cc->sendMail(
+                        $participant->getParticipantEmail(),
+                        $this->getContainer()->get('translator')->trans("do_it_task_email_title", array(), "email", $parameters['locale']),
+                        'CyclogramFrontendBundle:Email:doitemail.html.twig',
+                        null,
+                        $embedded,
+                        true,
+                        $parameters);
+                if ($send){
+                    return array('send' => true, 'message' => 'sent email');
+                } else {
+                    return array('send' => false, 'message' => 'email not send');
+                }
+            } else {
+                return array('send' => false, 'message' => '');
+            }
         }
-
     }
     
     private function sendDoItNowSMS($participant) {
@@ -167,12 +175,20 @@ class DoItNotificationCommand extends ContainerAwareCommand
         
                 $intervention = array();
                 $interventionTitle = strip_tags($interventionContent->getInterventionName());
-        
-                $interventionUrl = $cc::generateGoogleShorURL($this->getContainer()->getParameter('site_url').$this->getInterventionUrl($interventionLink, $locale));
-                $sms = $this->getContainer()->get('sms');
-                $message = $this->getContainer()->get('translator')->trans('sms_title', array(), 'security', $locale);
-                $sentSms = $sms->sendSmsAction( array('message' => $message .': '. $interventionTitle.' '.$interventionUrl, 'phoneNumber'=> $participant->getParticipantMobileNumber()) );
-                return $sentSms;
+                if($interventionLink->getStatus()->getStatusName() == "Active" ) {
+                    $interventionUrl = $cc::generateGoogleShorURL($this->getContainer()->getParameter('site_url').$this->getInterventionUrl($interventionLink, $locale));
+                    $sms = $this->getContainer()->get('sms');
+                    $message = $this->getContainer()->get('translator')->trans('sms_title', array(), 'security', $locale);
+                    $sentSms = $sms->sendSmsAction( array('message' => $message .': '. $interventionTitle.' '.$interventionUrl, 'phoneNumber'=> $participant->getParticipantMobileNumber()) );
+                    if ($sentSms){
+                        return array('send' => true, 'message' => 'sent sms');
+                    } else {
+                        return array('send' => false, 'message' => 'sms not send');
+                    }
+                } else {
+                return array('send' => false, 'message' => '');
+                }
+                
             }
         }
         return false;
