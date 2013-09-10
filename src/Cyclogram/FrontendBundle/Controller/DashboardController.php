@@ -28,13 +28,13 @@ class DashboardController extends Controller
         $this->get('study_logic')->interventionLogic($participant);
         
         $em = $this->getDoctrine()->getManager();
-        $surveyscount = $em->getRepository('CyclogramProofPilotBundle:Participant')->getParticipantInterventionsCount($participant);
-        $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:Participant')->getParticipantInterventionLinks($participant);
+        $surveyscount = $em->getRepository('CyclogramProofPilotBundle:Participant')->getActiveParticipantInterventionsCount($participant);
+        $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:Participant')->getActiveParticipantInterventionLinks($participant);
 
         $session = $this->getRequest()->getSession();
         
         $parameters = array();
-        $parameters['surveycount'] = $surveyscount;
+        $parameters["interventioncount"] = $surveyscount;
 
 
         $parameters["interventions"] = array();
@@ -52,14 +52,7 @@ class DashboardController extends Controller
             $intervention["content"] = $interventionContent->getInterventionDescripton();
             $intervention["url"] = $this->getInterventionUrl($interventionLink, $locale);
             $intervention["logo"] = $this->container->getParameter('study_image_url') . "/" . $studyId . "/" . $studyContent->getStudyLogo();
-            
-            if($interventionLink->getStatus()->getStatusName() != "Active" ) {
-                $intervention["status"] = "Completed";
-            } else {
-                $intervention["status"] = "Enabled";
-                $parameters["interventions"][] = $intervention;
-            }
-
+            $parameters["interventions"][] = $intervention;
         }
         
         $parameters["actions"] = array(
