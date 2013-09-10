@@ -23,4 +23,6 @@ txt_login_securely: 'Accese de manera sgura con sus cuentas.'
 txt_login_with: 'Accese con'
 txt_or: ó
 txt_stay_logged_in: 'Permanezca conectado'
+txt_why_popup: txt_why_popup   # FIXME
 username_sent: 'Su usuario ha sido enviado al teléfono móbil'
+why_popup_title: why_popup_title   # FIXME
