@@ -27,7 +27,7 @@ class GlobalExtension extends \Twig_Extension
                         'needs_context' => true
                         )),
                 'is_enrolled_in_study' => new \Twig_Function_Method($this, 'isEnrolledInStudy'),
-                'is_stytdy_logic_implemented' => new \Twig_Function_Method($this, 'isStudyLogicImplemented')
+                'is_study_logic_implemented' => new \Twig_Function_Method($this, 'isStudyLogicImplemented')
 //                 'google_campaign_info' => new \Twig_Function_Method($this, 'getGoogleCampaignInfo')
         );
     }

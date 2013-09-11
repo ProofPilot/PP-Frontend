@@ -1,5 +1,5 @@
 <?php
-namespace Cyclogram\FrontendBundle\Service;
+namespace Common;
 
 use Cyclogram\Bundle\ProofPilotBundle\Entity\Study;
 
@@ -48,8 +48,11 @@ class KAHStudy extends AbstractStudy implements StudyInterface
     }
     
     public function checkEligibility($surveyResult) {
-        // TODO: Auto-generated method stub
-
+        return true;
     }
 
+    public static function getStudyCode()
+    {
+        return 'kah';
+    }
 }

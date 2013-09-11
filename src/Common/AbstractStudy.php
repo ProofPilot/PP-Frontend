@@ -1,5 +1,5 @@
 <?php
-namespace Cyclogram\FrontendBundle\Service;
+namespace Common;
 
 class AbstractStudy
 {

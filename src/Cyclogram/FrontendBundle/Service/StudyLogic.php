@@ -16,21 +16,22 @@ class StudyLogic
     private $container;
     private $studies;
     
-    private $supportedStudies = array(
-            'sexpro',
-            'koc',
-            'kocsocialmedia'
-            );
 
     public function __construct (Container $container)
     {
         $this->container = $container;
-        $this->studies = array(
-                'sexpro' => new SexproStudy($this->container), 
-                'koc' => new KOCStudy($this->container), 
-                'kocsocialmedia' => new KOCSocialMediaStudy($this->container), 
-                'eStamp3' => new EStamp3Study($this->container), 
-                'kah' => new KAHStudy($this->container));
+        
+        $classes = get_declared_classes();
+        $studyClasses = array();
+        foreach($classes as $class) {
+            $reflect = new \ReflectionClass($class);
+            if($reflect->implementsInterface('Common\StudyInterface'))
+                $studyClasses[] = $class;
+        }
+        foreach ($studyClasses as $class) {
+            $code = $class::getStudyCode();
+            $this->studies[$code] = new $class($this->container);
+        }
     }
     
     public function getArmCodes($studyCode) {
