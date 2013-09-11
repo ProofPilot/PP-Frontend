@@ -14,7 +14,7 @@ class Version20130907220937 extends AbstractMigration
     {
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != "mysql");
         $this->addSql("
-                ALTER TABLE `proofpilot`.`participant_contact_time_link` DROP FOREIGN KEY `server_contact_time_link_ibfk_4` ;
+                ALTER TABLE `proofpilot`.`participant_contact_time_link` DROP FOREIGN KEY `participant_contact_time_link_ibfk_4` ;
                 ALTER TABLE `proofpilot`.`participant_contact_time_link` DROP COLUMN `server_weekday` , DROP COLUMN `server_contact_time` 
                 , DROP INDEX `FK_server_contact_time_link_contact_time_idx` ;
                 
