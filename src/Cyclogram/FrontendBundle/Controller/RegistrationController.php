@@ -93,7 +93,7 @@ class RegistrationController extends Controller
                     $participant->setParticipantMobileNumber('');
                     $participant->setParticipantMobileSmsCodeConfirmed(false);
                     $participant->setParticipantIncentiveBalance(false);
-                    $participant->setLanguage($request->getLocale());
+                    $participant->setLocale($request->getLocale());
                     $date = new \DateTime();
                     $participant->setParticipantLastTouchDatetime($date);
                     $participant->setParticipantZipcode('');
@@ -518,4 +518,65 @@ class RegistrationController extends Controller
         }
     }
 
+    /**
+     * @Route("/register/email/{id}/{studyCode}", name="_register_email", defaults={"studyCode"=null})
+     * @Template()
+     */
+    public function registerSendEmailAction($id, $studyCode)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $request = $this->getRequest();
+        $this->checkStudyEligibility($studyCode);
+    
+        $participant = $em->getRepository("CyclogramProofPilotBundle:Participant")->find($id);
+        if ($participant->getParticipantEmailConfirmed() == true) {
+            return $this->redirect( $this->generateUrl("_login"));
+        }
+    
+        $participant->setLanguage($request->getLocale());
+    
+        $this->confirmParticipantEmail($participant, $studyCode);
+        $em->persist($participant);
+        $em->flush($participant);
+    
+        return $this->render('CyclogramFrontendBundle:Registration:email_confirm.html.twig');
+    }
+    
+    /**
+     * @Route("/register/email_verify/{email}/{code}/{studyCode}", name="email_verify", defaults={"studyCode"=null})
+     * @Template()
+     */
+    public function confirmEmailAction($email, $code, $studyCode)
+    {
+        $request = $this->getRequest();
+        $session = $this->getRequest()->getSession();
+        $em = $this->getDoctrine()->getManager();
+    
+        $participant = $em->getRepository('CyclogramProofPilotBundle:Participant')->findOneBy(array('participantEmailCode' =>$code, 'participantEmail' => $email));
+    
+        if ($participant) {
+            $participant->setParticipantEmailConfirmed(true);
+            $em->persist($participant);
+            $em->flush($participant);
+    
+            if(!empty($studyCode)) {
+                $study = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:Study')->find($studyCode);
+                if($study && $study->getEmailVerificationRequired() ) {
+                    $session->set('6step', true);
+                    return $this->redirect( $this->generateUrl("_register_mobile", array(
+                            'id' => $participant->getParticipantId(),
+                            'studyCode' => $studyCode
+                    )));
+                }
+            }
+    
+            $session->set('confirmed', "Congratilations!!! Your e-mail is confirmed!");
+            return $this->redirect( $this->generateUrl("_main") );
+    
+        } else {
+            $error = $this->get('translator')->trans('mail_confirmation_fail', array(), 'register');
+            return $this->render('CyclogramFrontendBundle:Registration:mail_confirm.html.twig', array('error' => $error));
+        }
+         
+    }
 }
