@@ -266,7 +266,7 @@ class Participant implements AdvancedUserInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="city", type="string", length=255, nullable=true)
+     * @ORM\Column(name="participant_city", type="string", length=255, nullable=true)
      */
     protected $cityName;
 
