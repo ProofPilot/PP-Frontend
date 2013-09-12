@@ -378,8 +378,8 @@ class RegistrationController extends Controller
                         'id' => $participant->getParticipantId(), 
                         'form' => $form->createView(), 
                         'studyCode' => $studyCode,
-                        'steps' => 6,
-                        'current' => 6
+                        'steps' => 5,
+                        'current' => 5
                         ));
     }
     
