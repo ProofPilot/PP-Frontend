@@ -24,6 +24,5 @@ class Version20130912111023 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != "mysql");
         $this->addSql("ALTER TABLE `proofpilot`.`participant` DROP COLUMN `voice_phone`;");
-        $this->addSql("ALTER TABLE `proofpilot`.`participant` MODIFY COLUMN `language` VARCHAR(255) NULL");
     }
 }
