@@ -104,10 +104,12 @@ class RegistrationController extends Controller
 
                     $em->persist($participant);
                     $em->flush();
-
+                    if (!empty($studyCode)){
+                        return $this->redirect( $this->generateUrl("_register_mobile", array('id' => $participant->getParticipantId(), 'studyCode' => $studyCode)));
+                    } else {
                         return $this->redirect( $this->generateUrl("_register_mobile", array('id' => $participant->getParticipantId())) );
+                    }
                     
-
                 } catch (Exception $ex) {
                     $em->close();
                 }
@@ -284,7 +286,6 @@ class RegistrationController extends Controller
     
                     //Make Participant SMS code confirmed
                     $participant->setParticipantMobileSmsCodeConfirmed(true);
-                    $participant->setLanguage($request->getLocale());
                     $em->persist($participant);
                     $em->flush($participant);
     
@@ -356,7 +357,6 @@ class RegistrationController extends Controller
                 $participant->setParticipantAddress2($form['participantAddress2']);
                 $participant->setParticipantZipcode($form['participantZipcode']);
                 $participant->setVoicePhone($form['voice']);
-                $participant->setLanguage($request->getLocale());
                 $city = $em->getRepository('CyclogramProofPilotBundle:City')->find($form['cityId']);
                 $participant->setCity($city);
                 if (strtolower(trim($city->getCityName())) != (strtolower(trim($form['city']))))
