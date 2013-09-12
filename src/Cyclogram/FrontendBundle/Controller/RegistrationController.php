@@ -93,6 +93,7 @@ class RegistrationController extends Controller
                     $participant->setParticipantMobileNumber('');
                     $participant->setParticipantMobileSmsCodeConfirmed(false);
                     $participant->setParticipantIncentiveBalance(false);
+                    $participant->setLanguage($request->getLocale());
                     $date = new \DateTime();
                     $participant->setParticipantLastTouchDatetime($date);
                     $participant->setParticipantZipcode('');
