@@ -30,14 +30,14 @@ class Participant implements AdvancedUserInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="facebookId", type="string", length=255)
+     * @ORM\Column(name="participant_facebook_id", type="string", length=255)
      */
     protected $facebookId;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="googleId", type="string", length=255)
+     * @ORM\Column(name="participant_google_id", type="string", length=255)
      */
     protected $googleId;
 
@@ -95,7 +95,7 @@ class Participant implements AdvancedUserInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="recovery_password_code", type="string", length=45, nullable=false)
+     * @ORM\Column(name="participant_recovery_password_code", type="string", length=45, nullable=false)
      */
     protected $recoveryPasswordCode;
 
@@ -273,42 +273,42 @@ class Participant implements AdvancedUserInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="education", type="string", length=255, nullable=true)
+     * @ORM\Column(name="participant_education", type="string", length=255, nullable=true)
      */
     protected $education;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="income", type="integer", nullable=true)
+     * @ORM\Column(name="participant_income", type="integer", nullable=true)
      */
     protected $income;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="age", type="integer", nullable=true)
+     * @ORM\Column(name="participant_age", type="integer", nullable=true)
      */
     protected $age;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="location", type="string", length=255, nullable=true)
+     * @ORM\Column(name="participant_location", type="string", length=255, nullable=true)
      */
     protected $location;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="language", type="string", length=255, nullable=true)
+     * @ORM\Column(name="participant_locale", type="string", length=255, nullable=true)
      */
-    protected $language;
+    protected $locale;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="voice_phone", type="integer", nullable=true)
+     * @ORM\Column(name="participant_voice_phone", type="integer", nullable=true)
      */
     protected $voicePhone;
 
@@ -1102,14 +1102,14 @@ class Participant implements AdvancedUserInterface
         $this->googleId = $googleId;
     }
 
-    public function getLanguage()
+    public function getLocale()
     {
-        return $this->language;
+        return $this->locale;
     }
 
-    public function setLanguage($language)
+    public function setLocale($locale)
     {
-        $this->language = $language;
+        $this->locale = $locale;
     }
 
     public function getStudyreminderlinks()
