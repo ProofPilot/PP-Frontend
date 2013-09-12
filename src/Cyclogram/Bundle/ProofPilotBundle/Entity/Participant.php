@@ -304,16 +304,21 @@ class Participant implements AdvancedUserInterface
      * @ORM\Column(name="language", type="string", length=255, nullable=true)
      */
     protected $language;
-    
-    
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="voice_phone", type="integer", nullable=true)
+     */
+    protected $voicePhone;
+
     /**
      * @ORM\OneToMany(targetEntity="ParticipantStudyReminderLink", mappedBy="participant")
      * @var unknown_type
      * @var unknown_type
      */
     protected $studyreminderlinks;
-    
-    
+
     /**
      * @ORM\OneToMany(targetEntity="ParticipantContactTimeLink", mappedBy="participant")
      * @var unknown_type
@@ -1107,7 +1112,6 @@ class Participant implements AdvancedUserInterface
         $this->language = $language;
     }
 
-
     public function getStudyreminderlinks()
     {
         return $this->studyreminderlinks;
@@ -1117,4 +1121,15 @@ class Participant implements AdvancedUserInterface
     {
         return $this->contacttimelinks;
     }
+
+    public function getVoicePhone()
+    {
+        return $this->voicePhone;
+    }
+
+    public function setVoicePhone($voicePhone)
+    {
+        $this->voicePhone = $voicePhone;
+    }
+
 }
