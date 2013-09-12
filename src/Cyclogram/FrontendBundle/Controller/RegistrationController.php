@@ -104,15 +104,7 @@ class RegistrationController extends Controller
                     $em->persist($participant);
                     $em->flush();
 
-                    if (!empty($studyCode)){
-                        if ($study->getEmailVerificationRequired()) {
-                            return $this->redirect( $this->generateUrl("_register_email", array('id' => $participant->getParticipantId(), 'studyCode' => $studyCode)));
-                        } else {
-                            return $this->redirect( $this->generateUrl("_register_mobile", array('id' => $participant->getParticipantId(), 'studyCode' => $studyCode)));
-                        }
-                    } else {
                         return $this->redirect( $this->generateUrl("_register_mobile", array('id' => $participant->getParticipantId())) );
-                    }
                     
 
                 } catch (Exception $ex) {
@@ -123,7 +115,8 @@ class RegistrationController extends Controller
            }
           
            if ( !empty($study) && $study->getEmailVerificationRequired() == true) {
-               $totalSteps = 6;
+               $session->set('5step', true);
+               $totalSteps = 5;
            } else {
                $totalSteps = 4;
            }
@@ -135,30 +128,6 @@ class RegistrationController extends Controller
         
         }
 
-    /**
-     * @Route("/register/email/{id}/{studyCode}", name="_register_email", defaults={"studyCode"=null})
-     * @Template()
-    */
-    public function registerSendEmailAction($id, $studyCode)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $request = $this->getRequest();
-        $this->checkStudyEligibility($studyCode);
-        
-        $participant = $em->getRepository("CyclogramProofPilotBundle:Participant")->find($id);
-        if ($participant->getParticipantEmailConfirmed() == true) {
-           return $this->redirect( $this->generateUrl("_login"));
-        }
-        
-        $participant->setLanguage($request->getLocale());
-        
-        $this->confirmParticipantEmail($participant, $studyCode);
-        $em->persist($participant);
-        $em->flush($participant);
-
-        return $this->render('CyclogramFrontendBundle:Registration:email_confirm.html.twig');
-    }
-    
     /**
      * @Route("/register/mobile/{id}/{studyCode}", name="_register_mobile", defaults={"studyCode"=null})
      * @Template()
@@ -218,8 +187,8 @@ class RegistrationController extends Controller
                         array(
                                 'phone' => $participant->getParticipantMobileNumber(),
                                 'id' => $participant->getParticipantId(),
-                                'steps' => $session->get("6step", false) ? 6 : 4,
-                                'current' => $session->get("6step", false) ? 4 : 3
+                                'steps' => $session->get("5step", false) ? 5 : 4,
+                                'current' => 3
                         ));
             }
         }
@@ -227,8 +196,8 @@ class RegistrationController extends Controller
                 array(
                         "form" => $form->createView(),
                         'id' => $id,
-                        'steps' => $session->get("6step", false) ? 6 : 4,
-                        'current' => $session->get("6step", false) ? 3 : 2
+                        'steps' => $session->get("5step", false) ? 5 : 4,
+                        'current' => 2
                 ));
     }
     
@@ -318,10 +287,10 @@ class RegistrationController extends Controller
                     $em->persist($participant);
                     $em->flush($participant);
     
-                    $steps6 = $session->get("6step", false);
+                    $steps5 = $session->get("5step", false);
     
-                    if($steps6) {
-                        //on 6step we redirect
+                    if($steps5) {
+                        //on 5step we redirect
                         return $this->redirect($this->generateUrl("_register_mailaddress",
                                 array(
                                         'id'=> $id,
@@ -342,8 +311,8 @@ class RegistrationController extends Controller
                         'error' => $error,
                         'form' => $form->createView(),
                         'id' => $participant->getParticipantId(),
-                        'steps' => $session->get("6step", false) ? 6 : 4,
-                        'current' => $session->get("6step", false) ? 5 : 4
+                        'steps' => $session->get("5step", false) ? 5 : 4,
+                        'current' => 4
                 ));
     }
     
@@ -385,6 +354,7 @@ class RegistrationController extends Controller
                 $participant->setParticipantAddress1($form['participantAddress1']);
                 $participant->setParticipantAddress2($form['participantAddress2']);
                 $participant->setParticipantZipcode($form['participantZipcode']);
+                $participant->setVoicePhone($form['voice']);
                 $participant->setLanguage($request->getLocale());
                 $city = $em->getRepository('CyclogramProofPilotBundle:City')->find($form['cityId']);
                 $participant->setCity($city);
@@ -396,6 +366,8 @@ class RegistrationController extends Controller
                 $em->persist($participant);
                 $em->persist($participant);
                 $em->flush($participant);
+                
+                $this->confirmParticipantEmail($participant, $studyCode);
                 
                 return $this->registerAndRedirect($participant, $studyCode);
             }
@@ -438,44 +410,6 @@ class RegistrationController extends Controller
     }
     
     /**
-     * @Route("/register/email_verify/{email}/{code}/{studyCode}", name="email_verify", defaults={"studyCode"=null})
-     * @Template()
-     */
-    public function confirmEmailAction($email, $code, $studyCode)
-    {
-        $request = $this->getRequest();
-        $session = $this->getRequest()->getSession();
-        $em = $this->getDoctrine()->getManager();
-    
-        $participant = $em->getRepository('CyclogramProofPilotBundle:Participant')->findOneBy(array('participantEmailCode' =>$code, 'participantEmail' => $email));
-    
-        if ($participant) {
-            $participant->setParticipantEmailConfirmed(true);
-            $em->persist($participant);
-            $em->flush($participant);
-    
-            if(!empty($studyCode)) {
-                $study = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:Study')->find($studyCode);
-                if($study && $study->getEmailVerificationRequired() ) {
-                    $session->set('6step', true);
-                    return $this->redirect( $this->generateUrl("_register_mobile", array(
-                            'id' => $participant->getParticipantId(),
-                            'studyCode' => $studyCode
-                    )));
-                }
-            } 
-            
-            $session->set('confirmed', "Congratilations!!! Your e-mail is confirmed!");
-            return $this->redirect( $this->generateUrl("_main") );
-    
-        } else {
-            $error = $this->get('translator')->trans('mail_confirmation_fail', array(), 'register');
-            return $this->render('CyclogramFrontendBundle:Registration:mail_confirm.html.twig', array('error' => $error));
-        }
-         
-    }
-    
-    /**
      * Send email to confirm participant has indicated a real email address
      * @param Participant $participant
      */
@@ -498,9 +432,6 @@ class RegistrationController extends Controller
     
         if($studyCode)
             $parameters['studyCode'] = $studyCode;
-    
-        //        $parameters['confirmed'] = 1;
-        //        $parameters['simple'] = true;  //TODO :wassap?
     
         $parameters['locale'] = $participant->getLanguage() ? $participant->getLanguage() : $request->getLocale();
         $parameters['host'] = $this->container->getParameter('site_url');
