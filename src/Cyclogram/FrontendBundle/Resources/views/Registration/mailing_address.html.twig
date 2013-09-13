@@ -48,20 +48,12 @@
           <label>{% trans from "register" %}label_firstname{% endtrans %}</label>
           {{ form_widget(form.participantFirstname, {'attr' : {'class' : 'text'}}) }}
           {{ form_errors(form.participantFirstname) }}
-          <label>{% trans from "register" %}label_lastname{% endtrans %}</label>
-          {{ form_widget(form.participantLastname, {'attr' : {'class' : 'text'}}) }}
-          {{ form_errors(form.participantLastname) }}
           <label>{% trans from "register" %}label_address1{% endtrans %}</label>
           {{ form_widget(form.participantAddress1, {'attr' : {'class' : 'text'}}) }}
           {{ form_errors(form.participantAddress1) }}
-          <label>{% trans from "register" %}label_address2{% endtrans %}</label>
-          {{ form_widget(form.participantAddress2, {'attr' : {'class' : 'text'}}) }}
-          {{ form_errors(form.participantAddress2) }}
           <label>{% trans from "register" %}label_zipcode{% endtrans %}</label>
           {{ form_widget(form.participantZipcode, {'attr' : {'class' : 'text'}}) }}
           {{ form_errors(form.participantZipcode) }}
-        </div>
-        <div class="loginform_right">
           <label>{% trans from "register" %}label_city{% endtrans %}</label>
           {{ form_widget(form.city, {'attr' : {'class' : 'text'}}) }}
           {{ form_errors(form.city) }}
@@ -71,13 +63,18 @@
           <label>{% trans from "register" %}label_voice{% endtrans %}</label>
           {{ form_widget(form.voice, {'attr' : {'class' : 'text'}}) }}
           {{ form_errors(form.voice) }}
+        </div>
+        <div class="loginform_right">
+          <label>{% trans from "register" %}label_lastname{% endtrans %}</label>
+          {{ form_widget(form.participantLastname, {'attr' : {'class' : 'text'}}) }}
+          {{ form_errors(form.participantLastname) }}
+          <label>{% trans from "register" %}label_address2{% endtrans %}</label>
+          {{ form_widget(form.participantAddress2, {'attr' : {'class' : 'text'}}) }}
+          {{ form_errors(form.participantAddress2) }}
           <div class="checkbox_placeholder">
-          {{ form_widget(form.sign)}}
+          {% form_theme form 'CyclogramFrontendBundle:Form:fields.html.twig' %}
+          {{ form_widget(form.sign) }}
           {{ form_errors(form.sign) }}
-
-
-{#             <input type="checkbox" /><div>I prefer to sign to receive my package</div>#}
-{#             <input type="checkbox" checked /><div>The package can be left without my signature</div>#}
           </div>
 
           <span class="error">{{ form_errors(form) }}</span>

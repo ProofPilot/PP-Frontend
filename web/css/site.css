@@ -3602,7 +3602,7 @@ footer a.icon_update span {
 	margin-top: 3px;
 }
 .loginform_right .checkbox_placeholder div {
-	padding-left: 20px;
+/*	padding-left: 20px; */
 }
 .mobile_reg.login_form .loginform_right  span.input_placeholder span.mark {
 	position: absolute;
@@ -3906,7 +3906,7 @@ footer a.icon_update span {
 .mobile_reg.login_form .loginform_right label, .loginform_left label {
 	color: #6f6f6f;
 	margin-bottom: 3px;
-	display: inline-block;
+/*	display: inline-block;*/
 }
 .mobile_reg.login_form .loginform_right a.forgot {
 	color: #bd3b2b;
