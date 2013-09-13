@@ -15,10 +15,12 @@ label_city: City
 label_email: Email
 label_firstname: 'First Name'
 label_lastname: 'Last Name'
+label_not_sign: 'The package can be left without my signature'
 label_password: Password
 label_phone_small: 'Phone small'
 label_phone_wide: 'Phone wide'
 label_repeat_password: 'Repeat password'
+label_sign: 'I prefer to sign to receive my package'
 label_state: State
 label_username: Username
 label_voice: 'Voice phone number'

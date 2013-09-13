@@ -363,6 +363,12 @@ class RegistrationController extends Controller
                     $participant->setCityName($form['city']);
                 $state = $em->getRepository('CyclogramProofPilotBundle:State')->find($form['stateId']);
                 $participant->setState($state);
+                $country = $em->getRepository('CyclogramProofPilotBundle:Country')->find(1);
+                $participant->setCountry($country);
+                if ($form['sign'] == 'notSign')
+                    $participant->setParticipantDeliverySign(false);
+                else
+                    $participant->setParticipantDeliverySign(true);
                 
                 $em->persist($participant);
                 $em->persist($participant);

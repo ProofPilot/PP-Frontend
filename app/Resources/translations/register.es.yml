@@ -15,10 +15,12 @@ label_city: label_city
 label_email: label_email
 label_firstname: label_firstname
 label_lastname: label_lastname
+label_not_sign: label_not_sign
 label_password: label_password
 label_phone_small: label_phone_small
 label_phone_wide: label_phone_wide
 label_repeat_password: label_repeat_password
+label_sign: label_sign
 label_state: label_state
 label_username: label_username
 label_voice: label_voice

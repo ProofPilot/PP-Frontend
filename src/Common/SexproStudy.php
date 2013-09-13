@@ -70,11 +70,13 @@ class SexproStudy extends AbstractStudy implements StudyInterface
                 $minAge = 31;
                 $maxAge = 90;
             }
-            $firstArmParticipants = $em
+            $firstArmParticipants = $em->getRepository('CyclogramProofPilotBundle:Participant')->countAllArms('SexProBaseLine');
+            $secondArmParticipants = $em->getRepository('CyclogramProofPilotBundle:Participant')->countAllArms('SexPro3Month');
+            $firstArmParticipantsByCriteria = $em
                     ->getRepository('CyclogramProofPilotBundle:Participant')
                     ->countArmByCityAge('SexProBaseLine', $cityName, $minAge,
                             $maxAge);
-            $secondArmParticipants = $em
+            $secondArmParticipantsByCriteria = $em
                     ->getRepository('CyclogramProofPilotBundle:Participant')
                     ->countArmByCityAge('SexPro3Month', $cityName, $minAge,
                             $maxAge);
@@ -84,7 +86,12 @@ class SexproStudy extends AbstractStudy implements StudyInterface
                     ->findOneByArmCode('SexPro3Month');
 
             $participantArmLink = new ParticipantArmLink();
-            if ($firstArmParticipants <= $secondArmParticipants) {
+            if ($firstArmParticipantsByCriteria == 0 && $secondArmParticipantsByCriteria == 0 ) {
+                if ($firstArmParticipants <= $secondArmParticipants)
+                    $participantArmLink->setArm($firstArm);
+                else 
+                    $participantArmLink->setArm($secondArm);
+            } elseif ($firstArmParticipantsByCriteria <= $secondArmParticipantsByCriteria) {
                 $participantArmLink->setArm($firstArm);
             } else {
                 $participantArmLink->setArm($secondArm);

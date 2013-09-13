@@ -72,8 +72,12 @@
           {{ form_widget(form.voice, {'attr' : {'class' : 'text'}}) }}
           {{ form_errors(form.voice) }}
           <div class="checkbox_placeholder">
-            <input type="checkbox" /><div>I prefer to sign to receive my package</div>
-            <input type="checkbox" checked /><div>The package can be left without my signature</div>
+          {{ form_widget(form.sign)}}
+          {{ form_errors(form.sign) }}
+
+
+{#             <input type="checkbox" /><div>I prefer to sign to receive my package</div>#}
+{#             <input type="checkbox" checked /><div>The package can be left without my signature</div>#}
           </div>
 
           <span class="error">{{ form_errors(form) }}</span>
@@ -110,7 +114,7 @@
                                if (!(data instanceof Array)) return;
                                $('#mailing_address_city').val(data[0]['cityName']);
                                $('#mailing_address_cityId').val(data[0]['cityId']);
-                               $('#mailing_address_state').val(data[0]['stateName']);
+                               $('#mailing_address_state').val(data[0]['stateCode']);
                                $('#mailing_address_stateId').val(data[0]['stateId']);
 
                                chosenCities = []; cityIds = [];

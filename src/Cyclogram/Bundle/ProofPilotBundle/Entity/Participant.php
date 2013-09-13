@@ -35,6 +35,13 @@ class Participant implements AdvancedUserInterface
     protected $facebookId;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="participant_delivery_sign", type="integer", length=255)
+     */
+    protected $participantDeliverySign;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="participant_google_id", type="string", length=255)
@@ -1130,6 +1137,16 @@ class Participant implements AdvancedUserInterface
     public function setVoicePhone($voicePhone)
     {
         $this->voicePhone = $voicePhone;
+    }
+
+    public function getParticipantDeliverySign()
+    {
+        return $this->participantDeliverySign;
+    }
+
+    public function setParticipantDeliverySign($participantDeliverySign)
+    {
+        $this->participantDeliverySign = $participantDeliverySign;
     }
 
 }

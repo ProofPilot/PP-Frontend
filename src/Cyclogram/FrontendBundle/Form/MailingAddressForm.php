@@ -1,6 +1,7 @@
 <?php
 namespace Cyclogram\FrontendBundle\Form;
 
+use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 use Symfony\Component\DependencyInjection\Container;
@@ -43,9 +44,15 @@ class MailingAddressForm extends AbstractType
                 ));
         $builder->add('participantZipcode', 'text', array(
                 'label'=>'label_zipcode',
+                'attr'=>array(
+                        'maxlength'=>5
+                ),
                 'constraints' => new NotBlank(array(
                         'message'=>"error_not_blank"
-                        ))
+                        ),
+                        new Length(array(
+                         'max'=>5
+                         )))
                 ));
         $builder->add('cityId', 'hidden');
         $builder->add('city', 'text', array(
@@ -57,15 +64,29 @@ class MailingAddressForm extends AbstractType
         $builder->add('stateId', 'hidden');
         $builder->add('state', 'text', array(
                  'label'=>'label_state',
+                'attr'=>array(
+                        'maxlength'=>2
+                ),
                  'constraints' => new NotBlank(array(
                           'message'=>"error_not_blank"
-                           ))
+                           ),
+                         new Length(array(
+                                 'max'=> 2
+                         )))
                  ));
         $builder->add('voice', 'text', array(
-                'label'=>'label_state',
+                'label'=>'label_voice',
                 'constraints' => new NotBlank(array(
                         'message'=>"error_not_blank"
                 ))
+        ));
+        $builder->add('sign', 'choice', array(
+                'choices' => array(
+                        'notSign' => 'label_not_sign',
+                        'sign' => 'label_sign'
+                        ),
+                'preferred_choices' => array('notSign'),
+                'expanded' => true,
         ));
         $builder->add('saveMailingAddress', 'submit', array(
                 'label' => 'btn_save_mailing_address'

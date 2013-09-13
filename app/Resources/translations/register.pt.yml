@@ -15,10 +15,12 @@ label_city: Cidade
 label_email: Email
 label_firstname: 'Primeiro Nome'
 label_lastname: 'Último Nome'
+label_not_sign: label_not_sign
 label_password: Senha
 label_phone_small: Fone
 label_phone_wide: telefone
 label_repeat_password: 'Repita a senha'
+label_sign: label_sign
 label_state: Estado
 label_username: Usuário
 label_voice: label_voice
