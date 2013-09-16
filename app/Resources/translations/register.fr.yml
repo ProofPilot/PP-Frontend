@@ -26,6 +26,7 @@ label_username: label_username
 label_voice: label_voice
 label_zipcode: label_zipcode
 mail_confirmation_fail: mail_confirmation_fail
+mailing_header: mailing_header
 min_charachters: min_charachters
 no_code: no_code
 ok_verify: ok_verify
@@ -33,6 +34,7 @@ pick_user: pick_user
 sms_verification_message: sms_verification_message
 txt_basics: txt_basics
 txt_check_email: txt_check_email
+txt_check_zipcode: txt_check_zipcode   # FIXME
 txt_join: txt_join
 txt_join_with: txt_join_with
 txt_subtitle_check_email: txt_subtitle_check_email

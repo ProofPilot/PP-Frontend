@@ -22,20 +22,20 @@ class MailingAddressForm extends AbstractType
         $builder->add('participantFirstname', 'text', array(
                  'label'=>'label_firstname',
                  'constraints' => new NotBlank(array(
-                          'message'=>"error_not_blank"
+                          'message'=>"error_not_blank_name"
                            ))
                  ));
         $builder->add('participantLastname', 'text', array(
                  'label'=>'label_lastname',
                  'constraints' => new NotBlank(array(
-                         'message'=>"error_not_blank"
+                         'message'=>"error_not_blank_lastname"
                          ))
                  ));
         $builder->add('participantAddress1', 
                       'text', array(
                               'label'=>'label_address1',
                               'constraints' => new NotBlank(array(
-                                      'message'=>"error_not_blank"
+                                      'message'=>"error_not_blank_street1"
                                       ))
                               ));
         $builder->add('participantAddress2', 'text', array(
@@ -45,48 +45,45 @@ class MailingAddressForm extends AbstractType
         $builder->add('participantZipcode', 'text', array(
                 'label'=>'label_zipcode',
                 'attr'=>array(
-                        'maxlength'=>5
-                ),
-                'constraints' => new NotBlank(array(
-                        'message'=>"error_not_blank"
+                        'minLength'=>5,
+                        'maxlength'=>10,
                         ),
-                        new Length(array(
-                         'max'=>5
-                         )))
+                'constraints' => new NotBlank(array(
+                       'message'=>"error_not_blank_zipcode"
+                        ))
                 ));
         $builder->add('cityId', 'hidden');
         $builder->add('city', 'text', array(
                 'label'=>'label_city',
                 'constraints' => new NotBlank(array(
-                        'message'=>"error_not_blank"
+                        'message'=>"error_not_blank_city"
                          ))
                 ));
         $builder->add('stateId', 'hidden');
         $builder->add('state', 'text', array(
                  'label'=>'label_state',
                 'attr'=>array(
+                        'minlength'=>2,
                         'maxlength'=>2
                 ),
-                 'constraints' => new NotBlank(array(
-                          'message'=>"error_not_blank"
-                           ),
+                 'constraints' => array(new NotBlank(array(
+                          'message'=>"error_not_blank_state"
+                           )),
                          new Length(array(
-                                 'max'=> 2
+                                 'min'=> 2,
+                                 'max'=> 2,
+                                 'exactMessage'=>'error_state_length',
                          )))
                  ));
-        $builder->add('voice', 'text', array(
-                'label'=>'label_voice',
-                'constraints' => new NotBlank(array(
-                        'message'=>"error_not_blank"
-                ))
-        ));
         $builder->add('sign', 'choice', array(
                 'choices' => array(
                         'notSign' => 'label_not_sign',
                         'sign' => 'label_sign'
                         ),
-                'preferred_choices' => array('notSign'),
                 'expanded' => true,
+                'constraints' => new NotBlank(array(
+                        'message'=>"error_not_blank_choice"
+                ))
         ));
         $builder->add('saveMailingAddress', 'submit', array(
                 'label' => 'btn_save_mailing_address'

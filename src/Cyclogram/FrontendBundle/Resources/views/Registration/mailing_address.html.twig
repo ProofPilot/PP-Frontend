@@ -41,7 +41,7 @@
 {% block content %}
   <div class="mobile_reg login_form">
     <div class="wrapper">
-      <h1><span>{% trans from "register" %}txt_join{% endtrans %} {{ current }}/{{ steps }}:</span> Mailing address</h1>
+      <h1><span>{% trans from "register" %}txt_join{% endtrans %} {{ current }}/{{ steps }}:</span> {% trans from "register" %}mailing_header{% endtrans %}</h1>
       <div style="margin-bottom: 20px;">{% trans from "register" %}enter_address{% endtrans %}</div>
       <form novalidate method="post" action="{{ path('_register_mailaddress',{'id' : id, 'studyCode' : studyCode}) }}" name="mailing_address">
         <div class="loginform_left" style="padding-top: 0px;">
@@ -60,9 +60,6 @@
           <label>{% trans from "register" %}label_state{% endtrans %}</label>
           {{ form_widget(form.state, {'attr' : {'class' : 'text'}}) }}
           {{ form_errors(form.state) }}
-          <label>{% trans from "register" %}label_voice{% endtrans %}</label>
-          {{ form_widget(form.voice, {'attr' : {'class' : 'text'}}) }}
-          {{ form_errors(form.voice) }}
         </div>
         <div class="loginform_right">
           <label>{% trans from "register" %}label_lastname{% endtrans %}</label>
@@ -161,6 +158,14 @@
                      $("#mailing_address_stateId").val(suggestion.data);
             	}
             });
+
+            $("#mailing_address_participantZipcode").on('blur', function() {
+            	$('#error').remove(); 
+            	var inputVal = $(this).val();
+                var zipReg = /^[0-9]\d{4}-\d{4}|[0-9]{5}$/;
+                if(!zipReg.test(inputVal)) {
+                    $(this).after('<p class="error" id="error">{% trans from "register" %}txt_check_zipcode{% endtrans %}</p>');
+                }})
         });
         </script> 
     </div>

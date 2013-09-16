@@ -357,12 +357,18 @@ class RegistrationController extends Controller
                 $participant->setParticipantAddress2($form['participantAddress2']);
                 $participant->setParticipantZipcode($form['participantZipcode']);
                 $participant->setVoicePhone($form['voice']);
-                $city = $em->getRepository('CyclogramProofPilotBundle:City')->find($form['cityId']);
-                $participant->setCity($city);
-                if (strtolower(trim($city->getCityName())) != (strtolower(trim($form['city']))))
+                if (!empty($form['cityId'])) {
+                    $city = $em->getRepository('CyclogramProofPilotBundle:City')->find($form['cityId']);
+                    $participant->setCity($city);
+                } else {
                     $participant->setCityName($form['city']);
-                $state = $em->getRepository('CyclogramProofPilotBundle:State')->find($form['stateId']);
-                $participant->setState($state);
+                }
+                if (!empty($form['stateId'])) {
+                    $state = $em->getRepository('CyclogramProofPilotBundle:State')->find($form['stateId']);
+                    $participant->setState($state);
+                } else { 
+                    $participant->setParticipantState($form['state']);
+                }
                 $country = $em->getRepository('CyclogramProofPilotBundle:Country')->find(1);
                 $participant->setCountry($country);
                 if ($form['sign'] == 'notSign')

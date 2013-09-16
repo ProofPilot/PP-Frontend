@@ -26,6 +26,7 @@ label_username: label_username
 label_voice: label_voice
 label_zipcode: label_zipcode
 mail_confirmation_fail: mail_confirmation_fail
+mailing_header: mailing_header   # FIXME
 min_charachters: '(8 caractéres mínimo)'
 no_code: '¿Sin código? Enviar otro'
 ok_verify: 'Ok, ¡verifique!'
@@ -33,6 +34,7 @@ pick_user: 'Escoja su usuario'
 sms_verification_message: sms_verification_message
 txt_basics: txt_basics
 txt_check_email: txt_check_email
+txt_check_zipcode: txt_check_zipcode   # FIXME
 txt_join: Unase
 txt_join_with: 'Unase con'
 txt_subtitle_check_email: txt_subtitle_check_email
