@@ -132,10 +132,10 @@ class RegistrationController extends Controller
         }
 
     /**
-     * @Route("/register/mobile/{id}/{studyCode}", name="_register_mobile", defaults={"studyCode"=null})
+     * @Route("/register/mobile/{id}/{studyCode}/{aditionalNumber}", name="_register_mobile", defaults={"studyCode"=null, "aditionalNumber" = null})
      * @Template()
      */
-    public function registerMobileAction($id, $studyCode=null)
+    public function registerMobileAction($id, $studyCode=null, $aditionalNumber)
     {
         $em = $this->getDoctrine()->getManager();
     
@@ -151,16 +151,16 @@ class RegistrationController extends Controller
         $form = $this->createForm(new MobilePhoneForm($this->container), null, array(
                 'validation_groups' => array('registration')
         ));
-    
-        if ($participant->getParticipantMobileNumber()){
-            $phone = CyclogramCommon::parsePhoneNumber($participant->getParticipantMobileNumber());
+        if (is_null($aditionalNumber)) {
+            if ($participant->getParticipantMobileNumber()){
+                $phone = CyclogramCommon::parsePhoneNumber($participant->getParticipantMobileNumber());
+            }
+        
+            if(!empty($phone)) {
+                $form->get('phone_small')->setData($phone['country_code']);
+                $form->get('phone_wide')->setData($phone['phone']);
+            }
         }
-    
-        if(!empty($phone)) {
-            $form->get('phone_small')->setData($phone['country_code']);
-            $form->get('phone_wide')->setData($phone['phone']);
-        }
-    
         $clientIp = $request->getClientIp();
         if ($clientIp == '127.0.0.1') {
             $form->get('phone_small')->setData(380);
@@ -182,10 +182,33 @@ class RegistrationController extends Controller
     
                 $values = $form->getData();
                 $userPhone = $values['phone_small'].$values['phone_wide'];
-                $participant->setParticipantMobileNumber($userPhone);
+                if (is_null($aditionalNumber))
+                    $participant->setParticipantMobileNumber($userPhone);
+                else
+                    $participant->setVoicePhone($userPhone);
                 $em->persist($participant);
                 $em->flush();
-    
+                if (!is_null($aditionalNumber)){
+                    if($session->has("5step", false)) {
+                        //on 5step we redirect
+                        return $this->redirect($this->generateUrl("_register_mailaddress",
+                                array(
+                                        'id'=> $id,
+                                        'studyCode' => $studyCode
+                                )));
+                    } else {
+                        return $this->redirect( $this->generateUrl("_main") );
+                    }
+                } 
+                    return $this->render('CyclogramFrontendBundle:Registration:mobile_phone_verify.html.twig',
+                            array(
+                                    'phone' => $participant->getParticipantMobileNumber(),
+                                    'id' => $participant->getParticipantId(),
+                                    'steps' => $session->get("5step", false) ? 5 : 4,
+                                    'current' => 3
+                            ));
+                if (!empty($values['aditional_phone']))
+                    $session->set('aditional_phone', $values['aditional_phone']);
                 return $this->render('CyclogramFrontendBundle:Registration:mobile_phone_verify.html.twig',
                         array(
                                 'phone' => $participant->getParticipantMobileNumber(),
@@ -200,7 +223,8 @@ class RegistrationController extends Controller
                         "form" => $form->createView(),
                         'id' => $id,
                         'steps' => $session->get("5step", false) ? 5 : 4,
-                        'current' => 2
+                        'current' => 2,
+                        'aditional_phone' => $aditionalNumber ? $aditionalNumber : false
                 ));
     }
     
@@ -290,7 +314,14 @@ class RegistrationController extends Controller
                     $em->flush($participant);
     
                     $steps5 = $session->get("5step", false);
-    
+                    if ($session->has('aditional_phone')) 
+                        return $this->redirect($this->generateUrl("_register_mobile",
+                                array(
+                                        'id'=> $id,
+                                        'studyCode' => $studyCode,
+                                        'aditionalNumber' => $session->get('aditional_phone')
+                                )));
+
                     if($steps5) {
                         //on 5step we redirect
                         return $this->redirect($this->generateUrl("_register_mailaddress",

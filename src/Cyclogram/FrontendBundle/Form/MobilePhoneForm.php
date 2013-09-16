@@ -49,6 +49,9 @@ class MobilePhoneForm extends AbstractType
                         'maxMessage'=>'error_max_phone_code_length'
                         ))
                 ));
+        $builder->add('aditional_phone', 'checkbox', array(
+                'label' => 'label_aditional_phone'
+                ));
         $builder->add('sendCode', 'submit', array(
                 'label' => 'btn_send_confirmation'
                 ));

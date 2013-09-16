@@ -37,7 +37,7 @@ class Participant implements AdvancedUserInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="participant_STATE", type="string", length=40)
+     * @ORM\Column(name="participant_state", type="string", length=40)
      */
     protected $participantState;
 

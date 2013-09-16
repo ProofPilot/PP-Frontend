@@ -2,9 +2,14 @@
 
 {% block content %}
     <div class="mobile_reg">
-      <h1><span>{% trans from "register" %}txt_join{% endtrans %} {{ current }}/{{ steps }}:</span>{% trans from "register" %}enter_mobile_phone{% endtrans %}</h1>
-      <p>{% trans from "register" %}enter_mobile_phone{% endtrans %}</p>
-      <form method="post" action="{{ path('_register_mobile',{'id' : id, 'studyCode' : studyCode}) }}">
+      {% if aditional_phone == false  %}
+          <h1><span>{% trans from "register" %}txt_join{% endtrans %} {{ current }}/{{ steps }}:</span>{% trans from "register" %}enter_mobile_phone{% endtrans %}</h1>
+          <p>{% trans from "register" %}enter_mobile_phone{% endtrans %}</p>
+          <form method="post" action="{{ path('_register_mobile',{'id' : id, 'studyCode' : studyCode}) }}">
+      {% else %}
+          <p>{% trans from "register" %}enter_aditional_mobile_phone{% endtrans %}</p>
+          <form method="post" action="{{ path('_register_mobile',{'id' : id, 'studyCode' : studyCode, 'aditionalNumber' : aditional_phone}) }}">
+      {% endif %}
         <ul class="form_fields">
           <li class="small_input">
           {% if form is defined %}
@@ -17,20 +22,28 @@
           <li class="wide_input">
           {% if form is defined %}
           {{ form_widget(form.phone_wide, {'attr' : {'class' : 'default_input wide', 'id' : 'numeric'}}) }}
+          
           {% else %}
           <input name="" value="" class="default_input wide" type="text">
           {% endif %}
           </li>
            {% if form is defined %}
+           
               {{ form_errors(form.phone_small) }}
               {{ form_errors(form.phone_wide) }}
+              
 
            
         </ul>
+        {% if aditional_phone== false %}
+            {{ form_widget(form.aditional_phone) }}
+            {{ form_label(form.aditional_phone) }}
+            {% endif %}
         <div class="center_align">
         {{ form_widget(form.sendCode, {'attr':{'class':'submit'}}) }}
+        
               {{ form_errors(form) }}
-              {{ form_rest(form) }}
+{#               {{ form_rest(form) }}#}
               {% endif %}
         </div>
       </form>
