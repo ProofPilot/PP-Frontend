@@ -387,7 +387,6 @@ class RegistrationController extends Controller
                 $participant->setParticipantAddress1($form['participantAddress1']);
                 $participant->setParticipantAddress2($form['participantAddress2']);
                 $participant->setParticipantZipcode($form['participantZipcode']);
-                $participant->setVoicePhone($form['voice']);
                 if (!empty($form['cityId'])) {
                     $city = $em->getRepository('CyclogramProofPilotBundle:City')->find($form['cityId']);
                     $participant->setCity($city);
