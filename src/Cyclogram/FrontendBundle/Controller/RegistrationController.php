@@ -200,13 +200,6 @@ class RegistrationController extends Controller
                         return $this->redirect( $this->generateUrl("_main") );
                     }
                 } 
-                    return $this->render('CyclogramFrontendBundle:Registration:mobile_phone_verify.html.twig',
-                            array(
-                                    'phone' => $participant->getParticipantMobileNumber(),
-                                    'id' => $participant->getParticipantId(),
-                                    'steps' => $session->get("5step", false) ? 5 : 4,
-                                    'current' => 3
-                            ));
                 if (!empty($values['aditional_phone']))
                     $session->set('aditional_phone', $values['aditional_phone']);
                 return $this->render('CyclogramFrontendBundle:Registration:mobile_phone_verify.html.twig',

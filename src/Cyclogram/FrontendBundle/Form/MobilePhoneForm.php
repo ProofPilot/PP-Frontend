@@ -50,7 +50,8 @@ class MobilePhoneForm extends AbstractType
                         ))
                 ));
         $builder->add('aditional_phone', 'checkbox', array(
-                'label' => 'label_aditional_phone'
+                'label' => 'label_aditional_phone',
+                'required' => false
                 ));
         $builder->add('sendCode', 'submit', array(
                 'label' => 'btn_send_confirmation'
