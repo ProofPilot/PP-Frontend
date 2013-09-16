@@ -15,7 +15,7 @@ class Version20130916173450 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != "mysql");
         $this->addSql("ALTER TABLE `proofpilot`.`participant` DROP COLUMN `participant_voice_phone`;");
-        $this->addSql("ALTER TABLE `proofpilot`.`participant` ADD COLUMN `participant_voice_phone` VARCHAR(40) NULL  AFTER `participant_locale`;");
+        $this->addSql("ALTER TABLE `proofpilot`.`participant` ADD COLUMN `participant_voice_phone` VARCHAR(45) NULL  AFTER `participant_locale`;");
     }
 
     public function down(Schema $schema)
