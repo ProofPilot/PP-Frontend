@@ -197,6 +197,19 @@ class RegistrationController extends Controller
                                         'studyCode' => $studyCode
                                 )));
                     } else {
+                        $resourceOwnerName = $session->get("resourceOwnerName");
+                        $roles = array("ROLE_USER");
+                        if($resourceOwnerName == "facebook") {
+                            $roles = array_merge($roles, array("ROLE_FACEBOOK_USER", "ROLE_PARTICIPANT"));
+                        } else if($resourceOwnerName == "google") {
+                            $roles = array_merge($roles, array("ROLE_GOOGLE_USER", "ROLE_PARTICIPANT"));
+                        } else {
+                            $roles = array_merge($roles, array("ROLE_PARTICIPANT"));
+                        }
+                        $session->remove("resourceOwnerName");
+                        
+                        $token = new UsernamePasswordToken($participant, null, 'main', $roles);
+                        $this->get('security.context')->setToken($token);
                         return $this->redirect( $this->generateUrl("_main") );
                     }
                 } 
