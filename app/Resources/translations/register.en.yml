@@ -23,6 +23,7 @@ label_phone_small: 'Phone small'
 label_phone_wide: 'Phone wide'
 label_repeat_password: 'Repeat password'
 label_sign: 'I prefer to sign to receive my package'
+label_sign_main: 'Intro text to choice of how we want things delivered'
 label_state: State
 label_username: Username
 label_zipcode: 'Zip Code'

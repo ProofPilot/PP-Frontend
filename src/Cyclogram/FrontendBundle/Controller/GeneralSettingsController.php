@@ -135,7 +135,7 @@ class GeneralSettingsController  extends Controller
     }
     
     /**
-     * @Route("/shipping_infornation/{update}", name="_shipping", defaults={"update"=null})
+     * @Route("/shipping_information/{update}", name="_shipping", defaults={"update"=null})
      * @Secure(roles="ROLE_PARTICIPANT")
      * @Template()
      */
@@ -145,7 +145,6 @@ class GeneralSettingsController  extends Controller
         $request = $this->getRequest();
         $em = $this->getDoctrine()->getManager();
         $surveyscount = $em->getRepository('CyclogramProofPilotBundle:Participant')->getActiveParticipantInterventionsCount($participant);
-    
         $parameters["lastaccess"] = new \DateTime();
         if ($update)
             $parameters["update_data"] = $update;

@@ -77,14 +77,17 @@
                   {{ form_errors(form.state) }}
                 </div>
                 <div class="checkbox_placeholder">
+                {{ form_label(form.sign) }}
                   {{ form_widget(form.sign) }}
                   {{ form_errors(form.sign) }}
                 </div>
                 <span class="error">{{ form_errors(form) }}</span>
               </div>
               <div class="center_align">
-                {{ form_widget(form.saveMailingAddress, {'attr':{'class':'submit'}}) }}
-                {{ form_rest(form) }}
+              <button type="submit" class="submit ">{% trans from "shipping_information" %}shipping_update_button{% endtrans %}</button>
+{# {{ form_widget(form.saveMailingAddress, {'attr':{'class':'submit'}}) }}#}
+                {{ form_widget(form.cityId) }}
+                {{ form_widget(form.stateId) }}
               </div>
             </form>
           </div>
