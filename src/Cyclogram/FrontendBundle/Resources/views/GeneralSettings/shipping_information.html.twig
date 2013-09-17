@@ -1,171 +1,160 @@
 {%  extends '::dashboard.html.twig' %}
 
-{% form_theme form '::fields_theme2.html.twig' %}
+{% form_theme form '::fields_theme1.html.twig' %}
 
 {% from '::macro.html.twig' import showonerror,hideonerror %}
 {% block stylesheets %}
-            <style type="text/css">
-            
-                .autocomplete-suggestions { border: 1px solid #999; background: #FFF; overflow: auto; }
-                .autocomplete-suggestion { padding: 2px 5px; white-space: nowrap; overflow: hidden; }
-                .autocomplete-selected { background: #F0F0F0; }
-                .autocomplete-suggestions strong { font-weight: normal; color: #3399FF; }
-            
-            </style>
+  <style type="text/css">
+    .autocomplete-suggestions { border: 1px solid #999; background: #FFF; overflow: auto; }
+    .autocomplete-suggestion { padding: 2px 5px; white-space: nowrap; overflow: hidden; }
+    .autocomplete-selected { background: #F0F0F0; }
+    .autocomplete-suggestions strong { font-weight: normal; color: #3399FF; }
+  </style>
 {%  endblock stylesheets %}
 {% block javascripts %}
-            <script src="{{ asset('js/jquery.autocomplete.min.js') }}"></script>
+  <script src="{{ asset('js/jquery.autocomplete.min.js') }}"></script>
 {% endblock javascripts %}
 
-    {% block content %}
-    <div class="site_container">
+  {% block content %}
+  <div class="site_container">
 
-    {% include '::header.html.twig' %}
+  {% include '::header.html.twig' %}
 
-
-      <div class="panel">
-        <div class="panel_left">
-          {% include '::profile_info.html.twig' %}
-          <div class="menu_cont">
-              {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createSideSettingsMenu',{'template': 'CyclogramFrontendBundle:Knp:knp_side_menu.html.twig','currentClass': 'active'}) }}
-          </div>
+    <div class="panel">
+      <div class="panel_left">
+        {% include '::profile_info.html.twig' %}
+        <div class="menu_cont">
+          {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createSideSettingsMenu',{'template': 'CyclogramFrontendBundle:Knp:knp_side_menu.html.twig','currentClass': 'active'}) }}
         </div>
-        <div class="panel_right">
-          <div class="dashboard_title shipping_information"> 
-              <span class="align_to_middle">
-                  <h1>{% trans from "shipping_information" %}shipping_title{% endtrans %}</h1>
-                  <p>{% trans from "shipping_information" %}shipping_subtitle{% endtrans %}</p>
-              </span> 
-          </div>
-
-          <div class="dashboard_panel">
-                {% if update_data is defined %}
-                <p class="notice green"><span>{% trans from "shipping_information" %}shipping_update {% endtrans %}</span></p>
-                {% endif %}
- <form novalidate method="post" action="{{ path('_shipping') }}" name="mailing_address">
-        <div class="loginform_left mailing_adress" style="padding-top: 0px; width: auto; float: none;">
-          <div class="input_container" style="width: 44%">
-            <label>{% trans from "register" %}label_firstname{% endtrans %}</label>
-            {{ form_widget(form.participantFirstname, {'attr' : {'class' : 'text'}}) }}
-            {{ form_errors(form.participantFirstname) }}
-          </div>
-          <div class="input_container" style="width: 44%">
-            <label>{% trans from "register" %}label_lastname{% endtrans %}</label>
-            {{ form_widget(form.participantLastname, {'attr' : {'class' : 'text'}}) }}
-            {{ form_errors(form.participantLastname) }}
-          </div>
-          <div>
-            <label>{% trans from "register" %}label_address1{% endtrans %}</label>
-            {{ form_widget(form.participantAddress1, {'attr' : {'class' : 'text'}}) }}
-            {{ form_errors(form.participantAddress1) }}
-          </div>
-          <div>
-            <label>{% trans from "register" %}label_address2{% endtrans %}</label>
-            {{ form_widget(form.participantAddress2, {'attr' : {'class' : 'text'}}) }}
-            {{ form_errors(form.participantAddress2) }}
-          </div>
-          <div class="input_container" style="width: 21%">
-            <label>{% trans from "register" %}label_zipcode{% endtrans %}</label>
-            {{ form_widget(form.participantZipcode, {'attr' : {'class' : 'text'}}) }}
-            {{ form_errors(form.participantZipcode) }}
-          </div>
-          <div class="input_container" style="width: 46%">
-            <label>{% trans from "register" %}label_city{% endtrans %}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-            {{ form_widget(form.city, {'attr' : {'class' : 'text'}}) }}
-            {{ form_errors(form.city) }}
-          </div>
-          <div class="input_container" style="width: 13%">
-            <label>{% trans from "register" %}label_state{% endtrans %}</label>
-            {{ form_widget(form.state, {'attr' : {'class' : 'text'}}) }}
-            {{ form_errors(form.state) }}
-          </div>
-          <div class="checkbox_placeholder">
-{#             {% form_theme form 'CyclogramFrontendBundle:Form:fields.html.twig' %}#}
-            {{ form_widget(form.sign) }}
-            {{ form_errors(form.sign) }}
-          </div>
-          <span class="error">{{ form_errors(form) }}</span>
+      </div>
+      <div class="panel_right">
+        <div class="dashboard_title shipping_information"> 
+          <span class="align_to_middle">
+            <h1>{% trans from "shipping_information" %}shipping_title{% endtrans %}</h1>
+            <p>{% trans from "shipping_information" %}shipping_subtitle{% endtrans %}</p>
+          </span> 
         </div>
-        <div class="center_align">
-            {{ form_widget(form.saveMailingAddress, {'attr':{'class':'submit'}}) }}
-             {{ form_rest(form) }}
-        </div>
-      </form>
+        <div class="dashboard_panel">
+          {% if update_data is defined %}
+          <p class="notice green"><span>{% trans from "shipping_information" %}shipping_update {% endtrans %}</span></p>
+          {% endif %}
+          <div class="mobile_reg login_form" style="margin-top: 20px;">
+            <form novalidate method="post" action="{{ path('_shipping') }}" name="mailing_address">
+              <div class="loginform_left mailing_adress" style="padding-top: 0px; width: auto; float: none;">
+                <div class="input_container" style="width: 44%">
+                  <label>{% trans from "register" %}label_firstname{% endtrans %}</label>
+                  {{ form_widget(form.participantFirstname, {'attr' : {'class' : 'text'}}) }}
+                  {{ form_errors(form.participantFirstname) }}
+                </div>
+                <div class="input_container" style="width: 44%">
+                  <label>{% trans from "register" %}label_lastname{% endtrans %}</label>
+                  {{ form_widget(form.participantLastname, {'attr' : {'class' : 'text'}}) }}
+                  {{ form_errors(form.participantLastname) }}
+                </div>
+                <div>
+                  <label>{% trans from "register" %}label_address1{% endtrans %}</label>
+                  {{ form_widget(form.participantAddress1, {'attr' : {'class' : 'text'}}) }}
+                  {{ form_errors(form.participantAddress1) }}
+                </div>
+                <div>
+                  <label>{% trans from "register" %}label_address2{% endtrans %}</label>
+                  {{ form_widget(form.participantAddress2, {'attr' : {'class' : 'text'}}) }}
+                  {{ form_errors(form.participantAddress2) }}
+                </div>
+                <div class="input_container" style="width: 21%">
+                  <label>{% trans from "register" %}label_zipcode{% endtrans %}</label>
+                  {{ form_widget(form.participantZipcode, {'attr' : {'class' : 'text'}}) }}
+                  {{ form_errors(form.participantZipcode) }}
+                </div>
+                <div class="input_container" style="width: 46%">
+                  <label>{% trans from "register" %}label_city{% endtrans %}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                  {{ form_widget(form.city, {'attr' : {'class' : 'text'}}) }}
+                  {{ form_errors(form.city) }}
+                </div>
+                <div class="input_container" style="width: 13%">
+                  <label>{% trans from "register" %}label_state{% endtrans %}</label>
+                  {{ form_widget(form.state, {'attr' : {'class' : 'text'}}) }}
+                  {{ form_errors(form.state) }}
+                </div>
+                <div class="checkbox_placeholder">
+                  {{ form_widget(form.sign) }}
+                  {{ form_errors(form.sign) }}
+                </div>
+                <span class="error">{{ form_errors(form) }}</span>
+              </div>
+              <div class="center_align">
+                {{ form_widget(form.saveMailingAddress, {'attr':{'class':'submit'}}) }}
+                {{ form_rest(form) }}
+              </div>
+            </form>
           </div>
         </div>
       </div>
     </div>
-    <footer>
-      <div class="site_container">
-        <div class="footer_col_left">
-            {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createBottomLeftMenu',{'template': 'CyclogramFrontendBundle:Knp:knp_menu.html.twig'}) }}
-        </div>
-        <div class="footer_col_middle"><a class="to_top" href="#"><span>ON TOP</span></a></div>
-        <div class="footer_col_right">
-            {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createBottomRightMenu',{'template': 'CyclogramFrontendBundle:Knp:knp_menu.html.twig'}) }}
-        </div>
+  </div>
+  <footer>
+    <div class="site_container">
+      <div class="footer_col_left">
+        {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createBottomLeftMenu',{'template': 'CyclogramFrontendBundle:Knp:knp_menu.html.twig'}) }}
       </div>
-    </footer>
-{#     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>#}
-{#     <script>window.jQuery || document.write('<script src={{ asset('js/vendor/jquery-1.9.1.min.js') }}><\/script>')</script>#}
-{#         <script src= {{ asset ('js/plugins.js') }}></script>#}
-{#         <script src= {{ asset ('js/main.js') }}></script>#}
-        <script type="text/javascript">
-        $(document).ready(function(){
+      <div class="footer_col_middle"><a class="to_top" href="#"><span>ON TOP</span></a></div>
+      <div class="footer_col_right">
+        {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createBottomRightMenu',{'template': 'CyclogramFrontendBundle:Knp:knp_menu.html.twig'}) }}
+      </div>
+    </div>
+  </footer>
+  <script type="text/javascript">
+    $(document).ready(function(){
 
-            var chosenCities = [];
-            var cityIds = [];
+        var chosenCities = [];
+        var cityIds = [];
 
-            $('#mailing_address_participantZipcode').on('blur', function(){
-                if(!$(this).val())
-                    return;
+        $('#mailing_address_participantZipcode').on('blur', function(){
+        if(!$(this).val())
+            return;
 
-                $.getJSON(
-                        Routing.generate('_get_city_state_by_zip', {
-                            'zipcode': $(this).val(), 
-                            '_locale':'{{ app.request.locale }}'
-                                }),
-                        null,
-                        function(data, textStatus, jqXHR) {
-                               if($.isEmptyObject(data)) {
-                                   $('#mailing_address_city').val('');
-                                   $('#mailing_address_cityId').val('');
-                                   $('#mailing_address_state').val('');
-                                   $('#mailing_address_stateId').val('');
+            $.getJSON(
+                Routing.generate('_get_city_state_by_zip', {
+                    'zipcode': $(this).val(), 
+                    '_locale':'{{ app.request.locale }}'
+                }),
+                null,
+                function(data, textStatus, jqXHR) {
+                    if($.isEmptyObject(data)) {
+                        $('#mailing_address_city').val('');
+                        $('#mailing_address_cityId').val('');
+                        $('#mailing_address_state').val('');
+                        $('#mailing_address_stateId').val('');
+                    };
+                    if (!(data instanceof Array)) return;
+                    $('#mailing_address_city').val(data[0]['cityName']);
+                    $('#mailing_address_cityId').val(data[0]['cityId']);
+                    $('#mailing_address_state').val(data[0]['stateCode']);
+                    $('#mailing_address_stateId').val(data[0]['stateId']);
 
-                               };
-                               if (!(data instanceof Array)) return;
-                               $('#mailing_address_city').val(data[0]['cityName']);
-                               $('#mailing_address_cityId').val(data[0]['cityId']);
-                               $('#mailing_address_state').val(data[0]['stateCode']);
-                               $('#mailing_address_stateId').val(data[0]['stateId']);
+                    chosenCities = []; cityIds = [];
 
-                               chosenCities = []; cityIds = [];
+                    var len = data.length;
+                    for(var i=0;i<len;i++) {
+                        chosenCities[i] = {'data': data[i]["cityId"], 'value': data[i]["cityName"]};
+                        cityIds[i] = data[i]["cityId"];
+                    }
 
-                               var len = data.length;
-                               for(var i=0;i<len;i++) {
-                            	    chosenCities[i] = {'data': data[i]["cityId"], 'value': data[i]["cityName"]};
-                            	    cityIds[i] = data[i]["cityId"];
-                               }
-
-                               var cityoptions = {
-                                       lookup: chosenCities,
-                                       minChars: 0,
-                                       maxHeight: 150,
-                                       onSelect: function(suggestion) {
-                                    	    $("#mailing_address_city").val(suggestion.value);
-                                    	    $("#mailing_address_cityId").val(suggestion.data);
-                               	}
-                               };
-
-                               $('#mailing_address_city').autocomplete('disable');
-                               $('#mailing_address_city').autocomplete('setOptions', cityoptions);
-                               $('#mailing_address_city').autocomplete('enable');
-
-
+                    var cityoptions = {
+                        lookup: chosenCities,
+                        minChars: 0,
+                        maxHeight: 150,
+                        onSelect: function(suggestion) {
+                            $("#mailing_address_city").val(suggestion.value);
+                            $("#mailing_address_cityId").val(suggestion.data);
                         }
-                 );
+                    };
 
+                    $('#mailing_address_city').autocomplete('disable');
+                    $('#mailing_address_city').autocomplete('setOptions', cityoptions);
+                    $('#mailing_address_city').autocomplete('enable');
+
+                });
             });
             
             $("#mailing_address_city").autocomplete({
@@ -194,7 +183,7 @@
                 var zipReg = /^[0-9]\d{4}-\d{4}|[0-9]{5}$/;
                 if(!zipReg.test(inputVal)) {
                     $(this).after('<p class="error" id="error">{% trans from "register" %}txt_check_zipcode{% endtrans %}</p>');
-                }});
-        });
-        </script> 
-    {% endblock content %}
+            }});
+      });
+  </script> 
+{% endblock content %}
