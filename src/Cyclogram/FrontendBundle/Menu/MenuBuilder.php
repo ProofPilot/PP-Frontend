@@ -214,7 +214,11 @@ class MenuBuilder extends ContainerAware implements TranslationContainerInterfac
                                 'studyCode' => $studyCode
                         )))
                         ->setAttribute('class', 'icon_contact_prefs')->setExtra('translation_domain', 'sidemenu');
-
+        switch($this->container->get('request')->get('_route')) {
+            case "_shipping":
+                $menu['side_settings_menu.shipping_information']->setCurrent(true);
+                break;
+        }
         return $menu;
     }
     
