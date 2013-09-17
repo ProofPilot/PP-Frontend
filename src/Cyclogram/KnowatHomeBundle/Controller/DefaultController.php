@@ -371,6 +371,7 @@ class DefaultController extends Controller
 
     public function  ajaxStateValidationAction(){
 
+        header('Access-Control-Allow-Origin: *');
         return new \Symfony\Component\HttpFoundation\Response("test");
     }
 
