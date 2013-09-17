@@ -371,10 +371,16 @@ class DefaultController extends Controller
 
     public function  ajaxStateValidationAction(){
 
+        $content = "test(".json_encode(array("test"=>1)).")";
 
+        $response = new \Symfony\Component\HttpFoundation\Response();
+
+        $response->setContent( $content );
+        $response->setStatusCode(200);
+        $response->headers->set('Content-Type', 'application/jsonp');
         
-        header('Access-Control-Allow-Origin: *');
-        return new \Symfony\Component\HttpFoundation\Response( json_encode(array("test"=>1)) );
+        $response->send();
+        //return new \Symfony\Component\HttpFoundation\Response( $response );
     }
 
 }
