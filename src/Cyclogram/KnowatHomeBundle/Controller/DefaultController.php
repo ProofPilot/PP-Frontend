@@ -371,7 +371,10 @@ class DefaultController extends Controller
 
     public function  ajaxStateValidationAction(){
 
-        $content = "test(".json_encode(array("test"=>1)).")";
+        $request = $this->getRequest();
+        $callback = $request->query->get('callback');
+
+        $content = "$callback(".json_encode(array("test"=>1)).")";
 
         $response = new \Symfony\Component\HttpFoundation\Response();
 
@@ -380,7 +383,6 @@ class DefaultController extends Controller
         $response->headers->set('Content-Type', 'application/jsonp');
         
         $response->send();
-        //return new \Symfony\Component\HttpFoundation\Response( $response );
     }
 
 }
