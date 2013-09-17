@@ -6,24 +6,28 @@ confirm_password: 'Confirme contraseña'
 create_password: 'Crear una contraseña'
 double_check: 'Revise dos veces su entrada'
 enter_address: enter_address
+enter_aditional_mobile_phone: enter_aditional_mobile_phone   # FIXME
 enter_email: 'Ingrese su e-mail'
 enter_mobile_phone: 'Ingrese su teléfono móbil'
 enter_sms_code: 'Ingrese el código de verificación que recibió en su teléfono móbil'
 label_address1: label_address1
 label_address2: label_address2
+label_aditional_phone: label_aditional_phone   # FIXME
 label_city: label_city
 label_email: label_email
 label_firstname: label_firstname
 label_lastname: label_lastname
+label_not_sign: label_not_sign
 label_password: label_password
 label_phone_small: label_phone_small
 label_phone_wide: label_phone_wide
 label_repeat_password: label_repeat_password
+label_sign: label_sign
 label_state: label_state
 label_username: label_username
-label_voice: label_voice
 label_zipcode: label_zipcode
 mail_confirmation_fail: mail_confirmation_fail
+mailing_header: mailing_header
 min_charachters: '(8 caractéres mínimo)'
 no_code: '¿Sin código? Enviar otro'
 ok_verify: 'Ok, ¡verifique!'
@@ -31,6 +35,7 @@ pick_user: 'Escoja su usuario'
 sms_verification_message: sms_verification_message
 txt_basics: txt_basics
 txt_check_email: txt_check_email
+txt_check_zipcode: txt_check_zipcode
 txt_join: Unase
 txt_join_with: 'Unase con'
 txt_subtitle_check_email: txt_subtitle_check_email

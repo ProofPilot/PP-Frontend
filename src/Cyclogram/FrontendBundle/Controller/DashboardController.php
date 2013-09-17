@@ -14,14 +14,12 @@ use JMS\SecurityExtraBundle\Annotation\Secure;
 class DashboardController extends Controller
 {
     /**
-     * @Route("/main/{surveyUrl}", name="_main", defaults={"surveyUrl"= null})
+     * @Route("/main", name="_main")
      * @Secure(roles="ROLE_PARTICIPANT")
      * @Template()
      */
-    public function indexAction($surveyUrl=null)
+    public function indexAction()
     {
-        if (!is_null($surveyUrl)) 
-            return $this->redirect( $this->container->getParameter('site_url').urldecode($surveyUrl));
         $participant = $this->get('security.context')->getToken()->getUser();
         $request = $this->getRequest();
         $locale = $this->getRequest()->getLocale();
@@ -30,13 +28,13 @@ class DashboardController extends Controller
         $this->get('study_logic')->interventionLogic($participant);
         
         $em = $this->getDoctrine()->getManager();
-        $surveyscount = $em->getRepository('CyclogramProofPilotBundle:Participant')->getParticipantInterventionsCount($participant);
-        $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:Participant')->getParticipantInterventionLinks($participant);
+        $surveyscount = $em->getRepository('CyclogramProofPilotBundle:Participant')->getActiveParticipantInterventionsCount($participant);
+        $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:Participant')->getActiveParticipantInterventionLinks($participant);
 
         $session = $this->getRequest()->getSession();
         
         $parameters = array();
-        $parameters['surveycount'] = $surveyscount;
+        $parameters["interventioncount"] = $surveyscount;
 
 
         $parameters["interventions"] = array();
@@ -54,12 +52,6 @@ class DashboardController extends Controller
             $intervention["content"] = $interventionContent->getInterventionDescripton();
             $intervention["url"] = $this->getInterventionUrl($interventionLink, $locale);
             $intervention["logo"] = $this->container->getParameter('study_image_url') . "/" . $studyId . "/" . $studyContent->getStudyLogo();
-            
-            if($interventionLink->getStatus()->getStatusName() != "Active" ) {
-                $intervention["status"] = "Completed";
-            } else {
-                $intervention["status"] = "Enabled";
-            }
             $parameters["interventions"][] = $intervention;
         }
         

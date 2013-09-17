@@ -15,6 +15,7 @@ use Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantSurveyLink;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use JMS\SecurityExtraBundle\Annotation\Secure;
 
 class SurveyController extends Controller
 {
@@ -41,6 +42,31 @@ class SurveyController extends Controller
 
         return $this->render('CyclogramFrontendBundle:Survey:survey.html.twig', $parameters);
     }
+    
+    /**
+     * Shows a survey. After completion of survey, survey results are saved in session, also
+     * it is required to specify the redirect url
+     *
+     * @Route("/surveyprotected/{studyCode}/{surveyId}", name="_survey_protected")
+     * @Secure(roles="ROLE_PARTICIPANT")
+     * @Template()
+     */
+    public function surveyProtectedAction($studyCode, $surveyId)
+    {
+        $lime_em = $this->getDoctrine()->getManager('limesurvey');
+        $locale = $this->getRequest()->getLocale();
+    
+        $studyContent = $this->getDoctrine()->getRepository("CyclogramProofPilotBundle:StudyContent")->getStudyContentByCode($studyCode, $locale);
+        $studyId = $studyContent->getStudy()->getStudyId();
+    
+        $parameters = array();
+        $parameters['studyCode'] = $studyCode;
+        $parameters['survey'] = $this->getSurveyData($surveyId, $locale);
+        $parameters['logo'] = $this->container->getParameter('study_image_url') . '/' . $studyId. '/' .$studyContent->getStudyLogo();
+    
+        return $this->render('CyclogramFrontendBundle:Survey:survey.html.twig', $parameters);
+    }
+    
     
     /**
      * Main survey results processing function

@@ -43,7 +43,14 @@
 							</a>
 						</form>	
 					</div>
-					<div class="notice2"><p><span>{% trans from "login" %}txt_login_securely{% endtrans %}</span></p></div>
+					<div id="why_popup" class="why_popup why_login">
+                        <div class="why_popup_content">
+                            <a class="why_close" href=""></a>
+                            <p><strong>{% trans from "login" %}why_popup_title{% endtrans %}</strong></p>
+                            <p>{% trans from "login" %}txt_why_popup{% endtrans %}</p>
+                        </div>
+                    </div>
+					<div class="notice2"><a id="open_why_popup"><span>{% trans from "login" %}txt_login_securely{% endtrans %}</span></a></div>
 				
 				</div>
 				

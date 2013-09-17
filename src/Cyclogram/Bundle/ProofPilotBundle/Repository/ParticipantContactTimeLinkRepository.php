@@ -2,6 +2,7 @@
 namespace Cyclogram\Bundle\ProofPilotBundle\Repository;
 
 use Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantContactTimeLink;
+use Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantContactTime;
 
 use Doctrine\ORM\EntityRepository;
 
@@ -14,12 +15,10 @@ use Doctrine\ORM\EntityRepository;
 class ParticipantContactTimeLinkRepository extends EntityRepository
 {
     /**
-     * Get the participant contact time link
+     * Get all contact_time_links for participant
      * @param unknown_type $participant
-     * @param unknown_type $reminder
-     * @return Ambigous <\Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantStudyReminderLink, \Doctrine\ORM\mixed, NULL, mixed, unknown>
      */
-    public function getParticipantContactTimeLink ($participant, $contactTime)
+    public function getParticipantContactTimeLinks ($participant)
     {
         $query = $this->getEntityManager()
         ->createQuery("
@@ -27,33 +26,32 @@ class ParticipantContactTimeLinkRepository extends EntityRepository
                 FROM CyclogramProofPilotBundle:ParticipantContactTimeLink pctl
                 WHERE
                 pctl.participant = :participant
-                AND
-                pctl.participantContactTime = :contacttime
                 ")
-                ->setParameter("participant", $participant)
-                ->setParameter("contacttime", $contactTime);
-    
-        $result = $query->getOneOrNullResult();
+                ->setParameter("participant", $participant);
         
-        return $result;
+        $results = $query->getResult();
+        
+        return $results;
     }
 
-    
-    
-    
-    public function updateParticipantContactTimeLink($participant, $contactTime, $active, $timezone)
+
+    public function updateParticipantContactTimeLink($participant, $contactTime, $contactDay, $timezone, $isWeekdayActive, $isContactTimeActive)
     {
         $em = $this->getEntityManager();
-        if(!$active) {
+        
+        if(!$isWeekdayActive || !$isContactTimeActive) {
             $em->createQuery("
                     DELETE FROM CyclogramProofPilotBundle:ParticipantContactTimeLink pctl
                     WHERE
                     pctl.participant = :participant
                     AND
                     pctl.participantContactTime = :contacttime
+                    AND
+                    pctl.participantWeekday = :contactday
                     ")
                     ->setParameter("participant", $participant)
                     ->setParameter("contacttime", $contactTime)
+                    ->setParameter("contactday", $contactDay)
                     ->execute();
         } else {
             $contactTimeLinks = $em->createQuery("
@@ -63,9 +61,12 @@ class ParticipantContactTimeLinkRepository extends EntityRepository
                 pctl.participant = :participant
                 AND
                 pctl.participantContactTime = :contacttime
+                AND  
+                pctl.participantWeekday = :contactday
             ")
             ->setParameter("participant", $participant)
             ->setParameter("contacttime", $contactTime)
+            ->setParameter("contactday", $contactDay)
             ->getSingleScalarResult();
             
             if(!$contactTimeLinks) {
@@ -73,21 +74,23 @@ class ParticipantContactTimeLinkRepository extends EntityRepository
                 $contactTimeLink->setParticipant($participant);
                 $contactTimeLink->setParticipantContactTime($contactTime);
                 $contactTimeLink->setParticipantTimezone($timezone);
-                $contactTimeLink->setParticipantContactTimeStart(new \DateTime());
-                $contactTimeLink->setParticipantContactTimeEnd(new \DateTime());
+                $contactTimeLink->setParticipantWeekday($contactDay);
                 $em->persist($contactTimeLink);
                 $em->flush();
             } else {
-                $a = $em->createQuery("
+                $em->createQuery("
                         UPDATE CyclogramProofPilotBundle:ParticipantContactTimeLink pctl
                         SET pctl.participantTimezone = " . $timezone->getParticipantTimezoneId() . " 
                         WHERE
                         pctl.participant = :participant
                         AND
                         pctl.participantContactTime = :contacttime
+                        AND
+                        pctl.participantWeekday = :contactday
                         ")
                         ->setParameter("participant", $participant)
                         ->setParameter("contacttime", $contactTime)
+                        ->setParameter("contactday", $contactDay)
                         ->execute();
             }
         }

@@ -41,41 +41,50 @@
 {% block content %}
   <div class="mobile_reg login_form">
     <div class="wrapper">
-      <h1><span>{% trans from "register" %}txt_join{% endtrans %} {{ current }}/{{ steps }}:</span> Mailing address</h1>
+      <h1><span>{% trans from "register" %}txt_join{% endtrans %} {{ current }}/{{ steps }}:</span> {% trans from "register" %}mailing_header{% endtrans %}</h1>
       <div style="margin-bottom: 20px;">{% trans from "register" %}enter_address{% endtrans %}</div>
       <form novalidate method="post" action="{{ path('_register_mailaddress',{'id' : id, 'studyCode' : studyCode}) }}" name="mailing_address">
-        <div class="loginform_left" style="padding-top: 0px;">
-          <label>{% trans from "register" %}label_firstname{% endtrans %}</label>
-          {{ form_widget(form.participantFirstname, {'attr' : {'class' : 'text'}}) }}
-          {{ form_errors(form.participantFirstname) }}
-          <label>{% trans from "register" %}label_lastname{% endtrans %}</label>
-          {{ form_widget(form.participantLastname, {'attr' : {'class' : 'text'}}) }}
-          {{ form_errors(form.participantLastname) }}
-          <label>{% trans from "register" %}label_address1{% endtrans %}</label>
-          {{ form_widget(form.participantAddress1, {'attr' : {'class' : 'text'}}) }}
-          {{ form_errors(form.participantAddress1) }}
-          <label>{% trans from "register" %}label_address2{% endtrans %}</label>
-          {{ form_widget(form.participantAddress2, {'attr' : {'class' : 'text'}}) }}
-          {{ form_errors(form.participantAddress2) }}
-          <label>{% trans from "register" %}label_zipcode{% endtrans %}</label>
-          {{ form_widget(form.participantZipcode, {'attr' : {'class' : 'text'}}) }}
-          {{ form_errors(form.participantZipcode) }}
-        </div>
-        <div class="loginform_right">
-          <label>{% trans from "register" %}label_city{% endtrans %}</label>
-          {{ form_widget(form.city, {'attr' : {'class' : 'text'}}) }}
-          {{ form_errors(form.city) }}
-          <label>{% trans from "register" %}label_state{% endtrans %}</label>
-          {{ form_widget(form.state, {'attr' : {'class' : 'text'}}) }}
-          {{ form_errors(form.state) }}
-          <label>{% trans from "register" %}label_voice{% endtrans %}</label>
-          {{ form_widget(form.voice, {'attr' : {'class' : 'text'}}) }}
-          {{ form_errors(form.voice) }}
-          <div class="checkbox_placeholder">
-            <input type="checkbox" /><div>I prefer to sign to receive my package</div>
-            <input type="checkbox" checked /><div>The package can be left without my signature</div>
+        <div class="loginform_left mailing_adress" style="padding-top: 0px; width: auto; float: none;">
+          <div class="input_container" style="width: 44%">
+            <label>{% trans from "register" %}label_firstname{% endtrans %}</label>
+            {{ form_widget(form.participantFirstname, {'attr' : {'class' : 'text'}}) }}
+            {{ form_errors(form.participantFirstname) }}
           </div>
-
+          <div class="input_container" style="width: 44%">
+            <label>{% trans from "register" %}label_lastname{% endtrans %}</label>
+            {{ form_widget(form.participantLastname, {'attr' : {'class' : 'text'}}) }}
+            {{ form_errors(form.participantLastname) }}
+          </div>
+          <div>
+            <label>{% trans from "register" %}label_address1{% endtrans %}</label>
+            {{ form_widget(form.participantAddress1, {'attr' : {'class' : 'text'}}) }}
+            {{ form_errors(form.participantAddress1) }}
+          </div>
+          <div>
+            <label>{% trans from "register" %}label_address2{% endtrans %}</label>
+            {{ form_widget(form.participantAddress2, {'attr' : {'class' : 'text'}}) }}
+            {{ form_errors(form.participantAddress2) }}
+          </div>
+          <div class="input_container" style="width: 21%">
+            <label>{% trans from "register" %}label_zipcode{% endtrans %}</label>
+            {{ form_widget(form.participantZipcode, {'attr' : {'class' : 'text'}}) }}
+            {{ form_errors(form.participantZipcode) }}
+          </div>
+          <div class="input_container" style="width: 46%">
+            <label>{% trans from "register" %}label_city{% endtrans %}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+            {{ form_widget(form.city, {'attr' : {'class' : 'text'}}) }}
+            {{ form_errors(form.city) }}
+          </div>
+          <div class="input_container" style="width: 13%">
+            <label>{% trans from "register" %}label_state{% endtrans %}</label>
+            {{ form_widget(form.state, {'attr' : {'class' : 'text'}}) }}
+            {{ form_errors(form.state) }}
+          </div>
+          <div class="checkbox_placeholder">
+            {% form_theme form 'CyclogramFrontendBundle:Form:fields.html.twig' %}
+            {{ form_widget(form.sign) }}
+            {{ form_errors(form.sign) }}
+          </div>
           <span class="error">{{ form_errors(form) }}</span>
         </div>
         <div class="center_align">
@@ -110,7 +119,7 @@
                                if (!(data instanceof Array)) return;
                                $('#mailing_address_city').val(data[0]['cityName']);
                                $('#mailing_address_cityId').val(data[0]['cityId']);
-                               $('#mailing_address_state').val(data[0]['stateName']);
+                               $('#mailing_address_state').val(data[0]['stateCode']);
                                $('#mailing_address_stateId').val(data[0]['stateId']);
 
                                chosenCities = []; cityIds = [];
@@ -160,6 +169,14 @@
                      $("#mailing_address_stateId").val(suggestion.data);
             	}
             });
+
+            $("#mailing_address_participantZipcode").on('blur', function() {
+            	$('#error').remove(); 
+            	var inputVal = $(this).val();
+                var zipReg = /^[0-9]\d{4}-\d{4}|[0-9]{5}$/;
+                if(!zipReg.test(inputVal)) {
+                    $(this).after('<p class="error" id="error">{% trans from "register" %}txt_check_zipcode{% endtrans %}</p>');
+                }})
         });
         </script> 
     </div>

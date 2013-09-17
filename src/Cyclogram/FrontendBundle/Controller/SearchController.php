@@ -19,7 +19,7 @@ class SearchController extends Controller
     {
         $em = $this->getDoctrine()->getEntityManager();
         $results = $em->createQuery("
-                SELECT c.cityId, c.cityName, s.stateId, s.stateName
+                SELECT c.cityId, c.cityName, s.stateId, s.stateCode
                 FROM CyclogramProofPilotBundle:City c
                 INNER JOIN c.state s
                 WHERE c.cityZipcode = :zipcode
@@ -92,15 +92,15 @@ class SearchController extends Controller
     
             $qb = $repository->createQueryBuilder('s');
             $query = $qb
-            ->select('s.stateName, s.stateId')
-            ->where("UPPER(s.stateName) like '%$termUpper%'")
+            ->select('s.stateCode, s.stateId')
+            ->where("UPPER(s.stateCode) like '%$termUpper%'")
             ->getQuery();
     
             $states = $query->getResult();
     
             foreach($states as $state) {
                 $suggestions[] = array(
-                        'value' => $state["stateName"],
+                        'value' => $state["stateCode"],
                         'data' =>  $state["stateId"]
                 );
             }

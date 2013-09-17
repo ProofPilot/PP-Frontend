@@ -57,10 +57,12 @@ class TestController extends Controller
         $cc = $this->get('cyclogram.common');
 
         
-        $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:Participant')->getParticipantInterventionLinks($participant);
+        $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:Participant')->getActiveParticipantInterventionLinks($participant);
         $embedded['logo_top'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_logo.png");
         $embedded['logo_footer'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newletter_logo_footer.png");
         $embedded['login_button'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_small_login.jpg");
+        $embedded['white_top'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_white_top.png");
+        $embedded['white_bottom'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_white_bottom.png");
         
         
         $parameters["interventions"] = array();
@@ -80,21 +82,13 @@ class TestController extends Controller
         
                 $intervention["url"] = $this->getInterventionUrl($interventionLink, $locale);
                 $intervention["logo"] = $this->container->getParameter('study_image_url') . "/" . $studyId . "/" . $studyContent->getStudyLogo();
-        
-                if($interventionLink->getStatus()->getStatusName() != "Active" ) {
-                    $intervention["status"] = "Completed";
-                } else {
-                    $intervention["status"] = "Enabled";
-                }
                 $parameters["interventions"][] = $intervention;
-                $user = $this->container->get('security.context')->getToken();
             }
         
             $parameters['email'] = $participant->getParticipantEmail();
             $parameters['locale'] = $participant->getLanguage();
             $parameters['host'] = $this->container->getParameter('site_url');
-            $parameters['siteurl'] = $this->container->getParameter('site_url').$this->container->get('router')->generate('_login', array('_locale' => $locale,
-                    'surveyUrl' => urlencode($this->getInterventionUrl($interventionLink, $locale))));
+            $parameters['siteurl'] = $this->container->getParameter('site_url').$this->getInterventionUrl($interventionLink, $locale);
             
                               $send = $cc->sendMail(
                           $participant->getParticipantEmail(),
@@ -104,8 +98,12 @@ class TestController extends Controller
                           $embedded,
                           true,
                           $parameters);
-//                   if ($send) $output->writeln("send");
-                              return new Response("Completed");
+                  if ($send) 
+                      return new Response("Completed");
+                  else 
+                      return new Response("Email not send");
+        } else {
+            return new Response("Cant send email. No active tasks");
         }
     }
     
@@ -122,7 +120,7 @@ class TestController extends Controller
             case 'Survey & Observation':
                 $surveyId = $intervention->getSidId();
                 $redirectPath = $this->container->get('router')->generate('_main', array('_locale' => $locale));
-                $path = $this->container->get('router')->generate('_survey', array(
+                $path = $this->container->get('router')->generate('_survey_protected', array(
                         '_locale' => $locale,
                         'studyCode' => $studyCode,
                         'surveyId' => $surveyId,

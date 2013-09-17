@@ -27,6 +27,13 @@ class ParticipantTimezone
      * @ORM\Column(name="participant_timezone_desc", type="string", length=45)
      */
     private $participantTimezoneDesc;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="participant_timezone_name", type="string", length=25)
+     */
+    private $participantTimezoneName;
 
     /**
      * Set participantTimezoneId
@@ -72,5 +79,15 @@ class ParticipantTimezone
     public function getParticipantTimezoneDesc()
     {
         return $this->participantTimezoneDesc;
+    }
+
+    public function getParticipantTimezoneName()
+    {
+        return $this->participantTimezoneName;
+    }
+
+    public function setParticipantTimezoneName($participantTimezoneName)
+    {
+        $this->participantTimezoneName = $participantTimezoneName;
     }
 }

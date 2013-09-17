@@ -1,3 +1,4 @@
 email_sms_message: 'your email is'
 pass_reset_code: 'Your password reset code is'
+sms_title: 'You have an active task'
 user_name_sms_message: 'Your username is'

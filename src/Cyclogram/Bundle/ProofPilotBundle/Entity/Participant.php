@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantStudyReminderLink;
 
 /**
  * Participant
@@ -29,14 +30,28 @@ class Participant implements AdvancedUserInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="facebookId", type="string", length=255)
+     * @ORM\Column(name="participant_facebook_id", type="string", length=255)
      */
     protected $facebookId;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="googleId", type="string", length=255)
+     * @ORM\Column(name="participant_state", type="string", length=40)
+     */
+    protected $participantState;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="participant_delivery_sign", type="integer", length=255)
+     */
+    protected $participantDeliverySign;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="participant_google_id", type="string", length=255)
      */
     protected $googleId;
 
@@ -94,7 +109,7 @@ class Participant implements AdvancedUserInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="recovery_password_code", type="string", length=45, nullable=false)
+     * @ORM\Column(name="participant_recovery_password_code", type="string", length=45, nullable=false)
      */
     protected $recoveryPasswordCode;
 
@@ -265,44 +280,65 @@ class Participant implements AdvancedUserInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="city", type="string", length=255, nullable=true)
+     * @ORM\Column(name="participant_city", type="string", length=255, nullable=true)
      */
     protected $cityName;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="education", type="string", length=255, nullable=true)
+     * @ORM\Column(name="participant_education", type="string", length=255, nullable=true)
      */
     protected $education;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="income", type="integer", nullable=true)
+     * @ORM\Column(name="participant_income", type="integer", nullable=true)
      */
     protected $income;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="age", type="integer", nullable=true)
+     * @ORM\Column(name="participant_age", type="integer", nullable=true)
      */
     protected $age;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="location", type="string", length=255, nullable=true)
+     * @ORM\Column(name="participant_location", type="string", length=255, nullable=true)
      */
     protected $location;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="language", type="string", length=255, nullable=true)
+     * @ORM\Column(name="participant_locale", type="string", length=255, nullable=true)
      */
-    protected $language;
+    protected $locale;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="participant_voice_phone", type="integer", nullable=true)
+     */
+    protected $voicePhone;
+
+    /**
+     * @ORM\OneToMany(targetEntity="ParticipantStudyReminderLink", mappedBy="participant")
+     * @var unknown_type
+     * @var unknown_type
+     */
+    protected $studyreminderlinks;
+
+    /**
+     * @ORM\OneToMany(targetEntity="ParticipantContactTimeLink", mappedBy="participant")
+     * @var unknown_type
+     * @var unknown_type
+     */
+    protected $contacttimelinks;
 
     /**
      * Get participantId
@@ -966,7 +1002,7 @@ class Participant implements AdvancedUserInterface
     public function getUsername()
     {
         // TODO: Implement getUsername() method.
-        return $this->getParticipantEmail();
+        return $this->getParticipantUsername();
     }
 
     public function setFBData($fbdata)
@@ -1080,14 +1116,54 @@ class Participant implements AdvancedUserInterface
         $this->googleId = $googleId;
     }
 
-    public function getLanguage()
+    public function getLocale()
     {
-        return $this->language;
+        return $this->locale;
     }
 
-    public function setLanguage($language)
+    public function setLocale($locale)
     {
-        $this->language = $language;
+        $this->locale = $locale;
+    }
+
+    public function getStudyreminderlinks()
+    {
+        return $this->studyreminderlinks;
+    }
+
+    public function getContacttimelinks()
+    {
+        return $this->contacttimelinks;
+    }
+
+    public function getVoicePhone()
+    {
+        return $this->voicePhone;
+    }
+
+    public function setVoicePhone($voicePhone)
+    {
+        $this->voicePhone = $voicePhone;
+    }
+
+    public function getParticipantDeliverySign()
+    {
+        return $this->participantDeliverySign;
+    }
+
+    public function setParticipantDeliverySign($participantDeliverySign)
+    {
+        $this->participantDeliverySign = $participantDeliverySign;
+    }
+
+    public function getParticipantState()
+    {
+        return $this->participantState;
+    }
+
+    public function setParticipantState($participantState)
+    {
+        $this->participantState = $participantState;
     }
 
 }

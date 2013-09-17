@@ -12,3 +12,12 @@ please_fill_this_field: 'Por favor, preencher este campo'
 username_already_registered: 'Nome de usuário já está registrado'
 wrong_code: 'Você escreveu um código incorreto'
 wrong_pass: 'Você escreveu uma senha incorreta'
+error_state_length: error_state_length #TODO
+error_not_blank_name: error_not_blank_name
+error_not_blank_lastname: error_not_blank_lastname
+error_not_blank_street1: error_not_blank_street1
+error_not_blank_city: error_not_blank_city
+error_not_blank_state: error_not_blank_state
+error_not_blank_voice: error_not_blank_voice
+error_not_blank_choice: error_not_blank_choice
+error_not_blank_zipcode: error_not_blank_zipcode

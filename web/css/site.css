@@ -83,7 +83,9 @@ span em {
 	max-width: 998px;
 	margin: 0px auto;	
 }
-
+#open_why_popup {
+	cursor: pointer;
+}
 .reg_header {
 	/*width: 998px;*/
 	margin: 0px auto;
@@ -1231,7 +1233,7 @@ header .header_menu span.text  , .footer_col_right span.text  {
 .panel .panel_right .dashboard_panel .prefs_wrapper .form_container .form_row ul.col_4 li.form_label  {
 	
 }
-.panel .panel_right .dashboard_panel .prefs_wrapper a.btn.save_updates {
+.panel .panel_right .dashboard_panel a.btn.save_updates {
 	clear: both;
 	float: right;
 	color: white;
@@ -1241,7 +1243,7 @@ header .header_menu span.text  , .footer_col_right span.text  {
 	padding-left: 25px !important;
 	margin-top: 15px;
 } 
-.panel .panel_right .dashboard_panel .prefs_wrapper a.btn.save_updates span {
+.panel .panel_right .dashboard_panel a.btn.save_updates span {
 	padding-left: 25px !important;
 }
 .panel .panel_right .dashboard_panel ul.settings_form {
@@ -1928,7 +1930,7 @@ header .header_menu span.text  , .footer_col_right span.text  {
 	display: none;
 }
 .panel .panel_right .dashboard_panel .btns_box a , .panel .panel_right  .btns_box.for_mobile  a  , .panel .panel_right .prev_next.for_mobile ul li a ,
-.panel .panel_right .dashboard_panel .prefs_wrapper a.btn.save_updates {
+.panel .panel_right .dashboard_panel a.btn.save_updates {
 	display: inline-block;
 	color: white;
 	font-family: 'Roboto';
@@ -1944,7 +1946,7 @@ header .header_menu span.text  , .footer_col_right span.text  {
 }
 
 .panel .panel_right .dashboard_panel .btns_box a span , .panel .panel_right  .btns_box.for_mobile  a span  , .panel .panel_right .prev_next.for_mobile ul li a span ,
-.panel .panel_right .dashboard_panel .prefs_wrapper a.btn.save_updates span {
+.panel .panel_right .dashboard_panel a.btn.save_updates span {
 	display: inline-block;
 	padding-left: 22px;
 		line-height: 16px;
@@ -1966,12 +1968,12 @@ header .header_menu span.text  , .footer_col_right span.text  {
 	background:  url(../images/100_icon_save.png) no-repeat 0px 50%;
 }
 .panel a.complete span ,
-.panel .panel_right .dashboard_panel .prefs_wrapper a.btn.save_updates span {
+.panel .panel_right .dashboard_panel a.btn.save_updates span {
 	background:  url(../images/icon_complete.png) no-repeat 0px 50%;
 	background-size: 16px 12px;
 } 
 .lt-ie9 .panel a.complete span,
-.lt-ie9 .panel .panel_right .dashboard_panel .prefs_wrapper a.btn.save_updates span {
+.lt-ie9 .panel .panel_right .dashboard_panel a.btn.save_updates span {
 	background:  url(../images/100_icon_complete.png) no-repeat 0px 50%;
 }
 
@@ -2161,7 +2163,7 @@ div.panel div.panel_right div.prev_next ul li a.next span {
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#6e8993', endColorstr='#526e79',GradientType=0 ); /* IE6-9 */
 }
 .panel .panel_right .dashboard_panel .btns_box.wide a.complete , .panel .panel_right  .btns_box.for_mobile.wide a.complete,
-.panel .panel_right .dashboard_panel .prefs_wrapper a.btn.save_updates {
+.panel .panel_right .dashboard_panel a.btn.save_updates {
 	padding-left: 15px;
 	border: 1px solid #7ea61f;
 	background: #97c42c; /* Old browsers */
@@ -2175,7 +2177,7 @@ div.panel div.panel_right div.prev_next ul li a.next span {
 }
 .panel .panel_right .dashboard_panel .btns_box.wide a.complete:hover , 
 .panel .panel_right  .btns_box.for_mobile.wide a.complete:hover ,
-.panel .panel_right .dashboard_panel .prefs_wrapper a.btn.save_updates:hover {
+.panel .panel_right .dashboard_panel a.btn.save_updates:hover {
 	border: 1px solid #608016;
 	background: #6e8f20; /* Old browsers */
 	background: -moz-linear-gradient(top, #6e8f20 0%, #5d7a17 100%); /* FF3.6+ */
@@ -3600,7 +3602,7 @@ footer a.icon_update span {
 	margin-top: 3px;
 }
 .loginform_right .checkbox_placeholder div {
-	padding-left: 20px;
+/*	padding-left: 20px; */
 }
 .mobile_reg.login_form .loginform_right  span.input_placeholder span.mark {
 	position: absolute;
@@ -3639,7 +3641,22 @@ footer a.icon_update span {
 .mobile_reg input.default_input.full {
 	width: 364px;
 }
-
+.input_container {
+	float: left;
+	margin-right: 35px;
+}
+.input_container span input {
+	width: 93% !important;
+}
+.checkbox_placeholder {
+	clear: both;
+}
+#mailing_address_participantAddress1, #mailing_address_participantAddress2 {
+	width: 90.5%;
+}
+#mailing_address_sign input[type=radio] {
+	margin-right: 5px;
+}
 .mobile_reg .confirm_list {
 	float: left;
 	width: 100%;
@@ -3737,6 +3754,9 @@ footer a.icon_update span {
 }
 .mobile_reg.login_form .why_popup.active {
 	display: block; 
+}
+.why_login {
+	top: 10px !important;
 }
 .mobile_reg.login_form .why_popup .why_popup_content {
 	width: 247px;
@@ -3901,7 +3921,7 @@ footer a.icon_update span {
 .mobile_reg.login_form .loginform_right label, .loginform_left label {
 	color: #6f6f6f;
 	margin-bottom: 3px;
-	display: inline-block;
+/*	display: inline-block;*/
 }
 .mobile_reg.login_form .loginform_right a.forgot {
 	color: #bd3b2b;
@@ -5145,7 +5165,7 @@ footer a.icon_update span {
 		top: 30px;
 		right: 20px;
 	}
-	.panel .panel_right .dashboard_panel .prefs_wrapper a.btn.save_updates {
+	.panel .panel_right .dashboard_panel a.btn.save_updates {
 		width: 100%;
 		box-sizing:border-box;
 		-moz-box-sizing:border-box;
@@ -5229,6 +5249,9 @@ footer a.icon_update span {
 		padding-top: 10px;
 		margin-top: 30px;
 		background: #f7f7f7;
+	}
+	.mailing_adress div {
+		width: 100% !important;
 	}
 	.mobile_reg.login_form .loginform_left.register {
 		padding-top: 25px;

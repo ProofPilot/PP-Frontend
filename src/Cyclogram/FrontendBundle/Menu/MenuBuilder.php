@@ -35,14 +35,14 @@ class MenuBuilder extends ContainerAware implements TranslationContainerInterfac
         
         $participant = $this->container->get('security.context')->getToken()->getUser();
         $em = $this->container->get('doctrine')->getManager();
-        $surveyscount = $em->getRepository('CyclogramProofPilotBundle:Participant')->getParticipantInterventionsCount($participant);
+        $interventioncount = $em->getRepository('CyclogramProofPilotBundle:Participant')->getActiveParticipantInterventionsCount($participant);
         $menu = $factory->createItem('root');
         $menu->setChildrenAttribute('class', 'left_menu');
 
         $menu->addChild('side_dasboard_menu.dashboard', array(
                 'route' => '_main'
                 ))
-                ->setAttribute('class', 'icon_dashboard')->setExtra('translation_domain', 'sidemenu')->setAttribute("news", $surveyscount);
+                ->setAttribute('class', 'icon_dashboard')->setExtra('translation_domain', 'sidemenu')->setAttribute("news", $interventioncount);
 //         $menu->addChild('side_dasboard_menu.survey', array(
 //                 'route' => '_main',
 //                 'routeParameters' => array(

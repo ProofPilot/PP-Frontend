@@ -28,23 +28,12 @@ class LoginController extends Controller
 {
 
     /**
-     * @Route("/login/{surveyUrl}", name="_login", defaults={"surveyUrl"= null})
+     * @Route("/login", name="_login")
      * @Template()
      */
-    public function loginAction($surveyUrl=null)
+    public function loginAction()
     {
         $session =$this->getRequest()->getSession();
-        if (!is_null($surveyUrl)) {
-
-            $session->set('surveyUrl', urldecode($surveyUrl));
-        }
-        if ($session->has('_security.secured_area.target_path')) {
-         
-        }
-        
-        if ($this->get('security.context')->isGranted("ROLE_PARTICIPANT")){
-            return $this->redirect($this->get('router')->generate("_main", array('surveyUrl' => $surveyUrl)));
-        }
         $request = $this->getRequest();
         $session = $request->getSession();
         
@@ -208,8 +197,6 @@ class LoginController extends Controller
                     $this->get('custom_db')->getFactory('CommonCustom')->addEvent($participant->getParticipantId(),null,1,'login','Login succesfully', TRUE);
                     if ($session->has('_security.secured_area.target_path'))
                         return $this->redirect($session->get('_security.secured_area.target_path'));
-                    if ($session->has('surveyUrl')) 
-                        return $this->redirect( $this->container->getParameter('site_url').$session->get('surveyUrl'));
                     return $this->redirect( $this->generateUrl("_main") );
                 } else {
                     $this->get('custom_db')->getFactory('CommonCustom')->addEvent($participant->getParticipantId(),null,1,'login','Login failed', FALSE);
