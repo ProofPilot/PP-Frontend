@@ -105,33 +105,33 @@ class KOCSocialMediaStudy extends AbstractStudy implements StudyInterface
         $isEligible = true;
         $reason = array();
 
-        if (isset($surveyResponse['382539X701X6985'])
-                && intval($surveyResponse['382539X701X6985']) < 18) {
+        if (isset($surveyResult['382539X701X6985'])
+                && intval($surveyResult['382539X701X6985']) < 18) {
             $isEligible = false;
             $reason[] = "Less than 18 years";
         }
 
-        if (isset($surveyResponse['382539X701X6987'])
-                && $surveyResponse['382539X701X6987'] != "A1") {
+        if (isset($surveyResult['382539X701X6987'])
+                && $surveyResult['382539X701X6987'] != "A1") {
             $isEligible = false;
             $reason[] = "Sex not male";
         }
 
-        if (isset($surveyResponse['382539X701X6984'])
-                && !in_array($surveyResponse['382539X701X6984'],
+        if (isset($surveyResult['382539X701X6984'])
+                && !in_array($surveyResult['382539X701X6984'],
                         array("A1", "A2", "A3", "A4", "A5", "A6", "A7"))) {
             $isEligible = false;
             $reason[] = "Parish is other";
         }
 
-        if (isset($surveyResponse['382539X701X6986SQ003'])
-                && $surveyResponse['382539X701X6986SQ003'] != "Y") {
+        if (isset($surveyResult['382539X701X6986SQ003'])
+                && $surveyResult['382539X701X6986SQ003'] != "Y") {
             $isEligible = false;
             $reason[] = "Race Not Black/African American";
         }
 
-        if (isset($surveyResponse['382539X701X6988SQ005'])
-                && $surveyResponse['382539X701X6988SQ005'] == "Y") {
+        if (isset($surveyResult['382539X701X6988SQ005'])
+                && $surveyResult['382539X701X6988SQ005'] == "Y") {
             $isEligible = false;
             $reason[] = "No sex in the last 12 months";
         }

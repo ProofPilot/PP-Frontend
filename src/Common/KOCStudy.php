@@ -158,27 +158,27 @@ class KOCStudy extends AbstractStudy implements StudyInterface
         $isEligible = true;
         $reason = array();
 
-        if (isset($surveyResponse['362142X497X4260'])
-                && !in_array($surveyResponse['362142X497X4260'],
+        if (isset($surveyResult['362142X497X4260'])
+                && !in_array($surveyResult['362142X497X4260'],
                         array("A1", "A2", "A3", "A4", "A5", "A6", "A7"))) {
             $isEligible = false;
             $reason[] = "Parish";
         }
 
-        if (isset($surveyResponse['362142X497X4265'])
-                && $surveyResponse['362142X497X4265'] != "A1") {
+        if (isset($surveyResult['362142X497X4265'])
+                && $surveyResult['362142X497X4265'] != "A1") {
             $isEligible = false;
             $reason[] = "Gender";
         }
 
-        if (isset($surveyResponse['362142X497X4269SQ005'])
-                && $surveyResponse['362142X497X4269SQ005'] == "Y") {
+        if (isset($surveyResult['362142X497X4269SQ005'])
+                && $surveyResult['362142X497X4269SQ005'] == "Y") {
             $isEligible = false;
             $reason[] = "Sex in last 12 months with a male";
         }
 
-        if (isset($surveyResponse['362142X497X4263SQ003'])
-                && $surveyResponse['362142X497X4263SQ003'] != "Y") {
+        if (isset($surveyResult['362142X497X4263SQ003'])
+                && $surveyResult['362142X497X4263SQ003'] != "Y") {
             $isEligible = false;
             $reason[] = "Race not African American/Black";
         }

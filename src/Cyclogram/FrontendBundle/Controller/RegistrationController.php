@@ -348,8 +348,10 @@ class RegistrationController extends Controller
                     $errorCount = $session->get('errorCount');
                     $errorCount++;
                     $session->set('errorCount',$errorCount);
-                    if ($session->get('errorCount') >2)
+                    if ($session->get('errorCount') >2) {
+                        $session->remove('errorCount');
                         $this->checkStudyEligibility($studyCode, $error = true);
+                    }
                     $error = "Wrong SMS!";
                 }
             }
