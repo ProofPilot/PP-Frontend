@@ -23,6 +23,7 @@ label_phone_small: 'Phone small'
 label_phone_wide: 'Phone wide'
 label_repeat_password: 'Repeat password'
 label_sign: 'I prefer to sign to receive my package'
+label_sign_main: 'Intro text to choice of how we want things delivered'
 label_state: State
 label_username: Username
 label_zipcode: 'Zip Code'
@@ -33,11 +34,15 @@ no_code: 'No Code? Send Another'
 ok_verify: 'OK, Verify!'
 pick_user: 'Pick your Username'
 sms_verification_message: 'Your ProofPilot SMS Log-in code is:'
+txt_aditional_number_save: 'Save and next'
 txt_basics: 'The Basics'
 txt_check_email: 'Please check your zipcode'
 txt_check_zipcode: 'Please check your zipcode'
 txt_join: JOIN
 txt_join_with: 'Join with'
+txt_popup_header: txt_popup_header
+txt_popup_link: 'I prefer to recive voice calls at another number'
+txt_popup_text: txt_popup_text
 txt_subtitle_check_email: 'Please check your email address'
 txt_why: 'Why?'
 wrong_back: 'Wrong go back'

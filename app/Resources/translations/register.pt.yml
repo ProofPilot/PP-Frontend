@@ -6,13 +6,13 @@ confirm_password: 'confirme a senha'
 create_password: 'Crie uma senha (minímo de 8 caracteres com pelo menos 2 números)'
 double_check: 'Verifique novamente a sua entrada'
 enter_address: 'Por favor, insira seu endereço, para que possamos enviar seu kit de teste:'
-enter_aditional_mobile_phone: enter_aditional_mobile_phone   # FIXME
+enter_aditional_mobile_phone: enter_aditional_mobile_phone
 enter_email: 'Por favor insira um endereço de e-mail válido'
 enter_mobile_phone: 'Digite o número do seu telefone celular'
 enter_sms_code: "Digite o código de verificação que você recebeu em seu telefone\n"
 label_address1: Rua
 label_address2: Complemento
-label_aditional_phone: label_aditional_phone   # FIXME
+label_aditional_phone: label_aditional_phone
 label_city: Cidade
 label_email: Email
 label_firstname: 'Primeiro Nome'
@@ -23,6 +23,7 @@ label_phone_small: Fone
 label_phone_wide: telefone
 label_repeat_password: 'Repita a senha'
 label_sign: label_sign
+label_sign_main: label_sign_main   # FIXME
 label_state: Estado
 label_username: Usuário
 label_zipcode: CEP
@@ -33,11 +34,15 @@ no_code: 'Sem código? Enviar outro'
 ok_verify: 'OK, Verifique!'
 pick_user: 'Escolha o seu nome de usuário'
 sms_verification_message: sms_verification_message
+txt_aditional_number_save: txt_aditional_number_save
 txt_basics: txt_basics
 txt_check_email: 'Por favor, verifique o seu endereço de e-mail'
 txt_check_zipcode: txt_check_zipcode
 txt_join: Junte-se
 txt_join_with: Junte-se
+txt_popup_header: txt_popup_header
+txt_popup_link: txt_popup_link
+txt_popup_text: txt_popup_text
 txt_subtitle_check_email: 'Por favor, verifique o seu endereço de e-mail'
 txt_why: 'Por que?'
 wrong_back: 'Incorreto, voltar'

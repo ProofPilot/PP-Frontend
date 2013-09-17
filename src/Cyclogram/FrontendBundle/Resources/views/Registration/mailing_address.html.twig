@@ -81,7 +81,8 @@
             {{ form_errors(form.state) }}
           </div>
           <div class="checkbox_placeholder">
-            {% form_theme form 'CyclogramFrontendBundle:Form:fields.html.twig' %}
+{#             {% form_theme form 'CyclogramFrontendBundle:Form:fields.html.twig' %}#}
+            {{ form_label(form.sign) }}
             {{ form_widget(form.sign) }}
             {{ form_errors(form.sign) }}
           </div>
@@ -170,13 +171,7 @@
             	}
             });
 
-            $("#mailing_address_participantZipcode").on('blur', function() {
-            	$('#error').remove(); 
-            	var inputVal = $(this).val();
-                var zipReg = /^[0-9]\d{4}-\d{4}|[0-9]{5}$/;
-                if(!zipReg.test(inputVal)) {
-                    $(this).after('<p class="error" id="error">{% trans from "register" %}txt_check_zipcode{% endtrans %}</p>');
-                }})
+
         });
         </script> 
     </div>

@@ -21,3 +21,4 @@ error_not_blank_state: error_not_blank_state
 error_not_blank_voice: error_not_blank_voice
 error_not_blank_choice: error_not_blank_choice
 error_not_blank_zipcode: error_not_blank_zipcode
+incorrect_city: incorrect_city
