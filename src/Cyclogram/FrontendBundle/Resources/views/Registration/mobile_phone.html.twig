@@ -1,4 +1,4 @@
-{%  extends '::base.html.twig' %}
+{% extends '::base.html.twig' %}
 
 {% block content %}
     <div class="mobile_reg">
@@ -7,7 +7,7 @@
           <p>{% trans from "register" %}enter_mobile_phone{% endtrans %}</p>
           <form method="post" action="{{ path('_register_mobile',{'id' : id, 'studyCode' : studyCode}) }}">
       {% else %}
-          <p>{% trans from "register" %}enter_aditional_mobile_phone{% endtrans %}</p>
+          <h1>{% trans from "register" %}enter_aditional_mobile_phone{% endtrans %}</h1>
           <form method="post" action="{{ path('_register_mobile',{'id' : id, 'studyCode' : studyCode, 'aditionalNumber' : aditional_phone}) }}">
       {% endif %}
         <ul class="form_fields">
@@ -36,23 +36,29 @@
            
         </ul>
         {% if aditional_phone== false %}
+        <div class=mobile_reg_container>
+                <div class="notice2"><a id="open_why_popup"><span>{% trans from "register" %}txt_popup_link{% endtrans %}</span></a></div>
             {{ form_widget(form.aditional_phone) }}
-            {{ form_label(form.aditional_phone) }}
-            {% endif %}
-        <div class="center_align">
+            <div id="why_popup" class="why_popup why_register_mobile">
+                <div class="why_popup_content">
+                    <a class="why_close" href=""></a>
+                    <p><strong>{% trans from "register" %}txt_popup_header{% endtrans %}</strong></p>
+                    <p>{% trans from "register" %}txt_popup_text{% endtrans %}</p>
+                </div>
+            </div>
+			</div>
+         <div class="center_align">
         {{ form_widget(form.sendCode, {'attr':{'class':'submit'}}) }}
-        
+        {% else %}
+               <div class="center_align">
+        <button type="submit" class="submit btn_login">{% trans from "register" %}txt_aditional_number_save{% endtrans %}</button>
+        {% endif %}
               {{ form_errors(form) }}
-{#               {{ form_rest(form) }}#}
               {% endif %}
         </div>
       </form>
     </div>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src={{ asset('js/vendor/jquery-1.9.1.min.js') }}><\/script>')</script>
-    <script src= {{ asset ('js/plugins.js') }}></script>
-    <script src= {{ asset ('js/main.js') }}></script>
-    <script src= {{ asset ('js/jquery.numeric.js') }}></script>
+    
      <script>
         $(document).ready(function(){
             $("#phone_phone_small").numeric();

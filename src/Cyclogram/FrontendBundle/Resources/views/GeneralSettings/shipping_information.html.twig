@@ -1,17 +1,9 @@
-{%  extends '::base.html.twig' %}
+{%  extends '::dashboard.html.twig' %}
 
-{% form_theme form '::fields_theme1.html.twig' %}
+{% form_theme form '::fields_theme2.html.twig' %}
 
+{% from '::macro.html.twig' import showonerror,hideonerror %}
 {% block stylesheets %}
-{#             {% stylesheets filter='cssrewrite' output="assetic/css/jqueryui.css" debug=false#}
-{#                 'css/jquery-ui-1.10.3/base/jquery.ui.core.min.css'#}
-{#                 'css/jquery-ui-1.10.3/base/jquery.ui.theme.min.css'#}
-{#                 'css/jquery-ui-1.10.3/base/jquery.ui.menu.min.css'#}
-{#                 'css/jquery-ui-1.10.3/base/jquery.ui.autocomplete.min.css'#}
-{#              %}#}
-{#                  <link rel="stylesheet" href="{{ asset_url }}" media="screen" type="text/css"/>#}
-{#              {% endstylesheets %}#}
-{#             <link rel="stylesheet" href="{{ asset('css/jquery-ui-1.10.3/base/jquery-ui.min.css') }}" media="screen" type="text/css"/>#}
             <style type="text/css">
             
                 .autocomplete-suggestions { border: 1px solid #999; background: #FFF; overflow: auto; }
@@ -21,29 +13,36 @@
             
             </style>
 {%  endblock stylesheets %}
-
-
 {% block javascripts %}
-{#             {% javascripts output="assetic/js/jqueryui.js"  debug=false#}
-{#                 'js/jquery-ui-1.10.3/jquery.ui.core.min.js'#}
-{#                 'js/jquery-ui-1.10.3/jquery.ui.widget.min.js'#}
-{#                 'js/jquery-ui-1.10.3/jquery.ui.menu.min.js'#}
-{#                 'js/jquery-ui-1.10.3/jquery.ui.position.min.js'#}
-{#                 'js/jquery-ui-1.10.3/jquery.ui.autocomplete.min.js'#}
-{#             %}#}
-{#                 <script src="{{ asset_url }}"></script>#}
-{#             {% endjavascripts %}#}
-{#             <script src="{{ asset('js/jquery-ui-1.10.3/jquery-ui.min.js') }}"></script>#}
-{#             {{ form_javascript(form) }}#}
             <script src="{{ asset('js/jquery.autocomplete.min.js') }}"></script>
 {% endblock javascripts %}
 
-{% block content %}
-  <div class="mobile_reg login_form">
-    <div class="wrapper">
-      <h1><span>{% trans from "register" %}txt_join{% endtrans %} {{ current }}/{{ steps }}:</span> {% trans from "register" %}mailing_header{% endtrans %}</h1>
-      <div style="margin-bottom: 20px;">{% trans from "register" %}enter_address{% endtrans %}</div>
-      <form novalidate method="post" action="{{ path('_register_mailaddress',{'id' : id, 'studyCode' : studyCode}) }}" name="mailing_address">
+    {% block content %}
+    <div class="site_container">
+
+    {% include '::header.html.twig' %}
+
+
+      <div class="panel">
+        <div class="panel_left">
+          {% include '::profile_info.html.twig' %}
+          <div class="menu_cont">
+              {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createSideSettingsMenu',{'template': 'CyclogramFrontendBundle:Knp:knp_side_menu.html.twig','currentClass': 'active'}) }}
+          </div>
+        </div>
+        <div class="panel_right">
+          <div class="dashboard_title shipping_information"> 
+              <span class="align_to_middle">
+                  <h1>{% trans from "shipping_information" %}shipping_title{% endtrans %}</h1>
+                  <p>{% trans from "shipping_information" %}shipping_subtitle{% endtrans %}</p>
+              </span> 
+          </div>
+
+          <div class="dashboard_panel">
+                {% if update_data is defined %}
+                <p class="notice green"><span>{% trans from "shipping_information" %}shipping_update {% endtrans %}</span></p>
+                {% endif %}
+ <form novalidate method="post" action="{{ path('_shipping') }}" name="mailing_address">
         <div class="loginform_left mailing_adress" style="padding-top: 0px; width: auto; float: none;">
           <div class="input_container" style="width: 44%">
             <label>{% trans from "register" %}label_firstname{% endtrans %}</label>
@@ -92,7 +91,26 @@
              {{ form_rest(form) }}
         </div>
       </form>
-      <script type="text/javascript">
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer>
+      <div class="site_container">
+        <div class="footer_col_left">
+            {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createBottomLeftMenu',{'template': 'CyclogramFrontendBundle:Knp:knp_menu.html.twig'}) }}
+        </div>
+        <div class="footer_col_middle"><a class="to_top" href="#"><span>ON TOP</span></a></div>
+        <div class="footer_col_right">
+            {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createBottomRightMenu',{'template': 'CyclogramFrontendBundle:Knp:knp_menu.html.twig'}) }}
+        </div>
+      </div>
+    </footer>
+{#     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>#}
+{#     <script>window.jQuery || document.write('<script src={{ asset('js/vendor/jquery-1.9.1.min.js') }}><\/script>')</script>#}
+{#         <script src= {{ asset ('js/plugins.js') }}></script>#}
+{#         <script src= {{ asset ('js/main.js') }}></script>#}
+        <script type="text/javascript">
         $(document).ready(function(){
 
             var chosenCities = [];
@@ -179,6 +197,4 @@
                 }});
         });
         </script> 
-    </div>
-  </div>
-{% endblock content %}
+    {% endblock content %}

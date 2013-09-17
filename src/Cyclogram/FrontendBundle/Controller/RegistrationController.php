@@ -292,6 +292,7 @@ class RegistrationController extends Controller
         $request = $this->getRequest();
         $session = $request->getSession();
         $em = $this->getDoctrine()->getManager();
+
         $this->checkStudyEligibility($studyCode);
         $participant = $em->getRepository('CyclogramProofPilotBundle:Participant')->find($id);
     
@@ -304,16 +305,19 @@ class RegistrationController extends Controller
     
         $error = "";
         $form = $this->createForm(new UserSmsCodeForm($this->container));
-    
-    
+
         if( $request->getMethod() == "POST" ){
     
             $form->handleRequest($request);
     
             if( $form->isValid() ) {
                 $value = $form->getData();
+                $errorCount = 0;
+                if(!$session->has('errorCount')){
+                    $session->set('errorCount', $errorCount);
+                }
                 if ($value['sms_code'] == $userSMS) {
-    
+                    
                     //Make Participant SMS code confirmed
                     $participant->setParticipantMobileSmsCodeConfirmed(true);
                     $em->persist($participant);
@@ -341,6 +345,11 @@ class RegistrationController extends Controller
     
                     return $this->registerAndRedirect($participant, $studyCode);
                 } else {
+                    $errorCount = $session->get('errorCount');
+                    $errorCount++;
+                    $session->set('errorCount',$errorCount);
+                    if ($session->get('errorCount') >3)
+                        $this->checkStudyEligibility($studyCode, $error = true);
                     $error = "Wrong SMS!";
                 }
             }
@@ -542,11 +551,12 @@ class RegistrationController extends Controller
      * @param unknown_type $studyCode
      * @throws \Exception
      */
-    private function checkStudyEligibility($studyCode)
+    private function checkStudyEligibility($studyCode, $error = false)
     {
         if(!$studyCode)
             return;
-        
+        if ($error)
+            throw new \Exception("You have not passed eligibility test");
         $session = $this->getRequest()->getSession();
         if ($session->has('SurveyInfo')){
             $bag = $session->get('SurveyInfo');

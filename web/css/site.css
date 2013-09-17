@@ -1977,7 +1977,16 @@ header .header_menu span.text  , .footer_col_right span.text  {
 	background:  url(../images/100_icon_complete.png) no-repeat 0px 50%;
 }
 
+#phone_aditional_phone {
+	margin-top: 5px;
+	margin-right: 5px;
+	float: right;
+}
 
+
+.mobile_reg_container .notice2 {
+	float: right;
+}
 .panel .panel_right .dashboard_panel .btns_box a.left span , 
 .panel .panel_right .btns_box.for_mobile a.left span,
 div.panel div.panel_right div.prev_next ul li a.back span {
@@ -3329,6 +3338,7 @@ footer a.icon_update span {
 	width: 390px;
 	background: url(../images/bg_mobile.png) repeat 0px 0px;
 	box-shadow: 0px 0px 15px rgba(0,0,0,0.3);
+	position: relative;
 }
 .mobile_reg.align_center {
 	text-align: center;
@@ -3737,7 +3747,7 @@ footer a.icon_update span {
 	position: relative;
 }
 
-.mobile_reg.login_form .why_popup {
+.why_popup {
 	position: absolute;
 	z-index: 500;
 	top: 60px;
@@ -3752,13 +3762,17 @@ footer a.icon_update span {
 	box-shadow: 0px 0px 7px rgba(0,0,0,0.1);
 	display: none;
 }
-.mobile_reg.login_form .why_popup.active {
+.why_popup.active {
 	display: block; 
 }
 .why_login {
 	top: 10px !important;
 }
-.mobile_reg.login_form .why_popup .why_popup_content {
+.why_register_mobile {
+	top: 70px !important;
+	left: 205px;
+}
+.why_popup .why_popup_content {
 	width: 247px;
 	padding-right: 30px;
 	width: 217px;
@@ -3766,7 +3780,7 @@ footer a.icon_update span {
 
 }
 
-.mobile_reg.login_form .why_popup .why_popup_content a.why_close {
+.why_popup .why_popup_content a.why_close {
 	position: absolute;
 	top: 0px;
 	right: 0px;
@@ -3776,12 +3790,12 @@ footer a.icon_update span {
 	background: url(../images/why_close.png) no-repeat 0px 0px;
 	background-size: 9px 9px;
 }
-.mobile_reg.login_form .why_popup .why_popup_content p {
+.why_popup .why_popup_content p {
 	margin-bottom: 10px;
 	color: #919191;
 	font-size: 13px;
 }
-.mobile_reg.login_form .why_popup .why_popup_content strong {
+.why_popup .why_popup_content strong {
 	color: #c34130;
 	font-size: 14px;
 
@@ -3797,7 +3811,7 @@ footer a.icon_update span {
 	margin-left: -10px;
 	color: #464646;
 }
-.mobile_reg.login_form .loginform_left .notice2 span {
+.notice2 span {
 	background: url(../images/icon_notice2.png) no-repeat 100% 50%;
 	background-size: 16px 16px;
 	line-height: 16px;
@@ -3805,7 +3819,7 @@ footer a.icon_update span {
 	padding-right: 25px;
 	color: #464646;
 }
-.lt-ie9 .mobile_reg.login_form .loginform_left .notice2 span  {
+.notice2 span  {
 	background: url(../images/100_icon_notice2.png) no-repeat 100% 50%;
 }
 

@@ -6,13 +6,13 @@ confirm_password: confirm_password
 create_password: create_password
 double_check: 'txt_double_check-you_entry'''
 enter_address: enter_address
-enter_aditional_mobile_phone: enter_aditional_mobile_phone   # FIXME
+enter_aditional_mobile_phone: enter_aditional_mobile_phone
 enter_email: enter_email
 enter_mobile_phone: enter_mobile_phone
 enter_sms_code: enter_sms_code
 label_address1: label_address1
 label_address2: label_address2
-label_aditional_phone: label_aditional_phone   # FIXME
+label_aditional_phone: label_aditional_phone
 label_city: label_city
 label_email: label_email
 label_firstname: label_firstname
@@ -33,11 +33,15 @@ no_code: no_code
 ok_verify: ok_verify
 pick_user: pick_user
 sms_verification_message: sms_verification_message
+txt_aditional_number_save: txt_aditional_number_save   # FIXME
 txt_basics: txt_basics
 txt_check_email: txt_check_email
 txt_check_zipcode: txt_check_zipcode
 txt_join: txt_join
 txt_join_with: txt_join_with
+txt_popup_header: txt_popup_header
+txt_popup_link: txt_popup_link
+txt_popup_text: txt_popup_text
 txt_subtitle_check_email: txt_subtitle_check_email
 txt_why: txt_why
 wrong_back: wrong_back

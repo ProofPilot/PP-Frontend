@@ -6,13 +6,13 @@ confirm_password: 'Confirme contraseña'
 create_password: 'Crear una contraseña'
 double_check: 'Revise dos veces su entrada'
 enter_address: enter_address
-enter_aditional_mobile_phone: enter_aditional_mobile_phone   # FIXME
+enter_aditional_mobile_phone: enter_aditional_mobile_phone
 enter_email: 'Ingrese su e-mail'
 enter_mobile_phone: 'Ingrese su teléfono móbil'
 enter_sms_code: 'Ingrese el código de verificación que recibió en su teléfono móbil'
 label_address1: label_address1
 label_address2: label_address2
-label_aditional_phone: label_aditional_phone   # FIXME
+label_aditional_phone: label_aditional_phone
 label_city: label_city
 label_email: label_email
 label_firstname: label_firstname
@@ -33,11 +33,15 @@ no_code: '¿Sin código? Enviar otro'
 ok_verify: 'Ok, ¡verifique!'
 pick_user: 'Escoja su usuario'
 sms_verification_message: sms_verification_message
+txt_aditional_number_save: txt_aditional_number_save   # FIXME
 txt_basics: txt_basics
 txt_check_email: txt_check_email
 txt_check_zipcode: txt_check_zipcode
 txt_join: Unase
 txt_join_with: 'Unase con'
+txt_popup_header: txt_popup_header
+txt_popup_link: txt_popup_link
+txt_popup_text: txt_popup_text
 txt_subtitle_check_email: txt_subtitle_check_email
 txt_why: '¿Por qué?'
 wrong_back: 'erroneo devuelvase'
