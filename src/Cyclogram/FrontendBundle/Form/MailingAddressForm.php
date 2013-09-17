@@ -86,6 +86,7 @@ class MailingAddressForm extends AbstractType
                  ));
 
         $builder->add('sign', 'choice', array(
+                'label'=>'label_sign_main',
                 'choices' => array(
                         'notSign' => 'label_not_sign',
                         'sign' => 'label_sign'

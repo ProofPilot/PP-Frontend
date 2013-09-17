@@ -23,6 +23,7 @@ label_phone_small: label_phone_small
 label_phone_wide: label_phone_wide
 label_repeat_password: label_repeat_password
 label_sign: label_sign
+label_sign_main: label_sign_main   # FIXME
 label_state: label_state
 label_username: label_username
 label_zipcode: label_zipcode
@@ -33,7 +34,7 @@ no_code: no_code
 ok_verify: ok_verify
 pick_user: pick_user
 sms_verification_message: sms_verification_message
-txt_aditional_number_save: txt_aditional_number_save   # FIXME
+txt_aditional_number_save: txt_aditional_number_save
 txt_basics: txt_basics
 txt_check_email: txt_check_email
 txt_check_zipcode: txt_check_zipcode

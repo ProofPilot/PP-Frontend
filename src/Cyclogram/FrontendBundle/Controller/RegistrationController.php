@@ -350,7 +350,12 @@ class RegistrationController extends Controller
                     $session->set('errorCount',$errorCount);
                     if ($session->get('errorCount') >2) {
                         $session->remove('errorCount');
-                        $this->checkStudyEligibility($studyCode, $error = true);
+                        $this->checkStudyEligibility($studyCode, true);
+                        $studyContent = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:StudyContent')->getStudyContentByCode($studyCode, $request->getLocale());
+                        return $this->redirect($this->generateUrl('_page', array(
+                                'studyUrl' => $studyContent->getStudyUrl(),
+                                'eligible' => false
+                        )));
                     }
                     $error = "Wrong SMS!";
                 }
@@ -557,8 +562,9 @@ class RegistrationController extends Controller
     {
         if(!$studyCode)
             return;
-        if ($error)
-            throw new \Exception("You have not passed eligibility test");
+        if ($error) {
+            return;
+        }
         $session = $this->getRequest()->getSession();
         if ($session->has('SurveyInfo')){
             $bag = $session->get('SurveyInfo');
