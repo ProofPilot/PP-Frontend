@@ -170,13 +170,7 @@
             	}
             });
 
-            $("#mailing_address_participantZipcode").on('blur', function() {
-            	$('#error').remove(); 
-            	var inputVal = $(this).val();
-                var zipReg = /^((\d{5}-\d{4})|\d{5})$/;
-                if(!zipReg.test(inputVal)) {
-                    $(this).after('<p class="error" id="error">{% trans from "register" %}txt_check_zipcode{% endtrans %}</p>');
-                }});
+
         });
         </script> 
     </div>

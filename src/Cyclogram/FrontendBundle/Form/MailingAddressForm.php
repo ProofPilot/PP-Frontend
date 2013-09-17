@@ -3,6 +3,7 @@ namespace Cyclogram\FrontendBundle\Form;
 
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
 
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\DependencyInjection\Container;
@@ -51,9 +52,14 @@ class MailingAddressForm extends AbstractType
                         'minLength'=>5,
                         'maxlength'=>10,
                         ),
-                'constraints' => new NotBlank(array(
+                'constraints' => array(new NotBlank(array(
                        'message'=>"error_not_blank_zipcode"
-                        ))
+                        )),
+                        new Regex(array(
+                                'pattern' => "/^((\d{5}-\d{4})|\d{5})$/",
+                                'match' => true,
+                                'message' => "error_not_blank_zipcode"
+                                )))
                 ));
         $builder->add('cityId', 'hidden');
         $builder->add('city', 'text', array(
