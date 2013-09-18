@@ -384,8 +384,6 @@ class DefaultController extends Controller
         if( $city ){
             $DbState = strtolower($city->getState()->getStateName());
         }
-        var_dump($DbState);
-        die("end");
 
         $t = new \Cyclogram\Bundle\ProofPilotBundle\Entity\City();
         $t->getState();
