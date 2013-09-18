@@ -385,6 +385,8 @@ class DefaultController extends Controller
         if( $city ){
             $DbState = strtolower($city->getState()->getStateName());
             $responseCode = ( $DbState == $state )? "true" : "false";
+        }else{
+            $responseCode = "false";
         }
 
         $content = "$callback(".json_encode(array("responseCode"=>$responseCode)).")";
