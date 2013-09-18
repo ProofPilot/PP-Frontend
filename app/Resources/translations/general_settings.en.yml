@@ -4,6 +4,7 @@ general_subtitle: 'Start here to change the basics, then explore other settings 
 general_title: 'General Settings'
 label_email: E-mail
 label_new_email: 'New e-mail'
+label_new_incentive_email: 'New appreciation E-mail'
 label_new_pass: 'Type new password'
 label_new_phone_number: 'New phone number'
 label_new_phone_number_pass: 'Enter password to confirm change'
@@ -15,6 +16,7 @@ label_password: Password
 label_password_mobile_confirm: 'Enter mobile code to confirm'
 label_phone_number: 'Phone number'
 label_repeat_email: 'Confirm new e-mail'
+label_repeat_incentive_email: 'Confirm appreciation E-mail'
 label_repeat_pass: 'Confirm new password'
 label_username: Username
 last_access: 'Last Access: '
@@ -22,6 +24,7 @@ txt_change: Change
 txt_edit: Edit
 txt_email: E-mail
 txt_forgot_it: 'Forgot it?'
+txt_incentive_email: 'Token of Appreciation E-mail'
 txt_mobile_number: 'Mobile Number'
 txt_password: Password
 txt_username: Username

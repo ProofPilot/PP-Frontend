@@ -3,7 +3,9 @@ btn_send_mobile_code: 'Enviar código ao celular'
 general_subtitle: 'Clique aqui para mudar o básico, e depois explore outras configurações para personalizar a sua experiência.'
 general_title: 'Configurações Gerais'
 label_email: Email
+label_incentive_email: label_incentive_email   # FIXME
 label_new_email: 'Novo Email'
+label_new_incentive_email: label_new_incentive_email   # FIXME
 label_new_pass: 'Digite a nova senha'
 label_new_phone_number: 'Novo número de telefone'
 label_new_phone_number_pass: 'Entre om a senha para confirmar a mudança'
@@ -15,6 +17,7 @@ label_password: Senha
 label_password_mobile_confirm: 'Digite o código para confirmar'
 label_phone_number: 'Número de telefone'
 label_repeat_email: 'Confirme o novo email'
+label_repeat_incentive_email: label_repeat_incentive_email   # FIXME
 label_repeat_pass: 'Confirme a nova senha'
 label_username: Usuário
 last_access: 'Último Acesso:'
@@ -22,6 +25,7 @@ txt_change: Mudar
 txt_edit: Editar
 txt_email: Email
 txt_forgot_it: 'Esqueceu?'
+txt_incentive_email: txt_incentive_email   # FIXME
 txt_mobile_number: 'Número de Celular'
 txt_password: Senha
 txt_username: Usuário

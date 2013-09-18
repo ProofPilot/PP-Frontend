@@ -104,7 +104,12 @@ class GeneralSettingsController  extends Controller
                         $session->invalidate();
                         $parameters['message'] = "Your mobile numder has been changed";
                     }
-                } 
+                } elseif($form->get('incentiveEmailConfirm')->isClicked()) {
+                        $participant->setParticipantAppreciationEmail($data['newIncentiveEmail']);
+                        $em->persist($participant);
+                        $em->flush($participant);
+                        $parameters['message'] = "Your appreciation E-mail has been changed";
+                }
             } 
             else {
                if($form->get('userNameConfirm')->isClicked()) {
@@ -119,6 +124,8 @@ class GeneralSettingsController  extends Controller
                     $parameters["expandedFormClass"] = 'mobile';
                 } elseif ($form->get('phoneConfirm')->isClicked()) {
                     $parameters["expandedFormClass"] = 'mobile';
+                } elseif ($form->get('incentiveEmailConfirm')->isClicked()) {
+                    $parameters["expandedFormClass"] = 'incentiveEmail';
                 } 
             }
         }
