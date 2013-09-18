@@ -296,11 +296,13 @@ class LoginController extends Controller
     
                 if (!empty($participant)) {
                     $parameters['id'] = $participant->getParticipantId();
-                    $parameters['locale'] = $participant->getLanguage() ? $participant->getLanguage() : $request->getLocale();
+                    $parameters['locale'] = $participant->getLocale() ? $participant->getLocale() : $request->getLocale();
                     $parameters['host'] = $this->container->getParameter('site_url');
                     $embedded['logo_top'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_logo.png");
                     $embedded['logo_footer'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newletter_logo_footer.png");
                     $embedded['login_button'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_small_login.jpg");
+                    $embedded['white_top'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_white_top.png");
+                    $embedded['white_bottom'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_white_bottom.png");
                     $cc = $this->get('cyclogram.common');
                     $cc->sendMail($participant->getParticipantEmail(),
                             $this->get('translator')->trans("email_reset_password", array(), "email", $parameters['locale']),
@@ -310,7 +312,7 @@ class LoginController extends Controller
                             true,
                             $parameters);
     
-                    return $this->render('CyclogramFrontendBundle::Login:reset_password_confirmation.html.twig', array());
+                    return $this->render('CyclogramFrontendBundle:Login:reset_password_confirmation.html.twig', array());
                 } else {
                     return $this->render('CyclogramFrontendBundle:Login:forgot_your_password.html.twig',
                             array(
@@ -371,7 +373,7 @@ class LoginController extends Controller
                     $participant->setParticipantMobileSmsCode($participantSMSCode);
                     $em->persist($participant);
                     $em->flush($participant);
-                    $locale = $participant->getLanguage() ? $participant->getLanguage() : $request->getLocale();
+                    $locale = $participant->getLocale() ? $participant->getLocale() : $request->getLocale();
     
                     $sms = $this->get('sms');
                     $message = $this->get('translator')->trans('pass_reset_code', array(), 'security', $locale);
@@ -432,8 +434,7 @@ class LoginController extends Controller
                 array(
                         'error' => $error, 
                         'form' => $form->createView(), 
-                        'id' => $id, 
-                        "studyCode"=>$studyCode
+                        'id' => $id
                         ));
     }
     
@@ -477,7 +478,7 @@ class LoginController extends Controller
                     $participantUsername = $participant->getParticipantUsername();
     
                     $sms = $this->get('sms');
-                    $locale = $participant->getLanguage() ? $participant->getLanguage() : $request->getLocale();
+                    $locale = $participant->getLocale() ? $participant->getLocale() : $request->getLocale();
                     $userNameText = $this->get('translator')->trans('user_name_sms_message', array(), 'security', $locale);
                     $emailText = $this->get('translator')->trans('email_sms_message', array(), 'security', $locale);
                     $sentSms = $sms->sendSmsAction( array('message' =>  $userNameText.' '. $participantUsername .' '. $emailText .' '. $participantEmail, 'phoneNumber'=>$participant->getParticipantMobileNumber()) );

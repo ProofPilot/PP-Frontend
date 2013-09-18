@@ -480,12 +480,14 @@ class RegistrationController extends Controller
      */
     private function confirmParticipantEmail(Participant $participant, $studyCode)
     {
-        return true;
+//         return true;
         $em = $this->getDoctrine()->getManager();
     
         $embedded['logo_top'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_logo.png");
         $embedded['logo_footer'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newletter_logo_footer.png");
         $embedded['login_button'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_small_login.jpg");
+        $embedded['white_top'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_white_top.png");
+        $embedded['white_bottom'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_white_bottom.png");
         $cc = $this->get('cyclogram.common');
     
         $parameters['code'] = substr(md5( md5( $participant->getParticipantEmail() . md5(microtime()))), 0, 4);
@@ -498,7 +500,7 @@ class RegistrationController extends Controller
         if($studyCode)
             $parameters['studyCode'] = $studyCode;
     
-        $parameters['locale'] = $participant->getLanguage() ? $participant->getLanguage() : $request->getLocale();
+        $parameters['locale'] = $participant->getLocale() ? $participant->getLocale() : $request->getLocale();
         $parameters['host'] = $this->container->getParameter('site_url');
     
         $cc->sendMail($participant->getParticipantEmail(),
