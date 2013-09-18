@@ -375,21 +375,20 @@ class DefaultController extends Controller
 
         $request = $this->getRequest();
         $callback = $request->query->get('callback');
-        $state = $request->query->get('state');
+        $state = strtolower($request->query->get('state'));
         $zipcode = $request->query->get('zipcode');
+        $responseCode = null;
 
         //make queries
         $DbState = "";
         $city = $em->getRepository("CyclogramProofPilotBundle:City")->findOneBy(array("cityZipcode"=>$zipcode));
         if( $city ){
             $DbState = strtolower($city->getState()->getStateName());
+            $responseCode = ( $DbState == $state )? "true" : "false";
         }
 
-        $t = new \Cyclogram\Bundle\ProofPilotBundle\Entity\City();
-        $t->getState();
-
-        $content = "$callback(".json_encode(array("test"=>1)).")";
-
+        $content = "$callback(".json_encode(array("responseCode"=>$responseCode)).")";
+        
         $response = new \Symfony\Component\HttpFoundation\Response();
 
         $response->setContent( $content );
