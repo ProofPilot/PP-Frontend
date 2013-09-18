@@ -371,8 +371,24 @@ class DefaultController extends Controller
 
     public function  ajaxStateValidationAction(){
 
+        $em = $this->getDoctrine()->getManager();
+
         $request = $this->getRequest();
         $callback = $request->query->get('callback');
+        $state = $request->query->get('state');
+        $zipcode = $request->query->get('zipcode');
+
+        //make queries
+        $DbState = "";
+        $city = $em->getRepository("CyclogramProofPilotBundle:City")->findOneBy(array("cityZipcode"=>$zipcode));
+        if( $city ){
+            $DbState = strtolower($city->getState()->getStateName());
+        }
+        var_dump($DbState);
+        die("end");
+
+        $t = new \Cyclogram\Bundle\ProofPilotBundle\Entity\City();
+        $t->getState();
 
         $content = "$callback(".json_encode(array("test"=>1)).")";
 
