@@ -136,7 +136,7 @@
                 {% endif %}
                 
                 {# incentive email #}      
-                <li class="left_text form-email">{% trans from "general_settings" %}txt_incentive_email{% endtrans %}</li>
+                <li class="left_text form-email min_line_heigth">{% trans from "general_settings" %}txt_incentive_email{% endtrans %}</li>
                 {% if not is_granted('ROLE_FACEBOOK_USER') and not is_granted('ROLE_GOOGLE_USER') %}
                 <li class="form_expanded form-incentiveEmail"  {{ showonerror('incentiveEmail',expandedFormClass) }}>
                   <div class="wrapper">

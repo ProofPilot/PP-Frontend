@@ -1409,11 +1409,11 @@ header .header_menu span.text  , .footer_col_right span.text  {
 	color: #727271;
 	font-weight: 700;
 	line-height: 40px;
-	width: 217px;
+	width: 117px;
 	clear: both;
 }
 .panel .panel_right .dashboard_panel ul.settings_form li.middle_input {
-	width: 364px;
+	width: 464px;
 	padding-right: 20px;
 	margin-bottom: 20px;
 }
@@ -1430,6 +1430,9 @@ header .header_menu span.text  , .footer_col_right span.text  {
 	padding-left: 13px;
 	padding-right: 13px;
 	width: 437px;
+}
+.min_line_heigth {
+	line-height: 15px !important;
 }
 .panel .panel_right .dashboard_panel ul.settings_form li.edit_btn a {
 	color: #c03d35;
