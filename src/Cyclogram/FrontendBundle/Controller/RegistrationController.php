@@ -84,6 +84,7 @@ class RegistrationController extends Controller
                     }
                     
                     $participant->setParticipantEmail($registration->getParticipantEmail()); 
+                    $participant->setParticipantAppreciationEmail($registration->getParticipantEmail());
                     $participant->setParticipantPassword($registration->getParticipantPassword());
                     $participant->setParticipantUsername($registration->getParticipantUsername());
                     $question = $em->getRepository('CyclogramProofPilotBundle:RecoveryQuestion')->find(1);
