@@ -134,6 +134,9 @@ class DefaultController extends Controller
 
     public function eligibilityAction()
     {
+        if ($this->getRequest()->getMethod('POST')) {
+            $value = $this->getRequest()->request->get('specimen');
+        }
         $session = $this->get("session");
         $em = $this->getDoctrine()->getManager();
         $pageText = array();

@@ -47,17 +47,46 @@
                     <input type="radio" name="consent" id="consentNo" value="no" /> <label for="consentNo">I would not like to continue as a participant in this research study.</label>
                 </div>
             </form>
+            <p>
+            We would like to freeze part of the DBS specimen you send us for future use. 
+            Your samples would be stored for an indefinite time. 
+            We may use these specimens for research in the future. 
+            Nothing that could be linked to you will be kept with the specimens. 
+            Tests that might be done on these specimens may include tests for HIV, other viruses, 
+            or immune function tests (ability to fight infection). 
+            We will not test for genetic problems or use the specimens for cloning or commercial purposes. 
+            You may choose not to have your specimens stored for future research and still be part of this study.
+            </p>
+            <br />
+            <p>Are you willing to have your specimens frozen for future use?
+                <br />
+            </p>
+            <form method="post" name="specimenFrm" id="specimenFrm" action="{{ path('CyclogramKnowatHomeBundle_eligibility') }}">
+                <div style="margin-bottom: 1em;">
+                    <input type="radio" name="specimen" id="specimenYes" value="yes" /> <label for="specimenYes">Yes</label>
+                </div>
+                <div style="margin-bottom: 1em;">
+                    <input type="radio" name="specimen" id="specimenNo" value="no" /> <label for="specimenNo">No</label>
+                </div>
+            </form>
 
             <script type="text/javascript">
                 $(document).ready(function(){
                     $("a#continueBtn").click(function(){
                         var consent = $("#consentFrm input:radio[name='consent']:checked").val();
-                        if( typeof consent == 'undefined' ){
+                        var specimen = $("#specimenFrm input:radio[name='specimen']:checked").val();
+                        if ( typeof consent == 'undefined' ){
                             alert("Please select a valid option");
                             return false;
                         }
                         if( consent == "yes" ){
-                            document.location.href = "{{ path('CyclogramKnowatHomeBundle_eligibility') }}";
+                        	if ( typeof specimen == 'undefined' ) {
+                        		alert("Please select a valid specimen option");
+                                return false;
+                            	} else {
+                                    //document.location.href = "{{ path('CyclogramKnowatHomeBundle_eligibility') }}";
+                                	document.getElementById("specimenFrm").submit();
+                            	}
                         }else{
                             document.location.href = "{{ path('CyclogramKnowatHomeBundle_notEligible') }}";
                         }
