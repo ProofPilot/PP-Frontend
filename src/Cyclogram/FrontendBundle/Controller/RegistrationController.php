@@ -19,6 +19,12 @@
 
 namespace Cyclogram\FrontendBundle\Controller;
 
+use Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantStudyReminderLink;
+
+use Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantContactTimeLink;
+
+use Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantStudyReminder;
+
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
 use Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantSurveyLink;
@@ -82,6 +88,7 @@ class RegistrationController extends Controller
                     if(!$participant){
                         $participant = new Participant();
                     }
+                    $session->set('userTimezone', $form['timeZone']->getData());
                     
                     $participant->setParticipantEmail($registration->getParticipantEmail()); 
                     $participant->setParticipantAppreciationEmail($registration->getParticipantEmail());
@@ -351,7 +358,6 @@ class RegistrationController extends Controller
                     $session->set('errorCount',$errorCount);
                     if ($session->get('errorCount') >2) {
                         $session->remove('errorCount');
-                        $this->checkStudyEligibility($studyCode, true);
                         $studyContent = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:StudyContent')->getStudyContentByCode($studyCode, $request->getLocale());
                         return $this->redirect($this->generateUrl('_page', array(
                                 'studyUrl' => $studyContent->getStudyUrl(),
@@ -537,8 +543,6 @@ class RegistrationController extends Controller
 
         $resourceOwnerName = $session->get("resourceOwnerName");
     
-        echo "ResourceOwner :" . $resourceOwnerName;
-    
         $roles = array("ROLE_USER");
         if($resourceOwnerName == "facebook") {
             $roles = array_merge($roles, array("ROLE_FACEBOOK_USER", "ROLE_PARTICIPANT"));
@@ -548,10 +552,10 @@ class RegistrationController extends Controller
             $roles = array_merge($roles, array("ROLE_PARTICIPANT"));
         }
         $session->remove("resourceOwnerName");
-    
+        $this->addDefaultContactPreferences($participant);
         $token = new UsernamePasswordToken($participant, null, 'main', $roles);
         $this->get('security.context')->setToken($token);
-    
+        
         return $this->redirect( $this->generateUrl("_main") );
     }
     
@@ -561,13 +565,10 @@ class RegistrationController extends Controller
      * @param unknown_type $studyCode
      * @throws \Exception
      */
-    private function checkStudyEligibility($studyCode, $error = false)
+    private function checkStudyEligibility($studyCode)
     {
         if(!$studyCode)
             return;
-        if ($error) {
-            return;
-        }
         $session = $this->getRequest()->getSession();
         if ($session->has('SurveyInfo')){
             $bag = $session->get('SurveyInfo');
@@ -647,5 +648,33 @@ class RegistrationController extends Controller
             return $this->render('CyclogramFrontendBundle:Registration:mail_confirm.html.twig', array('error' => $error));
         }
          
+    }
+    
+    private function addDefaultContactPreferences($participant) {
+        $em = $this->getDoctrine()->getManager();
+        $session = $this->getRequest()->getSession();
+        
+        $reminder = $em->getRepository('CyclogramProofPilotBundle:ParticipantStudyReminder')->find(1);
+        $reminderLink = new ParticipantStudyReminderLink();
+        $reminderLink->setParticipant($participant);
+        $reminderLink->setParticipantStudyReminder($reminder);
+        $reminderLink->setBySMS(true);
+        $reminderLink->setByEmail(true);
+        $em->persist($reminderLink);
+        $em->flush();
+        
+        if($session->has('userTimezone')){
+            $userTimezone = $session->get('userTimezone');
+            $session->remove('userTimezone');
+        }
+        $timezone = $em->getRepository('CyclogramProofPilotBundle:ParticipantTimeZone')->findByParticipantTimezoneName($userTimezone);
+        if (empty($timezone))
+                $timezone = $em->getRepository('CyclogramProofPilotBundle:ParticipantTimeZone')->find(1);
+        $contactTime = $em->getRepository('CyclogramProofPilotBundle:ParticipantContactTime')->find(1);
+        for ($i=0; $i<7; $i++){
+            $em->getRepository('CyclogramProofPilotBundle:ParticipantContactTimeLink')
+                        ->updateParticipantContactTimeLink($participant, $contactTime, $i, $timezone, true, true);
+        }
+        
     }
 }

@@ -9,6 +9,7 @@ past_activity:
     mobile_status: 'Your mobile telephone number has been confirmed'
     welcome_study: 'Welcome to the study Know@Home: Putting the test to the test'
 
+send_again: send_again   # FIXME
 txt_dashboard: Dashboard
 txt_please_verify_email: "Please verify your e-mail address.<br/>\nTo participate in studies we need a valid e-mail address - please go to your e-mail and click the link.\n"
 

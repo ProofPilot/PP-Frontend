@@ -14,13 +14,37 @@ use JMS\SecurityExtraBundle\Annotation\Secure;
 class DashboardController extends Controller
 {
     /**
-     * @Route("/main", name="_main")
+     * @Route("/main/{sendMail}", name="_main", defaults={"sendMail"=null})
      * @Secure(roles="ROLE_PARTICIPANT")
      * @Template()
      */
-    public function indexAction()
+    public function indexAction($sendMail)
     {
+        
         $participant = $this->get('security.context')->getToken()->getUser();
+        
+        if (!is_null($sendMail)){
+            $cc = $this->get('cyclogram.common');
+            $embedded['logo_top'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_logo.png");
+            $embedded['logo_footer'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newletter_logo_footer.png");
+            $embedded['login_button'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_small_login.jpg");
+            $embedded['white_top'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_white_top.png");
+            $embedded['white_bottom'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_white_bottom.png");
+        
+            $parameters['email'] = $participant->getParticipantEmail();
+            $parameters['locale'] = $participant->getLocale() ? $participant->getLocale() : $request->getLocale();
+            $parameters['host'] = $this->container->getParameter('site_url');
+            $parameters['code'] = $participant->getParticipantEmailCode();
+            
+            $cc->sendMail($participant->getParticipantEmail(),
+                    $this->get('translator')->trans("email_title_verify", array(), "email", $parameters['locale']),
+                    'CyclogramFrontendBundle:Email:email_confirmation.html.twig',
+                    null,
+                    $embedded,
+                    true,
+                    $parameters);
+        }
+        
         $request = $this->getRequest();
         $locale = $this->getRequest()->getLocale();
         
