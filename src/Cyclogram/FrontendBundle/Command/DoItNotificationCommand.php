@@ -97,7 +97,7 @@ class DoItNotificationCommand extends ContainerAwareCommand
         $cc = $this->getContainer()->get('cyclogram.common');
         $em = $this->getContainer()->get('doctrine')->getManager();
         
-        $locale = $participant->getLanguage();
+        $locale = $participant->getLocale();
         
         $embedded['logo_top'] = realpath($this->getContainer()->getParameter('kernel.root_dir') . "/../web/images/newsletter_logo.png");
         $embedded['logo_footer'] = realpath($this->getContainer()->getParameter('kernel.root_dir') . "/../web/images/newletter_logo_footer.png");
@@ -127,7 +127,7 @@ class DoItNotificationCommand extends ContainerAwareCommand
             }
         
             $parameters['email'] = $participant->getParticipantEmail();
-            $parameters['locale'] = $participant->getLanguage();
+            $parameters['locale'] = $participant->getLocale();
             $parameters['host'] = $this->getContainer()->getParameter('site_url');
             $parameters['siteurl'] = $this->getContainer()->getParameter('site_url').$this->getInterventionUrl($interventionLink, $locale);
             if (!empty($parameters["interventions"])){
@@ -151,12 +151,12 @@ class DoItNotificationCommand extends ContainerAwareCommand
     }
     
     private function sendDoItNowSMS($participant) {
-        $locale = $participant->getLanguage();
+        $locale = $participant->getLocale();
         
         $cc = $this->getContainer()->get('cyclogram.common');
         $em = $this->getContainer()->get('doctrine')->getManager();
         
-        $locale = $participant->getLanguage();
+        $locale = $participant->getLocale();
         
         $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:Participant')->getActiveParticipantInterventionLinks($participant);
         

@@ -35,30 +35,30 @@
               {% if not is_granted('ROLE_FACEBOOK_USER') and not is_granted('ROLE_GOOGLE_USER') %}
               
                 <li class="left_text form-username">{% trans from "general_settings" %}txt_username{% endtrans %}</li>
-{#                 <li class="form_expanded form-username" {{ showonerror('username',expandedFormClass) }}>#}
-{#                   <div class="wrapper">#}
-{#                     <div class="current_text">{{ participant.participantUserName }}</div>#}
-{#                     <div class="close_cont"><a href="#" data-form-cont=".form-username">Cancel</a></div>#}
-{#                     <div class="new_inputs_cont">#}
-{#                       <div class="for_label">{{ form_label(form.newUserName) }}</div>#}
-{#                       {{ form_widget(form.newUserName) }}#}
-{#                       {{ form_errors(form.newUserName) }}#}
-{#                     </div>#}
-{#                     <div class="new_inputs_cont">#}
-{#                       <div class="for_label">{{ form_label(form.newUserNamePassword) }}<a href="{{ path('_forgot_pass') }}" class="forgot">{% trans from "general_settings" %}txt_forgot_it{% endtrans %}</a></div>#}
-{#                           {{ form_widget(form.newUserNamePassword) }}#}
-{#                           {{ form_errors(form.newUserNamePassword) }}#}
-{#                     </div>#}
-{#                     <div class="confirm_cont">#}
-{#                         {{ form_widget(form.userNameConfirm, {'attr':{'class' : 'btn_confirm'}}) }}#}
-{#                     </div>#}
-{#                   </div>#}
-{#                 </li>#}
+                <li class="form_expanded form-username" {{ showonerror('username',expandedFormClass) }}>
+                  <div class="wrapper">
+                    <div class="current_text">{{ participant.participantUserName }}</div>
+                    <div class="close_cont"><a href="#" data-form-cont=".form-username">Cancel</a></div>
+                    <div class="new_inputs_cont">
+                      <div class="for_label">{{ form_label(form.newUserName) }}</div>
+                      {{ form_widget(form.newUserName) }}
+                      {{ form_errors(form.newUserName) }}
+                    </div>
+                    <div class="new_inputs_cont">
+                      <div class="for_label">{{ form_label(form.newUserNamePassword) }}<a href="{{ path('_forgot_pass') }}" class="forgot">{% trans from "general_settings" %}txt_forgot_it{% endtrans %}</a></div>
+                          {{ form_widget(form.newUserNamePassword) }}
+                          {{ form_errors(form.newUserNamePassword) }}
+                    </div>
+                    <div class="confirm_cont">
+                        {{ form_widget(form.userNameConfirm, {'attr':{'class' : 'btn_confirm'}}) }}
+                    </div>
+                  </div>
+                </li>
                 <li class="middle_input form-username" {{ hideonerror('username',expandedFormClass) }}>
                     {{ form_widget(form.userName, {'attr' : {'class' : 'middle_input', 'readonly' : 'readonly'}, 'value': participant.participantUsername }) }}
                     {{ form_errors(form.userName) }}
                 </li>
-{#                 <li class="edit_btn form-username" {{ hideonerror('username',expandedFormClass) }}><a href="#" data-form-cont=".form-username">{% trans from "general_settings" %}txt_change{% endtrans %}</a></li>#}
+                <li class="edit_btn form-username" {{ hideonerror('username',expandedFormClass) }}><a href="#" data-form-cont=".form-username">{% trans from "general_settings" %}txt_change{% endtrans %}</a></li>
                 
                 
                 {# password #}
@@ -94,7 +94,7 @@
                   </div>
                 </li>
                 <li class="middle_input form-password" {{ hideonerror('password',expandedFormClass) }}>
-                    {{ form_widget(form.password, {'attr' : {'class' : 'middle_input', 'value' : 'password'}}) }}
+                    {{ form_widget(form.password, {'attr' : {'class' : 'middle_input', 'value' : 'password','readonly' : 'readonly'}}) }}
                     {{ form_errors(form.password) }}
                 <li class="edit_btn form-password" {{ hideonerror('password',expandedFormClass) }}><a href="#" data-form-cont=".form-password">{% trans from "general_settings" %}txt_change{% endtrans %}</a></li>
                     {% set emailReadOnly = false %}
@@ -135,6 +135,39 @@
                 <li class="edit_btn form-email" {{ hideonerror('email',expandedFormClass) }}><a href="#" data-form-cont=".form-email">{% trans from "general_settings" %}txt_change{% endtrans %}</a></li>
                 {% endif %}
                 
+                {# incentive email #}      
+                <li class="left_text form-email min_line_heigth">{% trans from "general_settings" %}txt_incentive_email{% endtrans %}</li>
+                {% if not is_granted('ROLE_FACEBOOK_USER') and not is_granted('ROLE_GOOGLE_USER') %}
+                <li class="form_expanded form-incentiveEmail"  {{ showonerror('incentiveEmail',expandedFormClass) }}>
+                  <div class="wrapper">
+                    <div class="current_text">{{ participant.participantAppreciationEmail }}</div>
+                    <div class="close_cont"><a href="#" data-form-cont=".form-incentiveEmail">Cancel</a></div>
+                    <div class="new_inputs_cont">
+                      <div class="for_label">{{ form_label(form.newIncentiveEmail.first) }}</div>
+                      <span class="input_container">
+                          {{ form_widget(form.newIncentiveEmail.first) }}
+                          {{ form_errors(form.newIncentiveEmail.first) }}
+                      </span>
+                    </div>
+                    <div class="new_inputs_cont">
+                      <div class="for_label">{{ form_label(form.newIncentiveEmail.second) }}</div>
+                      <span class="input_container">
+                          {{ form_widget(form.newIncentiveEmail.second) }}
+                          {{ form_errors(form.newIncentiveEmail.second) }}
+                      </span>
+                    </div>
+                    <div class="confirm_cont">
+                        {{ form_widget(form.incentiveEmailConfirm, {'attr':{'class' : 'btn_confirm'}}) }}
+                  </div>
+                </li>
+                {% endif %}
+                <li class="middle_input form-incentiveEmail" {{ hideonerror('incentiveEmail',expandedFormClass) }}>
+                    {{ form_widget(form.incentiveEmail, {'attr' : {'class' : 'middle_input', 'readonly' : 'readonly'}, 'value' : participant.participantAppreciationEmail }) }}
+                    {{ form_errors(form.incentiveEmail) }}
+                {% if not is_granted('ROLE_FACEBOOK_USER') and not is_granted('ROLE_GOOGLE_USER') %}
+                <li class="edit_btn form-incentiveEmail" {{ hideonerror('incentiveEmail',expandedFormClass) }}><a href="#" data-form-cont=".form-incentiveEmail">{% trans from "general_settings" %}txt_change{% endtrans %}</a></li>
+                {% endif %}
+                
                 {# mobile #}
                 <li class="left_text form-mobile">{% trans from "general_settings" %}txt_mobile_number{% endtrans %}</li>
                 <li class="form_expanded form-mobile"  {{ showonerror('mobile',expandedFormClass) }}>
@@ -173,10 +206,10 @@
                   
                 </li>
                 <li class="middle_input form-mobile" {{ hideonerror('mobile',expandedFormClass) }}>
-                    {{ form_widget(form.phoneNumber, {'attr' : {'class' : 'middle_input'}, 'value': participant.participantMobileNumber}) }}
+                    {{ form_widget(form.phoneNumber, {'attr' : {'class' : 'middle_input', 'readonly' : 'readonly'}, 'value': participant.participantMobileNumber}) }}
                     {{ form_errors(form.phoneNumber) }}
                 </li>
-                <li class="edit_btn form-mobile" {{ hideonerror('mobile',expandedFormClass) }}><a href="#" data-form-cont=".form-mobile">{% trans from "general_settings" %}txt_edit{% endtrans %}</a></li>
+                   <li class="edit_btn form-mobile" {{ hideonerror('mobile',expandedFormClass) }}><a href="#" data-form-cont=".form-mobile">{% trans from "general_settings" %}txt_edit{% endtrans %}</a></li>
               </ul>
               {{ form_widget(form.validationCheck) }}
 {#               {{ form_rest(form) }}#}
@@ -231,6 +264,10 @@
            $('#general_settings_phoneConfirm').click(function()
                    {
                             $('#general_settings_validationCheck').val("mobile");
+                   });
+           $('#general_settings_incentiveEmailConfirm').click(function()
+                   {
+                            $('#general_settings_validationCheck').val("incentive");
                    });
            });
         </script>

@@ -1431,6 +1431,9 @@ header .header_menu span.text  , .footer_col_right span.text  {
 	padding-right: 13px;
 	width: 437px;
 }
+.min_line_heigth {
+	line-height: 15px !important;
+}
 .panel .panel_right .dashboard_panel ul.settings_form li.edit_btn a {
 	color: #c03d35;
 	font-size: 13px;

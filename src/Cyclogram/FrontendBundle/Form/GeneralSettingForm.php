@@ -137,7 +137,26 @@ class GeneralSettingForm extends AbstractType
             $builder->add('phoneConfirm', 'submit', array(
                     'label' => 'btn_confirm'
                     ));
-    }
+        $builder->add('incentiveEmail', 'text', array(
+                'label' => 'label_incentive_email',
+                'required' => false
+                ));
+            $builder->add('newIncentiveEmail', 'repeated', array(
+                    'type' => 'text',
+                    'label'=>'label_new_incentive_email',
+                    'required' => false,
+                    'invalid_message' => 'email_fields_must_match.',
+                    'first_options'  => array(
+                            'label' => 'label_new_incentive_email'
+                    ),
+                    'second_options' => array(
+                            'label' => 'label_repeat_incentive_email'
+                    )
+            ));
+            $builder->add('incentiveEmailConfirm', 'submit', array(
+                    'label' => 'btn_confirm'
+            ));
+        }
     
     public function getName()
     {
@@ -158,7 +177,8 @@ class GeneralSettingForm extends AbstractType
                                 array($this, 'isUserNameValid'),
                                 array($this, 'isPasswordValid'),
                                 array($this, 'isEmailValid'),
-                                array($this, 'isPhoneValid')
+                                array($this, 'isPhoneValid'),
+                                array($this, 'isIncentiveEmailValid')
                         ))
                 )
         ));
@@ -259,6 +279,22 @@ class GeneralSettingForm extends AbstractType
             }
             if(!empty($data['newPhoneNumberSMS']) && ($data['newPhoneNumberSMS'] != $participant->getParticipantMobileSmsCode())){
                 $context->addViolationAt('[newPhoneNumberSMS]',  $this->container->get('translator')->trans('wrong_code', array(), 'validators'));
+            }
+        }
+    }
+    
+    public function isIncentiveEmailValid($data, ExecutionContextInterface $context){
+        $participant = $this->container->get('security.context')->getToken()->getUser();
+        $securityContext = $this->container->get('security.context');
+        if ($data['validationCheck'] == 'incentive'){
+            if (empty($data['newIncentiveEmail'])){
+                $context->addViolationAt('[newIncentiveEmail]',$this->container->get('translator')->trans('please_fill_this_field', array(), 'validators'));
+            } else {
+                //check if phone already exists
+                $existing  = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Participant')->findOneBy(array('participantAppreciationEmail'=>$data['newIncentiveEmail']));
+                if($existing) {
+                    $context->addViolationAt('[newIncentiveEmail]',  $this->container->get('translator')->trans('email_already_registered', array(), 'validators'));
+                }
             }
         }
     }

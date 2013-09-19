@@ -77,6 +77,13 @@ class Participant implements AdvancedUserInterface
     /**
      * @var string
      *
+     * @ORM\Column(name="participant_appreciation_email", type="string", length=255, nullable=true)
+     */
+    protected $participantAppreciationEmail;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="participant_firstname", type="string", length=45, nullable=true)
      */
     protected $participantFirstname;
@@ -1164,6 +1171,16 @@ class Participant implements AdvancedUserInterface
     public function setParticipantState($participantState)
     {
         $this->participantState = $participantState;
+    }
+
+    public function getParticipantAppreciationEmail()
+    {
+        return $this->participantAppreciationEmail;
+    }
+    
+    public function setParticipantAppreciationEmail($participantAppreciationEmail)
+    {
+        $this->participantAppreciationEmail = $participantAppreciationEmail;
     }
 
 }
