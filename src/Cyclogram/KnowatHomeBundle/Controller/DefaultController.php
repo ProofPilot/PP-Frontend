@@ -338,11 +338,11 @@ class DefaultController extends Controller
             $reason[] = "Yes to vaccine trial";
         }
 
-        echo "<pre>";
+        /*echo "<pre>";
         var_dump($isElegible);
         print_r( $reason );
         echo "</pre>";
-        die("debug");
+        die("debug");*/
         
         if( $isElegible ){
 
