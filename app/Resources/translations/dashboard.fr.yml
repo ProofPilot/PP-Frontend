@@ -1,7 +1,7 @@
 dashboard_subtitle: dashboard_subtitle
 do_it: 'DO IT'
 do_it_now: do_it_now
-no_do_it: no_do_it   # FIXME
+no_do_it: no_do_it
 
 past_activity:
     emai_confirmation_status: yuor_e-mail_address_has_been_confirmed
@@ -9,6 +9,7 @@ past_activity:
     mobile_status: your_mobile_telephone_number_has_been_confirmed
     welcome_study: 'welcome_to_the_study_know@home:_putting_the_test_to_the_test'
 
+send_again: send_again   # FIXME
 txt_dashboard: txt_dashboard
 txt_please_verify_email: txt_please_verify_email
 
