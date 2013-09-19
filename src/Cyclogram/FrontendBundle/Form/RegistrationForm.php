@@ -43,6 +43,9 @@ class RegistrationForm extends AbstractType
                             ),
                 'invalid_message' => 'error_passwords_do_not_match'
                 ));  
+        $builder->add('timeZone' , 'hidden', array(
+                "mapped" => false
+                ));
         $builder->add('next', 'submit', array(
                 'label'=>'btn_next'
                 ));

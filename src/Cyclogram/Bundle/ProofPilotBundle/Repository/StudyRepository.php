@@ -70,22 +70,23 @@ class StudyRepository extends EntityRepository
      * @param unknown_type $studyId
      * @return boolean
      */
-    public function checkStudyArms($arm_codes)
+    public function checkStudyArms($arm_codes, $study_code)
     {
-        foreach($arm_codes as $armcode) {
-            $arm = $this->getEntityManager()
+            $armsInDB = $this->getEntityManager()
             ->createQuery("
-                    SELECT a
+                    SELECT COUNT (a)
                     FROM CyclogramProofPilotBundle:Arm a
                     INNER JOIN a.study s
                     WHERE
-                    a.armCode = :armcode
+                    a.armCode IN ( :armcodes )
+                    and s.studyId = :study_code
                     ")
-                    ->setParameter('armcode', $armcode)
-                    ->getOneOrNullResult();
-            if(!$arm)
+                    ->setParameter('armcodes', $arm_codes)
+                    ->setParameter('study_code', $study_code)
+                    ->getSingleScalarResult();
+            if($armsInDB != count($arm_codes)) {
                 return false;
-        }
+            }
         return true;
     }
     
@@ -95,22 +96,23 @@ class StudyRepository extends EntityRepository
      * @param unknown_type $studyId
      * @return boolean
      */
-    public function checkStudyInterventions($intervention_codes)
+    public function checkStudyInterventions($intervention_codes, $study_code)
     {
-        foreach($intervention_codes as $interventionCode) {
-            $intervention = $this->getEntityManager()
+            $interventionInDB = $this->getEntityManager()
             ->createQuery("
-                    SELECT i
+                    SELECT COUNT( DISTINCT i.interventionId )
                     FROM CyclogramProofPilotBundle:Intervention i
                     INNER JOIN i.study s
                     WHERE
-                    i.interventionCode = :interventioncode
+                    i.interventionCode IN ( :interventioncode )
+                    and s.studyId = :study_code
                     ")
-                    ->setParameter('interventioncode', $interventionCode)
-                    ->getResult();
-            if(!$intervention)
-                return false;
-        }
+                    ->setParameter('interventioncode', $intervention_codes)
+                    ->setParameter('study_code', $study_code)
+                    ->getSingleScalarResult();
+                if($interventionInDB != count($intervention_codes)) {
+                            return false;
+                }
         return true;
     }
      
