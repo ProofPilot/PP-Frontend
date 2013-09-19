@@ -303,17 +303,17 @@ class DefaultController extends Controller
             $reason[] = "Less than 18 years";
         }
 
-        if( isset($surveyResult['349799X591X15496']) && ! in_array( $surveyResult['349799X591X15496'], $allowedZipCodes) ){
+        if( isset($surveyResult['349799X591X5496']) && ! in_array( $surveyResult['349799X591X5496'], $allowedZipCodes) ){
             $isElegible = false;
             $reason[] = "Zipcode not allowed";
         }
 
-        if( isset($surveyResult['349799X592X15497']) && $surveyResult['349799X592X15497'] != "A1" ){
+        if( isset($surveyResult['349799X592X5497']) && $surveyResult['349799X592X5497'] != "A1" ){
             $isElegible = false;
             $reason[] = "Sex at birth not male";
         }
 
-        if( isset($surveyResult['349799X592X5499']) && $surveyResult['349799X592X5499'] != "A2" ){
+        if( isset($surveyResult['349799X737X5499']) && $surveyResult['349799X737X5499'] != "A2" ){
             $isElegible = false;
             $reason[] = "No unprotected anal sex with male";
         }
@@ -343,7 +343,7 @@ class DefaultController extends Controller
         print_r( $reason );
         echo "</pre>";
         die("debug");
-
+        
         if( $isElegible ){
 
             //store surveyid and saveid in session
