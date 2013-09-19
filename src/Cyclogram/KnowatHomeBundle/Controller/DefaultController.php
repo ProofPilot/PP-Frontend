@@ -12,6 +12,8 @@ use Symfony\Component\Security\Core\SecurityContext;
 use \Symfony\Component\Validator\Constraints\DateTime;
 use Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle;
 
+use Symfony\Component\HttpFoundation\Session\Attribute\AttributeBag;
+
 use Cyclogram\CyclogramCommon;
 use Cyclogram\Bundle\ProofPilotBundle\Entity\Custom\DbCustom;
 
