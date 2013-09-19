@@ -72,6 +72,13 @@
 
             <script type="text/javascript">
                 $(document).ready(function(){
+                    $("input:radio[name=specimen]").click(function(){
+                        var specimenValue = $(this).val();
+
+                        var specimenFrmAction = "";
+                        specimenFrmAction += (specimenValue == "yes") ?  "?freezeSpecimen=yes" : "?freezeSpecimen=no";
+                        $.cookie("specimenFrmActionUrl", specimenFrmAction);
+                    });
                     $("a#continueBtn").click(function(){
                         var consent = $("#consentFrm input:radio[name='consent']:checked").val();
                         var specimen = $("#specimenFrm input:radio[name='specimen']:checked").val();

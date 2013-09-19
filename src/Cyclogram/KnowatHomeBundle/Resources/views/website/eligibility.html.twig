@@ -13,6 +13,10 @@
         $(document).ready(function(){
             {% set picN = app.session.get('picN') %}
             $("body").anystretch("/bundles/cyclogramknowathome/images/website/backgrounds/{{picN}}.jpg");
+
+            var specimenFrmActionUrl = $.cookie("specimenFrmActionUrl");
+            var surveyLink = $("#surveyLink").attr("href");
+            $("#surveyLink").attr("href", surveyLink+specimenFrmActionUrl);
         });
     </script>
 {% endblock %}
@@ -31,7 +35,7 @@
             <div class="eligibility">
 
                 <ul class="mainNavButtons" style="margin-bottom: 8px;">
-                    <li><a class="NavButton" href="{{ surveyLink }}">BEGIN</a></li>
+                    <li><a class="NavButton" id="surveyLink" href="{{ surveyLink }}">BEGIN</a></li>
                 </ul>
 
                 <p>
