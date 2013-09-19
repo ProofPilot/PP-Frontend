@@ -351,7 +351,6 @@ class RegistrationController extends Controller
                     $session->set('errorCount',$errorCount);
                     if ($session->get('errorCount') >2) {
                         $session->remove('errorCount');
-                        $this->checkStudyEligibility($studyCode, true);
                         $studyContent = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:StudyContent')->getStudyContentByCode($studyCode, $request->getLocale());
                         return $this->redirect($this->generateUrl('_page', array(
                                 'studyUrl' => $studyContent->getStudyUrl(),
@@ -561,13 +560,10 @@ class RegistrationController extends Controller
      * @param unknown_type $studyCode
      * @throws \Exception
      */
-    private function checkStudyEligibility($studyCode, $error = false)
+    private function checkStudyEligibility($studyCode)
     {
         if(!$studyCode)
             return;
-        if ($error) {
-            return;
-        }
         $session = $this->getRequest()->getSession();
         if ($session->has('SurveyInfo')){
             $bag = $session->get('SurveyInfo');

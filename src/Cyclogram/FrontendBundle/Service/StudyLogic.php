@@ -134,13 +134,19 @@ class StudyLogic
         ->getEnrolledStudies($participant);
         
         foreach ($studies as $study) {   
-                $this->studies[$study->getStudyCode()]->interventionLogic($participant);
+                if (in_array($study->getStudyCode(), $this->getSupportedStudies())) {
+                    $this->studies[$study->getStudyCode()]->interventionLogic($participant);
+                }
         }
     }
     
     public function checkEligibility($studyCode, $surveyResult)
     {
-        return $this->studies[$studyCode]->checkEligibility($surveyResult);
+        if (in_array($studyCode, $this->getSupportedStudies())) {
+            return $this->studies[$studyCode]->checkEligibility($surveyResult);
+        } else {
+            throw new \Exception("Study code" . $studyCode . "does not implement eligibility logic");
+        }
         
     }
 
