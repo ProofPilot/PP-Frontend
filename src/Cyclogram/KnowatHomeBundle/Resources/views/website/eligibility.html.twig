@@ -16,7 +16,7 @@
 
             var specimenFrmActionUrl = $.cookie("specimenFrmActionUrl");
             var surveyLink = $("#surveyLink").attr("href");
-            $("#surveyLink").attr("href", surveyLink+specimenFrmActionUrl);
+            $("#surveyLink").attr("href", surveyLink+"&"+specimenFrmActionUrl);
         });
     </script>
 {% endblock %}

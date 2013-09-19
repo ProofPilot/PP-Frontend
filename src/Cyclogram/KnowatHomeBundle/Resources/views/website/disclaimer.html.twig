@@ -76,7 +76,7 @@
                         var specimenValue = $(this).val();
 
                         var specimenFrmAction = "";
-                        specimenFrmAction += (specimenValue == "yes") ?  "?freezeSpecimen=yes" : "?freezeSpecimen=no";
+                        specimenFrmAction = (specimenValue == "yes") ?  "?freezeSpecimen=yes" : "?freezeSpecimen=no";
                         $.cookie("specimenFrmActionUrl", specimenFrmAction);
                     });
                     $("a#continueBtn").click(function(){

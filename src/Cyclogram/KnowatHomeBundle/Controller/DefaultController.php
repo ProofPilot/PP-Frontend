@@ -148,6 +148,7 @@ class DefaultController extends Controller
 
         $surveyUrl = "";
         $surveyUrl = $this->container->getParameter('url_survey_kah');
+        $surveyUrl .= "?redirectUrl=%2Fen%2Fknowathome%2Fstudy";
 
         $uniqId = uniqid();
         $session->set("uniqId", $uniqId);
@@ -160,7 +161,13 @@ class DefaultController extends Controller
         $pageText['title'] = "Consent";
         $pageText['consent_introduction'] = $studyContent->getStudyConsentIntroduction();
 
-        return $this->render('CyclogramKnowatHomeBundle:website:eligibility.html.twig', array("uniqid"=>$uniqId, "surveyLink"=>$surveyUrl, "pageText"=>$pageText) );
+        return $this->render('CyclogramKnowatHomeBundle:website:eligibility.html.twig',
+            array(
+                "uniqid"=>$uniqId,
+                "surveyLink"=>$surveyUrl,
+                "pageText"=>$pageText
+            )
+        );
     }
 
     public function loginAction()
@@ -330,6 +337,19 @@ class DefaultController extends Controller
         }
 
         if( $isElegible ){
+
+            //store surveyid and saveid in session
+            $session = $this->getRequest()->getSession();
+            $bag = new AttributeBag();
+            $bag->setName("SurveyInfo");
+            $array = array();
+            $bag->initialize($array);
+            $bag->set('surveyId', $sid);
+            $bag->set('saveId', $svid);
+            $bag->set('studyCode', "knowathome");
+            $session->registerBag($bag);
+            $session->set('SurveyInfo', $bag);
+            
             return $this->redirect( $this->generateUrl("CyclogramKnowatHomeBundle_eligible") );
         } else {
             $logger = $this->get('logger');
