@@ -338,6 +338,12 @@ class DefaultController extends Controller
             $reason[] = "Yes to vaccine trial";
         }
 
+        echo "<pre>";
+        var_dump($isElegible);
+        print_r( $reason );
+        echo "</pre>";
+        die("debug");
+
         if( $isElegible ){
 
             //store surveyid and saveid in session
