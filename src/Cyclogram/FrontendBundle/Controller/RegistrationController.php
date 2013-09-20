@@ -667,7 +667,7 @@ class RegistrationController extends Controller
             $userTimezone = $session->get('userTimezone');
             $session->remove('userTimezone');
         }
-        $timezone = $em->getRepository('CyclogramProofPilotBundle:ParticipantTimeZone')->findByParticipantTimezoneName($userTimezone);
+        $timezone = $em->getRepository('CyclogramProofPilotBundle:ParticipantTimeZone')->findOneByParticipantTimezoneName($userTimezone);
         if (empty($timezone))
                 $timezone = $em->getRepository('CyclogramProofPilotBundle:ParticipantTimeZone')->find(1);
         $contactTime = $em->getRepository('CyclogramProofPilotBundle:ParticipantContactTime')->find(1);
