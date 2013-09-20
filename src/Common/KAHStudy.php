@@ -53,6 +53,6 @@ class KAHStudy extends AbstractStudy implements StudyInterface
 
     public static function getStudyCode()
     {
-        return 'kah';
+        return 'knowathome';
     }
 }

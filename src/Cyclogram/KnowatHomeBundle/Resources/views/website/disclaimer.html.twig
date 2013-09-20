@@ -47,7 +47,7 @@
                     <input type="radio" name="consent" id="consentNo" value="no" /> <label for="consentNo">I would not like to continue as a participant in this research study.</label>
                 </div>
             </form>
-            <p style="width: 200%">
+            <p>
             We would like to freeze part of the DBS specimen you send us for future use. 
             Your samples would be stored for an indefinite time. 
             We may use these specimens for research in the future. 
@@ -72,6 +72,13 @@
 
             <script type="text/javascript">
                 $(document).ready(function(){
+                    $("input:radio[name=specimen]").click(function(){
+                        var specimenValue = $(this).val();
+
+                        var specimenFrmAction = "";
+                        specimenFrmAction = (specimenValue == "yes") ?  "?freezeSpecimen=yes" : "?freezeSpecimen=no";
+                        $.cookie("specimenFrmActionUrl", specimenFrmAction);
+                    });
                     $("a#continueBtn").click(function(){
                         var consent = $("#consentFrm input:radio[name='consent']:checked").val();
                         var specimen = $("#specimenFrm input:radio[name='specimen']:checked").val();

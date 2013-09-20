@@ -19,21 +19,21 @@ class ParticipantTimezone
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $participantTimezoneId;
+    protected $participantTimezoneId;
 
     /**
      * @var string
      *
      * @ORM\Column(name="participant_timezone_desc", type="string", length=45)
      */
-    private $participantTimezoneDesc;
+    protected $participantTimezoneDesc;
     
     /**
      * @var string
      *
      * @ORM\Column(name="participant_timezone_name", type="string", length=25)
      */
-    private $participantTimezoneName;
+    protected $participantTimezoneName;
 
     /**
      * Set participantTimezoneId

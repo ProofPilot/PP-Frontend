@@ -10,11 +10,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Cyclogram\Bundle\ProofPilotBundle\Entity\Participant;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 
-
+/**
+ * @Route("/main")
+ */
 class DashboardController extends Controller
 {
     /**
-     * @Route("/main/{sendMail}", name="_main", defaults={"sendMail"=null})
+     * @Route("/dashboard/{sendMail}", name="_main", defaults={"sendMail"=null})
      * @Secure(roles="ROLE_PARTICIPANT")
      * @Template()
      */

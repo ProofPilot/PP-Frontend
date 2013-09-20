@@ -12,6 +12,8 @@ use Symfony\Component\Security\Core\SecurityContext;
 use \Symfony\Component\Validator\Constraints\DateTime;
 use Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle;
 
+use Symfony\Component\HttpFoundation\Session\Attribute\AttributeBag;
+
 use Cyclogram\CyclogramCommon;
 use Cyclogram\Bundle\ProofPilotBundle\Entity\Custom\DbCustom;
 
@@ -148,6 +150,7 @@ class DefaultController extends Controller
 
         $surveyUrl = "";
         $surveyUrl = $this->container->getParameter('url_survey_kah');
+        $surveyUrl .= "?redirectUrl=%2Fen%2Fknowathome%2Fstudy";
 
         $uniqId = uniqid();
         $session->set("uniqId", $uniqId);
@@ -160,7 +163,13 @@ class DefaultController extends Controller
         $pageText['title'] = "Consent";
         $pageText['consent_introduction'] = $studyContent->getStudyConsentIntroduction();
 
-        return $this->render('CyclogramKnowatHomeBundle:website:eligibility.html.twig', array("uniqid"=>$uniqId, "surveyLink"=>$surveyUrl, "pageText"=>$pageText) );
+        return $this->render('CyclogramKnowatHomeBundle:website:eligibility.html.twig',
+            array(
+                "uniqid"=>$uniqId,
+                "surveyLink"=>$surveyUrl,
+                "pageText"=>$pageText
+            )
+        );
     }
 
     public function loginAction()
@@ -294,17 +303,17 @@ class DefaultController extends Controller
             $reason[] = "Less than 18 years";
         }
 
-        if( isset($surveyResult['349799X591X15496']) && ! in_array( $surveyResult['349799X591X15496'], $allowedZipCodes) ){
+        if( isset($surveyResult['349799X591X5496']) && ! in_array( $surveyResult['349799X591X5496'], $allowedZipCodes) ){
             $isElegible = false;
             $reason[] = "Zipcode not allowed";
         }
 
-        if( isset($surveyResult['349799X592X15497']) && $surveyResult['349799X592X15497'] != "A1" ){
+        if( isset($surveyResult['349799X592X5497']) && $surveyResult['349799X592X5497'] != "A1" ){
             $isElegible = false;
             $reason[] = "Sex at birth not male";
         }
 
-        if( isset($surveyResult['349799X592X5499']) && $surveyResult['349799X592X5499'] != "A2" ){
+        if( isset($surveyResult['349799X737X5499']) && $surveyResult['349799X737X5499'] != "A2" ){
             $isElegible = false;
             $reason[] = "No unprotected anal sex with male";
         }
@@ -329,7 +338,26 @@ class DefaultController extends Controller
             $reason[] = "Yes to vaccine trial";
         }
 
+        /*echo "<pre>";
+        var_dump($isElegible);
+        print_r( $reason );
+        echo "</pre>";
+        die("debug");*/
+        
         if( $isElegible ){
+
+            //store surveyid and saveid in session
+            $session = $this->getRequest()->getSession();
+            $bag = new AttributeBag();
+            $bag->setName("SurveyInfo");
+            $array = array();
+            $bag->initialize($array);
+            $bag->set('surveyId', $sid);
+            $bag->set('saveId', $svid);
+            $bag->set('studyCode', "knowathome");
+            $session->registerBag($bag);
+            $session->set('SurveyInfo', $bag);
+            
             return $this->redirect( $this->generateUrl("CyclogramKnowatHomeBundle_eligible") );
         } else {
             $logger = $this->get('logger');
