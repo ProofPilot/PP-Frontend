@@ -40,16 +40,6 @@ class ParticipantContactTimeLink
     private $participantWeekday;
 
     /**
-     * @var \ParticipantTimezone
-     *
-     * @ORM\ManyToOne(targetEntity="ParticipantTimezone")
-     * @ORM\JoinColumns({
-     * @ORM\JoinColumn(name="participant_timezone", referencedColumnName="participant_timezone_id")
-     * })
-     */
-    private $participantTimezone;
-
-    /**
      * @var \Participant
      *
      * @ORM\ManyToOne(targetEntity="Participant", inversedBy="contacttimelinks")
@@ -105,30 +95,6 @@ class ParticipantContactTimeLink
     public function getParticipantContactTime()
     {
         return $this->participantContactTime;
-    }
-
-    /**
-     * Set participantTimezone
-     *
-     * @param integer $participantTimezone
-     * @return ParticipantContactTimeLink
-     */
-    public function setParticipantTimezone(
-            \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantTimezone $participantTimezone = null)
-    {
-        $this->participantTimezone = $participantTimezone;
-
-        return $this;
-    }
-
-    /**
-     * Get participantTimezone
-     *
-     * @return \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantTimeZone
-     */
-    public function getParticipantTimezone()
-    {
-        return $this->participantTimezone;
     }
 
     /**

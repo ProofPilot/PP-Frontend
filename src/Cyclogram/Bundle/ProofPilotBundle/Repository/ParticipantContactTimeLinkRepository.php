@@ -35,7 +35,7 @@ class ParticipantContactTimeLinkRepository extends EntityRepository
     }
 
 
-    public function updateParticipantContactTimeLink($participant, $contactTime, $contactDay, $timezone, $isWeekdayActive, $isContactTimeActive)
+    public function updateParticipantContactTimeLink($participant, $contactTime, $contactDay,  $isWeekdayActive, $isContactTimeActive)
     {
         $em = $this->getEntityManager();
         
@@ -73,25 +73,9 @@ class ParticipantContactTimeLinkRepository extends EntityRepository
                 $contactTimeLink = new ParticipantContactTimeLink();
                 $contactTimeLink->setParticipant($participant);
                 $contactTimeLink->setParticipantContactTime($contactTime);
-                $contactTimeLink->setParticipantTimezone($timezone);
                 $contactTimeLink->setParticipantWeekday($contactDay);
                 $em->persist($contactTimeLink);
                 $em->flush();
-            } else {
-                $em->createQuery("
-                        UPDATE CyclogramProofPilotBundle:ParticipantContactTimeLink pctl
-                        SET pctl.participantTimezone = " . $timezone->getParticipantTimezoneId() . " 
-                        WHERE
-                        pctl.participant = :participant
-                        AND
-                        pctl.participantContactTime = :contacttime
-                        AND
-                        pctl.participantWeekday = :contactday
-                        ")
-                        ->setParameter("participant", $participant)
-                        ->setParameter("contacttime", $contactTime)
-                        ->setParameter("contactday", $contactDay)
-                        ->execute();
             }
         }
     }
