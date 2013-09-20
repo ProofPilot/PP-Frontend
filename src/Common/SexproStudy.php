@@ -122,6 +122,10 @@ class SexproStudy extends AbstractStudy implements StudyInterface
     public function interventionLogic($participant)
     {
         $em = $this->container->get('doctrine')->getEntityManager();
+        $participantArm = $em
+                ->getRepository('CyclogramProofPilotBundle:ParticipantArmLink')
+                ->findOneByParticipant($participant);
+        $participantArmName = $participantArm->getArm()->getArmName();
         //get all participant intervention links
         $interventionLinks = $em
                 ->getRepository('CyclogramProofPilotBundle:Participant')
@@ -151,17 +155,18 @@ class SexproStudy extends AbstractStudy implements StudyInterface
                         $status = "Closed";
                     }
                 }
-
-                if (($status == "Closed")
-                        && ($intervention->getInterventionName()
-                                == "SexPro Baseline Survey")) {
-                    $intervention = $em
-                            ->getRepository(
-                                    'CyclogramProofPilotBundle:Intervention')
-                            ->findOneByInterventionName("SexPro Activity");
-                    $em->getRepository('CyclogramProofPilotBundle:Participant')
-                            ->addParticipantInterventionLink($participant,
-                                    $intervention);
+                if ($participantArmName == 'SexPro3Month'){
+                    if (($status == "Closed")
+                            && ($intervention->getInterventionName()
+                                    == "SexPro Baseline Survey")) {
+                        $intervention = $em
+                                ->getRepository(
+                                        'CyclogramProofPilotBundle:Intervention')
+                                ->findOneByInterventionName("SexPro Activity");
+                        $em->getRepository('CyclogramProofPilotBundle:Participant')
+                                ->addParticipantInterventionLink($participant,
+                                        $intervention);
+                    }
                 }
 
                 break;
