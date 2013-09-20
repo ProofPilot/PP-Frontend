@@ -88,7 +88,6 @@ class RegistrationController extends Controller
                     if(!$participant){
                         $participant = new Participant();
                     }
-                    $session->set('userTimezone', $form['timeZone']->getData());
                     
                     $participant->setParticipantEmail($registration->getParticipantEmail()); 
                     $participant->setParticipantAppreciationEmail($registration->getParticipantEmail());
@@ -102,8 +101,11 @@ class RegistrationController extends Controller
                     $participant->setParticipantMobileSmsCodeConfirmed(false);
                     $participant->setParticipantIncentiveBalance(false);
                     $participant->setLocale($request->getLocale());
-                    $date = new \DateTime();
-                    $participant->setParticipantLastTouchDatetime($date);
+                    $timezone = $em->getRepository('CyclogramProofPilotBundle:ParticipantTimeZone')->findByParticipantTimezoneName($form['timeZone']->getData());
+                    if (empty($timezone))
+                        $timezone = $em->getRepository('CyclogramProofPilotBundle:ParticipantTimeZone')->find(1);
+                    $participant->setParticipantTimezone($timezone);
+                    $participant->setParticipantLastTouchDatetime((new \DateTime(null, new \DateTimeZone($participant->getParticipantTimezone()->getParticipantTimezoneName()))));
                     $participant->setParticipantZipcode('');
                     $role = $em->getRepository('CyclogramProofPilotBundle:ParticipantRole')->find(1);
                     $participant->setParticipantRole($role);
@@ -487,7 +489,7 @@ class RegistrationController extends Controller
      */
     private function confirmParticipantEmail(Participant $participant, $studyCode)
     {
-//         return true;
+        return true;
         $em = $this->getDoctrine()->getManager();
     
         $embedded['logo_top'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_logo.png");
@@ -652,28 +654,22 @@ class RegistrationController extends Controller
     
     private function addDefaultContactPreferences($participant) {
         $em = $this->getDoctrine()->getManager();
-        $session = $this->getRequest()->getSession();
         
         $reminder = $em->getRepository('CyclogramProofPilotBundle:ParticipantStudyReminder')->find(1);
-        $reminderLink = new ParticipantStudyReminderLink();
-        $reminderLink->setParticipant($participant);
-        $reminderLink->setParticipantStudyReminder($reminder);
-        $reminderLink->setBySMS(true);
-        $reminderLink->setByEmail(true);
-        $em->persist($reminderLink);
-        $em->flush();
-        
-        if($session->has('userTimezone')){
-            $userTimezone = $session->get('userTimezone');
-            $session->remove('userTimezone');
+        $reminderLink = $em->getRepository('CyclogramProofPilotBundle:ParticipantStudyReminderLink')->findOneByParticipant($participant);
+        if (empty($reminderLink)){
+            $reminderLink = new ParticipantStudyReminderLink();
+            $reminderLink->setParticipant($participant);
+            $reminderLink->setParticipantStudyReminder($reminder);
+            $reminderLink->setBySMS(true);
+            $reminderLink->setByEmail(true);
+            $em->persist($reminderLink);
+            $em->flush();
         }
-        $timezone = $em->getRepository('CyclogramProofPilotBundle:ParticipantTimeZone')->findByParticipantTimezoneName($userTimezone);
-        if (empty($timezone))
-                $timezone = $em->getRepository('CyclogramProofPilotBundle:ParticipantTimeZone')->find(1);
         $contactTime = $em->getRepository('CyclogramProofPilotBundle:ParticipantContactTime')->find(1);
         for ($i=0; $i<7; $i++){
             $em->getRepository('CyclogramProofPilotBundle:ParticipantContactTimeLink')
-                        ->updateParticipantContactTimeLink($participant, $contactTime, $i, $timezone, true, true);
+                        ->updateParticipantContactTimeLink($participant, $contactTime, $i, true, true);
         }
         
     }

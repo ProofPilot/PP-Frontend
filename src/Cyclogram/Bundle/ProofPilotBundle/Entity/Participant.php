@@ -42,6 +42,16 @@ class Participant implements AdvancedUserInterface
     protected $participantState;
 
     /**
+     * @var \ParticipantTimezone
+     *
+     * @ORM\ManyToOne(targetEntity="ParticipantTimezone")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="participant_timezone", referencedColumnName="participant_timezone_id", nullable=false)
+     * })
+     */
+    protected $participantTimezone;
+
+    /**
      * @var integer
      *
      * @ORM\Column(name="participant_delivery_sign", type="integer", length=255)
@@ -1177,10 +1187,27 @@ class Participant implements AdvancedUserInterface
     {
         return $this->participantAppreciationEmail;
     }
-    
-    public function setParticipantAppreciationEmail($participantAppreciationEmail)
+
+    public function setParticipantAppreciationEmail(
+            $participantAppreciationEmail)
     {
         $this->participantAppreciationEmail = $participantAppreciationEmail;
     }
 
+    /**
+     * Get timezone
+     *
+     * @return \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantTimezone
+     */
+    public function getParticipantTimezone()
+    {
+        return $this->participantTimezone;
+    }
+
+    public function setParticipantTimezone(
+            \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantTimezone $participantTimezone = null)
+    {
+        $this->participantTimezone = $participantTimezone;
+    }
+    
 }

@@ -67,8 +67,11 @@ class ContactPreferencesController extends Controller
                     $isContactTimeActive = $request->get('contactTime_' . $contactTimeId) ? true : false;
                     $timezoneid = $request->get('timezone');
                     $timezone = $em->getRepository('CyclogramProofPilotBundle:ParticipantTimeZone')->find($timezoneid);
+                    $participant->setParticipantTimezone($timezone);
+                    $em->persist($participant);
+                    $em->flush();
                     $em->getRepository('CyclogramProofPilotBundle:ParticipantContactTimeLink')
-                        ->updateParticipantContactTimeLink($participant, $contactTime, $weekday, $timezone, $isWeekdayActive, $isContactTimeActive);
+                        ->updateParticipantContactTimeLink($participant, $contactTime, $weekday, $isWeekdayActive, $isContactTimeActive);
                     $parameters["expandedForm"] = 'contacttimes';
                     $parameters['message'] = 'Your contact prefernces have been saved';
                     
@@ -98,9 +101,9 @@ class ContactPreferencesController extends Controller
         $timezone = 1;
         
         $participantCTLinks = $em->getRepository('CyclogramProofPilotBundle:ParticipantContactTimeLink')->getParticipantContactTimeLinks($participant);
-
+        
         foreach($participantCTLinks as $link) {
-            $timezone = $link->getParticipantTimezone()->getParticipantTimezoneId();
+            $timezone = $participant->getParticipantTimezone()->getParticipantTimezoneId();
             $selectedTimes[$link->getParticipantContactTime()->getParticipantContactTimesId()] = 1;
             $selectedWeekDays[$link->getParticipantWeekday()] = 1;
         }
@@ -122,7 +125,7 @@ class ContactPreferencesController extends Controller
                     'active' => in_array($key, $selectedWeekDays) ? true : false
             );
         }
-
+        
         $parameters['timezones'] = $timezones;
         $parameters['remindersData'] = $remindersData;
         $parameters['contactTimesData'] = $contactTimesData;

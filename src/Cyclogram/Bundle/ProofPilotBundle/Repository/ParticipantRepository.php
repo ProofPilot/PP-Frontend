@@ -256,12 +256,11 @@ class ParticipantRepository extends EntityRepository implements
                 SELECT p
                 FROM CyclogramProofPilotBundle:Participant p
                 INNER JOIN p.contacttimelinks pctl
-                INNER JOIN pctl.participantTimezone ptz
                 INNER JOIN pctl.participantContactTime pct
                 INNER JOIN p.studyreminderlinks psrl
                 INNER JOIN psrl.participantStudyReminder psr
                 WHERE psrl.byEmail = 1
-                AND ptz.participantTimezoneId = :timeZoneId
+                AND p.participantTimezone = :timeZoneId
                 AND pct.participantContactTimesId = :contactTimeId
                 AND psr.participantStudyReminderId = :reminderId
                 AND pctl.participantWeekday = :weekDayId
@@ -288,12 +287,11 @@ class ParticipantRepository extends EntityRepository implements
                 SELECT p
                 FROM CyclogramProofPilotBundle:Participant p
                 INNER JOIN p.contacttimelinks pctl
-                INNER JOIN pctl.participantTimezone ptz
                 INNER JOIN pctl.participantContactTime pct
                 INNER JOIN p.studyreminderlinks psrl
                 INNER JOIN psrl.participantStudyReminder psr
                 WHERE psrl.bySMS = 1
-                AND ptz.participantTimezoneId = :timeZoneId
+                AND p.participantTimezone = :timeZoneId
                 AND pct.participantContactTimesId = :contactTimeId
                 AND psr.participantStudyReminderId = :reminderId
                 AND pctl.participantWeekday = :weekDayId
