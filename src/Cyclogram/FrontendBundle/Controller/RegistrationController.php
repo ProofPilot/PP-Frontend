@@ -101,7 +101,7 @@ class RegistrationController extends Controller
                     $participant->setParticipantMobileSmsCodeConfirmed(false);
                     $participant->setParticipantIncentiveBalance(false);
                     $participant->setLocale($request->getLocale());
-                    $timezone = $em->getRepository('CyclogramProofPilotBundle:ParticipantTimeZone')->findByParticipantTimezoneName($form['timeZone']->getData());
+                    $timezone = $em->getRepository('CyclogramProofPilotBundle:ParticipantTimeZone')->findOneByParticipantTimezoneName($form['timeZone']->getData());
                     if (empty($timezone))
                         $timezone = $em->getRepository('CyclogramProofPilotBundle:ParticipantTimeZone')->find(1);
                     $participant->setParticipantTimezone($timezone);
@@ -669,10 +669,7 @@ class RegistrationController extends Controller
             $reminderLink->setByEmail(true);
             $em->persist($reminderLink);
             $em->flush();
-        }
-        $timezone = $em->getRepository('CyclogramProofPilotBundle:ParticipantTimeZone')->findOneByParticipantTimezoneName($participant->getParticipantTimezone());
-        if (empty($timezone))
-                $timezone = $em->getRepository('CyclogramProofPilotBundle:ParticipantTimeZone')->find(1);
+        } 
         $contactTime = $em->getRepository('CyclogramProofPilotBundle:ParticipantContactTime')->find(1);
         for ($i=0; $i<7; $i++){
             $em->getRepository('CyclogramProofPilotBundle:ParticipantContactTimeLink')
