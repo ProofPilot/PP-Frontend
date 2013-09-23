@@ -202,7 +202,7 @@ class CyclogramCommon {
         
         $message = \Swift_Message::newInstance()
         ->setContentType('text/html')
-        ->setFrom($this->container->getParameter('mailer_from'))
+        ->setFrom($this->container->getParameter('mailer_from'), $this->container->getParameter('mailer_envelope_from'))
         ->setTo($to);
 //         ->addBcc($control_mail);
         
