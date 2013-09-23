@@ -670,7 +670,7 @@ class RegistrationController extends Controller
             $em->persist($reminderLink);
             $em->flush();
         }
-        $timezone = $em->getRepository('CyclogramProofPilotBundle:ParticipantTimeZone')->findOneByParticipantTimezoneName($userTimezone);
+        $timezone = $em->getRepository('CyclogramProofPilotBundle:ParticipantTimeZone')->findOneByParticipantTimezoneName($participant->getParticipantTimezone());
         if (empty($timezone))
                 $timezone = $em->getRepository('CyclogramProofPilotBundle:ParticipantTimeZone')->find(1);
         $contactTime = $em->getRepository('CyclogramProofPilotBundle:ParticipantContactTime')->find(1);
