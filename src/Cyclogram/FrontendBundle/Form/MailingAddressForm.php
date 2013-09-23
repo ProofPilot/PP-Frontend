@@ -91,6 +91,7 @@ class MailingAddressForm extends AbstractType
                         'notSign' => 'label_not_sign',
                         'sign' => 'label_sign'
                         ),
+                'data' => 'notSign',
                 'expanded' => true,
                 'constraints' => new NotBlank(array(
                         'message'=>"error_not_blank_choice"
