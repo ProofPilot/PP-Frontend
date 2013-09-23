@@ -111,6 +111,10 @@ class RegistrationController extends Controller
                     $participant->setParticipantRole($role);
                     $status = $em->getRepository('CyclogramProofPilotBundle:Status')->find(1);
                     $participant->setStatus($status);
+                    $mailCode = substr(md5( md5( $participant->getParticipantEmail() . md5(microtime()))), 0, 4);
+                    $participant->setParticipantEmailCode($mailCode);
+                    $em->persist($participant);
+                    $em->flush($participant);
 
                     $em->persist($participant);
                     $em->flush();
@@ -499,7 +503,7 @@ class RegistrationController extends Controller
         $embedded['white_bottom'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_white_bottom.png");
         $cc = $this->get('cyclogram.common');
     
-        $parameters['code'] = substr(md5( md5( $participant->getParticipantEmail() . md5(microtime()))), 0, 4);
+        $parameters['code'] = $participant->getParticipantEmailCode();
         $participant->setParticipantEmailCode($parameters['code']);
         $em->persist($participant);
         $em->flush($participant);
