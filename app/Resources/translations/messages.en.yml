@@ -1,7 +1,7 @@
-'SMS Code:': 'SMS Code:'   # FIXME
-'Your email:': 'Your email:'   # FIXME
-'Your message:': 'Your message:'   # FIXME
-'Your name:': 'Your name:'   # FIXME
+'SMS Code:': 'SMS Code:'
+'Your email:': 'Your email:'
+'Your message:': 'Your message:'
+'Your name:': 'Your name:'
 browser_msg: 'For the best experience, please update your browser. We recommend Chrome, Firefox or Safari.'
 btn_save_pass: 'Save password'
 btn_send_pass: 'Send password'
@@ -11,3 +11,4 @@ label_username: Username
 txt_footer_top: 'ON TOP'
 txt_header_login: Login
 txt_header_register: Register
+txt_reminders_confirm: 'To be part of research studies, you must be willing to receive reminders via text message or e-mail message and you must select almost one weekday and time period. Are you sure you want to unsubscribe?'
