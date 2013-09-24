@@ -1,3 +1,8 @@
+'SMS Code:': 'SMS Code:'   # FIXME
+'Your email:': 'Your email:'   # FIXME
+'Your message:': 'Your message:'   # FIXME
+'Your name:': 'Your name:'   # FIXME
+browser_msg: 'For the best experience, please update your browser. We recommend Chrome, Firefox or Safari.'
 btn_save_pass: 'Save password'
 btn_send_pass: 'Send password'
 label_new_pass: 'New password'
@@ -5,6 +10,4 @@ label_repeat_pass: 'Repeat password'
 label_username: Username
 txt_footer_top: 'ON TOP'
 txt_header_login: Login
-txt_header_or: or
 txt_header_register: Register
-txt_header_register_here: 'Register Here'

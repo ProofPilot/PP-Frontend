@@ -1,3 +1,8 @@
+'SMS Code:': 'SMS Code:'   # FIXME
+'Your email:': 'Your email:'   # FIXME
+'Your message:': 'Your message:'   # FIXME
+'Your name:': 'Your name:'   # FIXME
+browser_msg: browser_msg   # FIXME
 btn_save_pass: 'Salvar senha'
 btn_send_pass: 'Enviar senha'
 label_new_pass: 'Nova senha'
@@ -5,6 +10,4 @@ label_repeat_pass: 'Repita a senha'
 label_username: Usuário
 txt_footer_top: 'Na parte superior'
 txt_header_login: Logar
-txt_header_or: ou
 txt_header_register: Registre-se
-txt_header_register_here: 'Cadastre-se aqui'
