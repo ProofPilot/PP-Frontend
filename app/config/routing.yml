@@ -16,8 +16,8 @@ frontend_oauth_service_redirect:
     defaults:
         _controller: CyclogramFrontendBundle:Login:redirectToService
         
-_bazinga_exposetranslation:
-    resource: "@BazingaExposeTranslationBundle/Resources/config/routing/routing.yml"
+#_bazinga_exposetranslation:
+#    resource: "@BazingaExposeTranslationBundle/Resources/config/routing/routing.yml"
 
 
 _root:

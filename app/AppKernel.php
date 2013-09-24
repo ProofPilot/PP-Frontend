@@ -33,7 +33,7 @@ class AppKernel extends Kernel
             new Sonata\IntlBundle\SonataIntlBundle(),
             new Maxmind\Bundle\GeoipBundle\MaxmindGeoipBundle(),
             new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
-            new Bazinga\ExposeTranslationBundle\BazingaExposeTranslationBundle()
+            //new Bazinga\ExposeTranslationBundle\BazingaExposeTranslationBundle()
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

@@ -33,8 +33,7 @@
         "knplabs/knp-menu": "dev-master",
         "sonata-project/intl-bundle": "dev-master",
         "maxmind/geoip": "dev-master",
-        "hwi/oauth-bundle": "0.3.*@dev",
-        "willdurand/expose-translation-bundle": "@dev"
+        "hwi/oauth-bundle": "0.3.*@dev"
     },
     "scripts": {
         "post-install-cmd": [
