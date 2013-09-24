@@ -660,7 +660,7 @@ class RegistrationController extends Controller
         $em = $this->getDoctrine()->getManager();
         
         $reminder = $em->getRepository('CyclogramProofPilotBundle:ParticipantStudyReminder')->find(1);
-        $reminderLink = $em->getRepository('CyclogramProofPilotBundle:ParticipantStudyReminderLink')->findOneByParticipant($participant);
+        $reminderLink = $em->getRepository('CyclogramProofPilotBundle:ParticipantStudyReminderLink')->findBy(array('participant' => $participant, 'participantStudyReminder' => $reminder));
         if (empty($reminderLink)){
             $reminderLink = new ParticipantStudyReminderLink();
             $reminderLink->setParticipant($participant);
