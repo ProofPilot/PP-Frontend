@@ -115,7 +115,7 @@ class DoItNotificationCommand extends ContainerAwareCommand
             
                     $study = $interventionLink->getIntervention()->getStudy();
                     $studyId = $study->getStudyId();
-                    $studyContent = $this->getContainer()->get('doctrine')->getRepository('CyclogramProofPilotBundle:StudyContent')->findOneByStudyId($studyId);
+                    $studyContent = $this->getContainer()->get('doctrine')->getRepository('CyclogramProofPilotBundle:StudyContent')->getStudyContentById($studyId, $locale);
             
                     $intervention = array();
                     $intervention["title"] = $interventionContent->getInterventionTitle();
@@ -156,8 +156,6 @@ class DoItNotificationCommand extends ContainerAwareCommand
         $cc = $this->getContainer()->get('cyclogram.common');
         $em = $this->getContainer()->get('doctrine')->getManager();
         
-        $locale = $participant->getLocale();
-        
         $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:Participant')->getActiveParticipantInterventionLinks($participant);
         
         $interventions = array();
@@ -168,7 +166,7 @@ class DoItNotificationCommand extends ContainerAwareCommand
         
                 $study = $interventionLink->getIntervention()->getStudy();
                 $studyId = $study->getStudyId();
-                $studyContent = $this->getContainer()->get('doctrine')->getRepository('CyclogramProofPilotBundle:StudyContent')->findOneByStudyId($studyId);
+                $studyContent = $this->getContainer()->get('doctrine')->getRepository('CyclogramProofPilotBundle:StudyContent')->getStudyContentById($studyId, $locale);
         
                 $intervention = array();
                 $interventionTitle = strip_tags($interventionContent->getInterventionName());

@@ -71,7 +71,7 @@ class DashboardController extends Controller
             
             $study = $interventionLink->getIntervention()->getStudy();
             $studyId = $study->getStudyId();
-            $studyContent = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:StudyContent')->findOneByStudyId($studyId);
+            $studyContent = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:StudyContent')->getStudyContentById($studyId, $participant->getLocale());
             
             $intervention = array();
             $intervention["title"] = $interventionContent->getInterventionTitle();
