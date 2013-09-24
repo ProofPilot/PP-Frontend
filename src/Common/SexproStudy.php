@@ -107,7 +107,7 @@ class SexproStudy extends AbstractStudy implements StudyInterface
             $participantInterventionLink = new ParticipantInterventionLink();
             $intervention = $em
                     ->getRepository('CyclogramProofPilotBundle:Intervention')
-                    ->findOneByInterventionName('SexPro Baseline Survey');
+                    ->findOneByInterventionCode('SexProBaselineSurvey');
             $participantInterventionLink->setIntervention($intervention);
             $participantInterventionLink->setParticipant($participant);
             $participantInterventionLink
@@ -162,7 +162,7 @@ class SexproStudy extends AbstractStudy implements StudyInterface
                         $intervention = $em
                                 ->getRepository(
                                         'CyclogramProofPilotBundle:Intervention')
-                                ->findOneByInterventionName("SexPro Activity");
+                                ->findOneByInterventionCode("SexProActivity");
                         $em->getRepository('CyclogramProofPilotBundle:Participant')
                                 ->addParticipantInterventionLink($participant,
                                         $intervention);
