@@ -105,7 +105,7 @@ class RegistrationController extends Controller
                     if (empty($timezone))
                         $timezone = $em->getRepository('CyclogramProofPilotBundle:ParticipantTimeZone')->find(1);
                     $participant->setParticipantTimezone($timezone);
-                    $participant->setParticipantLastTouchDatetime((new \DateTime(null, new \DateTimeZone($participant->getParticipantTimezone()->getParticipantTimezoneName()))));
+                    $participant->setParticipantLastTouchDatetime(new \DateTime(null, new \DateTimeZone($participant->getParticipantTimezone()->getParticipantTimezoneName())));
                     $participant->setParticipantZipcode('');
                     $role = $em->getRepository('CyclogramProofPilotBundle:ParticipantRole')->find(1);
                     $participant->setParticipantRole($role);
