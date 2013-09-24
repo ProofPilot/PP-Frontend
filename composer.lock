@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "3cd376fe10ad38453c748c7b26959a6e",
+    "hash": "80c98d5b1c6aeef67dd0904e97e17fec",
     "packages": [
         {
             "name": "doctrine/common",
@@ -2355,59 +2355,6 @@
                 "templating"
             ],
             "time": "2013-08-03 15:35:31"
-        },
-        {
-            "name": "willdurand/expose-translation-bundle",
-            "version": "dev-master",
-            "target-dir": "Bazinga/ExposeTranslationBundle",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/willdurand/BazingaExposeTranslationBundle.git",
-                "reference": "72f6567cdb6cf4b8cd20570d45ad8aaf3c311c79"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/willdurand/BazingaExposeTranslationBundle/zipball/72f6567cdb6cf4b8cd20570d45ad8aaf3c311c79",
-                "reference": "72f6567cdb6cf4b8cd20570d45ad8aaf3c311c79",
-                "shasum": ""
-            },
-            "require": {
-                "symfony/console": "~2.0",
-                "symfony/finder": "~2.0",
-                "symfony/framework-bundle": "~2.0"
-            },
-            "require-dev": {
-                "symfony/browser-kit": "~2.0",
-                "symfony/yaml": "~2.0"
-            },
-            "type": "symfony-bundle",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "0.3.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "Bazinga\\ExposeTranslationBundle": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "William Durand",
-                    "email": "william.durand1@gmail.com",
-                    "homepage": "http://www.willdurand.fr"
-                }
-            ],
-            "description": "A pretty nice way to expose your translation messages to your JavaScript.",
-            "keywords": [
-                "javascript",
-                "translation"
-            ],
-            "time": "2013-09-18 08:13:56"
         }
     ],
     "packages-dev": [
@@ -2433,8 +2380,7 @@
         "knplabs/knp-menu": 20,
         "sonata-project/intl-bundle": 20,
         "maxmind/geoip": 20,
-        "hwi/oauth-bundle": 20,
-        "willdurand/expose-translation-bundle": 20
+        "hwi/oauth-bundle": 20
     },
     "platform": {
         "php": ">=5.3.3"
