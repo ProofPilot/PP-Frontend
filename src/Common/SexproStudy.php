@@ -89,30 +89,44 @@ class SexproStudy extends AbstractStudy implements StudyInterface
             }
             $firstArmParticipants = $em->getRepository('CyclogramProofPilotBundle:Participant')->countAllArms('SexProBaseLine');
             $secondArmParticipants = $em->getRepository('CyclogramProofPilotBundle:Participant')->countAllArms('SexPro3Month');
-            $firstArmParticipantsByCriteria = $em
-                    ->getRepository('CyclogramProofPilotBundle:Participant')
-                    ->countArmByCityAge('SexProBaseLine', $cityName, $minAge,
-                            $maxAge);
-            $secondArmParticipantsByCriteria = $em
-                    ->getRepository('CyclogramProofPilotBundle:Participant')
-                    ->countArmByCityAge('SexPro3Month', $cityName, $minAge,
-                            $maxAge);
+//             $firstArmParticipantsByCriteria = $em
+//                     ->getRepository('CyclogramProofPilotBundle:Participant')
+//                     ->countArmByCityAge('SexProBaseLine', $cityName, $minAge,
+//                             $maxAge);
+//             $secondArmParticipantsByCriteria = $em
+//                     ->getRepository('CyclogramProofPilotBundle:Participant')
+//                     ->countArmByCityAge('SexPro3Month', $cityName, $minAge,
+//                             $maxAge);
             $firstArm = $em->getRepository('CyclogramProofPilotBundle:Arm')
                     ->findOneByArmCode('SexProBaseLine');
             $secondArm = $em->getRepository('CyclogramProofPilotBundle:Arm')
                     ->findOneByArmCode('SexPro3Month');
-
             $participantArmLink = new ParticipantArmLink();
-            if ($firstArmParticipantsByCriteria == 0 && $secondArmParticipantsByCriteria == 0 ) {
-                if ($firstArmParticipants <= $secondArmParticipants)
-                    $participantArmLink->setArm($firstArm);
-                else 
-                    $participantArmLink->setArm($secondArm);
-            } elseif ($firstArmParticipantsByCriteria <= $secondArmParticipantsByCriteria) {
-                $participantArmLink->setArm($firstArm);
+            if ($firstArmParticipants == 0 || $secondArmParticipants == 0) {
+                $armArray = array($firstArm, $secondArm );
+                shuffle(&$armArray);
+                $participantArmLink->setArm($armArray[0]);
             } else {
-                $participantArmLink->setArm($secondArm);
+                if ($firstArmParticipants/$secondArmParticipants > 2 ){
+                    $participantArmLink->setArm($secondArm);
+                } elseif ($firstArmParticipants/$secondArmParticipants < 2) {
+                    $participantArmLink->setArm($firstArm);
+                } else {
+                    $armArray = array($firstArm, $secondArm );
+                    shuffle(&$armArray);
+                    $participantArmLink->setArm($armArray[0]);
+                }
             }
+//             if ($firstArmParticipantsByCriteria == 0 && $secondArmParticipantsByCriteria == 0 ) {
+//                 if ($firstArmParticipants <= $secondArmParticipants)
+//                     $participantArmLink->setArm($firstArm);
+//                 else 
+//                     $participantArmLink->setArm($secondArm);
+//             } elseif ($firstArmParticipantsByCriteria <= $secondArmParticipantsByCriteria) {
+//                 $participantArmLink->setArm($firstArm);
+//             } else {
+//                 $participantArmLink->setArm($secondArm);
+//             }
             $participantArmLink->setParticipant($participant);
             $status = $em->getRepository('CyclogramProofPilotBundle:Status')
                     ->find(1);
@@ -162,6 +176,7 @@ class SexproStudy extends AbstractStudy implements StudyInterface
                             ->checkIfSurveyPassed($participant, $surveyId);
 
                     if ($passed) {
+                        $this->createIncentive($participant, $intervention);
                         $completedStatus = $em
                                 ->getRepository(
                                         'CyclogramProofPilotBundle:Status')
@@ -170,6 +185,7 @@ class SexproStudy extends AbstractStudy implements StudyInterface
                         $em->persist($interventionLink);
                         $em->flush();
                         $status = "Closed";
+                        
                     }
                 }
                 if ($participantArmName == 'SexPro3Month'){

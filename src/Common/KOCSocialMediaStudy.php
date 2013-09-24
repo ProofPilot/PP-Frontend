@@ -107,6 +107,7 @@ class KOCSocialMediaStudy extends AbstractStudy implements StudyInterface
                         $interventionLink->setStatus($completedStatus);
                         $em->persist($interventionLink);
                         $em->flush();
+                        $this->createIncentive($participant, $intervention);
                     }
                 }
 

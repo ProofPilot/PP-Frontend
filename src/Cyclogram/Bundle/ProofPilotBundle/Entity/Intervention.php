@@ -18,7 +18,6 @@
 */
 
 namespace Cyclogram\Bundle\ProofPilotBundle\Entity;
-
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -81,6 +80,13 @@ class Intervention
     private $interventionDescripton;
 
     /**
+     * @var float
+     *
+     * @ORM\Column(name="intervention_incentive_amount", type="float", nullable=null)
+     */
+    private $interventionIncentiveAmount;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="intervention_code", type="string", length=45, nullable=false)
@@ -129,8 +135,6 @@ class Intervention
      */
     private $study;
 
-
-
     /**
      * Set interventionId
      *
@@ -140,7 +144,7 @@ class Intervention
     public function setInterventionId($interventionId)
     {
         $this->interventionId = $interventionId;
-    
+
         return $this;
     }
 
@@ -163,7 +167,7 @@ class Intervention
     public function setInterventionName($interventionName)
     {
         $this->interventionName = $interventionName;
-    
+
         return $this;
     }
 
@@ -186,7 +190,7 @@ class Intervention
     public function setInterventionUrl($interventionUrl)
     {
         $this->interventionUrl = $interventionUrl;
-    
+
         return $this;
     }
 
@@ -209,7 +213,7 @@ class Intervention
     public function setSidId($sidId)
     {
         $this->sidId = $sidId;
-    
+
         return $this;
     }
 
@@ -232,7 +236,7 @@ class Intervention
     public function setInterventionResponseUrl($interventionResponseUrl)
     {
         $this->interventionResponseUrl = $interventionResponseUrl;
-    
+
         return $this;
     }
 
@@ -255,7 +259,7 @@ class Intervention
     public function setInterventionTitle($interventionTitle)
     {
         $this->interventionTitle = $interventionTitle;
-    
+
         return $this;
     }
 
@@ -278,7 +282,7 @@ class Intervention
     public function setInterventionDescripton($interventionDescripton)
     {
         $this->interventionDescripton = $interventionDescripton;
-    
+
         return $this;
     }
 
@@ -301,7 +305,7 @@ class Intervention
     public function setInterventionCode($interventionCode)
     {
         $this->interventionCode = $interventionCode;
-    
+
         return $this;
     }
 
@@ -321,10 +325,11 @@ class Intervention
      * @param \Cyclogram\Bundle\ProofPilotBundle\Entity\InterventionType $interventionType
      * @return Intervention
      */
-    public function setInterventionType(\Cyclogram\Bundle\ProofPilotBundle\Entity\InterventionType $interventionType = null)
+    public function setInterventionType(
+            \Cyclogram\Bundle\ProofPilotBundle\Entity\InterventionType $interventionType = null)
     {
         $this->interventionType = $interventionType;
-    
+
         return $this;
     }
 
@@ -344,10 +349,11 @@ class Intervention
      * @param \Cyclogram\Bundle\ProofPilotBundle\Entity\Language $language
      * @return Intervention
      */
-    public function setLanguage(\Cyclogram\Bundle\ProofPilotBundle\Entity\Language $language)
+    public function setLanguage(
+            \Cyclogram\Bundle\ProofPilotBundle\Entity\Language $language)
     {
         $this->language = $language;
-    
+
         return $this;
     }
 
@@ -367,10 +373,11 @@ class Intervention
      * @param \Cyclogram\Bundle\ProofPilotBundle\Entity\Status $status
      * @return Intervention
      */
-    public function setStatus(\Cyclogram\Bundle\ProofPilotBundle\Entity\Status $status = null)
+    public function setStatus(
+            \Cyclogram\Bundle\ProofPilotBundle\Entity\Status $status = null)
     {
         $this->status = $status;
-    
+
         return $this;
     }
 
@@ -390,10 +397,11 @@ class Intervention
      * @param \Cyclogram\Bundle\ProofPilotBundle\Entity\Study $study
      * @return Intervention
      */
-    public function setStudy(\Cyclogram\Bundle\ProofPilotBundle\Entity\Study $study = null)
+    public function setStudy(
+            \Cyclogram\Bundle\ProofPilotBundle\Entity\Study $study = null)
     {
         $this->study = $study;
-    
+
         return $this;
     }
 
@@ -406,4 +414,16 @@ class Intervention
     {
         return $this->study;
     }
+
+    public function getInterventionIncentiveAmount()
+    {
+        return $this->interventionIncentiveAmount;
+    }
+
+    public function setInterventionIncentiveAmount(
+            $interventionIncentiveAmount)
+    {
+        $this->interventionIncentiveAmount = $interventionIncentiveAmount;
+    }
+
 }
