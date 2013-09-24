@@ -104,7 +104,7 @@ class SexproStudy extends AbstractStudy implements StudyInterface
             $participantArmLink = new ParticipantArmLink();
             if ($firstArmParticipants == 0 || $secondArmParticipants == 0) {
                 $armArray = array($firstArm, $secondArm );
-                shuffle(&$armArray);
+                shuffle($armArray);
                 $participantArmLink->setArm($armArray[0]);
             } else {
                 if ($firstArmParticipants/$secondArmParticipants > 2 ){
@@ -113,7 +113,7 @@ class SexproStudy extends AbstractStudy implements StudyInterface
                     $participantArmLink->setArm($firstArm);
                 } else {
                     $armArray = array($firstArm, $secondArm );
-                    shuffle(&$armArray);
+                    shuffle($armArray);
                     $participantArmLink->setArm($armArray[0]);
                 }
             }
