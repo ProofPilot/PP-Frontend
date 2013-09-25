@@ -96,6 +96,7 @@ class GeneralSettingsController  extends Controller
                     }
                 } elseif ($form->get('emailConfirm')->isClicked()) {
                     $participant->setParticipantEmail($data['newEmail']);
+                    $participant->setParticipantEmailConfirmed(false);
                     $em->persist($participant);
                     $em->flush($participant);
 
