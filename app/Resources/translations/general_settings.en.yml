@@ -1,8 +1,12 @@
+appreciation_email_change: 'Your appreciation E-mail has been changed'
 btn_confirm: Confirm
 btn_send_mobile_code: 'Send mobile code'
+confirm_sms_send: 'Confirmation SMS has been sent to you'
+email_change: 'Your email has been changed. Please confirm your e-mail'
 general_subtitle: 'Start here to change the basics, then explore other settings to customize your experience.'
 general_title: 'General Settings'
 label_email: E-mail
+label_incentive_email: label_incentive_email   # FIXME
 label_new_email: 'New e-mail'
 label_new_incentive_email: 'New appreciation E-mail'
 label_new_pass: 'Type new password'
@@ -19,7 +23,11 @@ label_repeat_email: 'Confirm new e-mail'
 label_repeat_incentive_email: 'Confirm appreciation E-mail'
 label_repeat_pass: 'Confirm new password'
 label_username: Username
-last_access: 'Last Access: '
+last_access: 'Last Access:'
+mobile_number_change: 'Your mobile numder has been changed'
+password_change: 'Your password has been changed'
+sms_password_text: 'Your password reset code is'
+sms_phone_text: 'Your mobile phone change code is'
 txt_change: Change
 txt_edit: Edit
 txt_email: E-mail
@@ -28,3 +36,4 @@ txt_incentive_email: 'Token of Appreciation E-mail'
 txt_mobile_number: 'Mobile Number'
 txt_password: Password
 txt_username: Username
+username_change: 'Your username has been changed'
