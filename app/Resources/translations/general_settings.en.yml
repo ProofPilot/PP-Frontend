@@ -6,13 +6,14 @@ email_change: 'Your email has been changed. Please confirm your e-mail'
 general_subtitle: 'Start here to change the basics, then explore other settings to customize your experience.'
 general_title: 'General Settings'
 label_email: E-mail
-label_incentive_email: label_incentive_email   # FIXME
+label_incentive_email: label_incentive_email
 label_new_email: 'New e-mail'
 label_new_incentive_email: 'New appreciation E-mail'
 label_new_pass: 'Type new password'
-label_new_phone_number: 'New phone number'
 label_new_phone_number_pass: 'Enter password to confirm change'
+label_new_phone_number_small: 'Enter new mobile number'
 label_new_phone_number_sms: 'Enter mobile code to confirm'
+label_new_phone_number_wide: label_new_phone_number_wide   # FIXME
 label_new_user_name: 'New username'
 label_new_user_name_pass: 'Enter password'
 label_old_password: 'Old password'
