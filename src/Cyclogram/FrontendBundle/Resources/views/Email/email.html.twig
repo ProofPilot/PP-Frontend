@@ -22,6 +22,7 @@
             }
             .featured_box .text_box {
                 width: 100%;
+                display: block;
             }
             .featured_box .button_box {
                 -moz-box-sizing: border-box;
@@ -60,20 +61,20 @@
 			<td>
 				<a href="#"><img src="{{ images.logo_top }}" alt="" title="" style="display: block;" /></a>
 			</td>
-			<td>
+			{#<td>
 				<a href="{{ host }}/{{ locale }}/main" style="color: #bcbfc2; font-family: Arial; text-decoration: none;">{{ 'my_dahsboard' | trans({}, "email", locale) }}</a>
-			</td>
-			<td>
+			</td>#}
+			<td align="right">
 				<a href="{{ host }}/{{ locale }}/main/contact_prefs" style="color: #bcbfc2; font-family: Arial; text-decoration: none;">{{ 'communictaion_preferences' | trans({}, "email", locale) }}</a>
 			</td>
-			<td>
+			{#<td>
 				<a href="{{ host }}/{{ locale }}/sexpro/is_it_secure" style="color: #bcbfc2; font-family: Arial; text-decoration: none;">{{ 'our_security' | trans({}, "email", locale) }}</a>
 			</td>
 			<td align="right" class="login_btn">
 				{% if siteurl is defined %}<a href="{{ host }}/{{ locale }}/login" style="background: #B73B32; 
                 border-radius: 3px 3px 3px 3px; color: #FFFFFF; display: inline-block;
                 height: 30px; line-height: 30px; padding-left: 25px; padding-right: 25px; text-decoration: none;">{% else %}<a href="#"> {% endif %}Login</a>
-			</td>
+			</td>#}
 		</tr>
 	</table>
 
