@@ -2255,6 +2255,14 @@ div.panel div.panel_right div.prev_next ul li a.next span {
 	text-align: center;
 	margin-bottom: 20px;
 }
+#general_settings_newPhoneNumberSmall {
+	width: 30px !important;
+	float: left;
+	margin-right: 15px;
+}
+#general_settings_newPhoneNumberWide {
+	width: 201px !important;
+}
 .panel .panel_right .dashboard_panel .survey_intro p {
 	color: #9a9a9a;
 	font-size: 13px;

@@ -177,13 +177,10 @@
                     <div class="new_inputs_cont">
                       <div class="for_label">{{ form_label(form.newPhoneNumberSmall) }}</div>
                       <span class="input_container">
-                          {{ form_widget(form.newPhoneNumberSmall) }}
-                          {{ form_errors(form.newPhoneNumberSmall) }}
-                      </span>
-                      <div class="for_label">{{ form_label(form.newPhoneNumberWide) }}</div>
-                      <span class="input_container">
-                          {{ form_widget(form.newPhoneNumberWide) }}
-                          {{ form_errors(form.newPhoneNumberWide) }}
+                          <span class="input_placeholder">
+                              <input id="general_settings_newPhoneNumberSmall" type="text" value="380" maxlength="3" name="general_settings[newPhoneNumberSmall]">
+                              <input id="general_settings_newPhoneNumberWide" type="text" maxlength="11" name="general_settings[newPhoneNumberWide]">
+                          </span>
                       </span>
                       </div>
                       {% if not is_granted('ROLE_FACEBOOK_USER') and not is_granted('ROLE_GOOGLE_USER') %}
