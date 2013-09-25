@@ -129,10 +129,21 @@ class GeneralSettingForm extends AbstractType
                 'required' => false
                 ));
 
-            $builder->add('newPhoneNumber', 'text', array(
-                    'label'=>'label_new_phone_number', 
-                    'required' => false
+            $builder->add('newPhoneNumberSmall', 'text', array(
+                    'label'=>'label_new_phone_number_small', 
+                    'required' => false,
+                    'attr'=>array(
+                            'maxlength'=>3
+                    ),
                     ));
+            
+            $builder->add('newPhoneNumberWide', 'text', array(
+                    'label'=>'label_new_phone_number_wide',
+                    'required' => false,
+                    'attr'=>array(
+                            'maxlength'=>11
+                    ),
+            ));
 
             $builder->add('newPhoneNumberPassword', 'password', array(
                     'label'=>'label_new_phone_number_pass', 
@@ -269,13 +280,15 @@ class GeneralSettingForm extends AbstractType
         $securityContext = $this->container->get('security.context');
         if ($data['validationCheck'] == 'mobile-sms'){
             
-            if (empty($data['newPhoneNumber'])){
-                $context->addViolationAt('[newPhoneNumber]',$this->container->get('translator')->trans('please_fill_this_field', array(), 'validators'));
-            } else {
+            if (empty($data['newPhoneNumberSmall'])){
+                $context->addViolationAt('[newPhoneNumberSmall]',$this->container->get('translator')->trans('please_fill_this_field', array(), 'validators'));
+            } elseif (empty($data['newPhoneNumberWide'])) {
+                $context->addViolationAt('[newPhoneNumberWide]',$this->container->get('translator')->trans('please_fill_this_field', array(), 'validators'));
+            } else{
                 //check if phone already exists
-                $existing  = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Participant')->findOneBy(array('participantMobileNumber'=>$data['newPhoneNumber']));
+                $existing  = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Participant')->findOneBy(array('participantMobileNumber'=>$data['newPhoneNumberSmall'].$data['newPhoneNumberWide']));
                 if($existing) { 
-                    $context->addViolationAt('[newPhoneNumber]',  $this->container->get('translator')->trans('error_mobile_phone_already_registered', array(), 'validators'));
+                    $context->addViolationAt('[newPhoneNumberWide]',  $this->container->get('translator')->trans('error_mobile_phone_already_registered', array(), 'validators'));
                 }
             }
             
