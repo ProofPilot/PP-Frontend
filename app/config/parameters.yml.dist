@@ -22,6 +22,7 @@ parameters:
     mailer_password: da2UmugE
     mailer_encryption: ssl
     mailer_from: crew@proofpilot.com
+    mailer_envelope_from: 'Proofpilot Crew'
     locale: en
     locales: [en, es, pt, fr]
     secret: 10da697491608e381e7f81207a304c43f

@@ -34,6 +34,17 @@
     <script>window.jQuery || document.write('<script src={{ asset('js/vendor/jquery-1.9.1.min.js') }}><\/script>')</script>
     <script src= {{ asset ('js/plugins.js') }}></script>
     <script src= {{ asset ('js/main.js') }}></script>
+    
+    <script> var ISOLDIE = false;</script>
+    <!--[if lt IE 9]>
+        <script> var ISOLDIE = true; </script>
+    <![endif]-->
+    <script>
+    var browser_msg = "{% trans from "messages" %}browser_msg{% endtrans %}";
+    if(ISOLDIE) {
+        alert(browser_msg);
+    }
+    </script>
 
     {% block javascripts %}
     {% endblock javascripts %}

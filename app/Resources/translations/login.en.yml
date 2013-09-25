@@ -1,3 +1,4 @@
+alert_msg: 'Please select a valid option'
 btn_confrimcoe_login: 'confirm code & login'
 cant_remember_username: 'Can''t remember your Username?'
 doesnt_match_records: 'We''re sorry, your entry does not match our records'
@@ -12,6 +13,7 @@ havent_joined: 'Haven''t joined yet?'
 label_sms_code: 'Sms code'
 new_password_selection: "<p>Click on the link in the e-mail and you will be guided through the selection of a new password. You will need your mobile phone to complete this process.</p>\n<p>If it hasn't arrived within a few minutes, check your SPAM or junkmail folders</p>\n"
 send_another_code: 'No code? Send another'
+specimen_msg: 'Please select a valid specimen option'
 txt_forgot_your_password: 'Forgot your password?'
 txt_forgot_your_username: 'Forgot your Username?'
 txt_form_password: Password
@@ -23,6 +25,6 @@ txt_login_securely: 'Login Securely with your accounts.'
 txt_login_with: 'Login with'
 txt_or: OR
 txt_stay_logged_in: 'Stay logged in'
-txt_why_popup: "Use your Facebook or Google credentials to securely join and log-in. You don't have to remember another password - and we won't share anything with either service."
+txt_why_popup: 'Use your Facebook or Google credentials to securely join and log-in. You don''t have to remember another password - and we won''t share anything with either service.'
 username_sent: 'Your Username has been sent to the the mobile telephone number on record'
 why_popup_title: 'Why Register and Login with your existing accounts?'

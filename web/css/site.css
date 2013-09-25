@@ -1626,7 +1626,7 @@ header .header_menu span.text  , .footer_col_right span.text  {
 .panel .panel_right .dashboard_panel .choices_box .featured_box  .text_box {
 	float: left;
 	width: 360px;
-	/*padding-top: 30px;*/
+	padding-top: 40px;
 	width: 330px;
 	padding-right: 30px;
 }
@@ -2254,6 +2254,14 @@ div.panel div.panel_right div.prev_next ul li a.next span {
 	font-size: 28px;
 	text-align: center;
 	margin-bottom: 20px;
+}
+#general_settings_newPhoneNumberSmall {
+	width: 30px !important;
+	float: left;
+	margin-right: 15px;
+}
+#general_settings_newPhoneNumberWide {
+	width: 201px !important;
 }
 .panel .panel_right .dashboard_panel .survey_intro p {
 	color: #9a9a9a;
@@ -4396,7 +4404,13 @@ footer a.icon_update span {
 		float: right;
 		margin-right: 20px;
 	}
-	
+	.panel .panel_right .dashboard_title.main {
+		padding: 15px 0px 0px 95px;
+	}
+	.panel .panel_right .dashboard_title.branded {
+		background: url("../images/h1_dashboard.jpg") no-repeat scroll 26px 15px #F8F7EF;
+		max-width: none;
+	}
 }
 
 /* @media screen and (max-width: 990px) */ 
@@ -4594,7 +4608,7 @@ footer a.icon_update span {
 	
 	
 	.panel .panel_right .dashboard_panel .choices_box .featured_box .text_box {
-		/*padding-top: 10px;*/
+		padding-top: 20px;
 	}
 	
 	.panel .panel_right .dashboard_panel .choices_box .featured_box .text_box h4 {
@@ -4830,6 +4844,13 @@ footer a.icon_update span {
 		background: url(../images/bg_green_2.jpg) no-repeat 0px 0px;
 		padding: 25px 0px 0px 100px;
 		
+	}
+	.panel .panel_right .dashboard_title.main {
+		padding: 15px 0px 0px 95px;
+	}
+	.panel .panel_right .dashboard_title.branded {
+		background: url("../images/h1_dashboard.jpg") no-repeat scroll 26px 15px #F8F7EF;
+		max-width: none;
 	}
 	
 	.panel .panel_right .progress_bar {

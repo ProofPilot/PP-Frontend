@@ -15,6 +15,9 @@ frontend_oauth_service_redirect:
     pattern: /redirect/{service}
     defaults:
         _controller: CyclogramFrontendBundle:Login:redirectToService
+        
+#_bazinga_exposetranslation:
+#    resource: "@BazingaExposeTranslationBundle/Resources/config/routing/routing.yml"
 
 
 _root:
@@ -30,6 +33,8 @@ _root:
 CyclogramKnowatHomeBundle:
     resource: "@CyclogramKnowatHomeBundle/Resources/config/routing.yml"
     prefix:   /{_locale}/knowathome
+    requirements:
+        _locale: en|es|pt|fr|es_MX|pt_BR
 
 cyclogram_frontend:
     resource: "@CyclogramFrontendBundle/Controller/"

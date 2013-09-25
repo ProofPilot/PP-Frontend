@@ -175,10 +175,12 @@
                     <div class="current_text">{{ participant.participantMobileNumber }}</div>
                     <div class="close_cont"><a href="#" data-form-cont=".form-mobile">Cancel</a></div>
                     <div class="new_inputs_cont">
-                      <div class="for_label">{{ form_label(form.newPhoneNumber) }}</div>
+                      <div class="for_label">{{ form_label(form.newPhoneNumberSmall) }}</div>
                       <span class="input_container">
-                          {{ form_widget(form.newPhoneNumber) }}
-                          {{ form_errors(form.newPhoneNumber) }}
+                          <span class="input_placeholder">
+                              <input id="general_settings_newPhoneNumberSmall" type="text" value="380" maxlength="3" name="general_settings[newPhoneNumberSmall]">
+                              <input id="general_settings_newPhoneNumberWide" type="text" maxlength="11" name="general_settings[newPhoneNumberWide]">
+                          </span>
                       </span>
                       </div>
                       {% if not is_granted('ROLE_FACEBOOK_USER') and not is_granted('ROLE_GOOGLE_USER') %}
@@ -234,8 +236,11 @@
     <script>window.jQuery || document.write('<script src={{ asset('js/vendor/jquery-1.9.1.min.js') }}><\/script>')</script>
         <script src= {{ asset ('js/plugins.js') }}></script>
         <script src= {{ asset ('js/main.js') }}></script>
+        <script src= {{ asset ('js/jquery.numeric.js') }}></script>
         <script type="text/javascript">
         $(document).ready(function(){
+            $("#general_settings_newPhoneNumberSmall").numeric();
+            $('#general_settings_newPhoneNumberWide').numeric();
            $('#general_settings_userNameConfirm').click(function()
                 {
                          $('#general_settings_validationCheck').val("username");

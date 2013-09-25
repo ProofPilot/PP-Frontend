@@ -1,11 +1,11 @@
 <?php
-
 /*
- * This is part of the ProofPilot package.
+* This is part of the ProofPilot package.
 *
 * (c)2012-2013 Cyclogram, Inc, West Hollywood, CA <crew@proofpilot.com>
 * ALL RIGHTS RESERVED
 *
+* This software is provided by the copyright holders to Manila Consulting for use on the
 * Center for Disease Control's Evaluation of Rapid HIV Self-Testing among MSM in High
 * Prevalence Cities until 2016 or the project is completed.
 *
@@ -101,16 +101,20 @@ class RegistrationController extends Controller
                     $participant->setParticipantMobileSmsCodeConfirmed(false);
                     $participant->setParticipantIncentiveBalance(false);
                     $participant->setLocale($request->getLocale());
-                    $timezone = $em->getRepository('CyclogramProofPilotBundle:ParticipantTimeZone')->findByParticipantTimezoneName($form['timeZone']->getData());
+                    $timezone = $em->getRepository('CyclogramProofPilotBundle:ParticipantTimeZone')->findOneByParticipantTimezoneName($form['timeZone']->getData());
                     if (empty($timezone))
                         $timezone = $em->getRepository('CyclogramProofPilotBundle:ParticipantTimeZone')->find(1);
                     $participant->setParticipantTimezone($timezone);
-                    $participant->setParticipantLastTouchDatetime((new \DateTime(null, new \DateTimeZone($participant->getParticipantTimezone()->getParticipantTimezoneName()))));
+                    $participant->setParticipantLastTouchDatetime(new \DateTime(null, new \DateTimeZone($participant->getParticipantTimezone()->getParticipantTimezoneName())));
                     $participant->setParticipantZipcode('');
                     $role = $em->getRepository('CyclogramProofPilotBundle:ParticipantRole')->find(1);
                     $participant->setParticipantRole($role);
                     $status = $em->getRepository('CyclogramProofPilotBundle:Status')->find(1);
                     $participant->setStatus($status);
+                    $mailCode = substr(md5( md5( $participant->getParticipantEmail() . md5(microtime()))), 0, 4);
+                    $participant->setParticipantEmailCode($mailCode);
+                    $em->persist($participant);
+                    $em->flush($participant);
 
                     $em->persist($participant);
                     $em->flush();
@@ -499,7 +503,7 @@ class RegistrationController extends Controller
         $embedded['white_bottom'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_white_bottom.png");
         $cc = $this->get('cyclogram.common');
     
-        $parameters['code'] = substr(md5( md5( $participant->getParticipantEmail() . md5(microtime()))), 0, 4);
+        $parameters['code'] = $participant->getParticipantEmailCode();
         $participant->setParticipantEmailCode($parameters['code']);
         $em->persist($participant);
         $em->flush($participant);
@@ -656,7 +660,7 @@ class RegistrationController extends Controller
         $em = $this->getDoctrine()->getManager();
         
         $reminder = $em->getRepository('CyclogramProofPilotBundle:ParticipantStudyReminder')->find(1);
-        $reminderLink = $em->getRepository('CyclogramProofPilotBundle:ParticipantStudyReminderLink')->findOneByParticipant($participant);
+        $reminderLink = $em->getRepository('CyclogramProofPilotBundle:ParticipantStudyReminderLink')->findOneBy(array('participant' => $participant, 'participantStudyReminder' => $reminder));
         if (empty($reminderLink)){
             $reminderLink = new ParticipantStudyReminderLink();
             $reminderLink->setParticipant($participant);
@@ -665,10 +669,7 @@ class RegistrationController extends Controller
             $reminderLink->setByEmail(true);
             $em->persist($reminderLink);
             $em->flush();
-        }
-        $timezone = $em->getRepository('CyclogramProofPilotBundle:ParticipantTimeZone')->findOneByParticipantTimezoneName($userTimezone);
-        if (empty($timezone))
-                $timezone = $em->getRepository('CyclogramProofPilotBundle:ParticipantTimeZone')->find(1);
+        } 
         $contactTime = $em->getRepository('CyclogramProofPilotBundle:ParticipantContactTime')->find(1);
         for ($i=0; $i<7; $i++){
             $em->getRepository('CyclogramProofPilotBundle:ParticipantContactTimeLink')

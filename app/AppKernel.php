@@ -32,7 +32,8 @@ class AppKernel extends Kernel
             new Cyclogram\FrontendBundle\CyclogramFrontendBundle(),
             new Sonata\IntlBundle\SonataIntlBundle(),
             new Maxmind\Bundle\GeoipBundle\MaxmindGeoipBundle(),
-            new HWI\Bundle\OAuthBundle\HWIOAuthBundle()
+            new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
+            //new Bazinga\ExposeTranslationBundle\BazingaExposeTranslationBundle()
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
