@@ -660,7 +660,9 @@ class RegistrationController extends Controller
             }
     
             $session->set('confirmed', "Congratilations!!! Your e-mail is confirmed!");
-            return $this->redirect( $this->generateUrl("_main") );
+            return $this->redirect( $this->generateUrl("_main", array(
+                    'studyCode' => $studyCode
+                    )) );
     
         } else {
             $error = $this->get('translator')->trans('mail_confirmation_fail', array(), 'register');

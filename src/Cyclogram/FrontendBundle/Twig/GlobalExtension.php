@@ -63,7 +63,7 @@ class GlobalExtension extends \Twig_Extension
     public function studyBackground($studyCode)
     {
         $nPic = rand ( 1, 4 );
-        if($studyCode == 'kah')
+        if($studyCode == 'knowathome')
             return "style=\"background-image:url('/images/study/1/".$nPic.".jpg')\"";
         else 
             return "";
@@ -72,7 +72,7 @@ class GlobalExtension extends \Twig_Extension
     public function studyLogo($studyCode)
     {
         $loginUrl = $this->container->get('router')->generate('_login');
-        if($studyCode == 'kah')
+        if($studyCode == 'knowathome')
             return "<a href=\"$loginUrl\" class=\"logo knowathome\"></a>";
         else
             return "<a class=\"logo\" href=\"$loginUrl\">ProofPilot</a>";
@@ -80,7 +80,7 @@ class GlobalExtension extends \Twig_Extension
     
     public function dashboardLogo($studyCode, $url)
     {
-        if($studyCode == 'kah')
+        if($studyCode == 'knowathome')
             return "<a class=\"logo knowathome\" href=\"$url\">
                  <img src=\"/2cd1c6ecec2c6d908b3ed66d4ea7b902/1/logo-1-en.png\" width=\"234\" height=\"44\" />
             </a>";

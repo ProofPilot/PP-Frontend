@@ -57,7 +57,10 @@ class MenuBuilder extends ContainerAware implements TranslationContainerInterfac
         $menu->setChildrenAttribute('class', 'left_menu');
 
         $menu->addChild('side_dasboard_menu.dashboard', array(
-                'route' => '_main'
+                'route' => '_main',
+                'routeParameters' => array(
+                        'studyCode' => $studyCode
+                )
                 ))
                 ->setAttribute('class', 'icon_dashboard')->setExtra('translation_domain', 'sidemenu')->setAttribute("news", $interventioncount);
 //         $menu->addChild('side_dasboard_menu.survey', array(

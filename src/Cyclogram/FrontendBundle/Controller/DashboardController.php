@@ -28,7 +28,7 @@ use Cyclogram\Bundle\ProofPilotBundle\Entity\Participant;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 
 /**
- * @Route("/main")
+ * @Route("/main/{studyCode}", defaults={"studyCode"=null})
  */
 class DashboardController extends Controller
 {
@@ -93,8 +93,10 @@ class DashboardController extends Controller
             $intervention = array();
             $intervention["title"] = $interventionContent->getInterventionTitle();
             $intervention["content"] = $interventionContent->getInterventionDescripton();
+            
             $intervention["url"] = $this->getInterventionUrl($interventionLink, $locale);
             $intervention["logo"] = $this->container->getParameter('study_image_url') . "/" . $studyId . "/" . $studyContent->getStudyLogo();
+            $parameters["studyCode"] = $study->getStudyCode();
             $parameters["interventions"][] = $intervention;
         }
         
