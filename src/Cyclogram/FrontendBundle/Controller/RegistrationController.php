@@ -174,17 +174,40 @@ class RegistrationController extends Controller
                 $form->get('phone_small')->setData($phone['country_code']);
                 $form->get('phone_wide')->setData($phone['phone']);
             }
-        }
-        $clientIp = $request->getClientIp();
-        if ($clientIp == '127.0.0.1') {
-            $form->get('phone_small')->setData(380);
-        }
-        $geoip = $this->get('maxmind.geoip')->lookup($clientIp);
-        if ($geoip != false) {
-            $countryCode = $geoip->getCountryCode();
-            $country = $em->getRepository('CyclogramProofPilotBundle:Country')->findOneByCountryCode($countryCode);
-            if (isset($country)){
-                $form->get('phone_small')->setData($country->getDailingCode());
+            
+            $clientIp = $request->getClientIp();
+            if ($clientIp == '127.0.0.1') {
+                $form->get('phone_small')->setData(380);
+            }
+            $geoip = $this->get('maxmind.geoip')->lookup($clientIp);
+            if ($geoip != false) {
+                $countryCode = $geoip->getCountryCode();
+                $country = $em->getRepository('CyclogramProofPilotBundle:Country')->findOneByCountryCode($countryCode);
+                if (isset($country)){
+                    $form->get('phone_small')->setData($country->getDailingCode());
+                }
+            }
+        } else {
+            if ($participant->getVoicephone()){
+                $phone = CyclogramCommon::parsePhoneNumber($participant->getVoicephone());
+            }
+            
+            if(!empty($phone)) {
+                $form->get('voice_phone_small')->setData($phone['country_code']);
+                $form->get('voice_phone_wide')->setData($phone['phone']);
+            }
+            
+            $clientIp = $request->getClientIp();
+            if ($clientIp == '127.0.0.1') {
+                $form->get('voice_phone_small')->setData(380);
+            }
+            $geoip = $this->get('maxmind.geoip')->lookup($clientIp);
+            if ($geoip != false) {
+                $countryCode = $geoip->getCountryCode();
+                $country = $em->getRepository('CyclogramProofPilotBundle:Country')->findOneByCountryCode($countryCode);
+                if (isset($country)){
+                    $form->get('voice_phone_small')->setData($country->getDailingCode());
+                }
             }
         }
     
@@ -195,11 +218,13 @@ class RegistrationController extends Controller
             if( $form->isValid() ) {
     
                 $values = $form->getData();
-                $userPhone = $values['phone_small'].$values['phone_wide'];
-                if (is_null($aditionalNumber))
+                if (is_null($aditionalNumber)) {
+                    $userPhone = $values['phone_small'].$values['phone_wide'];
                     $participant->setParticipantMobileNumber($userPhone);
-                else
+                } else {
+                    $userPhone = $values['voice_phone_small'].$values['voice_phone_wide'];
                     $participant->setVoicePhone($userPhone);
+                }
                 $em->persist($participant);
                 $em->flush();
                 if (!is_null($aditionalNumber)){

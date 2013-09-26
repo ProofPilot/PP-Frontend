@@ -66,6 +66,30 @@ class MobilePhoneForm extends AbstractType
                         'maxMessage'=>'error_max_phone_code_length'
                         ))
                 ));
+        $builder->add('voice_phone_small', 'text', array(
+                'label'=>'label_phone_small',
+                'attr'=>array(
+                        'maxlength'=>3
+                ),
+                'constraints' => new Length(array(
+                        'min'=>1,
+                        'minMessage'=>'error_min_area_code_length',
+                        'max'=>3,
+                        'maxMessage'=>'error_max_area_code_length'
+                ))
+        ));
+        $builder->add('voice_phone_wide' , 'text', array(
+                'label'=>'label_phone_wide',
+                'attr'=>array(
+                        'maxlength'=>11
+                ),
+                'constraints' => new Length(array(
+                        'min'=>8,
+                        'minMessage'=>'error_min_phone_code_length',
+                        'max'=>11,
+                        'maxMessage'=>'error_max_phone_code_length'
+                ))
+        ));
         $builder->add('aditional_phone', 'checkbox', array(
                 'label' => 'label_aditional_phone',
                 'required' => false
