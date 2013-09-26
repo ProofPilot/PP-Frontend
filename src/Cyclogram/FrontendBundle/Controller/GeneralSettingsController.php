@@ -69,7 +69,7 @@ class GeneralSettingsController  extends Controller
             $countryCode = $geoip->getCountryCode();
             $country = $em->getRepository('CyclogramProofPilotBundle:Country')->findOneByCountryCode($countryCode);
             if (isset($country)){
-                $form->get('phone_small')->setData($country->getDailingCode());
+                $form->get('newPhoneNumberSmall')->setData($country->getDailingCode());
             }
         }
         
