@@ -1,6 +1,10 @@
 <header>
     {% if is_granted('ROLE_PARTICIPANT')  %}
-        {{ dashboard_logo(studyCode, path('_main', {'studyCode' : studyCode}))|raw }}
+        {% if studyCode is defined %}
+            {{ dashboard_logo(studyCode, path('_main', {'studyCode' : studyCode}))|raw }}
+        {% else %}
+            {{ dashboard_logo(studyCode, path('_main'))|raw }}
+        {% endif %}
     {% else %}
         {{ dashboard_logo(studyCode, path('_login'))|raw }}
     {% endif %}
@@ -18,7 +22,11 @@
 <div class="mobile_header_menu nologin">
         <ul>
         {% if is_granted('ROLE_PARTICIPANT')  %}
-            <li class="logo"><a class="site_logo" href="{{ path('_main', {'studyCode' : studyCode}) }}">ProofPilot</a></li>
+            {% if studyCode is defined %}
+                 <li class="logo"><a class="site_logo" href="{{ path('_main', {'studyCode' : studyCode}) }}">ProofPilot</a></li>
+            {% else %}
+                 <li class="logo"><a class="site_logo" href="{{ path('_main') }}">ProofPilot</a></li>
+            {% endif %}
         {% else %}
             <li class="logo"><a class="site_logo" href="{{ path('_login') }}">ProofPilot</a></li>
         {% endif %}

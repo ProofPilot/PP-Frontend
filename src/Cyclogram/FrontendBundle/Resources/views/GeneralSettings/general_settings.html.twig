@@ -66,21 +66,22 @@
                 <li class="form_expanded form-password"  {{ showonerror('password',expandedFormClass) }}>
                   <div class="wrapper">
                     <div class="close_cont"><a href="#" data-form-cont=".form-password">Cancel</a></div>
-                    <div class="new_inputs_cont with_margin">
-                      <div class="for_label">{{ form_label(form.oldPassword) }}<a href="{{ path('_forgot_pass') }}" class="forgot">{% trans from "general_settings" %}txt_forgot_it{% endtrans %}</a></div>
-                          {{ form_widget(form.oldPassword) }}
-                          {{ form_errors(form.oldPassword) }}
-                    </div>
-                    <div class="new_inputs_cont">
-                      <div class="for_label">{{ form_label(form.newPassword.first) }}</div>
-                          {{ form_widget(form.newPassword.first) }}
-                          {{ form_errors(form.newPassword.first) }}
-                    </div>
-                    <div class="new_inputs_cont">
-                      <div class="for_label">{{ form_label(form.newPassword.second) }}</div>
-                          {{ form_widget(form.newPassword.second) }}
-                          {{ form_errors(form.newPassword.second) }}
-                    </div>
+
+                        <div class="new_inputs_cont with_margin">
+                          <div class="for_label">{{ form_label(form.oldPassword) }}<a href="{{ path('_forgot_pass') }}" class="forgot">{% trans from "general_settings" %}txt_forgot_it{% endtrans %}</a></div>
+                              {{ form_widget(form.oldPassword) }}
+                              {{ form_errors(form.oldPassword) }}
+                        </div>
+                        <div class="new_inputs_cont">
+                          <div class="for_label">{{ form_label(form.newPassword.first) }}</div>
+                              {{ form_widget(form.newPassword.first) }}
+                              {{ form_errors(form.newPassword.first) }}
+                        </div>
+                        <div class="new_inputs_cont">
+                          <div class="for_label">{{ form_label(form.newPassword.second) }}</div>
+                              {{ form_widget(form.newPassword.second) }}
+                              {{ form_errors(form.newPassword.second) }}
+                        </div>
                     <div class="confirm_cont">
                         {{ form_widget(form.passwordSendSMS, {'attr':{'class' : 'btn_confirm'}}) }}
                     </div>

@@ -575,7 +575,7 @@ class RegistrationController extends Controller
         $token = new UsernamePasswordToken($participant, null, 'main', $roles);
         $this->get('security.context')->setToken($token);
         
-        return $this->redirect( $this->generateUrl("_main") );
+        return $this->redirect( $this->generateUrl("_main", array('studyCode' => $studyCode)) );
     }
     
     

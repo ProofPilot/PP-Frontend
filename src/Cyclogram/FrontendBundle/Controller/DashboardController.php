@@ -28,12 +28,12 @@ use Cyclogram\Bundle\ProofPilotBundle\Entity\Participant;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 
 /**
- * @Route("/main/{studyCode}", defaults={"studyCode"=null})
+ * @Route("/main")
  */
 class DashboardController extends Controller
 {
     /**
-     * @Route("/dashboard/{sendMail}", name="_main", defaults={"sendMail"=null})
+     * @Route("/dashboard/{studyCode}/{sendMail}", name="_main", defaults={"sendMail"=null, "studyCode"=null})
      * @Secure(roles="ROLE_PARTICIPANT")
      * @Template()
      */
@@ -145,7 +145,7 @@ class DashboardController extends Controller
             $parameters["email_alert"] = $this->get('translator')->trans('txt_please_verify_email', array(), 'dashboard');
         }
 
-        return $this->render('CyclogramFrontendBundle:Dashboard:main.html.twig', $parameters);
+      return $this->render('CyclogramFrontendBundle:Dashboard:main.html.twig', $parameters);
     
     }
     
