@@ -1,6 +1,6 @@
 {%  extends '::dashboard.html.twig' %}
 
-{% form_theme form '::fields_theme2.html.twig' %}
+{% form_theme form '::fields_theme1.html.twig' %}
 
 {% from '::macro.html.twig' import showonerror,hideonerror %}
 
@@ -178,8 +178,16 @@
                       <div class="for_label">{{ form_label(form.newPhoneNumberSmall) }}</div>
                       <span class="input_container">
                           <span class="input_placeholder">
-                              <input id="general_settings_newPhoneNumberSmall" type="text" value="380" maxlength="3" name="general_settings[newPhoneNumberSmall]">
-                              <input id="general_settings_newPhoneNumberWide" type="text" maxlength="11" name="general_settings[newPhoneNumberWide]">
+                          <ul class="form_fields">
+                          <li class="small_input">
+                              {{ form_widget(form.newPhoneNumberSmall,{'attr':{'class' : 'default_input tac small'}}) }}
+                              </li>
+                              <li class="wide_input">
+                              {{ form_widget(form.newPhoneNumberWide,{'attr':{'class' : 'default_input wide'}}) }}
+                              </li>
+{#                               <input id="general_settings_newPhoneNumberSmall" type="text" value="380" maxlength="3" name="general_settings[newPhoneNumberSmall]">#}
+{#                               <input id="general_settings_newPhoneNumberWide" type="text" maxlength="11" name="general_settings[newPhoneNumberWide]">#}
+                         </ul>
                           </span>
                       </span>
                       </div>
