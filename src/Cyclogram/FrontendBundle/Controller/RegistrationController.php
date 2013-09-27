@@ -101,9 +101,7 @@ class RegistrationController extends Controller
                     $participant->setParticipantMobileSmsCodeConfirmed(false);
                     $participant->setParticipantIncentiveBalance(false);
                     $participant->setLocale($request->getLocale());
-                    $timezone = $em->getRepository('CyclogramProofPilotBundle:ParticipantTimeZone')->findOneByParticipantTimezoneName($form['timeZone']->getData());
-                    if (empty($timezone))
-                        $timezone = $em->getRepository('CyclogramProofPilotBundle:ParticipantTimeZone')->find(1);
+                    $timezone = $em->getRepository('CyclogramProofPilotBundle:ParticipantTimeZone')->find(1);
                     $participant->setParticipantTimezone($timezone);
                     $participant->setParticipantLastTouchDatetime(new \DateTime(null, new \DateTimeZone($participant->getParticipantTimezone()->getParticipantTimezoneName())));
                     $participant->setParticipantZipcode('');
@@ -587,7 +585,7 @@ class RegistrationController extends Controller
         $token = new UsernamePasswordToken($participant, null, 'main', $roles);
         $this->get('security.context')->setToken($token);
         
-        return $this->redirect( $this->generateUrl("_main", array('studyCode' => $studyCode)) );
+        return $this->redirect( $this->generateUrl("_main") );
     }
     
     

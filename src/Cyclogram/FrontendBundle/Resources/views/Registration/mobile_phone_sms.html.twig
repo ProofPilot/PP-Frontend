@@ -1,5 +1,6 @@
 {%  extends '::base.html.twig' %}
 {% block javascripts %}
+  <script src= {{ asset ('js/jstz-1.0.4.min.js') }}></script>
     <script>
     $(document).ready(function(){
            $('#sms_confirm_confirmCode').click(function()

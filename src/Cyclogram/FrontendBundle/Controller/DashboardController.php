@@ -33,7 +33,7 @@ use JMS\SecurityExtraBundle\Annotation\Secure;
 class DashboardController extends Controller
 {
     /**
-     * @Route("/dashboard/{studyCode}/{sendMail}", name="_main", defaults={"sendMail"=null, "studyCode"=null})
+     * @Route("/dashboard/{sendMail}", name="_main", defaults={"sendMail"=null})
      * @Secure(roles="ROLE_PARTICIPANT")
      * @Template()
      */

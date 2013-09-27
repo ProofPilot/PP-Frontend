@@ -57,10 +57,7 @@ class MenuBuilder extends ContainerAware implements TranslationContainerInterfac
         $menu->setChildrenAttribute('class', 'left_menu');
 
         $menu->addChild('side_dasboard_menu.dashboard', array(
-                'route' => '_main',
-                'routeParameters' => array(
-                        'studyCode' => $studyCode
-                )
+                'route' => '_main'
                 ))
                 ->setAttribute('class', 'icon_dashboard')->setExtra('translation_domain', 'sidemenu')->setAttribute("news", $interventioncount);
 //         $menu->addChild('side_dasboard_menu.survey', array(
@@ -120,22 +117,13 @@ class MenuBuilder extends ContainerAware implements TranslationContainerInterfac
         $menu = $factory->createItem('root');
 
         $menu->addChild('bottom_left_menu.home', array(
-                'route' => '_main',
-                'routeParameters' => array(
-                        'studyCode' => $studyCode
-                        )))
+                'route' => '_main'))
                 ->setAttribute('class', 'icon_home')->setExtra('translation_domain', 'generalmenus');
         $menu->addChild('bottom_left_menu.fullscreen', array(
-                'route' => '_main',
-                'routeParameters' => array(
-                        'studyCode' => $studyCode
-                        )))
+                'route' => '_main'))
                 ->setAttribute('class', 'icon_fullscreen')->setExtra('translation_domain', 'generalmenus');
         $menu->addChild('bottom_left_menu.update', array(
-                'route' => '_main',
-                'routeParameters' => array(
-                        'studyCode' => $studyCode
-                        )))
+                'route' => '_main'))
                 ->setAttribute('class', 'icon_update')->setExtra('translation_domain', 'generalmenus');
 
         return $menu;

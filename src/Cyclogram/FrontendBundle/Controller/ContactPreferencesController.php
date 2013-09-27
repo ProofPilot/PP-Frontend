@@ -30,7 +30,7 @@ use JMS\SecurityExtraBundle\Annotation\Secure;
 class ContactPreferencesController extends Controller
 {
     /**
-     * @Route("/contact_prefs/{studyCode}", name="_contact_prefs", defaults={"studyCode"=null})
+     * @Route("/contact_prefs", name="_contact_prefs")
      * @Secure(roles="ROLE_PARTICIPANT")
      * @Template()
      */
