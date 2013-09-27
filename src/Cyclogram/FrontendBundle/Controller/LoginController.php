@@ -348,7 +348,7 @@ class LoginController extends Controller
     }
     
     /**
-     * @Route("/create_pass/{studyCode}/{id}" , name="_create_new_pass", defaults={"studyCode"= null})
+     * @Route("/create_pass/{id}/{studyCode}" , name="_create_new_pass", defaults={"studyCode"= null})
      * @Template()
      */
     public function createPassAction($id, $studyCode = null)
