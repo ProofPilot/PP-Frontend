@@ -325,6 +325,10 @@ class GeneralSettingForm extends AbstractType
                 if($existing) {
                     $context->addViolationAt('[newIncentiveEmail]',  $this->container->get('translator')->trans('email_already_registered', array(), 'validators'));
                 }
+                $existing  = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Participant')->findOneBy(array('participantEmail'=>$data['newIncentiveEmail']));
+                if($existing) {
+                    $context->addViolationAt('[newIncentiveEmail]',  $this->container->get('translator')->trans('email_already_registered', array(), 'validators'));
+                }
             }
         }
     }

@@ -1,6 +1,6 @@
 {%  extends '::dashboard.html.twig' %}
 
-{% form_theme form '::fields_theme1.html.twig' %}
+{% form_theme form '::fields_theme2.html.twig' %}
 
 {% from '::macro.html.twig' import showonerror,hideonerror %}
 
@@ -171,6 +171,11 @@
                 
                 {# mobile #}
                 <li class="left_text form-mobile">{% trans from "general_settings" %}txt_mobile_number{% endtrans %}</li>
+                                <li class="middle_input form-mobile" {{ hideonerror('mobile',expandedFormClass) }}>
+                    {{ form_widget(form.phoneNumber, {'attr' : {'class' : 'middle_input', 'readonly' : 'readonly'}, 'value': participant.participantMobileNumber}) }}
+                    {{ form_errors(form.phoneNumber) }}
+                </li>
+                   <li class="edit_btn form-mobile" {{ hideonerror('mobile',expandedFormClass) }}><a href="#" data-form-cont=".form-mobile">{% trans from "general_settings" %}txt_edit{% endtrans %}</a></li>
                 <li class="form_expanded form-mobile"  {{ showonerror('mobile',expandedFormClass) }}>
                   <div class="wrapper">
                     <div class="current_text">{{ participant.participantMobileNumber }}</div>
@@ -179,16 +184,19 @@
                       <div class="for_label">{{ form_label(form.newPhoneNumberSmall) }}</div>
                       <span class="input_container">
                           <span class="input_placeholder">
-                          <ul class="form_fields">
-                          <li class="small_input">
+
+{#                           <ul class="form_fields">#}
+{#                           <li class="small_input">#}
                               {{ form_widget(form.newPhoneNumberSmall,{'attr':{'class' : 'default_input tac small'}}) }}
-                              </li>
-                              <li class="wide_input">
+                              {{ form_errors(form.newPhoneNumberSmall) }}
+{#                               </li>#}
+{#                               <li class="wide_input">#}
                               {{ form_widget(form.newPhoneNumberWide,{'attr':{'class' : 'default_input wide'}}) }}
-                              </li>
+                              {{ form_errors(form.newPhoneNumberWide) }}
+{#                               </li>#}
 {#                               <input id="general_settings_newPhoneNumberSmall" type="text" value="380" maxlength="3" name="general_settings[newPhoneNumberSmall]">#}
 {#                               <input id="general_settings_newPhoneNumberWide" type="text" maxlength="11" name="general_settings[newPhoneNumberWide]">#}
-                         </ul>
+{#                          </ul>#}
                           </span>
                       </span>
                       </div>
@@ -216,11 +224,11 @@
                   </div>
                   
                 </li>
-                <li class="middle_input form-mobile" {{ hideonerror('mobile',expandedFormClass) }}>
-                    {{ form_widget(form.phoneNumber, {'attr' : {'class' : 'middle_input', 'readonly' : 'readonly'}, 'value': participant.participantMobileNumber}) }}
-                    {{ form_errors(form.phoneNumber) }}
-                </li>
-                   <li class="edit_btn form-mobile" {{ hideonerror('mobile',expandedFormClass) }}><a href="#" data-form-cont=".form-mobile">{% trans from "general_settings" %}txt_edit{% endtrans %}</a></li>
+{#                 <li class="middle_input form-mobile" {{ hideonerror('mobile',expandedFormClass) }}>#}
+{#                     {{ form_widget(form.phoneNumber, {'attr' : {'class' : 'middle_input', 'readonly' : 'readonly'}, 'value': participant.participantMobileNumber}) }}#}
+{#                     {{ form_errors(form.phoneNumber) }}#}
+{#                 </li>#}
+{#                    <li class="edit_btn form-mobile" {{ hideonerror('mobile',expandedFormClass) }}><a href="#" data-form-cont=".form-mobile">{% trans from "general_settings" %}txt_edit{% endtrans %}</a></li>#}
               </ul>
               {{ form_widget(form.validationCheck) }}
 {#               {{ form_rest(form) }}#}

@@ -100,6 +100,10 @@ class RegistrationForm extends AbstractType
             ->getRepository('CyclogramProofPilotBundle:Participant')
             ->checkIfEmailNotUsed($participant->getParticipantEmail());
         
+        $count = $this->container->get('doctrine')
+            ->getRepository('CyclogramProofPilotBundle:Participant')
+            ->checkIfAppreciationEmailNotUsed($participant->getParticipantEmail());
+        
         if($count)
             $context->addViolationAt('participantEmail',  $this->container->get('translator')->trans('email_already_registered', array(), 'validators'));
     }
