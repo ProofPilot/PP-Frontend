@@ -1,18 +1,4 @@
 <header>
-{#     {% if is_granted('ROLE_PARTICIPANT')  %}#}
-    
-{#         {% if is_enrolled_in_study('knowathome') %}#}
-{#             {{ dashboard_logo('knowathome', path('_main'))|raw }}#}
-{#        {% else %}#}
-{#            {{ dashboard_logo(studyCode, path('_main'))|raw }}#}
-{#        {% endif %}#}
-{#     {% else %}#}
-{#         {% if is_enrolled_in_study('knowathome') %}#}
-{#             {{ dashboard_logo('knowathome', path('_main'))|raw }}#}
-{#        {% else %}#}
-{#            {{ dashboard_logo(studyCode, path('_main'))|raw }}#}
-{#        {% endif %}#}
-{#     {% endif %}#}
     <a class="logo {{ branding }}" href="{{ path('_main') }}">
         <img src="{{ asset('branding/' ~ branding ~ '/logo.png') }}"/>
     </a>
@@ -29,40 +15,16 @@
 </header>
 <div class="mobile_header_menu nologin">
         <ul>
-{#     {% if is_granted('ROLE_PARTICIPANT')  %}#}
-{#         {% if is_enrolled_in_study('knowathome') %}#}
-{#             {{ dashboard_logo('knowathome', path('_main'))|raw }}#}
-{#        {% else %}#}
-{#            {{ dashboard_logo(studyCode, path('_main'))|raw }}#}
-{#        {% endif %}#}
-{#     {% else %}#}
-{#         {% if is_enrolled_in_study('knowathome') %}#}
-{#             {{ dashboard_logo('knowathome', path('_main'))|raw }}#}
-{#        {% else %}#}
-{#            {{ dashboard_logo(studyCode, path('_main'))|raw }}#}
-{#        {% endif %}#}
-{#     {% endif %}#}
-         <a class="logo {{ branding }}" href="{{ path('_main') }}">
-            <img src="{{ asset('branding/' ~ branding ~ '/logo.png') }}"/>
-         </a>
+         <li class="logo">
+             <a class="logo {{ branding }}" href="{{ path('_main') }}">
+                <img src="{{ asset('branding/' ~ branding ~ '/logo.png') }}"/>
+             </a>
+         </li>
          <li class="right"><a class="trigger_sitemenu" href="#"></a></li>
         </ul>
 </div>
 <div class="mobile_sitemenu register nologin">
         <div class="menu_wrapper">
-{#     {% if is_granted('ROLE_PARTICIPANT')  %}#}
-{#         {% if is_enrolled_in_study('knowathome') %}#}
-{#             {{ dashboard_logo('knowathome', path('_main'))|raw }}#}
-{#        {% else %}#}
-{#            {{ dashboard_logo(studyCode, path('_main'))|raw }}#}
-{#        {% endif %}#}
-{#     {% else %}#}
-{#         {% if is_enrolled_in_study('knowathome') %}#}
-{#             {{ dashboard_logo('knowathome', path('_main'))|raw }}#}
-{#        {% else %}#}
-{#            {{ dashboard_logo(studyCode, path('_main'))|raw }}#}
-{#        {% endif %}#}
-{#     {% endif %}#}
         <a class="logo {{ branding }}" href="{{ path('_main') }}">
             <img src="{{ asset('branding/' ~ branding ~ '/logo.png') }}"/>
         </a>

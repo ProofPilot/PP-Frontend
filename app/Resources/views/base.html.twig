@@ -12,7 +12,7 @@
     <meta content="text/html; charset=utf-8" http-equiv="content-type">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     
-    <title>{% if studyCode != 'knowathome' %}{% block title %}{% endblock title %} - Proof Pilot{% else %} KnowAtHome {% endif %}</title>
+    <title>{% if branding != 'knowathome' %}{% block title %}{% endblock title %} - Proof Pilot{% else %} KnowAtHome {% endif %}</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link href="//fonts.googleapis.com/css?family=Roboto:300" rel="stylesheet" type="text/css" />
@@ -21,7 +21,7 @@
     <link href="//fonts.googleapis.com/css?family=Roboto:700" rel="stylesheet" type="text/css" />
     <link href="//fonts.googleapis.com/css?family=Roboto:900" rel="stylesheet" type="text/css" />
     <link rel="icon" href="{{ asset('images/favicon.ico') }}" type="image/x-icon"/>
-    <link rel="shortcut icon" {% if studyCode != 'knowathome' %} href="{{ asset('images/favicon.ico') }}" {% else %} href="{{ asset('images/knowathome_favicon.ico') }}" {% endif %} type="image/x-icon"/>
+    <link rel="shortcut icon" {% if branding != 'knowathome' %} href="{{ asset('images/favicon.ico') }}" {% else %} href="{{ asset('images/knowathome_favicon.ico') }}" {% endif %} type="image/x-icon"/>
     <link rel="stylesheet" href={{ asset('css/normalize.css') }} />
     <link rel="stylesheet" href={{ asset('css/main.css') }} />
     <link rel="stylesheet" href={{ asset('css/site.css') }}>

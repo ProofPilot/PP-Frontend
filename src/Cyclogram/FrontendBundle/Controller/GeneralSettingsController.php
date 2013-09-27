@@ -200,7 +200,7 @@ class GeneralSettingsController  extends Controller
     }
     
     /**
-     * @Route("/shipping_information/{studyCode}/{update}", name="_shipping", defaults={"studyCode"=null, "update"=null})
+     * @Route("/shipping_information/{update}", name="_shipping", defaults={"update"=null})
      * @Secure(roles="ROLE_PARTICIPANT")
      * @Template()
      */
