@@ -1,7 +1,3 @@
 <div class="reg_header">
-    {% if is_granted('ROLE_PARTICIPANT') and studyCode is not defined %}
-    	<a href="{{ path('_main') }}" class="logo">ProofPilot</a>
-    {% else  %}
-        {{ study_logo(studyCode)|raw}}
-    {%  endif %}
+<a href="{{ path('_main') }}" class="logo {{ branding }}"></a>
 </div>

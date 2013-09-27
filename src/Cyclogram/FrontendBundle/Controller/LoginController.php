@@ -414,7 +414,7 @@ class LoginController extends Controller
     }
     
     /**
-     * @Route("/confirm_reset}/{id}/{studyCode", name="_confirm_pass_reset", defaults={"studyCode"= null})
+     * @Route("/confirm_reset}/{id}/{studyCode}", name="_confirm_pass_reset", defaults={"studyCode"= null})
      * @Template()
      */
     public function confirmResetAction($id, $studyCode = null)

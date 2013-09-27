@@ -1,13 +1,21 @@
 <header>
-    {% if is_granted('ROLE_PARTICIPANT')  %}
-        {% if studyCode is defined %}
-            {{ dashboard_logo(studyCode, path('_main', {'studyCode' : studyCode}))|raw }}
-        {% else %}
-            {{ dashboard_logo(studyCode, path('_main'))|raw }}
-        {% endif %}
-    {% else %}
-        {{ dashboard_logo(studyCode, path('_login'))|raw }}
-    {% endif %}
+{#     {% if is_granted('ROLE_PARTICIPANT')  %}#}
+    
+{#         {% if is_enrolled_in_study('knowathome') %}#}
+{#             {{ dashboard_logo('knowathome', path('_main'))|raw }}#}
+{#        {% else %}#}
+{#            {{ dashboard_logo(studyCode, path('_main'))|raw }}#}
+{#        {% endif %}#}
+{#     {% else %}#}
+{#         {% if is_enrolled_in_study('knowathome') %}#}
+{#             {{ dashboard_logo('knowathome', path('_main'))|raw }}#}
+{#        {% else %}#}
+{#            {{ dashboard_logo(studyCode, path('_main'))|raw }}#}
+{#        {% endif %}#}
+{#     {% endif %}#}
+    <a class="logo {{ branding }}" href="{{ path('_main') }}">
+        <img src="{{ asset('branding/' ~ branding ~ '/logo.png') }}"/>
+    </a>
     {% if is_granted('ROLE_PARTICIPANT')  %}
         {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createTopSettingsMenu',{'template': 'CyclogramFrontendBundle:Knp:top_menu.html.twig'}) }}
         {% else %}
@@ -21,25 +29,43 @@
 </header>
 <div class="mobile_header_menu nologin">
         <ul>
-        {% if is_granted('ROLE_PARTICIPANT')  %}
-            {% if studyCode is defined %}
-                 <li class="logo"><a class="site_logo" href="{{ path('_main', {'studyCode' : studyCode}) }}">ProofPilot</a></li>
-            {% else %}
-                 <li class="logo"><a class="site_logo" href="{{ path('_main') }}">ProofPilot</a></li>
-            {% endif %}
-        {% else %}
-            <li class="logo"><a class="site_logo" href="{{ path('_login') }}">ProofPilot</a></li>
-        {% endif %}
-          <li class="right"><a class="trigger_sitemenu" href="#"></a></li>
+{#     {% if is_granted('ROLE_PARTICIPANT')  %}#}
+{#         {% if is_enrolled_in_study('knowathome') %}#}
+{#             {{ dashboard_logo('knowathome', path('_main'))|raw }}#}
+{#        {% else %}#}
+{#            {{ dashboard_logo(studyCode, path('_main'))|raw }}#}
+{#        {% endif %}#}
+{#     {% else %}#}
+{#         {% if is_enrolled_in_study('knowathome') %}#}
+{#             {{ dashboard_logo('knowathome', path('_main'))|raw }}#}
+{#        {% else %}#}
+{#            {{ dashboard_logo(studyCode, path('_main'))|raw }}#}
+{#        {% endif %}#}
+{#     {% endif %}#}
+         <a class="logo {{ branding }}" href="{{ path('_main') }}">
+            <img src="{{ asset('branding/' ~ branding ~ '/logo.png') }}"/>
+         </a>
+         <li class="right"><a class="trigger_sitemenu" href="#"></a></li>
         </ul>
 </div>
 <div class="mobile_sitemenu register nologin">
         <div class="menu_wrapper">
-        {% if is_granted('ROLE_PARTICIPANT')  %}
-            <a class="close" href="#"></a> <a class="logo" href="#">ProofPilot</a>
-        {% else %}
-            <a class="close" href="#"></a> <a class="logo" href="#">ProofPilot</a>
-        {% endif %}
+{#     {% if is_granted('ROLE_PARTICIPANT')  %}#}
+{#         {% if is_enrolled_in_study('knowathome') %}#}
+{#             {{ dashboard_logo('knowathome', path('_main'))|raw }}#}
+{#        {% else %}#}
+{#            {{ dashboard_logo(studyCode, path('_main'))|raw }}#}
+{#        {% endif %}#}
+{#     {% else %}#}
+{#         {% if is_enrolled_in_study('knowathome') %}#}
+{#             {{ dashboard_logo('knowathome', path('_main'))|raw }}#}
+{#        {% else %}#}
+{#            {{ dashboard_logo(studyCode, path('_main'))|raw }}#}
+{#        {% endif %}#}
+{#     {% endif %}#}
+        <a class="logo {{ branding }}" href="{{ path('_main') }}">
+            <img src="{{ asset('branding/' ~ branding ~ '/logo.png') }}"/>
+        </a>
         {% if app.user %}
             {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createTopSettingsMenu',{'template': 'CyclogramFrontendBundle:Knp:top_menu.html.twig'}) }}
         {% else %}

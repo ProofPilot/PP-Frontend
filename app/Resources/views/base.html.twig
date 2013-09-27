@@ -55,7 +55,7 @@
   </head>
 
   {% block body %}
-  <body class="has_image" {% if studyCode is defined %}{{ study_background(studyCode)|raw }}{% endif %}>
+  <body class="has_image" {{ study_background(branding, random_themes)|raw }}>
       {% block scripts_facebook %}{% endblock scripts_facebook %}
       <div class="block_wrapper">
       {% include '::header_reg.html.twig' %}

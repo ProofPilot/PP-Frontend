@@ -109,9 +109,19 @@ span em {
 .lt-ie9 .reg_header a.logo {
 	background:  url(../images/100_logo.png) no-repeat 0px 50%;
 }
+.reg_header a.logo.default {
+	
+}
 .reg_header a.logo.knowathome {
     background:  url(../images/study/1/logo-white.png) no-repeat 0px 50%;
     background-size: 117px 22px;
+}
+header a.logo.default img {
+	
+}
+header a.logo.knowathome img {
+	width: 234px;
+	height: 44px;
 }
 
 .mobile_sitemenu {
@@ -501,6 +511,13 @@ header .header_menu span.text  , .footer_col_right span.text  {
 }
 .panel .panel_left.study {
 	background: url(../images/alt4.png) repeat-y 100% 0px;
+}
+.branding_default {
+	
+}
+.branding_knowathome {
+	background: none; 
+	background-color: #878681 !important;
 }
 .page_main .panel {
 	padding-bottom: 0px;
