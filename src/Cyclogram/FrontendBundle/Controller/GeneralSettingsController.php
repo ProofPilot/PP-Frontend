@@ -54,6 +54,8 @@ class GeneralSettingsController  extends Controller
         $locale =$participant->getLocale() ? $participant->getLocale() : $request->getLocale();
         $parameters["lastaccess"] = new \DateTime();
         $parameters["expandedFormClass"] = '';
+        $parameters["passwordConfirmShow"] = false;
+        $parameters["phoneConfirmShow"] = false;
          
         if($participant->getFacebookId())
             $parameters["user"]["avatar"] = "http://graph.facebook.com/" . $participant->getParticipantUsername() . "/picture?width=80&height=82";
@@ -97,6 +99,7 @@ class GeneralSettingsController  extends Controller
                         $em->flush($participant);
                         $parameters['message'] = $this->get('translator')->trans("confirm_sms_send", array(), "general_settings", $locale);
                     }
+                    $parameters["passwordConfirmShow"] = true;
                     $parameters["expandedFormClass"] = 'password';
                 } elseif ($form->get('passwordConfirm')->isClicked()) {
                     $session = $request->getSession();
@@ -147,6 +150,7 @@ class GeneralSettingsController  extends Controller
                         $em->flush($participant);
                         $parameters['message'] = $this->get('translator')->trans("confirm_sms_send", array(), "general_settings", $locale);
                     }
+                    $parameters["phoneConfirmShow"] = true;
                     $parameters["expandedFormClass"] = 'mobile';
                 } elseif ($form->get('phoneConfirm')->isClicked()) {
                     $session = $request->getSession();
