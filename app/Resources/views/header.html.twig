@@ -1,7 +1,5 @@
 <header>
-    <a class="logo {{ branding }}" href="{{ path('_main') }}">
-        <img src="{{ asset('branding/' ~ branding ~ '/logo.png') }}"/>
-    </a>
+    <a class="site_logo {{ branding }}" href="{{ path('_main') }}"></a>
     {% if is_granted('ROLE_PARTICIPANT')  %}
         {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createTopSettingsMenu',{'template': 'CyclogramFrontendBundle:Knp:top_menu.html.twig'}) }}
         {% else %}
@@ -16,18 +14,14 @@
 <div class="mobile_header_menu nologin">
         <ul>
          <li class="logo">
-             <a class="logo {{ branding }}" href="{{ path('_main') }}">
-                <img src="{{ asset('branding/' ~ branding ~ '/logo.png') }}"/>
-             </a>
+            <a class="site_logo {{ branding }}" href="{{ path('_main') }}"></a>
          </li>
          <li class="right"><a class="trigger_sitemenu" href="#"></a></li>
         </ul>
 </div>
 <div class="mobile_sitemenu register nologin">
         <div class="menu_wrapper">
-        <a class="logo {{ branding }}" href="{{ path('_main') }}">
-            <img src="{{ asset('branding/' ~ branding ~ '/logo.png') }}"/>
-        </a>
+        <a class="site_logo {{ branding }}" href="{{ path('_main') }}"></a>
         {% if app.user %}
             {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createTopSettingsMenu',{'template': 'CyclogramFrontendBundle:Knp:top_menu.html.twig'}) }}
         {% else %}

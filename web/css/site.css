@@ -17,6 +17,14 @@ body.has_image {
 	background-size: cover;
 }
 
+.branding_default {
+	
+}
+.branding_knowathome {
+	background: none; 
+	background-color: #878681 !important;
+}
+
 footer .site_container {
 	position: relative;
 }
@@ -101,7 +109,7 @@ span em {
 
 	/*background:  url(../images/reg_logo.png) no-repeat 0px 0px;*/
 	
-	background:  url(../images/logo.png) no-repeat 0px 50%;
+	background:  url(../branding/default/logo.png) no-repeat 0px 50%;
 	background-size: 117px 22px;
 	
 	margin-left: 20px;
@@ -109,17 +117,9 @@ span em {
 .lt-ie9 .reg_header a.logo {
 	background:  url(../images/100_logo.png) no-repeat 0px 50%;
 }
-.reg_header a.logo.default {
-	
-}
 .reg_header a.logo.knowathome {
-    background:  url(../images/study/1/logo-white.png) no-repeat 0px 50%;
+    background:  url(../branding/knowathome/logo.png) no-repeat 0px 50%;
     background-size: 117px 22px;
-}
-
-header a.logo img {
-	width: 117px;
-	height: 22px;
 }
 
 .mobile_sitemenu {
@@ -165,10 +165,14 @@ header a.logo img {
 	text-indent: -9999px;
 	width: 117px;
 	/*background:  url(../images/logo2.png) no-repeat 0px 1px;*/
-	background:  url(../images/logo.png) no-repeat 0px 50%;
+	background:  url(../branding/default/logo.png) no-repeat 0px 50%;
 	background-size: 117px 22px;
 	/*margin-left: -5px;*/
 	/*margin-top: 3px;*/
+}
+.mobile_sitemenu .menu_wrapper a.logo.knowathome {
+	background:  url(../branding/knowathome/logo.png) no-repeat 0px 50%;
+	background-size: 117px 22px;
 }
 .mobile_sitemenu.nologin .menu_wrapper a.logo,
 .mobile_header_menu.nologin ul li.logo a  {
@@ -253,7 +257,7 @@ header a.logo img {
 	height: 55px;
 	/*background:  url(../images/reg_logo.png) no-repeat 0px 17px;*/
 
-	background:  url(../images/logo.png) no-repeat 0px 50%;
+	background:  url(../branding/default/logo.png) no-repeat 0px 50%;
 	background-size: 117px 22px;
 
 	
@@ -264,25 +268,31 @@ header a.logo img {
 
 }
 
+.mobile_header_menu ul li.logo a.knowathome {
+	background:  url(../branding/knowathome/logo.png) no-repeat 0px 50%;
+	background-size: 117px 22px;
+}
+
 header {
 	height: 55px;
 	width: 100%;
 }
-header .logo {
+header .site_logo {
 	display: block;
 	float: left;
 	height: 55px;
 	text-indent: -9999px;
 	width: 117px;
 	height: 55px;
-	
-}
-header .logo.default {
-	background:  url(../images/logo.png) no-repeat 0px 50%;
+	background:  url(../branding/default/logo.png) no-repeat 0px 50%;
 	background-size: 117px 22px;
 }
-.lt-ie9 header .logo.default {
+.lt-ie9 header .site_logo {
 		background:  url(../images/100_logo.png) no-repeat 0px 50%;
+}
+header .site_logo.knowathome {
+	background:  url(../branding/knowathome/logo.png) no-repeat 0px 50%;
+	background-size: 117px 22px;
 }
 header .header_menu {
 	float: right;
@@ -512,13 +522,6 @@ header .header_menu span.text  , .footer_col_right span.text  {
 }
 .panel .panel_left.study {
 	background: url(../images/alt4.png) repeat-y 100% 0px;
-}
-.branding_default {
-	
-}
-.branding_knowathome {
-	background: none; 
-	background-color: #878681 !important;
 }
 .page_main .panel {
 	padding-bottom: 0px;
@@ -4093,7 +4096,7 @@ footer a.icon_update span {
 		margin-left: 20px;
 	}
 	
-	header .logo {
+	header .site_logo {
 		margin-left: 10px;
 	}
 	header .header_menu {
