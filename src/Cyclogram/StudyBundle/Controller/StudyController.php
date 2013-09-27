@@ -87,15 +87,8 @@ class StudyController extends Controller
         //check for default campaigns
         if(!$campaignParameters = $this->container->get('doctrine')->getRepository("CyclogramProofPilotBundle:Campaign")->getDefaultCampaignParameters($studyId)) {
 //             $this->parameters["errorMessage"] = "No campains are linked with site  '" . $this->parameters["defaultSite"] . "'";
-//             return true;
-            $this->parameters["campaignParameters"]["campaignSiteLinkId"] = 4;
-            $this->parameters["campaignParameters"]["campaignId"] = 4;
-            $this->parameters["campaignParameters"]["campaignName"] = "SexPro";
-            $this->parameters["campaignParameters"]["campaignTypeName"] = "Clinic";
-            $this->parameters["campaignParameters"]["placementName"] = "SexPro";
-            $this->parameters["campaignParameters"]["siteId"] = 3;
-            $this->parameters["campaignParameters"]["siteName"] = $this->parameters["defaultSite"];
-            $this->parameters["campaignParameters"]["affinityName"] = "No Affinity";
+           $this->parameters["errorMessage"] = "No campains are linked with site  '" . $this->parameters["defaultSite"] . "'";
+            return true;
         } else {
             $this->parameters["campaignParameters"] = $campaignParameters;
         }

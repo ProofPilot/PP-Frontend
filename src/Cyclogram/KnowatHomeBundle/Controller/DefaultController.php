@@ -364,6 +364,46 @@ class DefaultController extends Controller
         if( $isElegible ){
 
             //store surveyid and saveid in session
+            $locale = $this->getRequest()->getLocale();
+            $em = $this->getDoctrine()->getManager();
+            $session = $this->getRequest()->getSession();
+            
+            //depending on request parameters get campaign and site name
+            if($this->getRequest()->get('utm_source') && $this->getRequest()->get('utm_campaign')) {
+                $campaignName = $this->getRequest()->get('utm_campaign');
+                $siteName = $this->getRequest()->get('utm_source');
+                $csl = $this->getDoctrine()->getRepository("CyclogramProofPilotBundle:CampaignSiteLink")->getCSLParameters($campaignName, $siteName);
+                if (!$csl)
+                    throw new \Exception("Referral URL parameters are wrong");
+                $siteId = $csl->getSite()->getSiteId();
+                $campaignId = $csl->getCampaign()->getCampaignId();
+            
+            } else {
+                if(!$campaignParameters = $this->container->get('doctrine')->getRepository("CyclogramProofPilotBundle:Campaign")->getDefaultCampaignParameters(1)) {
+                    //             $this->parameters["errorMessage"] = "No campains are linked with site  '" . $this->parameters["defaultSite"] . "'";
+                    $this->parameters["errorMessage"] = "No campains are linked with site  '" . $this->parameters["defaultSite"] . "'";
+                    return true;
+                } else {
+                    $this->parameters["campaignParameters"] = $campaignParameters;
+                }
+                $campaignName = $this->parameters["campaignParameters"]["campaignName"];
+                $campaignId = $this->parameters["campaignParameters"]["campaignId"];
+                $siteName = $this->parameters["campaignParameters"]["siteName"];
+                $siteId =  $this->parameters["campaignParameters"]["siteId"];
+            
+                $str = "utm_source=" . urlencode($this->parameters["campaignParameters"]["siteName"]);
+                $str .= "&utm_medium=" . urlencode($this->parameters["campaignParameters"]["campaignTypeName"]);
+                $str .= "&utm_term=" . urlencode($this->parameters["campaignParameters"]["placementName"]);
+                $str .= "&utm_content=" . urlencode($this->parameters["campaignParameters"]["affinityName"]);
+                $str .= "&utm_campaign="  . urlencode($this->parameters["campaignParameters"]["campaignName"]);
+            
+                $this->parameters["google_pars"] = $str;
+            }
+            
+            //save referral site&campaign in session
+            $session->set('referralSite', $siteId);
+            $session->set('referralCampaign', $campaignId);
+            
             $session = $this->getRequest()->getSession();
             $bag = new AttributeBag();
             $bag->setName("SurveyInfo");

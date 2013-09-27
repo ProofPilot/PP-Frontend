@@ -359,14 +359,17 @@ class RegistrationController extends Controller
                     $em->flush($participant);
     
                     $steps5 = $session->get("5step", false);
-                    if ($session->has('aditional_phone')) 
-                        return $this->redirect($this->generateUrl("_register_mobile",
-                                array(
-                                        'id'=> $id,
-                                        'studyCode' => $studyCode,
-                                        'aditionalNumber' => $session->get('aditional_phone')
-                                )));
-
+                    if ($session->has('aditional_phone')) {
+                        $aditionalNumber = $session->get('aditional_phone');
+                        $session->remove('aditional_phone');
+                            return $this->redirect($this->generateUrl("_register_mobile",
+                                    array(
+                                            'id'=> $id,
+                                            'studyCode' => $studyCode,
+                                            'aditionalNumber' =>  $aditionalNumber
+                                    )));
+                    }
+                    
                     if($steps5) {
                         //on 5step we redirect
                         return $this->redirect($this->generateUrl("_register_mailaddress",
