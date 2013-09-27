@@ -346,7 +346,15 @@ class RegistrationController extends Controller
                 if ($value['sms_code'] == $userSMS) {
                     
                     //Make Participant SMS code confirmed
+                    $timezone = $em->getRepository('CyclogramProofPilotBundle:ParticipantTimeZone')->findOneByParticipantTimezoneName($form['timeZone']->getData());
+                    if (empty($timezone))
+                        $timezone = $em->getRepository('CyclogramProofPilotBundle:ParticipantTimeZone')->find(1);
                     $participant->setParticipantMobileSmsCodeConfirmed(true);
+                    $mailCode = $participant->getParticipantEmailCode();
+                    if(empty($mailCode)){
+                        $mailCode = substr(md5( md5( $participant->getParticipantEmail() . md5(microtime()))), 0, 4);
+                        $participant->setParticipantEmailCode($mailCode);
+                    }
                     $em->persist($participant);
                     $em->flush($participant);
     
@@ -393,7 +401,8 @@ class RegistrationController extends Controller
                         'form' => $form->createView(),
                         'id' => $participant->getParticipantId(),
                         'steps' => $session->get("5step", false) ? 5 : 4,
-                        'current' => 4
+                        'current' => 4,
+                        'studyCode' => $studyCode
                 ));
     }
     

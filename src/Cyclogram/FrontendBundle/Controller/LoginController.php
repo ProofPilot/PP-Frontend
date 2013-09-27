@@ -45,10 +45,10 @@ class LoginController extends Controller
 {
 
     /**
-     * @Route("/login", name="_login")
+     * @Route("/login/{studyCode}", name="_login", defaults={"studyCode"= null})
      * @Template()
      */
-    public function loginAction()
+    public function loginAction($studyCode=null)
     {
         $session =$this->getRequest()->getSession();
         $request = $this->getRequest();
@@ -66,17 +66,14 @@ class LoginController extends Controller
             
             $participant = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:Participant')->find($participantId);
             
-            if(!empty($studyCode))
-                $study = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
-            
+
             if (!empty($studyCode)){
+                $study = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
                 if ($study->getEmailVerificationRequired()) {
                     return $this->redirect( $this->generateUrl("_register_email", array('id' => $participant->getParticipantId(), 'studyCode' => $studyCode)));
                 } else {
                     return $this->redirect( $this->generateUrl("_register_mobile", array('id' => $participant->getParticipantId(), 'studyCode' => $studyCode)));
                 }
-            } else {
-                return $this->redirect( $this->generateUrl("_register_mobile", array('id' => $participant->getParticipantId())) );
             }
         }
         
@@ -283,10 +280,10 @@ class LoginController extends Controller
     }
     
     /**
-     * @Route("/forgot_pass", name="_forgot_pass")
+     * @Route("/forgot_pass/{studyCode}", name="_forgot_pass", defaults={"studyCode"= null})
      * @Template()
      */
-    public function forgotPassAction()
+    public function forgotPassAction($studyCode = null)
     {
         $request = $this->getRequest();
     
@@ -314,6 +311,8 @@ class LoginController extends Controller
     
                 if (!empty($participant)) {
                     $parameters['id'] = $participant->getParticipantId();
+                    $parameters['studyCode'] = $studyCode;
+                    $parameters['email'] = $participant->getParticipantEmail();
                     $parameters['locale'] = $participant->getLocale() ? $participant->getLocale() : $request->getLocale();
                     $parameters['host'] = $this->container->getParameter('site_url');
                     $embedded['logo_top'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_logo.png");
@@ -330,12 +329,13 @@ class LoginController extends Controller
                             true,
                             $parameters);
     
-                    return $this->render('CyclogramFrontendBundle:Login:reset_password_confirmation.html.twig', array());
+                    return $this->render('CyclogramFrontendBundle:Login:reset_password_confirmation.html.twig', array("studyCode" => $studyCode));
                 } else {
                     return $this->render('CyclogramFrontendBundle:Login:forgot_your_password.html.twig',
                             array(
                                     "form" => $form->createView(),
-                                    "error" => $this->get('translator')->trans("doesnt_match_records", array(), "login")
+                                    "error" => $this->get('translator')->trans("doesnt_match_records", array(), "login"),
+                                    "studyCode" => $studyCode
                             ));
                 }
             }
@@ -343,14 +343,15 @@ class LoginController extends Controller
         return $this->render('CyclogramFrontendBundle:Login:forgot_your_password.html.twig',
                 array(
                         "form" => $form->createView(),
+                        "studyCode" => $studyCode
                 ));
     }
     
     /**
-     * @Route("/create_pass/{id}" , name="_create_new_pass")
+     * @Route("/create_pass/{studyCode}/{id}" , name="_create_new_pass", defaults={"studyCode"= null})
      * @Template()
      */
-    public function createPassAction($id)
+    public function createPassAction($id, $studyCode = null)
     {
         $request = $this->getRequest();
         $session = $this->getRequest()->getSession();
@@ -399,7 +400,7 @@ class LoginController extends Controller
                     if($sentSms){
     
                         $session->set('password' ,$values['participantPassword']['first']);
-                        return $this->redirect( $this->generateUrl('_confirm_pass_reset', array('id' => $id)));
+                        return $this->redirect( $this->generateUrl('_confirm_pass_reset', array('studyCode' => $studyCode,'id' => $id)));
                     }
                 }
             }
@@ -408,14 +409,15 @@ class LoginController extends Controller
                 array(
                         "form" => $form->createView(),
                         'id' => $id,
+                        'studyCode' => $studyCode
                 ));
     }
     
     /**
-     * @Route("/confirm_reset/{id}", name="_confirm_pass_reset")
+     * @Route("/confirm_reset/{studyCode}/{id}", name="_confirm_pass_reset", defaults={"studyCode"= null})
      * @Template()
      */
-    public function confirmResetAction($id)
+    public function confirmResetAction($id, $studyCode = null)
     {
         $request = $this->getRequest();
     
@@ -439,7 +441,7 @@ class LoginController extends Controller
                         $em->flush($participant);
                         $session->invalidate();
     
-                        return $this->render('CyclogramFrontendBundle:Login:password_changed.html.twig');
+                        return $this->render('CyclogramFrontendBundle:Login:password_changed.html.twig', array('studCode' => $studyCode));
                     } else {
                         $session->invalidate();
                         $error = "Wrong SMS!";
@@ -457,10 +459,10 @@ class LoginController extends Controller
     }
     
     /**
-     * @Route("/forgot_username", name="_forgot_username")
+     * @Route("/forgot_username/{studyCode}", name="_forgot_username", defaults={"studyCode"= null})
      * @Template()
      */
-    public function forgotUserAction()
+    public function forgotUserAction($studyCode=null)
     {
         if ($this->get('security.context')->isGranted("ROLE_PARTICIPANT")){
             return $this->redirect($this->get('router')->generate("_main"));
@@ -502,19 +504,21 @@ class LoginController extends Controller
                     $sentSms = $sms->sendSmsAction( array('message' =>  $userNameText.' '. $participantUsername .' '. $emailText .' '. $participantEmail, 'phoneNumber'=>$participant->getParticipantMobileNumber()) );
                     if($sentSms)
                         return $this->render('CyclogramFrontendBundle:Login:username_sent.html.twig',
-                                array());
+                                array("studyCode" => $studyCode));
                 } else {
                     return $this->render('CyclogramFrontendBundle:Login:forgot_username.html.twig',
                             array(
                                     'form' => $form->createView(),
-                                    "error" => $this->get('translator')->trans("doesnt_match_records", array(), "login")
+                                    "error" => $this->get('translator')->trans("doesnt_match_records", array(), "login"),
+                                    
                             ));
                 }
             }
         }
         return $this->render('CyclogramFrontendBundle:Login:forgot_username.html.twig',
                 array(
-                        'form' => $form->createView()
+                        'form' => $form->createView(),
+                        "studyCode" => $studyCode
                 ));
     }
 }

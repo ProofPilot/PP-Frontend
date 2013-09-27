@@ -57,6 +57,7 @@ class OAuth2UserProvider implements OAuthAwareUserProviderInterface
         //if participant does not existr and it was registration
         if (empty($participant)) {
             $participant = new Participant();
+            $request = $this->container->get('request');
             $question = $this->userManager->getRepository('CyclogramProofPilotBundle:RecoveryQuestion')->find(1);
             $participant->setRecoveryQuestion($question);
             $participant->setRecoveryPasswordCode('Default');
@@ -70,6 +71,9 @@ class OAuth2UserProvider implements OAuthAwareUserProviderInterface
             $date = new \DateTime();
             $participant->setParticipantLastTouchDatetime($date);
             $participant->setParticipantZipcode('');
+            $participant->setLocale($request->getLocale());
+            $timezone = $this->userManager->getRepository('CyclogramProofPilotBundle:ParticipantTimeZone')->find(1);
+            $participant->setParticipantTimezone($timezone);
             $role = $this->userManager->getRepository('CyclogramProofPilotBundle:ParticipantRole')->find(1);
             $participant->setParticipantRole($role);
             $status = $this->userManager->getRepository('CyclogramProofPilotBundle:Status')->find(1);

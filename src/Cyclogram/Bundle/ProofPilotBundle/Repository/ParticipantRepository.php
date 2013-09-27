@@ -135,20 +135,11 @@ class ParticipantRepository extends EntityRepository implements
     public function checkIfEmailNotUsed($email) {
         $result = $this->getEntityManager()
             ->createQuery('SELECT COUNT(p.participantEmail) FROM CyclogramProofPilotBundle:Participant p
-                    WHERE p.participantEmail = :email')
+                    WHERE p.participantEmail = :email
+                    OR p.participantAppreciationEmail = :email')
                     //AND p.participantEmailConfirmed = true')
             ->setParameter('email', $email)
             ->getSingleScalarResult();
-        return $result;
-    }
-    
-    public function checkIfAppreciationEmailNotUsed($email) {
-        $result = $this->getEntityManager()
-        ->createQuery('SELECT COUNT(p.participantEmail) FROM CyclogramProofPilotBundle:Participant p
-                WHERE p.participantAppreciationEmail = :email')
-                //AND p.participantEmailConfirmed = true')
-        ->setParameter('email', $email)
-        ->getSingleScalarResult();
         return $result;
     }
     

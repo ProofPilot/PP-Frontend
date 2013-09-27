@@ -76,5 +76,5 @@
 			
 			</div>
 		</div>
-		<div class="login_btn_placeholder">{% trans from "login" %}havent_joined{% endtrans %} <a href="{{ path('_register') }}">Register</a></div>
+		<div class="login_btn_placeholder">{% trans from "login" %}havent_joined{% endtrans %} <a href="{{ path('_register',{'studyCode' : studyCode}) }}">Register</a></div>
 {% endblock content %}

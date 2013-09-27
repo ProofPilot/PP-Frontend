@@ -62,7 +62,7 @@ class DefaultController extends Controller
         $pageText['title'] = $studyContent->getStudyName();
         $pageText['description'] = $studyContent->getStudyDescription();
 
-        return $this->render('CyclogramKnowatHomeBundle:website:home.html.twig', array('pageText'=>$pageText, "studyId"=>$study->getStudyId()));
+        return $this->render('CyclogramKnowatHomeBundle:website:home.html.twig', array('pageText'=>$pageText, "studyCode"=>$study->getStudyCode()));
     }
 
     public function aboutStudyAction()
