@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "7763231e1e368fbf7c24d1143714c6c6",
+    "hash": "3c9860d81b731b967ee2de17d2995662",
     "packages": [
         {
             "name": "doctrine/common",
@@ -559,18 +559,19 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/hwi/HWIOAuthBundle.git",
-                "reference": "71b44c6a95443b6a9a13defa2e63ccc7a05d5f99"
+                "reference": "630d61ca64dfcafd02a13b61698fa99d7ec2c74e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hwi/HWIOAuthBundle/zipball/71b44c6a95443b6a9a13defa2e63ccc7a05d5f99",
-                "reference": "71b44c6a95443b6a9a13defa2e63ccc7a05d5f99",
+                "url": "https://api.github.com/repos/hwi/HWIOAuthBundle/zipball/630d61ca64dfcafd02a13b61698fa99d7ec2c74e",
+                "reference": "630d61ca64dfcafd02a13b61698fa99d7ec2c74e",
                 "shasum": ""
             },
             "require": {
                 "kriswallsmith/buzz": "~0.7",
                 "php": ">=5.3.3",
                 "symfony/framework-bundle": "~2.1",
+                "symfony/options-resolver": "~2.1",
                 "symfony/security-bundle": "~2.1"
             },
             "require-dev": {
@@ -630,6 +631,7 @@
                 "deviantart",
                 "disqus",
                 "dropbox",
+                "eventbrite",
                 "facebook",
                 "firewall",
                 "flickr",
@@ -639,14 +641,19 @@
                 "instagram",
                 "jira",
                 "linkedin",
+                "mail.ru",
                 "oauth",
                 "oauth1",
                 "oauth2",
                 "odnoklassniki",
+                "qq",
                 "security",
                 "sensio connect",
+                "sina weibo",
                 "stack exchange",
                 "stereomood",
+                "trello",
+                "twitch",
                 "twitter",
                 "vkontakte",
                 "windows live",
@@ -654,7 +661,7 @@
                 "yahoo",
                 "yandex"
             ],
-            "time": "2013-08-06 08:16:39"
+            "time": "2013-09-28 12:37:04"
         },
         {
             "name": "incenteev/composer-parameter-handler",
