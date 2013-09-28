@@ -58,12 +58,11 @@ class LoginController extends Controller
 
         if(     $error &&
                 $error instanceof IncompleteUserException) {
-
             $participantId = $error->getParticipantId();
             $studyCode = $error->getToken()->getAttribute("studyCode");
             $resourceOwner = $error->getToken()->getResourceOwnerName();
             $session->set("resourceOwnerName",$resourceOwner);
-            
+
             $participant = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:Participant')->find($participantId);
             
 
@@ -74,6 +73,8 @@ class LoginController extends Controller
                 } else {
                     return $this->redirect( $this->generateUrl("_register_mobile", array('id' => $participant->getParticipantId(), 'studyCode' => $studyCode)));
                 }
+            } else {
+                return $this->redirect( $this->generateUrl("_register_mobile", array('id' => $participant->getParticipantId())) );
             }
         }
         

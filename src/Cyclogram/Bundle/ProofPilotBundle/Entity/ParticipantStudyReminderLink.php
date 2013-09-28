@@ -41,7 +41,7 @@ class ParticipantStudyReminderLink
     /**
      * @var \Participant
      *
-     * @ORM\ManyToOne(targetEntity="Participant", inversedBy="studyReminders")
+     * @ORM\ManyToOne(targetEntity="Participant", inversedBy="studyreminderlinks")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="participant_id", referencedColumnName="participant_id")
      * })

@@ -43,9 +43,22 @@ class ParticipantRepository extends EntityRepository implements
          ->getOneOrNullResult();
 
     }
+    
+    public function loadUserByEmail($email)
+    {
+        return $this->getEntityManager()
+        ->createQuery('SELECT p FROM
+                CyclogramProofPilotBundle:Participant p
+                WHERE p.participantEmail = :email')
+                ->setParameters(array(
+                        'email' => $email
+                ))
+                ->getOneOrNullResult();
+    }
+    
     public function refreshUser(UserInterface $user)
     {
-        return $this->loadUserByUsername($user->getUsername());
+        return $this->loadUserByEmail($user->getParticipantEmail());
 
     }
     public function supportsClass($class)
