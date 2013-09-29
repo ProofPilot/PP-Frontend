@@ -84,7 +84,6 @@ class OAuth2UserProvider implements OAuthAwareUserProviderInterface
                     $participant->setParticipantFirstname($data["first_name"]);
                     $participant->setParticipantLastname($data["last_name"]);
                     $participant->setParticipantEmail($data["email"]);
-                    $participant->setParticipantUsername($data["username"]);
                     $participant->setFacebookId($data["id"]);
                     break;
                 case "google":
