@@ -2,7 +2,7 @@
 'Your email:': 'Your email:'
 'Your message:': 'Your message:'
 'Your name:': 'Your name:'
-browser_msg: 'For the best experience, please update your browser. We recommend Chrome, Firefox or Safari.'
+browser_msg: 'For the best experience, please update your browser. We recommend Chrome, Firefox, Safari or Internet Explorer 9 and above.'
 btn_save_pass: 'Save password'
 btn_send_pass: 'Send password'
 label_new_pass: 'New password'
