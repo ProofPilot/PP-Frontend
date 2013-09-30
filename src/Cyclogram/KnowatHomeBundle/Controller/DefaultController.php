@@ -391,7 +391,7 @@ class DefaultController extends Controller
                 if(!$campaignParameters = $this->container->get('doctrine')->getRepository("CyclogramProofPilotBundle:Campaign")->getDefaultCampaignParameters(1)) {
                     //             $this->parameters["errorMessage"] = "No campains are linked with site  '" . $this->parameters["defaultSite"] . "'";
                     $this->parameters["errorMessage"] = "No campains are linked with site  '" . $this->parameters["defaultSite"] . "'";
-                    return true;
+                    return $this->render('CyclogramStudyBundle:Study:error.html.twig', $this->parameters);
                 } else {
                     $this->parameters["campaignParameters"] = $campaignParameters;
                 }
