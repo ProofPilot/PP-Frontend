@@ -40,11 +40,10 @@ class VerificationNoticeCommand extends ContainerAwareCommand
         $em = $this->getContainer()->get('doctrine')->getManager();
         $participants = $em->getRepository('CyclogramProofPilotBundle:Participant')->findByParticipantEmailConfirmed(false);
         $currentDate = new \DateTime();
-//         $currentDay = $currentDate->format('z');
-        $currentDay = 3;
+        $currentDay = $currentDate->format('z');
         foreach ($participants as $participant) {
             $participantRegTime = $participant->getParticipantRegistrationtime();
-//             $participantRegDay = $participantRegTime->format('z');
+            $participantRegDay = $participantRegTime->format('z');
             $participantRegDay = 366;
             $interval = $currentDay - $participantRegDay;
             if ((($currentDay - $participantRegDay) == 3) || (($currentDay - $participantRegDay) == -363) || (($currentDay - $participantRegDay) == -364)
