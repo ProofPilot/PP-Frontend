@@ -316,12 +316,12 @@ class LoginController extends Controller
                     $parameters['email'] = $participant->getParticipantEmail();
                     $parameters['locale'] = $participant->getLocale() ? $participant->getLocale() : $request->getLocale();
                     $parameters['host'] = $this->container->getParameter('site_url');
-                    $embedded['logo_top'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_logo.png");
-                    $embedded['logo_footer'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newletter_logo_footer.png");
-                    $embedded['login_button'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_small_login.jpg");
-                    $embedded['white_top'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_white_top.png");
-                    $embedded['white_bottom'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_white_bottom.png");
+                    
                     $cc = $this->get('cyclogram.common');
+                    
+                    $embedded = array();
+                    $embedded = $cc->getEmbeddedImages();
+                    
                     $cc->sendMail($participant->getParticipantEmail(),
                             $this->get('translator')->trans("email_reset_password", array(), "email", $parameters['locale']),
                             'CyclogramFrontendBundle:Email:reset_password_email.html.twig',

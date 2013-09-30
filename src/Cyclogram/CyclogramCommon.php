@@ -281,5 +281,20 @@ class CyclogramCommon {
         }
         return $full_phone;
     }
+    
+    public function getEmbeddedImages() {
+        $branding = $this->container->getParameter('branding');
+        if ($branding == 'knowathome') {
+            $embedded['logo_knowathome'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/branding/knowathome/logo.png");
+        } else {
+            $embedded['logo_top'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_logo.png");
+            $embedded['logo_footer'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newletter_logo_footer.png");
+        }
+        //            $embedded['login_button'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_small_login.jpg");
+        $embedded['white_top'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_white_top.png");
+        $embedded['white_bottom'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_white_bottom.png");
+        
+        return $embedded;
+    }
 
 }

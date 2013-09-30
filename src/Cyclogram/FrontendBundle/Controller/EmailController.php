@@ -33,11 +33,10 @@ class EmailController extends Controller
      */
     function sendTestEmailAction($email)
     {
-        $embedded['logo_top'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_logo.png");
-        $embedded['logo_footer'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newletter_logo_footer.png");
-        $embedded['login_button'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_small_login.jpg");
-        $embedded['white_top'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_white_top.png");
-        $embedded['white_bottom'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_white_bottom.png");
+        $branding = $this->get('branding');
+        
+        $embedded = array();
+        $embedded = $cc->getEmbeddedImages();
         
         $cc = $this->get('cyclogram.common');
         
@@ -77,11 +76,9 @@ class EmailController extends Controller
 
         
         $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:Participant')->getActiveParticipantInterventionLinks($participant);
-        $embedded['logo_top'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_logo.png");
-        $embedded['logo_footer'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newletter_logo_footer.png");
-        $embedded['login_button'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_small_login.jpg");
-        $embedded['white_top'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_white_top.png");
-        $embedded['white_bottom'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_white_bottom.png");
+        
+        $embedded = array();
+        $embedded = $cc->getEmbeddedImages();
         
         
         $parameters["interventions"] = array();
@@ -160,11 +157,9 @@ class EmailController extends Controller
             $em = $this->getDoctrine()->getManager();
             $participant = $em->getRepository('CyclogramProofPilotBundle:Participant')->find($id);
             $cc = $this->get('cyclogram.common');
-            $embedded['logo_top'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_logo.png");
-            $embedded['logo_footer'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newletter_logo_footer.png");
-            $embedded['login_button'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_small_login.jpg");
-            $embedded['white_top'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_white_top.png");
-            $embedded['white_bottom'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_white_bottom.png");
+            
+            $embedded = array();
+            $embedded = $cc->getEmbeddedImages();
         
             $parameters['email'] = $participant->getParticipantEmail();
             $parameters['locale'] = $participant->getLocale() ? $participant->getLocale() : $request->getLocale();
