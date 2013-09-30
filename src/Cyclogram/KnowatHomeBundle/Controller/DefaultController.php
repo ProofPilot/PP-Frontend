@@ -36,6 +36,7 @@ use Cyclogram\Bundle\ProofPilotBundle\Entity\Custom\DbCustom;
 
 class DefaultController extends Controller
 {
+    private $parameters = array();
 
     public function indexAction()
     {
@@ -367,6 +368,14 @@ class DefaultController extends Controller
             $locale = $this->getRequest()->getLocale();
             $em = $this->getDoctrine()->getManager();
             $session = $this->getRequest()->getSession();
+            
+            if(!$defaultSites = $this->getDoctrine()->getRepository("CyclogramProofPilotBundle:Study")->getDefaultSites(1)) {
+                $this->parameters["defaultSite"] = "KnowAtHome Default";
+                //             $this->parameters["errorMessage"] = "Organization '" . $this->parameters["siteOrganization"] . "' has no default sites.";
+                //             return true;
+            } else {
+                $this->parameters["defaultSite"] = $defaultSites[0]["siteName"];
+            }
             
             //depending on request parameters get campaign and site name
             if($this->getRequest()->get('utm_source') && $this->getRequest()->get('utm_campaign')) {
