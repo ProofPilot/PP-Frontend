@@ -25,7 +25,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
-class TestController extends Controller
+class EmailController extends Controller
 {
     /**
      * @Route("/send_test_email/{email}" , name="_send_test_email")
@@ -33,11 +33,10 @@ class TestController extends Controller
      */
     function sendTestEmailAction($email)
     {
-        $embedded['logo_top'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_logo.png");
-        $embedded['logo_footer'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newletter_logo_footer.png");
-        $embedded['login_button'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_small_login.jpg");
-        $embedded['white_top'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_white_top.png");
-        $embedded['white_bottom'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_white_bottom.png");
+        $branding = $this->get('branding');
+        
+        $embedded = array();
+        $embedded = $cc->getEmbeddedImages();
         
         $cc = $this->get('cyclogram.common');
         
@@ -77,11 +76,9 @@ class TestController extends Controller
 
         
         $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:Participant')->getActiveParticipantInterventionLinks($participant);
-        $embedded['logo_top'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_logo.png");
-        $embedded['logo_footer'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newletter_logo_footer.png");
-        $embedded['login_button'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_small_login.jpg");
-        $embedded['white_top'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_white_top.png");
-        $embedded['white_bottom'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_white_bottom.png");
+        
+        $embedded = array();
+        $embedded = $cc->getEmbeddedImages();
         
         
         $parameters["interventions"] = array();
@@ -149,5 +146,38 @@ class TestController extends Controller
                 return $path;
     
         }
+    }
+    
+    /**
+     * @Route("/send_verification_email/{email}/{code}/{id}/{studyCode}" , name="_send_verification_email", defaults={"studyCode"=null})
+     * @Template()
+     */
+    function sendVerificationEmailAction($email, $code ,$studyCode, $id)
+    {
+            $em = $this->getDoctrine()->getManager();
+            $participant = $em->getRepository('CyclogramProofPilotBundle:Participant')->find($id);
+            $cc = $this->get('cyclogram.common');
+            
+            $embedded = array();
+            $embedded = $cc->getEmbeddedImages();
+        
+            $parameters['email'] = $participant->getParticipantEmail();
+            $parameters['locale'] = $participant->getLocale() ? $participant->getLocale() : $request->getLocale();
+            $parameters['host'] = $this->container->getParameter('site_url');
+            $parameters['code'] = $participant->getParticipantEmailCode();
+            try{
+            $cc->sendMail($participant->getParticipantEmail(),
+                    $this->get('translator')->trans("email_title_verify", array(), "email", $parameters['locale']),
+                    'CyclogramFrontendBundle:Email:email_confirmation.html.twig',
+                    null,
+                    $embedded,
+                    true,
+                    $parameters);
+            } catch (\Exception $exc){
+                echo("Error. Email not send" . $exc->getMessage());
+            
+            }
+            
+           return $this->render('CyclogramFrontendBundle:Email:mail_confirm.html.twig');
     }
 }

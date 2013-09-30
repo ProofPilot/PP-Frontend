@@ -54,12 +54,17 @@
         }
     </style>
 </head>
-<body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0"style="margin: 0px; padding: 0px; background: #1e2833; background: -moz-linear-gradient(top, #1e2833 0%, #496275 100%); background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#1e2833), color-stop(100%,#496275));  background: -webkit-linear-gradient(top, #1e2833 0%,#496275 100%); background: -o-linear-gradient(top, #1e2833 0%,#496275 100%); background: -ms-linear-gradient(top, #1e2833 0%,#496275 100%); background: linear-gradient(to bottom, #1e2833 0%,#496275 100%); filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e2833', endColorstr='#496275',GradientType=0 );">
+<body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0" {% if branding != 'knowathome' %} style="margin: 0px; padding: 0px; background: #1e2833;
+      background: -moz-linear-gradient(top, #1e2833 0%, #496275 100%); background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#1e2833), color-stop(100%,#496275));  
+      background: -webkit-linear-gradient(top, #1e2833 0%,#496275 100%); background: -o-linear-gradient(top, #1e2833 0%,#496275 100%); background: -ms-linear-gradient(top, #1e2833 0%,#496275 100%); 
+      background: linear-gradient(to bottom, #1e2833 0%,#496275 100%); filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e2833', endColorstr='#496275',GradientType=0 );" {% endif %}
+      style="margin: 0px; padding: 0px; background: #878681; filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e2833', endColorstr='#496275',GradientType=0 );">
 
 	<table cellpadding="0" cellspacing="0" align="center" class="top_menu">
 		<tr>
 			<td>
-				<a href="#"><img src="{{ images.logo_top }}" alt="" title="" style="display: block;" /></a>
+				{% if branding != 'knowathome' %}<a href="#"><img src="{{ images.logo_top }}" alt="" title="" style="display: block;" /></a>{% else %}
+				<a href="#"><img src="{{ images.logo_knowathome }}" alt="" title="" style="display: block;" /></a>{% endif %}
 			</td>
 			{#<td>
 				<a href="{{ host }}/{{ locale }}/main" style="color: #bcbfc2; font-family: Arial; text-decoration: none;">{{ 'my_dahsboard' | trans({}, "email", locale) }}</a>
@@ -107,10 +112,10 @@
 				<table width="530" cellpadding="0" cellspacing="0" align="center">
 					<tr>
 						<td>
+                            {% if branding != 'knowathome' %} <p style="margin: 0px; padding: 0px; margin-bottom: 30px; text-align: center;"><img src="{{ images.logo_footer }}" width="104" height="20" alt="" title="" style="display: inline-block;" /></p> {% else %}
+                            <p style="margin: 0px; padding: 0px; margin-bottom: 30px; text-align: center;"><img src="{{ images.logo_knowathome }}" width="104" height="20" alt="" title="" style="display: inline-block;" /></p>{% endif %}
 
-							<p style="margin: 0px; padding: 0px; margin-bottom: 30px; text-align: center;"><img src="{{ images.logo_footer }}" width="104" height="20" alt="" title="" style="display: inline-block;" /></p>
-
-							<p style="margin: 0px; padding: 0px; color: #918f8f; font-family: Arial; line-height: 15px; margin-bottom: 15px; text-align: center;">{{ 'bottom_text' | trans({'%mail_to%': email, '%general_settings_link%': url('_settings')}, "email", locale) | raw }}</p>
+							<p style="margin: 0px; padding: 0px; color: #918f8f; font-family: Arial; line-height: 15px; margin-bottom: 15px; text-align: center;">{{ 'bottom_text' | trans({'%mail_to%': email, '%general_settings_link%': url('_settings',{'_locale' : locale})}, "email", locale) | raw }}</p>
 							
 							<p style="margin: 0px; padding: 0px; color: #918f8f; font-family: Arial; line-height: 15px; margin-bottom: 15px; text-align: center;">{{ 'bottom_street' | trans({}, "email", locale) | raw }}</p>
 							

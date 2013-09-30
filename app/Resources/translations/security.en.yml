@@ -1,4 +1,5 @@
 email_sms_message: 'your email is'
 pass_reset_code: 'Your password reset code is'
+sms_notice_title: 'Hey, this is ProofPilot. We noticed you have not confirmed your e-mail address. To send another:'
 sms_title: 'You have an active task'
 user_name_sms_message: 'Your username is'

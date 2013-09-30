@@ -116,11 +116,8 @@ class DoItNotificationCommand extends ContainerAwareCommand
         
         $locale = $participant->getLocale();
         
-        $embedded['logo_top'] = realpath($this->getContainer()->getParameter('kernel.root_dir') . "/../web/images/newsletter_logo.png");
-        $embedded['logo_footer'] = realpath($this->getContainer()->getParameter('kernel.root_dir') . "/../web/images/newletter_logo_footer.png");
-//         $embedded['login_button'] = realpath($this->getContainer()->getParameter('kernel.root_dir') . "/../web/images/newsletter_small_login.jpg");
-        $embedded['white_top'] = realpath($this->getContainer()->getParameter('kernel.root_dir') . "/../web/images/newsletter_white_top.png");
-        $embedded['white_bottom'] = realpath($this->getContainer()->getParameter('kernel.root_dir') . "/../web/images/newsletter_white_bottom.png");
+        $embedded = array();
+        $embedded = $cc->getEmbeddedImages();
         
         $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:Participant')->getActiveParticipantInterventionLinks($participant);
         
@@ -147,6 +144,7 @@ class DoItNotificationCommand extends ContainerAwareCommand
             $parameters['locale'] = $participant->getLocale();
             $parameters['host'] = $this->getContainer()->getParameter('site_url');
             $parameters['siteurl'] = $this->getContainer()->getParameter('site_url').$this->getInterventionUrl($interventionLink, $locale);
+            
             if (!empty($parameters["interventions"])){
                 $send = $cc->sendMail(
                         $participant->getParticipantEmail(),

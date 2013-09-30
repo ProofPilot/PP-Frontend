@@ -23,6 +23,7 @@ services:
             - %lunetics_locale.switcher.use_referrer%
             - %lunetics_locale.switcher.redirect_to_route%
             - %lunetics_locale.switcher.redirect_statuscode%
+            - @service_container
 
     study_logic:
         class: Cyclogram\FrontendBundle\Service\StudyLogic

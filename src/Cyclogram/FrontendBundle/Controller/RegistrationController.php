@@ -519,13 +519,11 @@ class RegistrationController extends Controller
 //         return true;
         $em = $this->getDoctrine()->getManager();
     
-        $embedded['logo_top'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_logo.png");
-        $embedded['logo_footer'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newletter_logo_footer.png");
-        $embedded['login_button'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_small_login.jpg");
-        $embedded['white_top'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_white_top.png");
-        $embedded['white_bottom'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_white_bottom.png");
         $cc = $this->get('cyclogram.common');
-    
+        
+        $embedded = array();
+        $embedded = $cc->getEmbeddedImages();
+        
         $parameters['code'] = $participant->getParticipantEmailCode();
         $participant->setParticipantEmailCode($parameters['code']);
         $em->persist($participant);
