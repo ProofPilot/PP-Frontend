@@ -121,6 +121,7 @@ class DoItNotificationCommand extends ContainerAwareCommand
 //         $embedded['login_button'] = realpath($this->getContainer()->getParameter('kernel.root_dir') . "/../web/images/newsletter_small_login.jpg");
         $embedded['white_top'] = realpath($this->getContainer()->getParameter('kernel.root_dir') . "/../web/images/newsletter_white_top.png");
         $embedded['white_bottom'] = realpath($this->getContainer()->getParameter('kernel.root_dir') . "/../web/images/newsletter_white_bottom.png");
+        $embedded['logo_knowathome'] = realpath($this->getContainer()->getParameter('kernel.root_dir') . "/../web/branding/knowathome/logo.png");
         
         $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:Participant')->getActiveParticipantInterventionLinks($participant);
         
