@@ -1,27 +1,22 @@
 {%  extends 'CyclogramFrontendBundle:Email:email.html.twig' %}
 {% block email_content %}
-{% if studyCode is defined %}
-    {% set confirmurl = url('email_verify', {'_locale': locale, 'email': email, 'code': code, 'studyCode' : studyCode})  %}
-{% else %}
-    {% set confirmurl = url('email_verify', {'_locale': locale,'email': email, 'code': code }) %}
-{% endif %}
             <td width="643" style="background-color: white;">
-                <p style="margin: 0px; padding: 0px; margin-bottom: 25px; color: #ae4840; font-family: Arial; font-weight: bold; font-size: 40px;">{{ 'confirm_verify_title' | trans({}, "email", locale) }}</p>
-                <p style="margin: 0px; padding: 0px; margin-bottom: 35px; color: #8b8b8b; font-family: Arial; font-size: 13px; line-height: 20px;">{% trans from "email" %}confirm_verify_text{% endtrans %}</p>
+                <p style="margin: 0px; padding: 0px; margin-bottom: 25px; color: #ae4840; font-family: Arial; font-weight: bold; font-size: 40px;">{{ 'notice_verification' | trans({}, "email", locale) }}</p>
+                <p style="margin: 0px; padding: 0px; margin-bottom: 35px; color: #8b8b8b; font-family: Arial; font-size: 13px; line-height: 20px;">{% trans from "email" %}notice_verification_text{% endtrans %}</p>
                 <div class="button_box">
-                    <a href="{{ confirmurl }}" style=" background: -moz-linear-gradient(top, #97C52C 0%, #7EA61F 100%); 
+                    <a href="{{ siteurl }}" style=" background: -moz-linear-gradient(top, #97C52C 0%, #7EA61F 100%); 
                         background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#97C52C), color-stop(100%,#7EA61F));  
                         background: -webkit-linear-gradient(top, #97C52C 0%,#7EA61F 100%); background: -o-linear-gradient(top, #97C52C 0%,#7EA61F 100%); 
                         background: -ms-linear-gradient(top, #97C52C 0%,#7EA61F 100%); background: linear-gradient(to bottom, #97C52C 0%,#7EA61F 100%); 
                         filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#97C52C', endColorstr='#7EA61F',GradientType=0 );
                         border: 1px solid #7EA61F; border-radius: 3px 3px 3px 3px; color: #FFFFFF; display: inline-block; font-size: 16px;
                         font-weight: 700; height: 41px; line-height: 41px; padding-left: 25px; padding-right: 25px; text-decoration: none;">
-                        <span>{{ 'do_it' | trans({}, "dashboard", locale) }}</span>
+                        <span>{{ 'send_verification_email' | trans({}, "email", locale) }}</span>
                     </a>
                 </div>
                 <div>
                     <p>If for some reason, you can't click button, use link below to confirm the registration:</p>
-                    <a href="{{ confirmurl }}">{{ confirmurl }}</a>
+                    <a href="{{ siteurl }}">{{ siteurl }}</a>
                 </div>
             </td>
 {% endblock %}

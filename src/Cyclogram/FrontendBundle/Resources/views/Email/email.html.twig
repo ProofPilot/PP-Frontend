@@ -110,7 +110,7 @@
 
 							<p style="margin: 0px; padding: 0px; margin-bottom: 30px; text-align: center;"><img src="{{ images.logo_footer }}" width="104" height="20" alt="" title="" style="display: inline-block;" /></p>
 
-							<p style="margin: 0px; padding: 0px; color: #918f8f; font-family: Arial; line-height: 15px; margin-bottom: 15px; text-align: center;">{{ 'bottom_text' | trans({'%mail_to%': email, '%general_settings_link%': url('_settings')}, "email", locale) | raw }}</p>
+							<p style="margin: 0px; padding: 0px; color: #918f8f; font-family: Arial; line-height: 15px; margin-bottom: 15px; text-align: center;">{{ 'bottom_text' | trans({'%mail_to%': email, '%general_settings_link%': url('_settings',{'_locale' : locale})}, "email", locale) | raw }}</p>
 							
 							<p style="margin: 0px; padding: 0px; color: #918f8f; font-family: Arial; line-height: 15px; margin-bottom: 15px; text-align: center;">{{ 'bottom_street' | trans({}, "email", locale) | raw }}</p>
 							
