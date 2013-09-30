@@ -27,9 +27,13 @@
 */
 namespace Cyclogram\FrontendBundle\Controller;
 
+
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\DependencyInjection\Container;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Lunetics\LocaleBundle\Validator\MetaValidator;
 
@@ -39,12 +43,13 @@ use Lunetics\LocaleBundle\Validator\MetaValidator;
  * @author Matthias Breddin <mb@lunetics.com>
  * @author Christophe Willemsen <willemsen.christophe@gmail.com>
  */
-class LocaleController
+class LocaleController extends Controller
 {
     private $router;
     private $metaValidator;
     private $useReferrer;
     private $redirectToRoute;
+    protected $container;
 
     /**
      * @param RouterInterface $router          Router Service
@@ -53,13 +58,14 @@ class LocaleController
      * @param null            $redirectToRoute From Config
      * @param string          $statusCode      From Config
      */
-    public function __construct(RouterInterface $router = null, MetaValidator $metaValidator, $useReferrer = true, $redirectToRoute = null, $statusCode = '302')
+    public function __construct(RouterInterface $router = null, MetaValidator $metaValidator, $useReferrer = true, $redirectToRoute = null, $statusCode = '302', Container $container)
     {
         $this->router = $router;
         $this->metaValidator = $metaValidator;
         $this->useReferrer = $useReferrer;
         $this->redirectToRoute = $redirectToRoute;
         $this->statusCode = $statusCode;
+        $this->container = $container;
     }
 
     /**
@@ -74,8 +80,13 @@ class LocaleController
     {
         $_locale = $request->attributes->get('_locale', $request->getLocale());
         $studyUrl = $request->get('study');
-        if(empty($studyUrl)) 
-            $studyUrl = "sexpro";
+        if(empty($studyUrl)) {
+            $branding = $this->container->getParameter('branding');
+            if ($branding == 'knowathome')
+                $studyUrl = "knowathome";
+            else
+                $studyUrl = "sexpro";
+        }
         $statusCode = $request->attributes->get('statusCode', $this->statusCode);
         $useReferrer = $request->attributes->get('useReferrer', $this->useReferrer);
         $redirectToRoute = $request->attributes->get('route', $this->redirectToRoute);
