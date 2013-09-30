@@ -33,7 +33,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\DependencyInjection\Container;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Lunetics\LocaleBundle\Validator\MetaValidator;
 
@@ -43,7 +42,7 @@ use Lunetics\LocaleBundle\Validator\MetaValidator;
  * @author Matthias Breddin <mb@lunetics.com>
  * @author Christophe Willemsen <willemsen.christophe@gmail.com>
  */
-class LocaleController extends Controller
+class LocaleController
 {
     private $router;
     private $metaValidator;
