@@ -602,7 +602,7 @@ class RegistrationController extends Controller
             $surveyId = $bag->get('surveyId');
             $saveId = $bag->get('saveId');
             if($studyCode != $bag->get('studyCode'))
-                throw new \Exception("You have not passed eligibility test");
+                throw new \Exception("Your eligibility results do not match studycode");
             
             $surveyResult = $this->get('custom_db')->getFactory('ElegibilityCustom')->getSurveyResponseData($saveId, $surveyId);
             $sl = $this->get('study_logic');
@@ -611,7 +611,7 @@ class RegistrationController extends Controller
             if(!$isEligible)
                 throw new \Exception("You have not passed eligibility test");
         } else {
-            throw new \Exception("You have not passed eligibility test");
+            throw new \Exception("No survey details found in session");
         }
     }
 
