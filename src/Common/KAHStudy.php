@@ -111,11 +111,7 @@ class KAHStudy extends AbstractStudy implements StudyInterface
                             $em->persist($interventionLink);
                             $em->flush();
                             $status = "Closed";
-                            $intervention = $em
-                            ->getRepository('CyclogramProofPilotBundle:Intervention')
-                            ->findOneByInterventionCode("KAHPhase3TestPackage");
-                            $em->getRepository('CyclogramProofPilotBundle:Participant')
-                            ->addParticipantInterventionLink($participant,$intervention);
+                           
                             $order = new Orders();
                             $order->setOrderDatetime(new \Datetime('now'));
                             $courier = $em->getRepostirory('CyclogramProofPilotBundle:Courier')->find(1);

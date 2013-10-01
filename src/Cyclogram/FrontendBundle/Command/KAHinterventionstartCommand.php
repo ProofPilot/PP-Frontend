@@ -36,7 +36,7 @@ class KAHinterventionstartCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $em = $this->getContainer()->get('doctrine')->getManager();
-        $intervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')->findOneByIntervetionCode('KAHPhase3TestPackage');
+        $intervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')->findOneByIntervetionCode('KAHPhase3Baseline');
         $study=$em->getRepository('CyclogramProofPilotBundle:Study')->findByStudyCode('knowathome');
         $status = $em->getRepository('CyclogramProofPilotBundle:Status')
                             ->findOneByStatusName("Closed");
