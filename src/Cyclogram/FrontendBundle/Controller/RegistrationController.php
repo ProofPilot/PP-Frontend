@@ -97,7 +97,7 @@ class RegistrationController extends Controller
                     $participant->setRecoveryQuestion($question);
                     $participant->setRecoveryPasswordCode('Default');
                     $participant->setParticipantEmailConfirmed(false);
-                    $participant->setParticipantMobileNumber('');
+                    //$participant->setParticipantMobileNumber('');
                     $participant->setParticipantMobileSmsCodeConfirmed(false);
                     $participant->setParticipantIncentiveBalance(false);
                     $participant->setLocale($request->getLocale());

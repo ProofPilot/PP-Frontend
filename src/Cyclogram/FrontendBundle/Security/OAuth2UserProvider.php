@@ -62,8 +62,8 @@ class OAuth2UserProvider implements OAuthAwareUserProviderInterface
             $participant->setRecoveryQuestion($question);
             $participant->setRecoveryPasswordCode('Default');
             $participant->setParticipantEmailConfirmed(false);
-            if(!$participant->getParticipantMobileNumber())
-                $participant->setParticipantMobileNumber('');
+//             if(!$participant->getParticipantMobileNumber())
+//                 $participant->setParticipantMobileNumber('');
             if(!$participant->getParticipantPassword())
                 $participant->setParticipantPassword('');
             $participant->setParticipantMobileSmsCodeConfirmed(false);
