@@ -60,7 +60,7 @@ class OAuth2UserProvider implements OAuthAwareUserProviderInterface
             $request = $this->container->get('request');
             $question = $this->userManager->getRepository('CyclogramProofPilotBundle:RecoveryQuestion')->find(1);
             $participant->setRecoveryQuestion($question);
-            $participant->setParticipantAppreciationEmail($registration->getParticipantEmail($email));
+            $participant->setParticipantAppreciationEmail($email);
             $participant->setRecoveryPasswordCode('Default');
             $participant->setParticipantEmailConfirmed(false);
 //             if(!$participant->getParticipantMobileNumber())
@@ -86,12 +86,14 @@ class OAuth2UserProvider implements OAuthAwareUserProviderInterface
                     $participant->setParticipantFirstname($data["first_name"]);
                     $participant->setParticipantLastname($data["last_name"]);
                     $participant->setParticipantEmail($data["email"]);
+                    $participant->setParticipantAppreciationEmail($data["email"]);
                     $participant->setFacebookId($data["id"]);
                     break;
                 case "google":
                     $participant->setParticipantFirstname($data["given_name"]);
                     $participant->setParticipantLastname($data["family_name"]);
                     $participant->setParticipantEmail($data["email"]);
+                    $participant->setParticipantAppreciationEmail($data["email"]);
                     $participant->setGoogleId($data["id"]);
             }
 
