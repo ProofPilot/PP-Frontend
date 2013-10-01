@@ -109,14 +109,12 @@ class KAHStudy extends AbstractStudy implements StudyInterface
                             $em->persist($interventionLink);
                             $em->flush();
                             $status = "Closed";
-                        }
-                    }
-                    if (($status == "Closed") && ($intervention->getInterventionName() == "KAHPhase3Baseline")) {
-                        $intervention = $em
+                            $intervention = $em
                             ->getRepository('CyclogramProofPilotBundle:Intervention')
                             ->findOneByInterventionCode("KAHPhase3TestPackage");
-                        $em->getRepository('CyclogramProofPilotBundle:Participant')
+                            $em->getRepository('CyclogramProofPilotBundle:Participant')
                             ->addParticipantInterventionLink($participant,$intervention);
+                        }
                     }
             }
         }
