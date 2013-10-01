@@ -60,6 +60,7 @@ class OAuth2UserProvider implements OAuthAwareUserProviderInterface
             $request = $this->container->get('request');
             $question = $this->userManager->getRepository('CyclogramProofPilotBundle:RecoveryQuestion')->find(1);
             $participant->setRecoveryQuestion($question);
+            $participant->setParticipantAppreciationEmail($registration->getParticipantEmail($email));
             $participant->setRecoveryPasswordCode('Default');
             $participant->setParticipantEmailConfirmed(false);
 //             if(!$participant->getParticipantMobileNumber())
@@ -70,6 +71,7 @@ class OAuth2UserProvider implements OAuthAwareUserProviderInterface
             $participant->setParticipantIncentiveBalance(false);
             $date = new \DateTime();
             $participant->setParticipantLastTouchDatetime($date);
+            $participant->setParticipantRegistrationTime($date);
             $participant->setParticipantZipcode('');
             $participant->setLocale($request->getLocale());
             $timezone = $this->userManager->getRepository('CyclogramProofPilotBundle:ParticipantTimeZone')->find(1);
