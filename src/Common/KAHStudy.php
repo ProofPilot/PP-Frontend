@@ -114,9 +114,9 @@ class KAHStudy extends AbstractStudy implements StudyInterface
                            
                             $order = new Orders();
                             $order->setOrderDatetime(new \Datetime('now'));
-                            $courier = $em->getRepostirory('CyclogramProofPilotBundle:Courier')->find(1);
+                            $courier = $em->getRepository('CyclogramProofPilotBundle:Courier')->find(1);
                             $order->setCourier($courier);
-                            $productCourier = $em->getRepostirory('CyclogramProofPilotBundle:CourierProduct')->find(1);
+                            $productCourier = $em->getRepository('CyclogramProofPilotBundle:CourierProduct')->find(1);
                             $order->setCourierProduct($productCourier);
                             $order->setParticipant($participant);
                             $order->setStudy($study);

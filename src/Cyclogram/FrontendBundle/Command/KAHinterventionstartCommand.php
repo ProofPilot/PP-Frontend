@@ -24,6 +24,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantInterventionLink;
 
 class KAHinterventionstartCommand extends ContainerAwareCommand
 {
@@ -36,7 +37,7 @@ class KAHinterventionstartCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $em = $this->getContainer()->get('doctrine')->getManager();
-        $intervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')->findOneByIntervetionCode('KAHPhase3Baseline');
+        $intervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')->findOneByInterventionCode('KAHPhase3Baseline');
         $study=$em->getRepository('CyclogramProofPilotBundle:Study')->findByStudyCode('knowathome');
         $status = $em->getRepository('CyclogramProofPilotBundle:Status')
                             ->findOneByStatusName("Closed");
@@ -44,7 +45,7 @@ class KAHinterventionstartCommand extends ContainerAwareCommand
         $currentDay = $currentDate->format('z');
         $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')->findByIntervention(array('intervention'=>$intervention, 'status'=>$status));
         foreach ($interventionLinks as $interventionLink) {
-            $participant = $interventinLink->getParticipant();
+            $participant = $interventionLink->getParticipant();
             
             $order = $em->getRepository('CyclogramProofPilotBundle:Orders')->findOneBy(array('participant'=>$participant,'study'=>$study));
             $orderDate = $order->getOrderDatetime();
