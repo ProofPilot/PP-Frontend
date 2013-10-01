@@ -81,10 +81,11 @@ class KOCSocialMediaStudy extends AbstractStudy implements StudyInterface
     public function interventionLogic($participant)
     {
         $em = $this->container->get('doctrine')->getEntityManager();
+        $study = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($this->getStudyCode());
         //get all participant intervention links
         $interventionLinks = $em
                 ->getRepository('CyclogramProofPilotBundle:Participant')
-                ->getParticipantInterventionLinks($participant);
+                ->getParticipantInterventionLinks($participant, $study);
         foreach ($interventionLinks as $interventionLink) {
             $interventionTypeName = $interventionLink->getIntervention()
                     ->getInterventionType()->getInterventionTypeName();

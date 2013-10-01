@@ -126,12 +126,20 @@ class OAuth2UserProvider implements OAuthAwareUserProviderInterface
                 $participant->setParticipantLastTouchDatetime($date);
                 $this->userManager->persist($participant);
                 $this->userManager->flush();
+                $request = $this->container->get('request');
+                $studyCode = $request->query->get('state');
+                if (!empty($studyCode)) {
+                    $logic = $this->container->get('study_logic');
+                    $session = $this->container->get('session');
+                    if ($session->has('SurveyInfo')){
+                        $bag = $session->get('SurveyInfo');
+                        $surveyId = $bag->get('surveyId');
+                        $saveId = $bag->get('saveId');
+                    
+                        $logic->studyRegistration($participant, $studyCode, $surveyId, $saveId);
+                    }
+                }
                 return $participant;
         }
-        
-
-
     }
-
-
 }
