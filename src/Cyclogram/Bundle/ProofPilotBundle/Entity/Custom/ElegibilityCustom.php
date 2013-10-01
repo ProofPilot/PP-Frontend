@@ -54,21 +54,6 @@ class elegibilityCustom extends DbCustom
 	
 	}
 
-    public function getKaHSurveyResult($save_id, $sid)
-    {
-
-        $sql = "SELECT    *
-				FROM      limesurvey.lime_survey_$sid
-				WHERE     id = '$save_id'";
-
-        $query = $this->db_conn->prepare($sql);
-        $query->execute();
-
-        $return = $query->fetchAll();
-        return $return[0];
-
-    }
-
     public function getSurveyResponseData($save_id, $sid){
         $sql = "SELECT    *
 				FROM      limesurvey.lime_survey_$sid
