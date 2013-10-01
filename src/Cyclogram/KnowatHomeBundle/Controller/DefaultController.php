@@ -28,6 +28,7 @@ use Symfony\Component\Validator\Constraints\MinLength;
 use Symfony\Component\Security\Core\SecurityContext;
 use \Symfony\Component\Validator\Constraints\DateTime;
 use Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 use Symfony\Component\HttpFoundation\Session\Attribute\AttributeBag;
 
@@ -152,8 +153,89 @@ class DefaultController extends Controller
         return $this->render('CyclogramKnowatHomeBundle:website:contactUs.html.twig', array('form'=>$formContactView, 'sent'=>$sent) );
     }
 
-    public function eligibilityAction()
+    public function eligibilityAction($studyUrl = null)
     {
+        $session = $this->get("session");
+        
+        $studyUrl = $session->get('studyUrl');
+        $session->remove('studyUrl');
+        $locale = $this->getRequest()->getLocale();
+        
+        $studyContent = $this->getDoctrine()->getRepository("CyclogramProofPilotBundle:StudyContent")->getStudyContent($studyUrl, $locale);
+        if (empty($studyContent))
+            throw new NotFoundHttpException();
+        
+        $parameters = array();
+        
+        $study = $studyContent->getStudy();
+        $studyId = $studyContent->getStudyId();
+        $parameters["studycontent"] = $studyContent;
+        $parameters['studyUrl'] = $studyUrl;
+        $parameters['studyId'] = $studyId;
+        $parameters['studyCode'] = $study->getStudyCode();
+        $parameters['surveyId'] = $studyContent->getStudyElegibilitySurvey();
+        $parameters["logo"] = $this->container->getParameter('study_image_url') . '/' . $studyId. '/' .$studyContent->getStudyLogo();
+        $parameters["graphic"] = $this->container->getParameter('study_image_url') . '/' .$studyId. '/' .$studyContent->getStudyGraphic();
+        
+        $logic = $this->get('study_logic');
+        
+        //check if study is supported
+        //         if(!$logic->supports($this->parameters['studyCode'])) {
+        //             $this->parameters["errorMessage"] = "Study with code '" . $study->getStudyCode() . "' not supported by the system.";
+        //             $this->parameters["errorChoicesMessage"] = "Supported codes are:";
+        //             $this->parameters["errorChoices"] = $logic->getSupportedStudies();
+        //             return true;
+        //         }
+        
+        $isEligible = true;
+        
+        //check for default campaigns
+        if(!$campaignParameters = $this->container->get('doctrine')->getRepository("CyclogramProofPilotBundle:Campaign")->getDefaultCampaignParameters($studyId)) {
+            $parameters["errorMessage"] = "Default campaign/sites must be set for study  '" . $parameters["studyCode"] . ", otherwise GoogleAnaytics will not work'";
+            $isEligible = false;
+        } else {
+            $parameters["campaignParameters"] = $campaignParameters;
+        }
+        
+        if(in_array($parameters['studyCode'], $logic->getSupportedStudies())) {
+        
+            //check if study has at least one "Site" organization linked
+            if(!$sol = $this->getDoctrine()->getRepository("CyclogramProofPilotBundle:Study")->getOrganizationLinks($studyId)) {
+                $parameters["errorMessage"] = "Study '" . $study->getStudyCode() . "' has no organization with role Site linked";
+                $isEligible = false;
+            } else {
+                $parameters["siteOrganization"] = $sol[0]["organizationName"];
+            }
+        
+            //check if organization has any default sites
+            if(!$defaultSites = $this->getDoctrine()->getRepository("CyclogramProofPilotBundle:Study")->getDefaultSites($studyId)) {
+                $parameters["errorMessage"] = "Organization '" . $parameters["siteOrganization"] . "' has no default sites.";
+                $isEligible = false;
+            } else {
+                $parameters["defaultSite"] = $defaultSites[0]["siteName"];
+            }
+        
+            //check if required arms exist
+            if(!$this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Study')->checkStudyArms($logic->getArmCodes($parameters['studyCode']), $parameters['studyId'])) {
+                $parameters["errorMessage"] = "Not all required arms found for study  '" .  $parameters['studyCode']  . "'";
+                $parameters["errorChoicesMessage"] = "Required arms are:";
+                $parameters["errorChoices"] = $logic->getArmCodes($parameters['studyCode']);
+                $isEligible = false;
+            }
+        
+            //check if required interventions exist
+            if(!$this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Study')->checkStudyInterventions($logic->getInterventionCodes($parameters['studyCode']), $parameters['studyId'])) {
+                $parameters["errorMessage"] = "Not all required interventions found for study  '" .  $parameters['studyCode']  . "'";
+                $parameters["errorChoicesMessage"] = "Required interventions are:";
+                $parameters["errorChoices"] = $logic->getInterventionCodes($parameters['studyCode']);
+                $isEligible = false;
+            }
+        
+        }
+        
+        if($isEligible == false)
+            return $this->redirect( $this->generateUrl('CyclogramKnowatHomeBundle_error', array('parameters' => $parameters)));
+        
         if ($this->getRequest()->getMethod('POST')) {
             $value = $this->getRequest()->request->get('specimen');
         }
@@ -183,11 +265,26 @@ class DefaultController extends Controller
 
         return $this->render('CyclogramKnowatHomeBundle:website:eligibility.html.twig',
             array(
+                 "studyUrl" => $studyUrl,
                 "uniqid"=>$uniqId,
                 "surveyLink"=>$surveyUrl,
                 "pageText"=>$pageText
+
             )
         );
+    }
+    
+    public function errorAction() {
+        
+        $session = $this->get("session");
+        
+        $lastPicN = $session->get("picN");
+        $picN = rand(1, 4);
+        $picN = CyclogramCommon::getRandomPicNumber($lastPicN, $picN);
+        $session->set("picN", $picN);
+        
+        $parameters = $this->getRequest()->get('parameters');
+        return $this->render('CyclogramKnowatHomeBundle:website:error.html.twig', $parameters);
     }
 
     public function loginAction()
@@ -439,6 +536,7 @@ class DefaultController extends Controller
         $picN = rand(1, 4);
         $picN = CyclogramCommon::getRandomPicNumber($lastPicN, $picN);
         $session->set("picN", $picN);
+        
 
         $em = $this->getDoctrine()->getManager();
         $pageText = array();
@@ -447,7 +545,7 @@ class DefaultController extends Controller
         $study = $em->getRepository("CyclogramProofPilotBundle:Study")->find(1);
         $language = $em->getRepository("CyclogramProofPilotBundle:Language")->find(1);
         $studyContent = $em->getRepository("CyclogramProofPilotBundle:StudyContent")->findOneBy(array("study"=>$study, "language"=>$language));
-
+        $session->set('studyUrl', $studyContent->getStudyUrl());
         $pageText['title'] = "Consent";
         $pageText['consent'] = $studyContent->getStudyConsent();
 
