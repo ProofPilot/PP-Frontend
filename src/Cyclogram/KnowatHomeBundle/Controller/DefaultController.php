@@ -155,13 +155,12 @@ class DefaultController extends Controller
 
     public function eligibilityAction($studyUrl = null)
     {
-        $session = $this->get("session");
-        
-        $studyUrl = $session->get('studyUrl');
-        $session->remove('studyUrl');
+
+        $studyCode = ('knowathome');
+
         $locale = $this->getRequest()->getLocale();
         
-        $studyContent = $this->getDoctrine()->getRepository("CyclogramProofPilotBundle:StudyContent")->getStudyContent($studyUrl, $locale);
+        $studyContent = $this->getDoctrine()->getRepository("CyclogramProofPilotBundle:StudyContent")->getStudyContentByCode($studyCode, $locale);
         if (empty($studyContent))
             throw new NotFoundHttpException();
         
@@ -545,7 +544,6 @@ class DefaultController extends Controller
         $study = $em->getRepository("CyclogramProofPilotBundle:Study")->find(1);
         $language = $em->getRepository("CyclogramProofPilotBundle:Language")->find(1);
         $studyContent = $em->getRepository("CyclogramProofPilotBundle:StudyContent")->findOneBy(array("study"=>$study, "language"=>$language));
-        $session->set('studyUrl', $studyContent->getStudyUrl());
         $pageText['title'] = "Consent";
         $pageText['consent'] = $studyContent->getStudyConsent();
 

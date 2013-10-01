@@ -153,14 +153,14 @@ class SexproStudy extends AbstractStudy implements StudyInterface
     public function interventionLogic($participant)
     {
         $em = $this->container->get('doctrine')->getEntityManager();
-        $participantArm = $em
-                ->getRepository('CyclogramProofPilotBundle:ParticipantArmLink')
-                ->findOneByParticipant($participant);
+        $study = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($this->getStudyCode());
+        $participantArm = $em->getRepository('CyclogramProofPilotBundle:ParticipantArmLink')
+                ->getParticipantStudyArm($participant, $study);
         $participantArmName = $participantArm->getArm()->getArmName();
         //get all participant intervention links
         $interventionLinks = $em
                 ->getRepository('CyclogramProofPilotBundle:Participant')
-                ->getParticipantInterventionLinks($participant);
+                ->getParticipantInterventionLinks($participant, $study);
         foreach ($interventionLinks as $interventionLink) {
             $interventionTypeName = $interventionLink->getIntervention()
                     ->getInterventionType()->getInterventionTypeName();

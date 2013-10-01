@@ -83,7 +83,7 @@ class ParticipantRepository extends EntityRepository implements
         ->getSingleScalarResult();
     }
     
-    public function getParticipantInterventionLinks($userid){
+    public function getParticipantInterventionLinks($userid, $study){
         
         $currentDate = new \DateTime();
         
@@ -94,10 +94,12 @@ class ParticipantRepository extends EntityRepository implements
                 INNER JOIN i.interventionType it
                 WHERE pil.participant = :userid
                 AND pil.participantInterventionLinkDatetimeStart <= :currentDate
+                AND i.study = :study
                 ')
                 ->setParameters(array(
                         'userid' => $userid,
-                        'currentDate' => $currentDate))
+                        'currentDate' => $currentDate,
+                        'study' => $study))
                         ->getResult();
     }
     
