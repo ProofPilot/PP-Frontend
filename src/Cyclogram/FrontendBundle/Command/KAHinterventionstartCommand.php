@@ -37,45 +37,37 @@ class KAHinterventionstartCommand extends ContainerAwareCommand
     {
         $em = $this->getContainer()->get('doctrine')->getManager();
         $intervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')->findOneByIntervetionCode('KAHPhase3TestPackage');
-        $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')->findByIntervention($intervention);
-        foreach ($interventionLinks as $interventionLink) {
-//             $participant = $interventin
-        }
-        $participants = $em->getRepository('CyclogramProofPilotBundle:Participant')->findByParticipantEmailConfirmed(false);
+        $study=$em->getRepository('CyclogramProofPilotBundle:Study')->findByStudyCode('knowathome');
+        $status = $em->getRepository('CyclogramProofPilotBundle:Status')
+                            ->findOneByStatusName("Closed");
         $currentDate = new \DateTime();
         $currentDay = $currentDate->format('z');
-        foreach ($participants as $participant) {
-            $participantRegTime = $participant->getParticipantRegistrationtime();
-            $participantRegDay = $participantRegTime->format('z');
-            $participantRegDay = 366;
-            $interval = $currentDay - $participantRegDay;
-            if ((($currentDay - $participantRegDay) == 3) || (($currentDay - $participantRegDay) == -363) || (($currentDay - $participantRegDay) == -364)
-                    || (($currentDay - $participantRegDay) == -365) || (($currentDay - $participantRegDay) == -366)) {
-                // send email
-                $result = $this->sendDoItNowEmail($participant);
-                if($result['send'] == true){
-                    $output->writeln($participant->getParticipantEmail());
-                    $output->writeln("sent email");
-                } else {
-                    if (!empty($result['message']))
-                    {
-                        $output->writeln($participant->getParticipantEmail());
-                        $output->writeln($result['message']);
-                    }
-                }
-                $result = $this->sendDoItNowSMS($participant);
-                if($result['send'] == true){
-                    $output->writeln($participant->getParticipantUsername()." phone number: ".$participant->getParticipantMobileNumber());
-                    $output->writeln("sent sms");
-                } else {
-                    if (!empty($result['message']))
-                    {
-                        $output->writeln($participant->getParticipantUsername()." phone number: ".$participant->getParticipantMobileNumber());
-                        $output->writeln($result['message']);
-                    }
-                }
+        $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')->findByIntervention(array('intervention'=>$intervention, 'status'=>$status));
+        foreach ($interventionLinks as $interventionLink) {
+            $participant = $interventinLink->getParticipant();
+            
+            $order = $em->getRepository('CyclogramProofPilotBundle:Orders')->findOneBy(array('participant'=>$participant,'study'=>$study));
+            $orderDate = $order->getOrderDatetime();
+            $orderDay = $orderDate->format('z');
+            
+            if ((($currentDay - $orderDay) == 3) || (($currentDay - $orderDay) == -363) || (($currentDay - $orderDay) == -364)
+                    || (($currentDay - $orderDay) == -365) || (($currentDay - $orderDay) == -366)) {
+
+                $status = $em->getRepository('CyclogramProofPilotBundle:Status')
+                ->find(1);
+                $participantInterventionLink = new ParticipantInterventionLink();
+                $intervention = $em
+                ->getRepository('CyclogramProofPilotBundle:Intervention')
+                ->findOneByInterventionCode('KAHPhase3ReportResults');
+                $participantInterventionLink->setIntervention($intervention);
+                $participantInterventionLink->setParticipant($participant);
+                $participantInterventionLink
+                ->setParticipantInterventionLinkDatetimeStart(
+                        new \DateTime("now"));
+                $participantInterventionLink->setStatus($status);
+                $em->persist($participantInterventionLink);
+                $em->flush($participantInterventionLink);
             }
         }
-        $output->writeln("\n");
     }
 }

@@ -18,6 +18,8 @@
 */
 namespace Common;
 
+use Cyclogram\Bundle\ProofPilotBundle\Entity\Orders;
+
 use Cyclogram\Bundle\ProofPilotBundle\Entity\Study;
 
 use Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantInterventionLink;
@@ -114,8 +116,60 @@ class KAHStudy extends AbstractStudy implements StudyInterface
                             ->findOneByInterventionCode("KAHPhase3TestPackage");
                             $em->getRepository('CyclogramProofPilotBundle:Participant')
                             ->addParticipantInterventionLink($participant,$intervention);
+                            $order = new Orders();
+                            $order->setOrderDatetime(new \Datetime('now'));
+                            $courier = $em->getRepostirory('CyclogramProofPilotBundle:Courier')->find(1);
+                            $order->setCourier($courier);
+                            $productCourier = $em->getRepostirory('CyclogramProofPilotBundle:CourierProduct')->find(1);
+                            $order->setCourierProduct($productCourier);
+                            $order->setParticipant($participant);
+                            $order->setStudy($study);
+                            $status = $em->getRepository('CyclogramProofPilotBundle:Status')
+                            ->findOneByStatusName("Active");
+                            $order->setStatus($status);
+                            $em->persist($order);
+                            $em->flush($order);
                         }
                     }
+            case "KAHPhase3TestPackage":
+                $surveyId = $intervention->getSidId();
+                if ($status == "Active") {
+                    $passed = $em
+                    ->getRepository('CyclogramProofPilotBundle:ParticipantSurveyLink')
+                    ->checkIfSurveyPassed($participant, $surveyId);
+                    
+                    if ($passed) {
+                        $this->createIncentive($participant, $intervention);
+                        $completedStatus = $em->getRepository('CyclogramProofPilotBundle:Status')
+                            ->findOneByStatusName("Closed");
+                        $interventionLink->setStatus($completedStatus);
+                        $em->persist($interventionLink);
+                        $em->flush();
+                        $status = "Closed";
+                    }
+                }
+            case "KAHPhase3ReportResults":
+                $surveyId = $intervention->getSidId();
+                if ($status == "Active") {
+                    $passed = $em
+                    ->getRepository('CyclogramProofPilotBundle:ParticipantSurveyLink')
+                    ->checkIfSurveyPassed($participant, $surveyId);
+                
+                    if ($passed) {
+                        $this->createIncentive($participant, $intervention);
+                        $completedStatus = $em->getRepository('CyclogramProofPilotBundle:Status')
+                        ->findOneByStatusName("Closed");
+                        $interventionLink->setStatus($completedStatus);
+                        $status = "Closed";
+                        $intervention = $em
+                            ->getRepository('CyclogramProofPilotBundle:Intervention')
+                            ->findOneByInterventionCode("KAHPhase3FollowUp");
+                        $em->getRepository('CyclogramProofPilotBundle:Participant')
+                            ->addParticipantInterventionLink($participant,$intervention);
+                        $em->persist($interventionLink);
+                        $em->flush();
+                    }
+                }
             }
         }
     }
