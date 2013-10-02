@@ -115,6 +115,8 @@ class StudyRepository extends EntityRepository
      */
     public function checkStudyInterventions($intervention_codes, $study_code)
     {
+        if (empty($intervention_codes))
+            return false;
             $interventionInDB = $this->getEntityManager()
             ->createQuery("
                     SELECT COUNT( DISTINCT i.interventionId )

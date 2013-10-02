@@ -104,8 +104,6 @@ class DoItNotificationCommand extends ContainerAwareCommand
                     }
                 }
             }
-            
-            $output->writeln("\n");
         }
     }
     

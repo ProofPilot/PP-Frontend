@@ -97,10 +97,11 @@ class RegistrationController extends Controller
                     $participant->setRecoveryQuestion($question);
                     $participant->setRecoveryPasswordCode('Default');
                     $participant->setParticipantEmailConfirmed(false);
-                    $participant->setParticipantMobileNumber('');
+                    //$participant->setParticipantMobileNumber('');
                     $participant->setParticipantMobileSmsCodeConfirmed(false);
                     $participant->setParticipantIncentiveBalance(false);
                     $participant->setLocale($request->getLocale());
+                    $participant->setParticipantRegistrationTime(new \DateTime('now'));
                     $timezone = $em->getRepository('CyclogramProofPilotBundle:ParticipantTimeZone')->find(1);
                     $participant->setParticipantTimezone($timezone);
                     $participant->setParticipantLastTouchDatetime(new \DateTime(null, new \DateTimeZone($participant->getParticipantTimezone()->getParticipantTimezoneName())));

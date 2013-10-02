@@ -1,0 +1,37 @@
+{% extends "CyclogramKnowatHomeBundle:Default:index.html.twig" %}
+
+{% block stylesheetsCustom %}
+    <link rel="stylesheet" href="/bundles/cyclogramknowathome/css/knowathome.css" type="text/css" />
+{% endblock %}
+
+{% block javascriptsCustom %}
+    <script>
+        $(document).ready(function(){
+            {% set picN = app.session.get('picN') %}
+            $("body").anystretch("/bundles/cyclogramknowathome/images/website/backgrounds/{{picN}}.jpg");
+        });
+    </script>
+{% endblock %}
+
+{% block body %}
+    <div id="wrapper" class="container">
+        <div class="leftColumn columns six ">
+         <div class="logo" style="margin-bottom: 15px;">
+             <a href="{{ path("CyclogramKnowatHomeBundle_homepage") }}"><img src="/bundles/cyclogramknowathome/images/website/logo-white.png" border="0" /></a>
+         </div>
+        <div class="main_notification">
+            <div class="eligibility">
+            <span><p>{{ errorMessage }}</p></span>
+            {% if errorChoices is defined %}
+            <span><p>{{ errorChoicesMessage }}<p></span>
+            <ul>
+                {% for choice in errorChoices %}
+                   <p> <li><strong>{{ choice }}</strong></li><p>
+                {% endfor %}
+            </ul>
+            {% endif %}
+             </div>
+             </div>
+    </div>
+</div>
+{% endblock %}

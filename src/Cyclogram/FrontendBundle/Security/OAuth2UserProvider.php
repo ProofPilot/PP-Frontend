@@ -60,16 +60,18 @@ class OAuth2UserProvider implements OAuthAwareUserProviderInterface
             $request = $this->container->get('request');
             $question = $this->userManager->getRepository('CyclogramProofPilotBundle:RecoveryQuestion')->find(1);
             $participant->setRecoveryQuestion($question);
+            $participant->setParticipantAppreciationEmail($email);
             $participant->setRecoveryPasswordCode('Default');
             $participant->setParticipantEmailConfirmed(false);
-            if(!$participant->getParticipantMobileNumber())
-                $participant->setParticipantMobileNumber('');
+//             if(!$participant->getParticipantMobileNumber())
+//                 $participant->setParticipantMobileNumber('');
             if(!$participant->getParticipantPassword())
                 $participant->setParticipantPassword('');
             $participant->setParticipantMobileSmsCodeConfirmed(false);
             $participant->setParticipantIncentiveBalance(false);
             $date = new \DateTime();
             $participant->setParticipantLastTouchDatetime($date);
+            $participant->setParticipantRegistrationTime($date);
             $participant->setParticipantZipcode('');
             $participant->setLocale($request->getLocale());
             $timezone = $this->userManager->getRepository('CyclogramProofPilotBundle:ParticipantTimeZone')->find(1);
@@ -84,12 +86,14 @@ class OAuth2UserProvider implements OAuthAwareUserProviderInterface
                     $participant->setParticipantFirstname($data["first_name"]);
                     $participant->setParticipantLastname($data["last_name"]);
                     $participant->setParticipantEmail($data["email"]);
+                    $participant->setParticipantAppreciationEmail($data["email"]);
                     $participant->setFacebookId($data["id"]);
                     break;
                 case "google":
                     $participant->setParticipantFirstname($data["given_name"]);
                     $participant->setParticipantLastname($data["family_name"]);
                     $participant->setParticipantEmail($data["email"]);
+                    $participant->setParticipantAppreciationEmail($data["email"]);
                     $participant->setGoogleId($data["id"]);
             }
 
@@ -122,12 +126,20 @@ class OAuth2UserProvider implements OAuthAwareUserProviderInterface
                 $participant->setParticipantLastTouchDatetime($date);
                 $this->userManager->persist($participant);
                 $this->userManager->flush();
+                $request = $this->container->get('request');
+                $studyCode = $request->query->get('state');
+                if (!empty($studyCode)) {
+                    $logic = $this->container->get('study_logic');
+                    $session = $this->container->get('session');
+                    if ($session->has('SurveyInfo')){
+                        $bag = $session->get('SurveyInfo');
+                        $surveyId = $bag->get('surveyId');
+                        $saveId = $bag->get('saveId');
+                    
+                        $logic->studyRegistration($participant, $studyCode, $surveyId, $saveId);
+                    }
+                }
                 return $participant;
         }
-        
-
-
     }
-
-
 }

@@ -16,7 +16,11 @@ CyclogramKnowatHomeBundle_contactUs:
 
 CyclogramKnowatHomeBundle_eligibility:
     pattern:  /eligibility
-    defaults: { _controller: CyclogramKnowatHomeBundle:Default:eligibility }
+    defaults: { _controller: CyclogramKnowatHomeBundle:Default:eligibility}
+    
+CyclogramKnowatHomeBundle_error:
+    pattern:  /error
+    defaults: { _controller: CyclogramKnowatHomeBundle:Default:error}
 
 CyclogramKnowatHomeBundle_login:
     pattern:  /login
