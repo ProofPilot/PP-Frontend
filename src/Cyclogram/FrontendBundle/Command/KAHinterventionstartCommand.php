@@ -31,7 +31,8 @@ class KAHinterventionstartCommand extends ContainerAwareCommand
     protected function configure(){
     
         $this->setName('send:kahintervetionstart')
-        ->setDescription('Check if start KAHPhase3ReportResults intervention');
+        ->setDescription('Check if start KAHPhase3ReportResults intervention')
+        ->addArgument('currentDay', InputArgument::REQUIRED);
     }
     
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -41,33 +42,34 @@ class KAHinterventionstartCommand extends ContainerAwareCommand
         $study=$em->getRepository('CyclogramProofPilotBundle:Study')->findByStudyCode('knowathome');
         $status = $em->getRepository('CyclogramProofPilotBundle:Status')
                             ->findOneByStatusName("Closed");
-        $currentDate = new \DateTime();
-        $currentDay = $currentDate->format('z');
+        $currentDay = $input->getArgument('currentDay');
         $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')->findByIntervention(array('intervention'=>$intervention, 'status'=>$status));
         foreach ($interventionLinks as $interventionLink) {
             $participant = $interventionLink->getParticipant();
             
             $order = $em->getRepository('CyclogramProofPilotBundle:Orders')->findOneBy(array('participant'=>$participant,'study'=>$study));
-            $orderDate = $order->getOrderDatetime();
-            $orderDay = $orderDate->format('z');
-            
-            if ((($currentDay - $orderDay) == 3) || (($currentDay - $orderDay) == -363) || (($currentDay - $orderDay) == -364)
-                    || (($currentDay - $orderDay) == -365) || (($currentDay - $orderDay) == -366)) {
-
-                $status = $em->getRepository('CyclogramProofPilotBundle:Status')
-                ->find(1);
-                $participantInterventionLink = new ParticipantInterventionLink();
-                $intervention = $em
-                ->getRepository('CyclogramProofPilotBundle:Intervention')
-                ->findOneByInterventionCode('KAHPhase3ReportResults');
-                $participantInterventionLink->setIntervention($intervention);
-                $participantInterventionLink->setParticipant($participant);
-                $participantInterventionLink
-                ->setParticipantInterventionLinkDatetimeStart(
-                        new \DateTime("now"));
-                $participantInterventionLink->setStatus($status);
-                $em->persist($participantInterventionLink);
-                $em->flush($participantInterventionLink);
+            if (!empty($order)) {
+                $orderDate = $order->getOrderDatetime();
+                $orderDay = $orderDate->format('z');
+                
+                if ((($currentDay - $orderDay) == 3) || (($currentDay - $orderDay) == -363) || (($currentDay - $orderDay) == -364)
+                        || (($currentDay - $orderDay) == -365) || (($currentDay - $orderDay) == -366)) {
+                        $output->writeln("Add KAHPhase3ReportResults task to user ".$participant->getParticipantEmail());
+                        $status = $em->getRepository('CyclogramProofPilotBundle:Status')
+                        ->find(1);
+                        $participantInterventionLink = new ParticipantInterventionLink();
+                        $intervention = $em
+                        ->getRepository('CyclogramProofPilotBundle:Intervention')
+                        ->findOneByInterventionCode('KAHPhase3ReportResults');
+                        $participantInterventionLink->setIntervention($intervention);
+                        $participantInterventionLink->setParticipant($participant);
+                        $participantInterventionLink
+                        ->setParticipantInterventionLinkDatetimeStart(
+                                new \DateTime("now"));
+                        $participantInterventionLink->setStatus($status);
+                        $em->persist($participantInterventionLink);
+                        $em->flush($participantInterventionLink);
+                }
             }
         }
     }

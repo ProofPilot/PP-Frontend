@@ -31,7 +31,8 @@ class VerificationNoticeCommand extends ContainerAwareCommand
     protected function configure(){
         
         $this->setName('send:verificationNotice')
-        ->setDescription('Send email&SMS with verificaion');
+        ->setDescription('Send email&SMS with verificaion')
+        ->addArgument('currentDay', InputArgument::REQUIRED);
     }
     
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -39,13 +40,10 @@ class VerificationNoticeCommand extends ContainerAwareCommand
 
         $em = $this->getContainer()->get('doctrine')->getManager();
         $participants = $em->getRepository('CyclogramProofPilotBundle:Participant')->findByParticipantEmailConfirmed(false);
-        $currentDate = new \DateTime();
-        $currentDay = $currentDate->format('z');
+        $currentDay = $input->getArgument('currentDay');
         foreach ($participants as $participant) {
             $participantRegTime = $participant->getParticipantRegistrationtime();
             $participantRegDay = $participantRegTime->format('z');
-            $participantRegDay = 366;
-            $interval = $currentDay - $participantRegDay;
             if ((($currentDay - $participantRegDay) == 3) || (($currentDay - $participantRegDay) == -363) || (($currentDay - $participantRegDay) == -364)
                  || (($currentDay - $participantRegDay) == -365) || (($currentDay - $participantRegDay) == -366)) {
                 // send email
@@ -73,7 +71,6 @@ class VerificationNoticeCommand extends ContainerAwareCommand
                 }
             }
         }
-        $output->writeln("\n");
     }
     
     private function sendDoItNowEmail($participant) 
