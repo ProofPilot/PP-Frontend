@@ -217,7 +217,7 @@
 		    	var saveId = surveydata.attr('saveid');
 
 		    	if(surveyId !== undefined && saveId !== undefined) {
-		    	    window.location = '/' + '{{ app.request.locale }}' + '/surveyResponse?&studyCode={{ studyCode }}&surveyId=' + surveyId + '&saveId=' + saveId + '&redirectUrl=' + '{{ app.request.get('redirectUrl') }}';
+		    	    window.location = {% if app.environment == "prod" %}'/app.php'{% else %}'/app_dev.php'{% endif %} + '/' + '{{ app.request.locale }}' + '/surveyResponse?&studyCode={{ studyCode }}&surveyId=' + surveyId + '&saveId=' + saveId + '&redirectUrl=' + '{{ app.request.get('redirectUrl') }}';
 		    	}
 
     		});
