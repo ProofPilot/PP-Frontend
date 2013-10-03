@@ -108,6 +108,7 @@ class SexproStudy extends AbstractStudy implements StudyInterface
                 $participantArmLink->setArm($armArray[0]);
             } else {
                 if ($firstArmParticipants/$secondArmParticipants > 2 ){
+                    //This one does not get the activity
                     $participantArmLink->setArm($secondArm);
                 } elseif ($firstArmParticipants/$secondArmParticipants < 2) {
                     $participantArmLink->setArm($firstArm);
@@ -135,18 +136,22 @@ class SexproStudy extends AbstractStudy implements StudyInterface
             $em->persist($participantArmLink);
             $em->flush($participantArmLink);
 
-            $participantInterventionLink = new ParticipantInterventionLink();
-            $intervention = $em
-                    ->getRepository('CyclogramProofPilotBundle:Intervention')
-                    ->findOneByInterventionCode('SexProBaselineSurvey');
-            $participantInterventionLink->setIntervention($intervention);
-            $participantInterventionLink->setParticipant($participant);
-            $participantInterventionLink
-                    ->setParticipantInterventionLinkDatetimeStart(
-                            new \DateTime("now"));
-            $participantInterventionLink->setStatus($status);
-            $em->persist($participantInterventionLink);
-            $em->flush($participantInterventionLink);
+            //create a sexpro activity only if the is not SexPro3Month
+            if ( ! ( $firstArmParticipants/$secondArmParticipants > 2 ) ){
+
+                $participantInterventionLink = new ParticipantInterventionLink();
+                $intervention = $em
+                        ->getRepository('CyclogramProofPilotBundle:Intervention')
+                        ->findOneByInterventionCode('SexProBaselineSurvey');
+                $participantInterventionLink->setIntervention($intervention);
+                $participantInterventionLink->setParticipant($participant);
+                $participantInterventionLink
+                        ->setParticipantInterventionLinkDatetimeStart(
+                                new \DateTime("now"));
+                $participantInterventionLink->setStatus($status);
+                $em->persist($participantInterventionLink);
+                $em->flush($participantInterventionLink);
+            }
         }
     }
 
