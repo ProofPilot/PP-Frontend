@@ -122,6 +122,7 @@ class DoItNotificationCommand extends ContainerAwareCommand
         $parameters["interventions"] = array();
         if (!empty($interventionLinks)){
             foreach($interventionLinks as $interventionLink) {
+                
                     $interventionId = $interventionLink->getIntervention()->getInterventionId();
                     $interventionContent = $this->getContainer()->get('doctrine')->getRepository("CyclogramProofPilotBundle:Intervention")->getInterventionContent($interventionId, $locale);
             

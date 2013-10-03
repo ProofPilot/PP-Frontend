@@ -1,6 +1,6 @@
 <?php
 /*
-* This is part of the ProofPilot package.
+ * This is part of the ProofPilot package.
 *
 * (c)2012-2013 Cyclogram, Inc, West Hollywood, CA <crew@proofpilot.com>
 * ALL RIGHTS RESERVED
@@ -31,7 +31,7 @@ use Cyclogram\Bundle\ProofPilotBundle\Entity\UserRoleLink;
  * @ORM\Table(name="user")
  * @ORM\Entity
  */
-class User implements AdvancedUserInterface
+class User
 {
 
     protected $roles;
@@ -42,39 +42,6 @@ class User implements AdvancedUserInterface
         $this->roles = array();
     }
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="facebookId", type="string", length=255)
-     */
-    protected $facebookId;
-    
-    
-    public function serialize()
-    {
-        return serialize(array($this->facebookId, parent::serialize()));
-    }
-    
-    public function unserialize($data)
-    {
-        list($this->facebookId, $parentData) = unserialize($data);
-        parent::unserialize($parentData);
-    }
-    
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="firstname", type="string", length=255)
-     */
-    protected $firstname;
-    
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="lastname", type="string", length=255)
-     */
-    protected $lastname;
-    
     /**
      * @var integer
      *
@@ -127,6 +94,13 @@ class User implements AdvancedUserInterface
     protected $userMobileSmsCodeConfirmed;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="login_attempts", type="boolean", nullable=false)
+     */
+    protected $loginAttempts;
+
+    /**
      * @var \Status
      *
      * @ORM\ManyToOne(targetEntity="Status")
@@ -135,6 +109,8 @@ class User implements AdvancedUserInterface
      * })
      */
     protected $status;
+
+
 
     /**
      * Get userId
@@ -155,8 +131,6 @@ class User implements AdvancedUserInterface
     public function setUserEmail($userEmail)
     {
         $this->userEmail = $userEmail;
-    
-        return $this;
     }
 
     /**
@@ -178,8 +152,6 @@ class User implements AdvancedUserInterface
     public function setUserPassword($userPassword)
     {
         $this->userPassword = $userPassword;
-    
-        return $this;
     }
 
     /**
@@ -201,8 +173,6 @@ class User implements AdvancedUserInterface
     public function setUserEmailConfirmed($userEmailConfirmed)
     {
         $this->userEmailConfirmed = $userEmailConfirmed;
-    
-        return $this;
     }
 
     /**
@@ -224,8 +194,6 @@ class User implements AdvancedUserInterface
     public function setUserMobileNumber($userMobileNumber)
     {
         $this->userMobileNumber = $userMobileNumber;
-    
-        return $this;
     }
 
     /**
@@ -247,8 +215,6 @@ class User implements AdvancedUserInterface
     public function setUserMobileSmsCode($userMobileSmsCode)
     {
         $this->userMobileSmsCode = $userMobileSmsCode;
-    
-        return $this;
     }
 
     /**
@@ -270,8 +236,6 @@ class User implements AdvancedUserInterface
     public function setUserMobileSmsCodeConfirmed($userMobileSmsCodeConfirmed)
     {
         $this->userMobileSmsCodeConfirmed = $userMobileSmsCodeConfirmed;
-    
-        return $this;
     }
 
     /**
@@ -293,8 +257,6 @@ class User implements AdvancedUserInterface
     public function setStatus(\Cyclogram\Bundle\ProofPilotBundle\Entity\Status $status = null)
     {
         $this->status = $status;
-    
-        return $this;
     }
 
     /**
@@ -344,6 +306,14 @@ class User implements AdvancedUserInterface
         return $this->getUserEmail();
     }
 
+    public function setLoginAttempts($loginAttempts) {
+    	$this->loginAttempts = $loginAttempts;
+    }
+    
+    public function getLoginAttempts() {
+    	return $this->loginAttempts;
+    }
+    
     /**
      * Removes sensitive data from the user.
      *
@@ -390,6 +360,17 @@ class User implements AdvancedUserInterface
         return array('userId');
     }
 
+    /* @Serializable */
+    public function serialize (){
+        return NULL;
+    }
+
+    /* @Serializable */
+    public function unserialize ( $serialized ) {
+        return;
+    }
+
+
     /**
      * Returns the roles granted to the user.
      *
@@ -425,79 +406,8 @@ class User implements AdvancedUserInterface
         }
     }
     
-    public function setRoleDirect($role)
-    {
-        $this->roles[] = $role;
-    }
-    
     public function __toString() 
     {
     	return (string) $this->userId;
-    }
-    
-    /**
-     * @return string
-     */
-    public function getFirstname()
-    {
-        return $this->firstname;
-    }
-    
-    /**
-     * @param string $firstname
-     */
-    public function setFirstname($firstname)
-    {
-        $this->firstname = $firstname;
-    }
-    
-    /**
-     * @return string
-     */
-    public function getLastname()
-    {
-        return $this->lastname;
-    }
-    
-    /**
-     * @param string $facebookId
-     * @return void
-     */
-    public function setFacebookId($facebookId)
-    {
-        $this->facebookId = $facebookId;
-        $this->salt = '';
-    }
-    
-    /**
-     * @return string
-     */
-    public function getFacebookId()
-    {
-        return $this->facebookId;
-    }
-    
-    /**
-     * @param string $lastname
-     */
-    public function setLastname($lastname)
-    {
-        $this->lastname = $lastname;
-    }
-    
-    public function setFBData($fbdata)
-    {
-        if (isset($fbdata['id'])) {
-            $this->setFacebookId($fbdata['id']);
-        }
-        if (isset($fbdata['first_name'])) {
-            $this->setFirstname($fbdata['first_name']);
-        }
-        if (isset($fbdata['last_name'])) {
-            $this->setLastname($fbdata['last_name']);
-        }
-        if (isset($fbdata['email'])) {
-            $this->setUserEmail($fbdata['email']);
-        }
     }
 }

@@ -448,7 +448,7 @@ class DefaultController extends Controller
             return $this->redirect( $this->generateUrl("CyclogramKnowatHomeBundle_eligible") );
         } else {
             $logger = $this->get('logger');
-            $logger->err('PARTICIPANT NOT ELIGIBLE: '.implode("|", $reason));
+            $logger->err('PARTICIPANT NOT ELIGIBLE ');
             return $this->redirect( $this->generateUrl("CyclogramKnowatHomeBundle_notEligible") );
         }
     }

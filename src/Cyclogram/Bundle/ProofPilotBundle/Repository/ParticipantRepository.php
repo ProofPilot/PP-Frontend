@@ -72,10 +72,12 @@ class ParticipantRepository extends EntityRepository implements
         return $this->getEntityManager()
         ->createQuery("SELECT COUNT (pil) FROM CyclogramProofPilotBundle:ParticipantInterventionLink pil
                 INNER JOIN pil.status intervention_status
+                INNER JOIN pil.intervention i
+                INNER JOIN i.interventionType it
                 WHERE pil.participant = :userid
                 AND pil.participantInterventionLinkDatetimeStart <= :currentDate
                 AND intervention_status.statusName = 'Active'
-                ")
+                AND it.interventionTypeName <> 'Test'")
         ->setParameters(array(
                         'userid' => $userid,
                         'currentDate' => $currentDate
@@ -115,6 +117,7 @@ class ParticipantRepository extends EntityRepository implements
                 WHERE pil.participant = :userid
                 AND pil.participantInterventionLinkDatetimeStart <= :currentDate
                 AND s.statusId = 1
+                AND it.interventionTypeName <> \'Test\'
                 ')
                 ->setParameters(array(
                         'userid' => $userid,

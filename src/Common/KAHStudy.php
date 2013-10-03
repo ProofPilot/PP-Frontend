@@ -21,6 +21,13 @@ namespace Common;
 use Cyclogram\Bundle\ProofPilotBundle\Entity\Orders;
 
 use Cyclogram\Bundle\ProofPilotBundle\Entity\Study;
+use Cyclogram\Bundle\ProofPilotBundle\Entity\Specimen;
+use Cyclogram\Bundle\ProofPilotBundle\Entity\SpecimenHistory;
+use Cyclogram\Bundle\ProofPilotBundle\Entity\Test;
+use Cyclogram\Bundle\ProofPilotBundle\Entity\OrderSpecimenLink;
+use Cyclogram\Bundle\ProofPilotBundle\Entity\SpecimenTestLink;
+use Cyclogram\Bundle\ProofPilotBundle\Entity\TestHistory;
+use Cyclogram\Bundle\ProofPilotBundle\Entity\User;
 
 use Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantInterventionLink;
 
@@ -104,7 +111,24 @@ class KAHStudy extends AbstractStudy implements StudyInterface
                             ->checkIfSurveyPassed($participant, $surveyId);
                         
                         if ($passed) {
-                            $this->createIncentive($participant, $intervention);
+                            $surveyLink = $em->getRepository('CyclogramProofPilotBundle:ParticipantSurveyLink')->findOneBy(array('participant'=>$participant,'sidId'=>$surveyId));
+     
+                            $surveyResult = $this->container->get('custom_db')->getFactory('ElegibilityCustom')->getSurveyResponseData($surveyLink->getSaveId(), $surveyId);
+                            if(isset($surveyResult['169385X619X5932'])) {
+                                switch ($surveyResult['169385X619X5932']) {
+                                    case "A1" :
+                                        $incentiveType = $em->getRepository('CyclogramProofPilotBundle:IncentiveType')->findOneByIncentiveTypeName('Paypal Gift Card');
+                                        break;
+                                    case "A2" :
+                                        $incentiveType = $em->getRepository('CyclogramProofPilotBundle:IncentiveType')->findOneByIncentiveTypeName('Amazon Gift Card');
+                                        break;
+                                    case "A3" :
+                                        $incentiveType = $em->getRepository('CyclogramProofPilotBundle:IncentiveType')->findOneByIncentiveTypeName('None');
+                                        break;
+                                }
+                            }
+                            
+                            $this->createIncentive($participant, $intervention, $incentiveType->getIncentiveTypeName());
                             $completedStatus = $em->getRepository('CyclogramProofPilotBundle:Status')
                                     ->findOneByStatusName("Closed");
                             $interventionLink->setStatus($completedStatus);
@@ -112,6 +136,14 @@ class KAHStudy extends AbstractStudy implements StudyInterface
                             $em->flush();
                             $status = "Closed";
                            
+                            $intervention = $em
+                            ->getRepository('CyclogramProofPilotBundle:Intervention')
+                            ->findOneByInterventionCode("KAHPhase3TestPackage");
+                            $em->getRepository('CyclogramProofPilotBundle:Participant')
+                            ->addParticipantInterventionLink($participant,$intervention);
+                            $em->persist($interventionLink);
+                            $em->flush();
+                            //inserting order
                             $order = new Orders();
                             $order->setOrderDatetime(new \Datetime('now'));
                             $courier = $em->getRepository('CyclogramProofPilotBundle:Courier')->find(1);
@@ -124,17 +156,74 @@ class KAHStudy extends AbstractStudy implements StudyInterface
                             ->findOneByStatusName("Active");
                             $order->setStatus($status);
                             $em->persist($order);
-                            $em->flush($order);
+                            $em->flush();
+                            //inserting speciment
+                            $specimen = new Specimen();
+                            $specimen->setSpecimenName('STE123');
+                            $kitNumber = "SPKN-" . $participant->getParticipantId() . "-TE";
+                            $kitNumber = "";
+                            $specimen->setSpecimenKitNumber($kitNumber);
+                            $specimen->setSpecimenPhase($em->getRepository('CyclogramProofPilotBundle:SpecimenPhase')->find( 1 ));
+                            $specimen->setSpecimenFdaApprovalStatus(1);
+                            $specimen->setSpecimenCollectionTool($em->getRepository('CyclogramProofPilotBundle:SpecimenCollectionTool')->find( 1 ));
+                            $specimen->setCollectorForum($em->getRepository('CyclogramProofPilotBundle:CollectorForum')->find( 3 ));
+                            $specimen->setStatus($em->getRepository('CyclogramProofPilotBundle:Status')->find( 1 ));
+                            $em->persist($specimen);
+                            $em->flush();
+                            //inserting specimen history
+                            $specimen_history = new SpecimenHistory();
+                            $specimen_history->setSpecimenHistoryDatetime(new \DateTime("now"));
+                            $specimen_history->setSpecimenHistoryIpAddress($_SERVER['REMOTE_ADDR']);
+                            $specimen_history->setSpecimen($em->getRepository('CyclogramProofPilotBundle:Specimen')->find( $specimen->getSpecimenId() ));
+                            $specimen_history->setSpecimenPhase($em->getRepository('CyclogramProofPilotBundle:SpecimenPhase')->find( 1 ));
+                            $representative = $em->getRepository('CyclogramProofPilotBundle:Representative')->find(1);
+                            $specimen_history->setRepresentative($representative);
+                            $em->persist($specimen_history);
+                            $em->flush();
+                            //inserting test
+                            $test = new Test();
+                            $test->setTestDateCreation(new \DateTime("now"));
+                            $kitNumber = "TKN-" . $participant->getParticipantId() . "-TE";
+                            $kitNumber = "";
+                            $test->getTestKitNumber($kitNumber);
+                            $testName = "TNM-" . $participant->getParticipantId() . "-TE";
+                            $test->setTestName($testName);
+                            $test->setTestKitRegistered(1);
+                            $test->setTestType($em->getRepository('CyclogramProofPilotBundle:TestType')->find( 1 ));
+                            $test->setTestPhase($em->getRepository('CyclogramProofPilotBundle:TestPhase')->find( 1 ));
+                            $test->setTestPreliminarResult($em->getRepository('CyclogramProofPilotBundle:TestPreliminarResult')->find( 1 ));
+                            $test->setCollectorForum($em->getRepository('CyclogramProofPilotBundle:CollectorForum')->find( 3 ));
+                            $test->setTestOutcomeType($em->getRepository('CyclogramProofPilotBundle:TestOutcomeType')->find( 1 ));
+                            $test->setTestProccesingType($em->getRepository('CyclogramProofPilotBundle:TestProccesingType')->find( 1 ));
+                            $test->setStatus($em->getRepository('CyclogramProofPilotBundle:Status')->find( 1 ));
+                            $em->persist($test);
+                            $em->flush();
+                            //inserting order-specimen-link
+                            $order_specimen_link = new OrderSpecimenLink();
+                            $order_specimen_link->setOrder($order);
+                            $order_specimen_link->setSpecimen($em->getRepository('CyclogramProofPilotBundle:Specimen')->find( $specimen->getSpecimenId() ));
+                            $em->persist($order_specimen_link);
+                            $em->flush();
+                            //inserting specimen-test-link
+                            $specimen_test_link = new SpecimenTestLink();
+                            $specimen_test_link->setTestId($test->getTestId());
+                            $specimen_test_link->setSpecimen($em->getRepository('CyclogramProofPilotBundle:Specimen')->find( $specimen->getSpecimenId() ));
+                            $em->persist($specimen_test_link);
+                            $em->flush();
+                            //inserting order-history
+                            $test_history = new TestHistory();
+                            $test_history->setTestHistoryDatetime(new \DateTime("now"));
+                            $test_history->setTest($em->getRepository('CyclogramProofPilotBundle:Test')->find( $test->getTestId() ));
+                            $test_history->setTestPhase($em->getRepository('CyclogramProofPilotBundle:TestPhase')->find( 1 ));
+                            $test_history->setRepresentative($representative);
+                            $em->persist($test_history);
+                            $em->flush();
                         }
                     }
+                    break;
             case "KAHPhase3TestPackage":
                 $surveyId = $intervention->getSidId();
                 if ($status == "Active") {
-                    $passed = $em
-                    ->getRepository('CyclogramProofPilotBundle:ParticipantSurveyLink')
-                    ->checkIfSurveyPassed($participant, $surveyId);
-                    
-                    if ($passed) {
                         $this->createIncentive($participant, $intervention);
                         $completedStatus = $em->getRepository('CyclogramProofPilotBundle:Status')
                             ->findOneByStatusName("Closed");
@@ -142,8 +231,8 @@ class KAHStudy extends AbstractStudy implements StudyInterface
                         $em->persist($interventionLink);
                         $em->flush();
                         $status = "Closed";
-                    }
                 }
+                break;
             case "KAHPhase3ReportResults":
                 $surveyId = $intervention->getSidId();
                 if ($status == "Active") {
@@ -152,7 +241,23 @@ class KAHStudy extends AbstractStudy implements StudyInterface
                     ->checkIfSurveyPassed($participant, $surveyId);
                 
                     if ($passed) {
-                        $this->createIncentive($participant, $intervention);
+                        $surveyLink = $em->getRepository('CyclogramProofPilotBundle:ParticipantSurveyLink')->findOneBy(array('participant'=>$participant,'sidId'=>$surveyId));
+                         
+                        $surveyResult = $this->container->get('custom_db')->getFactory('ElegibilityCustom')->getSurveyResponseData($surveyLink->getSaveId(), $surveyId);
+                        if(isset($surveyResult['295666X628X6127'])) {
+                            switch ($surveyResult['295666X628X6127']) {
+                                case "A1" :
+                                    $incentiveType = $em->getRepository('CyclogramProofPilotBundle:IncentiveType')->findOneByIncentiveTypeName('Paypal Gift Card');
+                                    break;
+                                case "A2" :
+                                    $incentiveType = $em->getRepository('CyclogramProofPilotBundle:IncentiveType')->findOneByIncentiveTypeName('Amazon Gift Card');
+                                    break;
+                                case "A3" :
+                                    $incentiveType = $em->getRepository('CyclogramProofPilotBundle:IncentiveType')->findOneByIncentiveTypeName('None');
+                                    break;
+                            }
+                        }
+                        $this->createIncentive($participant, $intervention, $incentiveType->getIncentiveTypeName());
                         $completedStatus = $em->getRepository('CyclogramProofPilotBundle:Status')
                         ->findOneByStatusName("Closed");
                         $interventionLink->setStatus($completedStatus);
@@ -162,6 +267,39 @@ class KAHStudy extends AbstractStudy implements StudyInterface
                             ->findOneByInterventionCode("KAHPhase3FollowUp");
                         $em->getRepository('CyclogramProofPilotBundle:Participant')
                             ->addParticipantInterventionLink($participant,$intervention);
+                        $em->persist($interventionLink);
+                        $em->flush();
+                    }
+                }
+            break;
+            case "KAHPhase3FollowUp":
+                $surveyId = $intervention->getSidId();
+                if ($status == "Active") {
+                    $passed = $em
+                    ->getRepository('CyclogramProofPilotBundle:ParticipantSurveyLink')
+                    ->checkIfSurveyPassed($participant, $surveyId);
+                    if ($passed) {
+                        $surveyLink = $em->getRepository('CyclogramProofPilotBundle:ParticipantSurveyLink')->findOneBy(array('participant'=>$participant,'sidId'=>$surveyId));
+                         
+                        $surveyResult = $this->container->get('custom_db')->getFactory('ElegibilityCustom')->getSurveyResponseData($surveyLink->getSaveId(), $surveyId);
+                        if(isset($surveyResult['543977X635X6190'])) {
+                            switch ($surveyResult['543977X635X6190']) {
+                                case "A1" :
+                                    $incentiveType = $em->getRepository('CyclogramProofPilotBundle:IncentiveType')->findOneByIncentiveTypeName('Paypal Gift Card');
+                                    break;
+                                case "A2" :
+                                    $incentiveType = $em->getRepository('CyclogramProofPilotBundle:IncentiveType')->findOneByIncentiveTypeName('Amazon Gift Card');
+                                    break;
+                                case "A3" :
+                                    $incentiveType = $em->getRepository('CyclogramProofPilotBundle:IncentiveType')->findOneByIncentiveTypeName('None');
+                                    break;
+                            }
+                        }
+                        $this->createIncentive($participant, $intervention, $incentiveType->getIncentiveTypeName());
+                        $completedStatus = $em->getRepository('CyclogramProofPilotBundle:Status')
+                        ->findOneByStatusName("Closed");
+                        $interventionLink->setStatus($completedStatus);
+                        $status = "Closed";
                         $em->persist($interventionLink);
                         $em->flush();
                     }

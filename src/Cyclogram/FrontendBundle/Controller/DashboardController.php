@@ -39,7 +39,8 @@ class DashboardController extends Controller
      */
     public function indexAction($sendMail)
     {
-        
+
+        $em = $this->getDoctrine()->getManager();
         $participant = $this->get('security.context')->getToken()->getUser();
         
         if (!is_null($sendMail)){
@@ -66,7 +67,6 @@ class DashboardController extends Controller
         
         $this->get('study_logic')->interventionLogic($participant);
         
-        $em = $this->getDoctrine()->getManager();
         $surveyscount = $em->getRepository('CyclogramProofPilotBundle:Participant')->getActiveParticipantInterventionsCount($participant);
         $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:Participant')->getActiveParticipantInterventionLinks($participant);
 

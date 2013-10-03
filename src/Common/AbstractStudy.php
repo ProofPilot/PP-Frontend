@@ -35,13 +35,13 @@ class AbstractStudy
         $this->container = $container;
     }
     
-    public function createIncentive(Participant $participant, Intervention $intervention ) {
+    public function createIncentive(Participant $participant, Intervention $intervention, $incentiveTypeName = 'None') {
         $em = $this->container->get('doctrine')->getEntityManager();
+        $incentiveType = $em->getRepository('CyclogramProofPilotBundle:IncentiveType')->findOneByIncentiveTypeName($incentiveTypeName);
         $incentive = new Incentive();
         $incentive->setParticipant($participant);
         $incentive->setIncentiveDatetime(new \DateTime());
         $incentive->setIncentiveAmount($intervention->getInterventionIncentiveAmount());
-        $incentiveType = $em->getRepository('CyclogramProofPilotBundle:IncentiveType')->find(1);
         $incentive->setIncentiveType($incentiveType);
         $status = $em->getRepository('CyclogramProofPilotBundle:Status')->find(25);
         $incentive->setStatus($status);
@@ -52,6 +52,8 @@ class AbstractStudy
         $participantIncentiveBalance = $participant->getParticipantIncentiveBalance();
         $sum = $intervention->getInterventionIncentiveAmount() + $participantIncentiveBalance;
         $participant->setParticipantIncentiveBalance($sum);
+        $em->persist($participant);
+        $em->flush();
     }
 
 }

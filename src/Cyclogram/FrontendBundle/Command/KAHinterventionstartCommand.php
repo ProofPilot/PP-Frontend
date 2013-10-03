@@ -38,23 +38,19 @@ class KAHinterventionstartCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $em = $this->getContainer()->get('doctrine')->getManager();
-        $intervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')->findOneByInterventionCode('KAHPhase3Baseline');
+        $intervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')->findOneByInterventionCode('KAHPhase3TestPackage');
         $study=$em->getRepository('CyclogramProofPilotBundle:Study')->findByStudyCode('knowathome');
         $status = $em->getRepository('CyclogramProofPilotBundle:Status')
                             ->findOneByStatusName("Closed");
         $currentDay = $input->getArgument('currentDay');
         $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')->findByIntervention(array('intervention'=>$intervention, 'status'=>$status));
         foreach ($interventionLinks as $interventionLink) {
-            $participant = $interventionLink->getParticipant();
-            
-            $order = $em->getRepository('CyclogramProofPilotBundle:Orders')->findOneBy(array('participant'=>$participant,'study'=>$study));
-            if (!empty($order)) {
-                $orderDate = $order->getOrderDatetime();
-                $orderDay = $orderDate->format('z');
-                
-                if ((($currentDay - $orderDay) == 3) || (($currentDay - $orderDay) == -363) || (($currentDay - $orderDay) == -364)
-                        || (($currentDay - $orderDay) == -365) || (($currentDay - $orderDay) == -366)) {
-                        $output->writeln("Add KAHPhase3ReportResults task to user ".$participant->getParticipantEmail());
+                $participant = $interventionLink->getParticipant();
+                $interventionDate = $interventionLink->getParticipantInterventionLinkDatetimeStart();
+                $interventionDay = $interventionDate->format('z');
+                if ((($currentDay - $interventionDay) == 3) || (($currentDay - $interventionDay) == -363) || (($currentDay - $interventionDay) == -364)
+                        || (($currentDay - $interventionDay) == -365) || (($currentDay - $interventionDay) == -366)) {
+                        $output->writeln("Add KAHPhase3ReportResults task to user ". $participant->getParticipantEmail());
                         $status = $em->getRepository('CyclogramProofPilotBundle:Status')
                         ->find(1);
                         $participantInterventionLink = new ParticipantInterventionLink();
@@ -70,7 +66,6 @@ class KAHinterventionstartCommand extends ContainerAwareCommand
                         $em->persist($participantInterventionLink);
                         $em->flush($participantInterventionLink);
                 }
-            }
         }
     }
 }

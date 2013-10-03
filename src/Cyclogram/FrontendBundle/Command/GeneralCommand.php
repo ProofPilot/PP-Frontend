@@ -53,7 +53,7 @@ class GeneralCommand extends ContainerAwareCommand
             $output->writeln("<!--send:doitnotification error--!>");
         }
         $output->writeln("\n");
-        if ($currentHour == 14) {
+        if ($currentHour == 16) {
             //send:verificationNotice
             $VerificationNoticeCommand = $this->getApplication()->find('send:verificationNotice');
             if (!empty($VerificationNoticeCommand)) {
@@ -71,7 +71,7 @@ class GeneralCommand extends ContainerAwareCommand
             $output->writeln("\n");
             //send:kahintervetionstart
             $KAHInterventionstartCommand = $this->getApplication()->find('send:kahintervetionstart');
-            if (!empty($VerificationNoticeCommand)) {
+            if (!empty($KAHInterventionstartCommand)) {
                 $output->writeln("<!--Running command send:kahintervetionstart--!>");
                 $input = new ArrayInput(array('command' => 'send:kahintervetionstart', 'currentDay'=> $currentDay));
                 $returnCode = $KAHInterventionstartCommand->run($input, $output);

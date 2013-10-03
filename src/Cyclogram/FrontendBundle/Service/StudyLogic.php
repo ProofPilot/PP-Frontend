@@ -142,7 +142,7 @@ class StudyLogic
         $participantLink->setSaveId($saveId);
 
         $em->persist($participantLink);
-        $em->flush($participantLink);
+        $em->flush();
     }
 
     public function interventionLogic($participant) {
