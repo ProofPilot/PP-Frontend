@@ -1,5 +1,20 @@
 {%  extends '::base.html.twig' %}
-
+{% block javascripts %}
+  <script src= {{ asset ('js/jstz-1.0.4.min.js') }}></script>
+    <script>
+    $(document).ready(function(){
+           $('#sms_confirm_confirmCode').click(function()
+                {
+                    var tz = jstz.determine();
+                    var timeZone = tz.name();
+                    $('#sms_confirm_timeZone').val(timeZone);
+                    return true;
+               });
+           var tz = jstz.determine();
+           $.post("{{ path('_register_verify_sms',{'id' : id, 'studyCode' : studyCode}) }}", {timeZonename : tz.name()});
+    });
+    </script>
+{% endblock javascripts %}
 {% block content %}
     <div class="mobile_reg">
       <h1><span>{% trans from "register" %}txt_join{% endtrans %} {{ current }}/{{ steps }}:</span>{% trans from "register" %}enter_sms_code{% endtrans %}</h1>
@@ -19,7 +34,7 @@
               {{ form_errors(form) }}
               {{ form_rest(form) }}
             </div>
-        <div class="center_align"><a href={{ path('_register_sms',{'id' : id}) }} class="repeat">{% trans from "register" %}no_code{% endtrans %}</a></div>
+        <div class="center_align"><a href={{ path('_register_sms',{'studyCode' : studyCode , 'id' : id}) }} class="repeat">{% trans from "register" %}no_code{% endtrans %}</a></div>
       </form>
     </div>
 {% endblock content %}

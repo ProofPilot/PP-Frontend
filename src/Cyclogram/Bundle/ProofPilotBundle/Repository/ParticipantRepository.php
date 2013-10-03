@@ -1,4 +1,21 @@
 <?php
+/*
+* This is part of the ProofPilot package.
+*
+* (c)2012-2013 Cyclogram, Inc, West Hollywood, CA <crew@proofpilot.com>
+* ALL RIGHTS RESERVED
+*
+* This software is provided by the copyright holders to Manila Consulting for use on the
+* Center for Disease Control's Evaluation of Rapid HIV Self-Testing among MSM in High
+* Prevalence Cities until 2016 or the project is completed.
+*
+* Any unauthorized use, modification or resale is not permitted without expressed permission
+* from the copyright holders.
+*
+* KnowatHome branding, URL, study logic, survey instruments, and resulting data are not part
+* of this copyright and remain the property of the prime contractor.
+*
+*/
 namespace Cyclogram\Bundle\ProofPilotBundle\Repository;
 
 use Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantInterventionLink;
@@ -26,9 +43,22 @@ class ParticipantRepository extends EntityRepository implements
          ->getOneOrNullResult();
 
     }
+    
+    public function loadUserByEmail($email)
+    {
+        return $this->getEntityManager()
+        ->createQuery('SELECT p FROM
+                CyclogramProofPilotBundle:Participant p
+                WHERE p.participantEmail = :email')
+                ->setParameters(array(
+                        'email' => $email
+                ))
+                ->getOneOrNullResult();
+    }
+    
     public function refreshUser(UserInterface $user)
     {
-        return $this->loadUserByUsername($user->getUsername());
+        return $this->loadUserByEmail($user->getParticipantEmail());
 
     }
     public function supportsClass($class)
@@ -42,10 +72,12 @@ class ParticipantRepository extends EntityRepository implements
         return $this->getEntityManager()
         ->createQuery("SELECT COUNT (pil) FROM CyclogramProofPilotBundle:ParticipantInterventionLink pil
                 INNER JOIN pil.status intervention_status
+                INNER JOIN pil.intervention i
+                INNER JOIN i.interventionType it
                 WHERE pil.participant = :userid
                 AND pil.participantInterventionLinkDatetimeStart <= :currentDate
                 AND intervention_status.statusName = 'Active'
-                ")
+                AND it.interventionTypeName <> 'Test'")
         ->setParameters(array(
                         'userid' => $userid,
                         'currentDate' => $currentDate
@@ -53,7 +85,7 @@ class ParticipantRepository extends EntityRepository implements
         ->getSingleScalarResult();
     }
     
-    public function getParticipantInterventionLinks($userid){
+    public function getParticipantInterventionLinks($userid, $study){
         
         $currentDate = new \DateTime();
         
@@ -64,10 +96,12 @@ class ParticipantRepository extends EntityRepository implements
                 INNER JOIN i.interventionType it
                 WHERE pil.participant = :userid
                 AND pil.participantInterventionLinkDatetimeStart <= :currentDate
+                AND i.study = :study
                 ')
                 ->setParameters(array(
                         'userid' => $userid,
-                        'currentDate' => $currentDate))
+                        'currentDate' => $currentDate,
+                        'study' => $study))
                         ->getResult();
     }
     
@@ -83,6 +117,7 @@ class ParticipantRepository extends EntityRepository implements
                 WHERE pil.participant = :userid
                 AND pil.participantInterventionLinkDatetimeStart <= :currentDate
                 AND s.statusId = 1
+                AND it.interventionTypeName <> \'Test\'
                 ')
                 ->setParameters(array(
                         'userid' => $userid,
@@ -118,7 +153,8 @@ class ParticipantRepository extends EntityRepository implements
     public function checkIfEmailNotUsed($email) {
         $result = $this->getEntityManager()
             ->createQuery('SELECT COUNT(p.participantEmail) FROM CyclogramProofPilotBundle:Participant p
-                    WHERE p.participantEmail = :email')
+                    WHERE p.participantEmail = :email
+                    OR p.participantAppreciationEmail = :email')
                     //AND p.participantEmailConfirmed = true')
             ->setParameter('email', $email)
             ->getSingleScalarResult();
@@ -256,12 +292,11 @@ class ParticipantRepository extends EntityRepository implements
                 SELECT p
                 FROM CyclogramProofPilotBundle:Participant p
                 INNER JOIN p.contacttimelinks pctl
-                INNER JOIN pctl.participantTimezone ptz
                 INNER JOIN pctl.participantContactTime pct
                 INNER JOIN p.studyreminderlinks psrl
                 INNER JOIN psrl.participantStudyReminder psr
                 WHERE psrl.byEmail = 1
-                AND ptz.participantTimezoneId = :timeZoneId
+                AND p.participantTimezone = :timeZoneId
                 AND pct.participantContactTimesId = :contactTimeId
                 AND psr.participantStudyReminderId = :reminderId
                 AND pctl.participantWeekday = :weekDayId
@@ -288,12 +323,11 @@ class ParticipantRepository extends EntityRepository implements
                 SELECT p
                 FROM CyclogramProofPilotBundle:Participant p
                 INNER JOIN p.contacttimelinks pctl
-                INNER JOIN pctl.participantTimezone ptz
                 INNER JOIN pctl.participantContactTime pct
                 INNER JOIN p.studyreminderlinks psrl
                 INNER JOIN psrl.participantStudyReminder psr
                 WHERE psrl.bySMS = 1
-                AND ptz.participantTimezoneId = :timeZoneId
+                AND p.participantTimezone = :timeZoneId
                 AND pct.participantContactTimesId = :contactTimeId
                 AND psr.participantStudyReminderId = :reminderId
                 AND pctl.participantWeekday = :weekDayId
@@ -306,5 +340,20 @@ class ParticipantRepository extends EntityRepository implements
     
         return $results;
     }
+    
+    public function getParticipantsWithNotConfirmedEmails()
+    {
+        $query = $this->getEntityManager()
+        ->createQuery("
+                SELECT p
+                FROM CyclogramProofPilotBundle:Participant p
+                WHERE DATEDIFF(CURRENT_DATE(), p.participantRegistrationtime) = 3
+                ");
+        echo $query->getSQL();
+        $results = $query->getResult();
+        
+        return $results;
+    }
+    
 
 }

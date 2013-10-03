@@ -1,4 +1,21 @@
 <?php
+/*
+* This is part of the ProofPilot package.
+*
+* (c)2012-2013 Cyclogram, Inc, West Hollywood, CA <crew@proofpilot.com>
+* ALL RIGHTS RESERVED
+*
+* This software is provided by the copyright holders to Manila Consulting for use on the
+* Center for Disease Control's Evaluation of Rapid HIV Self-Testing among MSM in High
+* Prevalence Cities until 2016 or the project is completed.
+*
+* Any unauthorized use, modification or resale is not permitted without expressed permission
+* from the copyright holders.
+*
+* KnowatHome branding, URL, study logic, survey instruments, and resulting data are not part
+* of this copyright and remain the property of the prime contractor.
+*
+*/
 namespace Cyclogram\FrontendBundle\Menu;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 
@@ -27,7 +44,16 @@ class MenuBuilder extends ContainerAware implements TranslationContainerInterfac
 //         $this->factory = $factory;
 //         $this->container = $container;
 //     }
-    
+    private function getThemeParameter()
+    {
+        $branding = $this->container->getParameter('branding');
+        if ($branding == 'default') {
+            return 'sexpro';
+        } else {
+            return 'knowathome';
+        }
+    }
+
     public function createSideDashboardMenu(FactoryInterface $factory,
             array $options)
     {
@@ -78,7 +104,7 @@ class MenuBuilder extends ContainerAware implements TranslationContainerInterfac
         
         $menu = $factory->createItem('root');
 
-        $menu->addChild('bottom_right_menu.help', array('route' => '_page', 'routeParameters' => array('studyUrl' => 'sexpro')))
+        $menu->addChild('bottom_right_menu.help', array('route' => '_page', 'routeParameters' => array('studyUrl' => $this->getThemeParameter())))
                 ->setAttribute('class', 'icon_help')->setExtra('translation_domain', 'generalmenus');
         $menu->addChild('bottom_right_menu.logout', array('route' => '_logout'))
                 ->setAttribute('class', 'icon_logout normal')->setExtra('translation_domain', 'generalmenus');
@@ -100,22 +126,13 @@ class MenuBuilder extends ContainerAware implements TranslationContainerInterfac
         $menu = $factory->createItem('root');
 
         $menu->addChild('bottom_left_menu.home', array(
-                'route' => '_main',
-                'routeParameters' => array(
-                        'studyCode' => $studyCode
-                        )))
+                'route' => '_main'))
                 ->setAttribute('class', 'icon_home')->setExtra('translation_domain', 'generalmenus');
         $menu->addChild('bottom_left_menu.fullscreen', array(
-                'route' => '_main',
-                'routeParameters' => array(
-                        'studyCode' => $studyCode
-                        )))
+                'route' => '_main'))
                 ->setAttribute('class', 'icon_fullscreen')->setExtra('translation_domain', 'generalmenus');
         $menu->addChild('bottom_left_menu.update', array(
-                'route' => '_main',
-                'routeParameters' => array(
-                        'studyCode' => $studyCode
-                        )))
+                'route' => '_main'))
                 ->setAttribute('class', 'icon_update')->setExtra('translation_domain', 'generalmenus');
 
         return $menu;
@@ -129,7 +146,7 @@ class MenuBuilder extends ContainerAware implements TranslationContainerInterfac
         $menu = $factory->createItem('root');
         $menu->setChildrenAttribute('class', 'header_menu');
 
-        $menu->addChild('top_menu.help', array('route' => '_page', 'routeParameters' => array('studyUrl' => 'sexpro')))
+        $menu->addChild('top_menu.help', array('route' => '_page', 'routeParameters' => array('studyUrl' => $this->getThemeParameter())))
                 ->setAttribute('class', 'icon_help')
                 ->setExtra('translation_domain', 'generalmenus');
         $menu->addChild('top_menu.logout', array('route' => '_logout'))

@@ -80,7 +80,7 @@ html.oldie .disclaimer {
 
 .disclaimer {
     border-radius: 4px;
-    height: 295px;
+    height: 160px;
     background-color: #333;
     margin-left: 0 !important;
 
@@ -89,7 +89,7 @@ html.oldie .disclaimer {
 
 .disclaimerContent {
     padding: 15px;
-    height: 250px;
+    height: 130px;
     overflow: auto;
     color: #FFFFFF;
 }

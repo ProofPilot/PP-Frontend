@@ -1,4 +1,21 @@
 <?php
+/*
+* This is part of the ProofPilot package.
+*
+* (c)2012-2013 Cyclogram, Inc, West Hollywood, CA <crew@proofpilot.com>
+* ALL RIGHTS RESERVED
+*
+* This software is provided by the copyright holders to Manila Consulting for use on the
+* Center for Disease Control's Evaluation of Rapid HIV Self-Testing among MSM in High
+* Prevalence Cities until 2016 or the project is completed.
+*
+* Any unauthorized use, modification or resale is not permitted without expressed permission
+* from the copyright holders.
+*
+* KnowatHome branding, URL, study logic, survey instruments, and resulting data are not part
+* of this copyright and remain the property of the prime contractor.
+*
+*/
 
 namespace Cyclogram\FrontendBundle\Controller;
 
@@ -41,18 +58,16 @@ class LoginController extends Controller
 
         if(     $error &&
                 $error instanceof IncompleteUserException) {
-
             $participantId = $error->getParticipantId();
             $studyCode = $error->getToken()->getAttribute("studyCode");
             $resourceOwner = $error->getToken()->getResourceOwnerName();
             $session->set("resourceOwnerName",$resourceOwner);
-            
+
             $participant = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:Participant')->find($participantId);
             
-            if(!empty($studyCode))
-                $study = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
-            
+
             if (!empty($studyCode)){
+                $study = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
                 if ($study->getEmailVerificationRequired()) {
                     return $this->redirect( $this->generateUrl("_register_email", array('id' => $participant->getParticipantId(), 'studyCode' => $studyCode)));
                 } else {
@@ -174,7 +189,8 @@ class LoginController extends Controller
 
                     $roles = $em->getRepository('CyclogramProofPilotBundle:UserRoleLink')->findBy(array("userUser"=>$participant));
                     $participant->setRoles($roles);
-                    $participant->setParticipantLastTouchDatetime(new \DateTime());
+                    $participant->setParticipantLastTouchDatetime(new \DateTime(null, new \DateTimeZone(
+                $participant->getParticipantTimezone()->getParticipantTimezoneName())));
 
                     $em->persist($participant);
                     $em->flush();
@@ -257,6 +273,7 @@ class LoginController extends Controller
     
         return new RedirectResponse(
                 $this->container->get('hwi_oauth.security.oauth_utils')->getAuthorizationUrl(
+                        $request,
                         $service, 
                         null, 
                         $extraParameters)
@@ -296,14 +313,15 @@ class LoginController extends Controller
     
                 if (!empty($participant)) {
                     $parameters['id'] = $participant->getParticipantId();
+                    $parameters['email'] = $participant->getParticipantEmail();
                     $parameters['locale'] = $participant->getLocale() ? $participant->getLocale() : $request->getLocale();
                     $parameters['host'] = $this->container->getParameter('site_url');
-                    $embedded['logo_top'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_logo.png");
-                    $embedded['logo_footer'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newletter_logo_footer.png");
-                    $embedded['login_button'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_small_login.jpg");
-                    $embedded['white_top'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_white_top.png");
-                    $embedded['white_bottom'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_white_bottom.png");
+                    
                     $cc = $this->get('cyclogram.common');
+                    
+                    $embedded = array();
+                    $embedded = $cc->getEmbeddedImages();
+                    
                     $cc->sendMail($participant->getParticipantEmail(),
                             $this->get('translator')->trans("email_reset_password", array(), "email", $parameters['locale']),
                             'CyclogramFrontendBundle:Email:reset_password_email.html.twig',
@@ -312,7 +330,7 @@ class LoginController extends Controller
                             true,
                             $parameters);
     
-                    return $this->render('CyclogramFrontendBundle:Login:reset_password_confirmation.html.twig', array());
+                    return $this->render('CyclogramFrontendBundle:Login:reset_password_confirmation.html.twig');
                 } else {
                     return $this->render('CyclogramFrontendBundle:Login:forgot_your_password.html.twig',
                             array(
@@ -324,7 +342,7 @@ class LoginController extends Controller
         }
         return $this->render('CyclogramFrontendBundle:Login:forgot_your_password.html.twig',
                 array(
-                        "form" => $form->createView(),
+                        "form" => $form->createView()
                 ));
     }
     
@@ -389,12 +407,12 @@ class LoginController extends Controller
         return $this->render('CyclogramFrontendBundle:Login:create_new_password.html.twig',
                 array(
                         "form" => $form->createView(),
-                        'id' => $id,
+                        'id' => $id
                 ));
     }
     
     /**
-     * @Route("/confirm_reset/{id}", name="_confirm_pass_reset")
+     * @Route("/confirm_reset}/{id}", name="_confirm_pass_reset")
      * @Template()
      */
     public function confirmResetAction($id)
@@ -483,13 +501,13 @@ class LoginController extends Controller
                     $emailText = $this->get('translator')->trans('email_sms_message', array(), 'security', $locale);
                     $sentSms = $sms->sendSmsAction( array('message' =>  $userNameText.' '. $participantUsername .' '. $emailText .' '. $participantEmail, 'phoneNumber'=>$participant->getParticipantMobileNumber()) );
                     if($sentSms)
-                        return $this->render('CyclogramFrontendBundle:Login:username_sent.html.twig',
-                                array());
+                        return $this->render('CyclogramFrontendBundle:Login:username_sent.html.twig');
                 } else {
                     return $this->render('CyclogramFrontendBundle:Login:forgot_username.html.twig',
                             array(
                                     'form' => $form->createView(),
-                                    "error" => $this->get('translator')->trans("doesnt_match_records", array(), "login")
+                                    "error" => $this->get('translator')->trans("doesnt_match_records", array(), "login"),
+                                    
                             ));
                 }
             }

@@ -1,4 +1,21 @@
 <?php
+/*
+* This is part of the ProofPilot package.
+*
+* (c)2012-2013 Cyclogram, Inc, West Hollywood, CA <crew@proofpilot.com>
+* ALL RIGHTS RESERVED
+*
+* This software is provided by the copyright holders to Manila Consulting for use on the
+* Center for Disease Control's Evaluation of Rapid HIV Self-Testing among MSM in High
+* Prevalence Cities until 2016 or the project is completed.
+*
+* Any unauthorized use, modification or resale is not permitted without expressed permission
+* from the copyright holders.
+*
+* KnowatHome branding, URL, study logic, survey instruments, and resulting data are not part
+* of this copyright and remain the property of the prime contractor.
+*
+*/
 namespace Cyclogram\FrontendBundle\Twig;
 
 use Symfony\Component\Security\Core\SecurityContext;
@@ -20,8 +37,6 @@ class GlobalExtension extends \Twig_Extension
     {
         return array(
                 'study_background' => new \Twig_Function_Method($this, 'studyBackground'),
-                'study_logo' => new \Twig_Function_Method($this, 'studyLogo'),
-                'dashboard_logo' => new \Twig_Function_Method($this, 'dashboardLogo'),
                 "twigtest" => new \Twig_Function_Method($this, 'twigTest', array(
                         'needs_environment' => true,
                         'needs_context' => true
@@ -43,33 +58,18 @@ class GlobalExtension extends \Twig_Extension
         $this->container = $container;
     }
     
-    public function studyBackground($studyCode)
+    public function studyBackground($branding, $random=false)
     {
         $nPic = rand ( 1, 4 );
-        if($studyCode == 'kah')
-            return "style=\"background-image:url('/images/study/1/".$nPic.".jpg')\"";
-        else 
+        if($branding=="default")
             return "";
+        else if($random==true)
+            return "style=\"background-image:url('/branding/".$branding."/random/".$nPic.".jpg')\"";
+        else if($random==false)
+            return "";
+
     }
-    
-    public function studyLogo($studyCode)
-    {
-        $loginUrl = $this->container->get('router')->generate('_login');
-        if($studyCode == 'kah')
-            return "<a href=\"$loginUrl\" class=\"logo knowathome\"></a>";
-        else
-            return "<a class=\"logo\" href=\"$loginUrl\">ProofPilot</a>";
-    }
-    
-    public function dashboardLogo($studyCode, $url)
-    {
-        if($studyCode == 'kah')
-            return "<a class=\"logo knowathome\" href=\"$url\">
-                 <img src=\"/2cd1c6ecec2c6d908b3ed66d4ea7b902/1/logo-1-en.png\" width=\"234\" height=\"44\" />
-            </a>";
-        else
-            return "<a class=\"site_logo\" href=\"$url\">ProofPilot</a>";
-    }
+
     
     public function twigTest(\Twig_Environment $environment, $context)
     {

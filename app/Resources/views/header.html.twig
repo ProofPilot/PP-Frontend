@@ -1,9 +1,5 @@
 <header>
-    {% if is_granted('ROLE_PARTICIPANT')  %}
-        {{ dashboard_logo(studyCode, path('_main'))|raw }}
-    {% else %}
-        {{ dashboard_logo(studyCode, path('_login'))|raw }}
-    {% endif %}
+    <a class="site_logo {{ branding }}" href="{{ path('_main') }}"></a>
     {% if is_granted('ROLE_PARTICIPANT')  %}
         {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createTopSettingsMenu',{'template': 'CyclogramFrontendBundle:Knp:top_menu.html.twig'}) }}
         {% else %}
@@ -17,21 +13,15 @@
 </header>
 <div class="mobile_header_menu nologin">
         <ul>
-        {% if is_granted('ROLE_PARTICIPANT')  %}
-            <li class="logo"><a class="site_logo" href="{{ path('_main') }}">ProofPilot</a></li>
-        {% else %}
-            <li class="logo"><a class="site_logo" href="{{ path('_login') }}">ProofPilot</a></li>
-        {% endif %}
-          <li class="right"><a class="trigger_sitemenu" href="#"></a></li>
+         <li class="logo">
+            <a class="site_logo {{ branding }}" href="{{ path('_main') }}"></a>
+         </li>
+         <li class="right"><a class="trigger_sitemenu" href="#"></a></li>
         </ul>
 </div>
 <div class="mobile_sitemenu register nologin">
         <div class="menu_wrapper">
-        {% if is_granted('ROLE_PARTICIPANT')  %}
-            <a class="close" href="#"></a> <a class="logo" href="#">ProofPilot</a>
-        {% else %}
-            <a class="close" href="#"></a> <a class="logo" href="#">ProofPilot</a>
-        {% endif %}
+        <a class="site_logo {{ branding }}" href="{{ path('_main') }}"></a>
         {% if app.user %}
             {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createTopSettingsMenu',{'template': 'CyclogramFrontendBundle:Knp:top_menu.html.twig'}) }}
         {% else %}

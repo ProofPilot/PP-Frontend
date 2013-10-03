@@ -28,10 +28,10 @@
 
         <h2>You Are Eligible</h2>
 
-        {% set redirectUrl = path('_register', {studyCode:'knowathome'}) %}
+        {% set redirectUrl = path('_register_in_study', {studyCode:'knowathome'}) %}
         <ul class="mainNavButtons">
             <!--<li><a class="NavButton" href="{{ path('_record_survey', {surveyId:svid, saveId:sid, redirectUrl: redirectUrl}) }}">Next</a></li>-->
-            <li><a class="NavButton" href="{{ redirectUrl }}">Next</a></li>
+            <li><a class="NavButton" href="{{ redirectUrl }}">Continue to registration</a></li>
         </ul>
 
         <br />

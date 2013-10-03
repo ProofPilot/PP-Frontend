@@ -13,16 +13,22 @@
         <ul class="form_fields">
           <li class="small_input">
           {% if form is defined %}
-              {{ form_widget(form.phone_small, {'attr' : {'class' : 'default_input tac small' , 'id' : 'numeric'}}) }}
-              
+              {% if aditional_phone == false  %}
+                  {{ form_widget(form.phone_small, {'attr' : {'class' : 'default_input tac small' , 'id' : 'numeric'}}) }}
+              {% else %}
+                  {{ form_widget(form.voice_phone_small, {'attr' : {'class' : 'default_input tac small' , 'id' : 'numeric'}}) }}
+              {% endif %}
           {% else %}
           <input name="" value="" class="default_input tac small" type="text">
           {% endif %}
           </li>
           <li class="wide_input">
           {% if form is defined %}
-          {{ form_widget(form.phone_wide, {'attr' : {'class' : 'default_input wide', 'id' : 'numeric'}}) }}
-          
+              {% if aditional_phone == false  %}
+                  {{ form_widget(form.phone_wide, {'attr' : {'class' : 'default_input wide', 'id' : 'numeric'}}) }}
+              {% else %}
+                  {{ form_widget(form.voice_phone_wide, {'attr' : {'class' : 'default_input wide' , 'id' : 'numeric'}}) }}
+              {% endif %}
           {% else %}
           <input name="" value="" class="default_input wide" type="text">
           {% endif %}
@@ -58,7 +64,7 @@
         </div>
       </form>
     </div>
-    
+    <script src= {{ asset ('js/jquery.numeric.js') }}></script>
      <script>
         $(document).ready(function(){
             $("#phone_phone_small").numeric();

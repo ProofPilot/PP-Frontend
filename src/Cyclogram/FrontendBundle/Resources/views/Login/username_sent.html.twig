@@ -1,9 +1,7 @@
 {%  extends '::base.html.twig' %}
 
-{% block body %}
-    <body class="has_image">
+{% block content %}
 		
-{% include '::header_reg.html.twig' %}
 		
 		<div class="mobile_reg align_center log_in_now">
 			
@@ -19,5 +17,5 @@
     <script>window.jQuery || document.write('<script src={{ asset('js/vendor/jquery-1.9.1.min.js') }}><\/script>')</script>
         <script src= {{ asset ('js/plugins.js') }}></script>
         <script src= {{ asset ('js/main.js') }}></script>
-    </body>
-{% endblock body %}
+
+{% endblock content %}

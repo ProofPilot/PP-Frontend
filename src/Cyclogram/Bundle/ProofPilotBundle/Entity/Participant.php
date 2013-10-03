@@ -1,4 +1,21 @@
 <?php
+/*
+ * This is part of the ProofPilot package.
+ *
+ * (c)2012-2013 Cyclogram, Inc, West Hollywood, CA <crew@proofpilot.com>
+ * ALL RIGHTS RESERVED
+ *
+ * This software is provided by the copyright holders to Manila Consulting for use on the
+ * Center for Disease Control's Evaluation of Rapid HIV Self-Testing among MSM in High
+ * Prevalence Cities until 2016 or the project is completed.
+ *
+ * Any unauthorized use, modification or resale is not permitted without expressed permission
+ * from the copyright holders.
+ *
+ * KnowatHome branding, URL, study logic, survey instruments, and resulting data are not part
+ * of this copyright and remain the property of the prime contractor.
+ *
+ */
 
 namespace Cyclogram\Bundle\ProofPilotBundle\Entity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -40,6 +57,16 @@ class Participant implements AdvancedUserInterface
      * @ORM\Column(name="participant_state", type="string", length=40)
      */
     protected $participantState;
+
+    /**
+     * @var \ParticipantTimezone
+     *
+     * @ORM\ManyToOne(targetEntity="ParticipantTimezone")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="participant_timezone", referencedColumnName="participant_timezone_id", nullable=false)
+     * })
+     */
+    protected $participantTimezone;
 
     /**
      * @var integer
@@ -161,6 +188,13 @@ class Participant implements AdvancedUserInterface
      * @ORM\Column(name="participant_birthdate", type="date", nullable=true)
      */
     protected $participantBirthdate;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="participant_registration_time", type="datetime", nullable=true)
+     */
+    protected $participantRegistrationtime;
 
     /**
      * @var float
@@ -1177,10 +1211,37 @@ class Participant implements AdvancedUserInterface
     {
         return $this->participantAppreciationEmail;
     }
-    
-    public function setParticipantAppreciationEmail($participantAppreciationEmail)
+
+    public function setParticipantAppreciationEmail(
+            $participantAppreciationEmail)
     {
         $this->participantAppreciationEmail = $participantAppreciationEmail;
+    }
+
+    /**
+     * Get timezone
+     *
+     * @return \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantTimezone
+     */
+    public function getParticipantTimezone()
+    {
+        return $this->participantTimezone;
+    }
+
+    public function setParticipantTimezone(
+            \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantTimezone $participantTimezone = null)
+    {
+        $this->participantTimezone = $participantTimezone;
+    }
+
+    public function getParticipantRegistrationtime()
+    {
+        return $this->participantRegistrationtime;
+    }
+
+    public function setParticipantRegistrationtime( $participantRegistrationtime)
+    {
+        $this->participantRegistrationtime = $participantRegistrationtime;
     }
 
 }

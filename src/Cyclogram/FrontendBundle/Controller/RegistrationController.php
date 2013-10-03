@@ -1,11 +1,11 @@
 <?php
-
 /*
- * This is part of the ProofPilot package.
+* This is part of the ProofPilot package.
 *
 * (c)2012-2013 Cyclogram, Inc, West Hollywood, CA <crew@proofpilot.com>
 * ALL RIGHTS RESERVED
 *
+* This software is provided by the copyright holders to Manila Consulting for use on the
 * Center for Disease Control's Evaluation of Rapid HIV Self-Testing among MSM in High
 * Prevalence Cities until 2016 or the project is completed.
 *
@@ -88,7 +88,6 @@ class RegistrationController extends Controller
                     if(!$participant){
                         $participant = new Participant();
                     }
-                    $session->set('userTimezone', $form['timeZone']->getData());
                     
                     $participant->setParticipantEmail($registration->getParticipantEmail()); 
                     $participant->setParticipantAppreciationEmail($registration->getParticipantEmail());
@@ -98,17 +97,23 @@ class RegistrationController extends Controller
                     $participant->setRecoveryQuestion($question);
                     $participant->setRecoveryPasswordCode('Default');
                     $participant->setParticipantEmailConfirmed(false);
-                    $participant->setParticipantMobileNumber('');
+                    //$participant->setParticipantMobileNumber('');
                     $participant->setParticipantMobileSmsCodeConfirmed(false);
                     $participant->setParticipantIncentiveBalance(false);
                     $participant->setLocale($request->getLocale());
-                    $date = new \DateTime();
-                    $participant->setParticipantLastTouchDatetime($date);
+                    $participant->setParticipantRegistrationTime(new \DateTime('now'));
+                    $timezone = $em->getRepository('CyclogramProofPilotBundle:ParticipantTimeZone')->find(1);
+                    $participant->setParticipantTimezone($timezone);
+                    $participant->setParticipantLastTouchDatetime(new \DateTime(null, new \DateTimeZone($participant->getParticipantTimezone()->getParticipantTimezoneName())));
                     $participant->setParticipantZipcode('');
                     $role = $em->getRepository('CyclogramProofPilotBundle:ParticipantRole')->find(1);
                     $participant->setParticipantRole($role);
                     $status = $em->getRepository('CyclogramProofPilotBundle:Status')->find(1);
                     $participant->setStatus($status);
+                    $mailCode = substr(md5( md5( $participant->getParticipantEmail() . md5(microtime()))), 0, 4);
+                    $participant->setParticipantEmailCode($mailCode);
+                    $em->persist($participant);
+                    $em->flush($participant);
 
                     $em->persist($participant);
                     $em->flush();
@@ -168,17 +173,40 @@ class RegistrationController extends Controller
                 $form->get('phone_small')->setData($phone['country_code']);
                 $form->get('phone_wide')->setData($phone['phone']);
             }
-        }
-        $clientIp = $request->getClientIp();
-        if ($clientIp == '127.0.0.1') {
-            $form->get('phone_small')->setData(380);
-        }
-        $geoip = $this->get('maxmind.geoip')->lookup($clientIp);
-        if ($geoip != false) {
-            $countryCode = $geoip->getCountryCode();
-            $country = $em->getRepository('CyclogramProofPilotBundle:Country')->findOneByCountryCode($countryCode);
-            if (isset($country)){
-                $form->get('phone_small')->setData($country->getDailingCode());
+            
+            $clientIp = $request->getClientIp();
+            if ($clientIp == '127.0.0.1') {
+                $form->get('phone_small')->setData(380);
+            }
+            $geoip = $this->get('maxmind.geoip')->lookup($clientIp);
+            if ($geoip != false) {
+                $countryCode = $geoip->getCountryCode();
+                $country = $em->getRepository('CyclogramProofPilotBundle:Country')->findOneByCountryCode($countryCode);
+                if (isset($country)){
+                    $form->get('phone_small')->setData($country->getDailingCode());
+                }
+            }
+        } else {
+            if ($participant->getVoicephone()){
+                $phone = CyclogramCommon::parsePhoneNumber($participant->getVoicephone());
+            }
+            
+            if(!empty($phone)) {
+                $form->get('voice_phone_small')->setData($phone['country_code']);
+                $form->get('voice_phone_wide')->setData($phone['phone']);
+            }
+            
+            $clientIp = $request->getClientIp();
+            if ($clientIp == '127.0.0.1') {
+                $form->get('voice_phone_small')->setData(380);
+            }
+            $geoip = $this->get('maxmind.geoip')->lookup($clientIp);
+            if ($geoip != false) {
+                $countryCode = $geoip->getCountryCode();
+                $country = $em->getRepository('CyclogramProofPilotBundle:Country')->findOneByCountryCode($countryCode);
+                if (isset($country)){
+                    $form->get('voice_phone_small')->setData($country->getDailingCode());
+                }
             }
         }
     
@@ -189,11 +217,13 @@ class RegistrationController extends Controller
             if( $form->isValid() ) {
     
                 $values = $form->getData();
-                $userPhone = $values['phone_small'].$values['phone_wide'];
-                if (is_null($aditionalNumber))
+                if (is_null($aditionalNumber)) {
+                    $userPhone = $values['phone_small'].$values['phone_wide'];
                     $participant->setParticipantMobileNumber($userPhone);
-                else
+                } else {
+                    $userPhone = $values['voice_phone_small'].$values['voice_phone_wide'];
                     $participant->setVoicePhone($userPhone);
+                }
                 $em->persist($participant);
                 $em->flush();
                 if (!is_null($aditionalNumber)){
@@ -205,20 +235,8 @@ class RegistrationController extends Controller
                                         'studyCode' => $studyCode
                                 )));
                     } else {
-                        $resourceOwnerName = $session->get("resourceOwnerName");
-                        $roles = array("ROLE_USER");
-                        if($resourceOwnerName == "facebook") {
-                            $roles = array_merge($roles, array("ROLE_FACEBOOK_USER", "ROLE_PARTICIPANT"));
-                        } else if($resourceOwnerName == "google") {
-                            $roles = array_merge($roles, array("ROLE_GOOGLE_USER", "ROLE_PARTICIPANT"));
-                        } else {
-                            $roles = array_merge($roles, array("ROLE_PARTICIPANT"));
-                        }
-                        $session->remove("resourceOwnerName");
-                        
-                        $token = new UsernamePasswordToken($participant, null, 'main', $roles);
-                        $this->get('security.context')->setToken($token);
-                        return $this->redirect( $this->generateUrl("_main") );
+                        $this->confirmParticipantEmail($participant, $studyCode);
+                        return $this->registerAndRedirect($participant, $studyCode);
                     }
                 } 
                 if (!empty($values['aditional_phone']))
@@ -327,19 +345,30 @@ class RegistrationController extends Controller
                 if ($value['sms_code'] == $userSMS) {
                     
                     //Make Participant SMS code confirmed
+                    $timezone = $em->getRepository('CyclogramProofPilotBundle:ParticipantTimeZone')->findOneByParticipantTimezoneName($form['timeZone']->getData());
+                    if (empty($timezone))
+                        $timezone = $em->getRepository('CyclogramProofPilotBundle:ParticipantTimeZone')->find(1);
                     $participant->setParticipantMobileSmsCodeConfirmed(true);
+                    $mailCode = $participant->getParticipantEmailCode();
+                    if(empty($mailCode)){
+                        $mailCode = substr(md5( md5( $participant->getParticipantEmail() . md5(microtime()))), 0, 4);
+                        $participant->setParticipantEmailCode($mailCode);
+                    }
                     $em->persist($participant);
                     $em->flush($participant);
     
                     $steps5 = $session->get("5step", false);
-                    if ($session->has('aditional_phone')) 
-                        return $this->redirect($this->generateUrl("_register_mobile",
-                                array(
-                                        'id'=> $id,
-                                        'studyCode' => $studyCode,
-                                        'aditionalNumber' => $session->get('aditional_phone')
-                                )));
-
+                    if ($session->has('aditional_phone')) {
+                        $aditionalNumber = $session->get('aditional_phone');
+                        $session->remove('aditional_phone');
+                            return $this->redirect($this->generateUrl("_register_mobile",
+                                    array(
+                                            'id'=> $id,
+                                            'studyCode' => $studyCode,
+                                            'aditionalNumber' =>  $aditionalNumber
+                                    )));
+                    }
+                    
                     if($steps5) {
                         //on 5step we redirect
                         return $this->redirect($this->generateUrl("_register_mailaddress",
@@ -374,7 +403,8 @@ class RegistrationController extends Controller
                         'form' => $form->createView(),
                         'id' => $participant->getParticipantId(),
                         'steps' => $session->get("5step", false) ? 5 : 4,
-                        'current' => 4
+                        'current' => 4,
+                        'studyCode' => $studyCode
                 ));
     }
     
@@ -490,14 +520,12 @@ class RegistrationController extends Controller
 //         return true;
         $em = $this->getDoctrine()->getManager();
     
-        $embedded['logo_top'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_logo.png");
-        $embedded['logo_footer'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newletter_logo_footer.png");
-        $embedded['login_button'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_small_login.jpg");
-        $embedded['white_top'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_white_top.png");
-        $embedded['white_bottom'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_white_bottom.png");
         $cc = $this->get('cyclogram.common');
-    
-        $parameters['code'] = substr(md5( md5( $participant->getParticipantEmail() . md5(microtime()))), 0, 4);
+        
+        $embedded = array();
+        $embedded = $cc->getEmbeddedImages();
+        
+        $parameters['code'] = $participant->getParticipantEmailCode();
         $participant->setParticipantEmailCode($parameters['code']);
         $em->persist($participant);
         $em->flush($participant);
@@ -575,7 +603,7 @@ class RegistrationController extends Controller
             $surveyId = $bag->get('surveyId');
             $saveId = $bag->get('saveId');
             if($studyCode != $bag->get('studyCode'))
-                throw new \Exception("You have not passed eligibility test");
+                throw new \Exception("Your eligibility results do not match studycode");
             
             $surveyResult = $this->get('custom_db')->getFactory('ElegibilityCustom')->getSurveyResponseData($saveId, $surveyId);
             $sl = $this->get('study_logic');
@@ -584,7 +612,7 @@ class RegistrationController extends Controller
             if(!$isEligible)
                 throw new \Exception("You have not passed eligibility test");
         } else {
-            throw new \Exception("You have not passed eligibility test");
+            throw new \Exception("No survey details found in session");
         }
     }
 
@@ -641,7 +669,9 @@ class RegistrationController extends Controller
             }
     
             $session->set('confirmed', "Congratilations!!! Your e-mail is confirmed!");
-            return $this->redirect( $this->generateUrl("_main") );
+            return $this->redirect( $this->generateUrl("_main", array(
+                    'studyCode' => $studyCode
+                    )) );
     
         } else {
             $error = $this->get('translator')->trans('mail_confirmation_fail', array(), 'register');
@@ -652,28 +682,22 @@ class RegistrationController extends Controller
     
     private function addDefaultContactPreferences($participant) {
         $em = $this->getDoctrine()->getManager();
-        $session = $this->getRequest()->getSession();
         
         $reminder = $em->getRepository('CyclogramProofPilotBundle:ParticipantStudyReminder')->find(1);
-        $reminderLink = new ParticipantStudyReminderLink();
-        $reminderLink->setParticipant($participant);
-        $reminderLink->setParticipantStudyReminder($reminder);
-        $reminderLink->setBySMS(true);
-        $reminderLink->setByEmail(true);
-        $em->persist($reminderLink);
-        $em->flush();
-        
-        if($session->has('userTimezone')){
-            $userTimezone = $session->get('userTimezone');
-            $session->remove('userTimezone');
-        }
-        $timezone = $em->getRepository('CyclogramProofPilotBundle:ParticipantTimeZone')->findByParticipantTimezoneName($userTimezone);
-        if (empty($timezone))
-                $timezone = $em->getRepository('CyclogramProofPilotBundle:ParticipantTimeZone')->find(1);
+        $reminderLink = $em->getRepository('CyclogramProofPilotBundle:ParticipantStudyReminderLink')->findOneBy(array('participant' => $participant, 'participantStudyReminder' => $reminder));
+        if (empty($reminderLink)){
+            $reminderLink = new ParticipantStudyReminderLink();
+            $reminderLink->setParticipant($participant);
+            $reminderLink->setParticipantStudyReminder($reminder);
+            $reminderLink->setBySMS(true);
+            $reminderLink->setByEmail(true);
+            $em->persist($reminderLink);
+            $em->flush();
+        } 
         $contactTime = $em->getRepository('CyclogramProofPilotBundle:ParticipantContactTime')->find(1);
         for ($i=0; $i<7; $i++){
             $em->getRepository('CyclogramProofPilotBundle:ParticipantContactTimeLink')
-                        ->updateParticipantContactTimeLink($participant, $contactTime, $i, $timezone, true, true);
+                        ->updateParticipantContactTimeLink($participant, $contactTime, $i, true, true);
         }
         
     }

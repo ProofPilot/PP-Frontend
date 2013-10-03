@@ -15,12 +15,10 @@
         {% set class_error = "has_error" %}
         {% set attr = attr|merge({'class': class_error}) %} 
     {% endif %}
-    <span class="input_container {% if errors %}has_error{% endif %}">
         <span class="input_placeholder {% if errors %}has_error{% endif %}">
             <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %} value="{{ value }}" {% endif %}/>
             <span class="mark"></span>
         </span>
-    </span>
 {% endspaceless %}
 {% endblock form_widget_simple %}
 

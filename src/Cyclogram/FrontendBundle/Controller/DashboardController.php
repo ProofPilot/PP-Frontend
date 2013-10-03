@@ -1,4 +1,21 @@
 <?php
+/*
+* This is part of the ProofPilot package.
+*
+* (c)2012-2013 Cyclogram, Inc, West Hollywood, CA <crew@proofpilot.com>
+* ALL RIGHTS RESERVED
+*
+* This software is provided by the copyright holders to Manila Consulting for use on the
+* Center for Disease Control's Evaluation of Rapid HIV Self-Testing among MSM in High
+* Prevalence Cities until 2016 or the project is completed.
+*
+* Any unauthorized use, modification or resale is not permitted without expressed permission
+* from the copyright holders.
+*
+* KnowatHome branding, URL, study logic, survey instruments, and resulting data are not part
+* of this copyright and remain the property of the prime contractor.
+*
+*/
 
 namespace Cyclogram\FrontendBundle\Controller;
 
@@ -10,27 +27,26 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Cyclogram\Bundle\ProofPilotBundle\Entity\Participant;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 
-
+/**
+ * @Route("/main")
+ */
 class DashboardController extends Controller
 {
     /**
-     * @Route("/main/{sendMail}", name="_main", defaults={"sendMail"=null})
+     * @Route("/dashboard/{sendMail}", name="_main", defaults={"sendMail"=null})
      * @Secure(roles="ROLE_PARTICIPANT")
      * @Template()
      */
     public function indexAction($sendMail)
     {
-        
+
+        $em = $this->getDoctrine()->getManager();
         $participant = $this->get('security.context')->getToken()->getUser();
         
         if (!is_null($sendMail)){
             $cc = $this->get('cyclogram.common');
-            $embedded['logo_top'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_logo.png");
-            $embedded['logo_footer'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newletter_logo_footer.png");
-            $embedded['login_button'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_small_login.jpg");
-            $embedded['white_top'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_white_top.png");
-            $embedded['white_bottom'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_white_bottom.png");
-        
+            $embedded = array();
+            $embedded = $cc->getEmbeddedImages();
             $parameters['email'] = $participant->getParticipantEmail();
             $parameters['locale'] = $participant->getLocale() ? $participant->getLocale() : $request->getLocale();
             $parameters['host'] = $this->container->getParameter('site_url');
@@ -51,7 +67,6 @@ class DashboardController extends Controller
         
         $this->get('study_logic')->interventionLogic($participant);
         
-        $em = $this->getDoctrine()->getManager();
         $surveyscount = $em->getRepository('CyclogramProofPilotBundle:Participant')->getActiveParticipantInterventionsCount($participant);
         $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:Participant')->getActiveParticipantInterventionLinks($participant);
 
@@ -69,13 +84,15 @@ class DashboardController extends Controller
             
             $study = $interventionLink->getIntervention()->getStudy();
             $studyId = $study->getStudyId();
-            $studyContent = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:StudyContent')->findOneByStudyId($studyId);
+            $studyContent = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:StudyContent')->getStudyContentById($studyId, $participant->getLocale());
             
             $intervention = array();
             $intervention["title"] = $interventionContent->getInterventionTitle();
             $intervention["content"] = $interventionContent->getInterventionDescripton();
+            
             $intervention["url"] = $this->getInterventionUrl($interventionLink, $locale);
             $intervention["logo"] = $this->container->getParameter('study_image_url') . "/" . $studyId . "/" . $studyContent->getStudyLogo();
+            $parameters["studyCode"] = $study->getStudyCode();
             $parameters["interventions"][] = $intervention;
         }
         
@@ -124,7 +141,7 @@ class DashboardController extends Controller
             $parameters["email_alert"] = $this->get('translator')->trans('txt_please_verify_email', array(), 'dashboard');
         }
 
-        return $this->render('CyclogramFrontendBundle:Dashboard:main.html.twig', $parameters);
+      return $this->render('CyclogramFrontendBundle:Dashboard:main.html.twig', $parameters);
     
     }
     

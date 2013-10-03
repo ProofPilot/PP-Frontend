@@ -1,4 +1,21 @@
 <?php
+/*
+* This is part of the ProofPilot package.
+*
+* (c)2012-2013 Cyclogram, Inc, West Hollywood, CA <crew@proofpilot.com>
+* ALL RIGHTS RESERVED
+*
+* This software is provided by the copyright holders to Manila Consulting for use on the
+* Center for Disease Control's Evaluation of Rapid HIV Self-Testing among MSM in High
+* Prevalence Cities until 2016 or the project is completed.
+*
+* Any unauthorized use, modification or resale is not permitted without expressed permission
+* from the copyright holders.
+*
+* KnowatHome branding, URL, study logic, survey instruments, and resulting data are not part
+* of this copyright and remain the property of the prime contractor.
+*
+*/
 namespace Cyclogram\FrontendBundle\Security;
 use Cyclogram\FrontendBundle\Exception\IncompleteUserException;
 
@@ -40,19 +57,25 @@ class OAuth2UserProvider implements OAuthAwareUserProviderInterface
         //if participant does not existr and it was registration
         if (empty($participant)) {
             $participant = new Participant();
+            $request = $this->container->get('request');
             $question = $this->userManager->getRepository('CyclogramProofPilotBundle:RecoveryQuestion')->find(1);
             $participant->setRecoveryQuestion($question);
+            $participant->setParticipantAppreciationEmail($email);
             $participant->setRecoveryPasswordCode('Default');
             $participant->setParticipantEmailConfirmed(false);
-            if(!$participant->getParticipantMobileNumber())
-                $participant->setParticipantMobileNumber('');
+//             if(!$participant->getParticipantMobileNumber())
+//                 $participant->setParticipantMobileNumber('');
             if(!$participant->getParticipantPassword())
                 $participant->setParticipantPassword('');
             $participant->setParticipantMobileSmsCodeConfirmed(false);
             $participant->setParticipantIncentiveBalance(false);
             $date = new \DateTime();
             $participant->setParticipantLastTouchDatetime($date);
+            $participant->setParticipantRegistrationTime($date);
             $participant->setParticipantZipcode('');
+            $participant->setLocale($request->getLocale());
+            $timezone = $this->userManager->getRepository('CyclogramProofPilotBundle:ParticipantTimeZone')->find(1);
+            $participant->setParticipantTimezone($timezone);
             $role = $this->userManager->getRepository('CyclogramProofPilotBundle:ParticipantRole')->find(1);
             $participant->setParticipantRole($role);
             $status = $this->userManager->getRepository('CyclogramProofPilotBundle:Status')->find(1);
@@ -63,13 +86,14 @@ class OAuth2UserProvider implements OAuthAwareUserProviderInterface
                     $participant->setParticipantFirstname($data["first_name"]);
                     $participant->setParticipantLastname($data["last_name"]);
                     $participant->setParticipantEmail($data["email"]);
-                    $participant->setParticipantUsername($data["username"]);
+                    $participant->setParticipantAppreciationEmail($data["email"]);
                     $participant->setFacebookId($data["id"]);
                     break;
                 case "google":
                     $participant->setParticipantFirstname($data["given_name"]);
                     $participant->setParticipantLastname($data["family_name"]);
                     $participant->setParticipantEmail($data["email"]);
+                    $participant->setParticipantAppreciationEmail($data["email"]);
                     $participant->setGoogleId($data["id"]);
             }
 
@@ -102,12 +126,20 @@ class OAuth2UserProvider implements OAuthAwareUserProviderInterface
                 $participant->setParticipantLastTouchDatetime($date);
                 $this->userManager->persist($participant);
                 $this->userManager->flush();
+                $request = $this->container->get('request');
+                $studyCode = $request->query->get('state');
+                if (!empty($studyCode)) {
+                    $logic = $this->container->get('study_logic');
+                    $session = $this->container->get('session');
+                    if ($session->has('SurveyInfo')){
+                        $bag = $session->get('SurveyInfo');
+                        $surveyId = $bag->get('surveyId');
+                        $saveId = $bag->get('saveId');
+                    
+                        $logic->studyRegistration($participant, $studyCode, $surveyId, $saveId);
+                    }
+                }
                 return $participant;
         }
-        
-
-
     }
-
-
 }

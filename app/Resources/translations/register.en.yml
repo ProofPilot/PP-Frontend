@@ -36,7 +36,7 @@ pick_user: 'Pick your Username'
 sms_verification_message: 'Your ProofPilot SMS Log-in code is:'
 txt_aditional_number_save: 'Save and next'
 txt_basics: 'The Basics'
-txt_check_email: 'Please check your zipcode'
+txt_check_email: 'Please check your email'
 txt_check_zipcode: 'Please check your zipcode'
 txt_join: JOIN
 txt_join_with: 'Join with'

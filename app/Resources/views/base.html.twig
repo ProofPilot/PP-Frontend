@@ -11,7 +11,8 @@
   <head>
     <meta content="text/html; charset=utf-8" http-equiv="content-type">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>{% block title %}{% endblock title %} - Proof Pilot</title>
+    
+    <title>{% if branding != 'knowathome' %}{% block title %}{% endblock title %} - Proof Pilot{% else %} KnowAtHome {% endif %}</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link href="//fonts.googleapis.com/css?family=Roboto:300" rel="stylesheet" type="text/css" />
@@ -20,7 +21,7 @@
     <link href="//fonts.googleapis.com/css?family=Roboto:700" rel="stylesheet" type="text/css" />
     <link href="//fonts.googleapis.com/css?family=Roboto:900" rel="stylesheet" type="text/css" />
     <link rel="icon" href="{{ asset('images/favicon.ico') }}" type="image/x-icon"/>
-    <link rel="shortcut icon" href="{{ asset('images/favicon.ico') }}" type="image/x-icon"/>
+    <link rel="shortcut icon" {% if branding != 'knowathome' %} href="{{ asset('images/favicon.ico') }}" {% else %} href="{{ asset('images/knowathome_favicon.ico') }}" {% endif %} type="image/x-icon"/>
     <link rel="stylesheet" href={{ asset('css/normalize.css') }} />
     <link rel="stylesheet" href={{ asset('css/main.css') }} />
     <link rel="stylesheet" href={{ asset('css/site.css') }}>
@@ -34,6 +35,19 @@
     <script>window.jQuery || document.write('<script src={{ asset('js/vendor/jquery-1.9.1.min.js') }}><\/script>')</script>
     <script src= {{ asset ('js/plugins.js') }}></script>
     <script src= {{ asset ('js/main.js') }}></script>
+  
+    
+    <script> var ISOLDIE = false;</script>
+    <!--[if lt IE 9]>
+        <script> var ISOLDIE = true; </script>
+    <![endif]-->
+    <script>
+    var browser_msg = "{% trans from "messages" %}browser_msg{% endtrans %}";
+    
+    if(ISOLDIE) {
+        alert(browser_msg);
+    }
+    </script>
 
     {% block javascripts %}
     {% endblock javascripts %}
@@ -41,7 +55,7 @@
   </head>
 
   {% block body %}
-  <body class="has_image" {% if studyCode is defined %}{{ study_background(studyCode)|raw }}{% endif %}>
+  <body class="has_image" {{ study_background(branding, random_themes)|raw }}>
       {% block scripts_facebook %}{% endblock scripts_facebook %}
       <div class="block_wrapper">
       {% include '::header_reg.html.twig' %}

@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "80c98d5b1c6aeef67dd0904e97e17fec",
+    "hash": "3c9860d81b731b967ee2de17d2995662",
     "packages": [
         {
             "name": "doctrine/common",
@@ -500,17 +500,17 @@
         },
         {
             "name": "friendsofsymfony/jsrouting-bundle",
-            "version": "dev-master",
+            "version": "1.2.1",
             "target-dir": "FOS/JsRoutingBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSJsRoutingBundle.git",
-                "reference": "1.2.0"
+                "reference": "73fd9994ee85e57e778e059c28beb1b963679fa5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSJsRoutingBundle/zipball/1.2.0",
-                "reference": "1.2.0",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSJsRoutingBundle/zipball/73fd9994ee85e57e778e059c28beb1b963679fa5",
+                "reference": "73fd9994ee85e57e778e059c28beb1b963679fa5",
                 "shasum": ""
             },
             "require": {
@@ -550,7 +550,7 @@
             "keywords": [
                 "Js Routing"
             ],
-            "time": "2013-07-15 09:21:37"
+            "time": "2013-09-10 15:45:38"
         },
         {
             "name": "hwi/oauth-bundle",
@@ -559,18 +559,19 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/hwi/HWIOAuthBundle.git",
-                "reference": "71b44c6a95443b6a9a13defa2e63ccc7a05d5f99"
+                "reference": "630d61ca64dfcafd02a13b61698fa99d7ec2c74e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hwi/HWIOAuthBundle/zipball/71b44c6a95443b6a9a13defa2e63ccc7a05d5f99",
-                "reference": "71b44c6a95443b6a9a13defa2e63ccc7a05d5f99",
+                "url": "https://api.github.com/repos/hwi/HWIOAuthBundle/zipball/630d61ca64dfcafd02a13b61698fa99d7ec2c74e",
+                "reference": "630d61ca64dfcafd02a13b61698fa99d7ec2c74e",
                 "shasum": ""
             },
             "require": {
                 "kriswallsmith/buzz": "~0.7",
                 "php": ">=5.3.3",
                 "symfony/framework-bundle": "~2.1",
+                "symfony/options-resolver": "~2.1",
                 "symfony/security-bundle": "~2.1"
             },
             "require-dev": {
@@ -630,6 +631,7 @@
                 "deviantart",
                 "disqus",
                 "dropbox",
+                "eventbrite",
                 "facebook",
                 "firewall",
                 "flickr",
@@ -639,14 +641,19 @@
                 "instagram",
                 "jira",
                 "linkedin",
+                "mail.ru",
                 "oauth",
                 "oauth1",
                 "oauth2",
                 "odnoklassniki",
+                "qq",
                 "security",
                 "sensio connect",
+                "sina weibo",
                 "stack exchange",
                 "stereomood",
+                "trello",
+                "twitch",
                 "twitter",
                 "vkontakte",
                 "windows live",
@@ -654,7 +661,7 @@
                 "yahoo",
                 "yandex"
             ],
-            "time": "2013-08-06 08:16:39"
+            "time": "2013-09-28 12:37:04"
         },
         {
             "name": "incenteev/composer-parameter-handler",
@@ -2370,7 +2377,6 @@
     ],
     "minimum-stability": "stable",
     "stability-flags": {
-        "friendsofsymfony/jsrouting-bundle": 20,
         "doctrine/doctrine-migrations-bundle": 20,
         "doctrine/migrations": 20,
         "doctrine/data-fixtures": 20,

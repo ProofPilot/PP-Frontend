@@ -17,6 +17,14 @@ body.has_image {
 	background-size: cover;
 }
 
+.branding_default {
+	
+}
+.branding_knowathome {
+	background: none; 
+	background-color: #878681 !important;
+}
+
 footer .site_container {
 	position: relative;
 }
@@ -101,7 +109,7 @@ span em {
 
 	/*background:  url(../images/reg_logo.png) no-repeat 0px 0px;*/
 	
-	background:  url(../images/logo.png) no-repeat 0px 50%;
+	background:  url(../branding/default/logo.png) no-repeat 0px 50%;
 	background-size: 117px 22px;
 	
 	margin-left: 20px;
@@ -110,7 +118,7 @@ span em {
 	background:  url(../images/100_logo.png) no-repeat 0px 50%;
 }
 .reg_header a.logo.knowathome {
-    background:  url(../images/study/1/logo-white.png) no-repeat 0px 50%;
+    background:  url(../branding/knowathome/logo.png) no-repeat 0px 50%;
     background-size: 117px 22px;
 }
 
@@ -157,10 +165,14 @@ span em {
 	text-indent: -9999px;
 	width: 117px;
 	/*background:  url(../images/logo2.png) no-repeat 0px 1px;*/
-	background:  url(../images/logo.png) no-repeat 0px 50%;
+	background:  url(../branding/default/logo.png) no-repeat 0px 50%;
 	background-size: 117px 22px;
 	/*margin-left: -5px;*/
 	/*margin-top: 3px;*/
+}
+.mobile_sitemenu .menu_wrapper a.logo.knowathome {
+	background:  url(../branding/knowathome/logo.png) no-repeat 0px 50%;
+	background-size: 117px 22px;
 }
 .mobile_sitemenu.nologin .menu_wrapper a.logo,
 .mobile_header_menu.nologin ul li.logo a  {
@@ -245,7 +257,7 @@ span em {
 	height: 55px;
 	/*background:  url(../images/reg_logo.png) no-repeat 0px 17px;*/
 
-	background:  url(../images/logo.png) no-repeat 0px 50%;
+	background:  url(../branding/default/logo.png) no-repeat 0px 50%;
 	background-size: 117px 22px;
 
 	
@@ -254,6 +266,11 @@ span em {
 	text-indent: -9999px;
 	margin: 0px auto;
 
+}
+
+.mobile_header_menu ul li.logo a.knowathome {
+	background:  url(../branding/knowathome/logo.png) no-repeat 0px 50%;
+	background-size: 117px 22px;
 }
 
 header {
@@ -267,11 +284,15 @@ header .site_logo {
 	text-indent: -9999px;
 	width: 117px;
 	height: 55px;
-	background:  url(../images/logo.png) no-repeat 0px 50%;
+	background:  url(../branding/default/logo.png) no-repeat 0px 50%;
 	background-size: 117px 22px;
 }
 .lt-ie9 header .site_logo {
 		background:  url(../images/100_logo.png) no-repeat 0px 50%;
+}
+header .site_logo.knowathome {
+	background:  url(../branding/knowathome/logo.png) no-repeat 0px 50%;
+	background-size: 117px 22px;
 }
 header .header_menu {
 	float: right;
@@ -1626,7 +1647,7 @@ header .header_menu span.text  , .footer_col_right span.text  {
 .panel .panel_right .dashboard_panel .choices_box .featured_box  .text_box {
 	float: left;
 	width: 360px;
-	/*padding-top: 30px;*/
+	padding-top: 40px;
 	width: 330px;
 	padding-right: 30px;
 }
@@ -2254,6 +2275,14 @@ div.panel div.panel_right div.prev_next ul li a.next span {
 	font-size: 28px;
 	text-align: center;
 	margin-bottom: 20px;
+}
+#general_settings_newPhoneNumberSmall {
+	width: 30px !important;
+	float: left;
+	margin-right: 15px;
+}
+#general_settings_newPhoneNumberWide {
+	width: 201px !important;
 }
 .panel .panel_right .dashboard_panel .survey_intro p {
 	color: #9a9a9a;
@@ -4396,7 +4425,13 @@ footer a.icon_update span {
 		float: right;
 		margin-right: 20px;
 	}
-	
+	.panel .panel_right .dashboard_title.main {
+		padding: 15px 0px 0px 95px;
+	}
+	.panel .panel_right .dashboard_title.branded {
+		background: url("../images/h1_dashboard.jpg") no-repeat scroll 26px 15px #F8F7EF;
+		max-width: none;
+	}
 }
 
 /* @media screen and (max-width: 990px) */ 
@@ -4594,7 +4629,7 @@ footer a.icon_update span {
 	
 	
 	.panel .panel_right .dashboard_panel .choices_box .featured_box .text_box {
-		/*padding-top: 10px;*/
+		padding-top: 20px;
 	}
 	
 	.panel .panel_right .dashboard_panel .choices_box .featured_box .text_box h4 {
@@ -4830,6 +4865,13 @@ footer a.icon_update span {
 		background: url(../images/bg_green_2.jpg) no-repeat 0px 0px;
 		padding: 25px 0px 0px 100px;
 		
+	}
+	.panel .panel_right .dashboard_title.main {
+		padding: 15px 0px 0px 95px;
+	}
+	.panel .panel_right .dashboard_title.branded {
+		background: url("../images/h1_dashboard.jpg") no-repeat scroll 26px 15px #F8F7EF;
+		max-width: none;
 	}
 	
 	.panel .panel_right .progress_bar {

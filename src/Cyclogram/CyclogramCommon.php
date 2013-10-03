@@ -1,4 +1,21 @@
 <?php
+/*
+* This is part of the ProofPilot package.
+*
+* (c)2012-2013 Cyclogram, Inc, West Hollywood, CA <crew@proofpilot.com>
+* ALL RIGHTS RESERVED
+*
+* This software is provided by the copyright holders to Manila Consulting for use on the
+* Center for Disease Control's Evaluation of Rapid HIV Self-Testing among MSM in High
+* Prevalence Cities until 2016 or the project is completed.
+*
+* Any unauthorized use, modification or resale is not permitted without expressed permission
+* from the copyright holders.
+*
+* KnowatHome branding, URL, study logic, survey instruments, and resulting data are not part
+* of this copyright and remain the property of the prime contractor.
+*
+*/
 
 namespace Cyclogram;
 
@@ -202,7 +219,7 @@ class CyclogramCommon {
         
         $message = \Swift_Message::newInstance()
         ->setContentType('text/html')
-        ->setFrom($this->container->getParameter('mailer_from'))
+        ->setFrom($this->container->getParameter('mailer_from'), $this->container->getParameter('mailer_envelope_from'))
         ->setTo($to);
 //         ->addBcc($control_mail);
         
@@ -263,6 +280,21 @@ class CyclogramCommon {
             $full_phone['phone'] = substr($phone, 3);
         }
         return $full_phone;
+    }
+    
+    public function getEmbeddedImages() {
+        $branding = $this->container->getParameter('branding');
+        if ($branding == 'knowathome') {
+            $embedded['logo_knowathome'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/branding/knowathome/logo.png");
+        } else {
+            $embedded['logo_top'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_logo.png");
+            $embedded['logo_footer'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newletter_logo_footer.png");
+        }
+        //            $embedded['login_button'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_small_login.jpg");
+        $embedded['white_top'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_white_top.png");
+        $embedded['white_bottom'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_white_bottom.png");
+        
+        return $embedded;
     }
 
 }

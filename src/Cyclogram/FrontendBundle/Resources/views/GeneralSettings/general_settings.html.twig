@@ -66,24 +66,26 @@
                 <li class="form_expanded form-password"  {{ showonerror('password',expandedFormClass) }}>
                   <div class="wrapper">
                     <div class="close_cont"><a href="#" data-form-cont=".form-password">Cancel</a></div>
-                    <div class="new_inputs_cont with_margin">
-                      <div class="for_label">{{ form_label(form.oldPassword) }}<a href="{{ path('_forgot_pass') }}" class="forgot">{% trans from "general_settings" %}txt_forgot_it{% endtrans %}</a></div>
-                          {{ form_widget(form.oldPassword) }}
-                          {{ form_errors(form.oldPassword) }}
-                    </div>
-                    <div class="new_inputs_cont">
-                      <div class="for_label">{{ form_label(form.newPassword.first) }}</div>
-                          {{ form_widget(form.newPassword.first) }}
-                          {{ form_errors(form.newPassword.first) }}
-                    </div>
-                    <div class="new_inputs_cont">
-                      <div class="for_label">{{ form_label(form.newPassword.second) }}</div>
-                          {{ form_widget(form.newPassword.second) }}
-                          {{ form_errors(form.newPassword.second) }}
-                    </div>
+                    {% if passwordConfirmShow == false %}
+                        <div class="new_inputs_cont with_margin">
+                          <div class="for_label">{{ form_label(form.oldPassword) }}<a href="{{ path('_forgot_pass') }}" class="forgot">{% trans from "general_settings" %}txt_forgot_it{% endtrans %}</a></div>
+                              {{ form_widget(form.oldPassword) }}
+                              {{ form_errors(form.oldPassword) }}
+                        </div>
+                        <div class="new_inputs_cont">
+                          <div class="for_label">{{ form_label(form.newPassword.first) }}</div>
+                              {{ form_widget(form.newPassword.first) }}
+                              {{ form_errors(form.newPassword.first) }}
+                        </div>
+                        <div class="new_inputs_cont">
+                          <div class="for_label">{{ form_label(form.newPassword.second) }}</div>
+                              {{ form_widget(form.newPassword.second) }}
+                              {{ form_errors(form.newPassword.second) }}
+                        </div>
                     <div class="confirm_cont">
                         {{ form_widget(form.passwordSendSMS, {'attr':{'class' : 'btn_confirm'}}) }}
                     </div>
+                  {% else %}
                     <div class="new_inputs_cont">
                       <div class="for_label">{{ form_label(form.passwordMobileComfirm) }}</div>
                          {{ form_widget(form.passwordMobileComfirm) }}
@@ -92,6 +94,8 @@
                     <div class="confirm_cont">
                         {{ form_widget(form.passwordConfirm, {'attr':{'class' : 'btn_confirm disabled'}}) }}
                   </div>
+                  {% endif %}
+                  
                 </li>
                 <li class="middle_input form-password" {{ hideonerror('password',expandedFormClass) }}>
                     {{ form_widget(form.password, {'attr' : {'class' : 'middle_input', 'value' : 'password','readonly' : 'readonly'}}) }}
@@ -170,15 +174,21 @@
                 
                 {# mobile #}
                 <li class="left_text form-mobile">{% trans from "general_settings" %}txt_mobile_number{% endtrans %}</li>
+                  
                 <li class="form_expanded form-mobile"  {{ showonerror('mobile',expandedFormClass) }}>
                   <div class="wrapper">
                     <div class="current_text">{{ participant.participantMobileNumber }}</div>
                     <div class="close_cont"><a href="#" data-form-cont=".form-mobile">Cancel</a></div>
+                    {% if phoneConfirmShow == false  %}
                     <div class="new_inputs_cont">
-                      <div class="for_label">{{ form_label(form.newPhoneNumber) }}</div>
+                      <div class="for_label">{{ form_label(form.newPhoneNumberSmall) }}</div>
                       <span class="input_container">
-                          {{ form_widget(form.newPhoneNumber) }}
-                          {{ form_errors(form.newPhoneNumber) }}
+                          <span class="input_placeholder">
+                              {{ form_widget(form.newPhoneNumberSmall,{'attr':{'class' : 'default_input tac small'}}) }}
+                              {{ form_errors(form.newPhoneNumberSmall) }}
+                              {{ form_widget(form.newPhoneNumberWide,{'attr':{'class' : 'default_input wide'}}) }}
+                              {{ form_errors(form.newPhoneNumberWide) }}
+                          </span>
                       </span>
                       </div>
                       {% if not is_granted('ROLE_FACEBOOK_USER') and not is_granted('ROLE_GOOGLE_USER') %}
@@ -192,6 +202,8 @@
                     {% endif %}
                     <div class="confirm_cont">
                         {{ form_widget(form.phoneSendSMS, {'attr':{'class' : 'btn_confirm'}}) }}
+                     </div>
+                     {% else %}
                     <div class="new_inputs_cont">
                       <div class="for_label"><label>{{ form_label(form.newPhoneNumberSMS) }}</label></div>
                       <span class="input_container">
@@ -202,7 +214,7 @@
                     <div class="confirm_cont">
                         {{ form_widget(form.phoneConfirm, {'attr':{'class' : 'btn_confirm disabled'}}) }}
                     </div>
-                  </div>
+                     {% endif %}
                   
                 </li>
                 <li class="middle_input form-mobile" {{ hideonerror('mobile',expandedFormClass) }}>
@@ -234,8 +246,11 @@
     <script>window.jQuery || document.write('<script src={{ asset('js/vendor/jquery-1.9.1.min.js') }}><\/script>')</script>
         <script src= {{ asset ('js/plugins.js') }}></script>
         <script src= {{ asset ('js/main.js') }}></script>
+        <script src= {{ asset ('js/jquery.numeric.js') }}></script>
         <script type="text/javascript">
         $(document).ready(function(){
+            $("#general_settings_newPhoneNumberSmall").numeric();
+            $('#general_settings_newPhoneNumberWide').numeric();
            $('#general_settings_userNameConfirm').click(function()
                 {
                          $('#general_settings_validationCheck').val("username");

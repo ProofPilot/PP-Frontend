@@ -40,6 +40,8 @@ twig:
         google_clientid: %google.client_id%
         google_clientsecret: %google.client_secret%
         google_analytics_account: %google_analytics_account%
+        branding: %branding%
+        random_themes: %random_themes%
 #    form:
 #        resources:
 #            - 'CyclogramFrontendBundle:Form:fields.html.twig'
@@ -87,6 +89,9 @@ doctrine:
         default_entity_manager: default # specify the EM used by default (when using console commands f.e)
         entity_managers:
             default:
+                dql:
+                    datetime_functions:
+                        datediff: Cyclogram\FrontendBundle\DQL\DateDiffFunction
                 connection: default
                 mappings:
                     CyclogramProofPilotBundle : ~   
@@ -128,7 +133,7 @@ jms_translation:
             output_dir: %kernel.root_dir%/Resources/translations
             ignored_domains: [routes, validators]
             excluded_names: [*TestCase.php, *Test.php]
-            excluded_dirs: [cache, data, logs, Acme, LimeSurvey, KnowatHomeBundle]
+            excluded_dirs: [cache, data, logs, Acme, LimeSurvey]
             #extractors: [alias_of_the_extractor]
     locales: %locales%
 

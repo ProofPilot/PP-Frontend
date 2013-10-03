@@ -1,4 +1,21 @@
 <?php
+/*
+* This is part of the ProofPilot package.
+*
+* (c)2012-2013 Cyclogram, Inc, West Hollywood, CA <crew@proofpilot.com>
+* ALL RIGHTS RESERVED
+*
+* This software is provided by the copyright holders to Manila Consulting for use on the
+* Center for Disease Control's Evaluation of Rapid HIV Self-Testing among MSM in High
+* Prevalence Cities until 2016 or the project is completed.
+*
+* Any unauthorized use, modification or resale is not permitted without expressed permission
+* from the copyright holders.
+*
+* KnowatHome branding, URL, study logic, survey instruments, and resulting data are not part
+* of this copyright and remain the property of the prime contractor.
+*
+*/
 namespace Common;
 use Cyclogram\Bundle\ProofPilotBundle\Entity\Study;
 
@@ -72,30 +89,44 @@ class SexproStudy extends AbstractStudy implements StudyInterface
             }
             $firstArmParticipants = $em->getRepository('CyclogramProofPilotBundle:Participant')->countAllArms('SexProBaseLine');
             $secondArmParticipants = $em->getRepository('CyclogramProofPilotBundle:Participant')->countAllArms('SexPro3Month');
-            $firstArmParticipantsByCriteria = $em
-                    ->getRepository('CyclogramProofPilotBundle:Participant')
-                    ->countArmByCityAge('SexProBaseLine', $cityName, $minAge,
-                            $maxAge);
-            $secondArmParticipantsByCriteria = $em
-                    ->getRepository('CyclogramProofPilotBundle:Participant')
-                    ->countArmByCityAge('SexPro3Month', $cityName, $minAge,
-                            $maxAge);
+//             $firstArmParticipantsByCriteria = $em
+//                     ->getRepository('CyclogramProofPilotBundle:Participant')
+//                     ->countArmByCityAge('SexProBaseLine', $cityName, $minAge,
+//                             $maxAge);
+//             $secondArmParticipantsByCriteria = $em
+//                     ->getRepository('CyclogramProofPilotBundle:Participant')
+//                     ->countArmByCityAge('SexPro3Month', $cityName, $minAge,
+//                             $maxAge);
             $firstArm = $em->getRepository('CyclogramProofPilotBundle:Arm')
                     ->findOneByArmCode('SexProBaseLine');
             $secondArm = $em->getRepository('CyclogramProofPilotBundle:Arm')
                     ->findOneByArmCode('SexPro3Month');
-
             $participantArmLink = new ParticipantArmLink();
-            if ($firstArmParticipantsByCriteria == 0 && $secondArmParticipantsByCriteria == 0 ) {
-                if ($firstArmParticipants <= $secondArmParticipants)
-                    $participantArmLink->setArm($firstArm);
-                else 
-                    $participantArmLink->setArm($secondArm);
-            } elseif ($firstArmParticipantsByCriteria <= $secondArmParticipantsByCriteria) {
-                $participantArmLink->setArm($firstArm);
+            if ($firstArmParticipants == 0 || $secondArmParticipants == 0) {
+                $armArray = array($firstArm, $secondArm );
+                shuffle($armArray);
+                $participantArmLink->setArm($armArray[0]);
             } else {
-                $participantArmLink->setArm($secondArm);
+                if ($firstArmParticipants/$secondArmParticipants > 2 ){
+                    $participantArmLink->setArm($secondArm);
+                } elseif ($firstArmParticipants/$secondArmParticipants < 2) {
+                    $participantArmLink->setArm($firstArm);
+                } else {
+                    $armArray = array($firstArm, $secondArm );
+                    shuffle($armArray);
+                    $participantArmLink->setArm($armArray[0]);
+                }
             }
+//             if ($firstArmParticipantsByCriteria == 0 && $secondArmParticipantsByCriteria == 0 ) {
+//                 if ($firstArmParticipants <= $secondArmParticipants)
+//                     $participantArmLink->setArm($firstArm);
+//                 else 
+//                     $participantArmLink->setArm($secondArm);
+//             } elseif ($firstArmParticipantsByCriteria <= $secondArmParticipantsByCriteria) {
+//                 $participantArmLink->setArm($firstArm);
+//             } else {
+//                 $participantArmLink->setArm($secondArm);
+//             }
             $participantArmLink->setParticipant($participant);
             $status = $em->getRepository('CyclogramProofPilotBundle:Status')
                     ->find(1);
@@ -107,7 +138,7 @@ class SexproStudy extends AbstractStudy implements StudyInterface
             $participantInterventionLink = new ParticipantInterventionLink();
             $intervention = $em
                     ->getRepository('CyclogramProofPilotBundle:Intervention')
-                    ->findOneByInterventionName('SexPro Baseline Survey');
+                    ->findOneByInterventionCode('SexProBaselineSurvey');
             $participantInterventionLink->setIntervention($intervention);
             $participantInterventionLink->setParticipant($participant);
             $participantInterventionLink
@@ -122,10 +153,14 @@ class SexproStudy extends AbstractStudy implements StudyInterface
     public function interventionLogic($participant)
     {
         $em = $this->container->get('doctrine')->getEntityManager();
+        $study = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($this->getStudyCode());
+        $participantArm = $em->getRepository('CyclogramProofPilotBundle:ParticipantArmLink')
+                ->getParticipantStudyArm($participant, $study);
+        $participantArmName = $participantArm->getArm()->getArmName();
         //get all participant intervention links
         $interventionLinks = $em
                 ->getRepository('CyclogramProofPilotBundle:Participant')
-                ->getParticipantInterventionLinks($participant);
+                ->getParticipantInterventionLinks($participant, $study);
         foreach ($interventionLinks as $interventionLink) {
             $interventionTypeName = $interventionLink->getIntervention()
                     ->getInterventionType()->getInterventionTypeName();
@@ -141,6 +176,7 @@ class SexproStudy extends AbstractStudy implements StudyInterface
                             ->checkIfSurveyPassed($participant, $surveyId);
 
                     if ($passed) {
+                        $this->createIncentive($participant, $intervention);
                         $completedStatus = $em
                                 ->getRepository(
                                         'CyclogramProofPilotBundle:Status')
@@ -149,19 +185,21 @@ class SexproStudy extends AbstractStudy implements StudyInterface
                         $em->persist($interventionLink);
                         $em->flush();
                         $status = "Closed";
+                        
                     }
                 }
-
-                if (($status == "Closed")
-                        && ($intervention->getInterventionName()
-                                == "SexPro Baseline Survey")) {
-                    $intervention = $em
-                            ->getRepository(
-                                    'CyclogramProofPilotBundle:Intervention')
-                            ->findOneByInterventionName("SexPro Activity");
-                    $em->getRepository('CyclogramProofPilotBundle:Participant')
-                            ->addParticipantInterventionLink($participant,
-                                    $intervention);
+                if ($participantArmName == 'SexPro3Month'){
+                    if (($status == "Closed")
+                            && ($intervention->getInterventionName()
+                                    == "SexPro Baseline Survey")) {
+                        $intervention = $em
+                                ->getRepository(
+                                        'CyclogramProofPilotBundle:Intervention')
+                                ->findOneByInterventionCode("SexProActivity");
+                        $em->getRepository('CyclogramProofPilotBundle:Participant')
+                                ->addParticipantInterventionLink($participant,
+                                        $intervention);
+                    }
                 }
 
                 break;
