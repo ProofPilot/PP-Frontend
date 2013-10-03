@@ -89,6 +89,9 @@ doctrine:
         default_entity_manager: default # specify the EM used by default (when using console commands f.e)
         entity_managers:
             default:
+                dql:
+                    datetime_functions:
+                        datediff: Cyclogram\FrontendBundle\DQL\DateDiffFunction
                 connection: default
                 mappings:
                     CyclogramProofPilotBundle : ~   

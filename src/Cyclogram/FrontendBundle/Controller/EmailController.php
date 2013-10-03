@@ -180,4 +180,15 @@ class EmailController extends Controller
             
            return $this->render('CyclogramFrontendBundle:Email:mail_confirm.html.twig');
     }
+    
+    /**
+     * @Route("/testdb" , name="_testdb")
+     */
+    function testDbAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $participants = $em->getRepository('CyclogramProofPilotBundle:Participant')->getParticipantsWithNotConfirmedEmails();
+        echo count($participants);
+        return new Response("");
+    }
 }

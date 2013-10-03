@@ -340,5 +340,20 @@ class ParticipantRepository extends EntityRepository implements
     
         return $results;
     }
+    
+    public function getParticipantsWithNotConfirmedEmails()
+    {
+        $query = $this->getEntityManager()
+        ->createQuery("
+                SELECT p
+                FROM CyclogramProofPilotBundle:Participant p
+                WHERE DATEDIFF(CURRENT_DATE(), p.participantRegistrationtime) = 3
+                ");
+        echo $query->getSQL();
+        $results = $query->getResult();
+        
+        return $results;
+    }
+    
 
 }
