@@ -46,6 +46,13 @@ class SurveyController extends Controller
      */
     public function surveyAction($studyCode, $surveyId)
     {
+        $securityContext = $this->container->get('security.context');
+        if( $securityContext->isGranted('ROLE_PARTICIPANT') ){
+            return $this->redirect($this->get('router')->generate("_survey_protected", array(
+                    'studyCode' => $studyCode,
+                     'surveyId' => $surveyId
+                    )));
+        }
         $lime_em = $this->getDoctrine()->getManager('limesurvey');
         $locale = $this->getRequest()->getLocale();
 
@@ -70,6 +77,11 @@ class SurveyController extends Controller
      */
     public function surveyProtectedAction($studyCode, $surveyId)
     {
+        $em = $this->getDoctrine()->getManager();
+        $participant = $this->get('security.context')->getToken()->getUser();
+        $isEnrolled = $em->getRepository("CyclogramProofPilotBundle:Participant")->isEnrolledInStudy($participant, $studyCode);
+        if ($isEnrolled)
+            return $this->redirect($this->get('router')->generate('_main'));
         $lime_em = $this->getDoctrine()->getManager('limesurvey');
         $locale = $this->getRequest()->getLocale();
     
