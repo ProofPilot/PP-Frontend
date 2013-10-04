@@ -179,7 +179,7 @@ class ParticipantRepository extends EntityRepository implements
         $result = $this->getEntityManager()
         ->createQuery('SELECT COUNT(p.participantMobileNumber) FROM CyclogramProofPilotBundle:Participant p
                 WHERE p.participantMobileNumber = :phone
-                AND p.participantMobileSmsCodeConfirmed = true')
+                ')
                 ->setParameter('phone', $phone)
                 ->getSingleScalarResult();
         return $result;
@@ -352,6 +352,7 @@ class ParticipantRepository extends EntityRepository implements
                 SELECT p
                 FROM CyclogramProofPilotBundle:Participant p
                 WHERE DATEDIFF(CURRENT_DATE(), p.participantRegistrationtime) = 3
+                AND p.participantEmailComfirmed = 0
                 ");
         echo $query->getSQL();
         $results = $query->getResult();
