@@ -42,7 +42,7 @@ class KOCSocialMediaStudy extends AbstractStudy implements StudyInterface
 
     public function studyRegistration($participant, $surveyId, $saveId)
     {
-        $em = $this->container->get('doctrine')->getEntityManager();
+        $em = $this->container->get('doctrine')->getManager();
 
         //participant intervention link
         $activeStatus = $this->container->get('doctrine')
@@ -80,7 +80,7 @@ class KOCSocialMediaStudy extends AbstractStudy implements StudyInterface
 
     public function interventionLogic($participant)
     {
-        $em = $this->container->get('doctrine')->getEntityManager();
+        $em = $this->container->get('doctrine')->getManager();
         $study = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($this->getStudyCode());
         //get all participant intervention links
         $interventionLinks = $em

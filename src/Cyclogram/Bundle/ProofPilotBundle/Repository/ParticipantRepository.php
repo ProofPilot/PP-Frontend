@@ -69,20 +69,22 @@ class ParticipantRepository extends EntityRepository implements
     public function getActiveParticipantInterventionsCount($userid){
         $currentDate = new \DateTime();
         
-        return $this->getEntityManager()
+        $query =  $this->getEntityManager()
         ->createQuery("SELECT COUNT (pil) FROM CyclogramProofPilotBundle:ParticipantInterventionLink pil
                 INNER JOIN pil.status intervention_status
                 INNER JOIN pil.intervention i
                 INNER JOIN i.interventionType it
+                INNER JOIN i.language l
                 WHERE pil.participant = :userid
                 AND pil.participantInterventionLinkDatetimeStart <= :currentDate
                 AND intervention_status.statusName = 'Active'
-                AND it.interventionTypeName <> 'Test'")
+                AND it.interventionTypeName <> 'Test'
+                AND l.locale = 'en'")
         ->setParameters(array(
                         'userid' => $userid,
                         'currentDate' => $currentDate
-                ))
-        ->getSingleScalarResult();
+                ));
+        return $query->getSingleScalarResult();
     }
     
     public function getParticipantInterventionLinks($userid, $study){
@@ -90,14 +92,16 @@ class ParticipantRepository extends EntityRepository implements
         $currentDate = new \DateTime();
         
         return $this->getEntityManager()
-        ->createQuery('SELECT pil, i, it, s FROM CyclogramProofPilotBundle:ParticipantInterventionLink pil
+        ->createQuery("SELECT pil, i, it, s FROM CyclogramProofPilotBundle:ParticipantInterventionLink pil
                 INNER JOIN pil.intervention i
                 INNER JOIN pil.status s
                 INNER JOIN i.interventionType it
+                INNER JOIN i.language l
                 WHERE pil.participant = :userid
                 AND pil.participantInterventionLinkDatetimeStart <= :currentDate
                 AND i.study = :study
-                ')
+                AND l.locale = 'en'
+                ")
                 ->setParameters(array(
                         'userid' => $userid,
                         'currentDate' => $currentDate,

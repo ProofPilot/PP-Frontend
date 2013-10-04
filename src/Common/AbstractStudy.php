@@ -36,7 +36,7 @@ class AbstractStudy
     }
     
     public function createIncentive(Participant $participant, Intervention $intervention, $incentiveTypeName = 'None') {
-        $em = $this->container->get('doctrine')->getEntityManager();
+        $em = $this->container->get('doctrine')->getManager();
         $incentiveType = $em->getRepository('CyclogramProofPilotBundle:IncentiveType')->findOneByIncentiveTypeName($incentiveTypeName);
         $incentive = new Incentive();
         $incentive->setParticipant($participant);

@@ -42,7 +42,7 @@ class KOCStudy extends AbstractStudy implements StudyInterface
 
     public function studyRegistration($participant, $surveyId, $saveId)
     {
-        $em = $this->container->get('doctrine')->getEntityManager();
+        $em = $this->container->get('doctrine')->getManager();
 
         $participantArmLink = new \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantArmLink();
         $participantArmLink->setParticipant($participant);

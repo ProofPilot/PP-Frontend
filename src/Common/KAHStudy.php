@@ -49,7 +49,7 @@ class KAHStudy extends AbstractStudy implements StudyInterface
     }
     
     public function studyRegistration($participant, $surveyId, $saveId) {
-        $em = $this->container->get('doctrine')->getEntityManager();
+        $em = $this->container->get('doctrine')->getManager();
         //Add participants to Default Arm at the moment.
         $armData = $em->getRepository('CyclogramProofPilotBundle:Arm')->findOneByArmCode('Phase3Default');
         $armData = ( ! is_null( $armData )  ) ? $armData : false;
@@ -74,7 +74,7 @@ class KAHStudy extends AbstractStudy implements StudyInterface
     }
     
     public function interventionLogic($participant) {
-        $em = $this->container->get('doctrine')->getEntityManager();
+        $em = $this->container->get('doctrine')->getManager();
         $study = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($this->getStudyCode());
         //get all participant intervention links
         $interventionLinks = $em

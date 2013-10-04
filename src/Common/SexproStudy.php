@@ -42,7 +42,7 @@ class SexproStudy extends AbstractStudy implements StudyInterface
 
     public function studyRegistration($participant, $surveyId, $saveId)
     {
-        $em = $this->container->get('doctrine')->getEntityManager();
+        $em = $this->container->get('doctrine')->getManager();
         $participantSurveyLink = $em
                 ->getRepository(
                         'CyclogramProofPilotBundle:ParticipantSurveyLink')
@@ -51,7 +51,7 @@ class SexproStudy extends AbstractStudy implements StudyInterface
             $saveId = $participantSurveyLink->getSaveId();
 
             $lem = $this->container->get('doctrine')
-                    ->getEntityManager('limesurvey');
+                    ->getManager('limesurvey');
             $participantSurvey = $lem
                     ->getRepository(
                             'CyclogramProofPilotBundleLime:LimeSurvey468727')
@@ -152,7 +152,7 @@ class SexproStudy extends AbstractStudy implements StudyInterface
 
     public function interventionLogic($participant)
     {
-        $em = $this->container->get('doctrine')->getEntityManager();
+        $em = $this->container->get('doctrine')->getManager();
         $study = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($this->getStudyCode());
         $participantArm = $em->getRepository('CyclogramProofPilotBundle:ParticipantArmLink')
                 ->getParticipantStudyArm($participant, $study);
