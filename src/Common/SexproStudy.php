@@ -1,21 +1,21 @@
 <?php
 /*
-* This is part of the ProofPilot package.
-*
-* (c)2012-2013 Cyclogram, Inc, West Hollywood, CA <crew@proofpilot.com>
-* ALL RIGHTS RESERVED
-*
-* This software is provided by the copyright holders to Manila Consulting for use on the
-* Center for Disease Control's Evaluation of Rapid HIV Self-Testing among MSM in High
-* Prevalence Cities until 2016 or the project is completed.
-*
-* Any unauthorized use, modification or resale is not permitted without expressed permission
-* from the copyright holders.
-*
-* KnowatHome branding, URL, study logic, survey instruments, and resulting data are not part
-* of this copyright and remain the property of the prime contractor.
-*
-*/
+ * This is part of the ProofPilot package.
+ *
+ * (c)2012-2013 Cyclogram, Inc, West Hollywood, CA <crew@proofpilot.com>
+ * ALL RIGHTS RESERVED
+ *
+ * This software is provided by the copyright holders to Manila Consulting for use on the
+ * Center for Disease Control's Evaluation of Rapid HIV Self-Testing among MSM in High
+ * Prevalence Cities until 2016 or the project is completed.
+ *
+ * Any unauthorized use, modification or resale is not permitted without expressed permission
+ * from the copyright holders.
+ *
+ * KnowatHome branding, URL, study logic, survey instruments, and resulting data are not part
+ * of this copyright and remain the property of the prime contractor.
+ *
+ */
 namespace Common;
 use Cyclogram\Bundle\ProofPilotBundle\Entity\Study;
 
@@ -87,46 +87,57 @@ class SexproStudy extends AbstractStudy implements StudyInterface
                 $minAge = 31;
                 $maxAge = 90;
             }
-            $baseLineArmParticipants = $em->getRepository('CyclogramProofPilotBundle:Participant')->countAllArms('SexProBaseLine');
-            $threeMonthArmParticipants = $em->getRepository('CyclogramProofPilotBundle:Participant')->countAllArms('SexPro3Month');
-//             $baseLineArmParticipantsByCriteria = $em
-//                     ->getRepository('CyclogramProofPilotBundle:Participant')
-//                     ->countArmByCityAge('SexProBaseLine', $cityName, $minAge,
-//                             $maxAge);
-//             $threeMonthArmParticipantsByCriteria = $em
-//                     ->getRepository('CyclogramProofPilotBundle:Participant')
-//                     ->countArmByCityAge('SexPro3Month', $cityName, $minAge,
-//                             $maxAge);
+            $baseLineArmParticipants = $em
+                    ->getRepository('CyclogramProofPilotBundle:Participant')
+                    ->countAllArms('SexProBaseLine');
+            $threeMonthArmParticipants = $em
+                    ->getRepository('CyclogramProofPilotBundle:Participant')
+                    ->countAllArms('SexPro3Month');
+            //             $baseLineArmParticipantsByCriteria = $em
+            //                     ->getRepository('CyclogramProofPilotBundle:Participant')
+            //                     ->countArmByCityAge('SexProBaseLine', $cityName, $minAge,
+            //                             $maxAge);
+            //             $threeMonthArmParticipantsByCriteria = $em
+            //                     ->getRepository('CyclogramProofPilotBundle:Participant')
+            //                     ->countArmByCityAge('SexPro3Month', $cityName, $minAge,
+            //                             $maxAge);
             $baseLineArm = $em->getRepository('CyclogramProofPilotBundle:Arm')
                     ->findOneByArmCode('SexProBaseLine');
-            $threeMonthArm = $em->getRepository('CyclogramProofPilotBundle:Arm')
+            $threeMonthArm = $em
+                    ->getRepository('CyclogramProofPilotBundle:Arm')
                     ->findOneByArmCode('SexPro3Month');
             $participantArmLink = new ParticipantArmLink();
-            if ($baseLineArmParticipants == 0 || $threeMonthArmParticipants == 0) {
-                $armArray = array($baseLineArm, $threeMonthArm );
+            if ($baseLineArmParticipants == 0
+                    && $threeMonthArmParticipants == 0) {
+                $armArray = array($baseLineArm, $threeMonthArm);
                 shuffle($armArray);
                 $participantArmLink->setArm($armArray[0]);
+            } elseif ($baseLineArmParticipants == 0) {
+                $participantArmLink->setArm($baseLineArm);
+            } elseif ($threeMonthArmParticipants == 0) {
+                $participantArmLink->setArm($threeMonthArm);
             } else {
-                if ($baseLineArmParticipants/$threeMonthArmParticipants > 2 ){
-                    $participantArmLink->setArm($threeMonthArm );
-                } elseif ($baseLineArmParticipants/$threeMonthArmParticipants < 2) {
+                if ($baseLineArmParticipants / $threeMonthArmParticipants > 2) {
+                    $participantArmLink->setArm($threeMonthArm);
+                } elseif ($baseLineArmParticipants / $threeMonthArmParticipants
+                        < 2) {
                     $participantArmLink->setArm($baseLineArm);
                 } else {
-                    $armArray = array($baseLineArm, $threeMonthArm );
+                    $armArray = array($baseLineArm, $threeMonthArm);
                     shuffle($armArray);
                     $participantArmLink->setArm($armArray[0]);
                 }
             }
-//             if ($baseLineArmParticipantsByCriteria == 0 && $threeMonthArmParticipantsByCriteria == 0 ) {
-//                 if ($baseLineArmParticipants <= $threeMonthArmParticipants)
-//                     $participantArmLink->setArm($baseLineArm);
-//                 else 
-//                     $participantArmLink->setArm($threeMonthArm);
-//             } elseif ($baseLineArmParticipantsByCriteria <= $threeMonthArmParticipantsByCriteria) {
-//                 $participantArmLink->setArm($baseLineArm);
-//             } else {
-//                 $participantArmLink->setArm($threeMonthArm);
-//             }
+            //             if ($baseLineArmParticipantsByCriteria == 0 && $threeMonthArmParticipantsByCriteria == 0 ) {
+            //                 if ($baseLineArmParticipants <= $threeMonthArmParticipants)
+            //                     $participantArmLink->setArm($baseLineArm);
+            //                 else 
+            //                     $participantArmLink->setArm($threeMonthArm);
+            //             } elseif ($baseLineArmParticipantsByCriteria <= $threeMonthArmParticipantsByCriteria) {
+            //                 $participantArmLink->setArm($baseLineArm);
+            //             } else {
+            //                 $participantArmLink->setArm($threeMonthArm);
+            //             }
             $participantArmLink->setParticipant($participant);
             $status = $em->getRepository('CyclogramProofPilotBundle:Status')
                     ->find(1);
@@ -185,10 +196,10 @@ class SexproStudy extends AbstractStudy implements StudyInterface
                         $em->persist($interventionLink);
                         $em->flush();
                         $status = "Closed";
-                        
+
                     }
                 }
-                if ($participantArmName == 'SexProBaseLine'){
+                if ($participantArmName == 'SexProBaseLine') {
                     if (($status == "Closed")
                             && ($intervention->getInterventionName()
                                     == "SexPro Baseline Survey")) {
@@ -196,7 +207,9 @@ class SexproStudy extends AbstractStudy implements StudyInterface
                                 ->getRepository(
                                         'CyclogramProofPilotBundle:Intervention')
                                 ->findOneByInterventionCode("SexProActivity");
-                        $em->getRepository('CyclogramProofPilotBundle:Participant')
+                        $em
+                                ->getRepository(
+                                        'CyclogramProofPilotBundle:Participant')
                                 ->addParticipantInterventionLink($participant,
                                         $intervention);
                     }
