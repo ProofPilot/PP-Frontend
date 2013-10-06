@@ -159,7 +159,7 @@ class DashboardController extends Controller
             case 'Survey & Observation':
                 $surveyId = $intervention->getSidId();
                 $redirectPath = $this->get('router')->generate('_main');
-                $path = $this->get('router')->generate('_survey', array(
+                $path = $this->get('router')->generate('_survey_protected', array(
                         'studyCode'=>$studyCode,
                         'surveyId'=>$surveyId,
                         'redirectUrl'=>urlencode($redirectPath)

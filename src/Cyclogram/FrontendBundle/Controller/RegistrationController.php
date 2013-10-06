@@ -19,6 +19,8 @@
 
 namespace Cyclogram\FrontendBundle\Controller;
 
+use Cyclogram\FrontendBundle\Aop\Check;
+
 use Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantStudyReminderLink;
 
 use Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantContactTimeLink;
@@ -51,21 +53,61 @@ use Cyclogram\FrontendBundle\Form\MailingAddressForm;
 use Cyclogram\Bundle\ProofPilotBundle\Entity\Participant;
 
 
+
 class RegistrationController extends Controller
 {
+    public function checkEligibility()
+    {
+        if ($this->get('security.context')->isGranted("ROLE_PARTICIPANT")){
+            return $this->redirect($this->get('router')->generate("_main"));
+        }
+        
+        $request = $this->getRequest();
+        $studyCode = $request->get('studyCode');
+       
+        if(!$studyCode)
+            return;
+        $session = $this->getRequest()->getSession();
+        if ($session->has('SurveyInfo')){
+            $bag = $session->get('SurveyInfo');
+            $surveyId = $bag->get('surveyId');
+            $saveId = $bag->get('saveId');
+            if($studyCode != $bag->get('studyCode'))
+                return $this->render("::error.html.twig", array(
+                        "error" => "Eligibility results do not match StudyCode"));
+            
+            $surveyResult = $this->get('custom_db')->getFactory('ElegibilityCustom')->getSurveyResponseData($saveId, $surveyId);
+            $sl = $this->get('study_logic');
+            
+            $isEligible = $sl->checkEligibility($studyCode, $surveyResult);
+            if(!$isEligible)
+                return $this->render("::error.html.twig", array(
+                        "error" => "You cannot register without passing eligibility test[2]"));
+        } else {
+            return $this->render("::error.html.twig", array(
+                    "error" => "You cannot register without passing eligibility test[3]"));
+        }
+    }
+    
+    public function checkParticipant()
+    {
+        $session = $this->getRequest()->getSession();
+        $id = $this->getRequest()->get('id');
+        $studyCode = $this->getRequest()->get('studyCode');
+        if(!$id)
+            return $this->redirect($this->generateUrl('_register', array('studyCode'=>$studyCode)));
+        $sessionId = $session->get("participantId");
+        if($id != $sessionId)
+            return $this->redirect($this->generateUrl('_register', array('studyCode'=>$studyCode)));
+    }
 
     /**
      * @Route("/register/{studyCode}", name="_register", defaults={"studyCode"= null})
+     * @Check(name="checkEligibility")
      * @Template()
      */
     public function registerStartAction($studyCode=null)
     {
-        //TODO: move the check to action
-        if ($this->get('security.context')->isGranted("ROLE_PARTICIPANT")){
-            return $this->redirect($this->get('router')->generate("_main"));
-        }
-        $this->checkStudyEligibility($studyCode);
-        
         $request = $this->getRequest();
         $session = $request->getSession();
 
@@ -117,6 +159,7 @@ class RegistrationController extends Controller
 
                     $em->persist($participant);
                     $em->flush();
+                    $session->set("participantId", $participant->getParticipantId());
                     if (!empty($studyCode)){
                         return $this->redirect( $this->generateUrl("_register_mobile", array('id' => $participant->getParticipantId(), 'studyCode' => $studyCode)));
                     } else {
@@ -146,6 +189,7 @@ class RegistrationController extends Controller
 
     /**
      * @Route("/register/mobile/{id}/{studyCode}/{aditionalNumber}", name="_register_mobile", defaults={"studyCode"=null, "aditionalNumber" = null})
+     * @Check(name="checkEligibility,checkParticipant")
      * @Template()
      */
     public function registerMobileAction($id, $studyCode=null, $aditionalNumber)
@@ -154,9 +198,9 @@ class RegistrationController extends Controller
     
         $participant = $em->getRepository('CyclogramProofPilotBundle:Participant')->find($id);
         if (empty($participant)) {
-            throw new \Exception("Wrong participant id");
+            return $this->render("::error.html.twig", array(
+                    "error"=>"Wrong participant id"));
         }
-        $this->checkStudyEligibility($studyCode);
     
         $request = $this->getRequest();
         $session = $request->getSession();
@@ -262,6 +306,7 @@ class RegistrationController extends Controller
     
     /**
      * @Route("/register/sms/{id}/{studyCode}", name="_register_sms", defaults={"studyCode"=null})
+     * @Check(name="checkEligibility,checkParticipant")
      * @Template()
      */
     public function registerSendSMSAction($id, $studyCode)
@@ -269,16 +314,11 @@ class RegistrationController extends Controller
         $request = $this->getRequest();
         $session = $request->getSession();
         $em = $this->getDoctrine()->getManager();
-        $this->checkStudyEligibility($studyCode);
         
         $participant = $em->getRepository('CyclogramProofPilotBundle:Participant')->find($id);
     
         if (empty($participant)) {
             return $this->redirect( $this->generateUrl("_register"));
-        }
-    
-        if ($participant->getParticipantMobileSmsCodeConfirmed() == true) {
-            return $this->redirect( $this->generateUrl("_login"));
         }
     
         $customerMobileNumber = $participant->getParticipantMobileNumber();
@@ -311,6 +351,7 @@ class RegistrationController extends Controller
     
     /**
      * @Route("/register/verify_sms/{id}/{studyCode}", name="_register_verify_sms", defaults={"studyCode"=null})
+     * @Check(name="checkEligibility,checkParticipant")
      * @Template()
      */
     public function registerVerifySMSAction($id, $studyCode)
@@ -319,7 +360,6 @@ class RegistrationController extends Controller
         $session = $request->getSession();
         $em = $this->getDoctrine()->getManager();
 
-        $this->checkStudyEligibility($studyCode);
         $participant = $em->getRepository('CyclogramProofPilotBundle:Participant')->find($id);
     
         if (empty($participant)) {
@@ -411,6 +451,7 @@ class RegistrationController extends Controller
     
     /**
      * @Route("/register/mailaddress/{id}/{studyCode}", name="_register_mailaddress", defaults={"studyCode"=null})
+     * @Check(name="checkEligibility,checkParticipant")
      * @Template()
      */
     public function registerMailAddressAction($id, $studyCode)
@@ -418,7 +459,6 @@ class RegistrationController extends Controller
         $em = $this->getDoctrine()->getManager();
         $request = $this->getRequest();
         $session = $request->getSession();
-        $this->checkStudyEligibility($studyCode);
         
 
         $participant = $em->getRepository('CyclogramProofPilotBundle:Participant')->find($id);
@@ -486,11 +526,11 @@ class RegistrationController extends Controller
     
     /**
      * @Route("/register/study/{studyCode}", name="_register_in_study")
+     * @Check(name="checkEligibility")
      * @Template()
      */
     public function registerInStudyAction($studyCode)
     {
-        $this->checkStudyEligibility($studyCode);
         $logic = $this->get('study_logic');
         
         if($this->get('security.context')->isGranted("ROLE_PARTICIPANT")) {
@@ -586,45 +626,17 @@ class RegistrationController extends Controller
         
         return $this->redirect( $this->generateUrl("_main") );
     }
-    
-    
-    /**
-     * Check study eligibility
-     * @param unknown_type $studyCode
-     * @throws \Exception
-     */
-    private function checkStudyEligibility($studyCode)
-    {
-        if(!$studyCode)
-            return;
-        $session = $this->getRequest()->getSession();
-        if ($session->has('SurveyInfo')){
-            $bag = $session->get('SurveyInfo');
-            $surveyId = $bag->get('surveyId');
-            $saveId = $bag->get('saveId');
-            if($studyCode != $bag->get('studyCode'))
-                throw new \Exception("Your eligibility results do not match studycode");
-            
-            $surveyResult = $this->get('custom_db')->getFactory('ElegibilityCustom')->getSurveyResponseData($saveId, $surveyId);
-            $sl = $this->get('study_logic');
-            
-            $isEligible = $sl->checkEligibility($studyCode, $surveyResult);
-            if(!$isEligible)
-                throw new \Exception("You have not passed eligibility test");
-        } else {
-            throw new \Exception("No survey details found in session");
-        }
-    }
+
 
     /**
      * @Route("/register/email/{id}/{studyCode}", name="_register_email", defaults={"studyCode"=null})
+     * @Check(name="checkEligibility")
      * @Template()
      */
     public function registerSendEmailAction($id, $studyCode)
     {
         $em = $this->getDoctrine()->getManager();
         $request = $this->getRequest();
-        $this->checkStudyEligibility($studyCode);
     
         $participant = $em->getRepository("CyclogramProofPilotBundle:Participant")->find($id);
         if ($participant->getParticipantEmailConfirmed() == true) {

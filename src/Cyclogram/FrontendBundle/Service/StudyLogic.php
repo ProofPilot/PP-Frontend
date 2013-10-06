@@ -66,13 +66,19 @@ class StudyLogic
      * @param unknown_type $surveyId
      * @param unknown_type $saveId
      */
-    public function studyRegistration($participant, $studyCode, $surveyId, $saveId) {
-    
-        $uniqId = uniqid();
-        $this->campaignRegistration($participant, $uniqId);
-        $this->participantSurveyLinkRegistration($surveyId, $saveId, $participant, $uniqId);
+    public function studyRegistration($participant, $studyCode, $surveyId, $saveId) 
+    {
+        $session=$this->container->get('session');
+        $em = $this->container->get('doctrine')->getManager();
+        $isEnrolled = $em->getRepository("CyclogramProofPilotBundle:Participant")->isEnrolledInStudy($participant, $studyCode);
+        if(!$isEnrolled) {
+            $uniqId = uniqid();
+            $this->campaignRegistration($participant, $uniqId);
+            $this->participantSurveyLinkRegistration($surveyId, $saveId, $participant, $uniqId);
+            $this->studies[$studyCode]->studyRegistration($participant,$surveyId, $saveId);
+        }
+        $session->remove('participantId');
         
-        $this->studies[$studyCode]->studyRegistration($participant,$surveyId, $saveId);
     }
     
     /**

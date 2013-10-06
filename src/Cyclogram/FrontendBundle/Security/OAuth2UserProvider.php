@@ -46,6 +46,7 @@ class OAuth2UserProvider implements OAuthAwareUserProviderInterface
     
     public function loadUserByOAuthUserResponse(UserResponseInterface $response)
     {
+        $session = $this->container->get('session');
         $resourceOwnerName = $response->getResourceOwner()->getName();
         
         $data = $response->getResponse();
@@ -63,8 +64,6 @@ class OAuth2UserProvider implements OAuthAwareUserProviderInterface
             $participant->setParticipantAppreciationEmail($email);
             $participant->setRecoveryPasswordCode('Default');
             $participant->setParticipantEmailConfirmed(false);
-//             if(!$participant->getParticipantMobileNumber())
-//                 $participant->setParticipantMobileNumber('');
             if(!$participant->getParticipantPassword())
                 $participant->setParticipantPassword('');
             $participant->setParticipantMobileSmsCodeConfirmed(false);
@@ -100,14 +99,17 @@ class OAuth2UserProvider implements OAuthAwareUserProviderInterface
             $this->userManager->persist($participant);
             $this->userManager->flush();
             
+            $session->set("participantId", $participant->getParticipantId());
+            
             $e = new IncompleteUserException("You have to continue registration");
             $e->setParticipantId($participant->getParticipantId());
             throw $e;
         } else {
                 //Participant with such email already exists in database
+                $session->set("participantId", $participant->getParticipantId());
                 
                 //if no mobile phone, do all registration again
-                if(($participant->getParticipantMobileSmsCodeConfirmed() == false)) {
+                if(is_null($participant->getParticipantMobileNumber())) {
                     $e = new IncompleteUserException("You have to continue registration");
                     $e->setParticipantId($participant->getParticipantId());
                     throw $e;
@@ -130,15 +132,16 @@ class OAuth2UserProvider implements OAuthAwareUserProviderInterface
                 $studyCode = $request->query->get('state');
                 if (!empty($studyCode)) {
                     $logic = $this->container->get('study_logic');
-                    $session = $this->container->get('session');
+                    
                     if ($session->has('SurveyInfo')){
                         $bag = $session->get('SurveyInfo');
                         $surveyId = $bag->get('surveyId');
                         $saveId = $bag->get('saveId');
-                    
-                        $logic->studyRegistration($participant, $studyCode, $surveyId, $saveId);
+                        if($studyCode != $bag->get('studyCode'))
+                            $logic->studyRegistration($participant, $studyCode, $surveyId, $saveId);
                     }
                 }
+                
                 return $participant;
         }
     }

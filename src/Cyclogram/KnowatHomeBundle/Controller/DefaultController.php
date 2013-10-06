@@ -404,7 +404,9 @@ class DefaultController extends Controller
                 $siteName = $this->getRequest()->get('utm_source');
                 $csl = $this->getDoctrine()->getRepository("CyclogramProofPilotBundle:CampaignSiteLink")->getCSLParameters($campaignName, $siteName);
                 if (!$csl)
-                    throw new \Exception("Referral URL parameters are wrong");
+                    return $this->render("::error.html.twig", array(
+                                "error" => "Referral URL parameters are wrong"
+                            ));
                 $siteId = $csl->getSite()->getSiteId();
                 $campaignId = $csl->getCampaign()->getCampaignId();
             

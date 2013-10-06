@@ -191,4 +191,13 @@ class EmailController extends Controller
         echo count($participants);
         return new Response("");
     }
+    
+    /**
+     * @Route("/testError" , name="_test_error")
+     */
+    function showErrorAction()
+    {
+        return $this->render('::error.html.twig', array("error"=>"Error"));
+    }
+
 }

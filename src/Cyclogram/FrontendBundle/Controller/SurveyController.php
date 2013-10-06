@@ -41,17 +41,19 @@ class SurveyController extends Controller
      * Shows a survey. After completion of survey, survey results are saved in session, also
      * it is required to specify the redirect url
      *
-     * @Route("/survey/{studyCode}/{surveyId}", name="_survey")
+     * @Route("/eligibility-survey/{studyCode}/{surveyId}", name="_eligibility_survey")
      * @Template()
      */
     public function surveyAction($studyCode, $surveyId)
     {
+        $em = $this->getDoctrine()->getManager();
         $securityContext = $this->container->get('security.context');
+        //If you are logged in and enrolled in study, no change to pass eligibility again
         if( $securityContext->isGranted('ROLE_PARTICIPANT') ){
-            return $this->redirect($this->get('router')->generate("_survey_protected", array(
-                    'studyCode' => $studyCode,
-                     'surveyId' => $surveyId
-                    )));
+            $participant = $securityContext->getToken()->getUser();
+            $isEnrolled = $em->getRepository("CyclogramProofPilotBundle:Participant")->isEnrolledInStudy($participant, $studyCode);
+            if ($isEnrolled)
+                return $this->redirect($this->get('router')->generate('_main'));
         }
         $lime_em = $this->getDoctrine()->getManager('limesurvey');
         $locale = $this->getRequest()->getLocale();
@@ -79,10 +81,13 @@ class SurveyController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $participant = $this->get('security.context')->getToken()->getUser();
-        $isEnrolled = $em->getRepository("CyclogramProofPilotBundle:Participant")->isEnrolledInStudy($participant, $studyCode);
-        if ($isEnrolled)
-            return $this->redirect($this->get('router')->generate('_main'));
-        $lime_em = $this->getDoctrine()->getManager('limesurvey');
+
+        
+        $passed = $em->getRepository('CyclogramProofPilotBundle:ParticipantSurveyLink')->checkIfSurveyPassed($participant, $surveyId);
+        if($passed)
+            return $this->render("::error.html.twig", array(
+                    "error" => "You have already passed this survey"));
+        
         $locale = $this->getRequest()->getLocale();
     
         $studyContent = $this->getDoctrine()->getRepository("CyclogramProofPilotBundle:StudyContent")->getStudyContentByCode($studyCode, $locale);

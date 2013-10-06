@@ -34,3 +34,16 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.controller, method: onKernelController } 
 
+#aop
+    check_pointcut:
+        class: Cyclogram\FrontendBundle\Aop\CheckPointcut
+        arguments:
+            - @annotation_reader
+        tags:
+            - { name: jms_aop.pointcut, interceptor: check_interceptor }    
+                    
+    check_interceptor:
+        class: Cyclogram\FrontendBundle\Aop\CheckInterceptor
+        arguments: 
+            - @annotation_reader
+
