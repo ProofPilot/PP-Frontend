@@ -78,8 +78,8 @@ class KAHStudy extends AbstractStudy implements StudyInterface
         $study = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($this->getStudyCode());
         //get all participant intervention links
         $interventionLinks = $em
-        ->getRepository('CyclogramProofPilotBundle:Participant')
-        ->getParticipantInterventionLinks($participant, $study);
+        ->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')
+        ->getStudyInterventionLinks($participant, $this->getStudyCode());
         if (($participant->getParticipantEmailConfirmed() == true) && empty($interventionLinks)) {
             $status = $em->getRepository('CyclogramProofPilotBundle:Status')
             ->find(1);
@@ -139,7 +139,7 @@ class KAHStudy extends AbstractStudy implements StudyInterface
                             $intervention = $em
                             ->getRepository('CyclogramProofPilotBundle:Intervention')
                             ->findOneByInterventionCode("KAHPhase3TestPackage");
-                            $em->getRepository('CyclogramProofPilotBundle:Participant')
+                            $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')
                             ->addParticipantInterventionLink($participant,$intervention);
                             $em->persist($interventionLink);
                             $em->flush();
@@ -265,7 +265,7 @@ class KAHStudy extends AbstractStudy implements StudyInterface
                         $intervention = $em
                             ->getRepository('CyclogramProofPilotBundle:Intervention')
                             ->findOneByInterventionCode("KAHPhase3FollowUp");
-                        $em->getRepository('CyclogramProofPilotBundle:Participant')
+                        $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')
                             ->addParticipantInterventionLink($participant,$intervention);
                         $em->persist($interventionLink);
                         $em->flush();

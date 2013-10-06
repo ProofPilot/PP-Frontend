@@ -25,16 +25,17 @@ use Doctrine\ORM\Mapping as ORM;
 
 class ParticipantArmLinkRepository extends EntityRepository{
     
-    public function getParticipantStudyArm($participant, $study) {
+    public function getStudyArm($participant, $studyCode) {
         return $this->getEntityManager()
         ->createQuery('SELECT pal FROM
                 CyclogramProofPilotBundle:ParticipantArmLink pal
                 INNER JOIN pal.arm  a
+                INNER JOIN a.study s
                 WHERE pal.participant = :username
-                AND a.study = :study')
+                AND s.studyCode = :studycode')
                 ->setParameters(array(
                         'username' => $participant,
-                        'study' => $study
+                        'studycode' => $studyCode
                 ))
                 ->getOneOrNullResult();
         

@@ -25,7 +25,7 @@ use Doctrine\ORM\Mapping as ORM;
  * ParticipantInterventionLink
  *
  * @ORM\Table(name="participant_intervention_link")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Cyclogram\Bundle\ProofPilotBundle\Repository\ParticipantInterventionLinkRepository")
  */
 class ParticipantInterventionLink
 {

@@ -117,7 +117,7 @@ class DoItNotificationCommand extends ContainerAwareCommand
         $embedded = array();
         $embedded = $cc->getEmbeddedImages();
         
-        $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:Participant')->getActiveParticipantInterventionLinks($participant);
+        $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')->getActiveParticipantInterventionLinks($participant);
         
         $parameters["interventions"] = array();
         if (!empty($interventionLinks)){
@@ -170,7 +170,7 @@ class DoItNotificationCommand extends ContainerAwareCommand
         $cc = $this->getContainer()->get('cyclogram.common');
         $em = $this->getContainer()->get('doctrine')->getManager();
         
-        $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:Participant')->getActiveParticipantInterventionLinks($participant);
+        $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')->getActiveParticipantInterventionLinks($participant);
         
         $interventions = array();
         if (!empty($interventionLinks)){

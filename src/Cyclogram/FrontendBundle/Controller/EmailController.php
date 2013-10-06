@@ -75,7 +75,7 @@ class EmailController extends Controller
         $cc = $this->get('cyclogram.common');
 
         
-        $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:Participant')->getActiveParticipantInterventionLinks($participant);
+        $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')->getActiveParticipantInterventionLinks($participant);
         
         $embedded = array();
         $embedded = $cc->getEmbeddedImages();

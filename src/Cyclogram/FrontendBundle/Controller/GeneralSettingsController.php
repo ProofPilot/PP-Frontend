@@ -50,7 +50,7 @@ class GeneralSettingsController  extends Controller
         $participant = $this->get('security.context')->getToken()->getUser();
         $request = $this->getRequest();
         $em = $this->getDoctrine()->getManager();
-        $surveyscount = $em->getRepository('CyclogramProofPilotBundle:Participant')->getActiveParticipantInterventionsCount($participant);
+        $surveyscount = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')->getActiveParticipantInterventionsCount($participant);
         $locale =$participant->getLocale() ? $participant->getLocale() : $request->getLocale();
         $parameters["lastaccess"] = new \DateTime();
         $parameters["expandedFormClass"] = '';
@@ -207,7 +207,7 @@ class GeneralSettingsController  extends Controller
         $participant = $this->get('security.context')->getToken()->getUser();
         $request = $this->getRequest();
         $em = $this->getDoctrine()->getManager();
-        $surveyscount = $em->getRepository('CyclogramProofPilotBundle:Participant')->getActiveParticipantInterventionsCount($participant);
+        $surveyscount = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')->getActiveParticipantInterventionsCount($participant);
         $parameters["lastaccess"] = new \DateTime();
         if ($update)
             $parameters["update_data"] = $update;

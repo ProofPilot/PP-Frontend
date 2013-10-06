@@ -67,8 +67,8 @@ class DashboardController extends Controller
         
         $this->get('study_logic')->interventionLogic($participant);
         
-        $surveyscount = $em->getRepository('CyclogramProofPilotBundle:Participant')->getActiveParticipantInterventionsCount($participant);
-        $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:Participant')->getActiveParticipantInterventionLinks($participant);
+        $surveyscount = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')->getActiveParticipantInterventionsCount($participant);
+        $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')->getActiveParticipantInterventionLinks($participant);
 
         $session = $this->getRequest()->getSession();
         
