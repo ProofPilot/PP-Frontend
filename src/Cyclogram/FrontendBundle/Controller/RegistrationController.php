@@ -401,7 +401,8 @@ class RegistrationController extends Controller
                     }
                     $em->persist($participant);
                     $em->flush($participant);
-    
+                    $session->remove('participantMobileNumber');
+                    
                     $steps5 = $session->get("5step", false);
                     if ($session->has('aditional_phone')) {
                         $aditionalNumber = $session->get('aditional_phone');

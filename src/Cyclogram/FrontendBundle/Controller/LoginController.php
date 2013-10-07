@@ -123,7 +123,6 @@ class LoginController extends Controller
 
         $request = $this->getRequest(); 
         $session = $request->getSession();
-        $session->set("participantId", $participant->getParticipantId());
 
         if( $customerMobileNumber ){
     
@@ -144,10 +143,9 @@ class LoginController extends Controller
     
             if($sentSms)
                 return $this->redirect(($this->generateUrl("login_sms")));
-        } else {
-             $session->set("participantId", $participant->getParticipantId());
-             return $this->redirect($this->generateUrl("_register_mobile", array('id'=> $participant->getParticipantId())));
         }
+        return $this->render("::error.html.twig", array(
+                "error" => "You have no mobile number set - please try to register again"));
 
     }
 

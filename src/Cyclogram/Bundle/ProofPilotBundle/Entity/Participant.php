@@ -1019,7 +1019,10 @@ class Participant implements AdvancedUserInterface
     }
     public function isEnabled()
     {
-        return true;
+        if($this->participantMobileSmsCodeConfirmed == 1)
+            return true;
+        else 
+            return false;
     }
 
     /**
