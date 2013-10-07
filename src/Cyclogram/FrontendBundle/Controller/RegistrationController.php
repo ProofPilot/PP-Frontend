@@ -321,7 +321,6 @@ class RegistrationController extends Controller
             return $this->redirect( $this->generateUrl("_register"));
         }
         if ($session->has('participantMobileNumber')) {
-            $session->get('participantMobileNumber');
             $customerMobileNumber = $session->get('participantMobileNumber');
         } else {
             return $this->redirect($this->generateUrl("_register_mobile",
