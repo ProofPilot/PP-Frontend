@@ -117,13 +117,13 @@ class LoginController extends Controller
     
         $participant = $this->get('security.context')->getToken()->getUser();
         
-        $participant->setParticipantEmail(strtolower($participant->getParticipantEmail()));
+//         $participant->setParticipantEmail(strtolower($participant->getParticipantEmail()));
     
         $customerMobileNumber = $participant->getParticipantMobileNumber();
 
-        $request = $this->getRequest();
+        $request = $this->getRequest(); 
         $session = $request->getSession();
-
+        $session->set("participantId", $participant->getParticipantId());
 
         if( $customerMobileNumber ){
     
@@ -138,16 +138,17 @@ class LoginController extends Controller
     
             $em->persist($participant);
             $em->flush($participant);
-    
             $sms = $this->get('sms');
             $this->get('custom_db')->getFactory('CommonCustom')->addEvent($participant->getParticipantId(),null,3, 'doLogin', $participantSMSCode . ":" . $participant->getParticipantEmail());
             $sentSms = $sms->sendSmsAction( array('message' => "Your SMS Verification code is $participantSMSCode", 'phoneNumber'=>"$customerMobileNumber") );
     
             if($sentSms)
                 return $this->redirect(($this->generateUrl("login_sms")));
+        } else {
+             $session->set("participantId", $participant->getParticipantId());
+             return $this->redirect($this->generateUrl("_register_mobile", array('id'=> $participant->getParticipantId())));
         }
 
-        return $this->redirect(($this->generateUrl("login_sms")));
     }
 
     /**

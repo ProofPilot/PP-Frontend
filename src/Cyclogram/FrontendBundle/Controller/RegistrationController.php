@@ -564,33 +564,35 @@ class RegistrationController extends Controller
     private function confirmParticipantEmail(Participant $participant, $studyCode)
     {
 //         return true;
-        $em = $this->getDoctrine()->getManager();
-    
-        $cc = $this->get('cyclogram.common');
+        if($participant->getParticipantEmailConfirmed() == false) {
+            $em = $this->getDoctrine()->getManager();
         
-        $embedded = array();
-        $embedded = $cc->getEmbeddedImages();
+            $cc = $this->get('cyclogram.common');
+            
+            $embedded = array();
+            $embedded = $cc->getEmbeddedImages();
+            
+            $parameters['code'] = $participant->getParticipantEmailCode();
+            $participant->setParticipantEmailCode($parameters['code']);
+            $em->persist($participant);
+            $em->flush($participant);
         
-        $parameters['code'] = $participant->getParticipantEmailCode();
-        $participant->setParticipantEmailCode($parameters['code']);
-        $em->persist($participant);
-        $em->flush($participant);
-    
-        $parameters['email'] = $participant->getParticipantEmail();
-    
-        if($studyCode)
-            $parameters['studyCode'] = $studyCode;
-    
-        $parameters['locale'] = $participant->getLocale() ? $participant->getLocale() : $request->getLocale();
-        $parameters['host'] = $this->container->getParameter('site_url');
-    
-        $cc->sendMail($participant->getParticipantEmail(),
-                $this->get('translator')->trans("email_title_verify", array(), "email", $parameters['locale']),
-                'CyclogramFrontendBundle:Email:email_confirmation.html.twig',
-                null,
-                $embedded,
-                true,
-                $parameters);
+            $parameters['email'] = $participant->getParticipantEmail();
+        
+            if($studyCode)
+                $parameters['studyCode'] = $studyCode;
+        
+            $parameters['locale'] = $participant->getLocale() ? $participant->getLocale() : $request->getLocale();
+            $parameters['host'] = $this->container->getParameter('site_url');
+        
+            $cc->sendMail($participant->getParticipantEmail(),
+                    $this->get('translator')->trans("email_title_verify", array(), "email", $parameters['locale']),
+                    'CyclogramFrontendBundle:Email:email_confirmation.html.twig',
+                    null,
+                    $embedded,
+                    true,
+                    $parameters);
+        }
     }
     
     /**
