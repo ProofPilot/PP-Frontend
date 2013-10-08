@@ -131,6 +131,8 @@ class RegistrationController extends Controller
                         $participant = new Participant();
                     }
                     
+                    $participnat_level = $em->getRepository('CyclogramProofPilotBundle:ParticipantLevel')->findOneByParticipantLevelName('Lead');
+                    $participant->setLevel($participnat_level);
                     $participant->setParticipantEmail($registration->getParticipantEmail()); 
                     $participant->setParticipantAppreciationEmail($registration->getParticipantEmail());
                     $participant->setParticipantPassword($registration->getParticipantPassword());
@@ -394,6 +396,8 @@ class RegistrationController extends Controller
                         $timezone = $em->getRepository('CyclogramProofPilotBundle:ParticipantTimeZone')->find(1);
                     $participant->setParticipantMobileSmsCodeConfirmed(true);
                     $participant->setParticipantMobileNumber($session->get('participantMobileNumber'));
+                    $participnat_level = $em->getRepository('CyclogramProofPilotBundle:ParticipantLevel')->findOneByParticipantLevelName('Customer');
+                    $participant->setLevel($participnat_level);
                     $mailCode = $participant->getParticipantEmailCode();
                     if(empty($mailCode)){
                         $mailCode = substr(md5( md5( $participant->getParticipantEmail() . md5(microtime()))), 0, 4);
@@ -401,7 +405,8 @@ class RegistrationController extends Controller
                     }
                     $em->persist($participant);
                     $em->flush($participant);
-    
+                    $session->remove('participantMobileNumber');
+                    
                     $steps5 = $session->get("5step", false);
                     if ($session->has('aditional_phone')) {
                         $aditionalNumber = $session->get('aditional_phone');

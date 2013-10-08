@@ -115,4 +115,40 @@ class ParticipantInterventionLinkRepository extends EntityRepository
                         'currentDate' => $currentDate))
                         ->getResult();
     }
+    
+    public function getParticipantByInterventionCodeAndPeriod($interventionCode, $period) {
+        $query = $this->getEntityManager()
+        ->createQuery("
+                SELECT p.participantId, p.participantEmail
+                FROM CyclogramProofPilotBundle:ParticipantInterventionLink pil
+                INNER JOIN pil.status s
+                INNER JOIN pil.participant p
+                INNER JOIN pil.intervention i
+                WHERE DATEDIFF(CURRENT_DATE(), pil.participantInterventionLinkDatetimeStart) = :period
+                AND i.interventionCode = :code
+                AND s.statusName = 'Closed'
+                ")->setParameters(array(
+                        'period' => $period,
+                        'code' => $interventionCode));
+        $results = $query->getResult();
+        
+        return $results;
+    }
+    
+    public function checkIfExistParticipantInterventionLink($interventionCode, $participantId){
+        $result = $this->getEntityManager()
+        ->createQuery('SELECT COUNT(pil) FROM CyclogramProofPilotBundle:ParticipantInterventionLink pil
+                INNER JOIN pil.participant p
+                INNER JOIN pil.intervention i
+                WHERE i.interventionCode = :code
+                AND p.participantId = :participant
+                ')
+                ->setParameter('code', $interventionCode)
+                ->setParameter('participant', $participantId)
+                ->getSingleScalarResult();
+        if($result)
+            return true;
+        else
+            return false;
+    }
 }

@@ -27,5 +27,6 @@ interface StudyInterface
     public function interventionLogic($participant);
     public function checkEligibility( $surveyResult);
     public static function getStudyCode();
+    public function commandInterventionLogic();
 
 }

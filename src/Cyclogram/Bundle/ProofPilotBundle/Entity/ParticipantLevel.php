@@ -36,14 +36,14 @@ class ParticipantLevel
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $participantLevelId;
+    protected $participantLevelId;
 
     /**
      * @var string
      *
      * @ORM\Column(name="participant_level_name", type="string", length=45, nullable=true)
      */
-    private $participantLevelName;
+    protected $participantLevelName;
 
     /**
      * @var \Status
@@ -53,7 +53,7 @@ class ParticipantLevel
      *   @ORM\JoinColumn(name="status_id", referencedColumnName="status_id")
      * })
      */
-    private $status;
+    protected $status;
 
 
 

@@ -31,43 +31,36 @@ class VerificationNoticeCommand extends ContainerAwareCommand
     protected function configure(){
         
         $this->setName('send:verificationNotice')
-        ->setDescription('Send email&SMS with verificaion')
-        ->addArgument('currentDay', InputArgument::REQUIRED);
+        ->setDescription('Send email&SMS with verificaion');
     }
     
     protected function execute(InputInterface $input, OutputInterface $output)
     {
 
         $em = $this->getContainer()->get('doctrine')->getManager();
-        $participants = $em->getRepository('CyclogramProofPilotBundle:Participant')->findByParticipantEmailConfirmed(false);
-        $currentDay = $input->getArgument('currentDay');
+        $participants = $em->getRepository('CyclogramProofPilotBundle:Participant')->getParticipantsWithNotConfirmedEmails();
         foreach ($participants as $participant) {
-            $participantRegTime = $participant->getParticipantRegistrationtime();
-            $participantRegDay = $participantRegTime->format('z');
-            if ((($currentDay - $participantRegDay) == 3) || (($currentDay - $participantRegDay) == -363) || (($currentDay - $participantRegDay) == -364)
-                 || (($currentDay - $participantRegDay) == -365) || (($currentDay - $participantRegDay) == -366)) {
-                // send email
-                $result = $this->sendDoItNowEmail($participant);
-                if($result['send'] == true){
+            // send email
+            $result = $this->sendDoItNowEmail($participant);
+            if($result['send'] == true){
+                $output->writeln($participant->getParticipantEmail());
+                $output->writeln("sent email");
+            } else {
+                if (!empty($result['message']))
+                {
                     $output->writeln($participant->getParticipantEmail());
-                    $output->writeln("sent email");
-                } else {
-                    if (!empty($result['message']))
-                    {
-                        $output->writeln($participant->getParticipantEmail());
-                        $output->writeln($result['message']);
-                    }
+                    $output->writeln($result['message']);
                 }
-                $result = $this->sendDoItNowSMS($participant);
-                if($result['send'] == true){
+            }
+            $result = $this->sendDoItNowSMS($participant);
+            if($result['send'] == true){
+                $output->writeln($participant->getParticipantUsername()." phone number: ".$participant->getParticipantMobileNumber());
+                $output->writeln("sent sms");
+            } else {
+                if (!empty($result['message']))
+                {
                     $output->writeln($participant->getParticipantUsername()." phone number: ".$participant->getParticipantMobileNumber());
-                    $output->writeln("sent sms");
-                } else {
-                    if (!empty($result['message']))
-                    {
-                        $output->writeln($participant->getParticipantUsername()." phone number: ".$participant->getParticipantMobileNumber());
-                        $output->writeln($result['message']);
-                    }
+                    $output->writeln($result['message']);
                 }
             }
         }
