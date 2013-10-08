@@ -163,6 +163,13 @@ class StudyLogic
         }
     }
     
+    public function commandInterventionLogic() {
+    
+        foreach ($this->studies as $study) {
+                $study->commandInterventionLogic();
+        }
+    }
+    
     public function checkEligibility($studyCode, $surveyResult)
     {
         if (in_array($studyCode, $this->getSupportedStudies())) {

@@ -21,6 +21,7 @@ namespace Cyclogram\FrontendBundle\Form;
 use Symfony\Component\Validator\ExecutionContextInterface;
 
 use Symfony\Component\Validator\Constraints\Callback;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -45,11 +46,15 @@ class RegistrationForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('participantEmail', 'email', array(
-                 'label'=>'label_email'
-                 ));
+                 'label'=>'label_email',
+                'constraints' => array(new NotBlank(array(
+                        'message'=>"error_not_blank_email"
+                )))));
         $builder->add('participantUsername', 'text', array(
-                'label'=>'label_username'
-                ));
+                'label'=>'label_username',
+                'constraints' => array(new NotBlank(array(
+                        'message'=>"error_not_blank_username"
+                )))));
         $builder->add('participantPassword', 'repeated', array(
                 'type' => 'password',
                 'first_options'  => array(
@@ -99,7 +104,7 @@ class RegistrationForm extends AbstractType
         $count = $this->container->get('doctrine')
             ->getRepository('CyclogramProofPilotBundle:Participant')
             ->checkIfEmailNotUsed($participant->getParticipantEmail());
-        
+            
         if($count)
             $context->addViolationAt('participantEmail',  $this->container->get('translator')->trans('email_already_registered', array(), 'validators'));
     }
@@ -107,9 +112,9 @@ class RegistrationForm extends AbstractType
     public function validateUsername(Participant $participant, ExecutionContextInterface $context)
     {
         $count = $this->container->get('doctrine')
-        ->getRepository('CyclogramProofPilotBundle:Participant')
-        ->checkIfUsernameNotUsed($participant->getParticipantUsername());
-    
+            ->getRepository('CyclogramProofPilotBundle:Participant')
+            ->checkIfUsernameNotUsed($participant->getParticipantUsername());
+        
         if($count)
             $context->addViolationAt('participantUsername',  $this->container->get('translator')->trans('username_already_registered', array(), 'validators'));
     }

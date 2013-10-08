@@ -319,6 +319,16 @@ class Participant implements AdvancedUserInterface
     protected $status;
 
     /**
+     * @var \ParticipantLevel
+     *
+     * @ORM\ManyToOne(targetEntity="ParticipantLevel")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="level_id", referencedColumnName="participant_level_id")
+     * })
+     */
+    protected $level;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="participant_city", type="string", length=255, nullable=true)
@@ -1019,9 +1029,9 @@ class Participant implements AdvancedUserInterface
     }
     public function isEnabled()
     {
-        if($this->participantMobileSmsCodeConfirmed == 1)
+        if($this->level->getParticipantLevelName() == 'Customer')
             return true;
-        else 
+        elseif ($this->level->getParticipantLevelName() == 'Lead')
             return false;
     }
 
@@ -1242,9 +1252,20 @@ class Participant implements AdvancedUserInterface
         return $this->participantRegistrationtime;
     }
 
-    public function setParticipantRegistrationtime( $participantRegistrationtime)
+    public function setParticipantRegistrationtime(
+            $participantRegistrationtime)
     {
         $this->participantRegistrationtime = $participantRegistrationtime;
+    }
+
+    public function getLevel()
+    {
+        return $this->level;
+    }
+
+    public function setLevel( \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantLevel $level = null)
+    {
+        $this->level = $level;
     }
 
 }

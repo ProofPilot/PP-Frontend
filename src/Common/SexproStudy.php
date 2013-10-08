@@ -50,8 +50,7 @@ class SexproStudy extends AbstractStudy implements StudyInterface
         if (isset($participantSurveyLink)) {
             $saveId = $participantSurveyLink->getSaveId();
 
-            $lem = $this->container->get('doctrine')
-                    ->getManager('limesurvey');
+            $lem = $this->container->get('doctrine')->getManager('limesurvey');
             $participantSurvey = $lem
                     ->getRepository(
                             'CyclogramProofPilotBundleLime:LimeSurvey468727')
@@ -164,61 +163,70 @@ class SexproStudy extends AbstractStudy implements StudyInterface
     public function interventionLogic($participant)
     {
         $em = $this->container->get('doctrine')->getManager();
-        
+
         $participantArm = $em
                 ->getRepository('CyclogramProofPilotBundle:ParticipantArmLink')
                 ->getStudyArm($participant, $this->getStudyCode());
         $participantArmName = $participantArm->getArm()->getArmName();
         //get all participant intervention links
         $interventionLinks = $em
-                ->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')
+                ->getRepository(
+                        'CyclogramProofPilotBundle:ParticipantInterventionLink')
                 ->getStudyInterventionLinks($participant, $this->getStudyCode());
-        
+
         foreach ($interventionLinks as $interventionLink) {
             $interventionTypeName = $interventionLink->getIntervention()
                     ->getInterventionType()->getInterventionTypeName();
             $intervention = $interventionLink->getIntervention();
             $status = $interventionLink->getStatus()->getStatusName();
-            
+
             switch ($interventionTypeName) {
-                case "Survey & Observation":
-                    $surveyId = $intervention->getSidId();
-                    if ($status == "Active") {
-                        $passed = $em
+            case "Survey & Observation":
+                $surveyId = $intervention->getSidId();
+                if ($status == "Active") {
+                    $passed = $em
+                            ->getRepository(
+                                    'CyclogramProofPilotBundle:ParticipantSurveyLink')
+                            ->checkIfSurveyPassed($participant, $surveyId);
+
+                    if ($passed) {
+                        $this->createIncentive($participant, $intervention);
+                        $completedStatus = $em
                                 ->getRepository(
-                                        'CyclogramProofPilotBundle:ParticipantSurveyLink')
-                                ->checkIfSurveyPassed($participant, $surveyId);
-    
-                        if ($passed) {
-                            $this->createIncentive($participant, $intervention);
-                            $completedStatus = $em
-                                    ->getRepository(
-                                            'CyclogramProofPilotBundle:Status')
-                                    ->findOneByStatusName("Closed");
-                            $interventionLink->setStatus($completedStatus);
-                            $em->persist($interventionLink);
-                            $em->flush();
-                            $status = "Closed";
-    
-                        }
+                                        'CyclogramProofPilotBundle:Status')
+                                ->findOneByStatusName("Closed");
+                        $interventionLink->setStatus($completedStatus);
+                        $em->persist($interventionLink);
+                        $em->flush();
+                        $status = "Closed";
+
                     }
-                    if ($participantArmName == 'SexProBaseLine') {
-                        if (($status == "Closed")&& ($intervention->getInterventionCode() == "SexProBaselineSurvey")) 
-                        {
-                            $iSexProActivity = $em->getRepository('CyclogramProofPilotBundle:Intervention')->findOneByInterventionCode("SexProActivity");
-                            $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')->addParticipantInterventionLink($participant,$iSexProActivity);
-                        }
+                }
+                if ($participantArmName == 'SexProBaseLine') {
+                    if (($status == "Closed")
+                            && ($intervention->getInterventionCode()
+                                    == "SexProBaselineSurvey")) {
+                        $iSexProActivity = $em
+                                ->getRepository(
+                                        'CyclogramProofPilotBundle:Intervention')
+                                ->findOneByInterventionCode("SexProActivity");
+                        $em
+                                ->getRepository(
+                                        'CyclogramProofPilotBundle:ParticipantInterventionLink')
+                                ->addParticipantInterventionLink($participant,
+                                        $iSexProActivity);
                     }
-                    break;
-                case "Activity":
-                    if ($participantArmName == 'SexPro3Month') {
-                        if($intervention->getInterventionCode() == "SexProActivity")
-                        {
-                            $em->remove($interventionLink);
-                            $em->flush();
-                        }
+                }
+                break;
+            case "Activity":
+                if ($participantArmName == 'SexPro3Month') {
+                    if ($intervention->getInterventionCode()
+                            == "SexProActivity") {
+                        $em->remove($interventionLink);
+                        $em->flush();
                     }
-                    break;
+                }
+                break;
             }
         }
     }
@@ -230,6 +238,10 @@ class SexproStudy extends AbstractStudy implements StudyInterface
     public static function getStudyCode()
     {
         return 'sexpro';
+    }
+    public function commandInterventionLogic()
+    {
+        return true;
     }
 
 }
