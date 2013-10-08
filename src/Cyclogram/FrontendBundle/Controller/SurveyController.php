@@ -48,6 +48,12 @@ class SurveyController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $securityContext = $this->container->get('security.context');
+        //if surveyid not equal to eligibility survey id
+        $study = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
+        $studyContent = $em->getRepository('CyclogramProofPilotBundle:StudyContent')->find(array('study' => $study->getStudyId(), 'language' => 1));
+        if ($studyContent->getStudyElegibilitySurvey() != $surveyId)
+            return $this->render("::error.html.twig", array(
+                    "error" => "Please dont hack our site:)"));
         //If you are logged in and enrolled in study, no change to pass eligibility again
         if( $securityContext->isGranted('ROLE_PARTICIPANT') ){
             $participant = $securityContext->getToken()->getUser();
