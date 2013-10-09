@@ -34,7 +34,9 @@
         "sonata-project/intl-bundle": "dev-master",
         "maxmind/geoip": "dev-master",
         "hwi/oauth-bundle": "0.3.*@dev",
-        "friendsofsymfony/jsrouting-bundle": "~1.1"
+        "friendsofsymfony/jsrouting-bundle": "~1.1",
+        "phpunit/phpunit": "3.7.*",
+		"phpunit/phpunit-selenium": ">=1.2"
     },
     "scripts": {
         "post-install-cmd": [
