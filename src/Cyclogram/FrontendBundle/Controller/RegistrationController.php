@@ -289,7 +289,7 @@ class RegistrationController extends Controller
                     $session->set('aditional_phone', $values['aditional_phone']);
                 return $this->render('CyclogramFrontendBundle:Registration:mobile_phone_verify.html.twig',
                         array(
-                                'phone' => $participant->getParticipantMobileNumber(),
+                                'phone' => $session->get('participantMobileNumber'),
                                 'id' => $participant->getParticipantId(),
                                 'steps' => $session->get("5step", false) ? 5 : 4,
                                 'current' => 3
