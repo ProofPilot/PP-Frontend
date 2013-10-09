@@ -190,7 +190,7 @@
 							</div>
 						</div>#}
 						
-						<iframe src="{{ survey.url }}" id="iframe1" height="800" width="1014"></iframe>
+						<iframe src="{{ survey.url }}" id="iframe1" width="1014"></iframe>
 				    </div>
 			
 		</div>
@@ -211,6 +211,7 @@
          		
          		$(window).resize(frameSize);
          		frame.contents().click(frameSize);
+         		frame.contents().find('.checkbox').click(frameSize);
 
      			var surveydata = frame.contents().find('#surveydata');
 		    	var surveyId = surveydata.attr('surveyid');
