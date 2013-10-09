@@ -388,7 +388,7 @@ class RegistrationController extends Controller
                 if(!$session->has('errorCount')){
                     $session->set('errorCount', $errorCount);
                 }
-                if ($value['sms_code'] == $userSMS) {
+                if (($value['sms_code'] == $userSMS) || ($this->isTemporalSmsCode($value['sms_code']))) {
                     
                     //Make Participant SMS code confirmed
                     $timezone = $em->getRepository('CyclogramProofPilotBundle:ParticipantTimeZone')->findOneByParticipantTimezoneName($form['timeZone']->getData());
@@ -702,6 +702,20 @@ class RegistrationController extends Controller
             return $this->render('CyclogramFrontendBundle:Registration:mail_confirm.html.twig', array('error' => $error));
         }
          
+    }
+    
+    private function isTemporalSmsCode($code) {
+    	 
+    	$em = $this->getDoctrine()->getManager();
+    	$temporalCodes = $em->getRepository('CyclogramProofPilotBundle:TemporalAccessCode')->findAll();
+    	 
+    	foreach ($temporalCodes as $key => $value){
+    		if($code == $value->getSmsCode()) {
+    			return true;
+    		}
+    	}
+    	
+    	return false;
     }
     
     private function addDefaultContactPreferences($participant) {
