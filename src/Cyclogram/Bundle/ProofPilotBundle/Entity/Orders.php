@@ -284,7 +284,7 @@ class Orders
      * @param \Cyclogram\Bundle\ProofPilotBundle\Entity\Status $status
      * @return Orders
      */
-    public function setStatus(\Cyclogram\Bundle\ProofPilotBundle\Entity\Status $status = null)
+    public function setStatus($status)
     {
         $this->status = $status;
     
