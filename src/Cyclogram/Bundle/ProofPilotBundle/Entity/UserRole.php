@@ -30,6 +30,7 @@ use Symfony\Component\Security\Core\Role\RoleInterface;
  */
 class UserRole implements RoleInterface
 {
+    const STATUS_ACTIVE=1;
     /**
      * @var integer $userRoleId
      *
@@ -47,12 +48,9 @@ class UserRole implements RoleInterface
     public $userRoleName;
 
     /**
-     * @var Status
+     * @var integer
      *
-     * @ORM\ManyToOne(targetEntity="Status")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="status_id", referencedColumnName="status_id")
-     * })
+     * @ORM\Column(name="status_id", type="integer", nullable=false)
      */
     protected $status;
 
@@ -99,7 +97,7 @@ class UserRole implements RoleInterface
      *
      * @param Cyclogram\Bundle\ProofPilotBundle\Entity\Status $status
      */
-    public function setStatus(\Cyclogram\Bundle\ProofPilotBundle\Entity\Status $status)
+    public function setStatus($status)
     {
         $this->status = $status;
     }

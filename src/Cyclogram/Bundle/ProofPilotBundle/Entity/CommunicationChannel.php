@@ -29,6 +29,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class CommunicationChannel
 {
+    
+    const STATUS_ACTIVE = 1;
     /**
      * @var integer
      *
@@ -46,12 +48,9 @@ class CommunicationChannel
     private $communicationChannelName;
 
     /**
-     * @var \Status
+     * @var integer
      *
-     * @ORM\ManyToOne(targetEntity="Status")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="status_id", referencedColumnName="status_id")
-     * })
+     * @ORM\Column(name="status_id", type="integer", nullable=false)
      */
     private $status;
 
@@ -96,7 +95,7 @@ class CommunicationChannel
      * @param \Cyclogram\Bundle\ProofPilotBundle\Entity\Status $status
      * @return CommunicationChannel
      */
-    public function setStatus(\Cyclogram\Bundle\ProofPilotBundle\Entity\Status $status = null)
+    public function setStatus($status)
     {
         $this->status = $status;
     

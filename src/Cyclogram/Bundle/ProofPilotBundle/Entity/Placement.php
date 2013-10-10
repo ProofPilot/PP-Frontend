@@ -29,6 +29,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Placement
 {
+    const STATUS_ACTIVE =1;
     /**
      * @var integer
      *
@@ -95,12 +96,9 @@ class Placement
     private $placementDateStop;
 
     /**
-     * @var \Status
+     * @var integer
      *
-     * @ORM\ManyToOne(targetEntity="Status")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="status_id", referencedColumnName="status_id")
-     * })
+     * @ORM\Column(name="status_id", type="integer", nullable=false)
      */
     private $status;
 
@@ -339,7 +337,7 @@ class Placement
      * @param \Cyclogram\Bundle\ProofPilotBundle\Entity\Study $study
      * @return Placement
      */
-    public function setStudy(\Cyclogram\Bundle\ProofPilotBundle\Entity\Study $study = null)
+    public function setStudy($study )
     {
         $this->study = $study;
     

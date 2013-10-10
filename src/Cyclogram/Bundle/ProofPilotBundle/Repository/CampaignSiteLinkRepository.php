@@ -18,6 +18,10 @@
 */
 namespace Cyclogram\Bundle\ProofPilotBundle\Repository;
 
+use Cyclogram\Bundle\ProofPilotBundle\Entity\Campaign;
+
+use Cyclogram\Bundle\ProofPilotBundle\Entity\Site;
+
 use Cyclogram\Bundle\ProofPilotBundle\Entity\CampaignSiteLink;
 
 use Doctrine\ORM\EntityRepository;
@@ -37,16 +41,17 @@ class CampaignSiteLinkRepository extends EntityRepository
                 INNER JOIN csl.campaign c
                 LEFT JOIN c.campaignType ct
                 INNER JOIN csl.site site
-                INNER JOIN site.status site_status
-                INNER JOIN c.status campaign_status
                 WHERE
                 site.siteName = :siteName
                 AND c.campaignName = :campaignName
-                AND site_status.statusName = 'Active'
-                AND campaign_status.statusName = 'Active'
+                AND site.status = :sitestatus
+                AND c.status = :campaignstatus
                 ")
-                ->setParameter('siteName', $siteName)
-                ->setParameter('campaignName', $campaignName);
+                ->setParameters(array('siteName' => $siteName,
+                                      'campaignName' => $campaignName,
+                                      ':sitestatus' => Site::STATUS_ACTIVE,
+                                      'campaignstatus' => Campaign::STATUS_ACTIVE
+                        ));
     
         $results = $query->getResult();
     

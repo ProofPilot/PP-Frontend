@@ -33,6 +33,7 @@ use Cyclogram\Bundle\ProofPilotBundle\Entity\StudyOrganizationLink;
  */
 class Organization
 {
+    const STATUS_ACTIVE =1;
     /**
      * @var integer
      *
@@ -136,12 +137,9 @@ class Organization
     private $state;
 
     /**
-     * @var \Status
+     * @var integer
      *
-     * @ORM\ManyToOne(targetEntity="Status")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="status_id", referencedColumnName="status_id")
-     * })
+     * @ORM\Column(name="status_id", type="integer", nullable=false)
      */
     private $status;
     
@@ -459,7 +457,7 @@ class Organization
      * @param \Cyclogram\Bundle\ProofPilotBundle\Entity\Status $status
      * @return Organization
      */
-    public function setStatus(\Cyclogram\Bundle\ProofPilotBundle\Entity\Status $status = null)
+    public function setStatus($status)
     {
         $this->status = $status;
     

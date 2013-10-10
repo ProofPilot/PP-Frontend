@@ -29,6 +29,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class ParticipantInterventionLink
 {
+    const STATUS_ACTIVE = 1;
+    const STATUS_CLOSED = 11;
     /**
      * @var integer
      *
@@ -80,12 +82,9 @@ class ParticipantInterventionLink
     private $participant;
 
     /**
-     * @var \Status
+     * @var integer
      *
-     * @ORM\ManyToOne(targetEntity="Status")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="status_id", referencedColumnName="status_id")
-     * })
+     * @ORM\Column(name="status_id", type="integer", nullable=false)
      */
     private $status;
 
@@ -222,7 +221,7 @@ class ParticipantInterventionLink
      * @param \Cyclogram\Bundle\ProofPilotBundle\Entity\Status $status
      * @return ParticipantInterventionLink
      */
-    public function setStatus(\Cyclogram\Bundle\ProofPilotBundle\Entity\Status $status = null)
+    public function setStatus($status)
     {
         $this->status = $status;
     

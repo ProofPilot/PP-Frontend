@@ -43,8 +43,7 @@ class AbstractStudy
         $incentive->setIncentiveDatetime(new \DateTime());
         $incentive->setIncentiveAmount($intervention->getInterventionIncentiveAmount());
         $incentive->setIncentiveType($incentiveType);
-        $status = $em->getRepository('CyclogramProofPilotBundle:Status')->find(25);
-        $incentive->setStatus($status);
+        $incentive->setStatus(Incentive::STATUS_PENDING_APPROVAL);
         $incentive->setIntervention($intervention);
         $incentive->setInterventionLanguageid($intervention->getLanguage()->getLanguageId());
         $em->persist($incentive);

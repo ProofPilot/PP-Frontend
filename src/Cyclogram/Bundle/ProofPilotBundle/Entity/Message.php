@@ -29,6 +29,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Message
 {
+    const STATUS_ACTIVE =1;
     /**
      * @var integer
      *
@@ -56,14 +57,9 @@ class Message
     private $status;
 
     /**
-     * @var \Language
+     * @var integer
      *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="Language")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="language_id", referencedColumnName="language_id")
-     * })
+     * @ORM\Column(name="status_id", type="integer", nullable=false)
      */
     private $language;
 
@@ -177,7 +173,7 @@ class Message
      * @param \Cyclogram\Bundle\ProofPilotBundle\Entity\Study $study
      * @return Message
      */
-    public function setStudy(\Cyclogram\Bundle\ProofPilotBundle\Entity\Study $study = null)
+    public function setStudy($study)
     {
         $this->study = $study;
     

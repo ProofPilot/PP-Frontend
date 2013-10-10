@@ -34,6 +34,7 @@ use Cyclogram\Bundle\ProofPilotBundle\Entity\UserRoleLink;
 class User
 {
 
+    const STATUS_ACTIVE =1;
     protected $roles;
 
     public function __construct(){
@@ -101,12 +102,9 @@ class User
     protected $loginAttempts;
 
     /**
-     * @var \Status
+     * @var integer
      *
-     * @ORM\ManyToOne(targetEntity="Status")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="status_id", referencedColumnName="status_id")
-     * })
+     * @ORM\Column(name="status_id", type="integer", nullable=false)
      */
     protected $status;
 
@@ -254,7 +252,7 @@ class User
      * @param \Cyclogram\Bundle\ProofPilotBundle\Entity\Status $status
      * @return User
      */
-    public function setStatus(\Cyclogram\Bundle\ProofPilotBundle\Entity\Status $status = null)
+    public function setStatus($status)
     {
         $this->status = $status;
     }

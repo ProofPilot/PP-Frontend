@@ -31,9 +31,8 @@ class ParticipantInterventionLinkRepository extends EntityRepository
         $currentDate = new \DateTime();
     
         return $this->getEntityManager()
-        ->createQuery("SELECT pil, i, it, s FROM CyclogramProofPilotBundle:ParticipantInterventionLink pil
+        ->createQuery("SELECT pil, i, it FROM CyclogramProofPilotBundle:ParticipantInterventionLink pil
                 INNER JOIN pil.intervention i
-                INNER JOIN pil.status s
                 INNER JOIN i.interventionType it
                 INNER JOIN i.language l
                 INNER JOIN i.study study
@@ -66,7 +65,7 @@ class ParticipantInterventionLinkRepository extends EntityRepository
             $interventionLink = new ParticipantInterventionLink();
             $interventionLink->setParticipant($participant);
             $interventionLink->setIntervention($intervention);
-            $interventionLink->setStatus($em->getRepository('CyclogramProofPilotBundle:Status')->findOneByStatusName("Active"));
+            $interventionLink->setStatus(ParticipantInterventionLink::STATUS_ACTIVE);
             $interventionLink->setParticipantInterventionLinkDatetimeStart( new \DateTime("now") );
             $em->persist($interventionLink);
             $em->flush();
@@ -79,18 +78,18 @@ class ParticipantInterventionLinkRepository extends EntityRepository
     
         $query =  $this->getEntityManager()
         ->createQuery("SELECT COUNT (pil) FROM CyclogramProofPilotBundle:ParticipantInterventionLink pil
-                INNER JOIN pil.status intervention_status
                 INNER JOIN pil.intervention i
                 INNER JOIN i.interventionType it
                 INNER JOIN i.language l
                 WHERE pil.participant = :userid
                 AND pil.participantInterventionLinkDatetimeStart <= :currentDate
-                AND intervention_status.statusName = 'Active'
+                AND pil.status = :pilstatus
                 AND it.interventionTypeName <> 'Test'
                 AND l.locale = 'en'")
                 ->setParameters(array(
                         'userid' => $userid,
-                        'currentDate' => $currentDate
+                        'currentDate' => $currentDate,
+                        'pilstatus' => ParticipantInterventionLink::STATUS_ACTIVE
                 ));
         return $query->getSingleScalarResult();
     }
@@ -101,18 +100,18 @@ class ParticipantInterventionLinkRepository extends EntityRepository
         $currentDate = new \DateTime();
     
         return $this->getEntityManager()
-        ->createQuery('SELECT pil, i, it, s FROM CyclogramProofPilotBundle:ParticipantInterventionLink pil
+        ->createQuery('SELECT pil, i, it FROM CyclogramProofPilotBundle:ParticipantInterventionLink pil
                 INNER JOIN pil.intervention i
-                INNER JOIN pil.status s
                 INNER JOIN i.interventionType it
                 WHERE pil.participant = :userid
                 AND pil.participantInterventionLinkDatetimeStart <= :currentDate
-                AND s.statusId = 1
+                AND pil.status  = :pilstatus
                 AND it.interventionTypeName <> \'Test\'
                 ')
                 ->setParameters(array(
                         'userid' => $userid,
-                        'currentDate' => $currentDate))
+                        'currentDate' => $currentDate,
+                        'pilstatus' => ParticipantInterventionLink::STATUS_ACTIVE))
                         ->getResult();
     }
     
@@ -121,15 +120,15 @@ class ParticipantInterventionLinkRepository extends EntityRepository
         ->createQuery("
                 SELECT p.participantId, p.participantEmail
                 FROM CyclogramProofPilotBundle:ParticipantInterventionLink pil
-                INNER JOIN pil.status s
                 INNER JOIN pil.participant p
                 INNER JOIN pil.intervention i
                 WHERE DATEDIFF(CURRENT_DATE(), pil.participantInterventionLinkDatetimeStart) = :period
                 AND i.interventionCode = :code
-                AND s.statusName = 'Closed'
+                AND pil.status = :pilstatus
                 ")->setParameters(array(
-                        'period' => $period,
-                        'code' => $interventionCode));
+                                        'period' => $period,
+                                        'code' => $interventionCode,
+                                        'pilstatus' => ParticipantInterventionLink::STATUS_CLOSED));
         $results = $query->getResult();
         
         return $results;

@@ -58,6 +58,8 @@ class OAuth2UserProvider implements OAuthAwareUserProviderInterface
         //if participant does not existr and it was registration
         if (empty($participant)) {
             $participant = new Participant();
+            $participnat_level = $this->userManager->getRepository('CyclogramProofPilotBundle:ParticipantLevel')->findOneByParticipantLevelName('Lead');
+            $participant->setLevel($participnat_level);
             $request = $this->container->get('request');
             $question = $this->userManager->getRepository('CyclogramProofPilotBundle:RecoveryQuestion')->find(1);
             $participant->setRecoveryQuestion($question);
@@ -77,8 +79,7 @@ class OAuth2UserProvider implements OAuthAwareUserProviderInterface
             $participant->setParticipantTimezone($timezone);
             $role = $this->userManager->getRepository('CyclogramProofPilotBundle:ParticipantRole')->find(1);
             $participant->setParticipantRole($role);
-            $status = $this->userManager->getRepository('CyclogramProofPilotBundle:Status')->find(1);
-            $participant->setStatus($status);
+            $participant->setStatus(Participant::STATUS_ACTIVE);
 
             switch($resourceOwnerName) {
                 case "facebook":

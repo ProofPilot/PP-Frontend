@@ -29,6 +29,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Arm
 {
+    
+    const STATUS_ACTIVE = 1;
     /**
      * @var integer
      *
@@ -36,59 +38,56 @@ class Arm
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $armId;
+    protected $armId;
 
     /**
      * @var string
      *
      * @ORM\Column(name="arm_code", type="string", length=45, nullable=false)
      */
-    private $armCode;
+    protected $armCode;
 
     /**
      * @var string
      *
      * @ORM\Column(name="arm_name", type="string", length=45, nullable=false)
      */
-    private $armName;
+    protected $armName;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="arm_quota", type="integer", nullable=true)
      */
-    private $armQuota;
+    protected $armQuota;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="arm_ceilling", type="integer", nullable=true)
      */
-    private $armCeilling;
+    protected $armCeilling;
 
     /**
      * @var string
      *
      * @ORM\Column(name="arm_description", type="string", length=2000, nullable=true)
      */
-    private $armDescription;
+    protected $armDescription;
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="arm_default", type="boolean", nullable=false)
      */
-    private $armDefault;
+    protected $armDefault;
 
     /**
-     * @var \Status
+     * @var integer
      *
-     * @ORM\ManyToOne(targetEntity="Status")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="status_id", referencedColumnName="status_id")
-     * })
+     * @ORM\Column(name="status_id", type="integer", nullable=false)
      */
-    private $status;
+    protected $status;
 
     /**
      * @var \Study
@@ -98,7 +97,7 @@ class Arm
      *   @ORM\JoinColumn(name="study_id", referencedColumnName="study_id")
      * })
      */
-    private $study;
+    protected $study;
 
 
 
@@ -253,10 +252,8 @@ class Arm
     /**
      * Set status
      *
-     * @param \Cyclogram\Bundle\ProofPilotBundle\Entity\Status $status
-     * @return Arm
      */
-    public function setStatus(\Cyclogram\Bundle\ProofPilotBundle\Entity\Status $status = null)
+    public function setStatus($status)
     {
         $this->status = $status;
     
@@ -266,7 +263,6 @@ class Arm
     /**
      * Get status
      *
-     * @return \Cyclogram\Bundle\ProofPilotBundle\Entity\Status 
      */
     public function getStatus()
     {

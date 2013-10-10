@@ -29,6 +29,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Individual
 {
+    const STATUS_ACTIVE = 1;
     /**
      * @var integer
      *
@@ -149,12 +150,9 @@ class Individual
     private $state;
 
     /**
-     * @var \Status
+     * @var integer
      *
-     * @ORM\ManyToOne(targetEntity="Status")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="status_id", referencedColumnName="status_id")
-     * })
+     * @ORM\Column(name="status_id", type="integer", nullable=false)
      */
     private $status;
 
@@ -498,7 +496,7 @@ class Individual
      * @param \Cyclogram\Bundle\ProofPilotBundle\Entity\Status $status
      * @return Individual
      */
-    public function setStatus(\Cyclogram\Bundle\ProofPilotBundle\Entity\Status $status = null)
+    public function setStatus($status)
     {
         $this->status = $status;
     

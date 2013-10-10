@@ -268,9 +268,8 @@ class ParticipantRepository extends EntityRepository implements
                 SELECT p
                 FROM CyclogramProofPilotBundle:Participant p
                 WHERE DATEDIFF(CURRENT_DATE(), p.participantRegistrationtime) = 3
-                AND p.participantEmailComfirmed = 0
+                AND p.participantEmailConfirmed = 0
                 ");
-        echo $query->getSQL();
         $results = $query->getResult();
         
         return $results;

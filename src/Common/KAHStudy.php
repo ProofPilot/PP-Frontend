@@ -57,25 +57,18 @@ class KAHStudy extends AbstractStudy implements StudyInterface
                 ->findOneByArmCode('Phase3Default');
         $armData = (!is_null($armData)) ? $armData : false;
 
-        $armStatus = $em->getRepository('CyclogramProofPilotBundle:Status')
-                ->find(1);
-        $armStatus = (!is_null($armStatus)) ? $armStatus : false;
-
         $ArmParticipantLink = null;
         if ($armData) {
             $ArmParticipantLink = new \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantArmLink();
             $ArmParticipantLink->setArm($armData);
             $ArmParticipantLink->setParticipant($participant);
-            $ArmParticipantLink->setStatus($armStatus);
+            $ArmParticipantLink->setStatus(ParticipantArmLink::STATUS_ACTIVE);
             $ArmParticipantLink
                     ->setParticipantArmLinkDatetime(new \DateTime("now"));
         }
         $em->persist($ArmParticipantLink);
 
         $em->flush();
-
-        $status = $em->getRepository('CyclogramProofPilotBundle:Status')
-                ->find(1);
     }
 
     public function interventionLogic($participant)
@@ -90,8 +83,6 @@ class KAHStudy extends AbstractStudy implements StudyInterface
                 ->getStudyInterventionLinks($participant, $this->getStudyCode());
         if (($participant->getParticipantEmailConfirmed() == true)
                 && empty($interventionLinks)) {
-            $status = $em->getRepository('CyclogramProofPilotBundle:Status')
-                    ->find(1);
             $participantInterventionLink = new ParticipantInterventionLink();
             $intervention = $em
                     ->getRepository('CyclogramProofPilotBundle:Intervention')
@@ -101,7 +92,7 @@ class KAHStudy extends AbstractStudy implements StudyInterface
             $participantInterventionLink
                     ->setParticipantInterventionLinkDatetimeStart(
                             new \DateTime("now"));
-            $participantInterventionLink->setStatus($status);
+            $participantInterventionLink->setStatus(ParticipantInterventionLink::STATUS_ACTIVE);
             $em->persist($participantInterventionLink);
             $em->flush($participantInterventionLink);
         }
@@ -110,11 +101,11 @@ class KAHStudy extends AbstractStudy implements StudyInterface
             $interventionCode = $interventionLink->getIntervention()
                     ->getInterventionCode();
             $intervention = $interventionLink->getIntervention();
-            $status = $interventionLink->getStatus()->getStatusName();
+            $status = $interventionLink->getStatus();
             switch ($interventionCode) {
             case "KAHPhase3Baseline":
                 $surveyId = $intervention->getSidId();
-                if ($status == "Active") {
+                if ($status == ParticipantInterventionLink::STATUS_ACTIVE) {
                     $passed = $em
                             ->getRepository(
                                     'CyclogramProofPilotBundle:ParticipantSurveyLink')
@@ -160,14 +151,10 @@ class KAHStudy extends AbstractStudy implements StudyInterface
                         $this
                                 ->createIncentive($participant, $intervention,
                                         $incentiveType->getIncentiveTypeName());
-                        $completedStatus = $em
-                                ->getRepository(
-                                        'CyclogramProofPilotBundle:Status')
-                                ->findOneByStatusName("Closed");
-                        $interventionLink->setStatus($completedStatus);
+                        $interventionLink->setStatus(ParticipantInterventionLink::STATUS_CLOSED);
                         $em->persist($interventionLink);
                         $em->flush();
-                        $status = "Closed";
+                        $status = ParticipantInterventionLink::STATUS_CLOSED;
 
                         $intervention = $em
                                 ->getRepository(
@@ -196,11 +183,8 @@ class KAHStudy extends AbstractStudy implements StudyInterface
                         $order->setCourierProduct($productCourier);
                         $order->setParticipant($participant);
                         $order->setStudy($study);
-                        $status = $em
-                                ->getRepository(
-                                        'CyclogramProofPilotBundle:Status')
-                                ->findOneByStatusName("Active");
-                        $order->setStatus($status);
+
+                        $order->setStatus(Orders::STATUS_ACTIVE);
                         $em->persist($order);
                         $em->flush();
                         //inserting speciment
@@ -230,11 +214,7 @@ class KAHStudy extends AbstractStudy implements StudyInterface
                                                         'CyclogramProofPilotBundle:CollectorForum')
                                                 ->find(3));
                         $specimen
-                                ->setStatus(
-                                        $em
-                                                ->getRepository(
-                                                        'CyclogramProofPilotBundle:Status')
-                                                ->find(1));
+                                ->setStatus(Specimen::STATUS_ACTIVE);
                         $em->persist($specimen);
                         $em->flush();
                         //inserting specimen history
@@ -314,11 +294,7 @@ class KAHStudy extends AbstractStudy implements StudyInterface
                                                         'CyclogramProofPilotBundle:TestProccesingType')
                                                 ->find(1));
                         $test
-                                ->setStatus(
-                                        $em
-                                                ->getRepository(
-                                                        'CyclogramProofPilotBundle:Status')
-                                                ->find(1));
+                                ->setStatus(Test::ACTIVE);
                         $em->persist($test);
                         $em->flush();
                         //inserting order-specimen-link
@@ -371,20 +347,17 @@ class KAHStudy extends AbstractStudy implements StudyInterface
                 break;
             case "KAHPhase3TestPackage":
                 $surveyId = $intervention->getSidId();
-                if ($status == "Active") {
+                if ($status == ParticipantInterventionLink::STATUS_ACTIVE) {
                     $this->createIncentive($participant, $intervention);
-                    $completedStatus = $em
-                            ->getRepository('CyclogramProofPilotBundle:Status')
-                            ->findOneByStatusName("Closed");
-                    $interventionLink->setStatus($completedStatus);
+                    $interventionLink->setStatus(ParticipantInterventionLink::STATUS_CLOSED);
                     $em->persist($interventionLink);
                     $em->flush();
-                    $status = "Closed";
+                    $status = ParticipantInterventionLink::STATUS_CLOSED;
                 }
                 break;
             case "KAHPhase3ReportResults":
                 $surveyId = $intervention->getSidId();
-                if ($status == "Active") {
+                if ($status == ParticipantInterventionLink::STATUS_ACTIVE) {
                     $passed = $em
                             ->getRepository(
                                     'CyclogramProofPilotBundle:ParticipantSurveyLink')
@@ -429,12 +402,8 @@ class KAHStudy extends AbstractStudy implements StudyInterface
                         $this
                                 ->createIncentive($participant, $intervention,
                                         $incentiveType->getIncentiveTypeName());
-                        $completedStatus = $em
-                                ->getRepository(
-                                        'CyclogramProofPilotBundle:Status')
-                                ->findOneByStatusName("Closed");
-                        $interventionLink->setStatus($completedStatus);
-                        $status = "Closed";
+                        $interventionLink->setStatus(ParticipantInterventionLink::STATUS_CLOSED);
+                        $status = ParticipantInterventionLink::STATUS_CLOSED;
                         $intervention = $em
                                 ->getRepository(
                                         'CyclogramProofPilotBundle:Intervention')
@@ -451,7 +420,7 @@ class KAHStudy extends AbstractStudy implements StudyInterface
                 break;
             case "KAHPhase3FollowUp":
                 $surveyId = $intervention->getSidId();
-                if ($status == "Active") {
+                if ($status == ParticipantInterventionLink::STATUS_ACTIVE) {
                     $passed = $em
                             ->getRepository(
                                     'CyclogramProofPilotBundle:ParticipantSurveyLink')
@@ -495,12 +464,8 @@ class KAHStudy extends AbstractStudy implements StudyInterface
                         $this
                                 ->createIncentive($participant, $intervention,
                                         $incentiveType->getIncentiveTypeName());
-                        $completedStatus = $em
-                                ->getRepository(
-                                        'CyclogramProofPilotBundle:Status')
-                                ->findOneByStatusName("Closed");
-                        $interventionLink->setStatus($completedStatus);
-                        $status = "Closed";
+                        $interventionLink->setStatus(ParticipantInterventionLink::STATUS_CLOSED);
+                        $status = ParticipantInterventionLink::STATUS_CLOSED;
                         $em->persist($interventionLink);
                         $em->flush();
                     }
@@ -1422,7 +1387,7 @@ class KAHStudy extends AbstractStudy implements StudyInterface
                 $participantInterventionLink->setIntervention($newIntervention);
                 $participantInterventionLink->setParticipant($em->getReference('Cyclogram\Bundle\ProofPilotBundle\Entity\Participant', $interventionLink['participantId']));
                 $participantInterventionLink->setParticipantInterventionLinkDatetimeStart(new \DateTime("now"));
-                $participantInterventionLink->setStatus($em->getReference('Cyclogram\Bundle\ProofPilotBundle\Entity\Status', 1));
+                $participantInterventionLink->setStatus(ParticipantInterventionLink::STATUS_ACTIVE);
                 $em->persist($participantInterventionLink);
                 $em->flush();
             }

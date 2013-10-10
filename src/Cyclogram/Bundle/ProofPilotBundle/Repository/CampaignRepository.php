@@ -19,6 +19,18 @@
 namespace Cyclogram\Bundle\ProofPilotBundle\Repository;
 
 
+use Cyclogram\Bundle\ProofPilotBundle\Entity\StudyOrganizationLink;
+
+use Cyclogram\Bundle\ProofPilotBundle\Entity\Organization;
+
+use Cyclogram\Bundle\ProofPilotBundle\Entity\Affinity;
+
+use Cyclogram\Bundle\ProofPilotBundle\Entity\Placement;
+
+use Cyclogram\Bundle\ProofPilotBundle\Entity\Campaign;
+
+use Cyclogram\Bundle\ProofPilotBundle\Entity\Site;
+
 use Doctrine\ORM\EntityRepository;
 
 class CampaignRepository extends EntityRepository
@@ -38,28 +50,30 @@ class CampaignRepository extends EntityRepository
                 LEFT JOIN c.placement p
                 LEFT JOIN c.affinity a
                 INNER JOIN csl.site site
-                INNER JOIN site.status site_status
-                INNER JOIN c.status campaign_status
-                INNER JOIN p.status placement_status
-                INNER JOIN a.status affinity_status
                 INNER JOIN site.organization o
-                INNER JOIN o.status organization_status
                 INNER JOIN o.studyOrganizationLinks sol
-                INNER JOIN sol.status sol_status
                 INNER JOIN sol.studyOrganizationRole role
                 INNER JOIN sol.study study
                 WHERE
                 study.studyId = :studyId
-                AND site_status.statusName = 'Active'
+                AND site.status = :sitestatus
                 AND site.siteDefault = true
-                AND campaign_status.statusName = 'Active'
-                AND organization_status.statusName = 'Active'
-                AND sol_status.statusName = 'Active'
-                AND placement_status.statusName = 'Active'
-                AND affinity_status.statusName = 'Active'
+                AND c.status = :campaignstatus
+                AND o.status = :organozationstatus
+                AND sol.status = :solstatus
+                AND p.status = :placementstatus
+                AND a.status = :affinitystatus
                 AND role.studyOrganizationRoleName = 'Site'
                 ")
-                ->setParameter('studyId', $studyId);
+                ->setParameters(array(
+                                      'studyId'=> $studyId,
+                                      'sitestatus' => Site::STATUS_ACTIVE,
+                                      'campaignstatus' => Campaign::STATUS_ACTIVE,
+                                      'placementstatus' => Placement::STATUS_ACTIVE,
+                                      'affinitystatus' => Affinity::STATUS_ACTIVE,
+                                      'organozationstatus' => Organization::STATUS_ACTIVE,
+                                      'solstatus' => StudyOrganizationLink::STATUS_ACTIVE
+                        ));
         
         $results = $query->getResult();
         

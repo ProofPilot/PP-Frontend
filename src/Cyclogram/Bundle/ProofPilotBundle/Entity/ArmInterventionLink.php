@@ -29,6 +29,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class ArmInterventionLink
 {
+    
+    const STATUS_ACTIVE = 1;
     /**
      * @var integer
      *
@@ -36,7 +38,7 @@ class ArmInterventionLink
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $armInterventionLink;
+    protected $armInterventionLink;
 
     /**
      * @var \Arm
@@ -46,7 +48,7 @@ class ArmInterventionLink
      *   @ORM\JoinColumn(name="arm_id", referencedColumnName="arm_id")
      * })
      */
-    private $arm;
+    protected $arm;
 
     /**
      * @var \Intervention
@@ -56,17 +58,14 @@ class ArmInterventionLink
      *   @ORM\JoinColumn(name="intervention_id", referencedColumnName="intervention_id")
      * })
      */
-    private $intervention;
+    protected $intervention;
 
     /**
-     * @var \Status
+     * @var integer
      *
-     * @ORM\ManyToOne(targetEntity="Status")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="status_id", referencedColumnName="status_id")
-     * })
+     * @ORM\Column(name="status_id", type="integer", nullable=false)
      */
-    private $status;
+    protected $status;
 
 
 
@@ -129,10 +128,8 @@ class ArmInterventionLink
     /**
      * Set status
      *
-     * @param \Cyclogram\Bundle\ProofPilotBundle\Entity\Status $status
-     * @return ArmInterventionLink
      */
-    public function setStatus(\Cyclogram\Bundle\ProofPilotBundle\Entity\Status $status = null)
+    public function setStatus( $status)
     {
         $this->status = $status;
     

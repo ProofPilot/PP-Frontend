@@ -45,15 +45,13 @@ class KOCSocialMediaStudy extends AbstractStudy implements StudyInterface
         $em = $this->container->get('doctrine')->getManager();
 
         //participant intervention link
-        $activeStatus = $this->container->get('doctrine')
-                ->getRepository('CyclogramProofPilotBundle:Status')->find(1);
         $intervention = $em
                 ->getRepository('CyclogramProofPilotBundle:Intervention')
                 ->findOneByInterventionCode('KOCSocialMediaSurvey');
 
         $participantInterventionLink = new \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantInterventionLink();
         $participantInterventionLink->setParticipant($participant);
-        $participantInterventionLink->setStatus($activeStatus);
+        $participantInterventionLink->setStatus(ParticipantInterventionLink::ACTIVE);
         $participantInterventionLink->setIntervention($intervention);
         $participantInterventionLink
                 ->setParticipantInterventionLinkDatetimeStart(
@@ -65,7 +63,7 @@ class KOCSocialMediaStudy extends AbstractStudy implements StudyInterface
 
         $participantArmLink = new \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantArmLink();
         $participantArmLink->setParticipant($participant);
-        $participantArmLink->setStatus($activeStatus);
+        $participantArmLink->setStatus(ParticipantArmLink::ACTIVE);
         $participantArmLink
                 ->setParticipantArmLinkDatetime(new \DateTime("now"));
         $participantArmLink
@@ -92,11 +90,11 @@ class KOCSocialMediaStudy extends AbstractStudy implements StudyInterface
             $interventionTypeName = $interventionLink->getIntervention()
                     ->getInterventionType()->getInterventionTypeName();
             $intervention = $interventionLink->getIntervention();
-            $status = $interventionLink->getStatus()->getStatusName();
+            $status = $interventionLink->getStatus();
             switch ($interventionTypeName) {
             case "Survey & Observation":
                 $surveyId = $intervention->getSidId();
-                if ($status == "Active") {
+                if ($status == ParticipantInterventionLink::STATUS_ACTIVE) {
                     $passed = $em
                             ->getRepository(
                                     'CyclogramProofPilotBundle:ParticipantSurveyLink')
@@ -111,6 +109,7 @@ class KOCSocialMediaStudy extends AbstractStudy implements StudyInterface
                         $em->persist($interventionLink);
                         $em->flush();
                         $this->createIncentive($participant, $intervention);
+                        $status = ParticipantInterventionLink::STATUS_CLOSED;
                     }
                 }
 

@@ -138,9 +138,7 @@ class SexproStudy extends AbstractStudy implements StudyInterface
             //                 $participantArmLink->setArm($threeMonthArm);
             //             }
             $participantArmLink->setParticipant($participant);
-            $status = $em->getRepository('CyclogramProofPilotBundle:Status')
-                    ->find(1);
-            $participantArmLink->setStatus($status);
+            $participantArmLink->setStatus(ParticipantArmLink::STATUS_ACTIVE);
             $participantArmLink->setParticipantArmLinkDatetime(new \DateTime());
             $em->persist($participantArmLink);
             $em->flush($participantArmLink);
@@ -154,7 +152,7 @@ class SexproStudy extends AbstractStudy implements StudyInterface
             $participantInterventionLink
                     ->setParticipantInterventionLinkDatetimeStart(
                             new \DateTime("now"));
-            $participantInterventionLink->setStatus($status);
+            $participantInterventionLink->setStatus(ParticipantInterventionLink::STATUS_ACTIVE);
             $em->persist($participantInterventionLink);
             $em->flush($participantInterventionLink);
         }
@@ -178,43 +176,34 @@ class SexproStudy extends AbstractStudy implements StudyInterface
             $interventionTypeName = $interventionLink->getIntervention()
                     ->getInterventionType()->getInterventionTypeName();
             $intervention = $interventionLink->getIntervention();
-            $status = $interventionLink->getStatus()->getStatusName();
+            $status = $interventionLink->getStatus();
 
             switch ($interventionTypeName) {
             case "Survey & Observation":
                 $surveyId = $intervention->getSidId();
-                if ($status == "Active") {
+                if ($status == ParticipantInterventionLink::STATUS_ACTIVE) {
                     $passed = $em
                             ->getRepository(
                                     'CyclogramProofPilotBundle:ParticipantSurveyLink')
                             ->checkIfSurveyPassed($participant, $surveyId);
-
                     if ($passed) {
                         $this->createIncentive($participant, $intervention);
-                        $completedStatus = $em
-                                ->getRepository(
-                                        'CyclogramProofPilotBundle:Status')
-                                ->findOneByStatusName("Closed");
-                        $interventionLink->setStatus($completedStatus);
+                        $interventionLink->setStatus(ParticipantInterventionLink::STATUS_CLOSED);
                         $em->persist($interventionLink);
                         $em->flush();
-                        $status = "Closed";
-
+                        $status = ParticipantInterventionLink::STATUS_CLOSED;
                     }
                 }
                 if ($participantArmName == 'SexProBaseLine') {
-                    if (($status == "Closed")
+                    if (($status == ParticipantInterventionLink::STATUS_CLOSED)
                             && ($intervention->getInterventionCode()
                                     == "SexProBaselineSurvey")) {
                         $iSexProActivity = $em
                                 ->getRepository(
                                         'CyclogramProofPilotBundle:Intervention')
                                 ->findOneByInterventionCode("SexProActivity");
-                        $em
-                                ->getRepository(
-                                        'CyclogramProofPilotBundle:ParticipantInterventionLink')
-                                ->addParticipantInterventionLink($participant,
-                                        $iSexProActivity);
+                        $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')
+                                ->addParticipantInterventionLink($participant,$iSexProActivity);
                     }
                 }
                 break;

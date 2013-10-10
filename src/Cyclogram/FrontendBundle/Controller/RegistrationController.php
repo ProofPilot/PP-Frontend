@@ -152,8 +152,7 @@ class RegistrationController extends Controller
                     $participant->setParticipantZipcode('');
                     $role = $em->getRepository('CyclogramProofPilotBundle:ParticipantRole')->find(1);
                     $participant->setParticipantRole($role);
-                    $status = $em->getRepository('CyclogramProofPilotBundle:Status')->find(1);
-                    $participant->setStatus($status);
+                    $participant->setStatus(Participant::STATUS_ACTIVE);
                     $mailCode = substr(md5( md5( $participant->getParticipantEmail() . md5(microtime()))), 0, 4);
                     $participant->setParticipantEmailCode($mailCode);
                     $em->persist($participant);
@@ -190,11 +189,11 @@ class RegistrationController extends Controller
         }
 
     /**
-     * @Route("/register/mobile/{id}/{studyCode}/{aditionalNumber}", name="_register_mobile", defaults={"studyCode"=null, "aditionalNumber" = null})
+     * @Route("/register/mobile/{id}/{studyCode}", name="_register_mobile", defaults={"studyCode"=null})
      * @Check(name="checkEligibility,checkParticipant")
      * @Template()
      */
-    public function registerMobileAction($id, $studyCode=null, $aditionalNumber)
+    public function registerMobileAction($id, $studyCode=null)
     {
         $em = $this->getDoctrine()->getManager();
     
@@ -206,11 +205,13 @@ class RegistrationController extends Controller
     
         $request = $this->getRequest();
         $session = $request->getSession();
+        if ($session->has('aditional_phone'))
+            $aditionalNumber = $session->get('aditional_phone');
     
         $form = $this->createForm(new MobilePhoneForm($this->container), null, array(
                 'validation_groups' => array('registration')
         ));
-        if (is_null($aditionalNumber)) {
+        if (!isset($aditionalNumber)) {
             if ($participant->getParticipantMobileNumber()){
                 $phone = CyclogramCommon::parsePhoneNumber($participant->getParticipantMobileNumber());
             }
@@ -263,16 +264,17 @@ class RegistrationController extends Controller
             if( $form->isValid() ) {
     
                 $values = $form->getData();
-                if (is_null($aditionalNumber)) {
+                if (!isset($aditionalNumber)) {
                     $userPhone = $values['phone_small'].$values['phone_wide'];
                     $session->set('participantMobileNumber', $userPhone);
                 } else {
                     $userPhone = $values['voice_phone_small'].$values['voice_phone_wide'];
                     $participant->setVoicePhone($userPhone);
+                    $session->remove('aditional_phone');
                 }
                 $em->persist($participant);
                 $em->flush();
-                if (!is_null($aditionalNumber)){
+                if (isset($aditionalNumber)){
                     if($session->has("5step", false)) {
                         //on 5step we redirect
                         return $this->redirect($this->generateUrl("_register_mailaddress",
@@ -302,7 +304,7 @@ class RegistrationController extends Controller
                         'id' => $id,
                         'steps' => $session->get("5step", false) ? 5 : 4,
                         'current' => 2,
-                        'aditional_phone' => $aditionalNumber ? $aditionalNumber : false
+                        'aditional_phone' => isset($aditionalNumber) ? $aditionalNumber : false
                 ));
     }
     
@@ -396,8 +398,8 @@ class RegistrationController extends Controller
                         $timezone = $em->getRepository('CyclogramProofPilotBundle:ParticipantTimeZone')->find(1);
                     $participant->setParticipantMobileSmsCodeConfirmed(true);
                     $participant->setParticipantMobileNumber($session->get('participantMobileNumber'));
-                    $participnat_level = $em->getRepository('CyclogramProofPilotBundle:ParticipantLevel')->findOneByParticipantLevelName('Customer');
-                    $participant->setLevel($participnat_level);
+//                     $participnat_level = $em->getRepository('CyclogramProofPilotBundle:ParticipantLevel')->findOneByParticipantLevelName('Customer');
+//                     $participant->setLevel($participnat_level);
                     $mailCode = $participant->getParticipantEmailCode();
                     if(empty($mailCode)){
                         $mailCode = substr(md5( md5( $participant->getParticipantEmail() . md5(microtime()))), 0, 4);
@@ -409,16 +411,13 @@ class RegistrationController extends Controller
                     
                     $steps5 = $session->get("5step", false);
                     if ($session->has('aditional_phone')) {
-                        $aditionalNumber = $session->get('aditional_phone');
-                        $session->remove('aditional_phone');
+                        
                             return $this->redirect($this->generateUrl("_register_mobile",
                                     array(
                                             'id'=> $id,
-                                            'studyCode' => $studyCode,
-                                            'aditionalNumber' =>  $aditionalNumber
+                                            'studyCode' => $studyCode
                                     )));
                     }
-                    
                     if($steps5) {
                         //on 5step we redirect
                         return $this->redirect($this->generateUrl("_register_mailaddress",
@@ -608,6 +607,11 @@ class RegistrationController extends Controller
     
         $session = $this->getRequest()->getSession();
         
+        $em = $this->getDoctrine()->getManager();
+        $participnat_level = $em->getRepository('CyclogramProofPilotBundle:ParticipantLevel')->findOneByParticipantLevelName('Customer');
+        $participant->setLevel($participnat_level);
+        $em->persist($participant);
+        $em->flush($participant);
         //if studyCode passed also register participant in study
         if($studyCode) {
             $ls = $this->get('study_logic');

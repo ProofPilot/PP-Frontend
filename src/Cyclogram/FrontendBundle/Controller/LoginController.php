@@ -19,6 +19,8 @@
 
 namespace Cyclogram\FrontendBundle\Controller;
 
+use Cyclogram\Bundle\ProofPilotBundle\Entity\Participant;
+
 use Cyclogram\FrontendBundle\Exception\IncompleteUserException;
 
 use Cyclogram\FrontendBundle\Form\UserSmsCodeForm;
@@ -183,8 +185,7 @@ class LoginController extends Controller
 
                     $participant->setParticipantMobileSmsCodeConfirmed(true);
                     $participant->setParticipantEmail(strtolower($participant->getParticipantEmail()));
-                    $status = $em->getRepository('CyclogramProofPilotBundle:Status')->find(1);
-                    $participant->setStatus($status);
+                    $participant->setStatus(Participant::STATUS_ACTIVE);
 
                     $roles = $em->getRepository('CyclogramProofPilotBundle:UserRoleLink')->findBy(array("userUser"=>$participant));
                     $participant->setRoles($roles);

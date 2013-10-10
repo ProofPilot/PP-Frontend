@@ -18,6 +18,13 @@
 */
 namespace Cyclogram\Bundle\ProofPilotBundle\Repository;
 
+
+use Cyclogram\Bundle\ProofPilotBundle\Entity\Site;
+
+use Cyclogram\Bundle\ProofPilotBundle\Entity\Organization;
+
+use Cyclogram\Bundle\ProofPilotBundle\Entity\StudyOrganizationLink;
+
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\Mapping as ORM;
@@ -37,18 +44,20 @@ class StudyRepository extends EntityRepository
         ->createQuery("
                 SELECT sol.studyOrganizationLinkId, o.organizationName
                 FROM CyclogramProofPilotBundle:StudyOrganizationLink sol
-                INNER JOIN sol.status sol_status
                 INNER JOIN sol.studyOrganizationRole role
                 INNER JOIN sol.study study
                 INNER JOIN sol.organization o
-                INNER JOIN o.status organization_status
                 WHERE
                 study.studyId = :studyId
-                AND sol_status.statusName = 'Active'
-                AND organization_status.statusName = 'Active'
+                AND sol.status = :solstatus
+                AND o.status = :organizationstatus
                 AND role.studyOrganizationRoleName = 'Site'
                 ")
-                ->setParameter('studyId', $studyId)
+                ->setParameters(array(
+                                      'studyId' => $studyId,
+                                      'solstatus' => StudyOrganizationLink::STATUS_ACTIVE,
+                                      'organizationstatus' => Organization::STATUS_ACTIVE,
+                        ))
                 ->getResult();
     }
     
@@ -63,22 +72,24 @@ class StudyRepository extends EntityRepository
         ->createQuery("
                 SELECT sol.studyOrganizationLinkId, sites.siteName
                 FROM CyclogramProofPilotBundle:StudyOrganizationLink sol
-                INNER JOIN sol.status sol_status
                 INNER JOIN sol.studyOrganizationRole role
                 INNER JOIN sol.study study
                 INNER JOIN sol.organization o
-                INNER JOIN o.status organization_status
                 INNER JOIN o.sites sites
-                INNER JOIN sites.status sites_status
                 WHERE
                 study.studyId = :studyId
-                AND sol_status.statusName = 'Active'
-                AND organization_status.statusName = 'Active'
+                AND sol.status = :solstatus
+                AND o.status = :organizationstatus
                 AND role.studyOrganizationRoleName = 'Site'
                 AND sites.siteDefault = true
-                AND sites_status.statusName = 'Active'
+                AND sites.status = :sitestatus
                 ")
-                ->setParameter('studyId', $studyId)
+                ->setParameters(array(
+                                      'studyId' => $studyId,
+                                      'solstatus' => StudyOrganizationLink::STATUS_ACTIVE,
+                                      'organizationstatus' => Organization::STATUS_ACTIVE,
+                                      'sitestatus' => Site::STATUS_ACTIVE
+                        ))
                 ->getResult();
     }
     
