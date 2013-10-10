@@ -294,7 +294,7 @@ class KAHStudy extends AbstractStudy implements StudyInterface
                                                         'CyclogramProofPilotBundle:TestProccesingType')
                                                 ->find(1));
                         $test
-                                ->setStatus(Test::ACTIVE);
+                                ->setStatus(Test::STATUS_ACTIVE);
                         $em->persist($test);
                         $em->flush();
                         //inserting order-specimen-link

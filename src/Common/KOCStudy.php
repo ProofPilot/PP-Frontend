@@ -47,7 +47,7 @@ class KOCStudy extends AbstractStudy implements StudyInterface
         $participantArmLink = new \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantArmLink();
         $participantArmLink->setParticipant($participant);
         $participantArmLink
-                ->setStatus(ParticipantArmLink::ACTIVE);
+                ->setStatus(ParticipantArmLink::STATUS_ACTIVE);
         $participantArmLink
                 ->setParticipantArmLinkDatetime(new \DateTime("now"));
         $participantArmLink
@@ -65,7 +65,7 @@ class KOCStudy extends AbstractStudy implements StudyInterface
         $participantInterventionLink = new \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantInterventionLink();
         $participantInterventionLink->setParticipant($participant);
         $participantInterventionLink
-                ->setStatus(ParticipantInterventionLink::ACTIVE);
+                ->setStatus(ParticipantInterventionLink::STATUS_ACTIVE);
         $participantInterventionLink
                 ->setIntervention(
                         $em
@@ -93,7 +93,7 @@ class KOCStudy extends AbstractStudy implements StudyInterface
 
         $participantInterventionLink = new \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantInterventionLink();
         $participantInterventionLink->setParticipant($participant);
-        $participantInterventionLink->setStatus(ParticipantInterventionLink::ACTIVE);
+        $participantInterventionLink->setStatus(ParticipantInterventionLink::STATUS_ACTIVE);
         $participantInterventionLink
                 ->setIntervention(
                         $em
@@ -115,7 +115,7 @@ class KOCStudy extends AbstractStudy implements StudyInterface
         $participantInterventionLink = new \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantInterventionLink();
         $participantInterventionLink->setParticipant($participant);
         $participantInterventionLink
-                ->setStatus(ParticipantInterventionLink::ACTIVE);
+                ->setStatus(ParticipantInterventionLink::STATUS_ACTIVE);
         $participantInterventionLink
                 ->setIntervention(
                         $em
@@ -137,7 +137,7 @@ class KOCStudy extends AbstractStudy implements StudyInterface
         $participantInterventionLink = new \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantInterventionLink();
         $participantInterventionLink->setParticipant($participant);
         $participantInterventionLink
-                ->setStatus(ParticipantInterventionLink::ACTIVE);
+                ->setStatus(ParticipantInterventionLink::STATUS_ACTIVE);
         $participantInterventionLink
                 ->setIntervention(
                         $em
