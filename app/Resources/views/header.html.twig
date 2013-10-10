@@ -1,6 +1,6 @@
 <header>
     <a class="site_logo {{ branding }}" href="{{ path('_main') }}"></a>
-    {% if is_granted('ROLE_PARTICIPANT')  %}
+    {% if is_granted('ROLE_PARTICIPANT') or is_granted('IS_AUTHENTICATED_REMEMBERED') %}
         {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createTopSettingsMenu',{'template': 'CyclogramFrontendBundle:Knp:top_menu.html.twig'}) }}
         {% else %}
             <ul class="header_menu">

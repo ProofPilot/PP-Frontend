@@ -27,6 +27,11 @@ security:
             security: false
 
         secured_area:
+            remember_me:
+                key: %secret%
+                lifetime: 259200
+                path: /
+                domain: ~
             oauth:
                 resource_owners:
                     facebook:          facebook_login
@@ -48,15 +53,15 @@ security:
                 target: _login
 
     access_control:
-        - { path: "^/[a-z]{2}-[a-z]{2}/main$", roles: ROLE_USER }
-        - { path: "^/[a-z]{2}-[a-z]{2}/main/.*", roles: ROLE_USER }
-        - { path: "^/[a-z]{2}-[a-z]{2}/secured/.*", role: [IS_AUTHENTICATED_FULLY] }
+        - { path: "^/[a-z]{2}-[a-z]{2}/main$", roles: [ROLE_USER, IS_AUTHENTICATED_FULLY,IS_AUTHENTICATED_REMEMBERED] }
+        - { path: "^/[a-z]{2}-[a-z]{2}/main/.*", roles: [ROLE_USER, IS_AUTHENTICATED_FULLY,IS_AUTHENTICATED_REMEMBERED] }
+        - { path: "^/[a-z]{2}-[a-z]{2}/secured/.*", role:  [IS_AUTHENTICATED_FULLY,IS_AUTHENTICATED_REMEMBERED] }
         - { path: "^/[a-z]{2}-[a-z]{2}/register$", role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: "^/api$", roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: "^/r/", roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: "^/no-authorization", roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: "^/[a-z]{2}-[a-z]{2}/doLogin$", roles: ROLE_USER }
-        - { path: "^/[a-z]{2}-[a-z]{2}/loginSMS$", roles: ROLE_USER }
+        - { path: "^/[a-z]{2}-[a-z]{2}/doLogin$", roles: [ROLE_USER, IS_AUTHENTICATED_FULLY,IS_AUTHENTICATED_REMEMBERED]}
+        - { path: "^/[a-z]{2}-[a-z]{2}/loginSMS$", roles: [ROLE_USER, IS_AUTHENTICATED_FULLY,IS_AUTHENTICATED_REMEMBERED]}
         - { path: "^/$", roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: "^/[a-z]{2}-[a-z]{2}/", roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: "^/[a-z]{2}-[a-z]{2}/reg_step2$", roles: IS_AUTHENTICATED_ANONYMOUSLY }

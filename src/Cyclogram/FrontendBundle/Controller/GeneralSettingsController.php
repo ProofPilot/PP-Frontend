@@ -42,7 +42,7 @@ class GeneralSettingsController  extends Controller
 
     /**
      * @Route("/general_settings", name="_settings")
-     * @Secure(roles="ROLE_PARTICIPANT")
+     * @Secure(roles="ROLE_PARTICIPANT, IS_AUTHENTICATED_REMEMBERED")
      * @Template()
      */
     public function generalSettingsAction()
@@ -199,7 +199,7 @@ class GeneralSettingsController  extends Controller
     
     /**
      * @Route("/shipping_information/{update}", name="_shipping", defaults={"update"=null})
-     * @Secure(roles="ROLE_PARTICIPANT")
+     * @Secure(roles="ROLE_PARTICIPANT, IS_AUTHENTICATED_REMEMBERED")
      * @Template()
      */
     public function generalShippingAction($update)

@@ -80,7 +80,7 @@ class SurveyController extends Controller
      * it is required to specify the redirect url
      *
      * @Route("/surveyprotected/{studyCode}/{surveyId}", name="_survey_protected")
-     * @Secure(roles="ROLE_PARTICIPANT")
+     * @Secure(roles="ROLE_PARTICIPANT, IS_AUTHENTICATED_REMEMBERED")
      * @Template()
      */
     public function surveyProtectedAction($studyCode, $surveyId)

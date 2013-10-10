@@ -34,7 +34,7 @@ class DashboardController extends Controller
 {
     /**
      * @Route("/dashboard/{sendMail}", name="_main", defaults={"sendMail"=null})
-     * @Secure(roles="ROLE_PARTICIPANT")
+     * @Secure(roles="ROLE_PARTICIPANT, IS_AUTHENTICATED_REMEMBERED")
      * @Template()
      */
     public function indexAction($sendMail)
