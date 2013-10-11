@@ -186,6 +186,23 @@ class GeneralSettingForm extends AbstractType
             $builder->add('incentiveEmailConfirm', 'submit', array(
                     'label' => 'btn_confirm'
             ));
+            
+        $builder->add('language', 'text', array(
+                    'label' => 'label_language',
+                    'required' => false
+            ));
+        $locales = $this->container->getParameter('locales');
+        foreach ($locales as $locale) {
+            $choice_locales[$locale] = $locale;
+        }
+            $builder->add('languageSelect', 'choice', array(
+                    'choices' => $choice_locales,
+                    'label' => 'label_language_select'
+                    
+            ));
+            $builder->add('languageConfirm', 'submit', array(
+                    'label' => 'btn_confirm'
+            ));
         }
     
     public function getName()
