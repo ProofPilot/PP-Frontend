@@ -168,6 +168,10 @@ class GeneralSettingsController  extends Controller
                         $em->persist($participant);
                         $em->flush($participant);
                         $parameters['message'] = $this->get('translator')->trans("appreciation_email_change", array(), "general_settings", $locale);
+                } elseif($form->get('languageConfirm')->isClicked()) {
+                    $participant->setLocale($data['languageSelect']);
+                    $em->persist($participant);
+                    $em->flush();
                 }
             } 
             else {

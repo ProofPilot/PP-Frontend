@@ -7,13 +7,15 @@ general_subtitle: general_subtitle
 general_title: general_title
 label_email: label_email
 label_incentive_email: label_incentive_email
+label_language: label_language   # FIXME
+label_language_select: label_language_select   # FIXME
 label_new_email: label_new_email
 label_new_incentive_email: label_new_incentive_email
 label_new_pass: label_new_pass
 label_new_phone_number_pass: label_new_phone_number_pass
-label_new_phone_number_small: label_new_phone_number_small   # FIXME
+label_new_phone_number_small: label_new_phone_number_small
 label_new_phone_number_sms: label_new_phone_number_sms
-label_new_phone_number_wide: label_new_phone_number_wide   # FIXME
+label_new_phone_number_wide: label_new_phone_number_wide
 label_new_user_name: label_new_user_name
 label_new_user_name_pass: label_new_user_name_pass
 label_old_password: label_old_password
@@ -34,6 +36,7 @@ txt_edit: txt_edit
 txt_email: txt_email
 txt_forgot_it: txt_forgot_it
 txt_incentive_email: txt_incentive_email
+txt_language: txt_language   # FIXME
 txt_mobile_number: txt_mobile_number
 txt_password: txt_password
 txt_username: txt_username
