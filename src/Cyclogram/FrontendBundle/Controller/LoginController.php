@@ -433,7 +433,10 @@ class LoginController extends Controller
                     $smscode = $participant->getParticipantMobileSmsCode();
                     if ($value['sms_code'] == $smscode) {
                         $session = $this->getRequest()->getSession();
-                        $participant->setParticipantPassword($session->get('password'));
+                        $factory = $this->get('security.encoder_factory');
+                        $encoder = $factory->getEncoder($participant);
+                        
+                        $participant->setParticipantPassword($encoder->encodePassword($session->get('password'), $participant->getSalt()));
     
                         $em->persist($participant);
                         $em->flush($participant);

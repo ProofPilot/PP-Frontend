@@ -34,8 +34,13 @@ use Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantStudyReminderLink;
  */
 class Participant implements AdvancedUserInterface
 {
-    const STATUS_ACTIVE =1;
-    
+    const STATUS_ACTIVE = 1;
+
+    public function __construct()
+    {
+        $this->salt = hash("sha512", microtime());
+    }
+
     protected $participantRoles = array();
     /**
      * @var integer
@@ -309,6 +314,13 @@ class Participant implements AdvancedUserInterface
      * })
      */
     protected $state;
+
+    /**
+     * @var string $salt
+     *
+     * @ORM\Column(name="`Salt`", type="string", length=255, nullable=true)
+     */
+    protected $salt;
 
     /**
      * @var integer
@@ -1028,7 +1040,7 @@ class Participant implements AdvancedUserInterface
     public function isEnabled()
     {
 
-        if($this->level->getParticipantLevelName() == 'Customer')
+        if ($this->level->getParticipantLevelName() == 'Customer')
             return true;
         elseif ($this->level->getParticipantLevelName() == 'Lead')
             return false;
@@ -1085,7 +1097,7 @@ class Participant implements AdvancedUserInterface
 
     public function getSalt()
     {
-        // TODO: Implement getSalt() method.
+        return $this->salt;
     }
 
     public function getPassword()
@@ -1262,9 +1274,15 @@ class Participant implements AdvancedUserInterface
         return $this->level;
     }
 
-    public function setLevel( \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantLevel $level = null)
+    public function setLevel(
+            \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantLevel $level = null)
     {
         $this->level = $level;
+    }
+
+    public function setSalt($salt)
+    {
+        $this->salt = $salt;
     }
 
 }

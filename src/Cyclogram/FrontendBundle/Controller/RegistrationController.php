@@ -112,7 +112,8 @@ class RegistrationController extends Controller
         $session = $request->getSession();
 
         $em = $this->getDoctrine()->getManager();
-
+        $participant = new Participant();
+      
         $form = $this->createForm(new RegistrationForm($this->container));
         
         if(!empty($studyCode))
@@ -135,7 +136,10 @@ class RegistrationController extends Controller
                     $participant->setLevel($participnat_level);
                     $participant->setParticipantEmail($registration->getParticipantEmail()); 
                     $participant->setParticipantAppreciationEmail($registration->getParticipantEmail());
-                    $participant->setParticipantPassword($registration->getParticipantPassword());
+                    $factory = $this->get('security.encoder_factory');
+                    $encoder = $factory->getEncoder($participant);
+
+                    $participant->setParticipantPassword($encoder->encodePassword($registration->getParticipantPassword(), $participant->getSalt()));
                     $participant->setParticipantUsername($registration->getParticipantUsername());
                     $question = $em->getRepository('CyclogramProofPilotBundle:RecoveryQuestion')->find(1);
                     $participant->setRecoveryQuestion($question);

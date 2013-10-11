@@ -104,7 +104,10 @@ class GeneralSettingsController  extends Controller
                 } elseif ($form->get('passwordConfirm')->isClicked()) {
                     $session = $request->getSession();
                     if ($session->has('newPassword')) {
-                        $participant->setParticipantPassword($session->get('newPassword'));
+                        $factory = $this->get('security.encoder_factory');
+                        $encoder = $factory->getEncoder($participant);
+                        
+                        $participant->setParticipantPassword($encoder->encodePassword($session->get('newPassword'), $participant->getSalt()));
                         $em->persist($participant);
                         $em->flush($participant);
                         $session->invalidate();
