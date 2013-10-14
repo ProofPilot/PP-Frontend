@@ -1,8 +1,8 @@
-'SMS Code:': 'SMS Code:'
-'Your email:': 'Your email:'
-'Your message:': 'Your message:'
-'Your name:': 'Your name:'
-browser_msg: browser_msg
+'SMS Code:': 'código SMS'
+'Your email:': 'O seu e-mail'
+'Your message:': 'sua mensagem'
+'Your name:': 'Seu nome'
+browser_msg: 'Para uma melhor experiência, atualize seu navegador. Recomendamos Chrome, Firefox, Safari ou Internet Explorer 9 ou superior. Para mais informações visite: http://j.mp/17eUb5W'
 btn_save_pass: 'Salvar senha'
 btn_send_pass: 'Enviar senha'
 label_new_pass: 'Nova senha'
@@ -11,4 +11,4 @@ label_username: Usuário
 txt_footer_top: 'Na parte superior'
 txt_header_login: Logar
 txt_header_register: Registre-se
-txt_reminders_confirm: txt_reminders_confirm   # FIXME
+txt_reminders_confirm: 'Para fazer parte de estudos de investigação, você deve estar disposto a receber lembretes via mensagem de texto ou e-mail e você deve selecionar quase um dia da semana e período de tempo. Você tem certeza que deseja cancelar?'
