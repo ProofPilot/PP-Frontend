@@ -5,20 +5,20 @@ error_min_area_code_length: 'Código de área deve ter de pelo menos 1 dígito'
 error_min_phone_code_length: "Telefone deve ter pelo menos 8 dígitos\n"
 error_mobile_phone_already_registered: 'Telefone celular já está registrado'
 error_not_blank: "Sem valores em branco\n"
+error_not_blank_choice: 'Por favor, faça uma escolha'
+error_not_blank_city: 'Por favor insira uma cidade'
+error_not_blank_lastname: 'Por favor, indique um nome'
+error_not_blank_name: 'Por favor, indique um nome'
+error_not_blank_state: error_not_blank_state
+error_not_blank_street1: 'Por favor insira um endereço de rua'
+error_not_blank_voice: 'Por favor insira um número de telefone onde você pode receber chamadas de voz'
+error_not_blank_zipcode: 'Por favor, introduza o código postal'
 error_not_valid_email: "E-mail não é válido\n"
 error_password_short: "A senha deve ter no mínimo 8 caracteres\n"
 error_passwords_do_not_match: "As senhas não conferem\n"
+error_state_length: error_state_length
+incorrect_city: incorrect_city
 please_fill_this_field: 'Por favor, preencher este campo'
 username_already_registered: "Nome de usuário já está registrado\n"
 wrong_code: 'Você escreveu um código incorreto'
 wrong_pass: 'Você escreveu uma senha incorreta'
-error_state_length: error_state_length #TODO
-error_not_blank_name: error_not_blank_name
-error_not_blank_lastname: error_not_blank_lastname
-error_not_blank_street1: error_not_blank_street1
-error_not_blank_city: error_not_blank_city
-error_not_blank_state: error_not_blank_state
-error_not_blank_voice: error_not_blank_voice
-error_not_blank_choice: error_not_blank_choice
-error_not_blank_zipcode: error_not_blank_zipcode
-incorrect_city: incorrect_city

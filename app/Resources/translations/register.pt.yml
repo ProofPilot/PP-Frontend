@@ -23,7 +23,7 @@ label_phone_small: Fone
 label_phone_wide: telefone
 label_repeat_password: 'Repita a senha'
 label_sign: label_sign
-label_sign_main: label_sign_main   # FIXME
+label_sign_main: label_sign_main
 label_state: Estado
 label_username: Usuário
 label_zipcode: CEP
@@ -33,15 +33,15 @@ min_charachters: "(minímo de 8 caracteres)\n"
 no_code: 'Sem código? Enviar outro'
 ok_verify: 'OK, Verifique!'
 pick_user: 'Escolha o seu nome de usuário'
-sms_verification_message: sms_verification_message
-txt_aditional_number_save: txt_aditional_number_save
-txt_basics: txt_basics
+sms_verification_message: 'Seu ProofPilot SMS logar código é:'
+txt_aditional_number_save: 'Salvar e próxima'
+txt_basics: 'Os princípios'
 txt_check_email: 'Por favor, verifique o seu endereço de e-mail'
-txt_check_zipcode: txt_check_zipcode
+txt_check_zipcode: 'Por favor, verifique o seu cep'
 txt_join: Junte-se
 txt_join_with: Junte-se
 txt_popup_header: txt_popup_header
-txt_popup_link: txt_popup_link
+txt_popup_link: 'Eu prefiro recive chamadas de voz para outro número'
 txt_popup_text: txt_popup_text
 txt_subtitle_check_email: 'Por favor, verifique o seu endereço de e-mail'
 txt_why: 'Por que?'
