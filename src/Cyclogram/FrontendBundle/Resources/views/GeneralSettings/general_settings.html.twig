@@ -222,6 +222,34 @@
                     {{ form_errors(form.phoneNumber) }}
                 </li>
                    <li class="edit_btn form-mobile" {{ hideonerror('mobile',expandedFormClass) }}><a href="#" data-form-cont=".form-mobile">{% trans from "general_settings" %}txt_edit{% endtrans %}</a></li>
+                   
+                   
+                    {# locale #}
+                <li class="left_text form-language">{% trans from "general_settings" %}txt_language{% endtrans %}</li>
+                  
+                <li class="form_expanded form-language"  {{ showonerror('language',expandedFormClass) }}>
+                  <div class="wrapper">
+                    <div class="current_text">{{ participant.locale }}</div>
+                    <div class="close_cont"><a href="#" data-form-cont=".form-language">Cancel</a></div>
+                    <div class="new_inputs_cont">
+                      <span class="input_container">
+                          <span class="input_placeholder">
+                          {{ form_label(form.languageSelect) }}
+                              {{ form_widget(form.languageSelect) }}
+                              {{ form_errors(form.languageSelect) }}
+                          </span>
+                      </span>
+                      </div>
+                    <div class="confirm_cont">
+                        {{ form_widget(form.languageConfirm, {'attr':{'class' : 'btn_confirm'}}) }}
+                     </div>
+                  
+                </li>
+                <li class="middle_input form-language" {{ hideonerror('language',expandedFormClass) }}>
+                    {{ form_widget(form.language, {'attr' : {'class' : 'middle_input', 'readonly' : 'readonly'}, 'value': participant.locale}) }}
+                    {{ form_errors(form.language) }}
+                </li>
+                   <li class="edit_btn form-language" {{ hideonerror('language',expandedFormClass) }}><a href="#" data-form-cont=".form-language">{% trans from "general_settings" %}txt_edit{% endtrans %}</a></li>
               </ul>
               {{ form_widget(form.validationCheck) }}
 {#               {{ form_rest(form) }}#}

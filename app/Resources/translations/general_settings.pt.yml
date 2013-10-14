@@ -7,13 +7,15 @@ general_subtitle: 'Clique aqui para mudar o básico, e depois explore outras con
 general_title: 'Configurações Gerais'
 label_email: Email
 label_incentive_email: label_incentive_email
+label_language: label_language   # FIXME
+label_language_select: label_language_select   # FIXME
 label_new_email: 'Novo Email'
 label_new_incentive_email: label_new_incentive_email
 label_new_pass: 'Digite a nova senha'
 label_new_phone_number_pass: 'Entre om a senha para confirmar a mudança'
-label_new_phone_number_small: label_new_phone_number_small   # FIXME
+label_new_phone_number_small: label_new_phone_number_small
 label_new_phone_number_sms: 'Entre com o código para confirmar'
-label_new_phone_number_wide: label_new_phone_number_wide   # FIXME
+label_new_phone_number_wide: label_new_phone_number_wide
 label_new_user_name: 'Novo Usuário'
 label_new_user_name_pass: 'Digitar senha'
 label_old_password: 'Senha anterior'
@@ -34,6 +36,7 @@ txt_edit: Editar
 txt_email: Email
 txt_forgot_it: 'Esqueceu?'
 txt_incentive_email: txt_incentive_email
+txt_language: txt_language   # FIXME
 txt_mobile_number: 'Número de Celular'
 txt_password: Senha
 txt_username: Usuário

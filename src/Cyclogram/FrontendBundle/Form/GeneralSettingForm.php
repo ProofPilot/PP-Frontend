@@ -31,9 +31,11 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class GeneralSettingForm extends AbstractType
 {
     protected $container;
+    protected $factory;
     
     public function __construct(Container $container) {
         $this->container = $container;
+        $this->factory = $this->container->get('security.encoder_factory');
     }
     
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -184,6 +186,23 @@ class GeneralSettingForm extends AbstractType
             $builder->add('incentiveEmailConfirm', 'submit', array(
                     'label' => 'btn_confirm'
             ));
+            
+        $builder->add('language', 'text', array(
+                    'label' => 'label_language',
+                    'required' => false
+            ));
+        $locales = $this->container->getParameter('locales');
+        foreach ($locales as $locale) {
+            $choice_locales[$locale] = $locale;
+        }
+            $builder->add('languageSelect', 'choice', array(
+                    'choices' => $choice_locales,
+                    'label' => 'label_language_select'
+                    
+            ));
+            $builder->add('languageConfirm', 'submit', array(
+                    'label' => 'btn_confirm'
+            ));
         }
     
     public function getName()
@@ -215,6 +234,8 @@ class GeneralSettingForm extends AbstractType
     
     public function isUserNameValid($data, ExecutionContextInterface $context){
         $participant = $this->container->get('security.context')->getToken()->getUser();
+        $encoder = $this->factory->getEncoder($participant);
+        
         if ($data['validationCheck'] == 'username'){
             if (empty($data['newUserName'])) {
                 $context->addViolationAt('[newUserName]', $this->container->get('translator')->trans('please_fill_this_field', array(), 'validators'));
@@ -229,9 +250,12 @@ class GeneralSettingForm extends AbstractType
             if (empty($data['newUserNamePassword'])) {
                 $context->addViolationAt('[newUserNamePassword]',$this->container->get('translator')->trans('please_fill_this_field', array(), 'validators'));
             }
-
-            if (!empty($data['newUserNamePassword']) && $data['newUserNamePassword'] != $participant->getParticipantPassword()) {
-                $context->addViolationAt('[newUserNamePassword]', $this->container->get('translator')->trans('wrong_pass', array(), 'validators'));
+            
+            if (!empty($data['newUserNamePassword'])) { 
+                $ecnodedPassword = $encoder->encodePassword($data['newUserNamePassword'], $participant->getSalt());
+                if ($ecnodedPassword != $participant->getParticipantPassword()) {
+                    $context->addViolationAt('[newUserNamePassword]', $this->container->get('translator')->trans('wrong_pass', array(), 'validators'));
+                }
             }
             
         }
@@ -239,12 +263,17 @@ class GeneralSettingForm extends AbstractType
 
     public function isPasswordValid($data, ExecutionContextInterface $context){
         $participant = $this->container->get('security.context')->getToken()->getUser();
+        $encoder = $this->factory->getEncoder($participant);
+        
         if ($data['validationCheck'] == 'password-sms'){
             if (empty($data['oldPassword'])) {
                 $context->addViolationAt('[oldPassword]',$this->container->get('translator')->trans('please_fill_this_field', array(), 'validators'));
             }
-            if (!empty($data['oldPassword']) && $data['oldPassword'] != $participant->getParticipantPassword()) {
-                $context->addViolationAt('[oldPassword]', $this->container->get('translator')->trans('wrong_pass', array(), 'validators'));
+            if (!empty($data['oldPassword'])) { 
+                $ecnodedPassword = $encoder->encodePassword($data['oldPassword'], $participant->getSalt());
+                if($ecnodedPassword != $participant->getParticipantPassword()) {
+                    $context->addViolationAt('[oldPassword]', $this->container->get('translator')->trans('wrong_pass', array(), 'validators'));
+                }
             }
             if (empty($data['newPassword'])) {
                 $context->addViolationAt('[newPassword]', $this->container->get('translator')->trans('please_fill_this_field', array(), 'validators'));
@@ -278,6 +307,7 @@ class GeneralSettingForm extends AbstractType
     public function isPhoneValid($data, ExecutionContextInterface $context){
         $participant = $this->container->get('security.context')->getToken()->getUser();
         $securityContext = $this->container->get('security.context');
+        $encoder = $this->factory->getEncoder($participant);
         if ($data['validationCheck'] == 'mobile-sms'){
             
             if (empty($data['newPhoneNumberSmall'])){
@@ -297,8 +327,11 @@ class GeneralSettingForm extends AbstractType
                 if(empty($data['newPhoneNumberPassword'])) {
                     $context->addViolationAt('[newPhoneNumberPassword]', $this->container->get('translator')->trans('please_fill_this_field', array(), 'validators'));
                 }
-                if (!empty($data['newPhoneNumberPassword']) && $data['newPhoneNumberPassword'] != $participant->getParticipantPassword()) {
-                    $context->addViolationAt('[newPhoneNumberPassword]',  $this->container->get('translator')->trans('wrong_pass', array(), 'validators'));
+                if (!empty($data['newPhoneNumberPassword'])){ 
+                    $ecnodedPassword = $encoder->encodePassword($data['newPhoneNumberPassword'], $participant->getSalt());
+                    if($ecnodedPassword != $participant->getParticipantPassword()) {
+                        $context->addViolationAt('[newPhoneNumberPassword]',  $this->container->get('translator')->trans('wrong_pass', array(), 'validators'));
+                    }
                 }
             }
         }

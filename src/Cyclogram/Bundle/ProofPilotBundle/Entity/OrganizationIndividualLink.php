@@ -131,7 +131,7 @@ class OrganizationIndividualLink
      * @param \Cyclogram\Bundle\ProofPilotBundle\Entity\Status $status
      * @return OrganizationIndividualLink
      */
-    public function setStatus(\$status)
+    public function setStatus($status)
     {
         $this->status = $status;
     

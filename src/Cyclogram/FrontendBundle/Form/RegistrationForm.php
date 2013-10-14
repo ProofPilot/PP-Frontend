@@ -57,6 +57,9 @@ class RegistrationForm extends AbstractType
                 )))));
         $builder->add('participantPassword', 'repeated', array(
                 'type' => 'password',
+                'constraints' => array(new NotBlank(array(
+                        'message'=>"error_not_blank_password"
+                ))),
                 'first_options'  => array(
                             'label' => 'label_password'
                             ),
