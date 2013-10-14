@@ -18,8 +18,6 @@
 */
 
 namespace Cyclogram\FrontendBundle\Tests\Controller;
-use Cyclogram\Bundle\ProofPilotBundle\Entity\Participant;
-use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 class RegistrationControllerTest extends \PHPUnit_Extensions_SeleniumTestCase
 {
@@ -41,15 +39,16 @@ class RegistrationControllerTest extends \PHPUnit_Extensions_SeleniumTestCase
         $this->setSpeed(200);
     }
 
-    // set the participant quantity in $n 
+    //-------------  SexPro Registration; set the participant quantity in $n ---------------- 
     public function testSexProRegistration(){
-        $n=3;
+        $n=8;
         for ($i = 1; $i <= $n; $i++){
             $this->registerSexProParticipant($i);
         }
+        return $n;
     }
     
-    //-------------- Single User Registration -------------------
+    //-------------- SexpPro Single User Registration -------------------
     protected function registerSexProParticipant($number)
     {
         $this->open("/en/sexpro/");
@@ -71,8 +70,8 @@ class RegistrationControllerTest extends \PHPUnit_Extensions_SeleniumTestCase
         
         $this->click("css=a.green > span");
         $this->waitForPageToLoad("30000");
-        $this->type("id=registration_participantEmail", "test". $number ."@test.com");
-        $this->type("id=registration_participantUsername", "dime". $number);
+        $this->type("id=registration_participantEmail", "sexpro". $number ."@test.com");
+        $this->type("id=registration_participantUsername", "sexpro". $number);
         $this->type("id=registration_participantPassword_first", "q1w2e3r4");
         $this->type("id=registration_participantPassword_second", "q1w2e3r4");
         $this->click("id=registration_next");
@@ -87,16 +86,58 @@ class RegistrationControllerTest extends \PHPUnit_Extensions_SeleniumTestCase
         $this->waitForPageToLoad("30000");
         $this->open("/en/logout");
     }
-    //-------------- Checkinfo -------------------
-//     public function testDatabase()
-//     {
-//       $result = mysql_query("SELECT *  FROM participant", $this->dbhandle);
-      
-//       //fetch tha data from the database
-//       while ($row = mysql_fetch_array($result)) {
-//           echo "ID:".$row['participant_id']."\n";
+    
+    //-------------- SexProRandomization between arms -------------------
+    /**
+     * @depends testSexProRegistration
+     */
+    public function testSexProRandomization($n)
+    {
+      // SexPro Baseline (activity) : SexPro 3 Month = 2 : 1
+//       $participants = array();
+//       for ($i = 0; $i < $n; $i++) {
+//           array_push($participants, "test". $i ."@test.com");
 //       }
-//       mysql_close($this->dbhandle);
-//     }
+      
+      // Expected participant quantity in each arm
+      $baseLineExpected = floor($n * 2 / 3);
+      $threeMonthExpected = $n - $baseLineExpected;
+
+      // selecting SexProBaseline participants 
+      $query = "SELECT
+                *
+                FROM
+                participant
+                INNER JOIN participant_arm_link ON participant.participant_id = participant_arm_link.participant_id
+                INNER JOIN arm ON arm.arm_id = participant_arm_link.arm_id
+                where arm.arm_code = 'SexProBaseLine'";
+      $baseLineParticipants = mysql_query($query, $this->dbhandle);
+      $baseLineParticipantsCount = mysql_num_rows($baseLineParticipants);
+      mysql_free_result($baseLineParticipants);
+      // END: selecting SexProBaseline participants
+      
+      // selecting SexPro3Month participants 
+      $query = "SELECT
+                *
+                FROM
+                participant
+                INNER JOIN participant_arm_link ON participant.participant_id = participant_arm_link.participant_id
+                INNER JOIN arm ON arm.arm_id = participant_arm_link.arm_id
+                where arm.arm_code = 'SexPro3Month'";
+      $threeMonthParticipants = mysql_query($query, $this->dbhandle);
+      $threeMonthParticipantsCount = mysql_num_rows($threeMonthParticipants);
+      mysql_free_result($threeMonthParticipants);
+      // END: selecting SexPro3Month participants
+     
+      $this->assertEquals($baseLineExpected, $baseLineParticipantsCount);
+      $this->assertEquals($threeMonthExpected, $threeMonthParticipantsCount);
+    }
+    
+    
+    
+    protected function tearDown()
+    {
+        mysql_close($this->dbhandle);
+    }
 }
 
