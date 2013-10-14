@@ -9,6 +9,7 @@ bottom_right_menu:
     my_settings: bottom_right_menu.my_settings
 
 top_menu:
+    about_me: top_menu.about_me   # FIXME
     contact_preferences: top_menu.contact_preferences
     general_settings: top_menu.general_settings
     help: top_menu.help

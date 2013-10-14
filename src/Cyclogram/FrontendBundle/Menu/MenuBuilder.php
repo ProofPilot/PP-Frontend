@@ -190,6 +190,16 @@ class MenuBuilder extends ContainerAware implements TranslationContainerInterfac
                         ->setAttribute('class', 'submenu_icon_contact')
                         ->setAttribute("nospan", true)
                         ->setExtra('translation_domain', 'generalmenus');
+        $menu['top_menu.settings']
+        ->addChild('top_menu.about_me',
+                array(
+                        'route' => '_about_me',
+                        'routeParameters' => array(
+                                'studyCode' => $studyCode
+                        )))
+                        ->setAttribute('class', 'submenu_icon_contact')
+                        ->setAttribute("nospan", true)
+                        ->setExtra('translation_domain', 'generalmenus');
 //         $menu['top_menu.settings']
 //                 ->addChild('top_menu.shipping_information',
 //                         array(
@@ -231,6 +241,13 @@ class MenuBuilder extends ContainerAware implements TranslationContainerInterfac
                                 'studyCode' => $studyCode
                         )))
                         ->setAttribute('class', 'icon_contact_prefs')->setExtra('translation_domain', 'sidemenu');
+        $menu->addChild('side_settings_menu.about_me',
+                array(
+                        'route' => '_about_me',
+                        'routeParameters' => array(
+                                'studyCode' => $studyCode
+                        )))
+                        ->setAttribute('class', 'icon_contact_prefs')->setExtra('translation_domain', 'sidemenu');
         switch($this->container->get('request')->get('_route')) {
             case "_shipping":
                 $menu['side_settings_menu.shipping_information']->setCurrent(true);
@@ -253,6 +270,7 @@ class MenuBuilder extends ContainerAware implements TranslationContainerInterfac
                 'top_menu.general_settings',
                 'top_menu.contact_preferences',
                 'top_menu.shipping_information',
+                'top_menu.about_me',
                 //bottom right menu
                 'bottom_right_menu.help',
                 'bottom_right_menu.logout',
@@ -277,7 +295,8 @@ class MenuBuilder extends ContainerAware implements TranslationContainerInterfac
                 //side_settigs_menu
                 'side_settings_menu.general_settings',
                 'side_settings_menu.contact_preferences',
-                'side_settings_menu.shipping_information'
+                'side_settings_menu.shipping_information',
+                'side_settings_menu.about_me'
         );
         
         foreach ($menuNames as $name) {

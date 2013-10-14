@@ -24,6 +24,7 @@ use Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantStudyReminderLink;
 use Symfony\Component\HttpFoundation\Response;
 
 use Cyclogram\FrontendBundle\Form\MailingAddressForm;
+use Cyclogram\FrontendBundle\Form\AboutMeForm;
 use Symfony\Component\Validator\Constraints\Collection;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -312,6 +313,105 @@ class GeneralSettingsController  extends Controller
         $parameters['form'] = $form->createView();
     
         return $this->render('CyclogramFrontendBundle:GeneralSettings:shipping_information.html.twig', $parameters);
+    }
+    
+    /**
+     * @Route("/about_me", name="_about_me")
+     * @Secure(roles="ROLE_PARTICIPANT, IS_AUTHENTICATED_REMEMBERED")
+     * @Template()
+     */
+    public function aboutMeAction() {
+        $participant = $this->get('security.context')->getToken()->getUser();
+        $request = $this->getRequest();
+        $em = $this->getDoctrine()->getManager();
+        $locale =$participant->getLocale() ? $participant->getLocale() : $request->getLocale();
+        $parameters["lastaccess"] = new \DateTime();
+        $parameters["expandedFormClass"] = '';
+         
+        if($participant->getFacebookId())
+            $parameters["user"]["avatar"] = "http://graph.facebook.com/" . $participant->getParticipantUsername() . "/picture?width=80&height=82";
+        
+        $form = $this->createForm(new AboutMeForm($this->container));
+        
+        if ($request->getMethod() == 'POST') {
+            $form->handleRequest($request);
+        
+            if ($form->isValid()) {
+                $data = $form->getData();
+        
+                if($form->get('countryConfirm')->isClicked()) {
+                    $participant->setCountry($data['countrySelect']);
+                    $em->persist($participant);
+                    $em->flush();
+                    $parameters['message'] = $this->get('translator')->trans("country_change", array(), "about_me", $locale);
+                } elseif ($form->get('zipcodeConfirm')->isClicked()) {
+                    $participant->setParticipantZipCode($data['newzipcode']);
+                    $em->persist($participant);
+                    $em->flush();
+                    $parameters['message'] = $this->get('translator')->trans("zipcode_change", array(), "about_me", $locale);
+                } elseif ($form->get('birthdateConfirm')->isClicked()) {
+                    $datePices = explode("/", $data['birthdateSelect']);
+                    $date = new \DateTime($datePices[2].'-'.$datePices[0].'-'.$datePices[1]);
+                    $participant->setParticipantBirthdate($date );
+                    $em->persist($participant);
+                    $em->flush();
+                    $parameters['message'] = $this->get('translator')->trans("birthdate_change", array(), "about_me", $locale);
+                } elseif ($form->get('sexConfirm')->isClicked()) {
+                    $sex =  $em->getRepository('CyclogramProofPilotBundle:Sex')->findOneBySexName($data['sexSelect']);
+                    $participant->setSex($sex);
+                    $em->persist($participant);
+                    $em->flush();
+                    $parameters['message'] = $this->get('translator')->trans("sex_change", array(), "about_me", $locale);
+                } elseif ($form->get('interestedConfirm')->isClicked()) {
+                    $interested= "";
+                    foreach ($data['interestedSelect'] as $interest){
+                        $interested.= $interest;
+                    }
+                    $participant->setParticipantInterested($interested);
+                    $em->persist($participant);
+                    $em->flush();
+                    $parameters['message'] = $this->get('translator')->trans("interest_change", array(), "about_me", $locale);
+                } elseif ($form->get('raceConfirm')->isClicked()) {
+                    $race = $em->getRepository('CyclogramProofPilotBundle:Race')->findOneByRaceName($data['raceSelect']);
+                    $participant->setRace($race);
+                    $em->persist($participant);
+                    $em->flush();
+                    $parameters['message'] = $this->get('translator')->trans("race_change", array(), "about_me", $locale);
+                } 
+            }
+            else {
+                if($form->get('countryConfirm')->isClicked()) {
+                    $parameters["expandedFormClass"] = 'country';
+                } elseif ($form->get('zipcodeConfirm')->isClicked()) {
+                    $parameters["expandedFormClass"] = 'zipCode';
+                } elseif ($form->get('birthdateConfirm')->isClicked()) {
+                    $parameters["expandedFormClass"] = 'birthdate';
+                } elseif ($form->get('sexConfirm')->isClicked()) {
+                    $parameters["expandedFormClass"] = 'sex';
+                } elseif ($form->get('interestedConfirm')->isClicked()) {
+                    $parameters["expandedFormClass"] = 'interested';
+                } elseif ($form->get('raceConfirm')->isClicked()) {
+                    $parameters["expandedFormClass"] = 'race';
+                } 
+            }
+        }
+        $interested = $participant->getParticipantInterested();
+        if (isset($interested) && $interested == 'w') {
+            $parameters['interest'] = 'Woman';
+        } elseif (isset($interested) && $interested == 'm') {
+            $parameters['interest'] = 'Man';
+        } elseif (isset($interested) && $interested == 'mw') {
+            $parameters['interest'] = 'Man&Woman';
+        }else {
+            $parameters['interest'] = "";
+        }
+        $parameters['participant'] = $participant;
+        $parameters["user"]["name"] = $participant->getParticipantFirstname() . ' ' . $participant->getParticipantLastname();
+        $parameters["user"]["username"] = $participant->getParticipantUsername();
+        $parameters["user"]["last_access"] = $participant->getParticipantLastTouchDatetime();
+        $parameters['form'] = $form->createView();
+        
+        return $this->render('CyclogramFrontendBundle:GeneralSettings:about_me.html.twig', $parameters);
     }
 
 }

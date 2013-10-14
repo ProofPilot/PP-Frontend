@@ -1,0 +1,40 @@
+'African descent': 'African descent'
+'Arab/Middle Eastern': 'Arab/Middle Eastern'
+'East Asian': 'East Asian'
+'Hispanic and/or Latino': 'Hispanic and/or Latino'
+'Native American or Aboriginal': 'Native American or Aboriginal'
+Other: Other
+'South Asian': 'South Asian'
+'White and/or Eurpoean descent': 'White and/or Eurpoean descent'
+about_me_subtitle: about_me_subtitle
+about_me_title: about_me_title
+birthdate_change: birthdate_change   # FIXME
+btn_confirm: btn_confirm
+country_change: country_change   # FIXME
+interest_change: interest_change   # FIXME
+label_birthdate: label_birthdate
+label_country: label_country
+label_country_select: label_country_select
+label_female: label_female
+label_inresested_main: label_inresested_main
+label_interested: label_interested
+label_male: label_male
+label_man: label_man
+label_race: label_race
+label_race_main: label_race_main
+label_sex: label_sex
+label_sex_main: label_sex_main
+label_transgendered: label_transgendered
+label_woman: label_woman
+label_zipcode: label_zipcode
+label_zipcode_new: label_zipcode_new
+race_change: race_change   # FIXME
+sex_change: sex_change   # FIXME
+txt_birthdate: txt_birthdate
+txt_change: txt_change
+txt_country: txt_country
+txt_interested: txt_interested
+txt_race: txt_race
+txt_sex: txt_sex
+txt_zip_code: txt_zip_code
+zipcode_change: zipcode_change   # FIXME

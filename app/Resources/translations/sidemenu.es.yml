@@ -6,6 +6,7 @@ side_dasboard_menu:
     treatment: Tratamiento
 
 side_settings_menu:
+    about_me: side_settings_menu.about_me   # FIXME
     contact_preferences: 'Preferencias de contacto'
     general_settings: 'Preferencias Generales'
     shipping_information: 'Información de envío'

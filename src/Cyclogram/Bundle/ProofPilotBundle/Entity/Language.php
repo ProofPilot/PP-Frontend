@@ -58,7 +58,7 @@ class Language
      *
      * @ORM\ManyToMany(targetEntity="Study", mappedBy="language")
      */
-    private $study;
+    protected $study;
 
     /**
      * @var integer

@@ -193,7 +193,8 @@ class GeneralSettingForm extends AbstractType
             ));
         $locales = $this->container->getParameter('locales');
         foreach ($locales as $locale) {
-            $choice_locales[$locale] = $locale;
+            $language = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Language')->findOneByLocale($locale);
+            $choice_locales[$locale] = $language->getlanguageName();
         }
             $builder->add('languageSelect', 'choice', array(
                     'choices' => $choice_locales,

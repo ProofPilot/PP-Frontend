@@ -6,6 +6,7 @@ side_dasboard_menu:
     treatment: Treatment
 
 side_settings_menu:
+    about_me: 'About me'
     contact_preferences: 'Contact preferences'
     general_settings: 'General settings'
     shipping_information: 'Shipping information'

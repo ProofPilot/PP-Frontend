@@ -246,6 +246,13 @@ class Participant implements AdvancedUserInterface
     protected $participantZipcode;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="participant_interested", type="string", length=128, nullable=true)
+     */
+    protected $participantInterested;
+
+    /**
      * @var \City
      *
      * @ORM\ManyToOne(targetEntity="City")
@@ -1283,6 +1290,16 @@ class Participant implements AdvancedUserInterface
     public function setSalt($salt)
     {
         $this->salt = $salt;
+    }
+
+    public function getParticipantInterested()
+    {
+        return $this->participantInterested;
+    }
+
+    public function setParticipantInterested($participantInterested)
+    {
+        $this->participantInterested = $participantInterested;
     }
 
 }
