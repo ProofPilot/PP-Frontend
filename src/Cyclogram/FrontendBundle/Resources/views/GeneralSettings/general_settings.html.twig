@@ -29,9 +29,9 @@
           {% if message is defined %}
             <p class="notice green nomargin margin_top"><span>{{ message }}</span></p>
           {%  endif %}
-            <form action="{{ path('_settings') }}" method="POST", name="general_settings">
+
+               <form action="{{ path('_settings', {'_locale' : 'en'}) }}" method="POST", name="general_settings">
               <ul class="settings_form">
-              
               {% if not is_granted('ROLE_FACEBOOK_USER') and not is_granted('ROLE_GOOGLE_USER') %}
               
                 <li class="left_text form-username">{% trans from "general_settings" %}txt_username{% endtrans %}</li>
@@ -229,12 +229,14 @@
                   
                 <li class="form_expanded form-language"  {{ showonerror('language',expandedFormClass) }}>
                   <div class="wrapper">
-                    <div class="current_text">{{ participant.locale }}</div>
+                    {% if  participant.participantLanguage is not null %}
+                      <div class="current_text">{{ participant.participantLanguage.languageName }}</div>
+                    {% endif %}
                     <div class="close_cont"><a href="#" data-form-cont=".form-language">Cancel</a></div>
                     <div class="new_inputs_cont">
                       <span class="input_container">
                           <span class="input_placeholder">
-                          {{ form_label(form.languageSelect) }}
+                              {{ form_label(form.languageSelect) }}
                               {{ form_widget(form.languageSelect) }}
                               {{ form_errors(form.languageSelect) }}
                           </span>
@@ -246,7 +248,11 @@
                   
                 </li>
                 <li class="middle_input form-language" {{ hideonerror('language',expandedFormClass) }}>
-                    {{ form_widget(form.language, {'attr' : {'class' : 'middle_input', 'readonly' : 'readonly'}, 'value': participant.locale}) }}
+                {% if  participant.participantLanguage is not null %}
+                    {{ form_widget(form.language, {'attr' : {'class' : 'middle_input', 'readonly' : 'readonly'}, 'value': participant.participantLanguage.languageName }) }}
+                {% else %}
+                    {{ form_widget(form.language, {'attr' : {'class' : 'middle_input', 'readonly' : 'readonly'}}) }}
+                {% endif %}
                     {{ form_errors(form.language) }}
                 </li>
                    <li class="edit_btn form-language" {{ hideonerror('language',expandedFormClass) }}><a href="#" data-form-cont=".form-language">{% trans from "general_settings" %}txt_edit{% endtrans %}</a></li>

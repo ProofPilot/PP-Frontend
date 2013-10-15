@@ -170,9 +170,12 @@ class GeneralSettingsController  extends Controller
                         $em->flush($participant);
                         $parameters['message'] = $this->get('translator')->trans("appreciation_email_change", array(), "general_settings", $locale);
                 } elseif($form->get('languageConfirm')->isClicked()) {
+                    $language = $em->getRepository('CyclogramProofPilotBundle:Language')->findOneByLocale($data['languageSelect']);
+                    $participant->setParticipantLanguage($language);
                     $participant->setLocale($data['languageSelect']);
                     $em->persist($participant);
                     $em->flush();
+                    return $this->redirect($this->generateUrl("_settings", array('_locale' => $data['languageSelect'])));
                 }
             } 
             else {

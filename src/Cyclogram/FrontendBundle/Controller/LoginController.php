@@ -143,8 +143,12 @@ class LoginController extends Controller
             $this->get('custom_db')->getFactory('CommonCustom')->addEvent($participant->getParticipantId(),null,3, 'doLogin', $participantSMSCode . ":" . $participant->getParticipantEmail());
             $sentSms = $sms->sendSmsAction( array('message' => "Your SMS Verification code is $participantSMSCode", 'phoneNumber'=>"$customerMobileNumber") );
     
-            if($sentSms)
-                return $this->redirect(($this->generateUrl("login_sms")));
+            try {
+                if($sentSms)
+                    return $this->redirect(($this->generateUrl("login_sms", array("_locale"=> $participant->getLocale()))));
+            } catch ( InvalidParameterException $e) {
+                    return $this->redirect(($this->generateUrl("login_sms", array("_locale"=>"en"))));
+            }
         }
         return $this->render("::error.html.twig", array(
                 "error" => "You have no mobile number set - please try to register again"));
