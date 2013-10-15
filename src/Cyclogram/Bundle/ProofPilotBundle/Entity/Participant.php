@@ -303,6 +303,16 @@ class Participant implements AdvancedUserInterface
     protected $recoveryQuestion;
 
     /**
+     * @var \Language
+     *
+     * @ORM\ManyToOne(targetEntity="Language")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="participant_language", referencedColumnName="language_id")
+     * })
+     */
+    protected $participantLanguage;
+
+    /**
      * @var \Sex
      *
      * @ORM\ManyToOne(targetEntity="Sex")
@@ -1300,6 +1310,16 @@ class Participant implements AdvancedUserInterface
     public function setParticipantInterested($participantInterested)
     {
         $this->participantInterested = $participantInterested;
+    }
+
+    public function getParticipantLanguage()
+    {
+        return $this->participantLanguage;
+    }
+
+    public function setParticipantLanguage(\Cyclogram\Bundle\ProofPilotBundle\Entity\Language $participantLanguage)
+    {
+        $this->participantLanguage = $participantLanguage;
     }
 
 }

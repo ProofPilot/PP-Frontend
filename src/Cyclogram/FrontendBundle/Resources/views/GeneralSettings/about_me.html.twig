@@ -116,7 +116,9 @@
                 <li class="left_text form-sex">{% trans from "about_me" %}txt_sex{% endtrans %}</li>
                 <li class="form_expanded form-sex"  {{ showonerror('sex',expandedFormClass) }}>
                   <div class="wrapper">
+                  {% if  participant.sex is not null %}
                     <div class="current_text">{{ participant.sex.sexName }}</div>
+                  {% endif %}
                     <div class="close_cont"><a href="#" data-form-cont=".form-sex">Cancel</a></div>
                     <div class="new_inputs_cont">
                       <span class="input_container">
@@ -130,7 +132,11 @@
                   </div>
                 </li>
                 <li class="middle_input form-sex" {{ hideonerror('sex',expandedFormClass) }}>
+                {% if  participant.sex is not null %}
                     {{ form_widget(form.sex, {'attr' : {'class' : 'middle_input', 'readonly' : 'readonly', 'value' : participant.sex.sexName}}) }}
+                {% else %}
+                    {{ form_widget(form.sex, {'attr' : {'class' : 'middle_input', 'readonly' : 'readonly'}}) }}
+                {% endif %}
                     {{ form_errors(form.sex) }}
                 <li class="edit_btn form-sex" {{ hideonerror('incentiveEmail',expandedFormClass) }}><a href="#" data-form-cont=".form-sex">{% trans from "about_me" %}txt_change{% endtrans %}</a></li>
                 
@@ -163,7 +169,9 @@
                 <li class="left_text form-race">{% trans from "about_me" %}txt_race{% endtrans %}</li>
                 <li class="form_expanded form-race"  {{ showonerror('race',expandedFormClass) }}>
                   <div class="wrapper">
-                    <div class="current_text">{#{{ participant.locale }} #}</div>
+                  {% if  participant.race is not null %}
+                    <div class="current_text">{{ participant.race.raceName }}</div>
+                  {% endif %}
                     <div class="close_cont"><a href="#" data-form-cont=".form-race">Cancel</a></div>
                     <div class="new_inputs_cont">
                       <span class="input_container">
@@ -180,7 +188,11 @@
                   
                 </li>
                 <li class="middle_input form-race" {{ hideonerror('race',expandedFormClass) }}>
+                {% if  participant.race is not null %}
+                    {{ form_widget(form.race, {'attr' : {'class' : 'middle_input', 'readonly' : 'readonly', 'value' : participant.race.raceName}}) }}
+                {% else %}
                     {{ form_widget(form.race, {'attr' : {'class' : 'middle_input', 'readonly' : 'readonly'}}) }}
+                {% endif %}
                     {{ form_errors(form.race) }}
                 </li>
                    <li class="edit_btn form-race" {{ hideonerror('race',expandedFormClass) }}><a href="#" data-form-cont=".form-race">{% trans from "about_me" %}txt_change{% endtrans %}</a></li>

@@ -145,19 +145,14 @@ class AboutMeForm extends AbstractType
                 'label'=>'label_race',
                 'required'=>false
         ));
+        $races = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Race')->findAll();
+        foreach ($races as $race) {
+            $race_chioce[$race->getRaceName()] = $race->getRaceName();
+        }
         $builder->add('raceSelect','choice', array(
                 'label' => 'label_race_main',
                 'required'=>false,
-                'choices' => array(
-                        'White and/or Eurpoean descent'=>'White and/or Eurpoean descent',
-                        'African descent'=>'African descent',
-                        'Hispanic and/or Latino'=>'Hispanic and/or Latino',
-                        'South Asian'=>'South Asian',
-                        'East Asian'=>'East Asian',
-                        'Arab/Middle Eastern'=>'Arab/Middle Eastern',
-                        'Native American or Aboriginal'=>'Native American or Aboriginal',
-                        'Other'=>'Other'
-                        ),
+                'choices' => $race_chioce,
                 ));
         $builder->add('raceConfirm', 'submit', array(
                 'label' => 'btn_confirm'
