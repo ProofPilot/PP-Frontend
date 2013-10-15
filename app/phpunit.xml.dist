@@ -22,7 +22,10 @@
 
     <!--
     <php>
-        <server name="KERNEL_DIR" value="/path/to/your/app/" />
+        <const name="DBPASSWORD" value="" />
+        <const name="SITEHOST" value="http://frontend.proofpilot.dyndns.org" />
+        <const name="DBUSERNAME" value="root" />
+        <const name="DBHOSTNAME" value="localhost" />
     </php>
     -->
 

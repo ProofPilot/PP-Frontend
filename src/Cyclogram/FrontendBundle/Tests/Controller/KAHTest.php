@@ -60,34 +60,33 @@ class KAHTest extends  \PHPUnit_Extensions_SeleniumTestCase //\PHPUnit_Extension
     /**
      * @depends testKAHBaseline
      */
-    public function testKAHFollowUp($n) {
-        // 1. update participant intervention date
-        $query = "UPDATE
-                participant_intervention_link
-                SET participant_intervention_link.participant_intervention_link_datetime_start = DATE_SUB(participant_intervention_link.participant_intervention_link_datetime_start,INTERVAL 3 DAY)
-                WHERE participant_intervention_link.intervention_id = '2'
-                AND participant_intervention_link.status_id = '11'";
-        $result = mysql_query($query, $this->dbhandle);
-        if (!$result){
-            die('updating error'. mysql_error());
+    public function testKAHReportResults($n) {
+        // 0. first need to login to create new intervention link
+        for ($i = 1; $i <= $n; $i++){
+            $this->login($i);
         }
-    
+        // 1. update participant intervention date
+        $query = "UPDATE participant_intervention_link SET participant_intervention_link_datetime_start = DATE_SUB(participant_intervention_link_datetime_start,INTERVAL 3 DAY), status_id = '11' WHERE intervention_id = 22";
+        mysql_query($query, $this->dbhandle) or die('updating error'. mysql_error());
+        printf ("Records updated: %d\n", mysql_affected_rows());
+        
         // 2. shell_exec ( "cd ./../../../.. & php app/console run:generalcommand 17" );
-        shell_exec ( "php app/console run:generalcommand " . date('H') . "&");
+        system('php app/console run:generalcommand ' . date('H'));
+        for ($i = 1; $i <= $n; $i++){
+            $this->kahReportResultsSurvey($i);
+        }
+        return $n;
+    }
+    
+    /**
+     * @depends testKAHReportResults
+     */
+    public function testKAHFollowUp($n) {
         for ($i = 1; $i <= $n; $i++){
             $this->kahFollowUPSurvey($i);
         }
         return $n;
     
-    }
-    
-    /**
-     * @depends testKAHFollowUp
-     */
-    public function testKAHReportResults($n) {
-        for ($i = 1; $i <= $n; $i++){
-            $this->kahReportResultsSurvey($i);
-        }
     }
     
     //-------------- Single User Registration -------------------
@@ -313,6 +312,8 @@ class KAHTest extends  \PHPUnit_Extensions_SeleniumTestCase //\PHPUnit_Extension
         $this->waitForPageToLoad("30000");
         $this->click("css=#middle > #movesubmitbtn");
         $this->waitForPageToLoad("30000");
+        $this->open("/en/main/dashboard");
+        $this->waitForPageToLoad("30000");
         $this->open("/en/logout");
     }
     
@@ -343,6 +344,20 @@ class KAHTest extends  \PHPUnit_Extensions_SeleniumTestCase //\PHPUnit_Extension
         $this->click("id=answer295666X628X6129N");
         $this->click("id=answer295666X628X6129Y");
         $this->click("css=#middle > #movesubmitbtn");
+        $this->waitForPageToLoad("30000");
+        $this->open("/en/main/dashboard");
+        $this->waitForPageToLoad("30000");
+        $this->open("/en/logout");
+    }
+    
+    protected function login($n) {
+        $this->open("/en/login");
+        $this->type("id=reg_field_2", "q1w2e3r4");
+        $this->type("id=reg_field_1", "kah" . $n);
+        $this->click("css=button.submit.btn_login");
+        $this->waitForPageToLoad("30000");
+        $this->type("id=sms_confirm_sms_code", "1111");
+        $this->click("id=sms_confirm_confirmCode");
         $this->waitForPageToLoad("30000");
         $this->open("/en/logout");
     }
