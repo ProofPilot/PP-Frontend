@@ -4018,20 +4018,15 @@ footer a.icon_update span {
 }
 #about_me_sexSelect input, #about_me_interestedSelect input {
 	width: auto;
-	float: none;
 }
 #about_me_sexSelect div, #about_me_interestedSelect div {
 	height: 35px;
+	float: left;
+	width: 100%;
 }
 #about_me_sexSelect label, #about_me_interestedSelect label {
 	position: relative;
 	left: 5px;
-}
-#about_me_sexSelect label {
-	top: -13px;
-}
-#about_me_interestedSelect label {
-	top: -12px;
 }
 
 /* ---------------- RESPONSIVE STYLES -------------------*/
