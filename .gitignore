@@ -38,3 +38,4 @@
 
 /app/app.sqlite
 /web/app_custom.php
+/app/phpunit.xml
