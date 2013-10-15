@@ -75,6 +75,8 @@ class OAuth2UserProvider implements OAuthAwareUserProviderInterface
             $participant->setParticipantRegistrationTime($date);
             $participant->setParticipantZipcode('');
             $participant->setLocale($request->getLocale());
+            $language = $this->userManager->getRepository('CyclogramProofPilotBundle:Language')->findOneByLocale($request->getLocale());
+            $participant->setParticipantLanguage($language);
             $timezone = $this->userManager->getRepository('CyclogramProofPilotBundle:ParticipantTimeZone')->find(1);
             $participant->setParticipantTimezone($timezone);
             $role = $this->userManager->getRepository('CyclogramProofPilotBundle:ParticipantRole')->find(1);

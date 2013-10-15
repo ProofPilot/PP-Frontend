@@ -149,6 +149,8 @@ class RegistrationController extends Controller
                     $participant->setParticipantMobileSmsCodeConfirmed(false);
                     $participant->setParticipantIncentiveBalance(false);
                     $participant->setLocale($request->getLocale());
+                    $language = $em->getRepository('CyclogramProofPilotBundle:Language')->findOneByLocale($request->getLocale());
+                    $participant->setParticipantLanguage($language);
                     $participant->setParticipantRegistrationTime(new \DateTime('now'));
                     $timezone = $em->getRepository('CyclogramProofPilotBundle:ParticipantTimeZone')->find(1);
                     $participant->setParticipantTimezone($timezone);

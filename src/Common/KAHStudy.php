@@ -166,7 +166,11 @@ class KAHStudy extends AbstractStudy implements StudyInterface
                                         'CyclogramProofPilotBundle:ParticipantInterventionLink')
                                 ->addParticipantInterventionLink($participant,
                                         $intervention);
-                        $em->persist($interventionLink);
+                        $this->createIncentive($participant, $intervention);
+                        $packageInterventionlink = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')
+                            ->findOneBy(array('participant' => $participant, 'intervention' => $intervention));
+                        $packageInterventionlink->setStatus(ParticipantInterventionLink::STATUS_CLOSED);
+                        $em->persist($packageInterventionlink);
                         $em->flush();
                         //inserting order
                         $order = new Orders();
@@ -345,16 +349,16 @@ class KAHStudy extends AbstractStudy implements StudyInterface
                     }
                 }
                 break;
-            case "KAHPhase3TestPackage":
-                $surveyId = $intervention->getSidId();
-                if ($status == ParticipantInterventionLink::STATUS_ACTIVE) {
-                    $this->createIncentive($participant, $intervention);
-                    $interventionLink->setStatus(ParticipantInterventionLink::STATUS_CLOSED);
-                    $em->persist($interventionLink);
-                    $em->flush();
-                    $status = ParticipantInterventionLink::STATUS_CLOSED;
-                }
-                break;
+//             case "KAHPhase3TestPackage":
+//                 $surveyId = $intervention->getSidId();
+//                 if ($status == ParticipantInterventionLink::STATUS_ACTIVE) {
+//                     $this->createIncentive($participant, $intervention);
+//                     $interventionLink->setStatus(ParticipantInterventionLink::STATUS_CLOSED);
+//                     $em->persist($interventionLink);
+//                     $em->flush();
+//                     $status = ParticipantInterventionLink::STATUS_CLOSED;
+//                 }
+//                 break;
             case "KAHPhase3ReportResults":
                 $surveyId = $intervention->getSidId();
                 if ($status == ParticipantInterventionLink::STATUS_ACTIVE) {
