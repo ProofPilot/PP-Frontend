@@ -1360,7 +1360,7 @@ header .header_menu span.text  , .footer_col_right span.text  {
 }
 .panel .panel_right .dashboard_panel ul.settings_form li.form_expanded .new_inputs_cont span.input_container {
 	position: relative;
-	line-height: 40px;
+/* 	line-height: 40px; */
 	width: 100%;
 	float: left;
 	max-width: 302px;
@@ -4018,6 +4018,7 @@ footer a.icon_update span {
 }
 #about_me_sexSelect input, #about_me_interestedSelect input {
 	width: auto;
+	height: 20px;
 }
 #about_me_sexSelect div, #about_me_interestedSelect div {
 	height: 35px;
