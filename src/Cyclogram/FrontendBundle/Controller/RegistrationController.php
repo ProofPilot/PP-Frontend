@@ -51,6 +51,7 @@ use Cyclogram\FrontendBundle\Form\MobilePhoneForm;
 use Cyclogram\FrontendBundle\Form\RegistrationForm;
 use Cyclogram\FrontendBundle\Form\MailingAddressForm;
 use Cyclogram\Bundle\ProofPilotBundle\Entity\Participant;
+use Common\DefaultParticipantStudy;
 
 
 
@@ -618,6 +619,8 @@ class RegistrationController extends Controller
         $participant->setLevel($participnat_level);
         $em->persist($participant);
         $em->flush($participant);
+        $defaultParticipantStudy = new DefaultParticipantStudy($this->container);
+        $defaultParticipantStudy->participantDefaultStudyRegistration($participant);
         //if studyCode passed also register participant in study
         if($studyCode) {
             $ls = $this->get('study_logic');

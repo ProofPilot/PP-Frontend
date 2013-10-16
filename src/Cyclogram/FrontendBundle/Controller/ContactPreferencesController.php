@@ -60,6 +60,7 @@ class ContactPreferencesController extends Controller
         
         //first we process POST data if any
         if ($request->getMethod() == 'POST') {
+            $this->get('study_logic')->participantDefaultInterventionLogic($participant, 'communicationPreferences');
             foreach($reminders as $reminder)
             {
                 $reminder_id = $reminder->getParticipantStudyReminderId();
@@ -109,9 +110,6 @@ class ContactPreferencesController extends Controller
                     'byEmail' => $reminderLink->getByEmail()
             );
         }
-        
-                
-        
         //timeofday
         $contactTimesData = array(); $selectedTimes = array();
         $weekDaysData = array(); $selectedWeekDays = array();

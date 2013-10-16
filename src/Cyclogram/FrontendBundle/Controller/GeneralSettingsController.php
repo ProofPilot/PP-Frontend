@@ -279,6 +279,7 @@ class GeneralSettingsController  extends Controller
             $form->handleRequest($request);
     
             if ($form->isValid()) {
+                $this->get('study_logic')->participantDefaultInterventionLogic($participant, 'shippingInformation');
                 $form = $form->getData();
                 $participant->setParticipantFirstname($form['participantFirstname']);
                 $participant->setParticipantLastname($form['participantLastname']);
