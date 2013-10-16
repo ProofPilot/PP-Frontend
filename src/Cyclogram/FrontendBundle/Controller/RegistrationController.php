@@ -717,9 +717,9 @@ class RegistrationController extends Controller
     private function isTemporalSmsCode($code) {
     	 
     	$em = $this->getDoctrine()->getManager();
-    	$temporalCodes = $em->getRepository('CyclogramProofPilotBundle:TemporalAccessCode')->findAll();
+    	$temporaryCodes = $em->getRepository('CyclogramProofPilotBundle:TemporaryAccessCode')->findAll();
     	 
-    	foreach ($temporalCodes as $key => $value){
+    	foreach ($temporaryCodes as $key => $value){
     		if($code == $value->getSmsCode()) {
     			return true;
     		}

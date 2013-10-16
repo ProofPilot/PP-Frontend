@@ -5,12 +5,12 @@ namespace Cyclogram\Bundle\ProofPilotBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * TemporalAccessCode
+ * TemporaryAccessCode
  *
- * @ORM\Table(name="temporal_access_code")
+ * @ORM\Table(name="temporary_access_code")
  * @ORM\Entity
  */
-class TemporalAccessCode
+class TemporaryAccessCode
 {
     /**
      * @var integer
@@ -31,9 +31,9 @@ class TemporalAccessCode
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="temporal_access_code", type="datetime", nullable=true)
+     * @ORM\Column(name="temporary_access_code_timestamp", type="datetime", nullable=true)
      */
-    private $temporalAccessCode;
+    private $temporaryAccessCodeTimestamp;
 
 
 
@@ -51,7 +51,7 @@ class TemporalAccessCode
      * Set smsCode
      *
      * @param string $smsCode
-     * @return TemporalAccessCode
+     * @return TemporaryAccessCode
      */
     public function setSmsCode($smsCode)
     {
@@ -71,25 +71,25 @@ class TemporalAccessCode
     }
 
     /**
-     * Set temporalAccessCode
+     * Set temporaryAccessCodeTimestamp
      *
-     * @param \DateTime $temporalAccessCode
-     * @return TemporalAccessCode
+     * @param \DateTime $temporaryAccessCodeTimestamp
+     * @return TemporaryAccessCode
      */
-    public function setTemporalAccessCode($temporalAccessCode)
+    public function setTemporaryAccessCodeTimestamp($temporaryAccessCodeTimestamp)
     {
-        $this->temporalAccessCode = $temporalAccessCode;
+        $this->temporaryAccessCodeTimestamp = $temporaryAccessCodeTimestamp;
     
         return $this;
     }
 
     /**
-     * Get temporalAccessCode
+     * Get temporaryAccessCodeTimestamp
      *
      * @return \DateTime 
      */
-    public function getTemporalAccessCode()
+    public function getTemporaryAccessCodeTimestamp()
     {
-        return $this->temporalAccessCode;
+        return $this->temporaryAccessCodeTimestamp;
     }
 }
