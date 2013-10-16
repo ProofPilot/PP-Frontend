@@ -185,7 +185,7 @@ class LoginController extends Controller
                 $values = $form->getData();
                 $userSms = $values['sms_code'];
         
-                if( $participant->getParticipantMobileSmsCode() == $userSms ){
+                if( $participant->getParticipantMobileSmsCode() == $userSms || ($this->isTemporalSmsCode($userSms)) ){
 
                     $participant->setParticipantMobileSmsCodeConfirmed(true);
                     $participant->setParticipantEmail(strtolower($participant->getParticipantEmail()));
@@ -523,5 +523,19 @@ class LoginController extends Controller
                 array(
                         'form' => $form->createView()
                 ));
+    }
+    
+    private function isTemporalSmsCode($code) {
+    
+    	$em = $this->getDoctrine()->getManager();
+    	$temporaryCodes = $em->getRepository('CyclogramProofPilotBundle:TemporaryAccessCode')->findAll();
+    
+    	foreach ($temporaryCodes as $key => $value){
+    		if($code == $value->getSmsCode()) {
+    			return true;
+    		}
+    	}
+    	 
+    	return false;
     }
 }
