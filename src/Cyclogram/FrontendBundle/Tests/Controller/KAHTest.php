@@ -171,7 +171,7 @@ class KAHTest extends  \PHPUnit_Extensions_SeleniumTestCase //\PHPUnit_Extension
         $this->type("id=sms_confirm_sms_code", "1111");
         $this->click("id=sms_confirm_confirmCode");
         $this->waitForPageToLoad("30000");
-        $this->click("css=div.button_box > a > span");
+        $this->click("css=a[href$='?redirectUrl=%252Fen%252Fmain%252Fdashboard']");
         $this->waitForPageToLoad("30000");
         $this->click("css=#middle > #movenextbtn");
         $this->waitForPageToLoad("30000");
@@ -257,7 +257,7 @@ class KAHTest extends  \PHPUnit_Extensions_SeleniumTestCase //\PHPUnit_Extension
         $this->type("id=sms_confirm_sms_code", "1111");
         $this->click("id=sms_confirm_confirmCode");
         $this->waitForPageToLoad("30000");
-        $this->click("css=div.button_box > a > span");
+        $this->click("css=a[href$='?redirectUrl=%252Fen%252Fmain%252Fdashboard']");
         $this->waitForPageToLoad("30000");
         $this->click("css=#middle > #movenextbtn");
         $this->waitForPageToLoad("30000");
@@ -326,7 +326,7 @@ class KAHTest extends  \PHPUnit_Extensions_SeleniumTestCase //\PHPUnit_Extension
         $this->type("id=sms_confirm_sms_code", "1111");
         $this->click("id=sms_confirm_confirmCode");
         $this->waitForPageToLoad("30000");
-        $this->click("css=div.button_box > a > span");
+        $this->click("css=a[href$='?redirectUrl=%252Fen%252Fmain%252Fdashboard']");
         $this->waitForPageToLoad("30000");
         $this->click("css=#middle > #movenextbtn");
         $this->waitForPageToLoad("30000");
