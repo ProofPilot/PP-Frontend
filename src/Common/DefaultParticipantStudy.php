@@ -112,7 +112,7 @@ class DefaultParticipantStudy extends AbstractStudy
                         $this->createIncentive($participant, $intervention);
                         $interventionLink->setStatus(ParticipantInterventionLink::STATUS_CLOSED);
                         $em->persist($interventionLink);
-                        $em->flush();
+                        #$em->flush();
                     }
                 break;
                 case "DefaultParticipantCommunicationPreferences":
@@ -120,7 +120,7 @@ class DefaultParticipantStudy extends AbstractStudy
                         $this->createIncentive($participant, $intervention);
                         $interventionLink->setStatus(ParticipantInterventionLink::STATUS_CLOSED);
                         $em->persist($interventionLink);
-                        $em->flush();
+                        #$em->flush();
                     }
                     break;
                 case "DefaultParticipantShippingInformation":
@@ -128,7 +128,7 @@ class DefaultParticipantStudy extends AbstractStudy
                         $this->createIncentive($participant, $intervention);
                         $interventionLink->setStatus(ParticipantInterventionLink::STATUS_CLOSED);
                         $em->persist($interventionLink);
-                        $em->flush();
+                        #$em->flush();
                     }
                     break;
             }
