@@ -187,7 +187,6 @@ class LoginController extends Controller
         
                 if( $participant->getParticipantMobileSmsCode() == $userSms ){
 
-                    $participant->setParticipantMobileSmsCodeConfirmed(true);
                     $participant->setParticipantEmail(strtolower($participant->getParticipantEmail()));
                     $participant->setStatus(Participant::STATUS_ACTIVE);
 
