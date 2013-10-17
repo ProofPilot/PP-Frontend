@@ -1,7 +1,7 @@
 echo "UPDATING FRONTEND..."
 
 cd /home/sites/frontend
-git pull
+git pull origin master
 rm -Rf /home/sites/frontend/app/cache/*
 php app/console assets:install --symlink web/
 php app/console assetic:dump --env=prod --no-debug
