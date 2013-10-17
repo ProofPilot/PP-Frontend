@@ -94,7 +94,9 @@ class ParticipantRepository extends EntityRepository implements
     public function checkIfPhoneNotUsed($phone) {
         $result = $this->getEntityManager()
         ->createQuery('SELECT COUNT(p.participantMobileNumber) FROM CyclogramProofPilotBundle:Participant p
+                INNER JOIN p.level l
                 WHERE p.participantMobileNumber = :phone
+                AND l.participantLevelName = \'Customer\'
                 ')
                 ->setParameter('phone', $phone)
                 ->getSingleScalarResult();
