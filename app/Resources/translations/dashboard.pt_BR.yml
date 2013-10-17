@@ -9,7 +9,7 @@ past_activity:
     welcome_study: 'Bem-vindo ao estudo Know@Home: Colocando à prova o teste'
 
 txt_dashboard: 'Painel de controle'
-txt_please_verify_email: "Por favor, verifique o seu endereço de e-mail.<br/>\nPara participar de estudos necessitamos de um endereço de e-mail válido - por favor, vá para o seu e-mail e clique no link"
+txt_please_verify_email: ''
 
 what_next_list:
     collect_speciment: 'recolher amostras'

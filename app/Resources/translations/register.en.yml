@@ -40,9 +40,9 @@ txt_check_email: 'Please check your email'
 txt_check_zipcode: 'Please check your zipcode'
 txt_join: JOIN
 txt_join_with: 'Join with'
-txt_popup_header: txt_popup_header
+txt_popup_header: 'Why voice? '
 txt_popup_link: 'I prefer to recive voice calls at another number'
-txt_popup_text: txt_popup_text
+txt_popup_text: 'Occasionally we may need to call you about your participation in studies. If you prefer not to receive voice calls at another number, check the box.'
 txt_subtitle_check_email: 'Please check your email address'
 txt_why: 'Why?'
 wrong_back: 'Wrong go back'
