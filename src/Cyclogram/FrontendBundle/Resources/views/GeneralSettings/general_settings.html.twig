@@ -265,17 +265,7 @@
         </div>
       </div>
     </div>
-    <footer>
-      <div class="site_container">
-        <div class="footer_col_left">
-            {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createBottomLeftMenu',{'template': 'CyclogramFrontendBundle:Knp:knp_menu.html.twig'}) }}
-        </div>
-        <div class="footer_col_middle"><a class="to_top" href="#"><span>ON TOP</span></a></div>
-        <div class="footer_col_right">
-            {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createBottomRightMenu',{'template': 'CyclogramFrontendBundle:Knp:knp_menu.html.twig'}) }}
-        </div>
-      </div>
-    </footer>
+    {% include '::footer.html.twig' %}
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src={{ asset('js/vendor/jquery-1.9.1.min.js') }}><\/script>')</script>
         <script src= {{ asset ('js/plugins.js') }}></script>

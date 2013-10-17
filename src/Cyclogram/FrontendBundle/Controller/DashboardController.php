@@ -66,6 +66,8 @@ class DashboardController extends Controller
         
         
         $this->get('study_logic')->interventionLogic($participant);
+        $this->get('study_logic')->participantDefaultInterventionLogic($participant);
+
         
         $surveyscount = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')->getActiveParticipantInterventionsCount($participant);
         $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')->getActiveParticipantInterventionLinks($participant);
@@ -89,8 +91,15 @@ class DashboardController extends Controller
             $intervention = array();
             $intervention["title"] = $interventionContent->getInterventionTitle();
             $intervention["content"] = $interventionContent->getInterventionDescripton();
-            
-            $intervention["url"] = $this->getInterventionUrl($interventionLink, $locale);
+            if ($study->getStudyCode() == 'defaultparticipant') {
+                if ($interventionLink->getIntervention()->getInterventionCode() == 'DefaultParticipantCommunicationPreferences') {
+                    $intervention["url"] =  $this->get('router')->generate('_contact_prefs');
+                } elseif ($interventionLink->getIntervention()->getInterventionCode() == 'DefaultParticipantShippingInformation') {
+                    $intervention["url"] =  $this->get('router')->generate('_shipping');
+                }
+            } else {
+                $intervention["url"] = $this->getInterventionUrl($interventionLink, $locale);
+            }
             $intervention["logo"] = $this->container->getParameter('study_image_url') . "/" . $studyId . "/" . $studyContent->getStudyLogo();
             $parameters["studyCode"] = $study->getStudyCode();
             $parameters["interventions"][] = $intervention;

@@ -27,6 +27,7 @@ use Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantArmLink;
 use Symfony\Component\DependencyInjection\Container;
 use Cyclogram\Bundle\ProofPilotBundle\Entity\Participant;
 use Cyclogram\CyclogramCommon;
+use Common\DefaultParticipantStudy;
 
 class StudyLogic
 {
@@ -183,5 +184,12 @@ class StudyLogic
     public function getSupportedStudies()
     {
         return array_keys($this->studies);
+    }
+    public function participantDefaultInterventionLogic($participant, $update = null) {
+        $defaultParticipantStudy = new DefaultParticipantStudy($this->container);
+        if (!is_null($update))
+           $defaultParticipantStudy->participantDefaultInterventionLogic($participant, $update);
+        else 
+            $defaultParticipantStudy->participantDefaultInterventionLogic($participant);
     }
 }
