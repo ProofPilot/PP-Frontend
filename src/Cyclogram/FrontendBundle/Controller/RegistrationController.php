@@ -542,7 +542,6 @@ class RegistrationController extends Controller
     
     /**
      * @Route("/register/study/{studyCode}", name="_register_in_study")
-     * @Check(name="checkEligibility")
      * @Template()
      */
     public function registerInStudyAction($studyCode)
@@ -557,7 +556,16 @@ class RegistrationController extends Controller
                 $bag = $session->get('SurveyInfo');
                 $surveyId = $bag->get('surveyId');
                 $saveId = $bag->get('saveId');
-            
+                if($studyCode != $bag->get('studyCode'))
+                    return $this->render("::error.html.twig", array(
+                            "error" => "Eligibility results do not match StudyCode"));
+                
+                $surveyResult = $this->get('custom_db')->getFactory('ElegibilityCustom')->getSurveyResponseData($saveId, $surveyId);
+                
+                $isEligible = $logic->checkEligibility($studyCode, $surveyResult);
+                if(!$isEligible)
+                    return $this->render("::error.html.twig", array(
+                            "error" => "You cannot register without passing eligibility test[2]"));
                 $logic->studyRegistration($participant, $studyCode, $surveyId, $saveId);
                 return $this->redirect($this->generateUrl('_main'));
             }
