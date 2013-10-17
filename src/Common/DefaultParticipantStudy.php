@@ -54,7 +54,7 @@ class DefaultParticipantStudy extends AbstractStudy
             ->setParticipantInterventionLinkDatetimeStart(new \DateTime("now"));
         $participantInterventionLink->setStatus(ParticipantInterventionLink::STATUS_ACTIVE);
         $em->persist($participantInterventionLink);
-        #$em->flush();
+        ##$em->flush();
         //DefaultParticipantCommunicationPreferencesInterventionLink
         $participantInterventionLink = new \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantInterventionLink();
         $intervention = $em
@@ -66,7 +66,7 @@ class DefaultParticipantStudy extends AbstractStudy
             ->setParticipantInterventionLinkDatetimeStart(new \DateTime("now"));
         $participantInterventionLink->setStatus(ParticipantInterventionLink::STATUS_ACTIVE);
         $em->persist($participantInterventionLink);
-        #$em->flush();
+        ##$em->flush();
     }
     public function participantDefaultInterventionLogic($participant, $update = null)
     {
@@ -112,7 +112,7 @@ class DefaultParticipantStudy extends AbstractStudy
                         $this->createIncentive($participant, $intervention);
                         $interventionLink->setStatus(ParticipantInterventionLink::STATUS_CLOSED);
                         $em->persist($interventionLink);
-                        #$em->flush();
+                        ##$em->flush();
                     }
                 break;
                 case "DefaultParticipantCommunicationPreferences":
@@ -128,7 +128,7 @@ class DefaultParticipantStudy extends AbstractStudy
                         $this->createIncentive($participant, $intervention);
                         $interventionLink->setStatus(ParticipantInterventionLink::STATUS_CLOSED);
                         $em->persist($interventionLink);
-                        #$em->flush();
+                        ##$em->flush();
                     }
                     break;
             }
