@@ -41,8 +41,8 @@ class DefaultParticipantStudy extends AbstractStudy
             ->setParticipantArmLinkDatetime(new \DateTime("now"));
         }
         $em->persist($ArmParticipantLink);
-        
         $em->flush();
+        
         //DefaultParticipantEmailConfirmInterventionLink
         $participantInterventionLink = new \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantInterventionLink();
         $intervention = $em
@@ -53,8 +53,8 @@ class DefaultParticipantStudy extends AbstractStudy
         $participantInterventionLink
             ->setParticipantInterventionLinkDatetimeStart(new \DateTime("now"));
         $participantInterventionLink->setStatus(ParticipantInterventionLink::STATUS_ACTIVE);
-        $em->persist($participantInterventionLink);
-        ##$em->flush();
+        #$em->persist($participantInterventionLink);
+        #$em->flush();
         //DefaultParticipantCommunicationPreferencesInterventionLink
         $participantInterventionLink = new \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantInterventionLink();
         $intervention = $em
@@ -65,8 +65,8 @@ class DefaultParticipantStudy extends AbstractStudy
         $participantInterventionLink
             ->setParticipantInterventionLinkDatetimeStart(new \DateTime("now"));
         $participantInterventionLink->setStatus(ParticipantInterventionLink::STATUS_ACTIVE);
-        $em->persist($participantInterventionLink);
-        ##$em->flush();
+        #$em->persist($participantInterventionLink);
+        #$em->flush();
     }
     public function participantDefaultInterventionLogic($participant, $update = null)
     {
@@ -90,8 +90,8 @@ class DefaultParticipantStudy extends AbstractStudy
             $participantInterventionLink
                 ->setParticipantInterventionLinkDatetimeStart(new \DateTime("now"));
             $participantInterventionLink->setStatus(ParticipantInterventionLink::STATUS_ACTIVE);
-            $em->persist($participantInterventionLink);
-            $em->flush();
+            #$em->persist($participantInterventionLink);
+            #$em->flush();
         }
         
         $study = $em->getRepository('CyclogramProofPilotBundle:Study')
@@ -111,15 +111,15 @@ class DefaultParticipantStudy extends AbstractStudy
                     if ($status == ParticipantInterventionLink::STATUS_ACTIVE && $participant->getParticipantEmailConfirmed() == true) {
                         $this->createIncentive($participant, $intervention);
                         $interventionLink->setStatus(ParticipantInterventionLink::STATUS_CLOSED);
-                        $em->persist($interventionLink);
-                        ##$em->flush();
+                        #$em->persist($interventionLink);
+                        #$em->flush();
                     }
                 break;
                 case "DefaultParticipantCommunicationPreferences":
                     if ($status == ParticipantInterventionLink::STATUS_ACTIVE && $update == 'communicationPreferences') {
                         $this->createIncentive($participant, $intervention);
                         $interventionLink->setStatus(ParticipantInterventionLink::STATUS_CLOSED);
-                        $em->persist($interventionLink);
+                        #$em->persist($interventionLink);
                         #$em->flush();
                     }
                     break;
@@ -127,8 +127,8 @@ class DefaultParticipantStudy extends AbstractStudy
                     if ($status == ParticipantInterventionLink::STATUS_ACTIVE && $update == 'shippingInformation') {
                         $this->createIncentive($participant, $intervention);
                         $interventionLink->setStatus(ParticipantInterventionLink::STATUS_CLOSED);
-                        $em->persist($interventionLink);
-                        ##$em->flush();
+                        #$em->persist($interventionLink);
+                        #$em->flush();
                     }
                     break;
             }
