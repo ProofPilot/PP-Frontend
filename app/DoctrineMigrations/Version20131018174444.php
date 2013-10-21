@@ -14,6 +14,7 @@ class Version20131018174444 extends AbstractMigration
     {
         $this->addSql("ALTER TABLE `proofpilot`.`participant_intervention_link` ADD COLUMN `participant_intervention_link_send_doit_email_time` DATETIME NULL AFTER `participant_id`;");
         $this->addSql("ALTER TABLE `proofpilot`.`participant_intervention_link` ADD COLUMN `participant_intervention_link_send_doit_sms_time` DATETIME NULL AFTER `participant_id`;");
+        $this->addSql("UPDATE `proofpilot`.`participant_intervention_link` SET `participant_intervention_link_send_doit_sms_time` = NOW(), `participant_intervention_link_send_doit_email_time` = NOW() WHERE `status_id` = 1;");
     }
 
     public function down(Schema $schema)
