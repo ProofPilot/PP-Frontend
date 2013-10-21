@@ -117,7 +117,7 @@ class DoItNotificationCommand extends ContainerAwareCommand
         $embedded = array();
         $embedded = $cc->getEmbeddedImages();
         
-        $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')->getActiveParticipantInterventionLinks($participant);
+        $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')->getNotSendParticipantInterventionLinks($participant);
         
         $parameters["interventions"] = array();
         if (!empty($interventionLinks)){
@@ -154,6 +154,7 @@ class DoItNotificationCommand extends ContainerAwareCommand
                         true,
                         $parameters);
                 if ($send){
+                    
                     return array('send' => true, 'message' => 'sent email');
                 } else {
                     return array('send' => false, 'message' => 'email not send');
@@ -170,7 +171,7 @@ class DoItNotificationCommand extends ContainerAwareCommand
         $cc = $this->getContainer()->get('cyclogram.common');
         $em = $this->getContainer()->get('doctrine')->getManager();
         
-        $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')->getActiveParticipantInterventionLinks($participant);
+        $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')->getNotSendParticipantInterventionLinks($participant);
         
         $interventions = array();
         if (!empty($interventionLinks)){
@@ -189,6 +190,9 @@ class DoItNotificationCommand extends ContainerAwareCommand
                     $message = $this->getContainer()->get('translator')->trans('sms_title', array(), 'security', $locale);
                     $sentSms = $sms->sendSmsAction( array('message' => $message .': '. $interventionTitle.' '.$interventionUrl, 'phoneNumber'=> $participant->getParticipantMobileNumber()) );
                     if ($sentSms){
+                        $interventionLink->setSendTime(new \DateTime());
+                        $em->persist($interventionLink);
+                        $em->flush();
                         return array('send' => true, 'message' => 'sent sms');
                     } else {
                         return array('send' => false, 'message' => 'sms not send');

@@ -1,24 +1,23 @@
 <?php
 /*
-* This is part of the ProofPilot package.
-*
-* (c)2012-2013 Cyclogram, Inc, West Hollywood, CA <crew@proofpilot.com>
-* ALL RIGHTS RESERVED
-*
-* This software is provided by the copyright holders to Manila Consulting for use on the
-* Center for Disease Control's Evaluation of Rapid HIV Self-Testing among MSM in High
-* Prevalence Cities until 2016 or the project is completed.
-*
-* Any unauthorized use, modification or resale is not permitted without expressed permission
-* from the copyright holders.
-*
-* KnowatHome branding, URL, study logic, survey instruments, and resulting data are not part
-* of this copyright and remain the property of the prime contractor.
-*
-*/
+ * This is part of the ProofPilot package.
+ *
+ * (c)2012-2013 Cyclogram, Inc, West Hollywood, CA <crew@proofpilot.com>
+ * ALL RIGHTS RESERVED
+ *
+ * This software is provided by the copyright holders to Manila Consulting for use on the
+ * Center for Disease Control's Evaluation of Rapid HIV Self-Testing among MSM in High
+ * Prevalence Cities until 2016 or the project is completed.
+ *
+ * Any unauthorized use, modification or resale is not permitted without expressed permission
+ * from the copyright holders.
+ *
+ * KnowatHome branding, URL, study logic, survey instruments, and resulting data are not part
+ * of this copyright and remain the property of the prime contractor.
+ *
+ */
 
 namespace Cyclogram\Bundle\ProofPilotBundle\Entity;
-
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -57,6 +56,13 @@ class ParticipantInterventionLink
     /**
      * @var \DateTime
      *
+     * @ORM\Column(name="participant_intervention_link_send_time", type="datetime", nullable=true)
+     */
+    private $sendTime;
+
+    /**
+     * @var \DateTime
+     *
      * @ORM\Column(name="participant_intervention_link_datetime_end", type="datetime", nullable=true)
      */
     private $participantInterventionLinkDatetimeEnd;
@@ -88,8 +94,6 @@ class ParticipantInterventionLink
      */
     private $status;
 
-
-
     /**
      * Get participantInterventionLinkId
      *
@@ -106,10 +110,11 @@ class ParticipantInterventionLink
      * @param string $participantInterventionLinkName
      * @return ParticipantInterventionLink
      */
-    public function setParticipantInterventionLinkName($participantInterventionLinkName)
+    public function setParticipantInterventionLinkName(
+            $participantInterventionLinkName)
     {
         $this->participantInterventionLinkName = $participantInterventionLinkName;
-    
+
         return $this;
     }
 
@@ -129,10 +134,11 @@ class ParticipantInterventionLink
      * @param \DateTime $participantInterventionLinkDatetimeStart
      * @return ParticipantInterventionLink
      */
-    public function setParticipantInterventionLinkDatetimeStart($participantInterventionLinkDatetimeStart)
+    public function setParticipantInterventionLinkDatetimeStart(
+            $participantInterventionLinkDatetimeStart)
     {
         $this->participantInterventionLinkDatetimeStart = $participantInterventionLinkDatetimeStart;
-    
+
         return $this;
     }
 
@@ -152,10 +158,11 @@ class ParticipantInterventionLink
      * @param \DateTime $participantInterventionLinkDatetimeEnd
      * @return ParticipantInterventionLink
      */
-    public function setParticipantInterventionLinkDatetimeEnd($participantInterventionLinkDatetimeEnd)
+    public function setParticipantInterventionLinkDatetimeEnd(
+            $participantInterventionLinkDatetimeEnd)
     {
         $this->participantInterventionLinkDatetimeEnd = $participantInterventionLinkDatetimeEnd;
-    
+
         return $this;
     }
 
@@ -175,10 +182,11 @@ class ParticipantInterventionLink
      * @param \Cyclogram\Bundle\ProofPilotBundle\Entity\Intervention $intervention
      * @return ParticipantInterventionLink
      */
-    public function setIntervention(\Cyclogram\Bundle\ProofPilotBundle\Entity\Intervention $intervention = null)
+    public function setIntervention(
+            \Cyclogram\Bundle\ProofPilotBundle\Entity\Intervention $intervention = null)
     {
         $this->intervention = $intervention;
-    
+
         return $this;
     }
 
@@ -198,10 +206,11 @@ class ParticipantInterventionLink
      * @param \Cyclogram\Bundle\ProofPilotBundle\Entity\Participant $participant
      * @return ParticipantInterventionLink
      */
-    public function setParticipant(\Cyclogram\Bundle\ProofPilotBundle\Entity\Participant $participant = null)
+    public function setParticipant(
+            \Cyclogram\Bundle\ProofPilotBundle\Entity\Participant $participant = null)
     {
         $this->participant = $participant;
-    
+
         return $this;
     }
 
@@ -224,7 +233,7 @@ class ParticipantInterventionLink
     public function setStatus($status)
     {
         $this->status = $status;
-    
+
         return $this;
     }
 
@@ -237,4 +246,15 @@ class ParticipantInterventionLink
     {
         return $this->status;
     }
+
+    public function getSendTime()
+    {
+        return $this->sendTime;
+    }
+
+    public function setSendTime($sendTime)
+    {
+        $this->sendTime = $sendTime;
+    }
+
 }
