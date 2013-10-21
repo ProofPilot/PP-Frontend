@@ -123,14 +123,12 @@ class ParticipantInterventionLinkRepository extends EntityRepository
                 INNER JOIN pil.intervention i
                 INNER JOIN i.interventionType it
                 WHERE pil.participant = :userid
-                AND pil.participantInterventionLinkDatetimeStart <= :currentDate
                 AND pil.status  = :pilstatus
                 AND pil.participantInterventionLinkSendSmsTime IS NULL
                 AND it.interventionTypeName <> \'Test\'
                 ')
                 ->setParameters(array(
                         'userid' => $userid,
-                        'currentDate' => $currentDate,
                         'pilstatus' => ParticipantInterventionLink::STATUS_ACTIVE))
                         ->getResult();
         } 
@@ -140,14 +138,12 @@ class ParticipantInterventionLinkRepository extends EntityRepository
                     INNER JOIN pil.intervention i
                     INNER JOIN i.interventionType it
                     WHERE pil.participant = :userid
-                    AND pil.participantInterventionLinkDatetimeStart <= :currentDate
                     AND pil.status  = :pilstatus
                     AND pil.participantInterventionLinkSendEmailTime IS NULL
                     AND it.interventionTypeName <> \'Test\'
                     ')
                     ->setParameters(array(
                             'userid' => $userid,
-                            'currentDate' => $currentDate,
                             'pilstatus' => ParticipantInterventionLink::STATUS_ACTIVE))
                             ->getResult();
         }
