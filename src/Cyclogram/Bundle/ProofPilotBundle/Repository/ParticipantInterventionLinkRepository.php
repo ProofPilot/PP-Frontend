@@ -116,9 +116,7 @@ class ParticipantInterventionLinkRepository extends EntityRepository
     }
     
     public function getNotSendParticipantInterventionLinks($userid, $sendType){
-    
-        $currentDate = new \DateTime();
-        
+       
         if ($sendType == 'sms') {
         return $this->getEntityManager()
         ->createQuery('SELECT pil, i, it FROM CyclogramProofPilotBundle:ParticipantInterventionLink pil
