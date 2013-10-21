@@ -117,7 +117,7 @@ class DoItNotificationCommand extends ContainerAwareCommand
         $embedded = array();
         $embedded = $cc->getEmbeddedImages();
         
-        $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')->getNotSendParticipantInterventionLinks($participant);
+        $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')->getNotSendParticipantInterventionLinks($participant, 'email');
         
         $parameters["interventions"] = array();
         if (!empty($interventionLinks)){
@@ -137,6 +137,9 @@ class DoItNotificationCommand extends ContainerAwareCommand
                     $intervention["url"] = $this->getInterventionUrl($interventionLink, $locale);
                     $intervention["logo"] = $this->getContainer()->getParameter('study_image_url') . "/" . $studyId . "/" . $studyContent->getStudyLogo();
                     $parameters["interventions"][] = $intervention;
+                    $interventionLink->setParticipantInterventionLinkSendEmailTime(new \DateTime());
+                    $em->persist($interventionLink);
+                    $em->flush();
             }
         
             $parameters['email'] = $participant->getParticipantEmail();
@@ -171,7 +174,7 @@ class DoItNotificationCommand extends ContainerAwareCommand
         $cc = $this->getContainer()->get('cyclogram.common');
         $em = $this->getContainer()->get('doctrine')->getManager();
         
-        $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')->getNotSendParticipantInterventionLinks($participant);
+        $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')->getNotSendParticipantInterventionLinks($participant, 'sms');
         
         $interventions = array();
         if (!empty($interventionLinks)){
@@ -190,7 +193,7 @@ class DoItNotificationCommand extends ContainerAwareCommand
                     $message = $this->getContainer()->get('translator')->trans('sms_title', array(), 'security', $locale);
                     $sentSms = $sms->sendSmsAction( array('message' => $message .': '. $interventionTitle.' '.$interventionUrl, 'phoneNumber'=> $participant->getParticipantMobileNumber()) );
                     if ($sentSms){
-                        $interventionLink->setSendTime(new \DateTime());
+                        $interventionLink->setParticipantInterventionLinkSendSmsTime(new \DateTime());
                         $em->persist($interventionLink);
                         $em->flush();
                         return array('send' => true, 'message' => 'sent sms');

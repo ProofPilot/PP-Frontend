@@ -115,10 +115,11 @@ class ParticipantInterventionLinkRepository extends EntityRepository
                         ->getResult();
     }
     
-    public function getNotSendParticipantInterventionLinks($userid){
+    public function getNotSendParticipantInterventionLinks($userid, $sendType){
     
         $currentDate = new \DateTime();
-    
+        
+        if ($sendType == 'sms') {
         return $this->getEntityManager()
         ->createQuery('SELECT pil, i, it FROM CyclogramProofPilotBundle:ParticipantInterventionLink pil
                 INNER JOIN pil.intervention i
@@ -126,7 +127,7 @@ class ParticipantInterventionLinkRepository extends EntityRepository
                 WHERE pil.participant = :userid
                 AND pil.participantInterventionLinkDatetimeStart <= :currentDate
                 AND pil.status  = :pilstatus
-                AND pil.sendTime IS NULL
+                AND pil.participantInterventionLinkSendSmsTime IS NULL
                 AND it.interventionTypeName <> \'Test\'
                 ')
                 ->setParameters(array(
@@ -134,6 +135,24 @@ class ParticipantInterventionLinkRepository extends EntityRepository
                         'currentDate' => $currentDate,
                         'pilstatus' => ParticipantInterventionLink::STATUS_ACTIVE))
                         ->getResult();
+        } 
+        if ($sendType == 'email') {
+            return $this->getEntityManager()
+            ->createQuery('SELECT pil, i, it FROM CyclogramProofPilotBundle:ParticipantInterventionLink pil
+                    INNER JOIN pil.intervention i
+                    INNER JOIN i.interventionType it
+                    WHERE pil.participant = :userid
+                    AND pil.participantInterventionLinkDatetimeStart <= :currentDate
+                    AND pil.status  = :pilstatus
+                    AND pil.participantInterventionLinkSendEmailTime IS NULL
+                    AND it.interventionTypeName <> \'Test\'
+                    ')
+                    ->setParameters(array(
+                            'userid' => $userid,
+                            'currentDate' => $currentDate,
+                            'pilstatus' => ParticipantInterventionLink::STATUS_ACTIVE))
+                            ->getResult();
+        }
     }
     
     public function getParticipantByInterventionCodeAndPeriod($interventionCode, $period) {

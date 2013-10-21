@@ -56,9 +56,16 @@ class ParticipantInterventionLink
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="participant_intervention_link_send_time", type="datetime", nullable=true)
+     * @ORM\Column(name="participant_intervention_link_send_doit_email_time", type="datetime", nullable=true)
      */
-    private $sendTime;
+    private $participantInterventionLinkSendEmailTime;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="participant_intervention_link_send_doit_sms_time", type="datetime", nullable=true)
+     */
+    private $participantInterventionLinkSendSmsTime;
 
     /**
      * @var \DateTime
@@ -247,14 +254,26 @@ class ParticipantInterventionLink
         return $this->status;
     }
 
-    public function getSendTime()
+    public function getParticipantInterventionLinkSendEmailTime()
     {
-        return $this->sendTime;
+        return $this->participantInterventionLinkSendEmailTime;
     }
 
-    public function setSendTime($sendTime)
+    public function setParticipantInterventionLinkSendEmailTime(
+             $participantInterventionLinkSendEmailTime)
     {
-        $this->sendTime = $sendTime;
+        $this->participantInterventionLinkSendEmailTime = $participantInterventionLinkSendEmailTime;
+    }
+
+    public function getParticipantInterventionLinkSendSmsTime()
+    {
+        return $this->participantInterventionLinkSendSmsTime;
+    }
+
+    public function setParticipantInterventionLinkSendSmsTime(
+            $participantInterventionLinkSendSmsTime)
+    {
+        $this->participantInterventionLinkSendSmsTime = $participantInterventionLinkSendSmsTime;
     }
 
 }
