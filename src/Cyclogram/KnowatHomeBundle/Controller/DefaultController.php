@@ -46,7 +46,11 @@ class DefaultController extends Controller
         $pageText = array();
 
         $referrerUrl = ( ! empty( $_SERVER["HTTP_REFERER"] ) ) ? $_SERVER["HTTP_REFERER"] : "";
-
+        $urlArray = explode('/', $this->getRequest()->getPathInfo());
+        
+        if (array_search('knowathome',$urlArray) != false)
+            $studyCode = 'knowathome';
+        else $studyCode = 'eStamp4';
         $lastPicN = $session->get("picN");
 
         $picN = rand(1, 4);
@@ -57,7 +61,7 @@ class DefaultController extends Controller
         $session->set("picN", $picN);
 
         //GET STUDY INFO
-        $study = $em->getRepository("CyclogramProofPilotBundle:Study")->find(1);
+        $study = $em->getRepository("CyclogramProofPilotBundle:Study")->findOneByStudyCode($studyCode);
         $language = $em->getRepository("CyclogramProofPilotBundle:Language")->find(1);
         $studyContent = $em->getRepository("CyclogramProofPilotBundle:StudyContent")->findOneBy(array("study"=>$study, "language"=>$language));
 
@@ -67,39 +71,39 @@ class DefaultController extends Controller
         return $this->render('CyclogramKnowatHomeBundle:website:home.html.twig', array('pageText'=>$pageText, "studyCode"=>$study->getStudyCode()));
     }
 
-    public function aboutStudyAction()
+    public function aboutStudyAction($studyCode)
     {
         $em = $this->getDoctrine()->getManager();
         $pageText = array();
 
         //GET STUDY INFO
-        $study = $em->getRepository("CyclogramProofPilotBundle:Study")->find(1);
+        $study = $em->getRepository("CyclogramProofPilotBundle:Study")->findOneByStudyCode($studyCode);
         $language = $em->getRepository("CyclogramProofPilotBundle:Language")->find(1);
         $studyContent = $em->getRepository("CyclogramProofPilotBundle:StudyContent")->findOneBy(array("study"=>$study, "language"=>$language));
 
         $pageText['title'] = "About this study";
         $pageText['about'] = $studyContent->getStudyAbout();
 
-        return $this->render('CyclogramKnowatHomeBundle:website:aboutStudy.html.twig', array('pageText'=>$pageText) );
+        return $this->render('CyclogramKnowatHomeBundle:website:aboutStudy.html.twig', array('pageText'=>$pageText, "studyCode"=>$study->getStudyCode()) );
     }
 
-    public function privacyAndSecurityAction()
+    public function privacyAndSecurityAction($studyCode)
     {
         $em = $this->getDoctrine()->getManager();
         $pageText = array();
 
         //GET STUDY INFO
-        $study = $em->getRepository("CyclogramProofPilotBundle:Study")->find(1);
+        $study = $em->getRepository("CyclogramProofPilotBundle:Study")->findOneByStudyCode($studyCode);
         $language = $em->getRepository("CyclogramProofPilotBundle:Language")->find(1);
         $studyContent = $em->getRepository("CyclogramProofPilotBundle:StudyContent")->findOneBy(array("study"=>$study, "language"=>$language));
 
         $pageText['title'] = "Privacy and Security";
         $pageText['privacy'] = $studyContent->getStudyPrivacy();
 
-        return $this->render('CyclogramKnowatHomeBundle:website:privacyAndSecurity.html.twig', array("pageText"=>$pageText));
+        return $this->render('CyclogramKnowatHomeBundle:website:privacyAndSecurity.html.twig', array("pageText"=>$pageText, "studyCode"=>$study->getStudyCode()));
     }
 
-    public function contactUsAction()
+    public function contactUsAction($studyCode)
     {
 
         $request = $this->getRequest();
@@ -150,13 +154,11 @@ class DefaultController extends Controller
 
         $formContactView = $formContact->createView();
 
-        return $this->render('CyclogramKnowatHomeBundle:website:contactUs.html.twig', array('form'=>$formContactView, 'sent'=>$sent) );
+        return $this->render('CyclogramKnowatHomeBundle:website:contactUs.html.twig', array('form'=>$formContactView, 'sent'=>$sent, 'studyCode'=>$studyCode) );
     }
 
-    public function eligibilityAction($studyUrl = null)
+    public function eligibilityAction($studyCode, $studyUrl = null)
     {
-
-        $studyCode = ('knowathome');
 
         $locale = $this->getRequest()->getLocale();
         
@@ -233,7 +235,7 @@ class DefaultController extends Controller
         }
         
         if($isEligible == false)
-            return $this->redirect( $this->generateUrl('CyclogramKnowatHomeBundle_error', array('parameters' => $parameters)));
+            return $this->redirect( $this->generateUrl('CyclogramKnowatHomeBundle_error', array('parameters' => $parameters, "studyCode"=>$studyCode)));
         
         if ($this->getRequest()->getMethod('POST')) {
             $value = $this->getRequest()->request->get('specimen');
@@ -248,8 +250,15 @@ class DefaultController extends Controller
         $session->set("picN", $picN);
 
         $surveyUrl = "";
-        $surveyUrl = $this->container->getParameter('url_survey_kah');
-        $surveyUrl .= "?redirectUrl=%2Fen%2Fknowathome%2Fstudy";
+        if ($studyCode == 'knowathome') {
+            $surveyUrl = $this->container->getParameter('url_survey_kah');
+            $surveyUrl .= "?redirectUrl=%2Fen%2Fknowathome%2Fstudy";
+        }
+        elseif ($studyCode == 'eStamp4') {
+            $surveyUrl = $this->container->getParameter('url_survey_eStamp4');
+            $surveyUrl .= "?redirectUrl=%2Fen%2FeStamp4%2Fstudy";
+        }
+        
 
         $uniqId = uniqid();
         $session->set("uniqId", $uniqId);
@@ -267,7 +276,8 @@ class DefaultController extends Controller
                  "studyUrl" => $studyUrl,
                 "uniqid"=>$uniqId,
                 "surveyLink"=>$surveyUrl,
-                "pageText"=>$pageText
+                "pageText"=>$pageText,
+                "studyCode"=>$studyCode
 
             )
         );
@@ -329,7 +339,7 @@ class DefaultController extends Controller
         ));
     }
 
-    public function eligibleAction(){
+    public function eligibleAction($studyCode){
         $session = $this->get("session");
         $lastPicN = $session->get("picN");
         $em = $this->getDoctrine()->getManager();
@@ -350,10 +360,10 @@ class DefaultController extends Controller
         $svid = $session->get("svid");
         $sid = $session->get("sid");
 
-        return $this->render('CyclogramKnowatHomeBundle:website:eligible.html.twig', array("pageText"=>$pageText, "svid"=>$svid, "sid"=>$sid, "studyId"=>$study->getStudyId()));
+        return $this->render('CyclogramKnowatHomeBundle:website:eligible.html.twig', array("pageText"=>$pageText, "svid"=>$svid, "sid"=>$sid, "studyId"=>$study->getStudyId(), 'studyCode' => $studyCode));
     }
 
-    public function notEligibleAction()
+    public function notEligibleAction($studyCode)
     {
         $session = $this->get("session");
         $lastPicN = $session->get("picN");
@@ -362,10 +372,10 @@ class DefaultController extends Controller
         $picN = CyclogramCommon::getRandomPicNumber($lastPicN, $picN);
         $session->set("picN", $picN);
         
-        return $this->render('CyclogramKnowatHomeBundle:website:notEligible.html.twig');
+        return $this->render('CyclogramKnowatHomeBundle:website:notEligible.html.twig',array('studyCode' => $studyCode));
     }
 
-    public function surveyResultAction()
+    public function surveyResultAction($studyCode)
     {
         $svid = $this->getRequest()->get('svid');
         $sid = $this->getRequest()->get('sid');
@@ -382,7 +392,7 @@ class DefaultController extends Controller
         $surveyResult = $this->get('custom_db')->getFactory('ElegibilityCustom')->getSurveyResponseData( $svid, $sid );
         
         $sl = $this->get('study_logic');
-        $isElegible = $sl->checkEligibility('knowathome',$surveyResult);
+        $isElegible = $sl->checkEligibility($studyCode,$surveyResult);
 
 
         /*echo "<pre>";
@@ -443,19 +453,19 @@ class DefaultController extends Controller
             $bag->initialize($array);
             $bag->set('surveyId', $sid);
             $bag->set('saveId', $svid);
-            $bag->set('studyCode', "knowathome");
+            $bag->set('studyCode', $studyCode);
             $session->registerBag($bag);
             $session->set('SurveyInfo', $bag);
             
-            return $this->redirect( $this->generateUrl("CyclogramKnowatHomeBundle_eligible") );
+            return $this->redirect( $this->generateUrl("CyclogramKnowatHomeBundle_eligible", array('studyCode' => $studyCode)) );
         } else {
             $logger = $this->get('logger');
             $logger->err('PARTICIPANT NOT ELIGIBLE ');
-            return $this->redirect( $this->generateUrl("CyclogramKnowatHomeBundle_notEligible") );
+            return $this->redirect( $this->generateUrl("CyclogramKnowatHomeBundle_notEligible", array('studyCode' => $studyCode)) );
         }
     }
 
-    public function disclaimerAction()
+    public function disclaimerAction($studyCode)
     {
         $session = $this->get("session");
         $lastPicN = $session->get("picN");
@@ -474,7 +484,7 @@ class DefaultController extends Controller
         $pageText['title'] = "Consent";
         $pageText['consent'] = $studyContent->getStudyConsent();
 
-        return $this->render('CyclogramKnowatHomeBundle:website:disclaimer.html.twig', array("pageText"=>$pageText));
+        return $this->render('CyclogramKnowatHomeBundle:website:disclaimer.html.twig', array("pageText"=>$pageText, 'studyCode' => $studyCode));
     }
 
     public function noConsentAction()

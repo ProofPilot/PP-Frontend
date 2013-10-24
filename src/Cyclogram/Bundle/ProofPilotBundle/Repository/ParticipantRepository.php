@@ -157,6 +157,19 @@ class ParticipantRepository extends EntityRepository implements
                 ->getSingleScalarResult();
     }
     
+    public function countAllInterventions($interventionCode) {
+        return $this->getEntityManager()
+        ->createQuery('SELECT COUNT(p) FROM CyclogramProofPilotBundle:ParticipantInterventionLink pil
+                INNER JOIN pil.participant p
+                INNER JOIN pil.intervention i
+                WHERE i.interventionCode = :interventionCode
+                ')
+                ->setParameters(array(
+                        'interventionCode' => $interventionCode,
+                ))
+                ->getSingleScalarResult();
+    }
+    
     
     public function isEnrolledInStudy($participant, $studyCode) {
         $result = $this->getEntityManager()

@@ -13,7 +13,7 @@
     <div id="wrapper" class="container">
 
         <div class="logo" style="margin-bottom: 15px;">
-            <a href="{{ path("CyclogramKnowatHomeBundle_homepage") }}"><img src="/bundles/cyclogramknowathome/images/website/logo-red.png" border="0" /></a>
+            <a href="{{ path("CyclogramKnowatHomeBundle_homepage", {'studyCode' : studyCode}) }}"><img src="/bundles/cyclogramknowathome/images/website/logo-red.png" border="0" /></a>
         </div>
 
         <br />
@@ -28,7 +28,7 @@
 
         <div class="columns six">
             <ul class="mainNavButtons">
-                <li><a class="NavButton" href="{{ path("CyclogramKnowatHomeBundle_disclaimer") }}">ARE YOU ELIGIBLE?</a></li>
+                <li><a class="NavButton" href="{{ path("CyclogramKnowatHomeBundle_disclaimer", {'studyCode' : studyCode}) }}">ARE YOU ELIGIBLE?</a></li>
             </ul>
             <br /><br /><br /><br />
         </div>

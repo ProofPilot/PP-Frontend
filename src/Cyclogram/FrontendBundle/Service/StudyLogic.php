@@ -18,6 +18,8 @@
 */
 namespace Cyclogram\FrontendBundle\Service;
 
+use Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantSurveyLink;
+
 use Cyclogram\Bundle\ProofPilotBundle\Entity\Study;
 
 use Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantInterventionLink;
@@ -147,6 +149,7 @@ class StudyLogic
         $participantLink->setParticipant($participant);
         $participantLink->setSidId($surveyId);
         $participantLink->setSaveId($saveId);
+        $participantLink->setStatus(ParticipantSurveyLink::STATUS_ACTIVE);
 
         $em->persist($participantLink);
         $em->flush();

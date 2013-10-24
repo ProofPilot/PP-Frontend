@@ -32,9 +32,10 @@ _root:
 
 CyclogramKnowatHomeBundle:
     resource: "@CyclogramKnowatHomeBundle/Resources/config/routing.yml"
-    prefix:   /{_locale}/knowathome
+    prefix:   /{_locale}/{studyCode}
     requirements:
         _locale: en|es|pt|fr|es_MX|pt_BR
+        studyCode: knowathome|eStamp4
 
 cyclogram_frontend:
     resource: "@CyclogramFrontendBundle/Controller/"

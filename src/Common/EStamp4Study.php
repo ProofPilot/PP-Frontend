@@ -17,9 +17,8 @@
  *
  */
 namespace Common;
-use Cyclogram\Bundle\ProofPilotBundle\Entity\Orders;
-
 use Cyclogram\Bundle\ProofPilotBundle\Entity\Study;
+use Cyclogram\Bundle\ProofPilotBundle\Entity\Orders;
 use Cyclogram\Bundle\ProofPilotBundle\Entity\Specimen;
 use Cyclogram\Bundle\ProofPilotBundle\Entity\SpecimenHistory;
 use Cyclogram\Bundle\ProofPilotBundle\Entity\Test;
@@ -27,6 +26,7 @@ use Cyclogram\Bundle\ProofPilotBundle\Entity\OrderSpecimenLink;
 use Cyclogram\Bundle\ProofPilotBundle\Entity\SpecimenTestLink;
 use Cyclogram\Bundle\ProofPilotBundle\Entity\TestHistory;
 use Cyclogram\Bundle\ProofPilotBundle\Entity\User;
+use Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantSurveyLink;
 
 use Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantInterventionLink;
 
@@ -36,39 +36,70 @@ use Symfony\Component\DependencyInjection\Container;
 use Cyclogram\Bundle\ProofPilotBundle\Entity\Participant;
 use Cyclogram\CyclogramCommon;
 
-class KAHStudy extends AbstractStudy implements StudyInterface
+class EStamp4Study extends AbstractStudy implements StudyInterface
 {
+
     public function getArmCodes()
     {
-        return array('Phase3Default');
+        return array('eStamp4InterventionArm', 'eStamp4ControlArm', 'eStamp4HIVPositiveArm');
     }
 
     public function getInterventionCodes()
     {
-        return array('KAHPhase3Baseline', 'KAHPhase3TestPackage',
-                'KAHPhase3ReportResults', 'KAHPhase3FollowUp');
+        return array('eStamp4HIVBaseline','eStamp4HIVFollow-up','eStamp4Baseline',
+                     'eStamp4Self-TestResults','eStamp4RCTFollow-Up4','eStamp4Self-TestResultsatCompletion');
     }
 
     public function studyRegistration($participant, $surveyId, $saveId)
     {
         $em = $this->container->get('doctrine')->getManager();
-        //Add participants to Default Arm at the moment.
-        $armData = $em->getRepository('CyclogramProofPilotBundle:Arm')
-                ->findOneByArmCode('Phase3Default');
-        $armData = (!is_null($armData)) ? $armData : false;
-
-        $ArmParticipantLink = null;
-        if ($armData) {
-            $ArmParticipantLink = new \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantArmLink();
-            $ArmParticipantLink->setArm($armData);
-            $ArmParticipantLink->setParticipant($participant);
-            $ArmParticipantLink->setStatus(ParticipantArmLink::STATUS_ACTIVE);
-            $ArmParticipantLink
-                    ->setParticipantArmLinkDatetime(new \DateTime("now"));
+        $participantSurveyLink = $em
+                ->getRepository(
+                        'CyclogramProofPilotBundle:ParticipantSurveyLink')
+                ->findOneBy(array('saveId'=>$saveId, 'sidId'=>$surveyId));
+        if (isset($participantSurveyLink)) {
+            $participantSurveyLink->setStatus(ParticipantSurveyLink::STATUS_CLOSED);
+            $em->persist($participantSurveyLink);
+            $em->flush();
+            $surveyResult = $this->container->get('custom_db')->getFactory('ElegibilityCustom')
+                                            ->getSurveyResponseData($saveId, $surveyId);
+            if (isset($surveyResult['232486X150X1991']) && ($surveyResult['232486X150X1991'] == "A2")) {
+                $HIVPositiveArm = $em->getRepository('CyclogramProofPilotBundle:Arm')->findOneByArmCode('eStamp4HIVPositiveArm');
+                $ArmParticipantLink = new \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantArmLink();
+                $ArmParticipantLink->setArm($HIVPositiveArm);
+                $ArmParticipantLink->setParticipant($participant);
+                $ArmParticipantLink->setStatus(ParticipantArmLink::STATUS_ACTIVE);
+                $ArmParticipantLink->setParticipantArmLinkDatetime(new \DateTime("now"));
+            } else {
+                $interventionArmParticipants = $em->getRepository('CyclogramProofPilotBundle:Participant')
+                                              ->countAllArms('eStamp4InterventionArm');
+                $controlArmParticipants = $em->getRepository('CyclogramProofPilotBundle:Participant')
+                                                ->countAllArms('eStamp4ControlArm');
+                $interventionArm = $em->getRepository('CyclogramProofPilotBundle:Arm')->findOneByArmCode('eStamp4InterventionArm');
+                $controlArm = $em->getRepository('CyclogramProofPilotBundle:Arm')->findOneByArmCode('eStamp4ControlArm');
+                if ($interventionArmParticipants > $controlArmParticipants) {
+                    $ArmParticipantLink = new \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantArmLink();
+                    $ArmParticipantLink->setArm($controlArm);
+                    $ArmParticipantLink->setParticipant($participant);
+                    $ArmParticipantLink->setStatus(ParticipantArmLink::STATUS_ACTIVE);
+                    $ArmParticipantLink->setParticipantArmLinkDatetime(new \DateTime("now"));
+                } elseif ($interventionArmParticipants < $controlArmParticipants) {
+                    $ArmParticipantLink = new \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantArmLink();
+                    $ArmParticipantLink->setArm($interventionArm);
+                    $ArmParticipantLink->setParticipant($participant);
+                    $ArmParticipantLink->setStatus(ParticipantArmLink::STATUS_ACTIVE);
+                    $ArmParticipantLink->setParticipantArmLinkDatetime(new \DateTime("now"));
+                } else {
+                    $ArmParticipantLink = new \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantArmLink();
+                    $ArmParticipantLink->setArm($interventionArm);
+                    $ArmParticipantLink->setParticipant($participant);
+                    $ArmParticipantLink->setStatus(ParticipantArmLink::STATUS_ACTIVE);
+                    $ArmParticipantLink->setParticipantArmLinkDatetime(new \DateTime("now"));
+                }
+            }
+            $em->persist($ArmParticipantLink);
+            $em->flush();
         }
-        $em->persist($ArmParticipantLink);
-
-        $em->flush();
     }
 
     public function interventionLogic($participant)
@@ -76,406 +107,427 @@ class KAHStudy extends AbstractStudy implements StudyInterface
         $em = $this->container->get('doctrine')->getManager();
         $study = $em->getRepository('CyclogramProofPilotBundle:Study')
                 ->findOneByStudyCode($this->getStudyCode());
+        $participantArm = $em->getRepository('CyclogramProofPilotBundle:ParticipantArmLink')->getStudyArm($participant, $this->getStudyCode());
+        $participantArmName = $participantArm->getArm()->getArmCode();
         //get all participant intervention links
-        $interventionLinks = $em
-                ->getRepository(
-                        'CyclogramProofPilotBundle:ParticipantInterventionLink')
-                ->getStudyInterventionLinks($participant, $this->getStudyCode());
+        $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')
+                                ->getStudyInterventionLinks($participant, $this->getStudyCode());
         if (($participant->getParticipantEmailConfirmed() == true)
                 && empty($interventionLinks)) {
-            $participantInterventionLink = new ParticipantInterventionLink();
-            $intervention = $em
-                    ->getRepository('CyclogramProofPilotBundle:Intervention')
-                    ->findOneByInterventionCode('KAHPhase3Baseline');
-            $participantInterventionLink->setIntervention($intervention);
-            $participantInterventionLink->setParticipant($participant);
-            $participantInterventionLink
-                    ->setParticipantInterventionLinkDatetimeStart(
-                            new \DateTime("now"));
-            $participantInterventionLink->setStatus(ParticipantInterventionLink::STATUS_ACTIVE);
+            if ($participantArmName == 'eStamp4HIVPositiveArm') {
+                $participantInterventionLink = new ParticipantInterventionLink();
+                $intervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')
+                                   ->findOneByInterventionCode('eStamp4HIVBaseline');
+                $participantInterventionLink->setIntervention($intervention);
+                $participantInterventionLink->setParticipant($participant);
+                $participantInterventionLink->setParticipantInterventionLinkDatetimeStart(new \DateTime("now"));
+                $participantInterventionLink->setStatus(ParticipantInterventionLink::STATUS_ACTIVE);
+            } else {
+                $participantInterventionLink = new ParticipantInterventionLink();
+                $intervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')
+                ->findOneByInterventionCode('eStamp4Baseline');
+                $participantInterventionLink->setIntervention($intervention);
+                $participantInterventionLink->setParticipant($participant);
+                $participantInterventionLink->setParticipantInterventionLinkDatetimeStart(new \DateTime("now"));
+                $participantInterventionLink->setStatus(ParticipantInterventionLink::STATUS_ACTIVE);
+            }
             $em->persist($participantInterventionLink);
             $em->flush($participantInterventionLink);
         }
-
         foreach ($interventionLinks as $interventionLink) {
             $interventionCode = $interventionLink->getIntervention()
-                    ->getInterventionCode();
+            ->getInterventionCode();
             $intervention = $interventionLink->getIntervention();
             $status = $interventionLink->getStatus();
             switch ($interventionCode) {
-            case "KAHPhase3Baseline":
-                $surveyId = $intervention->getSidId();
-                if ($status == ParticipantInterventionLink::STATUS_ACTIVE) {
-                    $passed = $em
-                            ->getRepository(
-                                    'CyclogramProofPilotBundle:ParticipantSurveyLink')
-                            ->checkIfSurveyPassed($participant, $surveyId);
-
-                    if ($passed) {
-                        $surveyLink = $em
-                                ->getRepository(
-                                        'CyclogramProofPilotBundle:ParticipantSurveyLink')
-                                ->findOneBy(
-                                        array('participant' => $participant,
-                                                'sidId' => $surveyId));
-
-                        $surveyResult = $this->container->get('custom_db')
-                                ->getFactory('ElegibilityCustom')
-                                ->getSurveyResponseData(
-                                        $surveyLink->getSaveId(), $surveyId);
-                        if (isset($surveyResult['169385X619X5932'])) {
-                            switch ($surveyResult['169385X619X5932']) {
-                            case "A1":
-                                $incentiveType = $em
-                                        ->getRepository(
-                                                'CyclogramProofPilotBundle:IncentiveType')
-                                        ->findOneByIncentiveTypeName(
-                                                'Paypal Gift Card');
-                                break;
-                            case "A2":
-                                $incentiveType = $em
-                                        ->getRepository(
-                                                'CyclogramProofPilotBundle:IncentiveType')
-                                        ->findOneByIncentiveTypeName(
-                                                'Amazon Gift Card');
-                                break;
-                            case "A3":
-                                $incentiveType = $em
-                                        ->getRepository(
-                                                'CyclogramProofPilotBundle:IncentiveType')
-                                        ->findOneByIncentiveTypeName('None');
-                                break;
+                case 'eStamp4HIVBaseline' :
+                    $surveyId = $intervention->getSidId();
+                    if ($status == ParticipantInterventionLink::STATUS_ACTIVE) {
+                        $passed = $em->getRepository('CyclogramProofPilotBundle:ParticipantSurveyLink')
+                        ->checkIfSurveyPassed($participant, $surveyId);
+                        if ($passed) {
+                            $surveyLink = $em->getRepository('CyclogramProofPilotBundle:ParticipantSurveyLink')
+                                             ->findOneBy(array('participant' => $participant,'sidId' => $surveyId));
+                            $surveyResult = $this->container->get('custom_db')->getFactory('ElegibilityCustom')->getSurveyResponseData($surveyLink->getSaveId(), $surveyId);
+                            if (isset($surveyResult['393626X344X3103'])) {
+                                switch ($surveyResult['393626X344X3103']) {
+                                    case "A1":
+                                        $incentiveType = $em->getRepository('CyclogramProofPilotBundle:IncentiveType')->findOneByIncentiveTypeName('Paypal Gift Card');
+                                        break;
+                                    case "A2":
+                                        $incentiveType = $em->getRepository('CyclogramProofPilotBundle:IncentiveType')->findOneByIncentiveTypeName('Amazon Gift Card');
+                                        break;
+                                    case "A3":
+                                        $incentiveType = $em->getRepository('CyclogramProofPilotBundle:IncentiveType')->findOneByIncentiveTypeName('None');
+                                        break;
+                                }
+                            }
+                            $this->createIncentive($participant, $intervention, $incentiveType->getIncentiveTypeName());
+                            $interventionLink->setStatus(ParticipantInterventionLink::STATUS_CLOSED);
+                            $em->persist($interventionLink);
+                            $em->flush();
+                        }
+                    }
+                    break;
+                case 'eStamp4HIVFollow-up':
+                    $surveyId = $intervention->getSidId();
+                    if ($status == ParticipantInterventionLink::STATUS_ACTIVE) {
+                        $passed = $em->getRepository('CyclogramProofPilotBundle:ParticipantSurveyLink')
+                                     ->checkIfSurveyPassed($participant, $surveyId);
+                        if ($passed) {
+                            $surveyLink = $em->getRepository('CyclogramProofPilotBundle:ParticipantSurveyLink')->findOneBy(array('participant'=>$participant, 'sidId'=>$surveyId));
+                                
+                            $this->createIncentive($participant, $intervention);
+                            $interventionLink->setStatus(ParticipantInterventionLink::STATUS_CLOSED);
+                            $em->persist($interventionLink);
+                            $em->flush();
+                            $HIVFollowUpLinkCount = $em->getRepository('CyclogramProofPilotBundle:Participant')->countAllInterventions('eStamp4HIVFollow-up');
+                            if ($HIVFollowUpLinkCount <= 3) {
+                                $intervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')
+                                                   ->findOneByInterventionCode("eStamp4HIVWelcomeKit");
+                                $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')
+                                               ->addParticipantInterventionLink($participant,$intervention, false);
+                                $this->createIncentive($participant, $intervention);
+                                //inserting order
+                                $order = new Orders();
+                                $order->setOrderDatetime(new \Datetime('now'));
+                                $courier = $em->getRepository('CyclogramProofPilotBundle:Courier')->find(1);
+                                $order->setCourier($courier);
+                                $productCourier = $em->getRepository('CyclogramProofPilotBundle:CourierProduct')->find(1);
+                                $order->setCourierProduct($productCourier);
+                                $order->setParticipant($participant);
+                                $order->setStudy($study);
+                                $order->setStatus(Orders::STATUS_ACTIVE);
+                                $em->persist($order);
+                                $em->flush();
+                                //inserting speciment
+                                $specimen = new Specimen();
+                                $specimen->setSpecimenName('STE123');
+                                $kitNumber = "SPKN-" . $participant->getParticipantId(). "-TE";
+                                $kitNumber = "";
+                                $specimen->setSpecimenKitNumber($kitNumber);
+                                $specimen->setSpecimenPhase($em->getRepository('CyclogramProofPilotBundle:SpecimenPhase')->find(1));
+                                $specimen->setSpecimenFdaApprovalStatus(1);
+                                $specimen->setSpecimenCollectionTool($em->getRepository('CyclogramProofPilotBundle:SpecimenCollectionTool')->find(1));
+                                $specimen->setCollectorForum($em->getRepository('CyclogramProofPilotBundle:CollectorForum')->find(3));
+                                $specimen->setStatus(Specimen::STATUS_ACTIVE);
+                                $em->persist($specimen);
+                                $em->flush();
+                                //inserting specimen history
+                                $specimen_history = new SpecimenHistory();
+                                $specimen_history->setSpecimenHistoryDatetime(new \DateTime("now"));
+                                $specimen_history->setSpecimenHistoryIpAddress($_SERVER['REMOTE_ADDR']);
+                                $specimen_history->setSpecimen($em->getRepository('CyclogramProofPilotBundle:Specimen')->find($specimen->getSpecimenId()));
+                                $specimen_history->setSpecimenPhase($em->getRepository('CyclogramProofPilotBundle:SpecimenPhase')->find(1));
+                                $representative = $em->getRepository('CyclogramProofPilotBundle:Representative')->find(1);
+                                $specimen_history->setRepresentative($representative);
+                                $em->persist($specimen_history);
+                                $em->flush();
+                                //inserting test
+                                $test = new Test();
+                                $test->setTestDateCreation(new \DateTime("now"));
+                                $kitNumber = "TKN-" . $participant->getParticipantId(). "-TE";
+                                $kitNumber = "";
+                                $test->getTestKitNumber($kitNumber);
+                                $testName = "TNM-" . $participant->getParticipantId(). "-TE";
+                                $test->setTestName($testName);
+                                $test->setTestKitRegistered(1);
+                                $test->setTestType($em->getRepository('CyclogramProofPilotBundle:TestType')->findOneByTestTypeName('eStamp4HIVWelcomeKit'));
+                                $test->setTestPhase($em->getRepository('CyclogramProofPilotBundle:TestPhase')->find(1));
+                                $test->setTestPreliminarResult($em->getRepository('CyclogramProofPilotBundle:TestPreliminarResult')->find(1));
+                                $test->setCollectorForum($em->getRepository('CyclogramProofPilotBundle:CollectorForum')->find(3));
+                                $test->setTestOutcomeType($em->getRepository('CyclogramProofPilotBundle:TestOutcomeType')->find(1));
+                                $test->setTestProccesingType($em->getRepository('CyclogramProofPilotBundle:TestProccesingType')->find(1));
+                                $test->setStatus(Test::STATUS_ACTIVE);
+                                $em->persist($test);
+                                $em->flush();
+                                //inserting order-specimen-link
+                                $order_specimen_link = new OrderSpecimenLink();
+                                $order_specimen_link->setOrder($order);
+                                $order_specimen_link->setSpecimen($em->getRepository('CyclogramProofPilotBundle:Specimen')->find($specimen->getSpecimenId()));
+                                $em->persist($order_specimen_link);
+                                $em->flush();
+                                //inserting specimen-test-link
+                                $specimen_test_link = new SpecimenTestLink();
+                                $specimen_test_link->setTestId($test->getTestId());
+                                $specimen_test_link->setSpecimen($em->getRepository('CyclogramProofPilotBundle:Specimen')->find($specimen->getSpecimenId()));
+                                $em->persist($specimen_test_link);
+                                $em->flush();
+                                //inserting order-history
+                                $test_history = new TestHistory();
+                                $test_history->setTestHistoryDatetime(new \DateTime("now"));
+                                $test_history->setTest($em->getRepository('CyclogramProofPilotBundle:Test')->find($test->getTestId()));
+                                $test_history->setTestPhase($em->getRepository('CyclogramProofPilotBundle:TestPhase')->find(1));
+                                $test_history->setRepresentative($representative);
+                                $em->persist($test_history);
+                                $em->flush();
                             }
                         }
-
-                        $this
-                                ->createIncentive($participant, $intervention,
-                                        $incentiveType->getIncentiveTypeName());
-                        $interventionLink->setStatus(ParticipantInterventionLink::STATUS_CLOSED);
-                        $em->persist($interventionLink);
-                        $em->flush();
-                        $status = ParticipantInterventionLink::STATUS_CLOSED;
-
-                        $intervention = $em
-                                ->getRepository(
-                                        'CyclogramProofPilotBundle:Intervention')
-                                ->findOneByInterventionCode(
-                                        "KAHPhase3TestPackage");
-                        $em
-                                ->getRepository(
-                                        'CyclogramProofPilotBundle:ParticipantInterventionLink')
-                                ->addParticipantInterventionLink($participant,
-                                        $intervention);
-                        $this->createIncentive($participant, $intervention);
-                        //inserting order
-                        $order = new Orders();
-                        $order->setOrderDatetime(new \Datetime('now'));
-                        $courier = $em
-                                ->getRepository(
-                                        'CyclogramProofPilotBundle:Courier')
-                                ->find(1);
-                        $order->setCourier($courier);
-                        $productCourier = $em
-                                ->getRepository(
-                                        'CyclogramProofPilotBundle:CourierProduct')
-                                ->find(1);
-                        $order->setCourierProduct($productCourier);
-                        $order->setParticipant($participant);
-                        $order->setStudy($study);
-
-                        $order->setStatus(Orders::STATUS_ACTIVE);
-                        $em->persist($order);
-                        $em->flush();
-                        //inserting speciment
-                        $specimen = new Specimen();
-                        $specimen->setSpecimenName('STE123');
-                        $kitNumber = "SPKN-" . $participant->getParticipantId()
-                                . "-TE";
-                        $kitNumber = "";
-                        $specimen->setSpecimenKitNumber($kitNumber);
-                        $specimen
-                                ->setSpecimenPhase(
-                                        $em
-                                                ->getRepository(
-                                                        'CyclogramProofPilotBundle:SpecimenPhase')
-                                                ->find(1));
-                        $specimen->setSpecimenFdaApprovalStatus(1);
-                        $specimen
-                                ->setSpecimenCollectionTool(
-                                        $em
-                                                ->getRepository(
-                                                        'CyclogramProofPilotBundle:SpecimenCollectionTool')
-                                                ->find(1));
-                        $specimen
-                                ->setCollectorForum(
-                                        $em
-                                                ->getRepository(
-                                                        'CyclogramProofPilotBundle:CollectorForum')
-                                                ->find(3));
-                        $specimen
-                                ->setStatus(Specimen::STATUS_ACTIVE);
-                        $em->persist($specimen);
-                        $em->flush();
-                        //inserting specimen history
-                        $specimen_history = new SpecimenHistory();
-                        $specimen_history
-                                ->setSpecimenHistoryDatetime(
-                                        new \DateTime("now"));
-                        $specimen_history
-                                ->setSpecimenHistoryIpAddress(
-                                        $_SERVER['REMOTE_ADDR']);
-                        $specimen_history
-                                ->setSpecimen(
-                                        $em
-                                                ->getRepository(
-                                                        'CyclogramProofPilotBundle:Specimen')
-                                                ->find(
-                                                        $specimen
-                                                                ->getSpecimenId()));
-                        $specimen_history
-                                ->setSpecimenPhase(
-                                        $em
-                                                ->getRepository(
-                                                        'CyclogramProofPilotBundle:SpecimenPhase')
-                                                ->find(1));
-                        $representative = $em
-                                ->getRepository(
-                                        'CyclogramProofPilotBundle:Representative')
-                                ->find(1);
-                        $specimen_history->setRepresentative($representative);
-                        $em->persist($specimen_history);
-                        $em->flush();
-                        //inserting test
-                        $test = new Test();
-                        $test->setTestDateCreation(new \DateTime("now"));
-                        $kitNumber = "TKN-" . $participant->getParticipantId()
-                                . "-TE";
-                        $kitNumber = "";
-                        $test->getTestKitNumber($kitNumber);
-                        $testName = "TNM-" . $participant->getParticipantId()
-                                . "-TE";
-                        $test->setTestName($testName);
-                        $test->setTestKitRegistered(1);
-                        $test
-                                ->setTestType(
-                                        $em
-                                                ->getRepository(
-                                                        'CyclogramProofPilotBundle:TestType')
-                                                ->find(1));
-                        $test
-                                ->setTestPhase(
-                                        $em
-                                                ->getRepository(
-                                                        'CyclogramProofPilotBundle:TestPhase')
-                                                ->find(1));
-                        $test
-                                ->setTestPreliminarResult(
-                                        $em
-                                                ->getRepository(
-                                                        'CyclogramProofPilotBundle:TestPreliminarResult')
-                                                ->find(1));
-                        $test
-                                ->setCollectorForum(
-                                        $em
-                                                ->getRepository(
-                                                        'CyclogramProofPilotBundle:CollectorForum')
-                                                ->find(3));
-                        $test
-                                ->setTestOutcomeType(
-                                        $em
-                                                ->getRepository(
-                                                        'CyclogramProofPilotBundle:TestOutcomeType')
-                                                ->find(1));
-                        $test
-                                ->setTestProccesingType(
-                                        $em
-                                                ->getRepository(
-                                                        'CyclogramProofPilotBundle:TestProccesingType')
-                                                ->find(1));
-                        $test
-                                ->setStatus(Test::STATUS_ACTIVE);
-                        $em->persist($test);
-                        $em->flush();
-                        //inserting order-specimen-link
-                        $order_specimen_link = new OrderSpecimenLink();
-                        $order_specimen_link->setOrder($order);
-                        $order_specimen_link
-                                ->setSpecimen(
-                                        $em
-                                                ->getRepository(
-                                                        'CyclogramProofPilotBundle:Specimen')
-                                                ->find(
-                                                        $specimen
-                                                                ->getSpecimenId()));
-                        $em->persist($order_specimen_link);
-                        $em->flush();
-                        //inserting specimen-test-link
-                        $specimen_test_link = new SpecimenTestLink();
-                        $specimen_test_link->setTestId($test->getTestId());
-                        $specimen_test_link
-                                ->setSpecimen(
-                                        $em
-                                                ->getRepository(
-                                                        'CyclogramProofPilotBundle:Specimen')
-                                                ->find(
-                                                        $specimen
-                                                                ->getSpecimenId()));
-                        $em->persist($specimen_test_link);
-                        $em->flush();
-                        //inserting order-history
-                        $test_history = new TestHistory();
-                        $test_history
-                                ->setTestHistoryDatetime(new \DateTime("now"));
-                        $test_history
-                                ->setTest(
-                                        $em
-                                                ->getRepository(
-                                                        'CyclogramProofPilotBundle:Test')
-                                                ->find($test->getTestId()));
-                        $test_history
-                                ->setTestPhase(
-                                        $em
-                                                ->getRepository(
-                                                        'CyclogramProofPilotBundle:TestPhase')
-                                                ->find(1));
-                        $test_history->setRepresentative($representative);
-                        $em->persist($test_history);
-                        $em->flush();
                     }
-                }
-                break;
-//             case "KAHPhase3TestPackage":
-//                 $surveyId = $intervention->getSidId();
-//                 if ($status == ParticipantInterventionLink::STATUS_ACTIVE) {
-//                     $this->createIncentive($participant, $intervention);
-//                     $interventionLink->setStatus(ParticipantInterventionLink::STATUS_CLOSED);
-//                     $em->persist($interventionLink);
-//                     $em->flush();
-//                     $status = ParticipantInterventionLink::STATUS_CLOSED;
-//                 }
-//                 break;
-            case "KAHPhase3ReportResults":
-                $surveyId = $intervention->getSidId();
-                if ($status == ParticipantInterventionLink::STATUS_ACTIVE) {
-                    $passed = $em
-                            ->getRepository(
-                                    'CyclogramProofPilotBundle:ParticipantSurveyLink')
-                            ->checkIfSurveyPassed($participant, $surveyId);
-
-                    if ($passed) {
-                        $surveyLink = $em
-                                ->getRepository(
-                                        'CyclogramProofPilotBundle:ParticipantSurveyLink')
-                                ->findOneBy(
-                                        array('participant' => $participant,
-                                                'sidId' => $surveyId));
-
-                        $surveyResult = $this->container->get('custom_db')
-                                ->getFactory('ElegibilityCustom')
-                                ->getSurveyResponseData(
-                                        $surveyLink->getSaveId(), $surveyId);
-                        if (isset($surveyResult['295666X628X6127'])) {
-                            switch ($surveyResult['295666X628X6127']) {
-                            case "A1":
-                                $incentiveType = $em
-                                        ->getRepository(
-                                                'CyclogramProofPilotBundle:IncentiveType')
-                                        ->findOneByIncentiveTypeName(
-                                                'Paypal Gift Card');
-                                break;
-                            case "A2":
-                                $incentiveType = $em
-                                        ->getRepository(
-                                                'CyclogramProofPilotBundle:IncentiveType')
-                                        ->findOneByIncentiveTypeName(
-                                                'Amazon Gift Card');
-                                break;
-                            case "A3":
-                                $incentiveType = $em
-                                        ->getRepository(
-                                                'CyclogramProofPilotBundle:IncentiveType')
-                                        ->findOneByIncentiveTypeName('None');
-                                break;
+                    break;
+                case 'eStamp4Baseline' :
+                    $surveyId = $intervention->getSidId();
+                    if ($status == ParticipantInterventionLink::STATUS_ACTIVE) {
+                        $passed = $em->getRepository('CyclogramProofPilotBundle:ParticipantSurveyLink')
+                        ->checkIfSurveyPassed($participant, $surveyId);
+                        if ($passed) {
+                            $surveyLink = $em->getRepository('CyclogramProofPilotBundle:ParticipantSurveyLink')
+                            ->findOneBy(array('participant' => $participant,'sidId' => $surveyId));
+                            $surveyResult = $this->container->get('custom_db')->getFactory('ElegibilityCustom')->getSurveyResponseData($surveyLink->getSaveId(), $surveyId);
+                            if (isset($surveyResult['819549X735X7392'])) {
+                                switch ($surveyResult['819549X735X7392']) {
+                                    case "A1":
+                                        $incentiveType = $em->getRepository('CyclogramProofPilotBundle:IncentiveType')->findOneByIncentiveTypeName('Paypal Gift Card');
+                                        break;
+                                    case "A2":
+                                        $incentiveType = $em->getRepository('CyclogramProofPilotBundle:IncentiveType')->findOneByIncentiveTypeName('Amazon Gift Card');
+                                        break;
+                                    case "A3":
+                                        $incentiveType = $em->getRepository('CyclogramProofPilotBundle:IncentiveType')->findOneByIncentiveTypeName('None');
+                                        break;
+                                }
+                            }
+                            $this->createIncentive($participant, $intervention, $incentiveType->getIncentiveTypeName());
+                            $interventionLink->setStatus(ParticipantInterventionLink::STATUS_CLOSED);
+                            $em->persist($interventionLink);
+                            $em->flush();
+                            if ($participantArmName == 'eStamp4InterventionArm'){
+                                $intervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')
+                                ->findOneByInterventionCode("eStamp4WelcomeKit");
+                                $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')
+                                        ->addParticipantInterventionLink($participant,$intervention);
+                                $this->createIncentive($participant, $intervention);
+                                //inserting order
+                                $order = new Orders();
+                                $order->setOrderDatetime(new \Datetime('now'));
+                                $courier = $em->getRepository('CyclogramProofPilotBundle:Courier')->find(1);
+                                $order->setCourier($courier);
+                                $productCourier = $em->getRepository('CyclogramProofPilotBundle:CourierProduct')->find(1);
+                                $order->setCourierProduct($productCourier);
+                                $order->setParticipant($participant);
+                                $order->setStudy($study);
+                                $order->setStatus(Orders::STATUS_ACTIVE);
+                                $em->persist($order);
+                                $em->flush();
+                                //inserting speciment
+                                $specimen = new Specimen();
+                                $specimen->setSpecimenName('STE123');
+                                $kitNumber = "SPKN-" . $participant->getParticipantId(). "-TE";
+                                $kitNumber = "";
+                                $specimen->setSpecimenKitNumber($kitNumber);
+                                $specimen->setSpecimenPhase($em->getRepository('CyclogramProofPilotBundle:SpecimenPhase')->find(1));
+                                $specimen->setSpecimenFdaApprovalStatus(1);
+                                $specimen->setSpecimenCollectionTool($em->getRepository('CyclogramProofPilotBundle:SpecimenCollectionTool')->find(1));
+                                $specimen->setCollectorForum($em->getRepository('CyclogramProofPilotBundle:CollectorForum')->find(3));
+                                $specimen->setStatus(Specimen::STATUS_ACTIVE);
+                                $em->persist($specimen);
+                                $em->flush();
+                                //inserting specimen history
+                                $specimen_history = new SpecimenHistory();
+                                $specimen_history->setSpecimenHistoryDatetime(new \DateTime("now"));
+                                $specimen_history->setSpecimenHistoryIpAddress($_SERVER['REMOTE_ADDR']);
+                                $specimen_history->setSpecimen($em->getRepository('CyclogramProofPilotBundle:Specimen')->find($specimen->getSpecimenId()));
+                                $specimen_history->setSpecimenPhase($em->getRepository('CyclogramProofPilotBundle:SpecimenPhase')->find(1));
+                                $representative = $em->getRepository('CyclogramProofPilotBundle:Representative')->find(1);
+                                $specimen_history->setRepresentative($representative);
+                                $em->persist($specimen_history);
+                                $em->flush();
+                                //inserting test
+                                $test = new Test();
+                                $test->setTestDateCreation(new \DateTime("now"));
+                                $kitNumber = "TKN-" . $participant->getParticipantId(). "-TE";
+                                $kitNumber = "";
+                                $test->getTestKitNumber($kitNumber);
+                                $testName = "TNM-" . $participant->getParticipantId(). "-TE";
+                                $test->setTestName($testName);
+                                $test->setTestKitRegistered(1);
+                                $test->setTestType($em->getRepository('CyclogramProofPilotBundle:TestType')->findOneByTestTypeName('eStamp4WelcomeKit'));
+                                $test->setTestPhase($em->getRepository('CyclogramProofPilotBundle:TestPhase')->find(1));
+                                $test->setTestPreliminarResult($em->getRepository('CyclogramProofPilotBundle:TestPreliminarResult')->find(1));
+                                $test->setCollectorForum($em->getRepository('CyclogramProofPilotBundle:CollectorForum')->find(3));
+                                $test->setTestOutcomeType($em->getRepository('CyclogramProofPilotBundle:TestOutcomeType')->find(1));
+                                $test->setTestProccesingType($em->getRepository('CyclogramProofPilotBundle:TestProccesingType')->find(1));
+                                $test->setStatus(Test::STATUS_ACTIVE);
+                                $em->persist($test);
+                                $em->flush();
+                                //inserting order-specimen-link
+                                $order_specimen_link = new OrderSpecimenLink();
+                                $order_specimen_link->setOrder($order);
+                                $order_specimen_link->setSpecimen($em->getRepository('CyclogramProofPilotBundle:Specimen')->find($specimen->getSpecimenId()));
+                                $em->persist($order_specimen_link);
+                                $em->flush();
+                                //inserting specimen-test-link
+                                $specimen_test_link = new SpecimenTestLink();
+                                $specimen_test_link->setTestId($test->getTestId());
+                                $specimen_test_link->setSpecimen($em->getRepository('CyclogramProofPilotBundle:Specimen')->find($specimen->getSpecimenId()));
+                                $em->persist($specimen_test_link);
+                                $em->flush();
+                                //inserting order-history
+                                $test_history = new TestHistory();
+                                $test_history->setTestHistoryDatetime(new \DateTime("now"));
+                                $test_history->setTest($em->getRepository('CyclogramProofPilotBundle:Test')->find($test->getTestId()));
+                                $test_history->setTestPhase($em->getRepository('CyclogramProofPilotBundle:TestPhase')->find(1));
+                                $test_history->setRepresentative($representative);
+                                $em->persist($test_history);
+                                $em->flush();
                             }
                         }
-                        $this
-                                ->createIncentive($participant, $intervention,
-                                        $incentiveType->getIncentiveTypeName());
-                        $interventionLink->setStatus(ParticipantInterventionLink::STATUS_CLOSED);
-                        $status = ParticipantInterventionLink::STATUS_CLOSED;
-                        $intervention = $em
-                                ->getRepository(
-                                        'CyclogramProofPilotBundle:Intervention')
-                                ->findOneByInterventionCode("KAHPhase3FollowUp");
-                        $em
-                                ->getRepository(
-                                        'CyclogramProofPilotBundle:ParticipantInterventionLink')
-                                ->addParticipantInterventionLink($participant,
-                                        $intervention);
-                        $em->persist($interventionLink);
-                        $em->flush();
                     }
-                }
-                break;
-            case "KAHPhase3FollowUp":
-                $surveyId = $intervention->getSidId();
-                if ($status == ParticipantInterventionLink::STATUS_ACTIVE) {
-                    $passed = $em
-                            ->getRepository(
-                                    'CyclogramProofPilotBundle:ParticipantSurveyLink')
-                            ->checkIfSurveyPassed($participant, $surveyId);
-                    if ($passed) {
-                        $surveyLink = $em
-                                ->getRepository(
-                                        'CyclogramProofPilotBundle:ParticipantSurveyLink')
-                                ->findOneBy(
-                                        array('participant' => $participant,
-                                                'sidId' => $surveyId));
-
-                        $surveyResult = $this->container->get('custom_db')
-                                ->getFactory('ElegibilityCustom')
-                                ->getSurveyResponseData(
-                                        $surveyLink->getSaveId(), $surveyId);
-                        if (isset($surveyResult['543977X635X6190'])) {
-                            switch ($surveyResult['543977X635X6190']) {
-                            case "A1":
-                                $incentiveType = $em
-                                        ->getRepository(
-                                                'CyclogramProofPilotBundle:IncentiveType')
-                                        ->findOneByIncentiveTypeName(
-                                                'Paypal Gift Card');
-                                break;
-                            case "A2":
-                                $incentiveType = $em
-                                        ->getRepository(
-                                                'CyclogramProofPilotBundle:IncentiveType')
-                                        ->findOneByIncentiveTypeName(
-                                                'Amazon Gift Card');
-                                break;
-                            case "A3":
-                                $incentiveType = $em
-                                        ->getRepository(
-                                                'CyclogramProofPilotBundle:IncentiveType')
-                                        ->findOneByIncentiveTypeName('None');
-                                break;
+                    break;
+                case 'eStamp4ControlArmIntervention' :
+                    $surveyId = $intervention->getSidId();
+                    if ($status == ParticipantInterventionLink::STATUS_ACTIVE) {
+                        $passed = $em->getRepository('CyclogramProofPilotBundle:ParticipantSurveyLink')
+                        ->checkIfSurveyPassed($participant, $surveyId);
+                        if ($passed) {
+                            $this->createIncentive($participant, $intervention);
+                            $interventionLink->setStatus(ParticipantInterventionLink::STATUS_CLOSED);
+                            $em->persist($interventionLink);
+                            $em->flush();
+                        }
+                    }
+                    break;
+                case 'eStamp4Self-TestResults' :
+                    $surveyId = $intervention->getSidId();
+                    if ($status == ParticipantInterventionLink::STATUS_ACTIVE) {
+                        $passed = $em->getRepository('CyclogramProofPilotBundle:ParticipantSurveyLink')
+                        ->checkIfSurveyPassed($participant, $surveyId);
+                        if ($passed) {
+                            $this->createIncentive($participant, $intervention);
+                            $interventionLink->setStatus(ParticipantInterventionLink::STATUS_CLOSED);
+                            $em->persist($interventionLink);
+                            $em->flush();
+                        }
+                    }
+                    break;
+                case 'eStamp4RCTFollow-Up4' :
+                    $surveyId = $intervention->getSidId();
+                    if ($status == ParticipantInterventionLink::STATUS_ACTIVE) {
+                        $passed = $em->getRepository('CyclogramProofPilotBundle:ParticipantSurveyLink')
+                                     ->checkIfSurveyPassed($participant, $surveyId);
+                        if ($passed) {
+                            $this->createIncentive($participant, $intervention);
+                            $interventionLink->setStatus(ParticipantInterventionLink::STATUS_CLOSED);
+                            $em->persist($interventionLink);
+                            $em->flush();
+                            $followUpFinalLinkCount = $em->getRepository('CyclogramProofPilotBundle:Participant')->countAllInterventions('eStamp4RCTFollow-Up4');
+                            if ($followUpFinalLinkCount <= 3) {
+                                $intervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')->findOneByInterventionCode("eStamp4WelcomeKit");
+                                $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')->addParticipantInterventionLink($participant,$intervention, false);
+                                $this->createIncentive($participant, $intervention);
+                                //inserting order
+                                $order = new Orders();
+                                $order->setOrderDatetime(new \Datetime('now'));
+                                $courier = $em->getRepository('CyclogramProofPilotBundle:Courier')->find(1);
+                                $order->setCourier($courier);
+                                $productCourier = $em->getRepository('CyclogramProofPilotBundle:CourierProduct')->find(1);
+                                $order->setCourierProduct($productCourier);
+                                $order->setParticipant($participant);
+                                $order->setStudy($study);
+                                $order->setStatus(Orders::STATUS_ACTIVE);
+                                $em->persist($order);
+                                $em->flush();
+                                //inserting speciment
+                                $specimen = new Specimen();
+                                $specimen->setSpecimenName('STE123');
+                                $kitNumber = "SPKN-" . $participant->getParticipantId(). "-TE";
+                                $kitNumber = "";
+                                $specimen->setSpecimenKitNumber($kitNumber);
+                                $specimen->setSpecimenPhase($em->getRepository('CyclogramProofPilotBundle:SpecimenPhase')->find(1));
+                                $specimen->setSpecimenFdaApprovalStatus(1);
+                                $specimen->setSpecimenCollectionTool($em->getRepository('CyclogramProofPilotBundle:SpecimenCollectionTool')->find(1));
+                                $specimen->setCollectorForum($em->getRepository('CyclogramProofPilotBundle:CollectorForum')->find(3));
+                                $specimen->setStatus(Specimen::STATUS_ACTIVE);
+                                $em->persist($specimen);
+                                $em->flush();
+                                //inserting specimen history
+                                $specimen_history = new SpecimenHistory();
+                                $specimen_history->setSpecimenHistoryDatetime(new \DateTime("now"));
+                                $specimen_history->setSpecimenHistoryIpAddress($_SERVER['REMOTE_ADDR']);
+                                $specimen_history->setSpecimen($em->getRepository('CyclogramProofPilotBundle:Specimen')->find($specimen->getSpecimenId()));
+                                $specimen_history->setSpecimenPhase($em->getRepository('CyclogramProofPilotBundle:SpecimenPhase')->find(1));
+                                $representative = $em->getRepository('CyclogramProofPilotBundle:Representative')->find(1);
+                                $specimen_history->setRepresentative($representative);
+                                $em->persist($specimen_history);
+                                $em->flush();
+                                //inserting test
+                                $test = new Test();
+                                $test->setTestDateCreation(new \DateTime("now"));
+                                $kitNumber = "TKN-" . $participant->getParticipantId(). "-TE";
+                                $kitNumber = "";
+                                $test->getTestKitNumber($kitNumber);
+                                $testName = "TNM-" . $participant->getParticipantId(). "-TE";
+                                $test->setTestName($testName);
+                                $test->setTestKitRegistered(1);
+                                $test->setTestType($em->getRepository('CyclogramProofPilotBundle:TestType')->findOneByTestTypeName('eStamp4WelcomeKit'));
+                                $test->setTestPhase($em->getRepository('CyclogramProofPilotBundle:TestPhase')->find(1));
+                                $test->setTestPreliminarResult($em->getRepository('CyclogramProofPilotBundle:TestPreliminarResult')->find(1));
+                                $test->setCollectorForum($em->getRepository('CyclogramProofPilotBundle:CollectorForum')->find(3));
+                                $test->setTestOutcomeType($em->getRepository('CyclogramProofPilotBundle:TestOutcomeType')->find(1));
+                                $test->setTestProccesingType($em->getRepository('CyclogramProofPilotBundle:TestProccesingType')->find(1));
+                                $test->setStatus(Test::STATUS_ACTIVE);
+                                $em->persist($test);
+                                $em->flush();
+                                //inserting order-specimen-link
+                                $order_specimen_link = new OrderSpecimenLink();
+                                $order_specimen_link->setOrder($order);
+                                $order_specimen_link->setSpecimen($em->getRepository('CyclogramProofPilotBundle:Specimen')->find($specimen->getSpecimenId()));
+                                $em->persist($order_specimen_link);
+                                $em->flush();
+                                //inserting specimen-test-link
+                                $specimen_test_link = new SpecimenTestLink();
+                                $specimen_test_link->setTestId($test->getTestId());
+                                $specimen_test_link->setSpecimen($em->getRepository('CyclogramProofPilotBundle:Specimen')->find($specimen->getSpecimenId()));
+                                $em->persist($specimen_test_link);
+                                $em->flush();
+                                //inserting order-history
+                                $test_history = new TestHistory();
+                                $test_history->setTestHistoryDatetime(new \DateTime("now"));
+                                $test_history->setTest($em->getRepository('CyclogramProofPilotBundle:Test')->find($test->getTestId()));
+                                $test_history->setTestPhase($em->getRepository('CyclogramProofPilotBundle:TestPhase')->find(1));
+                                $test_history->setRepresentative($representative);
+                                $em->persist($test_history);
+                                $em->flush();
                             }
                         }
-                        $this
-                                ->createIncentive($participant, $intervention,
-                                        $incentiveType->getIncentiveTypeName());
-                        $interventionLink->setStatus(ParticipantInterventionLink::STATUS_CLOSED);
-                        $status = ParticipantInterventionLink::STATUS_CLOSED;
-                        $em->persist($interventionLink);
-                        $em->flush();
                     }
-                }
+                    break;
+                case 'eStamp4Self-TestResultsatCompletion' :
+                    $surveyId = $intervention->getSidId();
+                    if ($status == ParticipantInterventionLink::STATUS_ACTIVE) {
+                        $passed = $em->getRepository('CyclogramProofPilotBundle:ParticipantSurveyLink')
+                                     ->checkIfSurveyPassed($participant, $surveyId);
+                        if ($passed) {
+                            $surveyLink = $em->getRepository('CyclogramProofPilotBundle:ParticipantSurveyLink')
+                            ->findOneBy(array('participant' => $participant,'sidId' => $surveyId));
+                            $surveyResult = $this->container->get('custom_db')->getFactory('ElegibilityCustom')->getSurveyResponseData($surveyLink->getSaveId(), $surveyId);
+                            if (isset($surveyResult['699237X526X4596'])) {
+                                switch ($surveyResult['699237X526X4596']) {
+                                    case "A1":
+                                        $incentiveType = $em->getRepository('CyclogramProofPilotBundle:IncentiveType')->findOneByIncentiveTypeName('Paypal Gift Card');
+                                        break;
+                                    case "A2":
+                                        $incentiveType = $em->getRepository('CyclogramProofPilotBundle:IncentiveType')->findOneByIncentiveTypeName('Amazon Gift Card');
+                                        break;
+                                    case "A3":
+                                        $incentiveType = $em->getRepository('CyclogramProofPilotBundle:IncentiveType')->findOneByIncentiveTypeName('None');
+                                        break;
+                                }
+                            }
+                            $this->createIncentive($participant, $intervention, $incentiveType->getIncentiveTypeName());
+                            $interventionLink->setStatus(ParticipantInterventionLink::STATUS_CLOSED);
+                            $em->persist($interventionLink);
+                            $em->flush();
+                        }
+                    }
+                    break;
             }
         }
     }
 
     public function checkEligibility($surveyResult)
     {
-        $isElegible = TRUE; //By Default the Participant is Elegible
+     $isElegible = TRUE; //By Default the Participant is Elegible
         $reason = array();
 
         $allowedZipCodes = array(
@@ -1314,83 +1366,176 @@ class KAHStudy extends AbstractStudy implements StudyInterface
                 "94979", "94998", "94952", "94972", "95219", "95377", "95391"
         );
 
-        if (isset($surveyResult['349799X591X5493'])
-                && intval($surveyResult['349799X591X5493']) < 18) {
+        if (isset($surveyResult['232486X145X1975'])
+                && intval($surveyResult['232486X145X1975']) < 18) {
             $isElegible = false;
             $reason[] = "Less than 18 years";
         }
 
-        if (isset($surveyResult['349799X591X5496'])
-                && !in_array($surveyResult['349799X591X5496'], $allowedZipCodes)) {
+        if (isset($surveyResult['232486X146X1977'])
+                && !in_array($surveyResult['232486X146X1977'], $allowedZipCodes)) {
             $isElegible = false;
             $reason[] = "Zipcode not allowed";
         }
 
-        if (isset($surveyResult['349799X592X5497'])
-                && $surveyResult['349799X592X5497'] != "A1") {
+        if (isset($surveyResult['232486X147X1986'])
+                && $surveyResult['232486X147X1986'] != "A1") {
             $isElegible = false;
             $reason[] = "Sex at birth not male";
         }
 
-        if (isset($surveyResult['349799X737X5499'])
-                && $surveyResult['349799X737X5499'] != "A2") {
+        if (isset($surveyResult['232486X148X1988'])
+                && $surveyResult['232486X148X1988'] != "A2") {
             $isElegible = false;
             $reason[] = "No unprotected anal sex with male";
         }
 
-        if (isset($surveyResult['349799X593X5501'])
-                && ($surveyResult['349799X593X5501'] == "A2"
-                        || $surveyResult['349799X593X5501'] == "A5")) {
-            $isElegible = false;
-            $reason[] = "HIV positive";
-        }
-
-        if (isset($surveyResult['349799X593X5502'])
-                && $surveyResult['349799X593X5502'] != "A1") {
+        if (isset($surveyResult['232486X149X1989'])
+                && $surveyResult['232486X149X1989'] != "A1") {
             $isElegible = false;
             $reason[] = "Yes to bleeding desease";
         }
-
-        if (isset($surveyResult['349799X594X5503'])
-                && $surveyResult['349799X594X5503'] != "A1") {
-            $isElegible = false;
-            $reason[] = "Yes to Prep antiretroviral ";
-        }
-
-        if (isset($surveyResult['349799X594X5504'])
-                && $surveyResult['349799X594X5504'] != "A1") {
-            $isElegible = false;
-            $reason[] = "Yes to vaccine trial";
-        }
+        
         return $isElegible;
     }
 
+
     public static function getStudyCode()
     {
-        return 'knowathome';
+        return 'eStamp4';
     }
     public function commandInterventionLogic()
     {
-        $period = 3;
         $em = $this->container->get('doctrine')->getManager();
-        $intervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')->findOneByInterventionCode('KAHPhase3TestPackage');
-        $newIntervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')
-                              ->findOneByInterventionCode('KAHPhase3ReportResults');
-        $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')
-                                ->getParticipantByInterventionCodeAndPeriod($intervention->getInterventionCode(), $period);
-        foreach ($interventionLinks as $interventionLink) {
-            $isIntervention = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')
-                                 ->checkIfExistParticipantInterventionLink($newIntervention->getInterventionCode(), $interventionLink['participantId']);
-            if (!$isIntervention) {
-                $participantInterventionLink = new ParticipantInterventionLink();
-                $participantInterventionLink->setIntervention($newIntervention);
-                $participantInterventionLink->setParticipant($em->getReference('Cyclogram\Bundle\ProofPilotBundle\Entity\Participant', $interventionLink['participantId']));
-                $participantInterventionLink->setParticipantInterventionLinkDatetimeStart(new \DateTime("now"));
-                $participantInterventionLink->setStatus(ParticipantInterventionLink::STATUS_ACTIVE);
-                $em->persist($participantInterventionLink);
-                $em->flush();
+        foreach ($this->getArmCodes() as $armCode) {
+            switch ($armCode) {
+                case 'eStamp4HIVPositiveArm' :
+                    $period = 90;
+                    $baseLineIntervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')->findOneByInterventionCode('eStamp4HIVBaseline');
+                    $newIntervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')->findOneByInterventionCode('eStamp4HIVFollow-up');
+                    $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')
+                                            ->getParticipantByInterventionCodeAndPeriod($baseLineIntervention->getInterventionCode(), $period);
+                    foreach ($interventionLinks as $interventionLink) {
+                        if (!$em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')->checkIfExistParticipantInterventionLink('eStamp4HIVFollow-up', $interventionLink['participantId'])){
+                            $participantInterventionLink = new ParticipantInterventionLink();
+                            $participantInterventionLink->setIntervention($newIntervention);
+                            $participantInterventionLink->setParticipant($em->getReference('Cyclogram\Bundle\ProofPilotBundle\Entity\Participant', $interventionLink['participantId']));
+                            $participantInterventionLink->setParticipantInterventionLinkDatetimeStart(new \DateTime("now"));
+                            $participantInterventionLink->setStatus(ParticipantInterventionLink::STATUS_ACTIVE);
+                            $em->persist($participantInterventionLink);
+                            $em->flush(); 
+                        }
+                    }
+            
+                    $welcomeKitIntervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')->findOneByInterventionCode('eStamp4HIVWelcomeKit');
+                    $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')
+                                            ->getParticipantByInterventionCodeAndPeriod($welcomeKitIntervention->getInterventionCode(), $period);
+                    foreach ($interventionLinks as $interventionLink) {
+                        $HIVFollowUpLinkCount = $em->getRepository('CyclogramProofPilotBundle:Participant')->countAllInterventions('eStamp4HIVFollow-up');
+                        if ($HIVFollowUpLinkCount <= 3) {
+                            $participantInterventionLink = new ParticipantInterventionLink();
+                            $participantInterventionLink->setIntervention($newIntervention);
+                            $participantInterventionLink->setParticipant($em->getReference('Cyclogram\Bundle\ProofPilotBundle\Entity\Participant', $interventionLink['participantId']));
+                            $participantInterventionLink->setParticipantInterventionLinkDatetimeStart(new \DateTime("now"));
+                            $participantInterventionLink->setStatus(ParticipantInterventionLink::STATUS_ACTIVE);
+                            $em->persist($participantInterventionLink);
+                            $em->flush();
+                        }
+                    }
+                    break;
+                case 'eStamp4ControlArm' :
+                    $period = 90;
+                    $baseLineIntervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')->findOneByInterventionCode('eStamp4Baseline');
+                    $newIntervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')->findOneByInterventionCode('eStamp4ControlArmIntervention');
+                    $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')
+                                            ->getParticipantByInterventionCodeAndPeriod($baseLineIntervention->getInterventionCode(), $period);
+                    foreach ($interventionLinks as $interventionLink) {
+                        $participantInterventionLink = new ParticipantInterventionLink();
+                        $participantInterventionLink->setIntervention($newIntervention);
+                        $participantInterventionLink->setParticipant($em->getReference('Cyclogram\Bundle\ProofPilotBundle\Entity\Participant', $interventionLink['participantId']));
+                        $participantInterventionLink->setParticipantInterventionLinkDatetimeStart(new \DateTime("now"));
+                        $participantInterventionLink->setStatus(ParticipantInterventionLink::STATUS_ACTIVE);
+                        $em->persist($participantInterventionLink);
+                        $em->flush();
+                    }
+                        
+                    $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')
+                                            ->getParticipantByInterventionCodeAndPeriod($newIntervention->getInterventionCode(), $period);
+                    foreach ($interventionLinks as $interventionLink) {
+                        $controlArmLinkCount = $em->getRepository('CyclogramProofPilotBundle:Participant')->countAllInterventions('eStamp4ControlArmIntervention');
+                        if ($controlArmLinkCount < 4) {
+                            $participantInterventionLink = new ParticipantInterventionLink();
+                            $participantInterventionLink->setIntervention($newIntervention);
+                            $participantInterventionLink->setParticipant($em->getReference('Cyclogram\Bundle\ProofPilotBundle\Entity\Participant', $interventionLink['participantId']));
+                            $participantInterventionLink->setParticipantInterventionLinkDatetimeStart(new \DateTime("now"));
+                            $participantInterventionLink->setStatus(ParticipantInterventionLink::STATUS_ACTIVE);
+                            $em->persist($participantInterventionLink);
+                            $em->flush();
+                        }
+                    }
+                    break;
+                case 'eStamp4InterventionArm' :
+                    $welcomeKitIntervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')->findOneByInterventionCode('eStamp4WelcomeKit');
+                    $newIntervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')->findOneByInterventionCode('eStamp4Self-TestResults');
+                    $period =2;
+                    $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')
+                                            ->getParticipantByInterventionCodeAndPeriod($welcomeKitIntervention->getInterventionCode(), $period);
+                    foreach ($interventionLinks as $interventionLink) {
+                        $testResultLinkCount = $em->getRepository('CyclogramProofPilotBundle:Participant')->countAllInterventions('eStamp4Self-TestResults');
+                         if ($testResultLinkCount < 3) {
+                            $participantInterventionLink = new ParticipantInterventionLink();
+                            $participantInterventionLink->setIntervention($newIntervention);
+                            $participantInterventionLink->setParticipant($em->getReference('Cyclogram\Bundle\ProofPilotBundle\Entity\Participant', $interventionLink['participantId']));
+                            $participantInterventionLink->setParticipantInterventionLinkDatetimeStart(new \DateTime("now"));
+                            $participantInterventionLink->setStatus(ParticipantInterventionLink::STATUS_ACTIVE);
+                            $em->persist($participantInterventionLink);
+                            $em->flush();
+                         } elseif (!$em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')
+                                       ->checkIfExistParticipantInterventionLink('eStamp4Self-TestResultsatCompletion', $interventionLink['participantId']) && $testResultLinkCount = 3){
+                            $newIntervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')->findOneByInterventionCode('eStamp4Self-TestResultsatCompletion');
+                            $participantInterventionLink = new ParticipantInterventionLink();
+                            $participantInterventionLink->setIntervention($newIntervention);
+                            $participantInterventionLink->setParticipant($em->getReference('Cyclogram\Bundle\ProofPilotBundle\Entity\Participant', $interventionLink['participantId']));
+                            $participantInterventionLink->setParticipantInterventionLinkDatetimeStart(new \DateTime("now"));
+                            $participantInterventionLink->setStatus(ParticipantInterventionLink::STATUS_ACTIVE);
+                            $em->persist($participantInterventionLink);
+                            $em->flush();
+                         }
+                    }
+                    $testResultIntervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')->findOneByInterventionCode('eStamp4Self-TestResults');
+                    $newIntervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')->findOneByInterventionCode('eStamp4RCTFollow-Up4');
+                    $period = 90;
+                    $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')
+                                            ->getParticipantByInterventionCodeAndPeriod($testResultIntervention->getInterventionCode(), $period);
+                    foreach ($interventionLinks as $interventionLink) {
+                        $followUpFinalLinkCount = $em->getRepository('CyclogramProofPilotBundle:Participant')->countAllInterventions('eStamp4RCTFollow-Up4');
+                        if ($followUpFinalLinkCount <= 3) {
+                            $participantInterventionLink = new ParticipantInterventionLink();
+                            $participantInterventionLink->setIntervention($newIntervention);
+                            $participantInterventionLink->setParticipant($em->getReference('Cyclogram\Bundle\ProofPilotBundle\Entity\Participant', $interventionLink['participantId']));
+                            $participantInterventionLink->setParticipantInterventionLinkDatetimeStart(new \DateTime("now"));
+                            $participantInterventionLink->setStatus(ParticipantInterventionLink::STATUS_ACTIVE);
+                            $em->persist($participantInterventionLink);
+                            $em->flush();
+                        }
+                    }
+                    $finalTestResultIntervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')->findOneByInterventionCode('eStamp4Self-TestResultsatCompletion');
+                    $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')
+                                            ->getParticipantByInterventionCodeAndPeriod($finalTestResultIntervention->getInterventionCode(), $period);
+                    foreach ($interventionLinks as $interventionLink) {
+                        $followUpFinalLinkCount = $em->getRepository('CyclogramProofPilotBundle:Participant')->countAllInterventions('eStamp4RCTFollow-Up4');
+                        if ($followUpFinalLinkCount = 3) {
+                            $participantInterventionLink = new ParticipantInterventionLink();
+                            $participantInterventionLink->setIntervention($newIntervention);
+                            $participantInterventionLink->setParticipant($em->getReference('Cyclogram\Bundle\ProofPilotBundle\Entity\Participant', $interventionLink['participantId']));
+                            $participantInterventionLink->setParticipantInterventionLinkDatetimeStart(new \DateTime("now"));
+                            $participantInterventionLink->setStatus(ParticipantInterventionLink::STATUS_ACTIVE);
+                            $em->persist($participantInterventionLink);
+                            $em->flush();
+                        }
+                    }
+                    break;
             }
         }
     }
-
 }

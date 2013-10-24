@@ -31,6 +31,7 @@ parameters:
     url_analytics: "http://analytics.dev1.proofpilot.net"
     url_chartio: "https://chartio.com"
     url_survey_kah: 'http://limesurvey.dev1.proofpilot.net/index.php/349799/lang-en'
+    url_survey_eStamp4: 'http://limesurvey.dev1.proofpilot.net/index.php/232486/lang-en'
     encryption_key: "wKLH=qIk2A2&pEB"
 #	Facebook secret is from my riv.a.ntsiv@gmail.com
     facebook.secret: 61577113f011589a7d217cc7972798a4

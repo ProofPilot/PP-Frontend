@@ -135,20 +135,20 @@
     {% set activeNavContactUs = "" %}
     {% set hideRibbon = false %}
 
-    {% if path(app.request.attributes.get('_route')) == path('CyclogramKnowatHomeBundle_aboutStudy') %}
-        {% set activeNavAbout = "active" %}
-        {% set hideRibbon = true %}
-    {% endif %}
+{#     {% if path(app.request.attributes.get('_route')) == path('CyclogramKnowatHomeBundle_aboutStudy', {'studyCode' : studyCode}) %}#}
+{#         {% set activeNavAbout = "active" %}#}
+{#         {% set hideRibbon = true %}#}
+{#     {% endif %}#}
 
-    {% if path(app.request.attributes.get('_route')) == path('CyclogramKnowatHomeBundle_privacyAndSecurity') %}
-        {% set activeNavPrivacy = "active" %}
-        {% set hideRibbon = true %}
-    {% endif %}
+{#     {% if path(app.request.attributes.get('_route')) == path('CyclogramKnowatHomeBundle_privacyAndSecurity', {'studyCode' : studyCode}) %}#}
+{#         {% set activeNavPrivacy = "active" %}#}
+{#         {% set hideRibbon = true %}#}
+{#     {% endif %}#}
 
-    {% if path(app.request.attributes.get('_route')) == path('CyclogramKnowatHomeBundle_contactUs') %}
-        {% set activeNavContactUs = "active" %}
-        {% set hideRibbon = true %}
-    {% endif %}
+{#     {% if path(app.request.attributes.get('_route')) == path('CyclogramKnowatHomeBundle_contactUs', {'studyCode' : studyCode}) %}#}
+{#         {% set activeNavContactUs = "active" %}#}
+{#         {% set hideRibbon = true %}#}
+{#     {% endif %}#}
 
     <div class="footer">
         <div class="ribbonContainer container_16 container">
@@ -161,9 +161,9 @@
                 </div>-->
             {% endif %}
 
-            <a href="{{ path('CyclogramKnowatHomeBundle_aboutStudy') }}" class="{{ activeNavAbout }} footerNavFirstLnk" >About</a>
-            <a href="{{ path('CyclogramKnowatHomeBundle_privacyAndSecurity') }}" class="{{ activeNavPrivacy }}" >Privacy</a>
-            <a href="{{ path('CyclogramKnowatHomeBundle_contactUs') }}" class="{{ activeNavContactUs }}" >Contact Us</a>
+            <a href="{{ path('CyclogramKnowatHomeBundle_aboutStudy', {'studyCode' : studyCode}) }}" class="{{ activeNavAbout }} footerNavFirstLnk" >About</a>
+            <a href="{{ path('CyclogramKnowatHomeBundle_privacyAndSecurity', {'studyCode' : studyCode}) }}" class="{{ activeNavPrivacy }}" >Privacy</a>
+            <a href="{{ path('CyclogramKnowatHomeBundle_contactUs', {'studyCode' : studyCode}) }}" class="{{ activeNavContactUs }}" >Contact Us</a>
 
         </div>
         <!--<div class="bottomGradient">

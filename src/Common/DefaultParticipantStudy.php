@@ -33,15 +33,18 @@ class DefaultParticipantStudy extends AbstractStudy
         
         $ArmParticipantLink = null;
         if ($armData) {
-            $ArmParticipantLink = new \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantArmLink();
-            $ArmParticipantLink->setArm($armData);
-            $ArmParticipantLink->setParticipant($participant);
-            $ArmParticipantLink->setStatus(ParticipantArmLink::STATUS_ACTIVE);
-            $ArmParticipantLink
-            ->setParticipantArmLinkDatetime(new \DateTime("now"));
+            $defaultParticipantArm = $em->getRepository('CyclogramProofPilotBundle:ParticipantArmLink')->findBy(array('participant'=>$participant,'arm'=>$armData));
+           if (empty($defaultParticipantArm)) {
+                $ArmParticipantLink = new \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantArmLink();
+                $ArmParticipantLink->setArm($armData);
+                $ArmParticipantLink->setParticipant($participant);
+                $ArmParticipantLink->setStatus(ParticipantArmLink::STATUS_ACTIVE);
+                $ArmParticipantLink->setParticipantArmLinkDatetime(new \DateTime("now"));
+                $em->persist($ArmParticipantLink);
+                $em->flush();
+            }
         }
-        $em->persist($ArmParticipantLink);
-        $em->flush();
+
         
         //DefaultParticipantEmailConfirmInterventionLink
         $participantInterventionLink = new \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantInterventionLink();

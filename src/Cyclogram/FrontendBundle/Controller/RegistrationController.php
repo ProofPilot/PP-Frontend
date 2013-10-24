@@ -720,7 +720,7 @@ class RegistrationController extends Controller
     
         } else {
             $error = $this->get('translator')->trans('mail_confirmation_fail', array(), 'register');
-            return $this->render('CyclogramFrontendBundle:Registration:mail_confirm.html.twig', array('error' => $error));
+            return $this->render('CyclogramFrontendBundle:Registration:email_confirm.html.twig', array('error' => $error));
         }
          
     }

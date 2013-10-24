@@ -28,8 +28,6 @@ class ParticipantInterventionLinkRepository extends EntityRepository
 {
     public function getStudyInterventionLinks($participant, $studyCode){
     
-        $currentDate = new \DateTime();
-    
         return $this->getEntityManager()
         ->createQuery("SELECT pil, i, it FROM CyclogramProofPilotBundle:ParticipantInterventionLink pil
                 INNER JOIN pil.intervention i
@@ -37,21 +35,22 @@ class ParticipantInterventionLinkRepository extends EntityRepository
                 INNER JOIN i.language l
                 INNER JOIN i.study study
                 WHERE pil.participant = :participant
-                AND pil.participantInterventionLinkDatetimeStart <= :currentDate
+
                 AND study.studyCode = :studycode
                 AND l.locale = 'en'
                 ")
                 ->setParameters(array(
                         'participant' => $participant,
-                        'currentDate' => $currentDate,
                         'studycode' => $studyCode))
                         ->getResult();
     }
     
-    public function addParticipantInterventionLink($participant, $intervention) {
+    public function addParticipantInterventionLink($participant, $intervention, $check = true) {
         $em = $this->getEntityManager();
-    
+        
+        $hasInterventionLink = null;
         //check if intervention link already exists for a participant
+        if ($check) {
         $hasInterventionLink = $em->createQuery('SELECT pil, i FROM CyclogramProofPilotBundle:ParticipantInterventionLink pil
                 INNER JOIN pil.intervention i
                 WHERE pil.participant = :participant
@@ -60,12 +59,15 @@ class ParticipantInterventionLinkRepository extends EntityRepository
                 ->setParameter("participant", $participant)
                 ->setParameter("interventionName", $intervention->getInterventionName())
                 ->getOneOrNullResult();
-    
+        }
         if(!$hasInterventionLink) {
             $interventionLink = new ParticipantInterventionLink();
             $interventionLink->setParticipant($participant);
             $interventionLink->setIntervention($intervention);
-            $interventionLink->setStatus(ParticipantInterventionLink::STATUS_ACTIVE);
+            if ($intervention->getInterventionType()->getInterventionTypeName() == 'Test')
+                $interventionLink->setStatus(ParticipantInterventionLink::STATUS_CLOSED);
+            else
+                $interventionLink->setStatus(ParticipantInterventionLink::STATUS_ACTIVE);
             $interventionLink->setParticipantInterventionLinkDatetimeStart( new \DateTime("now") );
             $em->persist($interventionLink);
             $em->flush();

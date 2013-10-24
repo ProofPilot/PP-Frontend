@@ -55,11 +55,20 @@ class ParticipantSurveyLinkRepository extends EntityRepository
         $result = $em->createQuery('SELECT psl FROM CyclogramProofPilotBundle:ParticipantSurveyLink psl
                 WHERE psl.participant = :participant
                 AND psl.sidId = :surveyId
+                AND psl.status = :statusActive
                 ')
                 ->setParameters(array(
                         'surveyId' => $surveyId,
-                        'participant' => $participant
+                        'participant' => $participant,
+                        'statusActive' => ParticipantSurveyLink::STATUS_ACTIVE
                 ))->getOneOrNullResult();
-        if($result) return true; else return false;
+        if($result) {
+            $result->setStatus(ParticipantSurveyLink::STATUS_CLOSED);
+            $em->persist($result);
+            $em->flush();
+            return true;
+        } else {
+            return false;
+        }
     }
 }

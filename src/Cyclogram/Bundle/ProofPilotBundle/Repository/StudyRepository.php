@@ -118,6 +118,20 @@ class StudyRepository extends EntityRepository
         return true;
     }
     
+    public function getStudyArms($study_code)
+    {
+        return $this->getEntityManager()
+        ->createQuery("
+                SELECT a
+                FROM CyclogramProofPilotBundle:Arm a
+                INNER JOIN a.study s
+                WHERE s.studyCode = :study_code
+                ")
+                ->setParameter('armcodes', $arm_codes)
+                ->setParameter('study_code', $study_code)
+                ->getResult();
+    }
+    
     
     /**
      * Check if system contains required interventions
