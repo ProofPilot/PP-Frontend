@@ -19,6 +19,8 @@
 namespace Cyclogram\Bundle\ProofPilotBundle\Repository;
 
 
+use Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantArmLink;
+
 use Cyclogram\Bundle\ProofPilotBundle\Entity\Site;
 
 use Cyclogram\Bundle\ProofPilotBundle\Entity\Organization;
@@ -160,6 +162,24 @@ class StudyRepository extends EntityRepository
         return true;
     }
      
-
+    public function getParticipantsWithArmAndPeriod($armCode, $period)
+    {
+        $query = $this->getEntityManager()
+        ->createQuery("
+                SELECT p.participantId, p.participantEmail
+                FROM CyclogramProofPilotBundle:ParticipantArmLink pal
+                INNER JOIN pal.participant p
+                INNER JOIN pal.arm a
+                WHERE DATEDIFF(CURRENT_DATE(), pal.participantArmLinkDatetime) = :period
+                AND a.armCode = :code
+                AND pal.status = :palstatus
+                ")->setParameters(array(
+                                        'period' => $period,
+                                        'code' => $armCode,
+                                        'palstatus' => ParticipantArmLink::STATUS_ACTIVE));
+        $results = $query->getResult();
+        
+        return $results;
+    }
 
 }

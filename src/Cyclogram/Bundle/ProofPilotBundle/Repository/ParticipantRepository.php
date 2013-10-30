@@ -289,6 +289,5 @@ class ParticipantRepository extends EntityRepository implements
         
         return $results;
     }
-    
 
 }
