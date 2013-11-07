@@ -123,11 +123,13 @@ class ParticipantInterventionLinkRepository extends EntityRepository
         return $this->getEntityManager()
         ->createQuery('SELECT pil, i, it FROM CyclogramProofPilotBundle:ParticipantInterventionLink pil
                 INNER JOIN pil.intervention i
+                INNER JOIN i.study s
                 INNER JOIN i.interventionType it
                 WHERE pil.participant = :userid
                 AND pil.status  = :pilstatus
                 AND pil.participantInterventionLinkSendSmsTime IS NULL
                 AND it.interventionTypeName <> \'Test\'
+                AND s.studyCode <> \'sexpro\'
                 ')
                 ->setParameters(array(
                         'userid' => $userid,
@@ -138,11 +140,13 @@ class ParticipantInterventionLinkRepository extends EntityRepository
             return $this->getEntityManager()
             ->createQuery('SELECT pil, i, it FROM CyclogramProofPilotBundle:ParticipantInterventionLink pil
                     INNER JOIN pil.intervention i
+                    INNER JOIN i.study s
                     INNER JOIN i.interventionType it
                     WHERE pil.participant = :userid
                     AND pil.status  = :pilstatus
                     AND pil.participantInterventionLinkSendEmailTime IS NULL
                     AND it.interventionTypeName <> \'Test\'
+                    AND s.studyCode <> \'sexpro\'
                     ')
                     ->setParameters(array(
                             'userid' => $userid,

@@ -40,27 +40,29 @@ class VerificationNoticeCommand extends ContainerAwareCommand
         $em = $this->getContainer()->get('doctrine')->getManager();
         $participants = $em->getRepository('CyclogramProofPilotBundle:Participant')->getParticipantsWithNotConfirmedEmails();
         foreach ($participants as $participant) {
-            // send email
-            $result = $this->sendDoItNowEmail($participant);
-            if($result['send'] == true){
-                $output->writeln($participant->getParticipantEmail());
-                $output->writeln("sent email");
-            } else {
-                if (!empty($result['message']))
-                {
+            if (!$em->getRepository('CyclogramProofPilotBundle:Participant')->isEnrolledInStudy($participant, 'sexpro')) {
+                // send email
+                $result = $this->sendDoItNowEmail($participant);
+                if($result['send'] == true){
                     $output->writeln($participant->getParticipantEmail());
-                    $output->writeln($result['message']);
+                    $output->writeln("sent email");
+                } else {
+                    if (!empty($result['message']))
+                    {
+                        $output->writeln($participant->getParticipantEmail());
+                        $output->writeln($result['message']);
+                    }
                 }
-            }
-            $result = $this->sendDoItNowSMS($participant);
-            if($result['send'] == true){
-                $output->writeln($participant->getParticipantUsername()." phone number: ".$participant->getParticipantMobileNumber());
-                $output->writeln("sent sms");
-            } else {
-                if (!empty($result['message']))
-                {
+                $result = $this->sendDoItNowSMS($participant);
+                if($result['send'] == true){
                     $output->writeln($participant->getParticipantUsername()." phone number: ".$participant->getParticipantMobileNumber());
-                    $output->writeln($result['message']);
+                    $output->writeln("sent sms");
+                } else {
+                    if (!empty($result['message']))
+                    {
+                        $output->writeln($participant->getParticipantUsername()." phone number: ".$participant->getParticipantMobileNumber());
+                        $output->writeln($result['message']);
+                    }
                 }
             }
         }
