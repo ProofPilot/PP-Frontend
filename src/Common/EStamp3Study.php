@@ -40,7 +40,7 @@ class EStamp3Study extends AbstractStudy implements StudyInterface
         return array();
     }
 
-    public function studyRegistration($participant, $surveyId, $saveId)
+    public function studyRegistration($participant, $surveyId, $saveId, $campaignLink)
     {
         return false;
     }

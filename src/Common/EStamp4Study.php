@@ -50,7 +50,7 @@ class EStamp4Study extends AbstractStudy implements StudyInterface
                      'eStamp4Self-TestResults','eStamp4RCTFollow-Up4','eStamp4Self-TestResultsatCompletion');
     }
 
-    public function studyRegistration($participant, $surveyId, $saveId)
+    public function studyRegistration($participant, $surveyId, $saveId, $campaignLink)
     {
         $em = $this->container->get('doctrine')->getManager();
         $participantSurveyLink = $em

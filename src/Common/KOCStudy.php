@@ -38,7 +38,7 @@ class KOCStudy extends AbstractStudy implements StudyInterface
                 'KOCTechnologyUseSurvey', 'KOCCondomPick-UpSurvey','KOCFollow-UpSurvey');
     }
 
-    public function studyRegistration($participant, $surveyId, $saveId)
+    public function studyRegistration($participant, $surveyId, $saveId, $campaignLink)
     {
         $em = $this->container->get('doctrine')->getManager();
         $participantSurveyLink = $em->getRepository('CyclogramProofPilotBundle:ParticipantSurveyLink')
@@ -47,9 +47,8 @@ class KOCStudy extends AbstractStudy implements StudyInterface
             $participantSurveyLink->setStatus(ParticipantSurveyLink::STATUS_CLOSED);
             $em->persist($participantSurveyLink);
             $em->flush();
-            $site  = $em->getRepository('CyclogramProofPilotBundle:Site')->findOneBySiteName('King of Condoms Social Media Default');
-            $participantCampaignLink = $em->getRepository('CyclogramProofPilotBundle:ParticipantCampaignLink')->findOneBy(array('participant'=>$participant,'site'=>$site));
-            $participantCampaign = $participantCampaignLink->getCampaign()->getCampaignName();
+            
+            $participantCampaign =  $campaignLink->getCampaign()->getCampaignName();
             $ArmParticipantLink = null;
             if ($participantCampaign == 'KOCSocial' || $participantCampaign == 'KOC ONLINE') {
                 $armData = $em->getRepository('CyclogramProofPilotBundle:Arm')

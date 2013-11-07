@@ -40,7 +40,7 @@ class SexproStudy extends AbstractStudy implements StudyInterface
                 'SexPro3MonthFollowUpSurvey');
     }
 
-    public function studyRegistration($participant, $surveyId, $saveId)
+    public function studyRegistration($participant, $surveyId, $saveId, $campaignLink)
     {
         $em = $this->container->get('doctrine')->getManager();
         $participantSurveyLink = $em

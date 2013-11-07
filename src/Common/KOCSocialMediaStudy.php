@@ -40,7 +40,7 @@ class KOCSocialMediaStudy extends AbstractStudy implements StudyInterface
         return array('KOCSocialMediaSurvey');
     }
 
-    public function studyRegistration($participant, $surveyId, $saveId)
+    public function studyRegistration($participant, $surveyId, $saveId, $campaignLink)
     {
         $em = $this->container->get('doctrine')->getManager();
 

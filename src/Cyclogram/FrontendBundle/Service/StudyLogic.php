@@ -76,9 +76,9 @@ class StudyLogic
         $isEnrolled = $em->getRepository("CyclogramProofPilotBundle:Participant")->isEnrolledInStudy($participant, $studyCode);
         if(!$isEnrolled) {
             $uniqId = uniqid();
-            $this->campaignRegistration($participant, $uniqId);
+            $campaignLink = $this->campaignRegistration($participant, $uniqId);
             $this->participantSurveyLinkRegistration($surveyId, $saveId, $participant, $uniqId);
-            $this->studies[$studyCode]->studyRegistration($participant,$surveyId, $saveId);
+            $this->studies[$studyCode]->studyRegistration($participant,$surveyId, $saveId, $campaignLink);
         }
         $session->remove('participantId');
         
@@ -137,6 +137,8 @@ class StudyLogic
 
         $em->persist( $campaignLink );
         $em->flush();
+        
+        return $campaignLink;
     }
     
     public function participantSurveyLinkRegistration($surveyId, $saveId, $participant, $uniqId) {

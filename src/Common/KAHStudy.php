@@ -49,7 +49,7 @@ class KAHStudy extends AbstractStudy implements StudyInterface
                 'KAHPhase3ReportResults', 'KAHPhase3FollowUp');
     }
 
-    public function studyRegistration($participant, $surveyId, $saveId)
+    public function studyRegistration($participant, $surveyId, $saveId, $campaignLink)
     {
         $em = $this->container->get('doctrine')->getManager();
         //Add participants to Default Arm at the moment.
