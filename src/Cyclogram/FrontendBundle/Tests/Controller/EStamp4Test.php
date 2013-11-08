@@ -37,33 +37,62 @@ class EStamp4Test  extends  \PHPUnit_Extensions_SeleniumTestCase
     // set the participant quantity in $n
     public function testEStmap4Registration(){
         $n=1;
-        for ($i = 1; $i <= $n; $i++){
-//             if ($i%2 == 0){
-//                 $this->registerEStmap4Participant($i);
-//                 $this->activateEmail($i);
-//                 $this->eStampBaselineSurvey($i);
-//                 $this->runEStamp4TestResultsSurvey($i);
-//                 $this->eStampTestResultsSurvey($i);
+        $HIV = true;
+        if (!$HIV) {
+            for ($i = 1; $i <= $n; $i++){
+                if ($i%2 == 0){
+                    $this->registerEStmap4Participant($i);
+                    $this->activateEmail($i);
+                    $this->eStampBaselineSurvey($i);
+                    $this->runFirstEStamp4ComandInterventionSurvey($i);
+                    $this->eStampControlSurvey($i);
+                    $this->runEStamp4ComandInterventionSurvey($i);
+                    $this->eStampControlSurvey($i);
+                    $this->runEStamp4ComandInterventionSurvey($i);
+                    $this->eStampControlSurvey($i);
+                    $this->runEStamp4ComandInterventionSurvey($i);
+                    $this->eStampControlSurvey($i);
+                } else {
+                    $this->registerEStmap4Participant($i);
+                    $this->activateEmail($i);
+                    $this->eStampBaselineSurvey($i);
+                    $this->runEStamp4TestResultsSurvey($i);
+                    $this->eStampTestResultsSurvey($i);
+                    $this->runEStamp4FollowUpSurvey($i);
                     $this->eStampeRCTFollowUp4Survey($i);
-//             } else {
-//                 $this->registerEStmap4Participant($i);
-//                 $this->activateEmail($i);
-//                 $this->eStampBaselineSurvey($i);
-//                 $this->runFirstEStamp4ComandInterventionSurvey($i);
-//                 $this->eStampControlSurvey($i);
-//                 $this->runEStamp4ComandInterventionSurvey($i);
-//                 $this->eStampControlSurvey($i);
-//                 $this->runEStamp4ComandInterventionSurvey($i);
-//                 $this->eStampControlSurvey($i);
-//                 $this->runEStamp4ComandInterventionSurvey($i);
-//                 $this->eStampControlSurvey($i);
-//                 $this->runEStamp4ComandInterventionSurvey($i);
-//             }
+                    $this->runEStamp4TestResultsSurvey($i);
+                    $this->eStampTestResultsSurvey($i);
+                    $this->runEStamp4FollowUpSurvey($i);
+                    $this->eStampeRCTFollowUp4Survey($i);
+                    $this->runEStamp4TestResultsSurvey($i);
+                    $this->eStampTestResultsSurvey($i);
+                    $this->runEStamp4FollowUpSurvey($i);
+                    $this->eStampeRCTFollowUp4Survey($i);
+                    $this->runEStamp4TestResultsSurvey($i);
+                    $this->eStampFinalTestResultsSurvey($i);
+                    $this->runEStamp4FollowUpSurvey($i);
+                    $this->eStampeRCTFollowUp4Survey($i);
+                }
+            }
+        } else {
+            for ($i = 1; $i <= $n; $i++){
+                $this->registerEStmap4HIVParticipant($i);
+                $this->activateEmail($i);
+                $this->eStampHIVBaselineSurvey($i);
+                $this->runFirstEStamp4HIVFollowUpSurvey($i);
+                $this->eStamp4HIVFollowUpSurvey($i);
+                $this->runEStamp4HIVFollowUpSurvey($i);
+                $this->eStamp4HIVFollowUpSurvey($i);
+                $this->runEStamp4HIVFollowUpSurvey($i);
+                $this->eStamp4HIVFollowUpSurvey($i);
+                $this->runEStamp4HIVFollowUpSurvey($i);
+                $this->eStamp4HIVFollowUpSurvey($i);
+            }
         }
         return $n;
     }
     
-//     //-------------- Single User Registration -------------------
+    //-------------- Single User Registration -------------------
     protected function registerEStmap4Participant($n)
     {
         $this->open("/en/eStamp4/");
@@ -115,7 +144,7 @@ class EStamp4Test  extends  \PHPUnit_Extensions_SeleniumTestCase
         $this->type("id=sms_confirm_sms_code", "1111");
         $this->click("id=sms_confirm_confirmCode");
         $this->waitForPageToLoad("30000");
-//         $this->open("/en/logout");
+        $this->open("/en/logout");
     }
     
 //     /**
@@ -314,9 +343,10 @@ class EStamp4Test  extends  \PHPUnit_Extensions_SeleniumTestCase
     
     protected function runFirstEStamp4ComandInterventionSurvey($n) {
         // 1. update participant intervention date
-        $query = "UPDATE participant_intervention_link SET participant_intervention_link_datetime_start = DATE_SUB(participant_intervention_link_datetime_start,INTERVAL 90 DAY), status_id = '11' 
+        $query = "UPDATE participant_intervention_link SET participant_intervention_link_datetime_start = DATE_SUB(participant_intervention_link_datetime_start,INTERVAL 90 DAY) 
                   WHERE intervention_id = (SELECT intervention_id FROM intervention WHERE intervention.intervention_code = 'eStamp4Baseline')
-                  AND participant_id = (SELECT participant_id FROM participant WHERE participant.participant_username = 'eStamp4".$n."'))";
+                  AND participant_id = (SELECT participant_id FROM participant WHERE participant.participant_username = 'eStamp4".$n."')
+                ORDER BY participant_intervention_link_id DESC LIMIT 1";
         mysql_query($query, $this->dbhandle) or die('updating error'. mysql_error());
         printf ("Records updated: %d\n", mysql_affected_rows());
     
@@ -324,26 +354,21 @@ class EStamp4Test  extends  \PHPUnit_Extensions_SeleniumTestCase
         system('php app/console run:generalcommand ' . date('H'));
         
         // 3. update back to prevent cloning links 
-        $query = "UPDATE participant_intervention_link SET participant_intervention_link_datetime_start = DATE_ADD(participant_intervention_link_datetime_start,INTERVAL 90 DAY), status_id = '11'
+        $query = "UPDATE participant_intervention_link SET participant_intervention_link_datetime_start = DATE_ADD(participant_intervention_link_datetime_start,INTERVAL 90 DAY)
         WHERE intervention_id = (SELECT intervention_id FROM intervention WHERE intervention.intervention_code = 'eStamp4Baseline')
-        AND participant_id = (SELECT participant_id FROM participant WHERE participant.participant_username = 'eStamp4".$n."'))";
+        AND participant_id = (SELECT participant_id FROM participant WHERE participant.participant_username = 'eStamp4".$n."')
+        ORDER BY participant_intervention_link_id DESC LIMIT 1";
         mysql_query($query, $this->dbhandle) or die('updating error'. mysql_error());
         printf ("Records updated: %d\n", mysql_affected_rows());
         return $n;
     }
     
-    protected function eStampControlSurvey($n) {
-        $this->click("link=DO IT");
-        $this->waitForPageToLoad("30000");
-        $this->click("xpath=(//button[@id='movesubmitbtn'])[2]");
-        $this->waitForPageToLoad("30000");
-    }
-    
     protected function runEStamp4ComandInterventionSurvey($n) {
         // 1. update participant intervention date
-        $query = "UPDATE participant_intervention_link SET participant_intervention_link_datetime_start = DATE_SUB(participant_intervention_link_datetime_start,INTERVAL 90 DAY), status_id = '11'
+        $query = "UPDATE participant_intervention_link SET participant_intervention_link_datetime_start = DATE_SUB(participant_intervention_link_datetime_start,INTERVAL 90 DAY)
         WHERE intervention_id = (SELECT intervention_id FROM intervention WHERE intervention.intervention_code = 'eStamp4ControlArmIntervention')
-        AND participant_id = (SELECT participant_id FROM participant WHERE participant.participant_username = 'eStamp4".$n."'))";
+        AND participant_id = (SELECT participant_id FROM participant WHERE participant.participant_username = 'eStamp4".$n."')
+        ORDER BY participant_intervention_link_id DESC LIMIT 1";
         mysql_query($query, $this->dbhandle) or die('updating error'. mysql_error());
         printf ("Records updated: %d\n", mysql_affected_rows());
     
@@ -351,9 +376,49 @@ class EStamp4Test  extends  \PHPUnit_Extensions_SeleniumTestCase
         system('php app/console run:generalcommand ' . date('H'));
     
         // 3. update back to prevent cloning links
-        $query = "UPDATE participant_intervention_link SET participant_intervention_link_datetime_start = DATE_ADD(participant_intervention_link_datetime_start,INTERVAL 90 DAY), status_id = '11'
+        $query = "UPDATE participant_intervention_link SET participant_intervention_link_datetime_start = DATE_ADD(participant_intervention_link_datetime_start,INTERVAL 90 DAY)
         WHERE intervention_id = (SELECT intervention_id FROM intervention WHERE intervention.intervention_code = 'eStamp4ControlArmIntervention')
-        AND participant_id = (SELECT participant_id FROM participant WHERE participant.participant_username = 'eStamp4".$n."'))";
+        AND participant_id = (SELECT participant_id FROM participant WHERE participant.participant_username = 'eStamp4".$n."')
+        AND participant_intervention_link_datetime_start < CURDATE()
+        ORDER BY participant_intervention_link_id DESC LIMIT 1";
+        mysql_query($query, $this->dbhandle) or die('updating error'. mysql_error());
+        printf ("Records updated: %d\n", mysql_affected_rows());
+        return $n;
+    }
+    
+    protected function eStampControlSurvey($n) {
+        $this->open("/en/login");
+        $this->type("id=reg_field_2", "q1w2e3r4");
+        $this->type("id=reg_field_1", "estamp4" . $n);
+        $this->click("css=button.submit.btn_login");
+        $this->waitForPageToLoad("30000");
+        $this->type("id=sms_confirm_sms_code", "1111");
+        $this->click("id=sms_confirm_confirmCode");
+        $this->waitForPageToLoad("30000");
+        $this->click("link=DO IT");
+        $this->waitForPageToLoad("30000");
+        $this->click("xpath=(//button[@id='movesubmitbtn'])[2]");
+        $this->waitForPageToLoad("30000");
+        $this->open("/en/logout");
+    }
+    
+    protected function runEStamp4FollowUpSurvey($n) {
+        // 1. update participant intervention date
+        $query = "UPDATE participant_intervention_link SET participant_intervention_link_datetime_start = DATE_SUB(participant_intervention_link_datetime_start,INTERVAL 90 DAY)
+        WHERE intervention_id = (SELECT intervention_id FROM intervention WHERE intervention.intervention_code = 'eStamp4Self-TestResults')
+        AND participant_id = (SELECT participant_id FROM participant WHERE participant.participant_username = 'eStamp4".$n."')
+        ORDER BY participant_intervention_link_id DESC LIMIT 1";
+        mysql_query($query, $this->dbhandle) or die('updating error'. mysql_error());
+        printf ("Records updated: %d\n", mysql_affected_rows());
+    
+        // 2. shell_exec ( "cd ./../../../.. & php app/console run:generalcommand 17" );
+        system('php app/console run:generalcommand ' . date('H'));
+    
+//         3. update back to prevent cloning links
+        $query = "UPDATE participant_intervention_link SET participant_intervention_link_datetime_start = DATE_ADD(participant_intervention_link_datetime_start,INTERVAL 90 DAY)
+        WHERE intervention_id = (SELECT intervention_id FROM intervention WHERE intervention.intervention_code = 'eStamp4Self-TestResults')
+        AND participant_id = (SELECT participant_id FROM participant WHERE participant.participant_username = 'eStamp4".$n."')
+        ORDER BY participant_intervention_link_id DESC LIMIT 1";
         mysql_query($query, $this->dbhandle) or die('updating error'. mysql_error());
         printf ("Records updated: %d\n", mysql_affected_rows());
         return $n;
@@ -361,9 +426,10 @@ class EStamp4Test  extends  \PHPUnit_Extensions_SeleniumTestCase
     
     protected function runEStamp4TestResultsSurvey($n) {
         // 1. update participant intervention date
-        $query = "UPDATE participant_intervention_link SET participant_intervention_link_datetime_start = DATE_SUB(participant_intervention_link_datetime_start,INTERVAL 2 DAY), status_id = '11'
+        $query = "UPDATE participant_intervention_link SET participant_intervention_link_datetime_start = DATE_SUB(participant_intervention_link_datetime_start,INTERVAL 2 DAY)
         WHERE intervention_id = (SELECT intervention_id FROM intervention WHERE intervention.intervention_code = 'eStamp4WelcomeKit')
-        AND participant_id = (SELECT participant_id FROM participant WHERE participant.participant_username = 'eStamp4".$n."'))";
+        AND participant_id = (SELECT participant_id FROM participant WHERE participant.participant_username = 'eStamp4".$n."')
+        ORDER BY participant_intervention_link_id DESC LIMIT 1";
         mysql_query($query, $this->dbhandle) or die('updating error'. mysql_error());
         printf ("Records updated: %d\n", mysql_affected_rows());
     
@@ -371,15 +437,24 @@ class EStamp4Test  extends  \PHPUnit_Extensions_SeleniumTestCase
         system('php app/console run:generalcommand ' . date('H'));
     
         // 3. update back to prevent cloning links
-        $query = "UPDATE participant_intervention_link SET participant_intervention_link_datetime_start = DATE_ADD(participant_intervention_link_datetime_start,INTERVAL 2 DAY), status_id = '11'
+        $query = "UPDATE participant_intervention_link SET participant_intervention_link_datetime_start = DATE_ADD(participant_intervention_link_datetime_start,INTERVAL 2 DAY)
         WHERE intervention_id = (SELECT intervention_id FROM intervention WHERE intervention.intervention_code = 'eStamp4WelcomeKit')
-        AND participant_id = (SELECT participant_id FROM participant WHERE participant.participant_username = 'eStamp4".$n."'))";
+        AND participant_id = (SELECT participant_id FROM participant WHERE participant.participant_username = 'eStamp4".$n."')
+        ORDER BY participant_intervention_link_id DESC LIMIT 1";
         mysql_query($query, $this->dbhandle) or die('updating error'. mysql_error());
         printf ("Records updated: %d\n", mysql_affected_rows());
         return $n;
     }
     
     protected function eStampTestResultsSurvey($n) {
+        $this->open("/en/login");
+        $this->type("id=reg_field_2", "q1w2e3r4");
+        $this->type("id=reg_field_1", "estamp4" . $n);
+        $this->click("css=button.submit.btn_login");
+        $this->waitForPageToLoad("30000");
+        $this->type("id=sms_confirm_sms_code", "1111");
+        $this->click("id=sms_confirm_confirmCode");
+        $this->waitForPageToLoad("30000");
         $this->open("/en/main/dashboard");
         $this->click("css=div.button_box > a > span");
         $this->waitForPageToLoad("30000");
@@ -437,42 +512,25 @@ class EStamp4Test  extends  \PHPUnit_Extensions_SeleniumTestCase
         $this->click("id=answer479586X487X4146A1");
         $this->click("xpath=(//button[@id='movenextbtn'])[2]");
         $this->waitForPageToLoad("30000");
+        $this->open("/en/logout");
     }
     
-    protected function runEStamp4FollowUpSurvey($n) {
-        // 1. update participant intervention date
-        $query = "UPDATE participant_intervention_link SET participant_intervention_link_datetime_start = DATE_SUB(participant_intervention_link_datetime_start,INTERVAL 90 DAY), status_id = '11'
-        WHERE intervention_id = (SELECT intervention_id FROM intervention WHERE intervention.intervention_code = 'eStamp4RCTFollow-Up4')
-        AND participant_id = (SELECT participant_id FROM participant WHERE participant.participant_username = 'eStamp4".$n."'))";
-        mysql_query($query, $this->dbhandle) or die('updating error'. mysql_error());
-        printf ("Records updated: %d\n", mysql_affected_rows());
-    
-        // 2. shell_exec ( "cd ./../../../.. & php app/console run:generalcommand 17" );
-        system('php app/console run:generalcommand ' . date('H'));
-    
-        // 3. update back to prevent cloning links
-        $query = "UPDATE participant_intervention_link SET participant_intervention_link_datetime_start = DATE_ADD(participant_intervention_link_datetime_start,INTERVAL 90 DAY), status_id = '11'
-        WHERE intervention_id = (SELECT intervention_id FROM intervention WHERE intervention.intervention_code = 'eStamp4RCTFollow-Up4')
-        AND participant_id = (SELECT participant_id FROM participant WHERE participant.participant_username = 'eStamp4".$n."'))";
-        mysql_query($query, $this->dbhandle) or die('updating error'. mysql_error());
-        printf ("Records updated: %d\n", mysql_affected_rows());
-        return $n;
-    }
+
     
     protected function eStampeRCTFollowUp4Survey($n) {
         $this->open("/en/login");
         $this->type("id=reg_field_2", "q1w2e3r4");
-        $this->type("id=reg_field_1", "bogdan_d");
+        $this->type("id=reg_field_1", "estamp4" . $n);
         $this->click("css=button.submit.btn_login");
         $this->waitForPageToLoad("30000");
         $this->type("id=sms_confirm_sms_code", "1111");
         $this->click("id=sms_confirm_confirmCode");
         $this->waitForPageToLoad("30000");
-        $this->open("/en/main/dashboard");
         $this->click("css=div.button_box > a > span");
         $this->waitForPageToLoad("30000");
         $this->click("id=answer932957X490X4161A1");
         $this->click("id=answer932957X490X4163SQ001");
+        $this->click("id=question4168");
         $this->click("id=answer932957X490X4168SQ001");
         $this->click("id=answer932957X490X4182A1");
         $this->click("xpath=(//button[@id='movenextbtn'])[2]");
@@ -481,9 +539,11 @@ class EStamp4Test  extends  \PHPUnit_Extensions_SeleniumTestCase
         $this->click("xpath=(//button[@id='movenextbtn'])[2]");
         $this->waitForPageToLoad("30000");
         $this->click("id=answer932957X492X4229SQ001");
-        $this->select("id=month932957X492X4240", "label=Jun");
-        $this->select("id=day932957X492X4240", "label=12");
-        $this->select("id=year932957X492X4240", "label=2010");
+        $this->click("id=month932957X492X4240");
+        $this->select("id=month932957X492X4240", "label=Jul");
+        $this->click("css=option[value=\"07\"]");
+        $this->select("id=day932957X492X4240", "label=09");
+        $this->select("id=year932957X492X4240", "label=2009");
         $this->click("xpath=(//button[@id='movenextbtn'])[2]");
         $this->waitForPageToLoad("30000");
         $this->click("id=answer932957X494X4241A1");
@@ -506,7 +566,6 @@ class EStamp4Test  extends  \PHPUnit_Extensions_SeleniumTestCase
         $this->click("xpath=(//button[@id='movenextbtn'])[2]");
         $this->waitForPageToLoad("30000");
         $this->click("id=answer932957X507X4434A1");
-        $this->click("css=label.answertext");
         $this->type("id=answer932957X507X4469SQ001", "1");
         $this->type("id=answer932957X507X4469SQ002", "1");
         $this->click("xpath=(//button[@id='movenextbtn'])[2]");
@@ -520,40 +579,34 @@ class EStamp4Test  extends  \PHPUnit_Extensions_SeleniumTestCase
         $this->waitForPageToLoad("30000");
         $this->click("id=answer932957X542X4839A1");
         $this->click("id=answer932957X542X4840SQ001");
-        $this->click("css=#javatbd932957X542X4851A1 > label.answertext");
         $this->click("id=answer932957X542X4851A1");
         $this->click("xpath=(//button[@id='movenextbtn'])[2]");
         $this->waitForPageToLoad("30000");
         $this->type("id=answer932957X543X4852othertext", "1");
         $this->type("id=answer932957X543X4853othertext", "1");
         $this->type("id=answer932957X543X4854othertext", "1");
-        $this->click("css=#question4855 > div.answer.clearfix > ul.answers-list.radio-list");
+        $this->click("id=answer932957X543X4855othertext");
         $this->type("id=answer932957X543X4855othertext", "1");
         $this->click("xpath=(//button[@id='movenextbtn'])[2]");
         $this->waitForPageToLoad("30000");
         $this->type("id=answer932957X544X4856", "23");
         $this->click("id=answer932957X544X4857A1");
         $this->click("id=answer932957X544X4858SQ001");
-        $this->click("css=#javatbd932957X544X4866A1 > label.answertext");
-        $this->click("id=answer932957X544X4866A1");
+        $this->click("id=answer932957X544X4866A5");
         $this->click("id=answer932957X544X4867A1");
-        $this->click("css=#javatbd932957X544X4867A1 > label.answertext");
         $this->click("id=answer932957X544X4868SQ001");
         $this->click("xpath=(//button[@id='movenextbtn'])[2]");
         $this->waitForPageToLoad("30000");
         $this->select("id=answer932957X545X4877", "label=Date");
         $this->click("id=answer932957X545X4878A1");
-        $this->click("css=label.answertext");
         $this->click("xpath=(//button[@id='movenextbtn'])[2]");
         $this->waitForPageToLoad("30000");
         $this->select("id=answer932957X546X4879", "label=Date");
         $this->click("id=answer932957X546X4880A1");
-        $this->click("css=label.answertext");
         $this->click("xpath=(//button[@id='movenextbtn'])[2]");
         $this->waitForPageToLoad("30000");
         $this->select("id=answer932957X547X4881", "label=Date");
         $this->click("id=answer932957X547X4882A1");
-        $this->click("css=label.answertext");
         $this->click("id=answer932957X547X4883A1");
         $this->click("id=answer932957X547X4884A1");
         $this->click("id=answer932957X547X4885A1");
@@ -566,6 +619,7 @@ class EStamp4Test  extends  \PHPUnit_Extensions_SeleniumTestCase
         $this->waitForPageToLoad("30000");
         $this->select("id=answer932957X548X4891", "label=Date");
         $this->click("id=answer932957X548X4892A1");
+        $this->click("css=label.answertext");
         $this->click("id=answer932957X548X4893A1");
         $this->click("id=answer932957X548X4894A1");
         $this->click("id=answer932957X548X4895A1");
@@ -573,14 +627,16 @@ class EStamp4Test  extends  \PHPUnit_Extensions_SeleniumTestCase
         $this->click("id=answer932957X548X4897A1");
         $this->click("id=answer932957X548X4898A1");
         $this->click("id=answer932957X548X4899A1");
-        $this->click("id=answer932957X548X4900A1");
+        $this->click("id=javatbd932957X548X4900A2");
+        $this->click("id=answer932957X548X4900A2");
         $this->click("xpath=(//button[@id='movenextbtn'])[2]");
         $this->waitForPageToLoad("30000");
         $this->click("id=answer932957X549X4901A1");
+        $this->click("css=label.answertext");
         $this->click("xpath=(//button[@id='movenextbtn'])[2]");
         $this->waitForPageToLoad("30000");
         $this->type("id=answer932957X550X4902", "0");
-        $this->type("id=answer932957X550X4903", "1");
+        $this->type("id=answer932957X550X4903", "0");
         $this->type("id=answer932957X550X4904SQ001", "1");
         $this->type("id=answer932957X550X4904SQ002", "1");
         $this->type("id=answer932957X550X4904SQ003", "1");
@@ -591,20 +647,15 @@ class EStamp4Test  extends  \PHPUnit_Extensions_SeleniumTestCase
         $this->type("id=answer932957X551X4909SQ002", "s");
         $this->type("id=answer932957X551X4909SQ003", "w");
         $this->type("id=answer932957X551X4909SQ004", "d");
-        $this->click("css=label.answertext");
         $this->click("id=answer932957X551X4914A1");
         $this->click("id=answer932957X551X4915A1");
-        $this->click("css=#javatbd932957X551X4915A1 > label.answertext");
-        $this->click("id=answer932957X551X4916SQ001");
-        $this->click("css=#javatbd932957X551X4916SQ001 > label.answertext");
-        $this->click("css=#javatbd932957X551X4924A1 > label.answertext");
+        $this->click("id=answer932957X551X4916SQ006");
         $this->click("id=answer932957X551X4924A1");
         $this->type("id=answer932957X551X4925", "1");
         $this->click("id=answer932957X551X4926A2");
         $this->click("xpath=(//button[@id='movenextbtn'])[2]");
         $this->waitForPageToLoad("30000");
         $this->type("id=answer932957X569X5038SQ001comment", "1");
-        $this->type("id=answer932957X569X5038SQ002comment", "1");
         $this->type("id=answer932957X569X5044SQ001", "1");
         $this->type("id=answer932957X569X5044SQ002", "1");
         $this->type("id=answer932957X569X5044SQ003", "1");
@@ -635,18 +686,17 @@ class EStamp4Test  extends  \PHPUnit_Extensions_SeleniumTestCase
         $this->type("id=answer932957X570X5091SQ001", "1");
         $this->type("id=answer932957X570X5091SQ002", "1");
         $this->type("id=answer932957X570X5091SQ003", "1");
-        $this->type("id=answer932957X570X5091SQ004", "1");
         $this->type("id=answer932957X570X5091SQ005", "1");
+        $this->type("id=answer932957X570X5091SQ004", "1");
         $this->type("id=answer932957X570X5097SQ001", "1");
         $this->type("id=answer932957X570X5097SQ002", "1");
         $this->type("id=answer932957X570X5097SQ003", "1");
-        $this->type("id=answer932957X570X5097SQ004", "1");
         $this->type("id=answer932957X570X5097SQ005", "1");
+        $this->type("id=answer932957X570X5097SQ004", "1");
         $this->click("xpath=(//button[@id='movenextbtn'])[2]");
         $this->waitForPageToLoad("30000");
         $this->click("id=answer932957X571X5103A1");
         $this->click("id=answer932957X571X5104A1");
-        $this->click("css=#javatbd932957X571X5105A1 > label.answertext");
         $this->click("id=answer932957X571X5105A1");
         $this->click("id=answer932957X571X5106SQ001");
         $this->click("id=answer932957X571X5124A1");
@@ -659,12 +709,12 @@ class EStamp4Test  extends  \PHPUnit_Extensions_SeleniumTestCase
         $this->click("id=answer932957X573X5127A1");
         $this->type("id=answer932957X573X5128SQ001", "1");
         $this->type("id=answer932957X573X5128SQ002", "1");
-        $this->type("id=answer932957X573X5128SQ003", "1");
         $this->type("id=answer932957X573X5128SQ004", "1");
+        $this->type("id=answer932957X573X5128SQ003", "1");
         $this->click("id=answer932957X573X5133SQ001");
         $this->type("id=answer932957X573X5133SQ001", "1");
-        $this->type("id=answer932957X573X5133SQ002", "1");
         $this->type("id=answer932957X573X5133SQ003", "1");
+        $this->type("id=answer932957X573X5133SQ002", "1");
         $this->click("xpath=(//button[@id='movenextbtn'])[2]");
         $this->waitForPageToLoad("30000");
         $this->click("id=answer932957X574X5137A1");
@@ -672,21 +722,382 @@ class EStamp4Test  extends  \PHPUnit_Extensions_SeleniumTestCase
         $this->click("id=answer932957X574X5139SQ001");
         $this->click("id=answer932957X574X5148SQ001");
         $this->click("id=answer932957X574X5155A1");
+        $this->click("id=answer932957X574X5156A1");
         $this->click("id=answer932957X574X5157SQ001");
         $this->click("id=answer932957X574X5166SQ001");
         $this->click("id=answer932957X574X5173A1");
+        $this->click("xpath=(//button[@id='movesubmitbtn'])[2]");
+        $this->waitForPageToLoad("30000");
+        $this->open("/en/logout");
+    }
+    
+    protected function eStampFinalTestResultsSurvey($n) {
+        $this->open("/en/login");
+        $this->type("id=reg_field_2", "q1w2e3r4");
+        $this->type("id=reg_field_1", "estamp4" . $n);
+        $this->click("css=button.submit.btn_login");
+        $this->waitForPageToLoad("30000");
+        $this->type("id=sms_confirm_sms_code", "1111");
+        $this->click("id=sms_confirm_confirmCode");
+        $this->waitForPageToLoad("30000");
+        $this->click("css=div.button_box > a > span");
+        $this->waitForPageToLoad("30000");
+        $this->click("id=answer699237X514X4652SQ001");
+        $this->click("xpath=(//button[@id='movenextbtn'])[2]");
+        $this->waitForPageToLoad("30000");
+        $this->type("id=answer699237X515X4661", "1");
+        $this->click("xpath=(//button[@id='movenextbtn'])[2]");
+        $this->waitForPageToLoad("30000");
+        $this->click("id=answer699237X516X4572A2");
+        $this->click("id=answer699237X516X4573A1");
+        $this->click("xpath=(//button[@id='movenextbtn'])[2]");
+        $this->waitForPageToLoad("30000");
+        $this->click("xpath=(//button[@id='movenextbtn'])[2]");
+        $this->waitForPageToLoad("30000");
+        $this->click("id=answer699237X526X4596A2");
+        $this->click("id=answer699237X526X4659A1");
+        $this->click("xpath=(//button[@id='movenextbtn'])[2]");
+        $this->waitForPageToLoad("30000");
+        $this->click("xpath=(//button[@id='movesubmitbtn'])[2]");
+        $this->waitForPageToLoad("30000");
+        $this->open("/en/logout");
+    }
+    
+    protected function registerEStmap4HIVParticipant($n) {
+        $this->open("/en/eStamp4/");
+        $this->click("link=exact:ARE YOU ELIGIBLE?");
+        $this->waitForPageToLoad("30000");
+        $this->click("id=consentYes");
+        $this->click("id=specimenYes");
+        $this->click("id=continueBtn");
+        $this->waitForPageToLoad("30000");
+        $this->click("id=surveyLink");
+        $this->waitForPageToLoad("30000");
+        $this->type("id=answer232486X145X1975", "23");
+        $this->click("xpath=(//button[@id='movenextbtn'])[2]");
+        $this->waitForPageToLoad("30000");
+        $this->select("id=answer232486X146X1976", "label=Georgia");
+        $this->type("id=answer232486X146X1977", "30308");
+        $this->click("xpath=(//button[@id='movenextbtn'])[2]");
+        $this->waitForPageToLoad("30000");
+        $this->click("id=answer232486X147X1978A1");
+        $this->click("id=answer232486X147X1979SQ001");
+        $this->click("id=answer232486X147X1986A1");
+        $this->click("id=answer232486X147X1987A1");
+        $this->click("css=#javatbd232486X147X1987A1 > label.answertext");
+        $this->click("xpath=(//button[@id='movenextbtn'])[2]");
+        $this->waitForPageToLoad("30000");
+        $this->click("id=answer232486X148X1988A2");
+        $this->click("css=#javatbd232486X148X1988A2 > label.answertext");
+        $this->click("xpath=(//button[@id='movenextbtn'])[2]");
+        $this->waitForPageToLoad("30000");
+        $this->click("id=answer232486X149X1989A1");
+        $this->click("css=label.answertext");
+        $this->click("xpath=(//button[@id='movenextbtn'])[2]");
+        $this->waitForPageToLoad("30000");
+        $this->click("id=answer232486X150X1990A2");
+        $this->click("css=#javatbd232486X150X1990A2 > label.answertext");
+        $this->click("id=answer232486X150X1991A2");
+        $this->click("css=#javatbd232486X150X1991A2 > label.answertext");
+        $this->click("xpath=(//button[@id='movenextbtn'])[2]");
+        $this->waitForPageToLoad("30000");
+        $this->click("xpath=(//button[@id='movenextbtn'])[2]");
+        $this->waitForPageToLoad("30000");
+        $this->click("link=Continue to registration");
+        $this->waitForPageToLoad("30000");
+        $this->type("id=registration_participantEmail", "estamp4". $n ."@test.com");
+        $this->type("id=registration_participantUsername", "estamp4". $n);
+        $this->type("id=registration_participantPassword_first", "q1w2e3r4");
+        $this->type("id=registration_participantPassword_second", "q1w2e3r4");
+        $this->click("id=registration_next");
+        $this->waitForPageToLoad("30000");
+        $this->type("id=phone_phone_wide", "123".$n);
+        $this->click("id=phone_sendCode");
+        $this->waitForPageToLoad("30000");
+        $this->click("css=button.submit.m2");
+        $this->waitForPageToLoad("30000");
+        $this->type("id=sms_confirm_sms_code", "1111");
+        $this->click("id=sms_confirm_confirmCode");
+        $this->waitForPageToLoad("30000");
+        $this->click("css=a.icon_logout.normal > span");
+        $this->waitForPageToLoad("30000");
+        $this->open("/en/logout");
+    }
+    
+    protected function eStampHIVBaselineSurvey($n) {
+        $this->open("/en/login");
+        $this->type("id=reg_field_2", "q1w2e3r4");
+        $this->type("id=reg_field_1", "estamp4" . $n);
+        $this->click("css=button.submit.btn_login");
+        $this->waitForPageToLoad("30000");
+        $this->type("id=sms_confirm_sms_code", "1111");
+        $this->click("id=sms_confirm_confirmCode");
+        $this->waitForPageToLoad("30000");
+        $this->click("link=DO IT");
+        $this->waitForPageToLoad("30000");
+        $this->click("id=answer393626X312X3016A1");
+        $this->click("id=answer393626X312X3017A1");
+        $this->click("xpath=(//button[@id='movenextbtn'])[2]");
+        $this->waitForPageToLoad("30000");
+        $this->click("id=answer393626X313X3018A1");
+        $this->click("id=answer393626X313X3019A1");
+        $this->type("id=answer393626X313X3021", "1");
+        $this->click("xpath=(//button[@id='movenextbtn'])[2]");
+        $this->waitForPageToLoad("30000");
+        $this->click("id=answer393626X314X3022A1");
+        $this->click("id=answer393626X314X3023A1");
+        $this->click("id=answer393626X314X3506A1");
+        $this->click("xpath=(//button[@id='movenextbtn'])[2]");
+        $this->waitForPageToLoad("30000");
+        $this->click("xpath=(//button[@id='movenextbtn'])[2]");
+        $this->waitForPageToLoad("30000");
+        $this->click("id=answer393626X318X3033A1");
+        $this->click("id=answer393626X318X3724SQ001");
+//         $this->click("css=#javatbd393626X318X3724SQ001 > label.answertext");
+        $this->click("xpath=(//button[@id='movenextbtn'])[2]");
+        $this->waitForPageToLoad("30000");
+        $this->click("id=answer393626X319X3035A1");
+        $this->click("id=answer393626X319X3036");
+        $this->type("id=answer393626X319X3036", "1");
+        $this->click("xpath=(//button[@id='movenextbtn'])[2]");
+        $this->waitForPageToLoad("30000");
+        $this->type("id=answer393626X320X3037", "1");
+        $this->click("xpath=(//button[@id='movenextbtn'])[2]");
+        $this->waitForPageToLoad("30000");
+        $this->click("id=answer393626X316X3754A1");
+        $this->click("css=#javatbd393626X316X3754A1 > label.answertext");
         $this->click("id=navigator");
+        $this->click("xpath=(//button[@id='movenextbtn'])[2]");
+        $this->waitForPageToLoad("30000");
+        $this->click("id=answer393626X317X3755A1");
+        $this->click("id=answer393626X317X3756A1");
+        $this->click("id=javatbd393626X317X3757A1");
+        $this->click("id=answer393626X317X3757A1");
+        $this->click("xpath=(//button[@id='movenextbtn'])[2]");
+        $this->waitForPageToLoad("30000");
+        $this->click("id=answer393626X348X3992A1");
+        $this->click("xpath=(//button[@id='movenextbtn'])[2]");
+        $this->waitForPageToLoad("30000");
+        $this->click("id=answer393626X467X3995A1");
+        $this->click("xpath=(//button[@id='movenextbtn'])[2]");
+        $this->waitForPageToLoad("30000");
+        $this->click("id=answer393626X468X3998A1");
+        $this->click("id=answer393626X468X4001A1");
+        $this->click("css=#javatbd393626X468X4001A1 > label.answertext");
+        $this->click("xpath=(//button[@id='movenextbtn'])[2]");
+        $this->waitForPageToLoad("30000");
+        $this->click("id=answer393626X469X4003A1");
+        $this->click("css=#javatbd393626X469X4004A1 > label.answertext");
+        $this->click("id=answer393626X469X4004A1");
+        $this->click("xpath=(//button[@id='movenextbtn'])[2]");
+        $this->waitForPageToLoad("30000");
+        $this->click("id=answer393626X470X4006A1");
+        $this->click("css=label.answertext");
+        $this->click("css=#javatbd393626X470X4007A5 > label.answertext");
+        $this->click("id=answer393626X470X4007A5");
+        $this->click("xpath=(//button[@id='movenextbtn'])[2]");
+        $this->waitForPageToLoad("30000");
+        $this->click("id=answer393626X471X4019SQ001");
+        $this->click("xpath=(//button[@id='movenextbtn'])[2]");
+        $this->waitForPageToLoad("30000");
+        $this->click("id=answer393626X472X4030A1");
+        $this->click("css=label.answertext");
+        $this->click("xpath=(//button[@id='movenextbtn'])[2]");
+        $this->waitForPageToLoad("30000");
+        $this->click("id=answer393626X321X3040A1");
+        $this->click("css=label.answertext");
+        $this->click("xpath=(//button[@id='movenextbtn'])[2]");
+        $this->waitForPageToLoad("30000");
+        $this->type("id=answer393626X323X3046", "1");
+        $this->keyUp("id=answer393626X323X3046", "1");
+        $this->type("id=answer393626X323X3047SQ001", "a");
+        $this->type("id=answer393626X323X3047SQ002", "s");
+        $this->type("id=answer393626X323X3047SQ003", "w");
+        $this->type("id=answer393626X323X3047SQ004", "d");
+        $this->click("xpath=(//button[@id='movenextbtn'])[2]");
+        $this->waitForPageToLoad("30000");
+        $this->click("id=answer393626X324X3049A1");
+        $this->click("id=answer393626X324X3050A1");
+        $this->click("css=#javatbd393626X324X3050A1 > label.answertext");
+        $this->click("xpath=(//button[@id='movenextbtn'])[2]");
+        $this->waitForPageToLoad("30000");
+        $this->click("id=answer393626X325X3051SQ001");
+        $this->click("id=answer393626X325X3052A1");
+        $this->click("xpath=(//button[@id='movenextbtn'])[2]");
+        $this->waitForPageToLoad("30000");
+        $this->type("id=answer393626X326X3053", "1");
+        $this->keyUp("id=answer393626X326X3053", "1");
+        $this->click("id=answer393626X326X3054A2");
+        $this->click("css=#javatbd393626X326X3054A2 > label.answertext");
+        $this->click("xpath=(//button[@id='movenextbtn'])[2]");
+        $this->waitForPageToLoad("30000");
+        $this->type("id=answer393626X337X3080SQ001", "1");
+        $this->type("id=answer393626X337X3080SQ002", "0");
+        $this->type("id=answer393626X337X3080SQ003", "0");
+//         $this->click("css=#javatbd393626X337X3081SQ001 > label.answertext");
+        $this->click("id=answer393626X337X3081SQ001");
+        $this->click("xpath=(//button[@id='movenextbtn'])[2]");
+        $this->waitForPageToLoad("30000");
+        $this->click("id=answer393626X338X3082A1");
+        $this->click("id=answer393626X338X3083A1");
+        $this->click("css=#javatbd393626X338X3084A1 > label.answertext");
+        $this->click("id=answer393626X338X3084A1");
+        $this->click("xpath=(//button[@id='movenextbtn'])[2]");
+        $this->waitForPageToLoad("30000");
+        $this->click("id=answer393626X339X3085A1");
+        $this->click("css=label.answertext");
+        $this->click("id=answer393626X339X3086A1");
+        $this->click("css=#javatbd393626X339X3086A1 > label.answertext");
+        $this->click("xpath=(//button[@id='movenextbtn'])[2]");
+        $this->waitForPageToLoad("30000");
+        $this->click("id=answer393626X340X3088SQ001-A1");
+        $this->click("//tr[@id='javatbd393626X340X3088SQ002']/td/label");
+        $this->click("id=answer393626X340X3088SQ002-A1");
+        $this->click("//tr[@id='javatbd393626X340X3088SQ003']/td");
+        $this->click("id=answer393626X340X3088SQ004-A1");
+        $this->click("id=answer393626X340X3088SQ005-A1");
+        $this->click("id=answer393626X340X3088SQ006-A1");
+        $this->click("id=answer393626X340X3088SQ007-A1");
+        $this->click("id=answer393626X340X3088SQ008-A1");
+        $this->click("id=answer393626X340X3088SQ009-A1");
+        $this->click("id=answer393626X340X3088SQ010-A1");
+        $this->click("xpath=(//button[@id='movenextbtn'])[2]");
+        $this->waitForPageToLoad("30000");
+        $this->click("id=answer393626X341X3090A1");
+        $this->click("xpath=(//button[@id='movenextbtn'])[2]");
+        $this->waitForPageToLoad("30000");
+        $this->click("id=answer393626X342X3094A1");
+        $this->click("xpath=(//button[@id='movenextbtn'])[2]");
+        $this->waitForPageToLoad("30000");
+        $this->click("id=answer393626X343X3099A1");
+        $this->click("css=label.answertext");
+        $this->click("css=#javatbd393626X343X3101A1 > label.answertext");
+        $this->click("id=answer393626X343X3101A1");
+        $this->click("xpath=(//button[@id='movenextbtn'])[2]");
+        $this->waitForPageToLoad("30000");
+        $this->click("id=answer393626X344X3103A2");
+        $this->click("id=answer393626X344X3761A1");
+        $this->click("xpath=(//button[@id='movenextbtn'])[2]");
+        $this->waitForPageToLoad("30000");
+        $this->click("id=answer393626X345X3106A1");
+        $this->click("css=#javatbd393626X345X3107A1 > label.answertext");
+        $this->click("id=answer393626X345X3107A1");
+        $this->click("xpath=(//button[@id='movenextbtn'])[2]");
+        $this->waitForPageToLoad("30000");
+        $this->click("id=answer393626X346X3109A1");
+        $this->click("id=javatbd393626X346X3110A1");
+        $this->click("id=answer393626X346X3110A1");
+        $this->click("xpath=(//button[@id='movenextbtn'])[2]");
+        $this->waitForPageToLoad("30000");
+        $this->select("id=answer393626X347X31121", "label=Call my phone number at [insert telephone number from QS2]");
+        $this->select("id=answer393626X347X31122", "label=Call my phone number at [insert telephone number from QS2]");
+        $this->click("xpath=(//button[@id='movenextbtn'])[2]");
+        $this->waitForPageToLoad("30000");
         $this->click("xpath=(//button[@id='movesubmitbtn'])[2]");
         $this->waitForPageToLoad("30000");
-        $this->click("id=answer932957X574X5156A1");
+        $this->open("/en/logout");
+    }
+    
+    protected function runFirstEStamp4HIVFollowUpSurvey($n) {
+        // 1. update participant intervention date
+        $query = "UPDATE participant_intervention_link SET participant_intervention_link_datetime_start = DATE_SUB(participant_intervention_link_datetime_start,INTERVAL 90 DAY)
+        WHERE intervention_id = (SELECT intervention_id FROM intervention WHERE intervention.intervention_code = 'eStamp4HIVBaseline')
+        AND participant_id = (SELECT participant_id FROM participant WHERE participant.participant_username = 'eStamp4".$n."')
+        ORDER BY participant_intervention_link_id DESC LIMIT 1";
+        mysql_query($query, $this->dbhandle) or die('updating error'. mysql_error());
+        printf ("Records updated: %d\n", mysql_affected_rows());
+    
+        // 2. shell_exec ( "cd ./../../../.. & php app/console run:generalcommand 17" );
+        system('php app/console run:generalcommand ' . date('H'));
+    
+        // 3. update back to prevent cloning links
+        $query = "UPDATE participant_intervention_link SET participant_intervention_link_datetime_start = DATE_ADD(participant_intervention_link_datetime_start,INTERVAL 90 DAY)
+        WHERE intervention_id = (SELECT intervention_id FROM intervention WHERE intervention.intervention_code = 'eStamp4HIVBaseline')
+        AND participant_id = (SELECT participant_id FROM participant WHERE participant.participant_username = 'eStamp4".$n."')
+        ORDER BY participant_intervention_link_id DESC LIMIT 1";
+        mysql_query($query, $this->dbhandle) or die('updating error'. mysql_error());
+        printf ("Records updated: %d\n", mysql_affected_rows());
+        return $n;
+    }
+    
+    protected function eStamp4HIVFollowUpSurvey($n){
+        $this->open("/en/login");
+        $this->type("id=reg_field_2", "q1w2e3r4");
+        $this->type("id=reg_field_1", "estamp4" . $n);
+        $this->click("css=button.submit.btn_login");
+        $this->waitForPageToLoad("30000");
+        $this->type("id=sms_confirm_sms_code", "1111");
+        $this->click("id=sms_confirm_confirmCode");
+        $this->waitForPageToLoad("30000");
+        $this->click("css=div.button_box > a > span");
+        $this->waitForPageToLoad("30000");
+        $this->type("id=answer254935X529X4702SQ001", "1");
+        $this->type("id=answer254935X529X4702SQ002", "1");
+        $this->keyUp("id=answer254935X529X4702SQ002", "1");
+        $this->click("css=label.answertext");
+        $this->click("xpath=(//button[@id='movenextbtn'])[2]");
+        $this->waitForPageToLoad("30000");
+        $this->click("id=answer254935X530X4712SQ001");
+        $this->click("xpath=(//button[@id='movenextbtn'])[2]");
+        $this->waitForPageToLoad("30000");
+        $this->click("id=answer254935X532X4742A1");
+        $this->click("id=answer254935X532X4745SQ001");
+        $this->click("xpath=(//button[@id='movenextbtn'])[2]");
+        $this->waitForPageToLoad("30000");
+        $this->type("id=answer254935X534X4765", "23");
+        $this->click("id=answer254935X534X4766A1");
+        $this->click("id=answer254935X534X4767SQ001");
+        $this->click("xpath=(//button[@id='movenextbtn'])[2]");
+        $this->waitForPageToLoad("30000");
+        $this->click("id=answer254935X535X4775A1");
+        $this->click("id=answer254935X535X4776A1");
+        $this->click("css=#javatbd254935X535X4776A1 > label.answertext");
+        $this->click("id=javatbd254935X535X4777A1");
+        $this->click("id=answer254935X535X4777A1");
+        $this->click("xpath=(//button[@id='movenextbtn'])[2]");
+        $this->waitForPageToLoad("30000");
+        $this->click("id=answer254935X536X4778A1");
+        $this->click("css=#question4782 > div.answer.clearfix > ul.answers-list.radio-list > li.answer-item.radio-item > label.answertext");
+        $this->click("css=li.answer-item.radio-item > input[name=\"254935X536X4782\"]");
+        $this->click("id=answer254935X536X4783A1");
+        $this->click("xpath=(//button[@id='movenextbtn'])[2]");
+        $this->waitForPageToLoad("30000");
+        $this->click("css=li.answer-item.radio-item > input[name=\"254935X537X4785\"]");
+        $this->click("id=answer254935X537X4786A1");
+        $this->click("id=answer254935X537X4787A1");
+        $this->click("xpath=(//button[@id='movenextbtn'])[2]");
+        $this->waitForPageToLoad("30000");
+        $this->click("id=answer254935X539X4791A1");
+        $this->click("id=answer254935X539X4792A1");
+        $this->click("xpath=(//button[@id='movenextbtn'])[2]");
+        $this->waitForPageToLoad("30000");
+        $this->click("id=answer254935X540X4794A1");
+        $this->click("xpath=(//button[@id='movenextbtn'])[2]");
+        $this->waitForPageToLoad("30000");
         $this->click("xpath=(//button[@id='movesubmitbtn'])[2]");
         $this->waitForPageToLoad("30000");
-        $this->selectWindow("null");
-        $this->click("css=div.menubar-left > a > img");
-        $this->waitForPageToLoad("30000");
-        $this->type("id=user", "admin");
-        $this->click("//input[@value='Login']");
-        $this->waitForPageToLoad("30000");
-        $this->type("id=gs_survey", "Control");
+        $this->open("/en/logout");
+    }
+    
+    protected function runEStamp4HIVFollowUpSurvey($n) {
+        // 1. update participant intervention date
+        $query = "UPDATE participant_intervention_link SET participant_intervention_link_datetime_start = DATE_SUB(participant_intervention_link_datetime_start,INTERVAL 90 DAY)
+        WHERE intervention_id = (SELECT intervention_id FROM intervention WHERE intervention.intervention_code = 'eStamp4HIVWelcomeKit')
+        AND participant_id = (SELECT participant_id FROM participant WHERE participant.participant_username = 'eStamp4".$n."')
+        ORDER BY participant_intervention_link_id DESC LIMIT 1";
+        mysql_query($query, $this->dbhandle) or die('updating error'. mysql_error());
+        printf ("Records updated: %d\n", mysql_affected_rows());
+    
+        // 2. shell_exec ( "cd ./../../../.. & php app/console run:generalcommand 17" );
+        system('php app/console run:generalcommand ' . date('H'));
+    
+        // 3. update back to prevent cloning links
+        $query = "UPDATE participant_intervention_link SET participant_intervention_link_datetime_start = DATE_ADD(participant_intervention_link_datetime_start,INTERVAL 90 DAY)
+        WHERE intervention_id = (SELECT intervention_id FROM intervention WHERE intervention.intervention_code = 'eStamp4HIVWelcomeKit')
+        AND participant_id = (SELECT participant_id FROM participant WHERE participant.participant_username = 'eStamp4".$n."')
+        ORDER BY participant_intervention_link_id DESC LIMIT 1";
+        mysql_query($query, $this->dbhandle) or die('updating error'. mysql_error());
+        printf ("Records updated: %d\n", mysql_affected_rows());
+        return $n;
     }
 }
