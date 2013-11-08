@@ -43,7 +43,7 @@ class DashboardController extends Controller
         $em = $this->getDoctrine()->getManager();
         $participant = $this->get('security.context')->getToken()->getUser();
         
-        if (!is_null($sendMail)){
+        if (!is_null($sendMail) && !$em->getRepository('CyclogramProofPilotBundle:Participant')->isEnrolledInStudy($participant, 'sexpro')){
             $cc = $this->get('cyclogram.common');
             $embedded = array();
             $embedded = $cc->getEmbeddedImages();
