@@ -16,6 +16,11 @@ class Version20131028105024 extends AbstractMigration
         
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != "mysql");
         
+        $this->addSql("DELETE FROM `proofpilot`.`participant_intervention_link` WHERE `intervention_id` = (SELECT `intervention_id` FROM `proofpilot`.`intervention` WHERE `intervention_code` = 'KOCBaseline')");
+        $this->addSql("DELETE FROM `proofpilot`.`participant_intervention_link` WHERE `intervention_id` = (SELECT `intervention_id` FROM `proofpilot`.`intervention` WHERE `intervention_code` = 'LocalTechUseSurvey')");
+        $this->addSql("DELETE FROM `proofpilot`.`participant_intervention_link` WHERE `intervention_id` = (SELECT `intervention_id` FROM `proofpilot`.`intervention` WHERE `intervention_code` = 'KOCFollowUpSurvey')");
+        $this->addSql("DELETE FROM `proofpilot`.`participant_intervention_link` WHERE `intervention_id` = (SELECT `intervention_id` FROM `proofpilot`.`intervention` WHERE `intervention_code` = 'KOCCondomPickUpSurvey')");
+        $this->addSql("DELETE FROM `proofpilot`.`participant_intervention_link` WHERE `intervention_id` = (SELECT `intervention_id` FROM `proofpilot`.`intervention` WHERE `intervention_code` = 10)");
         $this->addSql("DELETE FROM `proofpilot`.`arm_intervention_link` WHERE `arm_id` = (SELECT `study_id` FROM `proofpilot`.`arm` WHERE `arm_code` = 'KOCOnline')");
         $this->addSql("DELETE FROM `proofpilot`.`arm_intervention_link` WHERE `intervention_id` = (SELECT `intervention_id` FROM `proofpilot`.`intervention` WHERE `intervention_code` = 'KOCBaseline')");
         $this->addSql("DELETE FROM `proofpilot`.`arm_intervention_link` WHERE `intervention_id` = (SELECT `intervention_id` FROM `proofpilot`.`intervention` WHERE `intervention_code` = 'LocalTechUseSurvey')");
@@ -41,7 +46,7 @@ class Version20131028105024 extends AbstractMigration
         $this->addSql("INSERT INTO `proofpilot`.`arm`
                 (`arm_code`, `arm_name`,`arm_quota`,`arm_ceilling`,`arm_description`,`study_id`,`status_id`,`arm_default`)
                 VALUES ('KOCOnlineOnlyArm', 'KOC Online Only Arm', NULL, NULL, NULL,
-                (SELECT `study_id` FROM `proofpilot`.`study` WHERE `study_code` = 'koc'),1,0);");
+                (SELECT `study_id` FROM `proofpilot`.`study` WHERE `study_code` = 'koc'),1,1);");
         
         $this->addSql("INSERT INTO `proofpilot`.`intervention`
                 (`language_id`,`intervention_name`,`intervention_type_id`,`intervention_url`,`sid_id`,`intervention_response_url`,
@@ -80,7 +85,7 @@ class Version20131028105024 extends AbstractMigration
         
         $this->addSql("INSERT INTO `proofpilot`.`arm_intervention_link`(`arm_id`,`intervention_id`,`status_id`, `arm_intervention_link_first_study_task`) VALUES (
                 (SELECT `arm_id` FROM `proofpilot`.`arm` WHERE `arm_code` = 'KOCCondomTrainingArm') ,
-                (SELECT `intervention_id` FROM `proofpilot`.`intervention` WHERE `intervention_code` = 'KOCBaseline'), 1, 0);
+                (SELECT `intervention_id` FROM `proofpilot`.`intervention` WHERE `intervention_code` = 'KOCBaseline'), 1, 1);
                 INSERT INTO `proofpilot`.`arm_intervention_link`(`arm_id`,`intervention_id`,`status_id`, `arm_intervention_link_first_study_task`) VALUES (
                 (SELECT `arm_id` FROM `proofpilot`.`arm` WHERE `arm_code` = 'KOCCondomTrainingArm') ,
                 (SELECT `intervention_id` FROM `proofpilot`.`intervention` WHERE `intervention_code` = 'KOCTraining'), 1, 0);
@@ -97,7 +102,7 @@ class Version20131028105024 extends AbstractMigration
         
         $this->addSql("INSERT INTO `proofpilot`.`arm_intervention_link`(`arm_id`,`intervention_id`,`status_id`, `arm_intervention_link_first_study_task`) VALUES (
                 (SELECT `arm_id` FROM `proofpilot`.`arm` WHERE `arm_code` ='KOCNoTrainingArm') ,
-                (SELECT `intervention_id` FROM `proofpilot`.`intervention` WHERE `intervention_code` = 'KOCBaseline'), 1, 0);
+                (SELECT `intervention_id` FROM `proofpilot`.`intervention` WHERE `intervention_code` = 'KOCBaseline'), 1, 1);
                 INSERT INTO `proofpilot`.`arm_intervention_link`(`arm_id`,`intervention_id`,`status_id`, `arm_intervention_link_first_study_task`) VALUES (
                 (SELECT `arm_id` FROM `proofpilot`.`arm` WHERE `arm_code` ='KOCNoTrainingArm') ,
                 (SELECT `intervention_id` FROM `proofpilot`.`intervention` WHERE `intervention_code` = 'KOCTechnologyUseSurvey'), 1, 0);
@@ -111,7 +116,7 @@ class Version20131028105024 extends AbstractMigration
         
         $this->addSql("INSERT INTO `proofpilot`.`arm_intervention_link`(`arm_id`,`intervention_id`,`status_id`, `arm_intervention_link_first_study_task`) VALUES (
                 (SELECT `arm_id` FROM `proofpilot`.`arm` WHERE `arm_code` ='KOCOnlineOnlyArm') ,
-                (SELECT `intervention_id` FROM `proofpilot`.`intervention` WHERE `intervention_code` = 'KOCBaseline'), 1, 0);
+                (SELECT `intervention_id` FROM `proofpilot`.`intervention` WHERE `intervention_code` = 'KOCBaseline'), 1, 1);
                 INSERT INTO `proofpilot`.`arm_intervention_link`(`arm_id`,`intervention_id`,`status_id`, `arm_intervention_link_first_study_task`) VALUES (
                 (SELECT `arm_id` FROM `proofpilot`.`arm` WHERE `arm_code` ='KOCOnlineOnlyArm') ,
                 (SELECT `intervention_id` FROM `proofpilot`.`intervention` WHERE `intervention_code` = 'KOCTechnologyUseSurvey'), 1, 0);
