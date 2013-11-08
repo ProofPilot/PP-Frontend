@@ -15,6 +15,7 @@ class Version20131108171703 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql("DELETE FROM `proofpilot`.`participant_arm_link` WHERE `arm_id` = (SELECT `arm_id` FROM `proofpilot`.`arm` WHERE `arm_code` = 'KOCSMDefault')");
         $this->addSql("DELETE FROM `proofpilot`.`arm_intervention_link` WHERE `arm_id` = (SELECT `arm_id` FROM `proofpilot`.`arm` WHERE `arm_code` = 'KOCSMDefault')");
+        $this->addSql("DELETE FROM `proofpilot`.`participant_campaign_link` WHERE `campaign_id` = (SELECT `campaign_id` FROM `proofpilot`.`campaign` WHERE `campaign_name` = 'KOCSocial')");
         $this->addSql("DELETE FROM `proofpilot`.`campaign_site_link` WHERE `campaign_id` = (SELECT `campaign_id` FROM `proofpilot`.`campaign` WHERE `campaign_name` = 'KOCSocial')");
         $this->addSql("DELETE FROM `proofpilot`.`campaign` WHERE `campaign_name` = 'KOCSocial'");
         $this->addSql("DELETE FROM `proofpilot`.`arm_intervention_link` WHERE `intervention_id` = (SELECT `intervention_id` FROM `proofpilot`.`intervention` WHERE `intervention_code` = 'KOCSocialMediaSurvey')");
