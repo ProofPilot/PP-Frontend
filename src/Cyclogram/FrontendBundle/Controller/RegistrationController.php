@@ -583,7 +583,7 @@ class RegistrationController extends Controller
     {
 //         return true;
         $em = $this->getDoctrine()->getManager();
-        if (!$em->getRepository('CyclogramProofPilotBundle:Participant')->isEnrolledInStudy($participant, 'sexpro')) {
+        if ($studyCode != 'sexpro') {
             if($participant->getParticipantEmailConfirmed() == false) {
             
                 $cc = $this->get('cyclogram.common');
