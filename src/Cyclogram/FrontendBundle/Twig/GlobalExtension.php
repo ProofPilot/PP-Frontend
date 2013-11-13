@@ -84,8 +84,13 @@ class GlobalExtension extends \Twig_Extension
     
     public function isStudyLogicImplemented($studyCode) {
         $logic = $this->container->get('study_logic');
-
-        return in_array(strtolower($studyCode), $logic->getSupportedStudies()) ? true : false;
+        
+        $studies = $logic->getSupportedStudies();
+        foreach ($studies as $study) {
+            $supportedStudies[] = strtolower($study);
+        }
+        
+        return in_array(strtolower($studyCode), $supportedStudies) ? true : false;
     }
     
 //     public function getGoogleCampaignInfo($studyId)
