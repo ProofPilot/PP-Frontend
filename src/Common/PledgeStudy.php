@@ -112,20 +112,19 @@ class PledgeStudy extends AbstractStudy implements StudyInterface
         $isEligible = true;
         $reason = array();
 
-        if (isset($surveyResult['481663X727X7350'])
-                && intval($surveyResult['481663X727X7350'] < 18)) {
+        if (isset($surveyResult['481663X739X7418'])
+                && intval($surveyResult['481663X739X7418'] < 18)) {
             $isElegible = false;
             $reason[] = "Less than 18 years";
         }
 
-        if (isset($surveyResult['481663X727X7890'])
-                && ($surveyResult['481663X727X7890'] != "A2"
-                || $surveyResult['481663X727X7890'] != "A4")) {
+        if (isset($surveyResult['481663X739X7425'])
+                &&  !in_array($surveyResult['481663X739X7425'], array('A2','A4'))) {
             $isEligible = false;
             $reason[] = "Gender";
         }
 
-        if (isset($surveyResult['481663X727X7360SQ002']) && $surveyResult['481663X727X7360SQ002'] != 'Y') {
+        if (isset($surveyResult['481663X739X7424SQ002']) && $surveyResult['481663X739X7424SQ002'] != 'Y') {
             $isEligible = false;
             $reason[] = "Sex in last 12 months with a male";
         }
