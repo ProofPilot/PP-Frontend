@@ -202,7 +202,7 @@
      		    location.href='#';
      			var frame = $(this);
          		var frameSize = function() {
-         			var frameHeight = frame.contents().find("html").height();
+         			var frameHeight = frame.contents().find("#content-wrapper").height();
          			frame.contents().find("html").css('overflow', 'hidden');
              		frame.height(frameHeight);
                 }
