@@ -13,3 +13,4 @@ s3cmd sync --recursive bundles s3://proofpilot/
 s3cmd sync --recursive css s3://proofpilot/css/
 s3cmd sync --recursive js s3://proofpilot/js/
 s3cmd sync --recursive images s3://proofpilot/images/
+chmod 777 app/logs app/cache
