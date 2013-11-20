@@ -631,16 +631,24 @@ class RegistrationController extends Controller
         $em->flush($participant);
         $defaultParticipantStudy = new DefaultParticipantStudy($this->container);
         $defaultParticipantStudy->participantDefaultStudyRegistration($participant);
+        
         //if studyCode passed also register participant in study
         if($studyCode) {
             $ls = $this->get('study_logic');
 
-            if ($session->has('SurveyInfo')){
+            if ($session->has('SurveyInfo') && $session->has('referralSite') && $session->has('referralCampaign')){
                 $bag = $session->get('SurveyInfo');
                 $surveyId = $bag->get('surveyId');
                 $saveId = $bag->get('saveId');
 
                 $ls->studyRegistration($participant, $studyCode, $surveyId, $saveId);
+            } else {
+                $study = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
+                $studyContent = $em->getRepository('CyclogramProofPilotBundle:StudyContent')->findOneByStudy($study);
+                $session->set("message", "There was a problem - try the entire registration process again");
+                $em->remove($participant);
+                $em->flush();
+                return $this->redirect($this->generateUrl("_page", array("studyUrl" => $studyContent->getStudyUrl())));
             }
         }
 

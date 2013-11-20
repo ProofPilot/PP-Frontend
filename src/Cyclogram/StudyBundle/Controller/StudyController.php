@@ -40,6 +40,8 @@ class StudyController extends Controller
     
     public function preExecute()
     {
+        $session = $this->getRequest()->getSession();
+
         $studyUrl = $this->getRequest()->get('studyUrl');
         $locale = $this->getRequest()->getLocale();
         
@@ -66,7 +68,6 @@ class StudyController extends Controller
 //             $this->parameters["errorChoices"] = $logic->getSupportedStudies();
 //             return true;
 //         }
-
         //check for default campaigns
         if(!$campaignParameters = $this->container->get('doctrine')->getRepository("CyclogramProofPilotBundle:Campaign")->getDefaultCampaignParameters($studyId)) {
             $this->parameters["errorMessage"] = "Default campaign/sites must be set for study  '" . $this->parameters["studyCode"] . ", otherwise GoogleAnaytics will not work'";
@@ -129,6 +130,11 @@ class StudyController extends Controller
         $em = $this->getDoctrine()->getManager();
         $session = $this->getRequest()->getSession();
 
+        if ($session->has("message")) {
+            $this->parameters["message"] = $session->get("message");
+            $session->remove("message");
+        }
+        
         //depending on request parameters get campaign and site name
         if($this->getRequest()->get('utm_source') && $this->getRequest()->get('utm_campaign')) {
             $campaignName = $this->getRequest()->get('utm_campaign');
