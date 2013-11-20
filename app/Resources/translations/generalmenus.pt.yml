@@ -4,12 +4,17 @@ bottom_left_menu:
     update: Atualizar
 
 bottom_right_menu:
+    contact_us: bottom_right_menu.contact_us   # FIXME
     help: Ajuda
-    logout: Logout
-    my_settings: 'Minhas Preferências'
+    privacy_and_security: bottom_right_menu.privacy_and_security   # FIXME
+
+top_left_menu:
+    browse: top_left_menu.browse
+    launch: top_left_menu.launch
+    what_proofpilot: top_left_menu.what_proofpilot
 
 top_menu:
-    about_me: top_menu.about_me   # FIXME
+    about_me: top_menu.about_me
     contact_preferences: 'Preferencias de contacto'
     general_settings: 'General settings'
     help: Ajuda

@@ -2,6 +2,7 @@
 
 {% block body %}
   <body class="page_study">
+   {% block scripts_facebook %}{% endblock scripts_facebook %}
     <div class="site_container">
       {% block header %}{% endblock header %}
       {% block content %}{% endblock content %}
@@ -9,5 +10,6 @@
     {% block footer %}
       {% include '::footer.html.twig' %}
     {% endblock footer %}
+    {% block scripts_google %}{% endblock scripts_google %}
   </body>
 {% endblock body %}

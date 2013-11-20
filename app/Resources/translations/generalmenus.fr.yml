@@ -4,12 +4,17 @@ bottom_left_menu:
     update: bottom_left_menu.update
 
 bottom_right_menu:
+    contact_us: bottom_right_menu.contact_us   # FIXME
     help: bottom_right_menu.help
-    logout: bottom_right_menu.logout
-    my_settings: bottom_right_menu.my_settings
+    privacy_and_security: bottom_right_menu.privacy_and_security   # FIXME
+
+top_left_menu:
+    browse: top_left_menu.browse
+    launch: top_left_menu.launch
+    what_proofpilot: top_left_menu.what_proofpilot
 
 top_menu:
-    about_me: top_menu.about_me   # FIXME
+    about_me: top_menu.about_me
     contact_preferences: top_menu.contact_preferences
     general_settings: top_menu.general_settings
     help: top_menu.help

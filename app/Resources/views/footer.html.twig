@@ -1,7 +1,7 @@
 <footer>
   <div class="site_container">
     <div class="footer_col_left">
-	  {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createBottomLeftMenu',{'template': 'CyclogramFrontendBundle:Knp:knp_menu.html.twig'}) }}
+        {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createTopLeftMenu',{'template': 'CyclogramFrontendBundle:Knp:knp_menu.html.twig'}) }}
     </div>
     <div class="footer_col_middle"><a class="to_top" href="#"><span>{% trans %}txt_footer_top{% endtrans %}</span></a></div>
     {% if app.user %}

@@ -104,15 +104,21 @@ class MenuBuilder extends ContainerAware implements TranslationContainerInterfac
         
         $menu = $factory->createItem('root');
 
-        $menu->addChild('bottom_right_menu.help', array('route' => '_page', 'routeParameters' => array('studyUrl' => $this->getThemeParameter())))
-                ->setAttribute('class', 'icon_help')->setExtra('translation_domain', 'generalmenus');
-        $menu->addChild('bottom_right_menu.logout', array('route' => '_logout'))
+        $menu->addChild('bottom_right_menu.privacy_and_security'
+//                 , array('route' => '_page', 'routeParameters' => array('studyUrl' => $this->getThemeParameter()))
+        )
+                ->setExtra('translation_domain', 'generalmenus');
+        $menu->addChild('bottom_right_menu.help'
+//                 , array('route' => '_logout')
+                )
                 ->setAttribute('class', 'icon_logout normal')->setExtra('translation_domain', 'generalmenus');
-        $menu->addChild('bottom_right_menu.my_settings', array(
-                'route' => '_settings',
-                'routeParameters' => array(
-                        'studyCode' => $studyCode
-                        )))
+        $menu->addChild('bottom_right_menu.contact_us'
+//                 , array(
+//                 'route' => '_settings',
+//                 'routeParameters' => array(
+//                         'studyCode' => $studyCode
+//                         ))
+                )
                 ->setAttribute('class', 'icon_settings')->setExtra('translation_domain', 'generalmenus');
 
         return $menu;
@@ -211,6 +217,34 @@ class MenuBuilder extends ContainerAware implements TranslationContainerInterfac
 
         return $menu;
     }
+    
+    public function createTopLeftMenu(FactoryInterface $factory,
+            array $options)
+    {
+    
+        $menu = $factory->createItem('root');
+        $menu->setChildrenAttribute('class', 'new_menu');
+    
+        $menu->addChild('top_left_menu.what_proofpilot'
+//                 array(
+//                 'route' => '#'
+//         )
+                )->setExtra('translation_domain', 'generalmenus');
+        
+        $menu->addChild('top_left_menu.browse'
+//                 array(
+//                 'route' => '#'
+//         )
+                )->setExtra('translation_domain', 'generalmenus');
+        
+        $menu->addChild('top_left_menu.launch'
+//                 array(
+//                 'route' => '#'
+//         )
+                )->setExtra('translation_domain', 'generalmenus');
+    
+        return $menu;
+    }
 
     public function createSideSettingsMenu(FactoryInterface $factory,
             array $options)
@@ -263,6 +297,10 @@ class MenuBuilder extends ContainerAware implements TranslationContainerInterfac
         // TODO: Auto-generated method stub
         
         $menuNames = array(
+                //top left menu 
+                'top_left_menu.what_proofpilot',
+                'top_left_menu.browse',
+                'top_left_menu.launch',
                 //top menu
                 'top_menu.help',
                 'top_menu.logout',
@@ -272,9 +310,12 @@ class MenuBuilder extends ContainerAware implements TranslationContainerInterfac
                 'top_menu.shipping_information',
                 'top_menu.about_me',
                 //bottom right menu
+//                 'bottom_right_menu.help',
+//                 'bottom_right_menu.logout',
+//                 'bottom_right_menu.my_settings',
+                'bottom_right_menu.privacy_and_security',
                 'bottom_right_menu.help',
-                'bottom_right_menu.logout',
-                'bottom_right_menu.my_settings',
+                'bottom_right_menu.contact_us',
                 //bottom left menu
                 'bottom_left_menu.home',
                 'bottom_left_menu.fullscreen',

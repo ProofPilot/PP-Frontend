@@ -4,9 +4,14 @@ bottom_left_menu:
     update: Update
 
 bottom_right_menu:
+    contact_us: Contact us
     help: Help
-    logout: Logout
-    my_settings: 'My settings'
+    privacy_and_security: Privacy and Security
+
+top_left_menu:
+    browse: Browse
+    launch: Launch
+    what_proofpilot: 'What is ProofPilot?'
 
 top_menu:
     about_me: 'About me'
