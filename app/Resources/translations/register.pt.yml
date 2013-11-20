@@ -34,6 +34,7 @@ no_code: 'Sem código? Enviar outro'
 ok_verify: 'OK, Verifique!'
 pick_user: 'Escolha o seu nome de usuário'
 sms_verification_message: 'Seu ProofPilot SMS logar código é:'
+study_register_error: study_register_error   # FIXME
 txt_aditional_number_save: 'Salvar e próxima'
 txt_basics: 'Os princípios'
 txt_check_email: 'Por favor, verifique o seu endereço de e-mail'

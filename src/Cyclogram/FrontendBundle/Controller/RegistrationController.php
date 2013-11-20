@@ -645,7 +645,7 @@ class RegistrationController extends Controller
             } else {
                 $study = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
                 $studyContent = $em->getRepository('CyclogramProofPilotBundle:StudyContent')->findOneByStudy($study);
-                $session->set("message", "There was a problem - try the entire registration process again");
+                $session->set("message", $this->get('translator')->trans('study_register_error', array(), 'register'));
                 $em->remove($participant);
                 $em->flush();
                 return $this->redirect($this->generateUrl("_page", array("studyUrl" => $studyContent->getStudyUrl())));
