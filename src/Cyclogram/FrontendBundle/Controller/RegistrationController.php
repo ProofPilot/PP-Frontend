@@ -752,7 +752,7 @@ class RegistrationController extends Controller
     private function addDefaultContactPreferences($participant) {
         $em = $this->getDoctrine()->getManager();
         
-        $reminder = $em->getRepository('CyclogramProofPilotBundle:ParticipantStudyReminder')->find(1);
+        $reminder = $em->getRepository('CyclogramProofPilotBundle:ParticipantStudyReminder')->findOneByParticipantStudyReminderName('reminder_study_task');
         $reminderLink = $em->getRepository('CyclogramProofPilotBundle:ParticipantStudyReminderLink')->findOneBy(array('participant' => $participant, 'participantStudyReminder' => $reminder));
         if (empty($reminderLink)){
             $reminderLink = new ParticipantStudyReminderLink();
@@ -763,6 +763,18 @@ class RegistrationController extends Controller
             $em->persist($reminderLink);
             $em->flush();
         } 
+        
+        $reminder = $em->getRepository('CyclogramProofPilotBundle:ParticipantStudyReminder')->findOneByParticipantStudyReminderName('reminder_other_studies');
+        $reminderLink = $em->getRepository('CyclogramProofPilotBundle:ParticipantStudyReminderLink')->findOneBy(array('participant' => $participant, 'participantStudyReminder' => $reminder));
+        if (empty($reminderLink)){
+            $reminderLink = new ParticipantStudyReminderLink();
+            $reminderLink->setParticipant($participant);
+            $reminderLink->setParticipantStudyReminder($reminder);
+            $reminderLink->setBySMS(true);
+            $reminderLink->setByEmail(true);
+            $em->persist($reminderLink);
+            $em->flush();
+        }
         $contactTime = $em->getRepository('CyclogramProofPilotBundle:ParticipantContactTime')->findOneByParticipantContactTimesName('time_morning');
         for ($i=0; $i<7; $i++){
             $em->getRepository('CyclogramProofPilotBundle:ParticipantContactTimeLink')
