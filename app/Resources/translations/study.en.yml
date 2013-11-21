@@ -1,8 +1,26 @@
+button_join_the_study_goal: join the study
 msg_not_eligible: 'You are not eligible for ''%studyname%'' at this time.'
 txt_about: 'About this study'
 txt_accept_btn: 'I ACCEPT - Join the study'
+txt_affiliated_organizations: Affiliated organizations
+txt_conducted_by: Conducted by
 txt_decline_btn: 'DECLINE - MAYBE LATER'
 txt_eligible_dsc: 'Your participation at a glance: What you need to do now and what’s next.'
-txt_to_do: 'What do you want to do?'
+txt_email: E-mail
+txt_email_to_friend: E-mail to friend
+txt_embed: Embed
+txt_goal: Goal
+txt_join_before_goal: Join the study before it reaches the goal and earn incentive points on your user profile.
+txt_learn_how: Learn how ProofPilot maintains the impartiality of research
+txt_like_proofpilot: Like Proofpilot
+txt_more_studies_about: See more studies about
+txt_more_studies_in: See more studies in
+txt_on_facebook: on Facebook
+txt_on_twitter: on Twitter
+txt_participants: Participants
+txt_share: Share
+txt_sponsored_by: This study is sponsored by
+txt_staff: Staff 
+txt_tweet: Tweet
 txt_you_are_eligible: 'You are eligible. Accept consent to continue ...'
 warning_message: 'Before proceeding, please read this important information and accept at the bottom of the page'

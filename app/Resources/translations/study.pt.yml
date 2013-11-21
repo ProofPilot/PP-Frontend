@@ -1,15 +1,26 @@
-btn_log_in: Logar
-btn_start_enrollment: 'Inicie a inclusão no estudo'
+button_join_the_study_goal: button_join_the_study_goal   # FIXME
+msg_not_eligible: 'You are not eligible for ''%studyname%'' at this time.'
 txt_about: 'Sobre este estudo'
-txt_about_proofpilot_text: "<p>ProofPilot é uma plataforma para criar, gerenciar e participar de pesquisas on-line. Ajudamos pesquisadores a lançarem facilmente estudos dos quais você, o participante, pode participar ao responder algumas perguntas importantes sobre a saúde, o comportamento humano e políticas sociais e públicas. Saiba mais sobre ProofPilot pelo link abaixo.</p>\n<p><a href=\"/\">www.proofpilot.com</a></p>"
-txt_about_proofpilot_title: 'Sobre o Proofpilot'
 txt_accept_btn: 'Aceito - Junte-se ao estudo'
+txt_affiliated_organizations: txt_affiliated_organizations   # FIXME
+txt_conducted_by: txt_conducted_by   # FIXME
 txt_decline_btn: 'Recuso – Talvez mais tarde'
 txt_eligible_dsc: 'Sua participação em um piscar de olhos. O que você precisa fazer agora e os próximos passos.'
-txt_secure_text: '<p>ProofPilot pensa na segurança em primeiro lugar. Entendemos que você estará compartilhando alguns dados sensíveis conosco e nossos parceiros. Armazenamos seus dados em servidores seguros em um formato altamente criptografado. Levamos a sua segurança e privacidade a sério. Saiba mais sobre segurança pelo link abaixo. </P'
-txt_secure_title: 'É seguro?'
-txt_security_privacy: 'Segurança e Privacidade com ProofPilot'
-txt_to_do: 'Que você quer fazer?'
+txt_email: txt_email   # FIXME
+txt_email_to_friend: txt_email_to_friend   # FIXME
+txt_embed: txt_embed   # FIXME
+txt_goal: txt_goal   # FIXME
+txt_join_before_goal: txt_join_before_goal   # FIXME
+txt_learn_how: txt_learn_how   # FIXME
+txt_like_proofpilot: txt_like_proofpilot   # FIXME
+txt_more_studies_about: txt_more_studies_about   # FIXME
+txt_more_studies_in: txt_more_studies_in   # FIXME
+txt_on_facebook: txt_on_facebook   # FIXME
+txt_on_twitter: txt_on_twitter   # FIXME
+txt_participants: txt_participants   # FIXME
+txt_share: txt_share   # FIXME
+txt_sponsored_by: txt_sponsored_by   # FIXME
+txt_staff: txt_staff   # FIXME
+txt_tweet: txt_tweet   # FIXME
 txt_you_are_eligible: 'Você é elegível'
-msg_not_eligible: 'You are not eligible for ''%studyname%'' at this time.'
 warning_message: 'Antes de prosseguir, por favor leia esta informação importante e clique em "recuso" ou "aceito" na parte inferior da página.'

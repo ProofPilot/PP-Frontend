@@ -1,4 +1,4 @@
-'dashboard_subtitle ': 'dashboard_subtitle '   # FIXME
+'dashboard_subtitle ': 'dashboard_subtitle '
 do_it: 'DO IT'
 do_it_now: 'Do It Now'
 no_do_it: 'You have no study tasks right now'
