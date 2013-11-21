@@ -108,10 +108,10 @@ class MenuBuilder extends ContainerAware implements TranslationContainerInterfac
 //                 , array('route' => '_page', 'routeParameters' => array('studyUrl' => $this->getThemeParameter()))
         )
                 ->setExtra('translation_domain', 'generalmenus');
-        $menu->addChild('bottom_right_menu.help'
+//         $menu->addChild('bottom_right_menu.help'
 //                 , array('route' => '_logout')
-                )
-                ->setAttribute('class', 'icon_logout normal')->setExtra('translation_domain', 'generalmenus');
+//                 )
+//                 ->setAttribute('class', 'icon_logout normal')->setExtra('translation_domain', 'generalmenus');
         $menu->addChild('bottom_right_menu.contact_us'
 //                 , array(
 //                 'route' => '_settings',
@@ -152,9 +152,9 @@ class MenuBuilder extends ContainerAware implements TranslationContainerInterfac
         $menu = $factory->createItem('root');
         $menu->setChildrenAttribute('class', 'header_menu');
 
-        $menu->addChild('top_menu.help', array('route' => '_page', 'routeParameters' => array('studyUrl' => $this->getThemeParameter())))
-                ->setAttribute('class', 'icon_help')
-                ->setExtra('translation_domain', 'generalmenus');
+//         $menu->addChild('top_menu.help', array('route' => '_page', 'routeParameters' => array('studyUrl' => $this->getThemeParameter())))
+//                 ->setAttribute('class', 'icon_help')
+//                 ->setExtra('translation_domain', 'generalmenus');
         $menu->addChild('top_menu.logout', array('route' => '_logout'))
                 ->setAttribute('class', 'icon_logout normal')
                 ->setExtra('translation_domain', 'generalmenus');

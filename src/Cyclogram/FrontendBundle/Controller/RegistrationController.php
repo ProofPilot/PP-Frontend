@@ -763,7 +763,7 @@ class RegistrationController extends Controller
             $em->persist($reminderLink);
             $em->flush();
         } 
-        $contactTime = $em->getRepository('CyclogramProofPilotBundle:ParticipantContactTime')->find(1);
+        $contactTime = $em->getRepository('CyclogramProofPilotBundle:ParticipantContactTime')->findOneByParticipantContactTimesName('time_morning');
         for ($i=0; $i<7; $i++){
             $em->getRepository('CyclogramProofPilotBundle:ParticipantContactTimeLink')
                         ->updateParticipantContactTimeLink($participant, $contactTime, $i, true, true);
