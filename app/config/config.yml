@@ -22,9 +22,9 @@ framework:
     templating:
         engines: ['twig']
         assets_version: "%assets_version%"
-        assets_base_urls:
-            http: [%url_assets%]
-            ssl:  [%url_assets_ssl%]
+#        assets_base_urls:
+#            http: [%url_assets%]
+#            ssl:  [%url_assets_ssl%]
     default_locale:  "%locale%"
     trusted_proxies: ~
     session:         ~

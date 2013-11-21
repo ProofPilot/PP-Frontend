@@ -4,9 +4,9 @@ bottom_left_menu:
     update: Update
 
 bottom_right_menu:
-    contact_us: Contact us
+    contact_us: 'Contact us'
     help: Help
-    privacy_and_security: Privacy and Security
+    privacy_and_security: 'Privacy and Security'
 
 top_left_menu:
     browse: Browse

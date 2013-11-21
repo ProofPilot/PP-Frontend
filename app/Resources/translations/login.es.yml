@@ -13,7 +13,7 @@ havent_joined: 'No se ha unido'
 label_sms_code: label_sms_code
 new_password_selection: "<p>Haga click en el enlace del e-mail y será guiado atravez de la selección de una nueva contraseña. Necesitará su teléfono móbil para completar este proceso. </p>\n<p>Si no ha arrivado en pocos minutos revise la carpeta de correo basura.</p>"
 send_another_code: '¿Sin código? Envie otro'
-specimen_msg: specimen_msg   # FIXME
+specimen_msg: specimen_msg
 txt_forgot_your_password: '¿Olvidó su contraseña?'
 txt_forgot_your_username: '¿Olvidó su usuario?'
 txt_form_password: Contraseña

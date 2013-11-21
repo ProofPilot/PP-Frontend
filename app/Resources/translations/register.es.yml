@@ -23,7 +23,7 @@ label_phone_small: label_phone_small
 label_phone_wide: label_phone_wide
 label_repeat_password: label_repeat_password
 label_sign: label_sign
-label_sign_main: label_sign_main   # FIXME
+label_sign_main: label_sign_main
 label_state: label_state
 label_username: label_username
 label_zipcode: label_zipcode

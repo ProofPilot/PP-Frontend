@@ -1,4 +1,4 @@
-dashboard_subtitle: 'Your participation at a glance. What you need to do now and what’s next.'
+'dashboard_subtitle ': 'dashboard_subtitle '   # FIXME
 do_it: 'DO IT'
 do_it_now: 'Do It Now'
 no_do_it: 'You have no study tasks right now'

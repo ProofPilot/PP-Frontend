@@ -7,8 +7,8 @@ general_subtitle: general_subtitle
 general_title: general_title
 label_email: label_email
 label_incentive_email: label_incentive_email
-label_language: label_language   # FIXME
-label_language_select: label_language_select   # FIXME
+label_language: label_language
+label_language_select: label_language_select
 label_new_email: label_new_email
 label_new_incentive_email: label_new_incentive_email
 label_new_pass: label_new_pass
@@ -36,7 +36,7 @@ txt_edit: txt_edit
 txt_email: txt_email
 txt_forgot_it: txt_forgot_it
 txt_incentive_email: txt_incentive_email
-txt_language: txt_language   # FIXME
+txt_language: txt_language
 txt_mobile_number: txt_mobile_number
 txt_password: txt_password
 txt_username: txt_username

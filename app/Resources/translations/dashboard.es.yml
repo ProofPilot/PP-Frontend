@@ -1,4 +1,4 @@
-dashboard_subtitle: 'El resúmen de su participación. Lo que tiene que hacer ahora y lo que está por venir.'
+'dashboard_subtitle ': 'dashboard_subtitle '   # FIXME
 do_it: 'DO IT'
 do_it_now: 'Hazlo Ahora'
 no_do_it: no_do_it
@@ -9,7 +9,7 @@ past_activity:
     mobile_status: 'Su número de telefóno móbil ha sido confirmado'
     welcome_study: 'Bienvenido al studio Know@Home: Poniendo a prueba la prueba'
 
-send_again: send_again   # FIXME
+send_again: send_again
 txt_dashboard: Escritorio
 txt_please_verify_email: "Porfavor verifique su dirección de e-mail.<br>\nPara participar en los estudios necesitamos un e-mail válido - Porfavor vaya al e-mail y haga click en el enlace."
 

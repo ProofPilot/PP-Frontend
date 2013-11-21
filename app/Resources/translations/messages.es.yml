@@ -10,5 +10,7 @@ label_repeat_pass: label_repeat_pass
 label_username: label_username
 txt_footer_top: ARRIBA
 txt_header_login: Iniciar
+txt_header_or: txt_header_or   # FIXME
 txt_header_register: Registro
-txt_reminders_confirm: txt_reminders_confirm   # FIXME
+txt_header_register_here: txt_header_register_here   # FIXME
+txt_reminders_confirm: txt_reminders_confirm

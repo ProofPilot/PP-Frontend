@@ -1,13 +1,18 @@
 <header>
     <a class="site_logo {{ branding }}" href="{{ path('_main') }}"></a>
         {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createTopLeftMenu',{'template': 'CyclogramFrontendBundle:Knp:knp_menu.html.twig'}) }}
+        <div class="search_form">
+            <form method="" action="">
+                <input type="text" title="Search" placeholder="Search" name="">
+            </form>
+        </div>
     {% if is_granted('ROLE_PARTICIPANT') or is_granted('IS_AUTHENTICATED_REMEMBERED') %}
         {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createTopSettingsMenu',{'template': 'CyclogramFrontendBundle:Knp:top_menu.html.twig'}) }}
         {% else %}
             <ul class="header_menu">
-{#                 <li><a class="register_link" href="{{ path('_register') }}">{% trans %}txt_header_register_here{% endtrans %}</a>#}
-{#                    <span class="text">{% trans %}txt_header_or{% endtrans %}</span>#}
-{#               </li>#}
+                <li><a class="register_link" href="{{ path('_register') }}">{% trans %}txt_header_register_here{% endtrans %}</a>
+                   <span class="text">{% trans %}txt_header_or{% endtrans %}</span>
+              </li>
               <li><a class="login" href="{{ path('_login') }}"><span>{% trans %}txt_header_login{% endtrans %}</span></a></li>
             </ul>
         {% endif %}

@@ -1,17 +1,9 @@
-'African descent': 'African descent'
-'Arab/Middle Eastern': 'Arab/Middle Eastern'
-'East Asian': 'East Asian'
-'Hispanic and/or Latino': 'Hispanic and/or Latino'
-'Native American or Aboriginal': 'Native American or Aboriginal'
-Other: Other
-'South Asian': 'South Asian'
-'White and/or Eurpoean descent': 'White and/or Eurpoean descent'
 about_me_subtitle: about_me_subtitle
 about_me_title: 'About me'
-birthdate_change: birthdate_change   # FIXME
+birthdate_change: birthdate_change
 btn_confirm: Comfirm
-country_change: country_change   # FIXME
-interest_change: interest_change   # FIXME
+country_change: country_change
+interest_change: interest_change
 label_birthdate: label_birthdate
 label_country: 'Select country'
 label_country_select: 'Select country'
@@ -28,8 +20,8 @@ label_transgendered: Transgendered
 label_woman: Woman
 label_zipcode: label_zipcode
 label_zipcode_new: 'New Zip code'
-race_change: race_change   # FIXME
-sex_change: sex_change   # FIXME
+race_change: race_change
+sex_change: sex_change
 txt_birthdate: Birthdate
 txt_change: Change
 txt_country: Country
@@ -37,4 +29,4 @@ txt_interested: Interested
 txt_race: Race
 txt_sex: Sex
 txt_zip_code: 'Zip code'
-zipcode_change: zipcode_change   # FIXME
+zipcode_change: zipcode_change

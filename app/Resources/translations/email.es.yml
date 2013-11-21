@@ -6,11 +6,11 @@ confirm_verify_text: confirm_verify_text
 confirm_verify_title: confirm_verify_title
 do_it_task_email_title: do_it_task_email_title
 email_reset_password: email_reset_password
-email_title_notice: email_title_notice   # FIXME
+email_title_notice: email_title_notice
 email_title_verify: email_title_verify
-notice_verification: notice_verification   # FIXME
-notice_verification_text: notice_verification_text   # FIXME
+notice_verification: notice_verification
+notice_verification_text: notice_verification_text
 reset_pass_link: reset_pass_link
 reset_pass_text: reset_pass_text
 reset_pass_title: reset_pass_title
-send_verification_email: send_verification_email   # FIXME
+send_verification_email: send_verification_email

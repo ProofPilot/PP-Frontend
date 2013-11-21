@@ -7,8 +7,8 @@ general_subtitle: 'Start here to change the basics, then explore other settings 
 general_title: 'General Settings'
 label_email: E-mail
 label_incentive_email: label_incentive_email
-label_language: Language 
-label_language_select: Select language
+label_language: Language
+label_language_select: 'Select language'
 label_new_email: 'New e-mail'
 label_new_incentive_email: 'New appreciation E-mail'
 label_new_pass: 'Type new password'

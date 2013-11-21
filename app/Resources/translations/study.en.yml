@@ -1,15 +1,8 @@
-btn_log_in: LOG-IN
-btn_start_enrollment: 'START STUDY ENROLLMENT'
 msg_not_eligible: 'You are not eligible for ''%studyname%'' at this time.'
 txt_about: 'About this study'
-txt_about_proofpilot_text: "<p>ProofPilot is a platform to create, manage and participate\nin online research studies. We help researchers easily launch\nstudies that, you, the participant, can join in order to\nanswer some important questions about health, human behavior,\nsocial and public policy. Learn more about ProofPilot with the\nlink below.</p>\n<p><a href=\"/\">www.proofpilot.com</a></p>\n"
-txt_about_proofpilot_title: 'About ProofPilot'
 txt_accept_btn: 'I ACCEPT - Join the study'
 txt_decline_btn: 'DECLINE - MAYBE LATER'
 txt_eligible_dsc: 'Your participation at a glance: What you need to do now and what’s next.'
-txt_secure_text: "<p>ProofPilot takes a security-first approach. We understand\n              that you are sharing some sensitive data with us and our\n              partners. We house your data in secure servers in a highly\n              encrypted format. We take your security and privacy seriously.\n              Learn more about security with the link below.</p>\n"
-txt_secure_title: 'Is it secure?'
-txt_security_privacy: 'Security &amp; Privacy at ProofPilot'
 txt_to_do: 'What do you want to do?'
 txt_you_are_eligible: 'You are eligible. Accept consent to continue ...'
 warning_message: 'Before proceeding, please read this important information and accept at the bottom of the page'
