@@ -104,15 +104,15 @@ class MenuBuilder extends ContainerAware implements TranslationContainerInterfac
         
         $menu = $factory->createItem('root');
 
-        $menu->addChild('bottom_right_menu.privacy_and_security'
+        $menu->addChild('bottom_study_right_menu.privacy_and_security'
 //                 , array('route' => '_page', 'routeParameters' => array('studyUrl' => $this->getThemeParameter()))
         )
                 ->setExtra('translation_domain', 'generalmenus');
-//         $menu->addChild('bottom_right_menu.help'
+//         $menu->addChild('bottom_study_right_menu.help'
 //                 , array('route' => '_logout')
 //                 )
 //                 ->setAttribute('class', 'icon_logout normal')->setExtra('translation_domain', 'generalmenus');
-        $menu->addChild('bottom_right_menu.contact_us'
+        $menu->addChild('bottom_study_right_menu.contact_us'
 //                 , array(
 //                 'route' => '_settings',
 //                 'routeParameters' => array(
@@ -331,12 +331,12 @@ class MenuBuilder extends ContainerAware implements TranslationContainerInterfac
                 'top_menu.shipping_information',
                 'top_menu.about_me',
                 //bottom right menu
-//                 'bottom_right_menu.help',
-//                 'bottom_right_menu.logout',
-//                 'bottom_right_menu.my_settings',
-                'bottom_right_menu.privacy_and_security',
                 'bottom_right_menu.help',
-                'bottom_right_menu.contact_us',
+                'bottom_right_menu.logout',
+                'bottom_right_menu.my_settings',
+                'bottom_study_right_menu.privacy_and_security',
+                'bottom_study_right_menu.help',
+                'bottom_study_right_menu.contact_us',
                 //bottom left menu
                 'bottom_left_menu.home',
                 'bottom_left_menu.fullscreen',

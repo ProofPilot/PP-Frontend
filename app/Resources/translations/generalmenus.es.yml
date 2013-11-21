@@ -4,9 +4,14 @@ bottom_left_menu:
     update: Actualizar
 
 bottom_right_menu:
-    contact_us: bottom_right_menu.contact_us
     help: Ayuda
-    privacy_and_security: bottom_right_menu.privacy_and_security
+    logout: bottom_right_menu.logout   # FIXME
+    my_settings: bottom_right_menu.my_settings   # FIXME
+
+bottom_study_right_menu:
+    contact_us: bottom_study_right_menu.contact_us   # FIXME
+    help: bottom_study_right_menu.help   # FIXME
+    privacy_and_security: bottom_study_right_menu.privacy_and_security   # FIXME
 
 top_left_menu:
     browse: top_left_menu.browse
