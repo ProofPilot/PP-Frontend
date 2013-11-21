@@ -1,4 +1,4 @@
-'dashboard_subtitle ': 'dashboard_subtitle '   # FIXME
+dashboard_subtitle: 'Votre participation à un coup d''œil. Ce que vous devez faire maintenant et ce qui est prochain.'
 do_it: FAIRE
 do_it_now: 'Faites-le maintenant'
 no_do_it: no_do_it
