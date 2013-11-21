@@ -97,7 +97,7 @@ class MenuBuilder extends ContainerAware implements TranslationContainerInterfac
         return $menu;
     }
 
-    public function createBottomRightMenu(FactoryInterface $factory,
+    public function createBottomStudyRightMenu(FactoryInterface $factory,
             array $options)
     {
         $studyCode = $this->container->get('request')->get('studyCode');
@@ -121,6 +121,27 @@ class MenuBuilder extends ContainerAware implements TranslationContainerInterfac
                 )
                 ->setAttribute('class', 'icon_settings')->setExtra('translation_domain', 'generalmenus');
 
+        return $menu;
+    }
+    
+    public function createBottomRightMenu(FactoryInterface $factory,
+            array $options)
+    {
+        $studyCode = $this->container->get('request')->get('studyCode');
+    
+        $menu = $factory->createItem('root');
+    
+//         $menu->addChild('bottom_right_menu.help', array('route' => '_page', 'routeParameters' => array('studyUrl' => $this->getThemeParameter())))
+//         ->setAttribute('class', 'icon_help')->setExtra('translation_domain', 'generalmenus');
+        $menu->addChild('bottom_right_menu.logout', array('route' => '_logout'))
+        ->setAttribute('class', 'icon_logout normal')->setExtra('translation_domain', 'generalmenus');
+        $menu->addChild('bottom_right_menu.my_settings', array(
+                'route' => '_settings',
+                'routeParameters' => array(
+                        'studyCode' => $studyCode
+                )))
+                ->setAttribute('class', 'icon_settings')->setExtra('translation_domain', 'generalmenus');
+    
         return $menu;
     }
 

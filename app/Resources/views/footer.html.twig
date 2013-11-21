@@ -1,28 +1,15 @@
 <footer>
-  <div class="row_1">
-      <div class="site_container">
-        <div class="footer_col_left">
-            {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createTopLeftMenu',{'template': 'CyclogramFrontendBundle:Knp:knp_menu.html.twig'}) }}
-        </div>
-        <div class="footer_col_right">
-    	    {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createBottomRightMenu',{'template': 'CyclogramFrontendBundle:Knp:knp_menu.html.twig'}) }}
-    	</div>
-        <div class="footer_col_middle">
-            <ul>
-                <li>
-                    <a class="fb" href="#"><span>Like ProfPilot<br>on Facebook</span></a>
-                </li>
-                <li>
-                    <a class="tw" href="#"><span>Like ProfPilot<br>on Twitter</span></a>
-                </li>
-            </ul>
-        </div>
-        {% if branding == 'default' %}<span class="footer_cyclogram">(c) Cyclogram 2011-2013, California USA</span>{% endif %}
-      </div>
-  </div>
-  <div class="row_2">
-    <div class="site_container">
-        <p>© 2011-2013 ProofPilot<sup>TM</sup> - All rights reserved</p>
+  <div class="site_container">
+    <div class="footer_col_left">
+	  {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createBottomLeftMenu',{'template': 'CyclogramFrontendBundle:Knp:knp_menu.html.twig'}) }}
     </div>
+    <div class="footer_col_middle"><a class="to_top" href="#"><span>{% trans %}txt_footer_top{% endtrans %}</span></a></div>
+    {% if app.user %}
+      <div class="footer_col_right">
+	    {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createBottomRightMenu',{'template': 'CyclogramFrontendBundle:Knp:knp_menu.html.twig'}) }}
+	  </div>
+    {% endif %}
+    <br />
+    {% if branding == 'default' %}<span class="footer_cyclogram">(c) Cyclogram 2011-2013, California USA</span>{% endif %}
   </div>
 </footer>
