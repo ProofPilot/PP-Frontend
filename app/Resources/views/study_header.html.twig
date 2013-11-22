@@ -6,29 +6,32 @@
                 <input type="text" title="Search" placeholder="Search" name="">
             </form>
         </div>
-    {% if is_granted('ROLE_PARTICIPANT') or is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-    
-        {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createTopSettingsMenu',{'template': 'CyclogramFrontendBundle:Knp:top_menu.html.twig'}) }}
+        {% if is_granted('ROLE_PARTICIPANT') or is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+            {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createTopSettingsMenu',{'template': 'CyclogramFrontendBundle:Knp:top_menu.html.twig'}) }}
         {% else %}
             <ul class="header_menu">
                 <li><a class="register_link" href="{{ path('_register') }}">{% trans %}txt_header_register_here{% endtrans %}</a>
-                   <span class="text">{% trans %}txt_header_or{% endtrans %}</span>
-              </li>
-              <li><a class="login" href="{{ path('_login') }}"><span>{% trans %}txt_header_login{% endtrans %}</span></a></li>
+                    <span class="text">{% trans %}txt_header_or{% endtrans %}</span>
+                </li>
+                <li><a class="login" href="{{ path('_login') }}"><span>{% trans %}txt_header_login{% endtrans %}</span></a></li>
             </ul>
         {% endif %}
 </header>
 <div class="mobile_header_menu nologin">
-        <ul>
-         <li class="logo">
+    <ul>
+        <li class="logo">
             <a class="site_logo {{ branding }}" href="{{ path('_main') }}"></a>
-         </li>
-         <li class="right"><a class="trigger_sitemenu" href="#"></a></li>
-        </ul>
+        </li>
+        <li class="right">
+            <a class="trigger_searchmenu" href="#"></a>
+            <a class="trigger_sitemenu" href="#"></a>
+        </li>
+    </ul>
 </div>
-<div class="mobile_sitemenu register nologin">
-        <div class="menu_wrapper">
-        <a class="site_logo {{ branding }}" href="{{ path('_main') }}"></a>
+<div class="mobile_sitemenu register nologin alt">
+    <div class="menu_wrapper">
+        <a class="close" href="#"></a>
+        <a class="logo"></a>
         {% if app.user %}
             {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createTopSettingsMenu',{'template': 'CyclogramFrontendBundle:Knp:top_menu.html.twig'}) }}
         {% else %}
@@ -37,5 +40,17 @@
                 <li><a href="{{ path('_login') }}" class="icon_login"><span>{% trans %}txt_header_login{% endtrans %}</span></a></li>
             </ul>
         {% endif %}
+    </div>
+</div>
+<div class="mobile_sitemenu search nologin alt">
+    <div class="menu_wrapper">
+        <a href="#" class="close"></a>
+        <a href="#" class="logo">ProofPilot</a>
+        <div class="searchform">
+            <form action="" method="">
+                <div class="input_wrapper"><input type="text" name="" value="Search" class="text"/></div>
+                <a href="#" class="submit">GO</a>
+            </form>	                   
         </div>
+    </div>
 </div>

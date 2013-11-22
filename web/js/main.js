@@ -403,30 +403,29 @@
 		  
 		});
 		
-		
-		// show site menu
-		$(".mobile_sitemenu a.close").bind('click', function(){
+		// show search menu
+		$(".mobile_sitemenu.search a.close").bind('click', function(){
 			
-			$(".mobile_sitemenu")
+			$(".mobile_sitemenu.search")
 			.animate({
 				'height' : '0px'
 			}, function(){ $(this).hide(); })
 			.removeClass('expanded');
 			return false;	
 		});
-		$(".trigger_sitemenu").bind('click', function(){
-		
-			if( !$(".mobile_sitemenu").hasClass('expanded') ){
+		$(".trigger_searchmenu").bind('click', function(){
+			
+			if( !$(".mobile_sitemenu.search").hasClass('expanded') ){
 				
 				
 				var menu_height = 0;
 				
-				if( !$(".mobile_sitemenu").attr('data-height') ){
+				if( !$(".mobile_sitemenu.search").attr('data-height') ){
 							
-					$(".mobile_sitemenu")
+					$(".mobile_sitemenu.search")
 					.show();
 					
-					$(".mobile_sitemenu").attr('data-height' , $(".mobile_sitemenu").height());
+					$(".mobile_sitemenu.search").attr('data-height' , $(".mobile_sitemenu.search").height());
 					
 
 
@@ -434,9 +433,9 @@
 
 				
 				// get height
-				menu_height = $(".mobile_sitemenu").attr('data-height');
+				menu_height = $(".mobile_sitemenu.search").attr('data-height');
 				
-				$(".mobile_sitemenu")
+				$(".mobile_sitemenu.search")
 				.height(0)
 				.show()
 				.animate({
@@ -445,13 +444,69 @@
 				
 	
 				// mark
-				$(".mobile_sitemenu").addClass('expanded');
+				$(".mobile_sitemenu.search").addClass('expanded');
 				
 			}
 			else {
 				
 				// clear
-				$(".mobile_sitemenu").removeClass('expanded');
+				$(".mobile_sitemenu.search").removeClass('expanded');
+				
+				
+			}
+		
+			return false;
+			
+		});
+		
+		// show site menu
+		$(".mobile_sitemenu.register a.close").bind('click', function(){
+			
+			$(".mobile_sitemenu.register")
+			.animate({
+				'height' : '0px'
+			}, function(){ $(this).hide(); })
+			.removeClass('expanded');
+			return false;	
+		});
+		$(".trigger_sitemenu").bind('click', function(){
+			
+			if( !$(".mobile_sitemenu.register").hasClass('expanded') ){
+				
+				
+				var menu_height = 0;
+				
+				if( !$(".mobile_sitemenu.register").attr('data-height') ){
+							
+					$(".mobile_sitemenu.register")
+					.show();
+					
+					$(".mobile_sitemenu.register").attr('data-height' , $(".mobile_sitemenu.register").height());
+					
+
+
+				}
+
+				
+				// get height
+				menu_height = $(".mobile_sitemenu.register").attr('data-height');
+				
+				$(".mobile_sitemenu.register")
+				.height(0)
+				.show()
+				.animate({
+					'height' : menu_height
+				});
+				
+	
+				// mark
+				$(".mobile_sitemenu.register").addClass('expanded');
+				
+			}
+			else {
+				
+				// clear
+				$(".mobile_sitemenu.register").removeClass('expanded');
 				
 				
 			}

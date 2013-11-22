@@ -10,7 +10,7 @@
         {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createTopSettingsMenu',{'template': 'CyclogramFrontendBundle:Knp:top_menu.html.twig'}) }}
         {% else %}
             <ul class="header_menu">
-                <li><a class="register_link" href="{{ path('_register') }}">{% trans %}txt_header_register_here{% endtrans %}</a>
+              <li><a class="register_link" href="{{ path('_register') }}">{% trans %}txt_header_register_here{% endtrans %}</a>
                    <span class="text">{% trans %}txt_header_or{% endtrans %}</span>
               </li>
               <li><a class="login" href="{{ path('_login') }}"><span>{% trans %}txt_header_login{% endtrans %}</span></a></li>
@@ -27,7 +27,7 @@
 </div>
 <div class="mobile_sitemenu register nologin">
         <div class="menu_wrapper">
-        <a class="site_logo {{ branding }}" href="{{ path('_main') }}"></a>
+        <a class="logo" href="#"></a>
         {% if app.user %}
             {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createTopSettingsMenu',{'template': 'CyclogramFrontendBundle:Knp:top_menu.html.twig'}) }}
         {% else %}
