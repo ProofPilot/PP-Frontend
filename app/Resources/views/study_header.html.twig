@@ -8,6 +8,7 @@
         </div>
         {% if is_granted('ROLE_PARTICIPANT') or is_granted('IS_AUTHENTICATED_REMEMBERED') %}
             {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createTopSettingsMenu',{'template': 'CyclogramFrontendBundle:Knp:top_menu.html.twig'}) }}
+
         {% else %}
             <ul class="header_menu">
                 <li><a class="register_link" href="{{ path('_register') }}">{% trans %}txt_header_register_here{% endtrans %}</a>
@@ -33,7 +34,7 @@
         <a class="close" href="#"></a>
         <a class="logo"></a>
         {% if app.user %}
-            {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createTopSettingsMenu',{'template': 'CyclogramFrontendBundle:Knp:top_menu.html.twig'}) }}
+            {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createTopSettingsStudyMenu',{'template': 'CyclogramFrontendBundle:Knp:top_menu.html.twig'}) }}
         {% else %}
             <ul>         
                 <li><a href="{{ path('_register') }}" class="icon_register"><span>{% trans %}txt_header_register{% endtrans %}</span></a></li>
