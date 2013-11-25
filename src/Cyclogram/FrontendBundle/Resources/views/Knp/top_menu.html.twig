@@ -98,7 +98,10 @@
     {% if item.attribute('nospan') == true %}
         {{ block('label') }}
     {% else %}
-        <span>{{ block('label') }}</span>
+        
+        <span><img src="{{ asset('images/tmpavatar3.png') }}" width="40" height="42"/>
+        Damien Sonensser<br>
+        {{ block('label') }}</span>
     {% endif %}
     </a>
     {% endblock %}

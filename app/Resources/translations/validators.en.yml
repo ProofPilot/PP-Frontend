@@ -22,3 +22,6 @@ error_not_blank_voice: error_not_blank_voice
 error_not_blank_choice: 'Please make a choice'
 error_not_blank_zipcode: 'Please check your zipcode'
 incorrect_city: 'Please enter a valid city'
+error_not_blank_email: Please enter email
+error_not_blank_username: Please enter username
+error_not_blank_password: Please enter password

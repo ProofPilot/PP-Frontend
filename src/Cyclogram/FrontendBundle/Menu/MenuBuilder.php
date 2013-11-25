@@ -239,6 +239,81 @@ class MenuBuilder extends ContainerAware implements TranslationContainerInterfac
         return $menu;
     }
     
+    
+    public function createTopSettingsStudyMenu(FactoryInterface $factory,
+            array $options)
+    {
+        $studyCode = $this->container->get('request')->get('studyCode');
+    
+        $menu = $factory->createItem('root');
+        $menu->setChildrenAttribute('class', 'header_menu');
+    
+        //         $menu->addChild('top_menu.help', array('route' => '_page', 'routeParameters' => array('studyUrl' => $this->getThemeParameter())))
+        //                 ->setAttribute('class', 'icon_help')
+        //                 ->setExtra('translation_domain', 'generalmenus');
+//         $menu->addChild('top_menu.logout', array('route' => '_logout'))
+//         ->setAttribute('class', 'icon_logout normal')
+//         ->setExtra('translation_domain', 'generalmenus');
+        $menu->addChild('top_menu.settings', array(
+                'route' => '_settings',
+                'routeParameters' => array(
+                        'studyCode' => $studyCode
+                )))
+                ->setAttribute('class', 'icon_settings')
+                ->setAttribute("dropdown", true)
+                ->setExtra('translation_domain', 'generalmenus');
+        $menu['top_menu.settings']
+        ->addChild('top_menu.general_settings',
+                array(
+                        'route' => '_settings',
+                        'routeParameters' => array(
+                                'studyCode' => $studyCode
+                        )))
+                        ->setAttribute('class', 'submenu_icon_general')
+                        ->setAttribute("nospan", true)
+                        ->setExtra('translation_domain', 'generalmenus');
+        $menu['top_menu.settings']
+        ->addChild('top_menu.contact_preferences',
+                array(
+                        'route' => '_contact_prefs',
+                        'routeParameters' => array(
+                                'studyCode' => $studyCode
+                        )))
+                        ->setAttribute('class', 'submenu_icon_contact')
+                        ->setAttribute("nospan", true)
+                        ->setExtra('translation_domain', 'generalmenus');
+        $menu['top_menu.settings']
+        ->addChild('top_menu.shipping_information',
+                array(
+                        'route' => '_shipping',
+                        'routeParameters' => array(
+                                'studyCode' => $studyCode
+                        )))
+                        ->setAttribute('class', 'submenu_icon_contact')
+                        ->setAttribute("nospan", true)
+                        ->setExtra('translation_domain', 'generalmenus');
+        $menu['top_menu.settings']
+        ->addChild('top_menu.about_me',
+                array(
+                        'route' => '_about_me',
+                        'routeParameters' => array(
+                                'studyCode' => $studyCode
+                        )))
+                        ->setAttribute('class', 'submenu_icon_contact')
+                        ->setAttribute("nospan", true)
+                        ->setExtra('translation_domain', 'generalmenus');
+        //         $menu['top_menu.settings']
+        //                 ->addChild('top_menu.shipping_information',
+        //                         array(
+        //                               'route' => '_survey_eligibility',
+        //                               'routeParameters' => array('studyUrl' => 'sexpro')))
+        //                 ->setAttribute('class', 'submenu_icon_shipping')
+        //                 ->setAttribute("nospan", true)
+        //                 ->setExtra('translation_domain', 'generalmenus');
+    
+        return $menu;
+    }
+    
     public function createTopLeftMenu(FactoryInterface $factory,
             array $options)
     {
