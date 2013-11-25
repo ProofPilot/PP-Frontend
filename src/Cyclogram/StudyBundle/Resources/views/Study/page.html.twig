@@ -23,8 +23,9 @@
                e.preventDefault();
                $('#email_list').dialog();
            });
-           $('#email_list').on('click', 'a', function() {
-        	   
+           $('#email_list').on('click', 'a', function(e) {
+        	   e.preventDefault();
+        	   $('<input type="text" />').insertBefore($(this));
            });
        });
 </script>
