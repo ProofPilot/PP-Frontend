@@ -4532,6 +4532,15 @@ footer .row_2 p {
 	position: relative;
 	left: 5px;
 }
+#email_list {
+	display: none;
+}
+#email_list a {
+	font-size: 12px;
+	color: #4283a8;
+	display: block;
+	margin-top: 15px;
+}
 
 /* ---------------- RESPONSIVE STYLES -------------------*/
 

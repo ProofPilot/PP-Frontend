@@ -19,6 +19,13 @@
                     e.stopPropagation();
                     g_login();
                 });
+           $('.email').bind('click', function(e) {
+               e.preventDefault();
+               $('#email_list').dialog();
+           });
+           $('#email_list').on('click', 'a', function() {
+        	   
+           });
        });
 </script>
     <script type="text/javascript">
@@ -91,7 +98,7 @@
                 <li><a href='http://www.facebook.com/share.php?u=http://new-frontend-bogdand.proofpilot.dyndns.org' class="fb" onClick="return fbs_click(400, 300)" target = "_blank"></a></li>
                     <li><a href="#" onclick="popUp=window.open('https://twitter.com/share?url=http://new-frontend-bogdand.proofpilot.dyndns.org', 'popupwindow', 'scrollbars=yes,width=800,height=400');popUp.focus();return false" class="tw"></a></li>
                     <li><a href="#" class="embed"></a></li>
-                    <li><a target="_blank" class="email" onclick="popUp=window.open('https://mail.google.com/mail/?view=cm&fs=1&tf=1&body=my-text', 'popupwindow', 'scrollbars=yes,width=800,height=400');popUp.focus();return false" href="#"></a></li>
+                    <li><a target="_blank" class="email" href="#"></a></li>
             </ul>
 	    </div>
         <div class="video_text">
@@ -134,7 +141,7 @@
                     <li><a href='http://www.facebook.com/share.php?u=http://new-frontend-bogdand.proofpilot.dyndns.org' class="fb" onClick="return fbs_click(400, 300)" target = "_blank"> {% trans from "study" %}txt_share{% endtrans %}</a></li>
                     <li><a href="#" onclick="popUp=window.open('https://twitter.com/share?url=http://new-frontend-bogdand.proofpilot.dyndns.org', 'popupwindow', 'scrollbars=yes,width=800,height=400');popUp.focus();return false" class="tw">{% trans from "study" %}txt_tweet{% endtrans %}</a></li>
                     <li><a href="#" class="embed">{% trans from "study" %}txt_embed{% endtrans %}</a></li>
-                    <li><a target="_blank" class="email" onclick="popUp=window.open('https://mail.google.com/mail/?view=cm&fs=1&tf=1&body=my-text', 'popupwindow', 'scrollbars=yes,width=800,height=400');popUp.focus();return false" href="#">{% trans from "study" %}txt_email_to_friend{% endtrans %}</a></li>
+                    <li><a class="email" href="#">{% trans from "study" %}txt_email_to_friend{% endtrans %}</a></li>
             </ul>
             </div>
             {{ studycontent.studyAbout |raw }}
@@ -184,6 +191,10 @@
     </div>
   </div>
 </div>
+<form id="email_list">
+    <input type="text" />
+    <a href=""> + add email</a>
+</form>
 {% endblock content %}
     {% block footer %}
     {% include '::study_footer.html.twig' %}

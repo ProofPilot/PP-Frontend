@@ -22,6 +22,7 @@
     <link href="//fonts.googleapis.com/css?family=Roboto:900" rel="stylesheet" type="text/css" />
     <link rel="icon" href="{{ asset('images/favicon.ico') }}" type="image/x-icon"/>
     <link rel="shortcut icon" {% if branding != 'knowathome' %} href="{{ asset('images/favicon.ico') }}" {% else %} href="{{ asset('images/knowathome_favicon.ico') }}" {% endif %} type="image/x-icon"/>
+    <link rel="stylesheet" href={{ asset('css/jquery-ui-1.10.3/base/jquery-ui.min.css') }} />
     <link rel="stylesheet" href={{ asset('css/normalize.css') }} />
     <link rel="stylesheet" href={{ asset('css/main.css') }} />
     <link rel="stylesheet" href={{ asset('css/site.css') }}>
@@ -33,6 +34,7 @@
     <script src={{ asset('js/vendor/modernizr-2.6.2.min.js') }}></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> 
     <script>window.jQuery || document.write('<script src={{ asset('js/vendor/jquery-1.10.2.min.js') }}><\/script>')</script>
+    <script src={{ asset('js/jquery-ui-1.10.3/jquery-ui.min.js') }}></script>
     <script src= {{ asset ('js/plugins.js') }}></script>
     <script src= {{ asset ('js/main.js') }}></script>
   
