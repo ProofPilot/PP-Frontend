@@ -21,6 +21,8 @@ namespace Cyclogram\FrontendBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
 
+use Symfony\Component\HttpFoundation\Request;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -182,6 +184,57 @@ class EmailController extends Controller
     }
     
     /**
+     * @Route("/email_to_friend/" , name="_email_to_friend")
+     * @Template()
+     */
+    function emailToFriendAction(Request $request)
+    {
+//         $request = $this->getRequest();
+        if ($request->isXmlHttpRequest()) {
+            $regex = '/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/';
+            $from = $request->get('send_from');
+            $to = $request->get('send_to');
+            $description = $request->get('description');
+            $subject = $request->get('subject');
+            if (!isset($from) || empty($from)){
+                return new Response(json_encode(array('error' => true, 'message' => 'Insert the sender e-mail')));
+            } else {
+                if (!preg_match($regex, $from)) 
+                    return new Response(json_encode(array('error' => true, 'message' => 'Yuo insert invalid sender e-mail')));
+            }
+            
+            if (!isset($to) || empty($to[0])){
+                return new Response(json_encode(array('error' => true, 'message' => 'Insert at least one reciver e-mail')));
+            } else {
+                foreach ($to as $t)
+                if (!preg_match($regex, $t)) 
+                    return new Response(json_encode(array('error' => true, 'message' => 'Yuo inser invalid reciver e-mail')));
+            }
+            
+            if (!isset($description) || empty($description)){
+                return new Response(json_encode(array('error' => true, 'message' => 'Please fill e-mail body')));
+            }
+            try {
+                $message = \Swift_Message::newInstance()
+                    ->setContentType('text/html')
+                    ->setFrom($from)
+                    ->setTo($to)
+                    ->setBody($description);
+            
+                if( $subject)
+                    $message->setSubject( $subject);
+            
+                $send = $this->container->get('mailer')->send($message);
+            } catch (\Swift_TransportException $exc) {
+               return new Response(json_encode(array('error' => true, 'message' => "Error. Email not send" . $exc->getMessage())));
+            }
+            if ($send) {
+                return new Response(json_encode(array('error' => false, 'message' => "Send")));
+            }
+        }
+    }
+    
+    /**
      * @Route("/testdb" , name="_testdb")
      */
     function testDbAction()
@@ -199,5 +252,7 @@ class EmailController extends Controller
     {
         return $this->render('::error.html.twig', array("error"=>"Error"));
     }
+    
+    
 
 }

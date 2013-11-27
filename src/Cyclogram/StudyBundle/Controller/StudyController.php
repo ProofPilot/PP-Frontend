@@ -31,6 +31,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
+use Cyclogram\FrontendBundle\Form\RegistrationForm;
 
 
 class StudyController extends Controller
@@ -129,6 +130,7 @@ class StudyController extends Controller
         $locale = $this->getRequest()->getLocale();
         $em = $this->getDoctrine()->getManager();
         $session = $this->getRequest()->getSession();
+        $request = $this->getRequest();
 
         if ($session->has("message")) {
             $this->parameters["message"] = $session->get("message");
@@ -166,6 +168,12 @@ class StudyController extends Controller
         //save referral site&campaign in session
         $session->set('referralSite', $siteId);
         $session->set('referralCampaign', $campaignId);
+        $form = $this->createForm(new RegistrationForm($this->container));
+  
+            
+        $this->parameters['form'] =  $form->createView();
+        $this->parameters['host'] = $this->container->getParameter('site_url');
+        $this->parameters['studyUrl'] = $studyUrl;
 
         return $this->render('CyclogramStudyBundle:Study:page.html.twig', $this->parameters);
 

@@ -5,6 +5,7 @@
 
 {% block javascripts %}
     {% include '::google_analytics.html.twig' %}
+    <script src="{{ asset('/js/jquery.form.js') }}"></script>
     <script>
        $(document).ready(function(){
            $('#facebook_button').click(function(e) 
@@ -23,10 +24,39 @@
                e.preventDefault();
                $('#email_list').dialog();
            });
-           $('#email_list').on('click', 'a', function(e) {
+           var count = 1;
+               $('#email_list').on('click', 'a', function(e) {
+                   if (count < 5 ){
+            	   e.preventDefault();
+                   $('<input type="text" name="send_to['+count+']"/>').insertBefore($(this));
+                   count++;
+                   }  else {
+                	    e.preventDefault();
+               }});
+             $('#email_list').submit(function(e){
+     	        $(this).ajaxSubmit({
+    		        dataType: "json",
+    	    	    success: function(json) {
+        	    	    if(json.error){
+        	    	    	$('#mail_send_result').removeClass("notice green").addClass("error");
+        	    	    	$('#mail_send_result').show().html('<span>'+json.message+'</span>');
+        	    	    } else {
+        	    	    	$('#mail_send_result').removeClass("error").addClass("notice green")
+        	    	    	 $('#mail_send_result').show().html('<span>'+json.message+'</span>');
+                    }}
+    	    	});
+     	        return false;
+                 });
+
+             $('.embed').on('click', function(e) {
+            	 e.preventDefault();
+            	 $('#embed_list').dialog();
+             });
+
+
+           $("#register").bind('click', function(e){
         	   e.preventDefault();
-        	   $('<input type="text" />').insertBefore($(this));
-           });
+                $("#div_register").dialog();});
        });
 </script>
     <script type="text/javascript">
@@ -117,7 +147,8 @@
                 {% set redirectUrl = path('_study', {studyUrl: studyUrl})  %}
            {% if not is_enrolled_in_study(studyCode) %}
                {% if not is_granted('ROLE_PARTICIPANT') or not is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                    <a href="{{ path('_signup', {'studyCode': studyCode} ) }}" class="join"><span>{% trans from "study" %}button_join_the_study_goal{% endtrans %}</span></a>
+{#                     <a href="{{ path('_signup', {'studyCode': studyCode} ) }}" class="join"><span>{% trans from "study" %}button_join_the_study_goal{% endtrans %}</span></a>#}
+                    <a href="" class="join" id="register"><span>{% trans from "study" %}button_join_the_study_goal{% endtrans %}</span></a>
                     <p class="note">Requires registration</p>
                         <div class="social_col">
                             <a class="fb" id="facebook_button" href="">
@@ -192,10 +223,31 @@
     </div>
   </div>
 </div>
-<form id="email_list">
-    <input type="text" />
-    <a href=""> + add email</a>
+	  <div id="div_register" style="display:none;">
+	      {% include 'CyclogramFrontendBundle:Signup:signup.html.twig' %}
+	   </div>
+	   
+	   	  <div id="div_register_step2" style="display:none;">
+	      {% include 'CyclogramFrontendBundle:Signup:signup.html.twig' %}
+	   </div>
+	   
+	   
+<form id="email_list" action="{{path('_email_to_friend')}}">
+    <p  id="mail_send_result" style="display: none"></p>
+    <label>E-mail from:</label>
+    <input type="text" name="send_from"/>
+    <label>E-mail to:</label>
+    <input type="text" name="send_to[0]"/>
+    <a href=""> + add email(up to 5 e-mails )</a>
+    <label>Subject:</label>
+    <input type="text" name="subject"/>
+    <textarea rows="" cols="22" name="description"></textarea>
+    <input type="submit" class="submit btn_login" value="SEND"/>
 </form>
+
+	   	  <div id="embed_list" style="display:none;">
+	   	      <code><a href="{{host}}{{path('_page', {'studyUrl' : studyUrl})}}">{{host}}{{path('_page', {'studyUrl' : studyUrl})}}</a></code>
+	   </div>
 {% endblock content %}
     {% block footer %}
     {% include '::study_footer.html.twig' %}

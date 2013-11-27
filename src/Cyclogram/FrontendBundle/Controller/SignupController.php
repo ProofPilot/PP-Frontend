@@ -144,7 +144,15 @@ class SignupController extends Controller
                 } catch (Exception $ex) {
                     $em->close();
                 }
-            }
+            } else {
+                $validator = $this->container->get('validator');
+                $errors = $validator->validate($form);
+                foreach ($errors as $err) {
+                    $msg[]= $err->getMessage();
+                }
+
+            return $this->redirect( $this->generateUrl("_page", array('studyUrl' => $studyCode, 'error_messages' => $msg)));
+        }
     
         }
 
