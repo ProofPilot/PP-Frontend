@@ -4537,12 +4537,27 @@ footer .row_2 p {
 }
 #email_list input {
 	margin-bottom: 15px;
+	width: 100%;
 }
 #email_list a {
 	font-size: 12px;
 	color: #4283a8;
 	display: block;
-	margin-top: 15px;
+	margin-bottom: 15px;
+}
+#email_list textarea {
+	width: 100%;
+}
+#email_list .submit {
+	width: 100px;
+	margin-top: 25px;
+	margin-left: 85px;
+}
+.ui-widget-header {
+	background: linear-gradient(to bottom, #CB4E45 0%, #BB392A 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);
+}
+.ui-button-icon-only .ui-icon {
+	left: 45%;
 }
 
 /* ---------------- RESPONSIVE STYLES -------------------*/
