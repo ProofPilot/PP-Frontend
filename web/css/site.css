@@ -4559,6 +4559,10 @@ footer .row_2 p {
 .ui-button-icon-only .ui-icon {
 	left: 45%;
 }
+#mail_send_result.green span, #mail_send_result.error span {
+	font-size: 12px;
+	color: red;
+}
 
 /* ---------------- RESPONSIVE STYLES -------------------*/
 
