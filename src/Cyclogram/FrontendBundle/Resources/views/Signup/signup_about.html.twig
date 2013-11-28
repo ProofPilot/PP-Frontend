@@ -1,21 +1,14 @@
-{% extends '::base.html.twig' %}
-
-{% block content %}
     <div class="mobile_reg">
         <h1><span>Tailor your experience with ProofPilot. Pre-Qualify for Studies.</span> </h1>
         <h1>Tell us a bit about yourself</h1>
-        <form  action="{{ path('_signup_about', {'studyCode' : studyCode, 'id' : id}) }}" method="post" name="signup_about" novalidate>
+        <form  action="{{ path('_signup_about', {'studyCode' : studyCode}) }}" method="post" name="signup_about" id="signup_about_form" novalidate>
         <span>I'am a 
-                      {{ form_widget(form.sexSelect) }}
-                      {{ form_errors(form.sexSelect) }}
+                      {{ form_widget(formAbout.sexSelect) }}
                       of
-                      {{ form_widget(form.raceSelect) }}
-                      {{ form_errors(form.raceSelect) }} 
+                      {{ form_widget(formAbout.raceSelect) }}
                       who lives in
-                      {{ form_widget(form.countrySelect) }}
-                      {{ form_errors(form.countrySelect) }}.
+                      {{ form_widget(formAbout.countrySelect) }}.
         </span>
-      {{ form_widget(form.confirm, {'attr':{'class' : 'submit with_min_width btn_login'}}) }}
+      {{ form_widget(formAbout.confirm, {'attr':{'class' : 'submit with_min_width btn_login'}}) }}
        </form>
     </div>
-{% endblock content %}

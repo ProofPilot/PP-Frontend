@@ -8,18 +8,21 @@
     <script src="{{ asset('/js/jquery.form.js') }}"></script>
     <script>
        $(document).ready(function(){
+           // facebook authentification
            $('#facebook_button').click(function(e) 
                 { 
                     e.preventDefault();
                     e.stopPropagation();
                     fb_login();
                 });
+           //google authentification
            $('#google_button').click(function(e)
                 {
                     e.preventDefault();
                     e.stopPropagation();
                     g_login();
                 });
+           //mail to friends
            $('.email').bind('click', function(e) {
                e.preventDefault();
                $('#email_list').dialog();
@@ -33,30 +36,71 @@
                    }  else {
                 	    e.preventDefault();
                }});
-             $('#email_list').submit(function(e){
+            $('#email_list').submit(function(e){
+        	        $(this).ajaxSubmit({
+       		        dataType: "json",
+       	    	    success: function(json) {
+           	    	    if(json.error){
+           	    	    	$('#mail_send_result').removeClass("notice green").addClass("error");
+           	    	    	$('#mail_send_result').show().html('<span>'+json.message+'</span>');
+           	    	    } else {
+           	    	    	$('#mail_send_result').removeClass("error").addClass("notice green")
+           	    	    	 $('#mail_send_result').show().html('<span>'+json.message+'</span>');
+                       }}
+       	    	});
+        	        return false;
+                    });
+               //registration form ajax
+            $("#register").bind('click', function(e){
+        	   e.preventDefault();
+                $("#div_register").dialog();
+            });
+             $('#registration_form').submit(function(e){
+            	 $('.error').remove();
      	        $(this).ajaxSubmit({
     		        dataType: "json",
     	    	    success: function(json) {
         	    	    if(json.error){
-        	    	    	$('#mail_send_result').removeClass("notice green").addClass("error");
-        	    	    	$('#mail_send_result').show().html('<span>'+json.message+'</span>');
+            	    	    var messages = json.messages;
+        	    	    	for (var i = 0; i < messages .length; i++){
+            	    	    	var message = messages[i].message;
+            	    	    	if(messages[i].password) {
+            	    	    		var property  = "#registration_"+messages[i].property+"_first";
+        	    	    	        $(property).after('<p class="error">'+message+'</p>');
+            	    	    	}else {
+                	    	    	var property  = "#registration_"+messages[i].property;
+            	    	    		$(property).after('<p class="error">'+message+'</p>');
+                	    	    	} 
+            	    	    	}
         	    	    } else {
-        	    	    	$('#mail_send_result').removeClass("error").addClass("notice green")
-        	    	    	 $('#mail_send_result').show().html('<span>'+json.message+'</span>');
+        	    	    	$("#div_register").dialog('close');
+        	    	    	$("#div_register_step2").dialog();
                     }}
     	    	});
      	        return false;
                  });
+             // signup about form ajax
+             $('#signup_about_form').submit(function(e){
+      	        $(this).ajaxSubmit({
+     		        dataType: "json",
+     	    	    success: function(json) {
+         	    	    if(json.error){
+         	    	    	$('#mail_send_result').removeClass("notice green").addClass("error");
+         	    	    	$('#mail_send_result').show().html('<span>'+json.message+'</span>');
+         	    	    } else {
+         	    	    	$("#div_register_step2").dialog('close');
+         	    	    	$("#div_consent").dialog();
+                     }}
+     	    	});
+      	        return false;
+                  });
 
+             
+             
              $('.embed').on('click', function(e) {
             	 e.preventDefault();
             	 $('#embed_list').dialog();
              });
-
-
-           $("#register").bind('click', function(e){
-        	   e.preventDefault();
-                $("#div_register").dialog();});
        });
 </script>
     <script type="text/javascript">
@@ -88,7 +132,7 @@
   
   	<div class="choose_action alt for_mobile">
 		<h3>{% trans from "study" %}txt_sponsored_by{% endtrans %}</h3>
-        <a href="#" class="learn_more"><span>{% trans from "study" %}txt_learn_how{% endtrans %}Learn how ProofPilot maintains the impartiality of research </span></a>
+        <a href="#" class="learn_more"><span>{% trans from "study" %}txt_learn_how{% endtrans %}</span></a>
 	</div>
 				
     <div class="home_welcome">
@@ -144,10 +188,9 @@
                         <span class="num">3000</span>
                     </li>
                 </ul>
-                {% set redirectUrl = path('_study', {studyUrl: studyUrl})  %}
-           {% if not is_enrolled_in_study(studyCode) %}
+                {% set redirectUrl = path('_main', {studyUrl: studyUrl})  %}
+           
                {% if not is_granted('ROLE_PARTICIPANT') or not is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-{#                     <a href="{{ path('_signup', {'studyCode': studyCode} ) }}" class="join"><span>{% trans from "study" %}button_join_the_study_goal{% endtrans %}</span></a>#}
                     <a href="" class="join" id="register"><span>{% trans from "study" %}button_join_the_study_goal{% endtrans %}</span></a>
                     <p class="note">Requires registration</p>
                         <div class="social_col">
@@ -159,10 +202,20 @@
                             </a> 
                         </div>
                 {% endif %}
+                
                 {% if is_granted('ROLE_PARTICIPANT') or is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                    <p class="join">{% trans from "study" %}txt_join_before_goal{% endtrans %}</p>
-                    <a href="{{ path('_eligibility_survey', {'studyCode': studyCode, 'surveyId': surveyId, 'redirectUrl': redirectUrl} ) }}" class="join"><span>{% trans from "study" %}button_join_the_study_goal{% endtrans %}</span></a>
-                {% endif %}
+                    {% if is_enrolled_in_study(studyCode) %}
+                         <p class="already_joined"><span>You are a participant</span></p>
+                            <ul class="short_menu">
+                                <li><a href="#" class="sm_icon_1">View consent information</a></li>
+                                <li><a href="#" class="sm_icon_2">Personalized insight</a></li>
+                                <li><a href="#" class="sm_icon_3">Study findings</a></li>
+                                <li class="last"><a href="#" class="sm_icon_4">Leave study</a></li>
+                           </ul>
+                    {% else%}
+                          <p class="join">{% trans from "study" %}txt_join_before_goal{% endtrans %}</p>
+                          <a href="{{ path('_eligibility_survey', {'studyCode': studyCode, 'surveyId': surveyId, 'redirectUrl': redirectUrl} ) }}" class="join"><span>{% trans from "study" %}button_join_the_study_goal{% endtrans %}</span></a>
+                    {% endif %}
             {% endif %}
         </div>
       </div>
@@ -223,14 +276,17 @@
     </div>
   </div>
 </div>
-	  <div id="div_register" style="display:none;">
-	      {% include 'CyclogramFrontendBundle:Signup:signup.html.twig' %}
-	   </div>
+<div id="div_register" style="display:none;">
+	{% include 'CyclogramFrontendBundle:Signup:signup.html.twig' %}
+</div>
 	   
-	   	  <div id="div_register_step2" style="display:none;">
-	      {% include 'CyclogramFrontendBundle:Signup:signup.html.twig' %}
-	   </div>
+<div id="div_register_step2" style="display:none;">
+	{% include 'CyclogramFrontendBundle:Signup:signup_about.html.twig' %}
+</div>
 	   
+<div id="div_consent" style="display:none;">
+	{% include 'CyclogramFrontendBundle:Signup:signup_consent.html.twig' %}
+</div>
 	   
 <form id="email_list" action="{{path('_email_to_friend')}}">
     <p  id="mail_send_result" style="display: none"></p>
@@ -244,10 +300,9 @@
     <textarea rows="" cols="22" name="description"></textarea>
     <input type="submit" class="submit btn_login" value="SEND"/>
 </form>
-
-	   	  <div id="embed_list" style="display:none;">
-	   	      <code><a href="{{host}}{{path('_page', {'studyUrl' : studyUrl})}}">{{host}}{{path('_page', {'studyUrl' : studyUrl})}}</a></code>
-	   </div>
+<div id="embed_list" style="display:none;">
+    <code><a href="{{host}}{{path('_page', {'studyUrl' : studyUrl})}}">{{host}}{{path('_page', {'studyUrl' : studyUrl})}}</a></code>
+</div>
 {% endblock content %}
     {% block footer %}
     {% include '::study_footer.html.twig' %}

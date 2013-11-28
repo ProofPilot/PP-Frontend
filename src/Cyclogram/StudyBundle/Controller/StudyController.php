@@ -32,7 +32,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Cyclogram\FrontendBundle\Form\RegistrationForm;
-
+use Cyclogram\FrontendBundle\Form\SignUpAboutForm;
 
 class StudyController extends Controller
 {
@@ -169,9 +169,10 @@ class StudyController extends Controller
         $session->set('referralSite', $siteId);
         $session->set('referralCampaign', $campaignId);
         $form = $this->createForm(new RegistrationForm($this->container));
-  
+        $formAbout = $this->createForm(new SignUpAboutForm($this->container));
             
         $this->parameters['form'] =  $form->createView();
+        $this->parameters['formAbout'] =  $formAbout->createView();
         $this->parameters['host'] = $this->container->getParameter('site_url');
         $this->parameters['studyUrl'] = $studyUrl;
 

@@ -15,29 +15,6 @@
 					{% include '::profile_info.html.twig' %}
 					
 					<div class="menu_cont">
-{# 					{{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createSideDashboardMenu',{'template': 'CyclogramFrontendBundle:Knp:knp_menu.html.twig'}) }}#}
-{# 						<ul class="left_menu">#}
-{# 							<li><a href="#" class="icon_dashboard active">Dashboard <span class="notice">5</span></a></li>#}
-{# 							<li class="first"><a class="icon_survey" href="#">Survey</a></li>#}
-{# 							<li><a class="icon_activities" href="#">Activities</a></li>#}
-{# 							<li><a class="icon_measurments" href="#">Measurments</a></li>#}
-{# 							<li><a class="icon_treatment" href="#">Treatment</a></li>#}
-{# 						</ul>#}
-					</div>
-					
-{#					<div class="study_desc survey_box">
-
-						
-						<h3>{{ about.title }}</h3>
-						
-						<p>{{ about.info }}</p>
-						<p>&nbsp;</p>
-						
-						{% for element in list %}
-						<p>{{ element.item }}</p>
-						{% endfor %}
-						
-					</div>#}
 				
 				</div>
 				
@@ -46,107 +23,10 @@
 					<div class="dashboard_title white">
 						<div class="image"><img src="{{ logo }}" width="93" height="93" alt="" title=""/></div>
 						<h1>{{ survey.title }}</h1>
-{# 						<p>{{ page.subtitle }}</p>#}
+
 					</div>
 					
-{#					<div class="progress_bar">
-	
-						<div class="text">Progress</div>
-						<ul class="bar">
-							<li>0%</li>
-							<li class="ind">
-								<span><span style="width: 100px;"></span></span>
-							</li>
-							<li>100%</li>
-						</ul>
-						<div class="est">
-							<b>Est. Duration:</b>
-							<span>12 Minutes</span>
-						</div>
-				
-					</div>#}
-					
-{# 						<div class="survey_intro">#}
-						
-{# 							<h2>Get Started</h2>#}
-							
-{# 							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut ut eros pretium ante bibendum #}
-{# 							condimentum. Aenean sit amet sem vel enim rutrum ultrices eu non massa.</p>	#}
-												
-{# 						</div>#}
 
-						
-{# 						<form method="POST" action="">#}
-{# 							<div class="qbox">#}
-{# 								<h4>How old are you?</h4>#}
-{# 								<ul class="for_text">#}
-{# 									<li class="left"><label for="tmp1">Your age</label></li>#}
-{# 									<li class="right"><input type="text" value="" name="" class="text" id="tmp1"></li>#}
-{# 								</ul>	#}
-{# 							</div>#}
-{# 							<div class="qbox">#}
-{# 								<h4>Do you consider yourself to be Hispanic or Latino?</h4>#}
-{# 								<ul class="for_radios">#}
-{# 									<li>#}
-{# 										<span><input type="radio" value="" name="" id="tmp2"></span>#}
-{# 										<label for="tmp2">No</label>#}
-{# 									</li>#}
-{# 									<li>#}
-{# 										<span><input type="radio" value="" name="" id="tmp3"></span>#}
-{# 										<label for="tmp3">Yes</label>#}
-{# 									</li>#}
-{# 									<li>#}
-{# 										<span><input type="radio" value="" name="" id="tmp4"></span>#}
-{# 										<label for="tmp4">Don’t know</label>#}
-{# 									</li>#}
-{# 									<li class="last">#}
-{# 										<span><input type="radio" value="" name="" id="tmp5"></span>#}
-{# 										<label for="tmp5">No answer</label>#}
-{# 									</li>#}
-{# 								</ul>	#}
-{# 							</div>#}
-{# 							<div class="qbox">#}
-{# 								<h4>Which racial group or groups do you consider yourself to be in?</h4>#}
-{# 								<ul class="for_radios">#}
-{# 									<li>#}
-{# 										<span><input type="radio" value="" name="" id="tmp6"></span>#}
-{# 										<label for="tmp6">American</label>#}
-{# 									</li>#}
-{# 									<li>#}
-{# 										<span><input type="radio" value="" name="" id="tmp7"></span>#}
-{# 										<label for="tmp7">Asian</label>#}
-{# 									</li>#}
-{# 									<li>#}
-{# 										<span><input type="radio" value="" name="" id="tmp8"></span>#}
-{# 										<label for="tmp8">Black or African American</label>#}
-{# 									</li>#}
-{# 									<li>#}
-{# 										<span><input type="radio" value="" name="" id="tmp9"></span>#}
-{# 										<label for="tmp9">Caucasian</label>#}
-{# 									</li>#}
-{# 									<li class="last">#}
-{# 										<span><input type="radio" value="" name="" id="tmp10"></span>#}
-{# 										<label for="tmp10">Does not apply</label>#}
-{# 									</li>#}
-{# 								</ul>	#}
-{# 							</div>#}
-{# 							<div class="qbox">#}
-{# 								<h4>Just another question to fill out the empty space</h4>#}
-{# 								<ul class="for_text">#}
-{# 									<li class="left"><label for="tmp1">Your height</label></li>#}
-{# 									<li class="right"><input type="text" value="" name="" class="text" id="tmp1"></li>#}
-{# 								</ul>	#}
-{# 								<ul class="for_text">#}
-{# 									<li class="left"><label for="tmp1">Your weight</label></li>#}
-{# 									<li class="right"><input type="text" value="" name="" class="text" id="tmp1"></li>#}
-{# 								</ul>#}
-{# 							</div>#}
-{# 						</form>#}
-						
-{# 						<div class="pagination"><p>Page 2 of 4</p></div>#}
-				 		
-				 	
-{# 					</div>#}
 					
 					<div class="prev_next for_mobile">
 						<ul>
@@ -154,42 +34,10 @@
 							<li class="next_right"><a class="next" href="#"><span>Next</span></a></li>
 						</ul>
 					</div>
-					
-						
-{#					<div class="btns_box wide for_mobile">
-						<ul>
-							<li class="back left"><a class="back left" href="#"><span>Back</span></a></li>
-							<li class="right">
-								<ul>#}
-									{#<li class="cancel"><a class="cancel" href="#"><span>Cancel</span></a></li>
-									<li class="save"><a class="save" href="#"><span>Save <em>for later</em></span></a></li>
-									<li class="complete"><a class="complete" href="#"><span>COMPLETE SURVEY</span></a></li>
-								</ul>
-							</li>
 
-						</ul>	
-					</div>#}
-				
-				
 			</div>
 			
 			<div class="dashboard_panel">
-						
-						
-						{#<div class="mobile about_box">
-							<a href="#" class="expander" id="about_expander"><span>{{ about.title }}</span></a>
-							<div class="text_desc">
-						
-								<p>{{ about.info }}</p>
-								<p>&nbsp;</p>
-								
-								{% for element in list %}
-        						<p>{{ element.item }}</p>
-        						{% endfor %}
-						
-							</div>
-						</div>#}
-						
 						<iframe src="{{ survey.url }}" id="iframe1" width="1014"></iframe>
 				    </div>
 			

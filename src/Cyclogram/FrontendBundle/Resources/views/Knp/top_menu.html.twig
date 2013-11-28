@@ -14,8 +14,8 @@
 
 {% block root %}
 {% set listAttributes = item.childrenAttributes %}
-{{ block('list') -}}
-{% endblock %}
+{{ block('list') -}} 
+{% endblock %}  
 
 {% block list %} 
 {% if item.hasChildren and options.depth is not sameas(0) and item.displayChildren %}
@@ -98,10 +98,7 @@
     {% if item.attribute('nospan') == true %}
         {{ block('label') }}
     {% else %}
-        
-        <span><img src="{{ asset('images/tmpavatar3.png') }}" width="40" height="42"/>
-        Damien Sonensser<br>
-        {{ block('label') }}</span>
+      <span>  {{ block('label') }}</span>
     {% endif %}
     </a>
     {% endblock %}

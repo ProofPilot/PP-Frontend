@@ -48,31 +48,34 @@ class SurveyController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $securityContext = $this->container->get('security.context');
-        //if surveyid not equal to eligibility survey id
-        $study = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
-        $studyContent = $em->getRepository('CyclogramProofPilotBundle:StudyContent')->find(array('study' => $study->getStudyId(), 'language' => 1));
-        if ($studyContent->getStudyElegibilitySurvey() != $surveyId)
-            return $this->render("::error.html.twig", array(
-                    "error" => "Please dont hack our site:)"));
-        //If you are logged in and enrolled in study, no change to pass eligibility again
         if( $securityContext->isGranted('ROLE_PARTICIPANT') ){
+            //if surveyid not equal to eligibility survey id
+            $study = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
+            $studyContent = $em->getRepository('CyclogramProofPilotBundle:StudyContent')->find(array('study' => $study->getStudyId(), 'language' => 1));
+            if ($studyContent->getStudyElegibilitySurvey() != $surveyId)
+                return $this->render("::error.html.twig", array(
+                        "error" => "Please dont hack our site:)"));
+            //If you are enrolled in study, no change to pass eligibility again
             $participant = $securityContext->getToken()->getUser();
             $isEnrolled = $em->getRepository("CyclogramProofPilotBundle:Participant")->isEnrolledInStudy($participant, $studyCode);
             if ($isEnrolled)
                 return $this->redirect($this->get('router')->generate('_main'));
+            $lime_em = $this->getDoctrine()->getManager('limesurvey');
+            $locale = $this->getRequest()->getLocale();
+    
+            $studyContent = $this->getDoctrine()->getRepository("CyclogramProofPilotBundle:StudyContent")->getStudyContentByCode($studyCode, $locale);
+            $studyId = $studyContent->getStudy()->getStudyId();
+    
+            $parameters = array();
+            $parameters['studyCode'] = $studyCode;
+            $parameters['survey'] = $this->getSurveyData($surveyId, $locale);
+            $parameters['logo'] = $this->container->getParameter('study_image_url') . '/' . $studyId. '/' .$studyContent->getStudyLogo();
+    
+            return $this->render('CyclogramFrontendBundle:Survey:survey.html.twig', $parameters);
+        } else {
+            return $this->render("::error.html.twig", array(
+                    "error" => "Please dont hack our site:)"));
         }
-        $lime_em = $this->getDoctrine()->getManager('limesurvey');
-        $locale = $this->getRequest()->getLocale();
-
-        $studyContent = $this->getDoctrine()->getRepository("CyclogramProofPilotBundle:StudyContent")->getStudyContentByCode($studyCode, $locale);
-        $studyId = $studyContent->getStudy()->getStudyId();
-
-        $parameters = array();
-        $parameters['studyCode'] = $studyCode;
-        $parameters['survey'] = $this->getSurveyData($surveyId, $locale);
-        $parameters['logo'] = $this->container->getParameter('study_image_url') . '/' . $studyId. '/' .$studyContent->getStudyLogo();
-
-        return $this->render('CyclogramFrontendBundle:Survey:survey.html.twig', $parameters);
     }
     
     /**
@@ -117,6 +120,7 @@ class SurveyController extends Controller
         $request = $this->getRequest();
         $locale = $request->getLocale();
         $logic = $this->get('study_logic');
+        $session = $this->getRequest()->getSession();
         
         
         $studyCode = $this->getRequest()->query->get('studyCode');
@@ -134,23 +138,26 @@ class SurveyController extends Controller
         
         $isEligible = $sl->checkEligibility($studyCode, $surveyResult);
 
+        
+
         //if the user is already logged in 
         if($this->get('security.context')->isGranted("ROLE_PARTICIPANT")) {
-            $loggedUser = $this->get('security.context')->getToken()->getUser();
-            $logic->participantSurveyLinkRegistration($surveyId, $saveId, $loggedUser, uniqid());
+            $participant = $this->get('security.context')->getToken()->getUser();
+            if ($studyContent->getStudyElegibilitySurvey() == $surveyId) {
+                if ($session->has('referralSite') && $session->has('referralCampaign')){
+                    $logic->studyRegistration($participant, $studyCode, $surveyId, $saveId);
+                } else {
+                    $study = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
+                    $studyContent = $em->getRepository('CyclogramProofPilotBundle:StudyContent')->findOneByStudy($study);
+                    $session->set("message", "There was a problem - try the entire registration process again");
+                    return $this->redirect($this->generateUrl("_page", array("studyUrl" => $studyContent->getStudyUrl())));
+                }
+            } else {
+                $loggedUser = $this->get('security.context')->getToken()->getUser();
+                $logic->participantSurveyLinkRegistration($surveyId, $saveId, $loggedUser, uniqid());
+            }
         }
         
-        //store surveyid and saveid in session
-        $session = $this->getRequest()->getSession();
-        $bag = new AttributeBag();
-        $bag->setName("SurveyInfo");
-        $array = array();
-        $bag->initialize($array);
-        $bag->set('surveyId', $surveyId);
-        $bag->set('saveId', $saveId);
-        $bag->set('studyCode', $studyCode);
-        $session->registerBag($bag);
-        $session->set('SurveyInfo', $bag);
         
         if($isEligible)
             return $this->redirect($redirectUrl);

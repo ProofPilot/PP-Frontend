@@ -112,11 +112,6 @@ class OAuth2UserProvider implements OAuthAwareUserProviderInterface
                 $session->set("participantId", $participant->getParticipantId());
                 
                 //if no mobile phone, do all registration again
-                if(is_null($participant->getParticipantMobileNumber())) {
-                    $e = new IncompleteUserException("You have to continue registration");
-                    $e->setParticipantId($participant->getParticipantId());
-                    throw $e;
-                }
                 
                 switch($resourceOwnerName) {
                     case "facebook":

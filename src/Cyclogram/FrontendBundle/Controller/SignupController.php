@@ -58,132 +58,125 @@ use Symfony\Component\Security\Core\SecurityContext;
 
 class SignupController extends Controller
 {
-    
-    public function checkParticipant()
-    {
-        $session = $this->getRequest()->getSession();
-        $id = $this->getRequest()->get('id');
-        $studyCode = $this->getRequest()->get('studyCode');
-        if(!$id)
-            return $this->redirect($this->generateUrl('_register', array('studyCode'=>$studyCode)));
-        $sessionId = $session->get("participantId");
-        if($id != $sessionId)
-            return $this->redirect($this->generateUrl('_register', array('studyCode'=>$studyCode)));
-    }
+
     /**
      * @Route("/signup/{studyCode}", name="_signup", defaults={"studyCode"= null})
      * @Template()
      */
-    public function registerStartAction($studyCode=null)
+    public function signupStartAction(Request $request, $studyCode=null)
     {
-        $request = $this->getRequest();
+
         $session = $request->getSession();
     
         $em = $this->getDoctrine()->getManager();
-        $participant = new Participant();
-    
-        $form = $this->createForm(new RegistrationForm($this->container));
-    
-        if(!empty($studyCode))
-            $study = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
-    
-        if ($request->getMethod() == 'POST') {
-            $form->handleRequest($request);
-            if ($form->isValid()) {
-                $registration = $form->getData();
-                try{
-                    //if participant is unfinished record, try to get it
-                    $participant = $em->getRepository('CyclogramProofPilotBundle:Participant')
-                    ->getUnfinishedParticipant($registration->getParticipantUsername(), $registration->getParticipantEmail());
-    
-                    if(!$participant){
+
+        if ($request->isXmlHttpRequest()) {
+            $form = $this->createForm(new RegistrationForm($this->container));
+            
+            if(!empty($studyCode))
+                $study = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
+            
+                $form->handleRequest($request);
+                if ($form->isValid()) {
+                    $registration = $form->getData();
+                        //if participant is unfinished record, try to get it
+//                         $participant = $em->getRepository('CyclogramProofPilotBundle:Participant')
+//                         ->getUnfinishedParticipant($registration->getParticipantUsername(), $registration->getParticipantEmail());
+        
+//                         if(!$participant){
+//                             $participant = new Participant();
+//                         }
                         $participant = new Participant();
+                        $participnat_level = $em->getRepository('CyclogramProofPilotBundle:ParticipantLevel')->findOneByParticipantLevelName('Lead');
+                        $participant->setLevel($participnat_level);
+                        $participant->setParticipantEmail($registration->getParticipantEmail());
+                        $participant->setParticipantAppreciationEmail($registration->getParticipantEmail());
+                        $factory = $this->get('security.encoder_factory');
+                        $encoder = $factory->getEncoder($participant);
+        
+                        $participant->setParticipantPassword($encoder->encodePassword($registration->getParticipantPassword(), $participant->getSalt()));
+                        $participant->setParticipantUsername($registration->getParticipantUsername());
+                        $question = $em->getRepository('CyclogramProofPilotBundle:RecoveryQuestion')->find(1);
+                        $participant->setRecoveryQuestion($question);
+                        $participant->setRecoveryPasswordCode('Default');
+                        $participant->setParticipantEmailConfirmed(false);
+                        //$participant->setParticipantMobileNumber('');
+                        $participant->setParticipantMobileSmsCodeConfirmed(false);
+                        $participant->setParticipantIncentiveBalance(false);
+                        $participant->setLocale($request->getLocale());
+                        $language = $em->getRepository('CyclogramProofPilotBundle:Language')->findOneByLocale($request->getLocale());
+                        $participant->setParticipantLanguage($language);
+                        $participant->setParticipantRegistrationTime(new \DateTime('now'));
+                        $timezone = $em->getRepository('CyclogramProofPilotBundle:ParticipantTimeZone')->find(1);
+                        $participant->setParticipantTimezone($timezone);
+                        $participant->setParticipantLastTouchDatetime(new \DateTime(null, new \DateTimeZone($participant->getParticipantTimezone()->getParticipantTimezoneName())));
+                        $participant->setParticipantZipcode('');
+                        $role = $em->getRepository('CyclogramProofPilotBundle:ParticipantRole')->find(1);
+                        $participant->setParticipantRole($role);
+                        $participant->setStatus(Participant::STATUS_ACTIVE);
+                        $mailCode = substr(md5( md5( $participant->getParticipantEmail() . md5(microtime()))), 0, 4);
+                        $participant->setParticipantEmailCode($mailCode);
+                        $em->persist($participant);
+                        $em->flush($participant);
+                        $session->set("participantId", $participant->getParticipantId());
+                        $roles = array("ROLE_USER", "ROLE_PARTICIPANT");
+            
+                        $token = new UsernamePasswordToken($participant, null, 'main', $roles);
+                        $this->get('security.context')->setToken($token);
+                        
+                        return new Response(json_encode(array('error' => false)));
+                } else {
+                    $messages = array();
+                    $validator = $this->container->get('validator');
+                    $errors = $validator->validate($form);
+                    foreach ($errors as $err) {
+                        if(strpos($err->getPropertyPath(),'[')) {
+                            if ($err->getMessage() == "Passwords do not match") {
+                                $property = substr($err->getPropertyPath(),strpos($err->getPropertyPath(),'[')+1,strlen($err->getPropertyPath()));
+                                $messages[]= array('property' => substr($property,0,strlen($property)-1),
+                                                    'message' => $err->getMessage(),
+                                                    'password' => true);
+                            } else {
+                                $property = substr($err->getPropertyPath(),strpos($err->getPropertyPath(),'[')+1,strlen($err->getPropertyPath()));
+                                $property = substr($property,0,strpos($property,'.')-1);
+                                if ($property == "participantPassword" ) {
+                                    $messages[]= array('property' => $property,
+                                            'message' => $err->getMessage(),
+                                            'password' => true);
+                                } else {
+                                    $messages[]= array('property' => $property ,
+                                            'message' => $err->getMessage(),
+                                            'password' => false);
+                                }
+                            }
+                        }
+                        elseif(strpos($err->getPropertyPath(),'.')){
+                            $messages[]= array('property' => substr($err->getPropertyPath(),strpos($err->getPropertyPath(),'.')+1,strlen($err->getPropertyPath())),
+                                    'message' => $err->getMessage(),
+                                    'password' => false);
+                        }
                     }
+                    return new Response(json_encode(array('error' => true, 'messages' => $messages)));
     
-                    $participnat_level = $em->getRepository('CyclogramProofPilotBundle:ParticipantLevel')->findOneByParticipantLevelName('Lead');
-                    $participant->setLevel($participnat_level);
-                    $participant->setParticipantEmail($registration->getParticipantEmail());
-                    $participant->setParticipantAppreciationEmail($registration->getParticipantEmail());
-                    $factory = $this->get('security.encoder_factory');
-                    $encoder = $factory->getEncoder($participant);
-    
-                    $participant->setParticipantPassword($encoder->encodePassword($registration->getParticipantPassword(), $participant->getSalt()));
-                    $participant->setParticipantUsername($registration->getParticipantUsername());
-                    $question = $em->getRepository('CyclogramProofPilotBundle:RecoveryQuestion')->find(1);
-                    $participant->setRecoveryQuestion($question);
-                    $participant->setRecoveryPasswordCode('Default');
-                    $participant->setParticipantEmailConfirmed(false);
-                    //$participant->setParticipantMobileNumber('');
-                    $participant->setParticipantMobileSmsCodeConfirmed(false);
-                    $participant->setParticipantIncentiveBalance(false);
-                    $participant->setLocale($request->getLocale());
-                    $language = $em->getRepository('CyclogramProofPilotBundle:Language')->findOneByLocale($request->getLocale());
-                    $participant->setParticipantLanguage($language);
-                    $participant->setParticipantRegistrationTime(new \DateTime('now'));
-                    $timezone = $em->getRepository('CyclogramProofPilotBundle:ParticipantTimeZone')->find(1);
-                    $participant->setParticipantTimezone($timezone);
-                    $participant->setParticipantLastTouchDatetime(new \DateTime(null, new \DateTimeZone($participant->getParticipantTimezone()->getParticipantTimezoneName())));
-                    $participant->setParticipantZipcode('');
-                    $role = $em->getRepository('CyclogramProofPilotBundle:ParticipantRole')->find(1);
-                    $participant->setParticipantRole($role);
-                    $participant->setStatus(Participant::STATUS_ACTIVE);
-                    $mailCode = substr(md5( md5( $participant->getParticipantEmail() . md5(microtime()))), 0, 4);
-                    $participant->setParticipantEmailCode($mailCode);
-                    $em->persist($participant);
-                    $em->flush($participant);
-    
-                    $em->persist($participant);
-                    $em->flush();
-                    $session->set("participantId", $participant->getParticipantId());
-                    if (!empty($studyCode)){
-                        return $this->redirect( $this->generateUrl("_signup_about", array('id' => $participant->getParticipantId(), 'studyCode' => $studyCode)));
-                    } else {
-                        return $this->redirect( $this->generateUrl("_signup_about", array('id' => $participant->getParticipantId())) );
-                    }
-    
-                } catch (Exception $ex) {
-                    $em->close();
-                }
-            } else {
-                $validator = $this->container->get('validator');
-                $errors = $validator->validate($form);
-                foreach ($errors as $err) {
-                    $msg[]= $err->getMessage();
-                }
-
-            return $this->redirect( $this->generateUrl("_page", array('studyUrl' => $studyCode, 'error_messages' => $msg)));
+            }
         }
-    
-        }
-
-        return $this->render('CyclogramFrontendBundle:Signup:signup.html.twig',
-                array (
-                        'form' => $form->createView(),
-                        'last_username' => $session->get(SecurityContext::LAST_USERNAME),
-                        ));
-    
     }
     
     /**
-     * @Route("/signupabout/{id}/{studyCode}", name="_signup_about", defaults={"studyCode"= null})
-     * @Check(name="checkParticipant")
+     * @Route("/signupabout/{studyCode}", name="_signup_about", defaults={"studyCode"= null})
      * @Template()
      */
-    public function signupAboutAction($id,$studyCode=null) {
-        $parameters = array();
-        
+    public function signupAboutAction(Request $request, $studyCode=null) {
         $em = $this->getDoctrine()->getManager();
-        
-        $participant = $em->getRepository('CyclogramProofPilotBundle:Participant')->find($id);
+        $session = $request->getSession();
+//         $id = $session->get('participantId');
+        $participant = $this->get('security.context')->getToken()->getUser();
         if (empty($participant)) {
             return $this->render("::error.html.twig", array(
                     "error"=>"Wrong participant id"));
         }
-        
-        $form = $this->createForm(new SignUpAboutForm($this->container));
-        
-        $request = $this->getRequest();
-        if ($request->getMethod() == 'POST') {
+        if ($request->isXmlHttpRequest()) {
+            $form = $this->createForm(new SignUpAboutForm($this->container));
             $form->handleRequest($request);
             if ($form->isValid()) {
                 $data = $form->getData();
@@ -192,16 +185,17 @@ class SignupController extends Controller
                 $participant->setSex($data['sexSelect']);
                 $em->persist($participant);
                 $em->flush();
-                return $this->redirect( $this->generateUrl("_signup_consent", array('id' => $participant->getParticipantId(), 'studyCode' => $studyCode)));
-//                 $sex = $em->getRepository('CyclogramProofPilotBundle:Sex')->findOneBySexName($data['sexSelect']);
-//                 $race = $em->getRepository('CyclogramProofPilotBundle:Race')->findOneByRaceName($data['raceSelect']);
-//                 $country = $em->getRepository('CyclogramProofPilotBundle:Country')->findOneByCountryName($data['countrySelect']);
+                return new Response(json_encode(array('error' => false)));
+            } else {
+                $validator = $this->container->get('validator');
+                $errors = $validator->validate($form);
+                foreach ($errors as $err) {
+                    $msg[]= $err->getMessage();
+                }
+                return new Response(json_encode(array('error' => true, 'message' => $msg)));
             }
         }
         
-        return $this->render('CyclogramFrontendBundle:Signup:signup_about.html.twig'
-                , array('form' => $form->createView(),'id' => $id)
-                );
         
         
     }
@@ -212,7 +206,7 @@ class SignupController extends Controller
      * @Template()
      */
     public function signupConsentAction($id,$studyCode=null) {
-    
+        return $this->render('CyclogramStudyBundle:Signup:signup_consent.html.twig');
     }
 
 }

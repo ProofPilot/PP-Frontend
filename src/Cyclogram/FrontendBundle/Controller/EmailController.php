@@ -189,7 +189,6 @@ class EmailController extends Controller
      */
     function emailToFriendAction(Request $request)
     {
-//         $request = $this->getRequest();
         if ($request->isXmlHttpRequest()) {
             $regex = '/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/';
             $from = $request->get('send_from');

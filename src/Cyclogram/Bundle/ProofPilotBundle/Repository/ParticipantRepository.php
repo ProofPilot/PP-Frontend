@@ -74,8 +74,7 @@ class ParticipantRepository extends EntityRepository implements
         $result = $this->getEntityManager()
             ->createQuery('SELECT COUNT(p.participantEmail) FROM CyclogramProofPilotBundle:Participant p
                     WHERE (p.participantEmail = :email
-                    OR p.participantAppreciationEmail = :email)
-                    AND p.participantMobileSmsCodeConfirmed = true')
+                    OR p.participantAppreciationEmail = :email)')
             ->setParameter('email', $email)
             ->getSingleScalarResult();
         return $result;
@@ -84,8 +83,7 @@ class ParticipantRepository extends EntityRepository implements
     public function checkIfUsernameNotUsed($username) {
         $result = $this->getEntityManager()
         ->createQuery('SELECT COUNT(p.participantUsername) FROM CyclogramProofPilotBundle:Participant p
-                WHERE p.participantUsername = :username
-                AND p.participantMobileSmsCodeConfirmed = true')
+                WHERE p.participantUsername = :username')
                 ->setParameter('username', $username)
                 ->getSingleScalarResult();
         return $result;

@@ -56,7 +56,7 @@ security:
         - { path: "^/[a-z]{2}-[a-z]{2}/main/.*", roles: [ROLE_USER, IS_AUTHENTICATED_FULLY,IS_AUTHENTICATED_REMEMBERED] }
         - { path: "^/[a-z]{2}-[a-z]{2}/secured/.*", role:  [IS_AUTHENTICATED_FULLY,IS_AUTHENTICATED_REMEMBERED] }
         - { path: "^/[a-z]{2}-[a-z]{2}/register$", role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: "^/[a-z]{2}-[a-z]{2}/signup$", role: IS_AUTHENTICATED_ANONYMOUSLY }
+       # - { path: "^/[a-z]{2}-[a-z]{2}/signup$", role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: "^/api$", roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: "^/r/", roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: "^/no-authorization", roles: IS_AUTHENTICATED_ANONYMOUSLY }
