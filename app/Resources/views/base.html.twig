@@ -12,7 +12,16 @@
     <meta content="text/html; charset=utf-8" http-equiv="content-type">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     
-    <title>{% if branding != 'knowathome' %}{% block title %}{% endblock title %} - Proof Pilot{% else %} KnowAtHome {% endif %}</title>
+    <title>{% if branding != 'knowathome' %}
+                {% if studycontent is defined %}
+                    {{ studycontent.studyName }}
+                {% else %}
+                     - Proof Pilot
+                {% endif %}
+           {% else %}
+                KnowAtHome 
+                {% endif %}
+           </title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link href="//fonts.googleapis.com/css?family=Roboto:300" rel="stylesheet" type="text/css" />
@@ -58,7 +67,6 @@
     if(ISOLDIE) {
         alert(browser_msg);
     }
-    </script>
 
     {% block javascripts %}
     {% endblock javascripts %}
