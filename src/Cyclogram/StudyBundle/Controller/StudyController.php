@@ -174,7 +174,7 @@ class StudyController extends Controller
         $form = $this->createForm(new RegistrationForm($this->container));
         $formAbout = $this->createForm(new SignUpAboutForm($this->container));
             
-        $this->parameters['shortstudyUrl'] = $cc::generateGoogleShorURL($this->container->getParameter('site_url').DIRECTORY_SEPARATOR.$locale.DIRECTORY_SEPARATOR.$studyUrl);
+        $this->parameters['shortstudyUrl'] = $cc::generateGoogleShorURL($this->container->getParameter('site_url')."/".$locale."/".$studyUrl);
         $this->parameters['form'] =  $form->createView();
         $this->parameters['formAbout'] =  $formAbout->createView();
         $this->parameters['host'] = $this->container->getParameter('site_url');
