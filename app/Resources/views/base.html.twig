@@ -25,7 +25,16 @@
     <link rel="stylesheet" href={{ asset('css/jquery-ui-1.10.3/base/jquery-ui.min.css') }} />
     <link rel="stylesheet" href={{ asset('css/normalize.css') }} />
     <link rel="stylesheet" href={{ asset('css/main.css') }} />
-    <link rel="stylesheet" href={{ asset('css/site.css') }}>
+    
+    {% stylesheets
+        'css/site.css'
+        'css/mobile.css'
+        filter='cssrewrite'
+        output='generated/global.css'
+    %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+    
     {% block stylesheets %}
     {%  endblock stylesheets %}
     

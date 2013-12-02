@@ -1,6 +1,7 @@
 /web/bundles
 /web/media/*
 /web/symlinks/*
+/web/generated/*
 /app/cache/*
 /app/logs/*
 /vendor*/
