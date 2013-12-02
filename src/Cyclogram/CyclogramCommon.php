@@ -212,7 +212,7 @@ class CyclogramCommon {
     	else return $request;
     }
     
-    public function sendMail($to, $subject, $body, $attachment = null, $embedded = null, $renderTemplate = false, $renderParams = null) 
+    public function sendMail($from = null, $to, $subject, $body, $attachment = null, $embedded = null, $renderTemplate = false, $renderParams = null) 
     {
         //do not send emails in production
         if($this->container->get('kernel')->getEnvironment() == "prod")
@@ -222,9 +222,11 @@ class CyclogramCommon {
         $templating = $this->container->get('templating');
         
         $message = \Swift_Message::newInstance()
-        ->setContentType('text/html')
-        ->setFrom($this->container->getParameter('mailer_from'), $this->container->getParameter('mailer_envelope_from'))
-        ->setTo($to);
+        ->setContentType('text/html');
+        if (is_null($from))
+            $message->setFrom($this->container->getParameter('mailer_from'), $this->container->getParameter('mailer_envelope_from'))->setTo($to);
+        else
+            $message->setFrom($from)->setTo($to);
 //         ->addBcc($control_mail);
         
         if($subject)

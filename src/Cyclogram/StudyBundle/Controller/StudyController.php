@@ -54,6 +54,7 @@ class StudyController extends Controller
         $study = $studyContent->getStudy();
         $studyId = $studyContent->getStudyId();
         $this->parameters["studycontent"] = $studyContent;
+        $this->parameters["facebookcontent"] = str_replace(array("\r\n", "\r", "\n"), "", urlencode(strip_tags($studyContent->getStudyAbout())));
         $this->parameters['studyUrl'] = $studyUrl;
         $this->parameters['studyId'] = $studyId;
         $this->parameters['studyCode'] = $study->getStudyCode();
@@ -132,6 +133,7 @@ class StudyController extends Controller
         $em = $this->getDoctrine()->getManager();
         $session = $this->getRequest()->getSession();
         $request = $this->getRequest();
+        $cc = $this->container->get('cyclogram.common');
 
         if ($session->has("message")) {
             $this->parameters["message"] = $session->get("message");
@@ -172,6 +174,7 @@ class StudyController extends Controller
         $form = $this->createForm(new RegistrationForm($this->container));
         $formAbout = $this->createForm(new SignUpAboutForm($this->container));
             
+        $this->parameters['shortstudyUrl'] = $cc::generateGoogleShorURL($this->container->getParameter('site_url').DIRECTORY_SEPARATOR.$locale.DIRECTORY_SEPARATOR.$studyUrl);
         $this->parameters['form'] =  $form->createView();
         $this->parameters['formAbout'] =  $formAbout->createView();
         $this->parameters['host'] = $this->container->getParameter('site_url');

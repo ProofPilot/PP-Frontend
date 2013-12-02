@@ -184,48 +184,67 @@ class EmailController extends Controller
     }
     
     /**
-     * @Route("/email_to_friend/" , name="_email_to_friend")
+     * @Route("/email_to_friend/{studyCode}" , name="_email_to_friend" , defaults={"studyCode"="null"})
      * @Template()
      */
-    function emailToFriendAction(Request $request)
+    function emailToFriendAction(Request $request, $studyCode)
     {
+        $em = $this->getDoctrine()->getManager();
+        $cc = $this->get('cyclogram.common');
+        
+        $locale = $request->getLocale();
+        
         if ($request->isXmlHttpRequest()) {
             $regex = '/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/';
             $from = $request->get('send_from');
             $to = $request->get('send_to');
+            $to = array_filter($to);
             $description = $request->get('description');
             $subject = $request->get('subject');
+            if (empty($subject)) 
+                $this->get('translator')->trans("email_friend_subject", array(), "email", $parameters['locale']);
             if (!isset($from) || empty($from)){
                 return new Response(json_encode(array('error' => true, 'message' => 'Insert the sender e-mail')));
             } else {
                 if (!preg_match($regex, $from)) 
-                    return new Response(json_encode(array('error' => true, 'message' => 'Yuo insert invalid sender e-mail')));
+                    return new Response(json_encode(array('error' => true, 'message' => 'You insert invalid sender e-mail')));
             }
             
-            if (!isset($to) || empty($to[0])){
+            if (!isset($to[0]) || empty($to[0])){
                 return new Response(json_encode(array('error' => true, 'message' => 'Insert at least one reciver e-mail')));
             } else {
+                $to = array_filter($to);
                 foreach ($to as $t)
-                if (!preg_match($regex, $t)) 
-                    return new Response(json_encode(array('error' => true, 'message' => 'Yuo inser invalid reciver e-mail')));
+                if ( !empty($t) && !preg_match($regex, $t)) 
+                    return new Response(json_encode(array('error' => true, 'message' => 'You insert invalid reciver e-mail')));
+                if ( empty($t))
+                        return new Response(json_encode(array('error' => true, 'message' => 'Insert the reciver e-mail')));
             }
             
             if (!isset($description) || empty($description)){
                 return new Response(json_encode(array('error' => true, 'message' => 'Please fill e-mail body')));
             }
-            try {
-                $message = \Swift_Message::newInstance()
-                    ->setContentType('text/html')
-                    ->setFrom($from)
-                    ->setTo($to)
-                    ->setBody($description);
             
-                if( $subject)
-                    $message->setSubject( $subject);
+            $embedded = array();
+            $embedded = $cc->getEmbeddedImages();
             
-                $send = $this->container->get('mailer')->send($message);
-            } catch (\Swift_TransportException $exc) {
-               return new Response(json_encode(array('error' => true, 'message' => "Error. Email not send" . $exc->getMessage())));
+            $parameters['email'] = $to[0];
+            $parameters['studycontent'] = $studyContent = $this->getDoctrine()->getRepository("CyclogramProofPilotBundle:StudyContent")->getStudyContent($studyCode, $locale);
+            $parameters['locale'] = $locale;
+            $parameters['url'] = $this->container->getParameter('site_url').DIRECTORY_SEPARATOR.$locale.DIRECTORY_SEPARATOR.$studyCode;
+            $parameters['desription'] = $description;
+            $parameters['host'] = $this->container->getParameter('site_url');
+            $parameters["graphic"] = $this->container->getParameter('study_image_url') . '/' . $studyContent->getStudyId(). '/' .$studyContent->getStudyLogo();
+            try{
+                $send = $cc->sendMail($from,$to,
+                        $subject,
+                        'CyclogramFrontendBundle:Email:email_friends.html.twig',
+                        null,
+                        $embedded,
+                        true,
+                        $parameters);
+            } catch (\Exception $exc){
+                 return new Response(json_encode(array('error' => true, 'message' => "Error. Email not send" . $exc->getMessage())));
             }
             if ($send) {
                 return new Response(json_encode(array('error' => false, 'message' => "Send")));
