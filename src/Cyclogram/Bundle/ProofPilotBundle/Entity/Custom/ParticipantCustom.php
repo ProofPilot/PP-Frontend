@@ -599,6 +599,17 @@ class participantCustom extends DbCustom
     	return $query->fetchAll();
     }
     
+    public function addParticipantIdToSurvey($participant_id, $survey_id, $save_id) {
+    
+    	$sql = "UPDATE limesurvey.lime_survey_$survey_id
+    			SET    token = CONCAT(token,':$participant_id')
+    			WHERE  id = '$save_id'";
+    	$query = $this->db_conn->prepare($sql);
+    	$query->execute();
+    
+    	return true;
+    }
+    
 }
     
  

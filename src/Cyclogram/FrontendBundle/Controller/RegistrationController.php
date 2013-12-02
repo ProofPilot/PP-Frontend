@@ -641,6 +641,8 @@ class RegistrationController extends Controller
                 $surveyId = $bag->get('surveyId');
                 $saveId = $bag->get('saveId');
 
+                $surveyResult = $this->get('custom_db')->getFactory('ParticipantCustom')->addParticipantIdToSurvey($participant->getParticipantId(), $surveyId, $saveId);
+                
                 $ls->studyRegistration($participant, $studyCode, $surveyId, $saveId);
             } else {
                 $study = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);

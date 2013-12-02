@@ -66,7 +66,9 @@ class commonCustom extends DbCustom
     	$ip = $_SERVER['REMOTE_ADDR'];
     	$extra = isset($extra) ? $extra : FALSE;
     	$event_extra = $this->eventExtra($extra);
-    	 
+    	
+    	if(!$participant_id) $participant_id = $user_id;
+    	
     	$sql = "INSERT INTO event
     			SET    event_datetime = NOW(),
     			       event_ip = '$ip',
