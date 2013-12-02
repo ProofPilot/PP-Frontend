@@ -121,6 +121,7 @@ class SurveyController extends Controller
         $locale = $request->getLocale();
         $logic = $this->get('study_logic');
         $session = $this->getRequest()->getSession();
+        $em = $this->getDoctrine()->getManager();
         
         
         $studyCode = $this->getRequest()->query->get('studyCode');

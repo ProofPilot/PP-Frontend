@@ -33,6 +33,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Cyclogram\FrontendBundle\Form\RegistrationForm;
 use Cyclogram\FrontendBundle\Form\SignUpAboutForm;
+use Symfony\Component\Security\Core\SecurityContext;
 
 class StudyController extends Controller
 {
@@ -175,6 +176,7 @@ class StudyController extends Controller
         $this->parameters['formAbout'] =  $formAbout->createView();
         $this->parameters['host'] = $this->container->getParameter('site_url');
         $this->parameters['studyUrl'] = $studyUrl;
+        $this->parameters['last_username'] = $session->get(SecurityContext::LAST_USERNAME);
 
         return $this->render('CyclogramStudyBundle:Study:page.html.twig', $this->parameters);
 

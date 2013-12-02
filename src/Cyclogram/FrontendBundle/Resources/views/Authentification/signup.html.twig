@@ -1,0 +1,30 @@
+{% extends '::base.html.twig' %}
+
+{% use '::facebook_blocks.html.twig' %}
+{% use '::google_blocks.html.twig' %}
+
+{% form_theme form '::fields_theme1.html.twig' %}
+
+{% block javascripts %}
+
+<script>
+       $(document).ready(function(){
+           $('#facebook_button').click(function(e) 
+                { 
+                    e.preventDefault();
+                    e.stopPropagation();
+                    fb_login();
+                });
+           $('#google_button').click(function(e)
+                {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    g_login();
+                });
+       });
+</script>
+{% endblock javascripts %}
+
+{% block content %}
+    {% include 'CyclogramFrontendBundle:Authentification:signup_form.html.twig' %}
+{% endblock content %}

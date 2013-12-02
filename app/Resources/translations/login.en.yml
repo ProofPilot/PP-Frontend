@@ -8,13 +8,13 @@ enter_sms_code: 'Enter code you received via SMS'
 forgot_password: 'Forgot your password'
 forgot_password_message: "It happens to all of us more times that we'd like to admit. \nNo problem, we'll walk you through creating a new password while protecting your privacy and security.\n"
 forgot_username: 'Forgot your Username'
-forgot_username_message: 'No problem. Enter the mobile telephone number you used to sign up and we will send your Username via text message.'
+forgot_username_message: 'No problem. Enter the email address you used to sign up and we will send your Username.'
 havent_joined: 'Haven''t joined yet?'
 label_sms_code: 'Sms code'
 new_password_selection: "<p>Click on the link in the e-mail and you will be guided through the selection of a new password. You will need your mobile phone to complete this process.</p>\n<p>If it hasn't arrived within a few minutes, check your SPAM or junkmail folders</p>\n"
 send_another_code: 'No code? Send another'
 specimen_msg: 'Please select a valid specimen option'
-txt_forgot_your_password: 'Forgot your password?'
+txt_forgot_your_password: 'Forgot it?'
 txt_forgot_your_username: 'Forgot your Username?'
 txt_form_password: Password
 txt_form_username: Username

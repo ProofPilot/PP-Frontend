@@ -35,8 +35,8 @@ security:
                 resource_owners:
                     facebook:          facebook_login
                     google:            google_login
-                login_path: _login
-                failure_path: _login
+                login_path: _signup
+                failure_path: _signup
                 oauth_user_provider:
                     service: frontend.oauth_aware.user_provider.service
             pattern: ^/
@@ -44,27 +44,27 @@ security:
             form_login:
                 provider: main
                 check_path: login_check
-                login_path: _login
+                login_path: _signup
                 default_target_path: _do_login
                 always_use_default_target_path: true
             logout:
                 path:   _logout
-                target: _login
+                target: _signup
 
-    access_control:
+    access_control:    
         - { path: "^/[a-z]{2}-[a-z]{2}/main$", roles: [ROLE_USER, IS_AUTHENTICATED_FULLY,IS_AUTHENTICATED_REMEMBERED] }
         - { path: "^/[a-z]{2}-[a-z]{2}/main/.*", roles: [ROLE_USER, IS_AUTHENTICATED_FULLY,IS_AUTHENTICATED_REMEMBERED] }
-        - { path: "^/[a-z]{2}-[a-z]{2}/secured/.*", role:  [IS_AUTHENTICATED_FULLY,IS_AUTHENTICATED_REMEMBERED] }
-        - { path: "^/[a-z]{2}-[a-z]{2}/register$", role: IS_AUTHENTICATED_ANONYMOUSLY }
-       # - { path: "^/[a-z]{2}-[a-z]{2}/signup$", role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: "^/[a-z]{2}-[a-z]{2}/secured/.*", role:  [ROLE_USER, IS_AUTHENTICATED_FULLY,IS_AUTHENTICATED_REMEMBERED] }
+        - { path: "^/[a-z]{2}-[a-z]{2}/consent$", role: [ROLE_USER, IS_AUTHENTICATED_FULLY,IS_AUTHENTICATED_REMEMBERED] }
+        - { path: "^/[a-z]{2}-[a-z]{2}/eligibility-survey$", role: [ROLE_USER, IS_AUTHENTICATED_FULLY,IS_AUTHENTICATED_REMEMBERED] }
+        - { path: "^/[a-z]{2}-[a-z]{2}/surveyprotected$", role: [ROLE_USER, IS_AUTHENTICATED_FULLY,IS_AUTHENTICATED_REMEMBERED] }
+        - { path: "^/[a-z]{2}-[a-z]{2}/surveyRespons$", role: [ROLE_USER, IS_AUTHENTICATED_FULLY,IS_AUTHENTICATED_REMEMBERED] }
+        - { path: "^/[a-z]{2}-[a-z]{2}/signup/about$", role: [ROLE_USER, IS_AUTHENTICATED_FULLY,IS_AUTHENTICATED_REMEMBERED] }
+        - { path: "^/[a-z]{2}-[a-z]{2}/signup$", role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: "^/api$", roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: "^/r/", roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: "^/no-authorization", roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: "^/[a-z]{2}-[a-z]{2}/doLogin$", roles: [ROLE_USER, IS_AUTHENTICATED_FULLY,IS_AUTHENTICATED_REMEMBERED]}
-        - { path: "^/[a-z]{2}-[a-z]{2}/loginSMS$", roles: [ROLE_USER, IS_AUTHENTICATED_FULLY,IS_AUTHENTICATED_REMEMBERED]}
         - { path: "^/$", roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: "^/[a-z]{2}-[a-z]{2}/", roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: "^/[a-z]{2}-[a-z]{2}/reg_step2$", roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: "^/[a-z]{2}-[a-z]{2}/reg_step3$", roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: "^/[a-z]{2}-[a-z]{2}/reg_step4$", roles: IS_AUTHENTICATED_ANONYMOUSLY }
         #- { path: ^/_internal/secure, roles: IS_AUTHENTICATED_ANONYMOUSLY, ip: 127.0.0.1 }

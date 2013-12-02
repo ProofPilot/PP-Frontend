@@ -1,0 +1,13 @@
+<div class="mobile_reg">
+     <h1><span>Here's what you need to know to participate.</span> </h1>
+     <form action="{{ path('_consent', {'studyCode': studyCode, 'surveyId': surveyId}) }}" method="post" id="consent_form">
+        <textarea rows="15" cols="35">
+             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce imperdiet lacus eu velit dapibus venenatis. Praesent non viverra elit. Donec at nisl eu mi eleifend sagittis. Mauris et commodo nisl. Duis ultrices imperdiet imperdiet. Etiam tellus felis, molestie non eros eu, accumsan sagittis diam. Cras consequat nulla id mi rhoncus commodo. Interdum et malesuada fames ac ante ipsum primis in faucibus.
+
+                Aenean eros metus, dignissim sit amet egestas cursus, placerat a metus. Nullam vitae diam non lacus tincidunt lobortis ac vitae purus. Maecenas posuere leo sit amet orci viverra, sed sollicitudin felis sollicitudin. Sed quis tortor dui. Vivamus vel tempor sem. Curabitur commodo ligula non ipsum porta, vel pellentesque velit ornare. Quisque eget tellus id lacus molestie accumsan eget id ante. Vestibulum ornare leo a ullamcorper imperdiet. Fusce rutrum felis eget convallis venenatis. Nullam elementum egestas libero non elementum. Phasellus convallis mi ultrices diam dictum eleifend. Aenean consequat libero id lacinia blandit. Maecenas at est consectetur, vulputate mauris porta, mollis nibh
+        </textarea>
+        <h1>Good to go? Accept and Join the Study.</h1>
+        <p> Any information you share with us is completly confidental and secure. See our <p><a href="{{ path('_secure', {'studyUrl' : studyUrl}) }}">{% trans from "study" %}txt_security_privacy{% endtrans %}<br></a></p> </p>
+        <button type="submit" class="join">{% trans from "study" %}button_join_the_study_goal{% endtrans %}</button>
+        </form>
+    </div>

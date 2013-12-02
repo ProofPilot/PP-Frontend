@@ -11,10 +11,7 @@
 
         {% else %}
             <ul class="header_menu">
-                <li><a class="register_link" href="{{ path('_register') }}">{% trans %}txt_header_register_here{% endtrans %}</a>
-                    <span class="text">{% trans %}txt_header_or{% endtrans %}</span>
-                </li>
-                <li><a class="login" href="{{ path('_login') }}"><span>{% trans %}txt_header_login{% endtrans %}</span></a></li>
+                <li><a class="login" href="{{ path('_signup') }}"><span>{% trans %}txt_header_login{% endtrans %}</span></a></li>
             </ul>
         {% endif %}
 </header>
@@ -37,8 +34,7 @@
             {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createTopSettingsStudyMenu',{'template': 'CyclogramFrontendBundle:Knp:top_menu.html.twig'}) }}
         {% else %}
             <ul>         
-                <li><a href="{{ path('_register') }}" class="icon_register"><span>{% trans %}txt_header_register{% endtrans %}</span></a></li>
-                <li><a href="{{ path('_login') }}" class="icon_login"><span>{% trans %}txt_header_login{% endtrans %}</span></a></li>
+                <li><a href="{{ path('_signup') }}" class="icon_login"><span>{% trans %}txt_header_login{% endtrans %}</span></a></li>
             </ul>
         {% endif %}
     </div>
