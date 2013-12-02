@@ -88,7 +88,8 @@ class VerificationNoticeCommand extends ContainerAwareCommand
         ));
         $parameters['siteurl'] = $this->getContainer()->getParameter('site_url').$path;
 
-        $send = $cc->sendMail($participant->getParticipantEmail(),
+        $send = $cc->sendMail(null,
+                $participant->getParticipantEmail(),
                 $this->getContainer()->get('translator')->trans("email_title_notice", array(), "email", $parameters['locale']),
                 'CyclogramFrontendBundle:Email:verification_notice_email.html.twig',
                 null,

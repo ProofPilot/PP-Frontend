@@ -93,6 +93,26 @@
      	    	});
       	        return false;
                   });
+             //login ajax
+             $("#forgot_username").bind('click', function(e){
+          	   e.preventDefault();
+          	   $("#div_register").dialog('close');
+               $("#div_forgot_username").dialog();
+           });
+             $("#forgot_username_form").submit(function(e){
+            	$('.error').remove();
+       	        $(this).ajaxSubmit({
+     		        dataType: "json",
+     	    	    success: function(json) {
+         	    	    if(json.error){
+        	    	    	    $('#mail_address_participantEmail').after('<div><p class="error">'+json.message+'</p></div>');
+
+         	    	       } else {
+         	    	    	  $('#mail_address_participantEmail').after('<div><p class="notice green">'+json.message+'</p></div>');
+             	    	       }}
+     	    	});
+      	        return false;
+                  });
              // signup about ajax
              $('#signup_about_form').submit(function(e){
       	        $(this).ajaxSubmit({
@@ -294,8 +314,10 @@
 </div>
 
 <div id="div_forgot_username" style="display:none;">
-	{% include 'CyclogramFrontendBundle:Authentification:consent.html.twig' %}
+ {% include 'CyclogramFrontendBundle:Authentification:forgot_username_form.html.twig' %}
 </div>
+
+
 <form id="email_list" action="{{path('_email_to_friend', {'studyCode' : studyCode})}}">
 {{ studyCode }}
     <p  id="mail_send_result" style="display: none"></p>

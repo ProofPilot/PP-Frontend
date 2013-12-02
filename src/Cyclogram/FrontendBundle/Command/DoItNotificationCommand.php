@@ -148,7 +148,7 @@ class DoItNotificationCommand extends ContainerAwareCommand
             $parameters['siteurl'] = $this->getContainer()->getParameter('site_url').$this->getInterventionUrl($interventionLink, $locale);
             
             if (!empty($parameters["interventions"])){
-                $send = $cc->sendMail(
+                $send = $cc->sendMail(null,
                         $participant->getParticipantEmail(),
                         $this->getContainer()->get('translator')->trans("do_it_task_email_title", array(), "email", $parameters['locale']),
                         'CyclogramFrontendBundle:Email:doitemail.html.twig',

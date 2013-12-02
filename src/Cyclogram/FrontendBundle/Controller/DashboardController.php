@@ -52,7 +52,8 @@ class DashboardController extends Controller
             $parameters['host'] = $this->container->getParameter('site_url');
             $parameters['code'] = $participant->getParticipantEmailCode();
             
-            $cc->sendMail($participant->getParticipantEmail(),
+            $cc->sendMail(null,
+                    $participant->getParticipantEmail(),
                     $this->get('translator')->trans("email_title_verify", array(), "email", $parameters['locale']),
                     'CyclogramFrontendBundle:Email:email_confirmation.html.twig',
                     null,

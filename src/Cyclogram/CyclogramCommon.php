@@ -97,8 +97,6 @@ class CyclogramCommon {
     	curl_close($curlObj);
     	
     	return $json->id;
-    	
-    	
     } 
     
     public static function encode($str, $key) {

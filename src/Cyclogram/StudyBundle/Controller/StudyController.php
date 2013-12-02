@@ -33,6 +33,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Cyclogram\FrontendBundle\Form\RegistrationForm;
 use Cyclogram\FrontendBundle\Form\SignUpAboutForm;
+use Cyclogram\FrontendBundle\Form\MailAddressForm;
 use Symfony\Component\Security\Core\SecurityContext;
 
 class StudyController extends Controller
@@ -173,10 +174,12 @@ class StudyController extends Controller
         $session->set('referralCampaign', $campaignId);
         $form = $this->createForm(new RegistrationForm($this->container));
         $formAbout = $this->createForm(new SignUpAboutForm($this->container));
+        $formForgorUsername = $this->createForm(new MailAddressForm($this->container));
             
         $this->parameters['shortstudyUrl'] = $cc::generateGoogleShorURL($this->container->getParameter('site_url')."/".$locale."/".$studyUrl);
         $this->parameters['form'] =  $form->createView();
         $this->parameters['formAbout'] =  $formAbout->createView();
+        $this->parameters['formForgorUsername'] = $formForgorUsername->createView();
         $this->parameters['host'] = $this->container->getParameter('site_url');
         $this->parameters['studyUrl'] = $studyUrl;
         $this->parameters['last_username'] = $session->get(SecurityContext::LAST_USERNAME);

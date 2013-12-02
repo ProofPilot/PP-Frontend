@@ -224,9 +224,8 @@ class AuthentificationController extends Controller
      * @Route("/forgot_username", name="_forgot_username")
      * @Template()
      */
-    public function forgotUserAction()
+    public function forgotUserAction(Request $request)
     {
-        $request = $this->getRequest();
         $em = $this->getDoctrine()->getManager();
         
         if ($this->get('security.context')->isGranted("ROLE_PARTICIPANT")){
@@ -235,7 +234,7 @@ class AuthentificationController extends Controller
         
         $form = $this->createForm(new MailAddressForm($this->container));
     
-        if( $request->getMethod() == "POST" ){
+        if( $request->getMethod() == "POST"){
             $form->handleRequest($request);
             $em = $this->getDoctrine()->getManager();
             if( $form->isValid() ) {
@@ -251,27 +250,41 @@ class AuthentificationController extends Controller
                 $embedded = array();
                 $embedded = $cc->getEmbeddedImages();
                 
-                $send = $cc->sendMail($values['participantEmail'],
+                $send = $cc->sendMail(null,
+                        $values['participantEmail'],
                         $this->get('translator')->trans("forgot_username", array(), "email", $parameters['locale']),
                         'CyclogramFrontendBundle:Email:forgot_username_email.html.twig',
                         null,
                         $embedded,
                         true,
                         $parameters);
+
+                if ($request->isXmlHttpRequest()){
+                    if($send)
+                        return new Response(json_encode(array('error' => false, 'message' => $this->get('translator')->trans("forgot_username_email_send", array(), "login",$request->getLocale()))));
+                    else 
+                        return new Response(json_encode(array('error' => true, 'message' => $this->get('translator')->trans("forgot_username_send_error", array(), "login",$request->getLocale()))));
+                }
                 if($send)
                     return $this->render('CyclogramFrontendBundle:Authentification:username_sent.html.twig');
                 else 
-                    return $this->render('CyclogramFrontendBundle:Login:forgot_username.html.twig',
+                    return $this->render('CyclogramFrontendBundle:Authentification:forgot_username.html.twig',
                             array(
                                     'form' => $form->createView(),
-                                    'error' => true
+                                    'error' => $this->get('translator')->trans("forgot_username_send_error", array(), "login",$request->getLocale())
                             ));
+            } elseif ($request->isXmlHttpRequest()) {
+                $validator = $this->container->get('validator');
+                $errors = $validator->validate($form);
+                foreach ($errors as $err) {
+                    $messages = $err->getMessage();
+                }
+                return new Response(json_encode(array('error' => true, 'message' => $messages)));
             }
         }
-        return $this->render('CyclogramFrontendBundle:Login:forgot_username.html.twig',
+        return $this->render('CyclogramFrontendBundle:Authentification:forgot_username.html.twig',
                 array(
-                        'form' => $form->createView(),
-                        'error' => false
+                        'formForgorUsername' => $form->createView()
                 ));
     }
     
@@ -344,7 +357,8 @@ class AuthentificationController extends Controller
             $parameters['locale'] = $participant->getLocale() ? $participant->getLocale() : $request->getLocale();
             $parameters['host'] = $this->container->getParameter('site_url');
     
-            $cc->sendMail($participant->getParticipantEmail(),
+            $cc->sendMail(null,
+                    $participant->getParticipantEmail(),
                     $this->get('translator')->trans("email_title_verify", array(), "email", $parameters['locale']),
                     'CyclogramFrontendBundle:Email:email_confirmation.html.twig',
                     null,

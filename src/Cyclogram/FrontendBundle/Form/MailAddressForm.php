@@ -50,7 +50,7 @@ class MailAddressForm extends AbstractType
                         'message'=>"error_not_blank_email"
                 )))));
         $builder->add('send', 'submit', array(
-                'label' => 'btn_send_confirmation'
+                'label' => 'btn_send_confirmation_email'
                 ));
     }
 

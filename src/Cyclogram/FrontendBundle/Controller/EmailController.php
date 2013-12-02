@@ -49,7 +49,7 @@ class EmailController extends Controller
         $parameters['host'] = $this->container->getParameter('site_url');
 
         try{
-            $cc->sendMail(
+            $cc->sendMail(null,
                     $email,
                     'Test Email from Cyclogram',
                     'CyclogramFrontendBundle:Email:email_test.html.twig',
@@ -108,7 +108,7 @@ class EmailController extends Controller
             $parameters['host'] = $this->container->getParameter('site_url');
             $parameters['siteurl'] = $this->container->getParameter('site_url').$this->getInterventionUrl($interventionLink, $locale);
             
-                              $send = $cc->sendMail(
+                              $send = $cc->sendMail(null,
                           $participant->getParticipantEmail(),
                           $this->container->get('translator')->trans("do_it_task_email_title", array(), "email", $parameters['locale']),
                           'CyclogramFrontendBundle:Email:doitemail.html.twig',
@@ -168,7 +168,8 @@ class EmailController extends Controller
             $parameters['host'] = $this->container->getParameter('site_url');
             $parameters['code'] = $participant->getParticipantEmailCode();
             try{
-            $cc->sendMail($participant->getParticipantEmail(),
+            $cc->sendMail(null,
+                    $participant->getParticipantEmail(),
                     $this->get('translator')->trans("email_title_verify", array(), "email", $parameters['locale']),
                     'CyclogramFrontendBundle:Email:email_confirmation.html.twig',
                     null,
@@ -212,14 +213,7 @@ class EmailController extends Controller
             
             if (!isset($to[0]) || empty($to[0])){
                 return new Response(json_encode(array('error' => true, 'message' => 'Insert at least one reciver e-mail')));
-            } else {
-                $to = array_filter($to);
-                foreach ($to as $t)
-                if ( !empty($t) && !preg_match($regex, $t)) 
-                    return new Response(json_encode(array('error' => true, 'message' => 'You insert invalid reciver e-mail')));
-                if ( empty($t))
-                        return new Response(json_encode(array('error' => true, 'message' => 'Insert the reciver e-mail')));
-            }
+            } 
             
             if (!isset($description) || empty($description)){
                 return new Response(json_encode(array('error' => true, 'message' => 'Please fill e-mail body')));

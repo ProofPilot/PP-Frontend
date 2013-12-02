@@ -202,7 +202,8 @@ class LoginController extends Controller
                     $embedded = array();
                     $embedded = $cc->getEmbeddedImages();
                     
-                    $cc->sendMail($participant->getParticipantEmail(),
+                    $cc->sendMail(null,
+                            $participant->getParticipantEmail(),
                             $this->get('translator')->trans("email_reset_password", array(), "email", $parameters['locale']),
                             'CyclogramFrontendBundle:Email:reset_password_email.html.twig',
                             null,
