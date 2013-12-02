@@ -197,7 +197,7 @@
     	    <ul class="social_share">
     	        <li><span>Share:</span></li>
                 <li><a href='http://www.facebook.com/share.php?u=http://new-frontend-bogdand.proofpilot.dyndns.org' class="fb" onClick="return fbs_click(400, 300)" target = "_blank"></a></li>
-                    <li><a href="#" onclick="popUp=window.open('https://twitter.com/share?url={{ shortstudyUrl }}', 'popupwindow', 'scrollbars=yes,width=800,height=400');popUp.focus();return false" class="tw"></a></li>
+                    <li><a href="#" onclick="popUp=window.open('https://twitter.com/share?url={{ shortstudyUrl }}&text={%  trans from "study" %}social_join_study{% endtrans %} {{ studycontent.studyName }} {%  trans from "study" %}social_at_proofpilot{% endtrans %}', 'popupwindow', 'scrollbars=yes,width=800,height=400');popUp.focus();return false" class="tw">{% trans from "study" %}txt_tweet{% endtrans %}</a></li>
                     <li><a href="#" class="embed"></a></li>
                     <li><a target="_blank" class="email" href="#"></a></li>
             </ul>
@@ -249,7 +249,7 @@
             <div class="v_toolbar">
         		<ul class="social_share">
                     <li><a href='' class="fb" onClick="return fbs_click(400, 300)" target = "_blank"> {% trans from "study" %}txt_share{% endtrans %}</a></li>
-                    <li><a href="#" onclick="popUp=window.open('https://twitter.com/share?url={{ shortstudyUrl }}&text=Join the study,{{ studycontent.studyName }} at ProofPilot:', 'popupwindow', 'scrollbars=yes,width=800,height=400');popUp.focus();return false" class="tw">{% trans from "study" %}txt_tweet{% endtrans %}</a></li>
+                    <li><a href="#" onclick="popUp=window.open('https://twitter.com/share?url={{ shortstudyUrl }}&text={%  trans from "study" %}social_join_study{% endtrans %} {{ studycontent.studyName }} {%  trans from "study" %}social_at_proofpilot{% endtrans %}', 'popupwindow', 'scrollbars=yes,width=800,height=400');popUp.focus();return false" class="tw">{% trans from "study" %}txt_tweet{% endtrans %}</a></li>
 {#                     <li><a href="#" class="embed">{% trans from "study" %}txt_embed{% endtrans %}</a></li>#}
                     <li><a class="email" href="#">{% trans from "study" %}txt_email_to_friend{% endtrans %}</a></li>
             </ul>
@@ -327,7 +327,7 @@
     <input type="text" name="send_to[0]"/>
     <a href=""> + add email(up to 5 e-mails )</a>
     <label>Subject:</label>
-    <input type="text" name="subject" value="Join the study,{{ studycontent.studyName }} at ProofPilot"/>
+    <input type="text" name="subject" value="{%  trans from "study" %}social_join_study{% endtrans %}{{ studycontent.studyName }} {%  trans from "study" %}social_at_proofpilot{% endtrans %}"/>
     <textarea rows="" cols="22" name="description">{{ studycontent.studyAbout |striptags }}</textarea>
     <input type="submit" class="submit btn_login" value="SEND"/>
 </form>

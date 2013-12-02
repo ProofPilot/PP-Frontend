@@ -1,26 +1,27 @@
-button_join_the_study_goal: button_join_the_study_goal   # FIXME
+button_join_the_study_goal: button_join_the_study_goal
 msg_not_eligible: 'You are not eligible for ''%studyname%'' at this time.'
+social_at_proofpilot: social_at_proofpilot   # FIXME
+social_join_study: social_join_study   # FIXME
 txt_about: 'Acerca de este estudio'
 txt_accept_btn: 'YO ACEPTO - Unase al estudio'
-txt_affiliated_organizations: txt_affiliated_organizations   # FIXME
-txt_conducted_by: txt_conducted_by   # FIXME
+txt_affiliated_organizations: txt_affiliated_organizations
+txt_conducted_by: txt_conducted_by
 txt_decline_btn: 'DECLINAR - TALVEZ LUEGO'
 txt_eligible_dsc: 'EL resumen de su participación: Lo que necesita hacer ahora y lo que viene despúes.'
-txt_email: txt_email   # FIXME
-txt_email_to_friend: txt_email_to_friend   # FIXME
-txt_embed: txt_embed   # FIXME
-txt_goal: txt_goal   # FIXME
-txt_join_before_goal: txt_join_before_goal   # FIXME
-txt_learn_how: txt_learn_how   # FIXME
-txt_like_proofpilot: txt_like_proofpilot   # FIXME
-txt_more_studies_about: txt_more_studies_about   # FIXME
-txt_more_studies_in: txt_more_studies_in   # FIXME
-txt_on_facebook: txt_on_facebook   # FIXME
-txt_on_twitter: txt_on_twitter   # FIXME
-txt_participants: txt_participants   # FIXME
-txt_share: txt_share   # FIXME
-txt_sponsored_by: txt_sponsored_by   # FIXME
-txt_staff: txt_staff   # FIXME
-txt_tweet: txt_tweet   # FIXME
+txt_email_to_friend: txt_email_to_friend
+txt_goal: txt_goal
+txt_join_before_goal: txt_join_before_goal
+txt_learn_how: txt_learn_how
+txt_like_proofpilot: txt_like_proofpilot
+txt_more_studies_about: txt_more_studies_about
+txt_more_studies_in: txt_more_studies_in
+txt_on_facebook: txt_on_facebook
+txt_on_twitter: txt_on_twitter
+txt_participants: txt_participants
+txt_security_privacy: txt_security_privacy   # FIXME
+txt_share: txt_share
+txt_sponsored_by: txt_sponsored_by
+txt_staff: txt_staff
+txt_tweet: txt_tweet
 txt_you_are_eligible: 'Eres elegible'
 warning_message: 'Antes de proceder, porfavor lea esta importante información y acepte al final de la página'
