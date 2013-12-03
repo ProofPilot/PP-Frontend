@@ -33,20 +33,19 @@ class EmailController extends Controller
      * @Route("/send_test_email/{email}" , name="_send_test_email")
      * @Template()
      */
-    function sendTestEmailAction($email)
+    function sendTestEmailAction(Request $request, $email)
     {
-        $branding = $this->get('branding');
-        
+//         $branding = $this->get('branding');
+        $cc = $this->get('cyclogram.common');
         $embedded = array();
         $embedded = $cc->getEmbeddedImages();
-        
-        $cc = $this->get('cyclogram.common');
         
         $parameters = array();
         $parameters['code'] = 155;
         $parameters['email'] = "ok@ok.com";
         $parameters['confirmed'] = 1;
         $parameters['host'] = $this->container->getParameter('site_url');
+        $parameters['locale'] = $request->getLocale();;
 
         try{
             $cc->sendMail(null,

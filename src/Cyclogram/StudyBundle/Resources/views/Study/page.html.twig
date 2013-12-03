@@ -44,7 +44,7 @@
            	    	    	$('#mail_send_result').removeClass("notice green").addClass("error");
            	    	    	$('#mail_send_result').show().html('<span>'+json.message+'</span>');
            	    	    } else {
-           	    	    	$('#mail_send_result').removeClass("error").addClass("notice green")
+           	    	    	$('#mail_send_result').removeClass("error").addClass("notice green");
            	    	    	 $('#mail_send_result').show().html('<span>'+json.message+'</span>');
                        }}
        	    	});
@@ -101,6 +101,7 @@
            });
              $("#forgot_username_form").submit(function(e){
             	$('.error').remove();
+            	$('.notice').remove();
        	        $(this).ajaxSubmit({
      		        dataType: "json",
      	    	    success: function(json) {
@@ -166,7 +167,7 @@
         return false;
     }
     
-</script
+</script>
 {% endblock javascripts %}
 
 
