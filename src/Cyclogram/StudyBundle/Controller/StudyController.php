@@ -175,11 +175,19 @@ class StudyController extends Controller
         $form = $this->createForm(new RegistrationForm($this->container));
         $formAbout = $this->createForm(new SignUpAboutForm($this->container));
         $formForgorUsername = $this->createForm(new MailAddressForm($this->container));
+        $formForgotPassword = $this->createFormBuilder()
+        ->add('participantUsername', 'text', array(
+                'label'=>'label_username'
+        ))
+        ->add('sendPass', 'submit', array(
+                'label' => 'btn_send_pass'))
+                ->getForm();
             
         $this->parameters['shortstudyUrl'] = $cc::generateGoogleShorURL($this->container->getParameter('site_url')."/".$locale."/".$studyUrl);
         $this->parameters['form'] =  $form->createView();
         $this->parameters['formAbout'] =  $formAbout->createView();
         $this->parameters['formForgorUsername'] = $formForgorUsername->createView();
+        $this->parameters['formForgotPassword'] = $formForgotPassword->createView();
         $this->parameters['host'] = $this->container->getParameter('site_url');
         $this->parameters['studyUrl'] = $studyUrl;
         $this->parameters['last_username'] = $session->get(SecurityContext::LAST_USERNAME);

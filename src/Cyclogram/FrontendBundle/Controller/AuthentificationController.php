@@ -140,6 +140,41 @@ class AuthentificationController extends Controller
     }
     
     /**
+     * @Route("/login_check", name="login_check")
+     */
+    public function securityCheckAction()
+    {
+        // The security layer will intercept this request
+    }
+    
+    
+    /**
+     * @Route("/logout", name="_logout" , options={"expose"=true})
+     */
+    public function logoutAction()
+    {
+        // The security layer will intercept this request
+    }
+    
+    /**
+     * @Route("/doLogin", name="_do_login")
+     * @Template()
+     */
+    public function doLoginAction(Request $request){
+        $em = $this->getDoctrine()->getManager();
+        if ($request->isXmlHttpRequest()) {
+            if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
+                return new Response(json_encode(array('error' => true)));
+            }
+            return new Response(json_encode(array('error' => false, 'url' => $this->generateUrl("_main"))));
+        }
+        if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
+            return $this->redirect($this->generateUrl("_authentification", array('error' => true)));
+        }
+        return $this->redirect($this->generateUrl("_main"));
+    }
+    
+    /**
      * @Route("/signupabout/{studyCode}", name="_signup_about", defaults={"studyCode"= null})
      * @Template()
      */
@@ -270,7 +305,7 @@ class AuthentificationController extends Controller
                 else 
                     return $this->render('CyclogramFrontendBundle:Authentification:forgot_username.html.twig',
                             array(
-                                    'form' => $form->createView(),
+                                    'formForgorUsername' => $form->createView(),
                                     'error' => $this->get('translator')->trans("forgot_username_send_error", array(), "login",$request->getLocale())
                             ));
             } elseif ($request->isXmlHttpRequest()) {
@@ -285,6 +320,131 @@ class AuthentificationController extends Controller
         return $this->render('CyclogramFrontendBundle:Authentification:forgot_username.html.twig',
                 array(
                         'formForgorUsername' => $form->createView()
+                ));
+    }
+    
+    /**
+     * @Route("/forgot_pass", name="_forgot_pass")
+     * @Template()
+     */
+    public function forgotPassAction(Request $request)
+    {
+        $form = $this->createFormBuilder()
+        ->add('participantUsername', 'text', array(
+                'label'=>'label_username'
+        ))
+        ->add('sendPass', 'submit', array(
+                'label' => 'btn_send_pass'))
+                ->getForm();
+    
+        $em = $this->getDoctrine()->getManager();
+        $session = $request->getSession();
+    
+        if( $request->getMethod() == "POST" ){
+            $form->handleRequest($request);
+            $em = $this->getDoctrine()->getManager();
+            if( $form->isValid() ) {
+    
+                $values = $request->request->get('form');
+                $username = $values['participantUsername'];
+                $participant = $em->getRepository("CyclogramProofPilotBundle:Participant")->findOneByParticipantUsername($username);
+    
+                if (!empty($participant)) {
+                    $parameters['id'] = $participant->getParticipantId();
+                    $parameters['email'] = $participant->getParticipantEmail();
+                    $parameters['locale'] = $participant->getLocale() ? $participant->getLocale() : $request->getLocale();
+                    $parameters['host'] = $this->container->getParameter('site_url');
+    
+                    $cc = $this->get('cyclogram.common');
+    
+                    $embedded = array();
+                    $embedded = $cc->getEmbeddedImages();
+    
+                    $cc->sendMail(null,
+                            $participant->getParticipantEmail(),
+                            $this->get('translator')->trans("email_reset_password", array(), "email", $parameters['locale']),
+                            'CyclogramFrontendBundle:Email:reset_password_email.html.twig',
+                            null,
+                            $embedded,
+                            true,
+                            $parameters);
+                    if ($request->isXmlHttpRequest())
+                        return new Response(json_encode(array('error' => false)));
+                    return $this->render('CyclogramFrontendBundle:Authentification:reset_password_confirmation.html.twig');
+                } else {
+                    if ($request->isXmlHttpRequest())
+                        return new Response(json_encode(array('error' => true, 'message' => $this->get('translator')->trans("doesnt_match_records", array(), "login"))));
+                    return $this->render('CyclogramFrontendBundle:Authentification:forgot_your_password.html.twig',
+                            array(
+                                    "formForgotPassword" => $form->createView(),
+                                    "error" => $this->get('translator')->trans("doesnt_match_records", array(), "login")
+                            ));
+                }
+            } elseif ($request->isXmlHttpRequest()) {
+                if ($request->isXmlHttpRequest())
+                    return new Response(json_encode(array('error' => true, 'message' => $this->get('translator')->trans("doesnt_match_records", array(), "login"))));
+            }
+        }
+        return $this->render('CyclogramFrontendBundle:Authentification:forgot_your_password.html.twig',
+                array(
+                        "formForgotPassword" => $form->createView()
+                ));
+    }
+    
+    /**
+     * @Route("/create_pass/{id}" , name="_create_new_pass")
+     * @Template()
+     */
+    public function createPassAction($id)
+    {
+        $request = $this->getRequest();
+        $session = $this->getRequest()->getSession();
+    
+        $collectionConstraint = new Collection(array(
+                'fields' => array(
+                        'participantPassword' => new Length(array('min' => 8))
+                )
+        ));
+        $form = $this->createFormBuilder(null, array('constraints' => $collectionConstraint))
+        ->add('participantPassword', 'repeated', array(
+                'type' => 'password',
+                'first_options'  => array(
+                        'label' => 'label_new_pass'
+                ),
+                'second_options' => array(
+                        'label' => 'label_repeat_pass'
+                ),
+                'invalid_message' => 'The password fields must match.',
+        ))
+        ->add('savePass', 'submit', array(
+                'label' => 'btn_save_pass'
+        ))
+        ->getForm();
+    
+        $em = $this->getDoctrine()->getManager();
+        $study = null;
+        $request = $this->getRequest();
+    
+        if( $request->getMethod() == "POST" ){
+            $participant = $em->getRepository("CyclogramProofPilotBundle:Participant")->find($id);
+            $form->handleRequest($request);
+            $em = $this->getDoctrine()->getManager();
+            if( $form->isValid() ) {
+                $values = $request->request->get('form');
+                $factory = $this->get('security.encoder_factory');
+                $encoder = $factory->getEncoder($participant);
+    
+                $participant->setParticipantPassword($encoder->encodePassword($values['participantPassword']['first'], $participant->getSalt()));
+    
+                $em->persist($participant);
+                $em->flush($participant);
+                return $this->render('CyclogramFrontendBundle:Authentification:password_changed.html.twig');
+            }
+        }
+        return $this->render('CyclogramFrontendBundle:Authentification:create_new_password.html.twig',
+                array(
+                        "form" => $form->createView(),
+                        'id' => $id
                 ));
     }
     

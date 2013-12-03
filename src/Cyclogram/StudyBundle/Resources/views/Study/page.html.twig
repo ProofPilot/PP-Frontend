@@ -93,7 +93,7 @@
      	    	});
       	        return false;
                   });
-             //login ajax
+             //forgot username ajax
              $("#forgot_username").bind('click', function(e){
           	   e.preventDefault();
           	   $("#div_register").dialog('close');
@@ -109,6 +109,27 @@
 
          	    	       } else {
          	    	    	  $('#mail_address_participantEmail').after('<div><p class="notice green">'+json.message+'</p></div>');
+             	    	       }}
+     	    	});
+      	        return false;
+                  });
+             //forgot password ajax
+             $("#forgot_password").bind('click', function(e){
+          	   e.preventDefault();
+          	   $("#div_register").dialog('close');
+               $("#div_forgot_password").dialog();
+           });
+             $("#forgot_password_form").submit(function(e){
+            	$('.error').remove();
+       	        $(this).ajaxSubmit({
+     		        dataType: "json",
+     	    	    success: function(json) {
+         	    	    if(json.error){
+        	    	    	    $('#form_participantUsername').after('<div><p class="error">'+json.message+'</p></div>');
+
+         	    	       } else {
+         	             	   $("#div_forgot_password").dialog('close');
+         	                  $("#div_forgot_password_confirmation").dialog();
              	    	       }}
      	    	});
       	        return false;
@@ -317,9 +338,15 @@
  {% include 'CyclogramFrontendBundle:Authentification:forgot_username_form.html.twig' %}
 </div>
 
+<div id="div_forgot_password" style="display:none;">
+ {% include 'CyclogramFrontendBundle:Authentification:forgot_your_password_form.html.twig' %}
+</div>
+
+<div id="div_forgot_password_confirmation" style="display:none;">
+ {% include 'CyclogramFrontendBundle:Authentification:reset_password_confirmation_content.html.twig' %}
+</div>
 
 <form id="email_list" action="{{path('_email_to_friend', {'studyCode' : studyCode})}}">
-{{ studyCode }}
     <p  id="mail_send_result" style="display: none"></p>
     <label>E-mail from:</label>
     <input type="text" name="send_from"/>
