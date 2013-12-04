@@ -10,13 +10,13 @@
         $(document).ready(function(){
 
             // facebook authentification
-            $('#facebook_button, #facebook_button_landing_page').click(function(e) { 
+            $('#facebook_button').click(function(e) { 
                 e.preventDefault();
                 e.stopPropagation();
                 fb_login();
             });
             //google authentification
-            $('#google_button, #google_button_landing_page').click(function(e) {
+            $('#google_button').click(function(e) {
                 e.preventDefault();
                 e.stopPropagation();
                 g_login();
@@ -38,19 +38,20 @@
                 }
             });
             $('#email_list').submit(function(e){
-        	        $(this).ajaxSubmit({
-       		        dataType: "json",
-       	    	    success: function(json) {
-           	    	    if(json.error){
-           	    	    	$('#mail_send_result').removeClass("notice green").addClass("error");
-           	    	    	$('#mail_send_result').show().html('<span>'+json.message+'</span>');
-           	    	    } else {
-           	    	    	$('#mail_send_result').removeClass("error").addClass("notice green");
-           	    	    	 $('#mail_send_result').show().html('<span>'+json.message+'</span>');
-                       }}
-       	    	});
-        	        return false;
-                    });
+                $(this).ajaxSubmit({
+                    dataType: "json",
+                    success: function(json) {
+                        if(json.error) {
+                            $('#mail_send_result').removeClass("notice green").addClass("error");
+                            $('#mail_send_result').show().html('<span>'+json.message+'</span>');
+                        } else {
+                            $('#mail_send_result').removeClass("error").addClass("notice green")
+                            $('#mail_send_result').show().html('<span>'+json.message+'</span>');
+                        }}
+                });
+                return false;
+            });
+            
             //registration ajax
             $("#register").bind('click', function(e) {
                 e.preventDefault();
@@ -68,8 +69,7 @@
                               });
                           }
                 });
-    	        return false;
-            });
+
                 $(window).resize(function () {
                     fluidDialog();
                 });
@@ -98,9 +98,9 @@
                             dialog.option("position", dialog.options.position);
                         }
                     });
-                };
+                }
                 
-
+            });
             $('#registration_form').submit(function(e){
                 $('.error').remove();
                 $(this).ajaxSubmit({
@@ -122,82 +122,54 @@
                             $("#div_register").dialog('close');
                             $("#div_register_step2").dialog();
                     }}
+                });
+                return false;
+            });
+            
+            //login ajax
+            $("#login_form").submit(function(e){
+                $('.error').remove();
+                $(this).ajaxSubmit({
+                    dataType: "json",
+                    success: function(json) {
+                        if(json.error) {
+                            $('#reg_field_2').after('<div><p class="error">{%  trans from "login" %}txt_login_error_message{% endtrans %}</p></div>');
+                        } else {
+                            window.location.replace(json.url);
+                        }
+                    }
+                });
+                return false;
+            });
+            
+            // signup about ajax
+            $('#signup_about_form').submit(function(e){
+                $(this).ajaxSubmit({
+                    dataType: "json",
+                    success: function(json) {
+                        if(!json.error){
+                            $("#div_register_step2").dialog('close');
+                            $("#div_consent").dialog({
+                                modal: true,
+                                width: 'auto',
+                                fluid: true,
+                                resizable: false,
+                                position: ['top',100],
+                                open: function() {
+                                          $(this).dialog("widget").find(".ui-dialog-titlebar").hide();
+                                          $('<div class="modal_close_btn">×</div>').appendTo('#div_consent');
+                                      }
+                            });
+                        }
+                    }
+                });
+                return false;
+            });
+            $('.embed').on('click', function(e) {
+                e.preventDefault();
+                $('#embed_list').dialog();
+            });
 
-    	    	});
-     	        return false;
-                 });
-             //login ajax
-             $("#login_form").submit(function(e){
-            	$('.error').remove();
-       	        $(this).ajaxSubmit({
-     		        dataType: "json",
-     	    	    success: function(json) {
-         	    	    if(json.error){
-         	    	    	$('#reg_field_2').after('<div><p class="error">{%  trans from "login" %}txt_login_error_message{% endtrans %}</p></div>');
-         	    	       } else {
-         	    	    	  window.location.replace(json.url);
-             	    	       }}
-     	    	});
-      	        return false;
-                  });
-             //forgot username ajax
-             $("#forgot_username").bind('click', function(e){
-          	   e.preventDefault();
-          	   $("#div_register").dialog('close');
-               $("#div_forgot_username").dialog();
-           });
-             $("#forgot_username_form").submit(function(e){
-            	$('.error').remove();
-            	$('.notice').remove();
-       	        $(this).ajaxSubmit({
-     		        dataType: "json",
-     	    	    success: function(json) {
-         	    	    if(json.error){
-        	    	    	    $('#mail_address_participantEmail').after('<div><p class="error">'+json.message+'</p></div>');
-
-         	    	       } else {
-         	    	    	  $('#mail_address_participantEmail').after('<div><p class="notice green">'+json.message+'</p></div>');
-             	    	       }}
-     	    	});
-      	        return false;
-                  });
-             //forgot password ajax
-             $("#forgot_password").bind('click', function(e){
-          	   e.preventDefault();
-          	   $("#div_register").dialog('close');
-               $("#div_forgot_password").dialog();
-           });
-             $("#forgot_password_form").submit(function(e){
-            	$('.error').remove();
-       	        $(this).ajaxSubmit({
-     		        dataType: "json",
-     	    	    success: function(json) {
-         	    	    if(json.error){
-        	    	    	    $('#form_participantUsername').after('<div><p class="error">'+json.message+'</p></div>');
-
-         	    	       } else {
-         	             	   $("#div_forgot_password").dialog('close');
-         	                  $("#div_forgot_password_confirmation").dialog();
-             	    	       }}
-     	    	});
-      	        return false;
-                  });
-             // signup about ajax
-             $('#signup_about_form').submit(function(e){
-      	        $(this).ajaxSubmit({
-     		        dataType: "json",
-     	    	    success: function(json) {
-         	    	    if(!json.error){
-         	    	    	$("#div_register_step2").dialog('close');
-         	    	    	$("#div_consent").dialog();
-                     }}
-     	    	});
-      	        return false;
-                  });
-             $('.embed').on('click', function(e) {
-            	 e.preventDefault();
-            	 $('#embed_list').dialog();
-             });
             // mobile_login_switcher
             $(".mobile_login_switcher a").bind('click', function(){
                 if( $(this).attr('rel') ){
@@ -217,6 +189,12 @@
 </script>
     <script type="text/javascript">
     //facebook share popup
+    function strip(html)
+    {
+        var tmp = document.createElement("DIV");
+        tmp.innerHTML = html;
+        return tmp.textContent || tmp.innerText;
+        }
     function fbs_click(width, height) {
         var leftPosition, topPosition;
         //Allow for borders.
@@ -225,11 +203,13 @@
         topPosition = (window.screen.height / 2) - ((height / 2) + 50);
         var windowFeatures = "status=no,height=" + height + ",width=" + width + ",resizable=yes,left=" + leftPosition + ",top=" + topPosition + ",screenX=" + leftPosition + ",screenY=" + topPosition + ",toolbar=no,menubar=no,scrollbars=no,location=no,directories=no";
         u=location.href;
-        window.open('http://www.facebook.com/sharer.php?s=100&p[url]='+encodeURIComponent(u)+'&p[title]={{ studycontent.studyName }}+&p[summary]={{ facebookcontent }}&p[images][0]={{ graphic }}','sharer', windowFeatures);
+        d = '<h2>About</h2><br><p>The purpose of this study is to learn what men and transwomen like and don’t like about Sex Pro and how it affects their understanding of sexual protection behaviors. We will also see whether Sex Pro helps men and transwomen to change their sexual health practices, and how using this tool affects counseling sessions between our study participants and their HIV counselors.</p>';
+        d = d.replace(/(<([^>]+)>)/ig," ");
+        window.open('http://www.facebook.com/sharer.php?s=100&p[url]='+encodeURIComponent(u)+'&p[title]={{ studycontent.studyName }}+&p[summary]='+d,'sharer', windowFeatures);
         return false;
     }
     
-</script>
+</script
 {% endblock javascripts %}
 
 
@@ -272,16 +252,16 @@
             <span>{% trans with {'%studyname%': studycontent.studyName } from "study" %}msg_not_eligible{% endtrans %}</span>
         </p>
     {% endif %}
-     {% set redirectUrl = path('_main')  %}
+    
     <div class="text_wrapper">
       <div class="video_wrapper">
-        <a class="fb" id="facebook_button_landing_page" href=""><span>{% trans from "register" %}txt_join_with{% endtrans %} Facebook</span></a>
+        <a class="fb" id="facebook_button" href=""><span>{% trans from "register" %}txt_join_with{% endtrans %} Facebook</span></a>
         <div class="video_placeholder"><img src="{{ graphic }}" height="393" width="670"></div>
         <div class="v_toolbar for_mobile">
     	    <ul class="social_share">
     	        <li><span>Share:</span></li>
                 <li><a href='http://www.facebook.com/share.php?u=http://new-frontend-bogdand.proofpilot.dyndns.org' class="fb" onClick="return fbs_click(400, 300)" target = "_blank"></a></li>
-                    <li><a href="#" onclick="popUp=window.open('https://twitter.com/share?url={{ shortstudyUrl }}&text={%  trans from "study" %}social_join_study{% endtrans %} {{ studycontent.studyName }} {%  trans from "study" %}social_at_proofpilot{% endtrans %}', 'popupwindow', 'scrollbars=yes,width=800,height=400');popUp.focus();return false" class="tw">{% trans from "study" %}txt_tweet{% endtrans %}</a></li>
+                    <li><a href="#" onclick="popUp=window.open('https://twitter.com/share?url=http://new-frontend-bogdand.proofpilot.dyndns.org', 'popupwindow', 'scrollbars=yes,width=800,height=400');popUp.focus();return false" class="tw"></a></li>
                     <li><a href="#" class="embed"></a></li>
                     <li><a target="_blank" class="email" href="#"></a></li>
             </ul>
@@ -303,10 +283,10 @@
                     <a href="" class="join" id="register"><span>{% trans from "study" %}button_join_the_study_goal{% endtrans %}</span></a>
                     <p class="note">Requires registration</p>
                         <div class="social_col">
-                            <a class="fb" id="facebook_button_landing_page" href="">
+                            <a class="fb" id="facebook_button" href="">
                                 <span>{% trans from "register" %}txt_join_with{% endtrans %} Facebook</span>
                             </a>
-                            <a class="gp" id="google_button_landing_page" href="">
+                            <a class="gp" id="google_button" href="">
                                 <span>{% trans from "register" %}txt_join_with{% endtrans %} Google</span>
                             </a> 
                         </div>
@@ -332,9 +312,9 @@
         <div class="home_text">
             <div class="v_toolbar">
         		<ul class="social_share">
-                    <li><a href='' class="fb" onClick="return fbs_click(400, 300)" target = "_blank"> {% trans from "study" %}txt_share{% endtrans %}</a></li>
-                    <li><a href="#" onclick="popUp=window.open('https://twitter.com/share?url={{ shortstudyUrl }}&text={%  trans from "study" %}social_join_study{% endtrans %} {{ studycontent.studyName }} {%  trans from "study" %}social_at_proofpilot{% endtrans %}', 'popupwindow', 'scrollbars=yes,width=800,height=400');popUp.focus();return false" class="tw">{% trans from "study" %}txt_tweet{% endtrans %}</a></li>
-{#                     <li><a href="#" class="embed">{% trans from "study" %}txt_embed{% endtrans %}</a></li>#}
+                    <li><a href='' class="fb" onClick="return fbs_click(400, 300,'{{ studycontent.studyName }}')" target = "_blank"> {% trans from "study" %}txt_share{% endtrans %}</a></li>
+                    <li><a href="#" onclick="popUp=window.open('https://twitter.com/share?url=http://new-frontend-bogdand.proofpilot.dyndns.org', 'popupwindow', 'scrollbars=yes,width=800,height=400');popUp.focus();return false" class="tw">{% trans from "study" %}txt_tweet{% endtrans %}</a></li>
+                    <li><a href="#" class="embed">{% trans from "study" %}txt_embed{% endtrans %}</a></li>
                     <li><a class="email" href="#">{% trans from "study" %}txt_email_to_friend{% endtrans %}</a></li>
             </ul>
             </div>
@@ -398,18 +378,10 @@
 </div>
 
 <div id="div_forgot_username" style="display:none;">
- {% include 'CyclogramFrontendBundle:Authentification:forgot_username_form.html.twig' %}
+	{% include 'CyclogramFrontendBundle:Authentification:consent.html.twig' %}
 </div>
 
-<div id="div_forgot_password" style="display:none;">
- {% include 'CyclogramFrontendBundle:Authentification:forgot_your_password_form.html.twig' %}
-</div>
-
-<div id="div_forgot_password_confirmation" style="display:none;">
- {% include 'CyclogramFrontendBundle:Authentification:reset_password_confirmation_content.html.twig' %}
-</div>
-
-<form id="email_list" action="{{path('_email_to_friend', {'studyCode' : studyCode})}}">
+<form id="email_list" action="{{path('_email_to_friend')}}">
     <p  id="mail_send_result" style="display: none"></p>
     <label>E-mail from:</label>
     <input type="text" name="send_from"/>
@@ -417,8 +389,8 @@
     <input type="text" name="send_to[0]"/>
     <a href=""> + add email(up to 5 e-mails )</a>
     <label>Subject:</label>
-    <input type="text" name="subject" value="{%  trans from "study" %}social_join_study{% endtrans %}{{ studycontent.studyName }} {%  trans from "study" %}social_at_proofpilot{% endtrans %}"/>
-    <textarea rows="" cols="22" name="description">{{ studycontent.studyAbout |striptags }}</textarea>
+    <input type="text" name="subject"/>
+    <textarea rows="" cols="22" name="description"></textarea>
     <input type="submit" class="submit btn_login" value="SEND"/>
 </form>
 

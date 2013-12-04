@@ -399,13 +399,93 @@
 	margin-bottom: 40px;
 	border-radius: 5px;
 	width: 390px;
-	background: url(../images/bg_mobile.png) repeat 0px 0px;
-	box-shadow: 0px 0px 15px rgba(0,0,0,0.3);
 	position: relative;
 }
-#div_register .mobile_reg {
+
+/*Step #3*/
+#div_register .mobile_reg, #div_consent .mobile_reg {
 	margin: 0px;
 }
+#div_consent .mobile_reg {
+	background-color: #f1f1f1;
+	padding: 25px 20px 20px;
+	max-width: 620px;
+}
+#div_consent .mobile_reg h2 {
+	color: #C64533;
+    font-size: 24px;
+    font-weight: 400;
+    margin-bottom: 25px;
+    text-align: center;
+}
+#div_consent .mobile_reg .list_box {
+    -moz-box-sizing: border-box;
+    background: none repeat scroll 0 0 #FFFFFF;
+    border-radius: 4px 4px 4px 4px;
+    border-top: 1px solid #D4D4D4;
+    height: 230px;
+    margin-bottom: 25px;
+    overflow: auto;
+    padding: 7px 7px 7px 12px;
+    width: 100%;
+}
+#div_consent .mobile_reg .list_box .arrow_list {
+    margin-top: 10px;
+}
+#div_consent .mobile_reg .list_box .arrow_list li {
+    background: url("../images/2x_arrow_for_list.png") no-repeat scroll 0 6px / 7px 10px rgba(0, 0, 0, 0);
+    color: #4F4F4F;
+    font-size: 15px;
+    margin-bottom: 15px;
+    padding-left: 18px;
+}
+#div_consent .mobile_reg h3 {
+    color: #2B2B2B;
+    font-size: 24px;
+    font-weight: 400;
+    margin-bottom: 3px;
+    text-align: center;
+}
+#div_consent .mobile_reg p {
+    color: #767676;
+    font-size: 12px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+#div_consent .mobile_reg .align_center {
+    text-align: center;
+}
+#div_consent .mobile_reg .join a.btn {
+	background: linear-gradient(to bottom, #97C52C 0%, #7EA61F 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);
+    border: 1px solid #7EA61F;
+    border-radius: 3px 3px 3px 3px;
+    clear: both;
+    color: #FFFFFF;
+    display: block;
+    font-family: 'Roboto';
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 900;
+    height: 50px;
+    line-height: 50px;
+    margin-bottom: 5px;
+    text-align: center;
+    text-transform: uppercase;
+    width: 248px;
+    display: inline-block;
+}
+#div_consent .mobile_reg .join a.btn span {
+    background: url("../images/check_white.png") no-repeat scroll 0 50% / 19px 15px rgba(0, 0, 0, 0);
+    color: #FFFFFF;
+    display: inline-block;
+    min-height: 16px;
+    padding-left: 30px;
+}
+#div_consent .mobile_reg .popup_text.join p a {
+    color: #CC5C4C;
+    font-size: 12px;
+}
+
 .mobile_reg.align_center {
 	text-align: center;
 	padding-bottom: 5px;
@@ -853,7 +933,7 @@
 }
 .mobile_reg.login_form .loginform_right {
 	float: left;
-	width: 250px;
+	width: 256px;
 	padding-left: 48px;
 	padding-right: 48px;
 	padding-top: 30px;

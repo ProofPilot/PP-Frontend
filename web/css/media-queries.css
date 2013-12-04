@@ -1172,6 +1172,9 @@
         padding-top: 20px;
         width: 250px;
     }
+    #div_consent .mobile_reg.login_form {
+    	width: auto;
+    }
     .mobile_login_switcher {
         display: block;   
         background: white;
@@ -1243,6 +1246,17 @@
     .mobile_reg.login_form h2 {
         display: none;
     }
+    #div_consent {
+    	margin-right: 45px;
+    	margin-left: 45px;
+    }
+    #div_consent .mobile_reg.login_form h2 {
+    	display: block;
+    }
+    .ui-dialog {
+    	background: none;
+    	border: none;
+    }
     .mobile_reg.login_form .loginform_left .actions_row {
         padding: 0px;
         font-size: 13px;
@@ -1294,6 +1308,10 @@
     .mobile_reg.login_form,
     .mobile_reg.login_form.wide_popup.with_map  {
         width: 290px;
+    }
+    #div_consent .mobile_reg.login_form, #div_consent
+    .mobile_reg.login_form.wide_popup.with_map  {
+        width: auto;
     }
     .mobile_reg.login_form.wide_popup.with_map {
         width: 100%;
