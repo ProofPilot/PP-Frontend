@@ -97,6 +97,15 @@ span em {
 	max-width: 998px;
 	margin: 0px auto;	
 }
+.mobile_login_switcher {
+    display: none;
+}
+.row_or_text {
+    display: none;
+}
+.mobile_switcher {
+    display: none;
+}
 #open_why_popup {
 	cursor: pointer;
 }
@@ -3421,12 +3430,16 @@ footer .row_2 p {
 	position: relative;
 	left: 5px;
 }
+#embed_list {
+	padding: 20px;
+}
 #email_list {
 	display: none;
+	padding: 20px;
 }
 #email_list input {
 	margin-bottom: 15px;
-	width: 100%;
+	width: 98%;
 }
 #email_list a {
 	font-size: 12px;

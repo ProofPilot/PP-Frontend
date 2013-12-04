@@ -1156,6 +1156,326 @@
 	
 }
 
+/* @media screen and (max-width: 730px) */ 
+@media screen and (max-width: 730px){
+    
+    .mobile_reg.login_form.selection_popup p.note a,
+    .mobile_reg.login_form.wide_popup .popup_text.join p a {
+        clear: both;
+        display: inline-block;
+    }
+    .mobile_reg.login_form {
+        width: 290px;
+        margin-left: -145px;
+        margin-top: 30px;
+        background: white;
+        padding-top: 20px;
+        width: 250px;
+    }
+    .mobile_login_switcher {
+        display: block;   
+        background: white;
+        float: left;
+        width: 100%;
+        border-radius: 5px;
+    }
+    .mobile_login_switcher a {
+        display: block;
+        color: #383838;
+        font-size: 20px; 
+        height: 68px;
+        line-height: 68px;
+        width: 100%;
+        float: left;
+        -webkit-box-sizing:border-box;
+           -moz-box-sizing:border-box;
+                box-sizing:border-box;
+        border-bottom: 1px solid #d7d7d7;
+        padding-left: 22px;
+    	background:  url(../images/2x_login.png) no-repeat 260px 50%;
+    	background-size: 12px 21px;  
+        outline: 0px;
+    } 
+    .lt-ie9 .mobile_login_switcher a {
+        background:  url(../images/100_login.png) no-repeat 260px 50%;
+    }    
+    .mobile_login_switcher a.expanded {
+    	background:  url(../images/2x_login_down.png) no-repeat 255px 50%;
+    	background-size:  21px 12px;  
+    }
+    .lt-ie9 .mobile_login_switcher a {
+        background:  url(../images/100_login_down.png) no-repeat 255px 50%;
+    }
+    .mobile_reg.login_form .loginform_left.expanded  ,
+    .mobile_reg.login_form .loginform_right.expanded  {
+        border-bottom: 1px solid #d7d7d7 !important;
+    } 
+    .mobile_login_switcher a.expanded {
+        border: 0px;
+    }
+    .mobile_login_switcher.cancel a {
+        border-bottom: 0px;
+        background: #f2f2f2;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+        text-align: center;
+        color: #858585;
+    	background:#f2f2f2  url(../images/2x_cancel.png) no-repeat 100px 50%;
+    	background-size: 16px 16px;  
+    }
+     .mobile_login_switcher.cancel a:hover {
+        color: #575757;  
+     }
+    .lt-ie9 .mobile_login_switcher.cancel a {
+        background: #f2f2f2  url(../images/100_cancel.png) no-repeat 100px 50%;
+    }
+    .mobile_reg.login_form .loginform_right ,
+    .mobile_reg.login_form .loginform_left.register {
+        padding: 0px;
+        border: 0px;
+        width: 255px;
+        padding-right: 16px;
+        padding-left: 18px;
+        height: auto;
+        padding-bottom: 20px;
+        display: none;
+    }
+    .mobile_reg.login_form h2 {
+        display: none;
+    }
+    .mobile_reg.login_form .loginform_left .actions_row {
+        padding: 0px;
+        font-size: 13px;
+    }
+    .mobile_reg.login_form .loginform_left .actions_row a.submit {
+        width: 100%;
+        height: 41px;
+        line-height: 41px;
+        font-size: 16px;
+        margin-top: 10px;
+    }
+    .mobile_reg .loginform_left input.text, 
+    .mobile_reg .loginform_right input.text {
+        width: 234px;
+    }
+    .mobile_reg .btns_wapper {
+        float: left;
+        width: 100%;
+        margin-top: 30px;
+    }
+    .mobile_reg.login_form .loginform_left .notice2 {
+        clear: both;
+        font-size: 13px;
+    }
+    .mobile_reg.login_form .mobile_text {
+        display: none;
+    }
+    .row_or_text {
+        display: block;
+        clear: both;
+        float: left;
+        width: 100%;
+        text-align: center;
+        color: #363232;
+        font-weight: 700;
+        font-size: 14px;
+        margin-top: 30px;
+        background: url(../images/sep_or_text.gif) no-repeat 50% 50%;
+    }
+    .mobile_reg.login_form .loginform_right {
+        background: white;
+    }
+    .mobile_reg.login_form .loginform_right a.close {
+        display: none;
+    }
+    .mobile_reg.login_form {
+        padding: 0px;
+    }
+    .mobile_reg.login_form,
+    .mobile_reg.login_form.wide_popup.with_map  {
+        width: 290px;
+    }
+    .mobile_reg.login_form.wide_popup.with_map {
+        width: 100%;
+        margin-top: 30px;
+    }
+    .mobile_reg.login_form.wide_popup.with_map .popup_map {
+        margin-top: 0px;
+        padding: 0px;
+    }
+    .mobile_reg.login_form.wide_popup.with_map {
+        padding-top: 0px;
+        height: auto;
+    }
+    .mobile_reg.login_form.wide_popup.with_map .popup_header {
+        background: white;
+        line-height: inherit;
+        padding-top: 20px;
+        margin-bottom: 40px;
+    }
+    .mobile_reg.login_form.wide_popup.with_map .popup_header h1 {
+        font-size: 22px;
+        line-height: 140%;
+    }
+    .mobile_reg.login_form.wide_popup.with_map .popup_header span {
+        display: inline-block;
+        line-height: 140%;
+        clear: both;
+    }
+    .mobile_reg.login_form.wide_popup.with_map .popup_sidebar {
+        width: 100%;
+    }
+    .mobile_reg.login_form.wide_popup.with_map .popup_sidebar .maps_search p.input_note {
+        margin-bottom: 5px;
+        color: #4f4f4f;
+        font-size: 13px;
+    }
+    .mobile_reg.login_form.wide_popup.with_map .popup_header a.close {
+        right: 15px;
+        top: 17px;
+    }
+    div.popup_sidebar div.results ul li div.text_wrapper div.mobile_info {
+        width: 100%;
+        float: left;
+        clear: both;
+        padding-left: 10px;
+        padding-right: 16px;
+		box-sizing:border-box;
+		-moz-box-sizing:border-box;
+		-webkit-box-sizing:border-box;
+    }
+    div.popup_sidebar div.results ul li div.text_wrapper div.mobile_info  p {
+        font-size: 14px;
+        margin-bottom: 20px;
+    }
+    div.popup_sidebar div.results ul li div.text_wrapper div.mobile_info  p a {
+        color: inherit;
+    }
+    div.popup_sidebar div.results ul li div.text_wrapper div.mobile_info  hr {
+        display: none;
+    }
+    div.popup_sidebar div.results ul li div.text_wrapper div.mobile_info a.close {
+        float: right;
+        margin-right: -11px;
+        margin-top: -10px;
+        margin-bottom: 20px;
+    }
+    div.popup_sidebar div.results ul li div.text_wrapper div.mobile_info .map_wrapper {
+        margin-bottom: 10px;
+        margin-top: 10px;   
+    }
+    .mobile_reg.login_form.wide_popup.with_map .popup_sidebar .maps_search {
+        height: auto;
+        padding-bottom: 0px;
+        padding-top: 0px;
+        margin-bottom: 40px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    .mobile_reg.login_form.wide_popup.with_map .popup_sidebar .maps_search input.text {
+        width: 225px;
+        width: 100%;
+		box-sizing:border-box;
+		-moz-box-sizing:border-box;
+		-webkit-box-sizing:border-box;
+    }
+    .mobile_reg.login_form.wide_popup.with_map .popup_sidebar .maps_search a.submit_form {
+        width: 100%;
+        clear: both;
+        float: left;
+        margin-top: 10px;
+        font-size: 13px;
+		box-sizing:border-box;
+		-moz-box-sizing:border-box;
+		-webkit-box-sizing:border-box;
+        height: 32px;
+        line-height: 32px;
+    }
+    .mobile_reg.login_form.wide_popup.with_map .popup_sidebar .mobile_switcher {
+        display: block;
+        width: 100%;
+        background: white;
+        padding-left: 10px;
+        padding-right: 10px;
+		box-sizing:border-box;
+		-moz-box-sizing:border-box;
+		-webkit-box-sizing:border-box;
+    } 
+    .mobile_reg.login_form.wide_popup.with_map .popup_sidebar .mobile_switcher a {
+        display: block;
+        float: left;
+        width: 127px;
+        height: 53px;
+        line-height: 53px;
+        font-size: 18px;
+        color: #676767;
+        text-align: center;
+        font-weight: 700;
+        border-top: 2px solid white;
+        width: 50%;
+        margin: 0px;
+    }
+    .mobile_reg.login_form.wide_popup.with_map .popup_sidebar .mobile_switcher a.active {
+        border-top: 2px solid #c54432;
+        background: #f1f1f1;
+        color: #c54432;
+    }
+    .mobile_reg button.submit.btn_login {
+	    font-size: 16px;
+	    height: 41px;
+	    line-height: 41px;
+	    margin-top: 10px;
+	    width: 100%;
+	}
+    .mobile_reg.login_form.wide_popup.with_map .popup_sidebar .results {
+        height: auto;
+        background: #f1f1f1;
+    }
+    .mobile_reg.login_form.wide_popup.with_map .popup_sidebar .results ul li .text_right {
+        margin-top: -60px;
+    }
+    .mobile_reg.login_form.wide_popup.with_map .popup_sidebar .results ul {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+    .mobile_reg.login_form.wide_popup.with_map .popup_sidebar .results ul li .text_left {
+        background-position: 4px 4px;
+        padding-left: 30px;
+        width: 162px;
+        width: 100%;
+		box-sizing:border-box;
+		-moz-box-sizing:border-box;
+		-webkit-box-sizing:border-box;
+        padding-right: 73px;
+    }
+    .mobile_reg.login_form.wide_popup.with_map .popup_sidebar .results ul li {
+        border-bottom: 1px solid #dcdcdd;
+        padding-left: 10px;
+        padding-right: 10px;
+        width: 100%;
+		box-sizing:border-box;
+		-moz-box-sizing:border-box;
+		-webkit-box-sizing:border-box;
+    }
+    .mobile_reg.login_form.wide_popup.with_map .popup_map {
+        display: none;
+        background: #f1f1f1;
+        padding: 15px;
+        height: 325px;
+        width: 100%;
+		box-sizing:border-box;
+		-moz-box-sizing:border-box;
+		-webkit-box-sizing:border-box;
+    }
+    .mobile_reg.login_form.wide_popup.with_map .popup_map iframe {
+        height: 288px !important;
+    }
+	.modal_close_btn {
+		display: none;
+	}
+	
+}
+
 /* @media screen and (max-width: 680px) */ 
 @media screen and (max-width: 680px){
 
@@ -1170,25 +1490,8 @@
 		display: inline-block;
 		margin-left: 0px;
 	}
-	.mobile_reg.login_form {
-		width: 290px;
-		padding: 30px;
-		width: 235px;
-		padding-top: 10px;
-		margin-top: 30px;
-		background: #f7f7f7;
-	}
 	.mailing_adress div {
 		width: 100% !important;
-	}
-	.mobile_reg.login_form .loginform_left.register {
-		padding-top: 25px;
-	}
-	.mobile_reg.login_form .loginform_left  ,
-	.mobile_reg.login_form .loginform_right {
-		width: 100%;
-		padding-left: 0px;
-		padding-right: 0px;
 	}
 	.mobile_reg.login_form .loginform_right input.text, .loginform_left input.text {
 		width: 209px;
@@ -1245,6 +1548,108 @@
 		border-top: 0px none;
 	}
 	
+}
+
+/* @media screen and (max-width: 690px) */ 
+@media screen and (max-width: 690px){
+    
+    br.break_and {
+        display: none;
+    }
+
+    
+}
+
+
+/* @media screen and (max-width: 680px) */ 
+@media screen and (max-width: 680px){
+
+	.reg_header {
+		width: 100%;
+		padding-left: 20px;
+		box-sizing:border-box;
+		-moz-box-sizing:border-box;
+		-webkit-box-sizing:border-box;
+	}
+	.reg_header a.logo {
+		display: inline-block;
+		margin-left: 0px;
+	}
+	.mobile_reg.login_form .loginform_right input.text {
+		width: 209px;
+	}
+	.reg_btn_placeholder, .login_btn_placeholder {
+		display: none;
+	}
+	.mobile_reg.login_form h1 {
+		padding-right: 0px;
+	}
+	.mobile_reg.login_form .loginform_right .actions_row a.submit {
+		clear: both;
+		width: 100%;
+		box-sizing:border-box;
+		-moz-box-sizing:border-box;
+		-webkit-box-sizing:border-box;
+		text-align: center;
+		margin-top: 5px;
+		height: 44px;
+		line-height: 44px;
+	}
+	.mobile_reg.login_form .sep , .mobile_reg.login_form .sep.wide {
+		height: 50px;
+		width: 100%;
+		background: none;
+		color: #363232;
+		font-size: 14px;
+		font-weight: 700;
+		text-align: center;
+		padding: 0px;
+		line-height: 50px;
+		background: url(../images/sep2.gif) no-repeat 0px 50%;
+	}
+	.mobile_reg.login_form .loginform_right label ,
+	.mobile_reg.login_form .loginform_right span.note{
+		font-size: 13px;
+	}
+	.mobile_reg.login_form  .mobile_text {
+		text-align: center;
+		display: block;
+		clear: both;
+		color: #434343;
+		font-size: 15px;
+		padding-top: 20px;
+	}
+	.mobile_reg.login_form  .mobile_text  a {
+		color: #d04f3b;
+	}
+	.mobile_reg.login_form h1 {
+		font-size: 18px;
+		margin: 0px;
+	}
+}
+
+/* @media screen and (max-width: 670px) */ 
+@media screen and (max-width: 670px){
+    
+    br.break_year {
+        display: inline;
+    }
+    br.break_before_postcode {
+        display: inherit;
+    }
+    br.break_postcode {
+        display: none;
+    }
+    br.break_year {
+        display: none;
+    }
+    br.break_1 {
+        display: none;
+    }
+    br.break_row {
+        display: none;
+    }
+    
 }
 
 /* @media screen and (max-width: 660px) */ 

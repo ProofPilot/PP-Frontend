@@ -1,8 +1,10 @@
 
-
 {% form_theme form '::fields_theme1.html.twig' %}
     <div class="mobile_reg login_form">
       <div class="wrapper">
+        <div class="mobile_login_switcher">
+            <a href="#" rel=".loginform_left">Log in</a>
+        </div>
         <div class="loginform_left register">
         <h2>Existing User Log In</h2>
             <form action="{{ path('login_check') }}" method="post" id="login_form">
@@ -28,6 +30,7 @@
 					<button type="submit" class="submit btn_login">{% trans from "login" %}txt_login_button{% endtrans %}</button>
 				</div>
 			</form>
+		  <div class="row_or_text">OR</div>
           <div class="btns_wapper">
                <a class="btn_reg fb" id="facebook_button" href="">
                    <span>{% trans from "register" %}txt_join_with{% endtrans %} Facebook</span>
@@ -48,6 +51,9 @@
                   <p>{% trans from "login" %}txt_why_popup{% endtrans %}</p>
               </div>
           </div>
+        </div>
+        <div class="mobile_login_switcher">
+            <a href="#" rel=".loginform_right">Register</a>
         </div>
         <div class="loginform_right">
         <h2>New ProofPilot Users</h2>
@@ -76,7 +82,8 @@
               {{ form_errors(form) }}
           </form>
         </div>
-        
-        
+        <div class="mobile_login_switcher cancel">
+            <a href="#">Cancel</a>
+        </div>     
       </div>
     </div>

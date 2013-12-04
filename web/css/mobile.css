@@ -828,6 +828,7 @@
 .mobile_reg.login_form .loginform_left a.btn_reg.google span {
 	background: url(../images/icon_btn_reg_google.png) no-repeat 20px 50%;
 	background-size: 23px 22px;
+	padding-left: 73px;
 }
 .lt-ie9 .mobile_reg.login_form .loginform_left a.btn_reg.google span {
 	background: url(../images/100_icon_btn_reg_google.png) no-repeat 0px 50%;

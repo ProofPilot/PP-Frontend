@@ -56,18 +56,51 @@
                 e.preventDefault();
                 $("#div_register").dialog({ 
                     modal: true,
-                    minWidth: 700,
+                    width: 'auto',
+                    fluid: true,
                     resizable: false,
                     position: ['top',100],
                     open: function() {
                               $(this).dialog("widget").find(".ui-dialog-titlebar").hide();
                               $('<div class="modal_close_btn">×</div>').appendTo('#div_register');
-                              $('.modal_close_btn').on('click', function() {
-                                  $(this).parent('.ui-dialog-content').dialog("close");
+                              $('.modal_close_btn, .cancel a').on('click', function() {
+                                  $(this).closest('.ui-dialog-content').dialog("close");
                               });
                           }
                 });
+    	        return false;
             });
+                $(window).resize(function () {
+                    fluidDialog();
+                });
+                $(document).on("dialogopen", ".ui-dialog", function (event, ui) {
+                    fluidDialog();
+                });
+                
+                function fluidDialog() {
+                    var $visible = $(".ui-dialog:visible");
+                    // each open dialog
+                    $visible.each(function () {
+                        var $this = $(this);
+                        var dialog = $this.find(".ui-dialog-content").data("ui-dialog");
+                        // if fluid option == true
+                        if (dialog.options.fluid) {
+                            var wWidth = $(window).width();
+                            // check window width against dialog width
+                            if (wWidth < dialog.options.maxWidth + 50) {
+                                // keep dialog from filling entire screen
+                                $this.css("max-width", "90%");
+                            } else {
+                                // fix maxWidth bug
+                                $this.css("max-width", dialog.options.maxWidth);
+                            }
+                            //reposition dialog
+                            dialog.option("position", dialog.options.position);
+                        }
+                    });
+                };
+                
+
             $('#registration_form').submit(function(e){
                 $('.error').remove();
                 $(this).ajaxSubmit({
@@ -89,6 +122,7 @@
                             $("#div_register").dialog('close');
                             $("#div_register_step2").dialog();
                     }}
+
     	    	});
      	        return false;
                  });
@@ -164,8 +198,22 @@
             	 e.preventDefault();
             	 $('#embed_list').dialog();
              });
-       });
-
+            // mobile_login_switcher
+            $(".mobile_login_switcher a").bind('click', function(){
+                if( $(this).attr('rel') ){
+                    if( !$(this).hasClass('expanded') ){
+                        $(".mobile_login_switcher a").removeClass('expanded');
+                        $(".loginform_left , .loginform_right").hide().removeClass('expanded');
+                        $( $(this).attr('rel') ).addClass('expanded').show();
+                        $(this).addClass('expanded');
+                    } else {
+                        $(".loginform_left , .loginform_right").hide().removeClass('expanded');
+                        $(this).removeClass('expanded');
+                    }
+                }
+                return false;
+            });
+        });
 </script>
     <script type="text/javascript">
     //facebook share popup
