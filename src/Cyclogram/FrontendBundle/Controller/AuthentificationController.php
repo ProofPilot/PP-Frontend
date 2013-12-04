@@ -50,6 +50,7 @@ use Symfony\Component\Validator\Constraints\Collection;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\HttpFoundation\Request;
 use Cyclogram\CyclogramCommon;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Cyclogram\FrontendBundle\Form\MobilePhoneForm;
 use Cyclogram\Bundle\ProofPilotBundle\Entity\Participant;

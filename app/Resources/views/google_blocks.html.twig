@@ -14,7 +14,7 @@ function g_login() {
             document.location = "{{ url("frontend_oauth_service_redirect", {
                 service: "google", 
                 studyCode: studyCode, 
-                _destination: path("_do_login", {studyCode: studyCode}) 
+                _destination: path("_do_login") 
                 }) | raw
             }}";
 

@@ -98,49 +98,47 @@ class OAuth2UserProvider implements OAuthAwareUserProviderInterface
                     $participant->setParticipantAppreciationEmail($data["email"]);
                     $participant->setGoogleId($data["id"]);
             }
+            switch($resourceOwnerName) {
+                case "facebook":
+                    $participant->setRoles(array("ROLE_FACEBOOK_USER"));
+                    break;
+                case "google":
+                    $participant->setRoles(array("ROLE_GOOGLE_USER"));
+                    break;
+            }
 
             $this->userManager->persist($participant);
             $this->userManager->flush();
             
-            $session->set("participantId", $participant->getParticipantId());
-            
-            $e = new IncompleteUserException("You have to continue registration");
-            $e->setParticipantId($participant->getParticipantId());
-            throw $e;
+            return $participant;
         } else {
-                //Participant with such email already exists in database
-                $session->set("participantId", $participant->getParticipantId());
+            switch($resourceOwnerName) {
+                case "facebook":
+                    $participant->setRoles(array("ROLE_FACEBOOK_USER"));
+                    break;
+                case "google":
+                    $participant->setRoles(array("ROLE_GOOGLE_USER"));
+                    break;
+            }
+            //if participant present, handle in another way
+            $date = new \DateTime();
+            $participant->setParticipantLastTouchDatetime($date);
+            $this->userManager->persist($participant);
+            $this->userManager->flush();
+            $request = $this->container->get('request');
+            $studyCode = $request->query->get('state');
+            if (!empty($studyCode)) {
+                $logic = $this->container->get('study_logic');
                 
-                //if no mobile phone, do all registration again
-                
-                switch($resourceOwnerName) {
-                    case "facebook":
-                        $participant->setRoles(array("ROLE_FACEBOOK_USER"));
-                        break;
-                    case "google":
-                        $participant->setRoles(array("ROLE_GOOGLE_USER"));
-                        break;
+                if ($session->has('SurveyInfo')){
+                    $bag = $session->get('SurveyInfo');
+                    $surveyId = $bag->get('surveyId');
+                    $saveId = $bag->get('saveId');
+                    if($studyCode != $bag->get('studyCode'))
+                        $logic->studyRegistration($participant, $studyCode, $surveyId, $saveId);
                 }
-                //if participant present, handle in another way
-                $date = new \DateTime();
-                $participant->setParticipantLastTouchDatetime($date);
-                $this->userManager->persist($participant);
-                $this->userManager->flush();
-                $request = $this->container->get('request');
-                $studyCode = $request->query->get('state');
-                if (!empty($studyCode)) {
-                    $logic = $this->container->get('study_logic');
-                    
-                    if ($session->has('SurveyInfo')){
-                        $bag = $session->get('SurveyInfo');
-                        $surveyId = $bag->get('surveyId');
-                        $saveId = $bag->get('saveId');
-                        if($studyCode != $bag->get('studyCode'))
-                            $logic->studyRegistration($participant, $studyCode, $surveyId, $saveId);
-                    }
-                }
-                
-                return $participant;
+            }
+            return $participant;
         }
     }
 }

@@ -14,7 +14,7 @@ facebook_login:
 frontend_oauth_service_redirect:
     pattern: /redirect/{service}
     defaults:
-        _controller: CyclogramFrontendBundle:Login:redirectToService
+        _controller: CyclogramFrontendBundle:Authentification:redirectToService
         
 #_bazinga_exposetranslation:
 #    resource: "@BazingaExposeTranslationBundle/Resources/config/routing/routing.yml"
