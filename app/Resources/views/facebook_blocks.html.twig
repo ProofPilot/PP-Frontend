@@ -7,7 +7,7 @@
                         document.location = "{{ url("frontend_oauth_service_redirect", {
                             service: "facebook", 
                             studyCode: studyCode, 
-                            _destination: path("_do_login") 
+                            _destination: path("_do_login", {'studyCode' : studyCode}) 
                             }) | raw
                         }}";
                     } else {
@@ -18,7 +18,7 @@
                                         document.location = document.location = "{{ url("frontend_oauth_service_redirect", {
                                                 service: "facebook", 
                                                 studyCode: studyCode, 
-                                                _destination: path("_do_login") 
+                                                _destination: path("_do_login", {'studyCode' : studyCode}) 
                                                 }) | raw
                                             }}";
                                     }

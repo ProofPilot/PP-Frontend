@@ -100,10 +100,10 @@ class OAuth2UserProvider implements OAuthAwareUserProviderInterface
             }
             switch($resourceOwnerName) {
                 case "facebook":
-                    $participant->setRoles(array("ROLE_FACEBOOK_USER"));
+                    $participant->setRoles(array("ROLE_FACEBOOK_USER","ROLE_PARTICIPANT" ));
                     break;
                 case "google":
-                    $participant->setRoles(array("ROLE_GOOGLE_USER"));
+                    $participant->setRoles(array("ROLE_GOOGLE_USER","ROLE_PARTICIPANT"));
                     break;
             }
 
@@ -114,10 +114,10 @@ class OAuth2UserProvider implements OAuthAwareUserProviderInterface
         } else {
             switch($resourceOwnerName) {
                 case "facebook":
-                    $participant->setRoles(array("ROLE_FACEBOOK_USER"));
+                    $participant->setRoles(array("ROLE_FACEBOOK_USER","ROLE_PARTICIPANT" ));
                     break;
                 case "google":
-                    $participant->setRoles(array("ROLE_GOOGLE_USER"));
+                   $participant->setRoles(array("ROLE_GOOGLE_USER","ROLE_PARTICIPANT"));
                     break;
             }
             //if participant present, handle in another way

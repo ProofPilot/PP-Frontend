@@ -155,10 +155,11 @@ class AuthentificationController extends Controller
     }
     
     /**
-     * @Route("/doLogin", name="_do_login")
+     * @Route("/doLogin/{studyCode}/{surveyId}", name="_do_login", defaults={"studyCode"= null, "surveyId"=null})
      * @Template()
      */
-    public function doLoginAction(Request $request){
+    public function doLoginAction(Request $request, $studyCode, $surveyId){
+        $language = $this->getRequest()->getLocale();
         $em = $this->getDoctrine()->getManager();
         if ($request->isXmlHttpRequest()) {
             if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
@@ -168,6 +169,13 @@ class AuthentificationController extends Controller
         }
         if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
             return $this->redirect($this->generateUrl("_authentification", array('error' => true)));
+        }
+        if (isset($studyCode)) {
+            $redirectUrl = $this->generateUrl("_main");
+            $study = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
+            $language = $em->getRepository('CyclogramProofPilotBundle:Language')->findOneByLocale($request->getLocale());
+            $studyContent =  $this->getDoctrine()->getRepository("CyclogramProofPilotBundle:StudyContent")->findOneBy(array('study' => $study->getStudyId(),'language' => $language));
+            return $this->redirect($this->generateUrl("_eligibility_survey", array('studyCode'=> $studyCode, 'surveyId' => $studyContent->getStudyElegibilitySurvey(), 'redirectUrl' => $redirectUrl)));
         }
         return $this->redirect($this->generateUrl("_main"));
     }
