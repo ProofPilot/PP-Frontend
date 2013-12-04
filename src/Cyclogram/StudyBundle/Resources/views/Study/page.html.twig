@@ -7,35 +7,36 @@
     {% include '::google_analytics.html.twig' %}
     <script src="{{ asset('/js/jquery.form.js') }}"></script>
     <script>
-       $(document).ready(function(){
-           // facebook authentification
-           $('#facebook_button').click(function(e) 
-                { 
+        $(document).ready(function(){
+
+            // facebook authentification
+            $('#facebook_button').click(function(e) { 
+                e.preventDefault();
+                e.stopPropagation();
+                fb_login();
+            });
+            //google authentification
+            $('#google_button').click(function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                g_login();
+            });
+            //mail to friends
+            $('.email').bind('click', function(e) {
+                e.preventDefault();
+                $('#email_list').dialog();
+            });
+
+            var count = 1;
+            $('#email_list').on('click', 'a', function(e) {
+                if (count < 5 ){
                     e.preventDefault();
-                    e.stopPropagation();
-                    fb_login();
-                });
-           //google authentification
-           $('#google_button').click(function(e)
-                {
+                    $('<input type="text" name="send_to['+count+']"/>').insertBefore($(this));
+                    count++;
+                } else {
                     e.preventDefault();
-                    e.stopPropagation();
-                    g_login();
-                });
-           //mail to friends
-           $('.email').bind('click', function(e) {
-               e.preventDefault();
-               $('#email_list').dialog();
-           });
-           var count = 1;
-               $('#email_list').on('click', 'a', function(e) {
-                   if (count < 5 ){
-            	   e.preventDefault();
-                   $('<input type="text" name="send_to['+count+']"/>').insertBefore($(this));
-                   count++;
-                   }  else {
-                	    e.preventDefault();
-               }});
+                }
+            });
             $('#email_list').submit(function(e){
         	        $(this).ajaxSubmit({
        		        dataType: "json",
@@ -50,31 +51,43 @@
        	    	});
         	        return false;
                     });
-               //registration ajax
-            $("#register").bind('click', function(e){
-        	   e.preventDefault();
-                $("#div_register").dialog();
+            //registration ajax
+            $("#register").bind('click', function(e) {
+                e.preventDefault();
+                $("#div_register").dialog({ 
+                    modal: true,
+                    minWidth: 700,
+                    resizable: false,
+                    position: ['top',100],
+                    open: function() {
+                              $(this).dialog("widget").find(".ui-dialog-titlebar").hide();
+                              $('<div class="modal_close_btn">×</div>').appendTo('#div_register');
+                              $('.modal_close_btn').on('click', function() {
+                                  $(this).parent('.ui-dialog-content').dialog("close");
+                              });
+                          }
+                });
             });
-             $('#registration_form').submit(function(e){
-            	 $('.error').remove();
-     	        $(this).ajaxSubmit({
-    		        dataType: "json",
-    	    	    success: function(json) {
-        	    	    if(json.error){
-            	    	    var messages = json.messages;
-        	    	    	for (var i = 0; i < messages .length; i++){
-            	    	    	var message = messages[i].message;
-            	    	    	if(messages[i].password) {
-            	    	    		var property  = "#registration_"+messages[i].property+"_first";
-        	    	    	        $(property).after('<p class="error">'+message+'</p>');
-            	    	    	}else {
-                	    	    	var property  = "#registration_"+messages[i].property;
-            	    	    		$(property).after('<p class="error">'+message+'</p>');
-                	    	    	} 
-            	    	    	}
-        	    	    } else {
-        	    	    	$("#div_register").dialog('close');
-        	    	    	$("#div_register_step2").dialog();
+            $('#registration_form').submit(function(e){
+                $('.error').remove();
+                $(this).ajaxSubmit({
+                    dataType: "json",
+                    success: function(json) {
+                        if(json.error){
+                            var messages = json.messages;
+                            for (var i = 0; i < messages .length; i++){
+                                var message = messages[i].message;
+                                if(messages[i].password) {
+                                    var property  = "#registration_"+messages[i].property+"_first";
+                                    $(property).after('<p class="error">'+message+'</p>');
+                                } else {
+                                    var property  = "#registration_"+messages[i].property;
+                                    $(property).after('<p class="error">'+message+'</p>');
+                                } 
+                            }
+                        } else {
+                            $("#div_register").dialog('close');
+                            $("#div_register_step2").dialog();
                     }}
     	    	});
      	        return false;
@@ -152,6 +165,7 @@
             	 $('#embed_list').dialog();
              });
        });
+
 </script>
     <script type="text/javascript">
     //facebook share popup

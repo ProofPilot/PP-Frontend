@@ -117,8 +117,6 @@ class AuthentificationController extends Controller
                 return $this->redirect( $this->generateUrl("_signup_about"));
             }
         }
-        
-        
         //login check
         $error = $this->getErrorForRequest($request);
         if($error) {
@@ -131,7 +129,6 @@ class AuthentificationController extends Controller
                         'error'         => $error
                 ));
         }
-            
         //render forms
         return $this->render('CyclogramFrontendBundle:Authentification:signup.html.twig', array(
                     'last_username' => $session->get(SecurityContext::LAST_USERNAME),
@@ -548,6 +545,37 @@ class AuthentificationController extends Controller
         }
     
         return $error;
+    }
+    
+    /**
+     * @param Request $request
+     * @param string  $service
+     *
+     * @return RedirectResponse
+     */
+    public function redirectToServiceAction(Request $request, $service)
+    {
+        // Check for a specified target path and store it before redirect if present
+        $param = $this->container->getParameter('hwi_oauth.target_path_parameter');
+    
+        $studyCode = $request->get('studyCode');
+        $extraParameters = array();
+        if($studyCode)
+            $extraParameters["state"] = $studyCode;
+    
+        if (!empty($param) && $request->hasSession() && $targetUrl = $request->get($param, null, true)) {
+            $providerKey = $this->container->getParameter('hwi_oauth.firewall_name');
+            $request->getSession()->set('_security.' . $providerKey . '.target_path', $targetUrl);
+        }
+    
+        return new RedirectResponse(
+                $this->container->get('hwi_oauth.security.oauth_utils')->getAuthorizationUrl(
+                        $request,
+                        $service,
+                        null,
+                        $extraParameters)
+    
+        );
     }
 
 }

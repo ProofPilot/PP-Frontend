@@ -1,1 +1,83 @@
-{% use '::facebook_blocks.html.twig' %}{% use '::google_blocks.html.twig' %}{% form_theme form '::fields_theme1.html.twig' %}    <div class="mobile_reg login_form">      <div class="wrapper">        <div class="loginform_left register">        <h1> Log In</h1>            <form action="{{ path('login_check') }}" method="post" id="login_form">					    <a class="forgot" href="{{ path('_forgot_username') }}" id="forgot_username">Trouble logging in?</a>			<label for="reg_field_1">{% trans from "login" %}txt_form_username{% endtrans %}</label>			<span class="input_placeholder "><input type="text" class="text " value="{{ last_username }}" id="reg_field_1" name="_username" ><span class="mark"></span></span>						<label for="reg_field_2" >{% trans from "login" %}txt_form_password{% endtrans %}</label>						<a class="forgot" tabIndex="-1" href="{{ path('_forgot_pass') }}" id="forgot_password">{% trans from "login" %}txt_forgot_your_password{% endtrans %}</a>						<span class="input_placeholder"><input type="password" class="text" name="_password" id="reg_field_2"><span class="mark"></span></span>						{% if error is defined %}<div><p class="error">{%  trans from "login" %}txt_login_error_message{% endtrans %}</p></div>{% endif %}						<div class="actions_row">							<input type="checkbox" class="checkbox" name="_remember_me" />{%  trans from "login" %}txt_stay_logged_in{% endtrans %}							<button type="submit" class="submit btn_login">{% trans from "login" %}txt_login_button{% endtrans %}</button>						</div>											</form>          <div class="btns_wapper">               <a class="btn_reg fb" id="facebook_button" href="">                   <span>{% trans from "register" %}txt_join_with{% endtrans %} Facebook</span>               </a>               <a class="btn_reg google" id="google_button" href="">                   <span>{% trans from "register" %}txt_join_with{% endtrans %} Google</span>               </a>           </div>          <div class="notice2"><a id="open_why_popup"><span>{% trans from "login" %}txt_login_securely{% endtrans %}</span></a></div>          <div id="why_popup" class="why_popup">                         <div class="why_popup_content">                  <a class="why_close" href="#"></a>                  <p><strong>{% trans from "login" %}why_popup_title{% endtrans %}</strong></p>                  <p>{% trans from "login" %}txt_why_popup{% endtrans %}</p>              </div>          </div>        </div>        <div class="sep wide"> OR </div>        <div class="loginform_right">        <h1> Register</h1>          <form novalidate action="{{ path('_signup', {'studyCode' : studyCode}) }}" method="post" name="registration" id="registration_form">                        <label for="reg_field_1">{% trans from "register" %}enter_email{% endtrans %}</label>               {{ form_widget(form.participantEmail, {'attr' : {'class' : 'text', 'id' : 'reg_field_1'}}) }}              {{ form_errors(form.participantEmail) }}              <label for="reg_field_2">{% trans from "register" %}pick_user{% endtrans %}</label>               {{ form_widget(form.participantUsername, {'attr' : {'class' : 'text', 'id' : 'reg_field_2'}}) }}              {{ form_errors(form.participantUsername) }}              <label for="reg_field_3">{% trans from "register" %}create_password{% endtrans %}</label>              <span class="note">{% trans from "register" %}min_charachters{% endtrans %}</span>               {{ form_widget(form.participantPassword.first, {'attr' : {'class' : 'text', 'id' : 'reg_field_3'}}) }}              {{ form_errors(form.participantPassword.first) }}                            <label for="reg_field_4">{% trans from "register" %}confirm_password{% endtrans %}</label>              {{ form_widget(form.participantPassword.second, {'attr' : {'class' : 'text', 'id' : 'reg_field_4'}}) }}                              <div class="actions_row">              {{form_widget(form.next, {'attr':{'class':'submit with_min_width btn_login'}}) }}              </div>              {{ form_rest(form) }}              {{ form_errors(form) }}          </form>        </div>                      </div>    </div>
+{% use '::facebook_blocks.html.twig' %}
+{% use '::google_blocks.html.twig' %}
+
+{% form_theme form '::fields_theme1.html.twig' %}
+    <div class="mobile_reg login_form">
+      <div class="wrapper">
+        <div class="loginform_left register">
+        <h2>Existing User Log In</h2>
+            <form action="{{ path('login_check') }}" method="post" id="login_form">
+            	<label for="reg_field_1">{% trans from "login" %}txt_form_username{% endtrans %}</label>
+				<a class="forgot" href="{{ path('_forgot_username') }}" id="forgot_username">Trouble logging in?</a>
+				<span class="input_placeholder ">
+					<input type="text" class="text " value="{{ last_username }}" id="reg_field_1" name="_username" >
+					<span class="mark"></span>
+				</span>
+				<label for="reg_field_2" >{% trans from "login" %}txt_form_password{% endtrans %}</label>
+				<a class="forgot" tabIndex="-1" href="{{ path('_forgot_pass') }}" id="forgot_password">{% trans from "login" %}txt_forgot_your_password{% endtrans %}</a>
+				<span class="input_placeholder">
+					<input type="password" class="text" name="_password" id="reg_field_2">
+					<span class="mark"></span>
+				</span>
+				{% if error is defined %}
+					<div>
+							<p class="error">{%  trans from "login" %}txt_login_error_message{% endtrans %}</p>
+					</div>
+				{% endif %}
+				<div class="actions_row">
+					<input type="checkbox" class="checkbox" name="_remember_me" />{%  trans from "login" %}txt_stay_logged_in{% endtrans %}
+					<button type="submit" class="submit btn_login">{% trans from "login" %}txt_login_button{% endtrans %}</button>
+				</div>
+			</form>
+          <div class="btns_wapper">
+               <a class="btn_reg fb" id="facebook_button" href="">
+                   <span>{% trans from "register" %}txt_join_with{% endtrans %} Facebook</span>
+               </a>
+               <a class="btn_reg google" id="google_button" href="">
+                   <span>{% trans from "register" %}txt_join_with{% endtrans %} Google</span>
+               </a> 
+          </div>
+          <div class="notice2">
+          	<a id="open_why_popup">
+          		<span>{% trans from "login" %}txt_login_securely{% endtrans %}</span>
+          	</a>
+          </div>
+          <div id="why_popup" class="why_popup">  
+              <div class="why_popup_content">
+                  <a class="why_close" href="#"></a>
+                  <p><strong>{% trans from "login" %}why_popup_title{% endtrans %}</strong></p>
+                  <p>{% trans from "login" %}txt_why_popup{% endtrans %}</p>
+              </div>
+          </div>
+        </div>
+        <div class="loginform_right">
+        <h2>New ProofPilot Users</h2>
+          <form novalidate action="{{ path('_signup', {'studyCode' : studyCode}) }}" method="post" name="registration" id="registration_form">
+              <label for="reg_field_1">{% trans from "register" %}enter_email{% endtrans %}</label> 
+              {{ form_widget(form.participantEmail, {'attr' : {'class' : 'text', 'id' : 'reg_field_1'}}) }}
+              {{ form_errors(form.participantEmail) }}
+
+              <label for="reg_field_2">{% trans from "register" %}pick_user{% endtrans %}</label> 
+              {{ form_widget(form.participantUsername, {'attr' : {'class' : 'text', 'id' : 'reg_field_2'}}) }}
+              {{ form_errors(form.participantUsername) }}
+
+              <label for="reg_field_3">{% trans from "register" %}create_password{% endtrans %}</label>
+              <span class="note">{% trans from "register" %}min_charachters{% endtrans %}</span> 
+              {{ form_widget(form.participantPassword.first, {'attr' : {'class' : 'text', 'id' : 'reg_field_3'}}) }}
+              {{ form_errors(form.participantPassword.first) }}
+              
+              <label for="reg_field_4">{% trans from "register" %}confirm_password{% endtrans %}</label>
+              {{ form_widget(form.participantPassword.second, {'attr' : {'class' : 'text', 'id' : 'reg_field_4'}}) }}
+
+                
+              <div class="actions_row">
+              {{form_widget(form.next, {'attr':{'class':'submit with_min_width btn_login'}}) }}
+              </div>
+              {{ form_rest(form) }}
+              {{ form_errors(form) }}
+          </form>
+        </div>
+        
+        
+      </div>
+    </div>
