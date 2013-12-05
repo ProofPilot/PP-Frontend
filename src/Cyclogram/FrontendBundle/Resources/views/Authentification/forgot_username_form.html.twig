@@ -1,17 +1,14 @@
-    <div class="mobile_reg align_center">
-      <h1 class="stronger"><span>{% trans from "login" %}forgot_username{% endtrans %}?</span></h1>
-      <p>{% trans from "login" %}forgot_username_message{% endtrans %}</p>
-      <p class="align_left">{% trans from "login" %}enter_email_address{% endtrans %}</p>
-        {% if error is defined %}
-            <p class="error"><span>{{ error }}</span></p>
-        {% endif %}
-      <form method="post" action="{{ path('_forgot_username') }}" id="forgot_username_form">
-
-              {{ form_widget(formForgorUsername.participantEmail,  {'attr' : {'class' : 'text'}}) }}
-              {{ form_errors(formForgorUsername.participantEmail) }}
-
-        <div class="center_align bottom_margin">
+<div class="mobile_reg align_center">
+    <h1 class="stronger"><span>{% trans from "login" %}forgot_username{% endtrans %}?</span></h1>
+    <p>{% trans from "login" %}forgot_username_message{% endtrans %}</p>
+    <p class="enter_email">{% trans from "login" %}enter_email_address{% endtrans %}</p>
+    {% if error is defined %}
+        <p class="error"><span>{{ error }}</span></p>
+    {% endif %}
+    <form method="post" action="{{ path('_forgot_username') }}" id="forgot_username_form">
+        {{ form_widget(formForgorUsername.participantEmail,  {'attr' : {'class' : 'text'}}) }}
+        {{ form_errors(formForgorUsername.participantEmail) }}
         {{ form_widget(formForgorUsername.send,{'attr':{'class':'submit type2'}}) }}
-              {{ form_rest(formForgorUsername) }}
-      </form>
-    </div>
+        {{ form_rest(formForgorUsername) }}
+    </form>
+</div>
