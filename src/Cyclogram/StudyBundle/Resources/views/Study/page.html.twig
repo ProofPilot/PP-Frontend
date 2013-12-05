@@ -403,7 +403,7 @@
                {% if not is_granted('ROLE_PARTICIPANT') or not is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                    {% if is_registered_study(studyCode) %}
                        {% set redirectUrl = path('_signup')  %}
-                       <a href="{{ path('_eligibility_survey', {'studyCode': studyCode, 'surveyId': surveyId, 'redirectUrl': redirectUrl} ) }}" class="join"><span>{% trans from "study" %}button_join_the_study_goal{% endtrans %}</span></a>
+                       <a href="" class="join" id="consent"><span>{% trans from "study" %}button_join_the_study_goal{% endtrans %}</span></a>
                    {% else %}
                         {% set redirectUrl = path('_main')  %}
                         <a href="" class="join" id="register"><span>{% trans from "study" %}button_join_the_study_goal{% endtrans %}</span></a>
