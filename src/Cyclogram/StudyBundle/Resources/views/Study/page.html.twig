@@ -125,7 +125,7 @@
                     position: ['top',100],
                     open: function() {
                               $(this).dialog("widget").find(".ui-dialog-titlebar").hide();
-                              $('<div class="modal_close_btn">×</div>').appendTo('#div_register');
+                              $('<div class="modal_close_btn">×</div>').appendTo('#div_consent');
                               $('.modal_close_btn, .cancel a').on('click', function() {
                                   $(this).closest('.ui-dialog-content').dialog("close");
                               });
@@ -287,6 +287,9 @@
                                 open: function() {
                                           $(this).dialog("widget").find(".ui-dialog-titlebar").hide();
                                           $('<div class="modal_close_btn">×</div>').appendTo('#div_consent');
+                                          $('.modal_close_btn, .cancel a').on('click', function() {
+                                              $(this).closest('.ui-dialog-content').dialog("close");
+                                          });
                                       }
                             });
                         }
