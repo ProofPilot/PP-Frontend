@@ -48,7 +48,7 @@ class SurveyController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $securityContext = $this->container->get('security.context');
-        if( $securityContext->isGranted('ROLE_PARTICIPANT') ){
+        
             //if surveyid not equal to eligibility survey id
             $study = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
             $studyContent = $em->getRepository('CyclogramProofPilotBundle:StudyContent')->find(array('study' => $study->getStudyId(), 'language' => 1));
@@ -56,10 +56,12 @@ class SurveyController extends Controller
                 return $this->render("::error.html.twig", array(
                         "error" => "Please dont hack our site:)"));
             //If you are enrolled in study, no change to pass eligibility again
-            $participant = $securityContext->getToken()->getUser();
-            $isEnrolled = $em->getRepository("CyclogramProofPilotBundle:Participant")->isEnrolledInStudy($participant, $studyCode);
-            if ($isEnrolled)
-                return $this->redirect($this->get('router')->generate('_main'));
+            if( $securityContext->isGranted('ROLE_PARTICIPANT') ){
+                $participant = $securityContext->getToken()->getUser();
+                $isEnrolled = $em->getRepository("CyclogramProofPilotBundle:Participant")->isEnrolledInStudy($participant, $studyCode);
+                if ($isEnrolled)
+                    return $this->redirect($this->get('router')->generate('_main'));
+            }
             $lime_em = $this->getDoctrine()->getManager('limesurvey');
             $locale = $this->getRequest()->getLocale();
     
@@ -72,10 +74,7 @@ class SurveyController extends Controller
             $parameters['logo'] = $this->container->getParameter('study_image_url') . '/' . $studyId. '/' .$studyContent->getStudyLogo();
     
             return $this->render('CyclogramFrontendBundle:Survey:survey.html.twig', $parameters);
-        } else {
-            return $this->render("::error.html.twig", array(
-                    "error" => "Please dont hack our site:)"));
-        }
+
     }
     
     /**
@@ -157,6 +156,18 @@ class SurveyController extends Controller
                 $loggedUser = $this->get('security.context')->getToken()->getUser();
                 $logic->participantSurveyLinkRegistration($surveyId, $saveId, $loggedUser, uniqid());
             }
+        } else {
+            //store surveyid and saveid in session
+            $session = $this->getRequest()->getSession();
+            $bag = new AttributeBag();
+            $bag->setName("SurveyInfo");
+            $array = array();
+            $bag->initialize($array);
+            $bag->set('surveyId', $surveyId);
+            $bag->set('saveId', $saveId);
+            $bag->set('studyCode', $studyCode);
+            $session->registerBag($bag);
+            $session->set('SurveyInfo', $bag);
         }
         
         

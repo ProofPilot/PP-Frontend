@@ -42,7 +42,8 @@ class GlobalExtension extends \Twig_Extension
                         'needs_context' => true
                         )),
                 'is_enrolled_in_study' => new \Twig_Function_Method($this, 'isEnrolledInStudy'),
-                'is_study_logic_implemented' => new \Twig_Function_Method($this, 'isStudyLogicImplemented')
+                'is_study_logic_implemented' => new \Twig_Function_Method($this, 'isStudyLogicImplemented'),
+                'is_registered_study'  => new \Twig_Function_Method($this, 'isRegisteredStudy')
 //                 'google_campaign_info' => new \Twig_Function_Method($this, 'getGoogleCampaignInfo')
         );
     }
@@ -91,6 +92,14 @@ class GlobalExtension extends \Twig_Extension
         }
         
         return in_array(strtolower($studyCode), $supportedStudies) ? true : false;
+    }
+    
+    public function isRegisteredStudy($studyCode)
+    {
+        $study =  $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
+        if($study->getRegisterProccess() == 1)
+            return true;
+        else return false;
     }
     
 //     public function getGoogleCampaignInfo($studyId)

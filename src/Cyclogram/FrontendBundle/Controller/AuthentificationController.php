@@ -114,6 +114,25 @@ class AuthentificationController extends Controller
             if ($form->isValid()) {
                 $registration = $form->getData();
                 $this->createParticipant($registration);
+                if ($session->has('SurveyInfo')) {
+                    if ($session->has('referralSite') && $session->has('referralCampaign')){
+                        $ls = $this->get('study_logic');
+                        $bag = $session->get('SurveyInfo');
+                        $surveyId = $bag->get('surveyId');
+                        $saveId = $bag->get('saveId');
+                        $studyCode = $bag->get('studyCode');
+                        $session->remove('SurveyInfo');
+                        $securityContext = $this->container->get('security.context');
+                        $participant = $securityContext->getToken()->getUser();
+                        
+                        $ls->studyRegistration($participant, $studyCode, $surveyId, $saveId);
+                    } else {
+                        $study = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
+                        $studyContent = $em->getRepository('CyclogramProofPilotBundle:StudyContent')->findOneByStudy($study);
+                        $session->set("message", $this->get('translator')->trans('study_register_error', array(), 'register'));
+                        return $this->redirect($this->generateUrl("_page", array("studyUrl" => $studyContent->getStudyUrl())));
+                    }
+                }
                 
                 return $this->redirect( $this->generateUrl("_signup_about"));
             }

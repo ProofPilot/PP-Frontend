@@ -95,6 +95,9 @@ class StudyLogic
     
         $siteId = $session->get('referralSite');
         $campaignId = $session->get('referralCampaign');
+        
+        $session->remove('referralSite');
+        $session->remove('referralCampaign');
     
         if(!$siteId || !$campaignId )
             throw new \Exception("Could not reliably determine campaign and site from session. Cancelling registration");

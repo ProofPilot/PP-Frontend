@@ -1,21 +1,21 @@
 <?php
 /*
-* This is part of the ProofPilot package.
-*
-* (c)2012-2013 Cyclogram, Inc, West Hollywood, CA <crew@proofpilot.com>
-* ALL RIGHTS RESERVED
-*
-* This software is provided by the copyright holders to Manila Consulting for use on the
-* Center for Disease Control's Evaluation of Rapid HIV Self-Testing among MSM in High
-* Prevalence Cities until 2016 or the project is completed.
-*
-* Any unauthorized use, modification or resale is not permitted without expressed permission
-* from the copyright holders.
-*
-* KnowatHome branding, URL, study logic, survey instruments, and resulting data are not part
-* of this copyright and remain the property of the prime contractor.
-*
-*/
+ * This is part of the ProofPilot package.
+ *
+ * (c)2012-2013 Cyclogram, Inc, West Hollywood, CA <crew@proofpilot.com>
+ * ALL RIGHTS RESERVED
+ *
+ * This software is provided by the copyright holders to Manila Consulting for use on the
+ * Center for Disease Control's Evaluation of Rapid HIV Self-Testing among MSM in High
+ * Prevalence Cities until 2016 or the project is completed.
+ *
+ * Any unauthorized use, modification or resale is not permitted without expressed permission
+ * from the copyright holders.
+ *
+ * KnowatHome branding, URL, study logic, survey instruments, and resulting data are not part
+ * of this copyright and remain the property of the prime contractor.
+ *
+ */
 
 namespace Cyclogram\Bundle\ProofPilotBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
@@ -28,8 +28,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Study
 {
-    const STATUS_ACTIVE =1;
-    const STATUS_NEW =6;
+    const STATUS_ACTIVE = 1;
+    const STATUS_NEW = 6;
     /**
      * @var integer
      *
@@ -117,6 +117,13 @@ class Study
     private $emailVerificationRequired;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="register_proccess", type="integer", nullable=false)
+     */
+    private $registerProccess;
+
+    /**
      * @var boolean
      *
      * @ORM\Column(name="study_real_time_graphics", type="boolean", nullable=false)
@@ -144,7 +151,7 @@ class Study
      * @ORM\Column(name="status_id", type="integer", nullable=false)
      */
     private $status;
-    
+
     /**
      * @var string
      *
@@ -520,7 +527,6 @@ class Study
         $this->emailVerificationRequired = $emailVerificationRequired;
     }
 
-
     public function getStudyCode()
     {
         return $this->studyCode;
@@ -530,4 +536,15 @@ class Study
     {
         $this->studyCode = $studyCode;
     }
+
+    public function getRegisterProccess()
+    {
+        return $this->registerProccess;
+    }
+
+    public function setRegisterProccess($registerProccess)
+    {
+        $this->registerProccess = $registerProccess;
+    }
+
 }
