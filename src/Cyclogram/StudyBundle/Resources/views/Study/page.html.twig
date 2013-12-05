@@ -24,7 +24,20 @@
             //mail to friends
             $('.email').bind('click', function(e) {
                 e.preventDefault();
-                $('#email_list').dialog();
+                $('#email_list').dialog({
+                    modal: true,
+                    width: '300',
+                    fluid: true,
+                    resizable: false,
+                    position: ['top',100],
+                    open: function() {
+                              $(this).dialog("widget").find(".ui-dialog-titlebar").hide();
+                              $('<div class="modal_close_btn">×</div>').appendTo('#email_list');
+                              $('.modal_close_btn, .cancel a').on('click', function() {
+                                  $(this).closest('.ui-dialog-content').dialog("close");
+                              });
+                          }
+                });
             });
 
             var count = 1;
@@ -145,7 +158,20 @@
             $("#forgot_username").bind('click', function(e){
          	   e.preventDefault();
          	   $("#div_register").dialog('close');
-              $("#div_forgot_username").dialog();
+              $("#div_forgot_username").dialog({
+                  modal: true,
+                  width: 'auto',
+                  fluid: true,
+                  resizable: false,
+                  position: ['top',100],
+                  open: function() {
+                            $(this).dialog("widget").find(".ui-dialog-titlebar").hide();
+                            $('<div class="modal_close_btn">×</div>').appendTo('#div_forgot_username');
+                            $('.modal_close_btn').on('click', function() {
+                                $(this).closest('.ui-dialog-content').dialog("close");
+                            });
+                        }
+              });
           });
             $("#forgot_username_form").submit(function(e){
            	$('.error').remove();
@@ -166,7 +192,20 @@
             $("#forgot_password").bind('click', function(e){
          	   e.preventDefault();
          	   $("#div_register").dialog('close');
-              $("#div_forgot_password").dialog();
+              $("#div_forgot_password").dialog({
+            	  modal: true,
+                  width: 'auto',
+                  fluid: true,
+                  resizable: false,
+                  position: ['top',100],
+                  open: function() {
+                            $(this).dialog("widget").find(".ui-dialog-titlebar").hide();
+                            $('<div class="modal_close_btn">×</div>').appendTo('#div_forgot_password');
+                            $('.modal_close_btn').on('click', function() {
+                                $(this).closest('.ui-dialog-content').dialog("close");
+                            });
+                        }
+              });
           });
             $("#forgot_password_form").submit(function(e){
            	$('.error').remove();

@@ -3449,11 +3449,12 @@ footer .row_2 p {
 }
 #email_list textarea {
 	width: 100%;
+	min-height: 100px;
 }
 #email_list .submit {
 	width: 100px;
 	margin-top: 25px;
-	margin-left: 85px;
+	margin-left: 80px;
 }
 .ui-widget-header {
 	background: linear-gradient(to bottom, #CB4E45 0%, #BB392A 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);

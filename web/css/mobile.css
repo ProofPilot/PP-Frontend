@@ -400,6 +400,7 @@
 	border-radius: 5px;
 	width: 390px;
 	position: relative;
+	background: #fff;
 }
 
 /*Step #3*/
@@ -485,10 +486,33 @@
     color: #CC5C4C;
     font-size: 12px;
 }
+/*Forgot username*/
+#div_forgot_username .mobile_reg {
+	margin: 20px;
+}
+#div_forgot_username .mobile_reg .enter_email {
+	margin-bottom: 5px;
+}
+#mail_address_participantEmail {
+	margin-bottom: 20px;
+}
+/*Forgot username*/
+#div_forgot_password .mobile_reg {
+	margin: 20px;
+}
+#div_forgot_password .mobile_reg .enter_email {
+	margin-bottom: 5px;
+}
+#form_participantUsername {
+	margin-bottom: 20px;
+}
 
 .mobile_reg.align_center {
 	text-align: center;
-	padding-bottom: 5px;
+	padding: 20px;
+}
+.mobile_reg.align_center p.enter_email {
+	margin-bottom: 5px;
 }
 .mobile_reg.align_center p {
 	margin-bottom: 25px;
@@ -812,6 +836,7 @@
 	padding-right: 48px;
 	position: relative;
 	height: 465px;
+	background: #fff;
 }
 .why_register_mobile {
 	top: 70px !important;
