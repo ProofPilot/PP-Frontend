@@ -30,6 +30,21 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class EmailController extends Controller
 {
     /**
+     * @Route("/verify_email/{email}" , name="_verify_email")
+     * @Template()
+     */
+    function verifyEmailAction(Request $request, $email)
+    {
+
+        $cc = $this->get('cyclogram.common');
+        $verify = $cc->verifyEmail($email);
+        if ($verify)
+            return new Response("Email verified");
+        else 
+            return new Response("Email not verified");
+    }
+    
+    /**
      * @Route("/send_test_email/{email}" , name="_send_test_email")
      * @Template()
      */
@@ -115,10 +130,10 @@ class EmailController extends Controller
                           $embedded,
                           true,
                           $parameters);
-                  if ($send) 
+                  if ($send['status'] == true) 
                       return new Response("Completed");
                   else 
-                      return new Response("Email not send");
+                      return new Response($send['message']);
         } else {
             return new Response("Cant send email. No active tasks");
         }
@@ -167,7 +182,7 @@ class EmailController extends Controller
             $parameters['host'] = $this->container->getParameter('site_url');
             $parameters['code'] = $participant->getParticipantEmailCode();
             try{
-            $cc->sendMail(null,
+            $send = $cc->sendMail(null,
                     $participant->getParticipantEmail(),
                     $this->get('translator')->trans("email_title_verify", array(), "email", $parameters['locale']),
                     'CyclogramFrontendBundle:Email:email_confirmation.html.twig',
@@ -176,7 +191,7 @@ class EmailController extends Controller
                     true,
                     $parameters);
             } catch (\Exception $exc){
-                echo("Error. Email not send" . $exc->getMessage());
+                echo($this->container->get('translator')->trans('email_not_send_try_later', array(), 'validators'));
             
             }
             
@@ -195,7 +210,6 @@ class EmailController extends Controller
         $locale = $request->getLocale();
         
         if ($request->isXmlHttpRequest()) {
-            $regex = '/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/';
             $from = $request->get('send_from');
             $to = $request->get('send_to');
             $to = array_filter($to);
@@ -205,9 +219,6 @@ class EmailController extends Controller
                 $this->get('translator')->trans("email_friend_subject", array(), "email", $parameters['locale']);
             if (!isset($from) || empty($from)){
                 return new Response(json_encode(array('error' => true, 'message' => 'Insert the sender e-mail')));
-            } else {
-                if (!preg_match($regex, $from)) 
-                    return new Response(json_encode(array('error' => true, 'message' => 'You insert invalid sender e-mail')));
             }
             
             if (!isset($to[0]) || empty($to[0])){
@@ -237,11 +248,12 @@ class EmailController extends Controller
                         true,
                         $parameters);
             } catch (\Exception $exc){
-                 return new Response(json_encode(array('error' => true, 'message' => "Error. Email not send" . $exc->getMessage())));
+                 return new Response(json_encode(array('error' => true, 'message' => $this->container->get('translator')->trans('email_not_send_try_later', array(), 'validators'))));
             }
-            if ($send) {
-                return new Response(json_encode(array('error' => false, 'message' => "Send")));
-            }
+            if ($send['status'] == false) {
+                return new Response(json_encode(array('error' => true, 'message' => $send['message'])));
+            } 
+            return new Response(json_encode(array('error' => false, 'message' => "Send")));
         }
     }
     

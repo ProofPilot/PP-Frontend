@@ -22,3 +22,5 @@ please_fill_this_field: 'Por favor, preencher este campo'
 username_already_registered: "Nome de usuário já está registrado\n"
 wrong_code: 'Você escreveu um código incorreto'
 wrong_pass: 'Você escreveu uma senha incorreta'
+email_not_valid: email_not_valid
+email_not_send_try_later: email_not_send_try_later

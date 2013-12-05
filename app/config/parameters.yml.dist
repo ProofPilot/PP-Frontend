@@ -48,3 +48,7 @@ parameters:
     google_analytics_account: 'UA-39509758-2'
     branding: default
     random_themes: true
+    
+    email_verifier_url: http://api.verify-email.org/api.php?
+    email_verifier_username: ProofPilot
+    email_verifier_password: CycloPP13

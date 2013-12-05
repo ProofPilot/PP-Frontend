@@ -110,6 +110,10 @@ class RegistrationForm extends AbstractType
             
         if($count)
             $context->addViolationAt('participantEmail',  $this->container->get('translator')->trans('email_already_registered', array(), 'validators'));
+        
+        $verify = $this->container->get('cyclogram.common')->verifyEmail($participant->getParticipantEmail());
+        if($verify['status'] == false)
+            $context->addViolationAt('participantEmail',  $verify['message']);
     }
     
     public function validateUsername(Participant $participant, ExecutionContextInterface $context)

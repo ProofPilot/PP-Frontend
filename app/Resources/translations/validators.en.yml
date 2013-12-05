@@ -25,3 +25,5 @@ incorrect_city: 'Please enter a valid city'
 error_not_blank_email: Please enter email
 error_not_blank_username: Please enter username
 error_not_blank_password: Please enter password
+email_not_valid: not valid email
+email_not_send_try_later: Cant send email. Please try again later

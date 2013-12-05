@@ -212,9 +212,20 @@ class CyclogramCommon {
     
     public function sendMail($from = null, $to, $subject, $body, $attachment = null, $embedded = null, $renderTemplate = false, $renderParams = null) 
     {
+        $result = null;
+        //verify emails
+        $verify = $this->verifyEmail($to);
+        if ($verify['status'] == false)
+            return $result = array('status' => false, 'message' =>  $verify['message']);
+        
+        if (!is_null($from)) {
+            $verify = $this->verifyEmail($from);
+            if ($verify['status'] == false)
+                return $result = array('status' => false, 'message' =>  $verify['message']);
+        }
         //do not send emails in production
         if($this->container->get('kernel')->getEnvironment() == "prod")
-            return true;
+            return $result['status'] = true;
         
 //         $control_mail = $this->container->getParameter('control_mail');
         $templating = $this->container->get('templating');
@@ -262,10 +273,10 @@ class CyclogramCommon {
         try {
             $this->container->get('mailer')->send($message);
         } catch (\Swift_TransportException $exc) {
-            return false;
+             return $result = array('status' => false, 'message' => $this->container->get('translator')->trans('email_not_send_try_later', array(), 'validators'));
         }
         
-        return true;
+        return $result['status'] = true;
     }
     
     public static function parsePhoneNumber($phone){
@@ -299,6 +310,52 @@ class CyclogramCommon {
         $embedded['white_bottom'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_white_bottom.png");
         
         return $embedded;
+    }
+    
+    public function verifyEmail($email) {
+        
+        $username = $this->container->getParameter('email_verifier_username');
+        $password = $this->container->getParameter('email_verifier_password');
+        
+        if (is_array($email)) {
+            foreach ($email as $m) {
+                $url = $this->container->getParameter('email_verifier_url').'usr='.$username.'&pwd='.$password.'&check='.$m;
+                $api_response = json_decode($this->curl_get_contents($url));
+                if (!$api_response->verify_status)
+                   return array('status' => false, 'message' => $m . ' : '. $this->container->get('translator')->trans('email_not_valid', array(), 'validators'));
+            }
+        } else {
+            $url = $this->container->getParameter('email_verifier_url').'usr='.$username.'&pwd='.$password.'&check='.$email;
+            $api_response = json_decode($this->curl_get_contents($url));
+            if (!$api_response->verify_status)
+                return array('status' => false, 'message' => $email . ' : '. $this->container->get('translator')->trans('email_not_valid', array(), 'validators'));
+        }
+        return array('status' => true);
+    }
+    
+    // Get remote file contents from verifier API
+    private function curl_get_contents($url)
+    {
+        // Initiate the curl session
+        $ch = curl_init();
+    
+        // Set the URL
+        curl_setopt($ch, CURLOPT_URL, $url);
+    
+        // Removes the headers from the output
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+    
+        // Return the output instead of displaying it directly
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    
+        // Execute the curl session
+        $output = curl_exec($ch);
+    
+        // Close the curl session
+        curl_close($ch);
+    
+        // Return the output as a variable
+        return $output;
     }
 
 }

@@ -96,7 +96,7 @@ class VerificationNoticeCommand extends ContainerAwareCommand
                 $embedded,
                 true,
                 $parameters);
-        if ($send){
+        if ($send['status'] == true){
             return array('send' => true, 'message' => 'sent email');
         } else {
             return array('send' => false, 'message' => 'email not send');

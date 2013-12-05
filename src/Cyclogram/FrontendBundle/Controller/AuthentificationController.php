@@ -320,18 +320,18 @@ class AuthentificationController extends Controller
                         $parameters);
 
                 if ($request->isXmlHttpRequest()){
-                    if($send)
+                    if($send['status'] == true)
                         return new Response(json_encode(array('error' => false, 'message' => $this->get('translator')->trans("forgot_username_email_send", array(), "login",$request->getLocale()))));
                     else 
-                        return new Response(json_encode(array('error' => true, 'message' => $this->get('translator')->trans("forgot_username_send_error", array(), "login",$request->getLocale()))));
+                        return new Response(json_encode(array('error' => true, 'message' => $send['message'])));
                 }
-                if($send)
+                if($send['status'] == true)
                     return $this->render('CyclogramFrontendBundle:Authentification:username_sent.html.twig');
                 else 
                     return $this->render('CyclogramFrontendBundle:Authentification:forgot_username.html.twig',
                             array(
                                     'formForgorUsername' => $form->createView(),
-                                    'error' => $this->get('translator')->trans("forgot_username_send_error", array(), "login",$request->getLocale())
+                                    'error' => $send['message']
                             ));
             } elseif ($request->isXmlHttpRequest()) {
                 $validator = $this->container->get('validator');
@@ -385,7 +385,7 @@ class AuthentificationController extends Controller
                     $embedded = array();
                     $embedded = $cc->getEmbeddedImages();
     
-                    $cc->sendMail(null,
+                    $send = $cc->sendMail(null,
                             $participant->getParticipantEmail(),
                             $this->get('translator')->trans("email_reset_password", array(), "email", $parameters['locale']),
                             'CyclogramFrontendBundle:Email:reset_password_email.html.twig',
@@ -394,7 +394,10 @@ class AuthentificationController extends Controller
                             true,
                             $parameters);
                     if ($request->isXmlHttpRequest())
-                        return new Response(json_encode(array('error' => false)));
+                        if ($send['status'] == true)
+                            return new Response(json_encode(array('error' => false)));
+                        else 
+                            return new Response(json_encode(array('error' => true, 'message' => $send['message'] )));
                     return $this->render('CyclogramFrontendBundle:Authentification:reset_password_confirmation.html.twig');
                 } else {
                     if ($request->isXmlHttpRequest())
