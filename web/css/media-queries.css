@@ -1491,6 +1491,9 @@
 	.modal_close_btn {
 		display: none;
 	}
+	#div_consent .modal_close_btn {
+		display: block;
+	}
 	
 }
 
@@ -2185,6 +2188,45 @@
 /* @media screen and (max-width: 580px) */ 
 @media screen and (max-width: 580px){
 	
+	#div_consent .mobile_reg.login_form {
+        background: white;
+    }
+    #div_consent .mobile_reg.login_form .popup_text.join a.btn {
+        width: 100%;
+    }
+    #div_consent .mobile_reg.login_form .popup_text.join h2 {
+        text-align: left;
+        font-size: 20px;
+        max-width: 200px;
+        margin-bottom: 18px;
+    }
+    #div_consent .mobile_reg.login_form .popup_text.join .list_box {
+		box-sizing:content-box;
+		-moz-box-sizing:content-box;
+		-webkit-box-sizing:content-box;
+        height: auto;
+        overflow: auto;
+        background: #f1f1f1;
+        border: 0px;
+        border-radius: 0px;
+        width: 100%;
+        margin-left: -25px;
+        padding-left: 25px;
+        padding-right: 20px;
+        margin-bottom: 20px;
+    }
+    #div_consent .mobile_reg.login_form .popup_text.join h3 {
+        margin-bottom: 20px;
+        font-size:19px;
+    }
+    #div_consent .mobile_reg.login_form .popup_text.join .list_box ul.arrow_list li {
+        font-size: 13px;
+        margin-bottom: 12px;
+    }
+    #div_consent {
+        margin-left: 15px;
+        margin-right: 15px;
+	} 
 	.panel .panel_right .dashboard_panel ul.settings_form li.left_text ,
 	.panel .panel_right .dashboard_panel ul.settings_form li.middle_input {
 		clear: both;
