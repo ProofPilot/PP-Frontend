@@ -511,7 +511,7 @@
 	text-align: center;
 	padding: 20px;
 }
-.mobile_reg.align_center p.enter_email {
+.mobile_reg .enter_email {
 	margin-bottom: 5px;
 }
 .mobile_reg.align_center p {

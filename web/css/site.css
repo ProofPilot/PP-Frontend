@@ -2274,7 +2274,7 @@ div.panel div.panel_right div.prev_next ul li a.next span {
 	max-width: 615px;
 	border-bottom-left-radius: 5px;
 }
-.intro_page .text_wrapper .video_wrapper .video_text .social_col a.fb span, .intro_page .text_wrapper .video_wrapper .video_text .social_col a.gp span {
+.intro_page .text_wrapper .video_wrapper .video_text a.fb span, .intro_page .text_wrapper .video_wrapper .video_text a.gp span, .intro_page .text_wrapper .video_wrapper .video_text a.join span  {
     display: inline-block;
     line-height: 47px;
     padding-left: 10px;
@@ -2515,14 +2515,13 @@ div.panel div.panel_right div.prev_next ul li a.next span {
     color: #FFFFFF;
     display: block;
     font-family: 'Roboto';
-    font-size: 20px;
+    font-size: 16px;
     font-style: normal;
     font-weight: 700;
-    height: 57px;
-    line-height: 57px;
+    height: 47px;
+    line-height: 47px;
     margin-bottom: 10px;
     text-align: center;
-    text-transform: uppercase;
     width: 100%;
     margin-left: 0px;
     margin-top: 0px;
@@ -2530,11 +2529,10 @@ div.panel div.panel_right div.prev_next ul li a.next span {
 }
 
 .intro_page .text_wrapper .video_wrapper .video_text a.join span {
-    background: url("../images/check_white.png") no-repeat scroll 0 50% / 19px 15px rgba(0, 0, 0, 0);
+    background: url("../images/check_white.png") no-repeat scroll 12px 50% / 19px 15px rgba(0, 0, 0, 0);
     color: #FFFFFF;
     display: inline-block;
     min-height: 16px;
-    padding-left: 30px;
 }
 .intro_page .text_wrapper .home_text  .social_bar .follow_us li a.fb:hover, 
 .intro_page .text_wrapper .social_bar.for_mobile .follow_us li a.fb:hover {
@@ -2585,11 +2583,7 @@ div.panel div.panel_right div.prev_next ul li a.next span {
     text-align: center;
     width: 100%;
 }
-.intro_page .text_wrapper .video_wrapper .video_text .social_col {
-    text-align: center;
-    width: 100%;
-}
-.intro_page .text_wrapper .video_wrapper .video_text .social_col a.fb {
+.intro_page .text_wrapper .video_wrapper .video_text a.fb {
     background: linear-gradient(to bottom, #3D629B 0%, #2D5089 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);
     border: 1px solid #3C5A9A;
     border-radius: 3px 3px 3px 3px;
@@ -2600,7 +2594,6 @@ div.panel div.panel_right div.prev_next ul li a.next span {
     height: 47px;
     line-height: 47px;
     margin-bottom: 15px;
-    max-width: 230px;
     text-align: center;
     width: 100%;
 }
@@ -2621,7 +2614,7 @@ div.panel div.panel_right div.prev_next ul li a.next span {
 .video_wrapper > a.fb {
 	display: none;
 }
-.intro_page .text_wrapper .video_wrapper .video_text .social_col a.gp {
+.intro_page .text_wrapper .video_wrapper .video_text a.gp {
     background: linear-gradient(to bottom, #E3624B 0%, #BC3A2A 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);
     border: 1px solid #B9503E;
     border-radius: 3px 3px 3px 3px;
@@ -2632,14 +2625,13 @@ div.panel div.panel_right div.prev_next ul li a.next span {
     font-weight: 700;
     height: 47px;
     line-height: 47px;
-    max-width: 230px;
     text-align: center;
     width: 100%;
 }
-.intro_page .text_wrapper .video_wrapper .video_text .social_col a.gp span {
+.intro_page .text_wrapper .video_wrapper .video_text a.gp span {
     background: url("../images/icon_btn_reg_google.png") no-repeat scroll 15px 50% / 23px 22px rgba(0, 0, 0, 0);
 }
-.intro_page .text_wrapper .video_wrapper .video_text .social_col a.fb span {
+.intro_page .text_wrapper .video_wrapper .video_text a.fb span {
     background: url("../images/icon_btn_reg_fb.png") no-repeat scroll 15px 50% / 13px 25px rgba(0, 0, 0, 0);
 }
 .intro_page .text_wrapper .home_text  .social_bar .follow_us li a.tw:hover , 
