@@ -89,6 +89,10 @@ class OAuth2UserProvider implements OAuthAwareUserProviderInterface
                     $participant->setParticipantLastname($data["last_name"]);
                     $participant->setParticipantEmail($data["email"]);
                     $participant->setParticipantAppreciationEmail($data["email"]);
+                    if (isset($data['gender'])) {
+                        $sex = $this->userManager->getRepository('CyclogramProofPilotBundle:Sex')->findOneBySexName(ucfirst($data['gender']));
+                        $participant->setSex($sex);
+                    }
                     $participant->setFacebookId($data["id"]);
                     break;
                 case "google":
@@ -96,6 +100,10 @@ class OAuth2UserProvider implements OAuthAwareUserProviderInterface
                     $participant->setParticipantLastname($data["family_name"]);
                     $participant->setParticipantEmail($data["email"]);
                     $participant->setParticipantAppreciationEmail($data["email"]);
+                    if (isset($data['gender'])) {
+                        $sex = $this->userManager->getRepository('CyclogramProofPilotBundle:Sex')->findOneBySexName(ucfirst($data['gender']));
+                        $participant->setSex($sex);
+                    }
                     $participant->setGoogleId($data["id"]);
             }
             switch($resourceOwnerName) {
