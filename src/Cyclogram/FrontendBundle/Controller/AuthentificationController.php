@@ -242,9 +242,14 @@ class AuthentificationController extends Controller
      */
     public function signupConsentAction($studyCode, $surveyId) {
             $participant = $this->get('security.context')->getToken()->getUser();
-            $redirectUrl = $this->generateUrl("_main");
-            if ($participant->getParticipantEmailConfirmed() == false)
-                $this->confirmParticipantEmail($participant);
+            if ($participant != 'anon.') {
+                $redirectUrl = $this->generateUrl("_main");
+                if ($participant->getParticipantEmailConfirmed() == false)
+                    $this->confirmParticipantEmail($participant);
+            } else {
+                $redirectUrl = $this->generateUrl("_signup");
+            }
+            
             return $this->redirect( $this->generateUrl("_eligibility_survey", array('studyCode' => $studyCode,'surveyId' => $surveyId, 'redirectUrl' => $redirectUrl)));
     }
     
