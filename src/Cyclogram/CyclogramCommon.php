@@ -224,8 +224,10 @@ class CyclogramCommon {
 //                 return $result = array('status' => false, 'message' =>  $verify['message']);
 //         }
         //do not send emails in production
-        if($this->container->get('kernel')->getEnvironment() == "prod")
-            return $result['status'] = true;
+        if($this->container->get('kernel')->getEnvironment() == "prod"){
+            $result['status'] = true;
+            return $result;
+        }
         
 //         $control_mail = $this->container->getParameter('control_mail');
         $templating = $this->container->get('templating');
@@ -275,8 +277,8 @@ class CyclogramCommon {
         } catch (\Swift_TransportException $exc) {
              return $result = array('status' => false, 'message' => $this->container->get('translator')->trans('email_not_send_try_later', array(), 'validators'));
         }
-        
-        return $result['status'] = true;
+        $result['status'] = true;
+        return $result;
     }
     
     public static function parsePhoneNumber($phone){
