@@ -214,15 +214,15 @@ class CyclogramCommon {
     {
         $result = null;
         //verify emails
-        $verify = $this->verifyEmail($to);
-        if ($verify['status'] == false)
-            return $result = array('status' => false, 'message' =>  $verify['message']);
+//         $verify = $this->verifyEmail($to);
+//         if ($verify['status'] == false)
+//             return $result = array('status' => false, 'message' =>  $verify['message']);
         
-        if (!is_null($from)) {
-            $verify = $this->verifyEmail($from);
-            if ($verify['status'] == false)
-                return $result = array('status' => false, 'message' =>  $verify['message']);
-        }
+//         if (!is_null($from)) {
+//             $verify = $this->verifyEmail($from);
+//             if ($verify['status'] == false)
+//                 return $result = array('status' => false, 'message' =>  $verify['message']);
+//         }
         //do not send emails in production
         if($this->container->get('kernel')->getEnvironment() == "prod")
             return $result['status'] = true;

@@ -13,7 +13,7 @@ class Version20131204153204 extends AbstractMigration
     public function up(Schema $schema)
     {
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != "mysql");
-        $this->addSql("CREATE  TABLE IF NOT EXISTS `proofpilot`.`study_promo_code` (
+        $this->addSql("CREATE  TABLE IF NOT EXISTS `new-roofpilot`.`study_promo_code` (
                           `study_promo_code_id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
                           `study_id` INT(50) UNSIGNED NOT NULL ,
                           `study_promo_code_value` VARCHAR(45) NOT NULL ,
@@ -32,7 +32,7 @@ class Version20131204153204 extends AbstractMigration
     public function down(Schema $schema)
     {
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != "mysql");
-        $this->addSql("DROP  TABLE IF EXISTS `proofpilot`.`study_promo_code`");
+        $this->addSql("DROP  TABLE IF EXISTS `new-proofpilot`.`study_promo_code`");
 
     }
 }
