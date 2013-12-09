@@ -43,9 +43,10 @@ twig:
         google_analytics_account: %google_analytics_account%
         branding: %branding%
         random_themes: %random_themes%
-#    form:
-#        resources:
-#            - 'CyclogramFrontendBundle:Form:fields.html.twig'
+    form:
+        resources:
+            - 'CyclogramFrontendBundle:Form:fields.html.twig'
+            - 'CyclogramFrontendBundle:Form:frontend_widgets.html.twig'
 
 # Assetic Configuration
 assetic:

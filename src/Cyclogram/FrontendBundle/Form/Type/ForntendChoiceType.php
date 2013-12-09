@@ -18,17 +18,16 @@
 */
 namespace Cyclogram\FrontendBundle\Form\Type;
 
-use Symfony\Component\Form\AbstractType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
-class ForntendChoiceType  extends AbstractType
+class ForntendChoiceType  extends EntityType
 {
-    public function getParent()
-    {
-        return 'choice';
-    }
+
     
     public function getName()
     {
         return 'frontend_choice';
     }
+    
+    
 }
