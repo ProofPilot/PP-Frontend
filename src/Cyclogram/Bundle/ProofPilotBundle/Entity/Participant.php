@@ -323,6 +323,36 @@ class Participant implements AdvancedUserInterface
     protected $sex;
 
     /**
+     * @var \GradeLevel
+     *
+     * @ORM\ManyToOne(targetEntity="GradeLevel")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="grade_level_id", referencedColumnName="grade_level_id", nullable=true)
+     * })
+     */
+    protected $gradeLevel;
+
+    /**
+     * @var \Industry
+     *
+     * @ORM\ManyToOne(targetEntity="Industry")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="industry_id", referencedColumnName="industry_id", nullable=true)
+     * })
+     */
+    protected $industry;
+
+    /**
+     * @var \MaritalStatus
+     *
+     * @ORM\ManyToOne(targetEntity="MaritalStatus")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="marital_status_id", referencedColumnName="marital_status_id", nullable=true)
+     * })
+     */
+    protected $maritalStatus;
+
+    /**
      * @var \State
      *
      * @ORM\ManyToOne(targetEntity="State")
@@ -362,6 +392,20 @@ class Participant implements AdvancedUserInterface
      * @ORM\Column(name="participant_city", type="string", length=255, nullable=true)
      */
     protected $cityName;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="participant_annual_income", type="integer", nullable=true)
+     */
+    protected $annualIncome;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="participant_children", type="integer", nullable=true)
+     */
+    protected $children;
 
     /**
      * @var string
@@ -1318,9 +1362,75 @@ class Participant implements AdvancedUserInterface
         return $this->participantLanguage;
     }
 
-    public function setParticipantLanguage(\Cyclogram\Bundle\ProofPilotBundle\Entity\Language $participantLanguage)
+    public function setParticipantLanguage(
+            \Cyclogram\Bundle\ProofPilotBundle\Entity\Language $participantLanguage)
     {
         $this->participantLanguage = $participantLanguage;
+    }
+
+    public function getParticipantRoles()
+    {
+        return $this->participantRoles;
+    }
+
+    public function setParticipantRoles($participantRoles)
+    {
+        $this->participantRoles = $participantRoles;
+    }
+
+    public function setParticipantId($participantId)
+    {
+        $this->participantId = $participantId;
+    }
+
+    public function getGradeLevel()
+    {
+        return $this->gradeLevel;
+    }
+
+    public function setGradeLevel(\Cyclogram\Bundle\ProofPilotBundle\Entity\GradeLevel $gradeLevel = null)
+    {
+        $this->gradeLevel = $gradeLevel;
+    }
+
+    public function getIndustry()
+    {
+        return $this->industry;
+    }
+
+    public function setIndustry(\Cyclogram\Bundle\ProofPilotBundle\Entity\Industry  $industry = null)
+    {
+        $this->industry = $industry;
+    }
+
+    public function getMaritalStatus()
+    {
+        return $this->maritalStatus;
+    }
+
+    public function setMaritalStatus(\Cyclogram\Bundle\ProofPilotBundle\Entity\MaritalStatus $maritalStatus=null)
+    {
+        $this->maritalStatus = $maritalStatus;
+    }
+
+    public function getAnnualIncome()
+    {
+        return $this->annualIncome;
+    }
+
+    public function setAnnualIncome($annualIncome)
+    {
+        $this->annualIncome = $annualIncome;
+    }
+
+    public function getChildren()
+    {
+        return $this->children;
+    }
+
+    public function setChildren($children)
+    {
+        $this->children = $children;
     }
 
 }

@@ -50,6 +50,56 @@ class SignUpAboutForm extends AbstractType
                 'required'=>false
                 )
             );
+        $builder->add('zipcode', 'text', array(
+                'label'=>'label_zipcode',
+                'attr'=>array(
+                        'minLength'=>5,
+                        'maxlength'=>10,
+                )
+        ));
+        
+
+        $builder->add('birthdateSelect','date', array(
+                'input' => 'datetime',
+                'widget' => 'choice',
+                'empty_value' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day'),
+                'days' => range(1,31),
+                'months' => range(1,12),
+                'years' => range(1900,date("Y")),
+                'format' => 'yyyy-MM-dd'
+        ));
+        
+        $builder->add('gradeSelect','entity', array(
+                'class' => 'CyclogramProofPilotBundle:GradeLevel',
+                'property' => 'gradeLevelName',
+                'empty_value' => 'grade level',
+                'label'=>'label_grade_level_main',
+                'required'=>false,
+        ));
+        
+        $builder->add('industrySelect','entity', array(
+                'class' => 'CyclogramProofPilotBundle:Industry',
+                'property' => 'industryName',
+                'empty_value' => 'industry',
+                'label'=>'label_industry_main',
+                'required'=>false,
+        ));
+        
+        $builder->add('annualIncome', 'text', array(
+                'label'=>'label_annual_income',
+                'attr'=>array(
+                        'minLength'=>5,
+                        'maxlength'=>10,
+                )
+        ));
+        
+        $builder->add('maritalStatusSelect','entity', array(
+                'class' => 'CyclogramProofPilotBundle:MaritalStatus',
+                'property' => 'maritalStatusName',
+                'empty_value' => 'maritalStatus',
+                'label'=>'label_marital_status_main',
+                'required'=>false,
+        ));
         
         $builder->add('sexSelect', 'entity', array(
                 'class' => 'CyclogramProofPilotBundle:Sex',
@@ -59,28 +109,36 @@ class SignUpAboutForm extends AbstractType
                 'required'=>false
         ));
         
+        $builder->add('childrenSelect', 'choice', array(
+                'label'=>'label_children_main',
+                'choices' => array(
+                        'have' => 'label_have',
+                        'nothave' => 'label_do_not_have',
+                ),
+                'empty_value' => 'label_do_not_have'
+        ));
+        
         $builder->add('interestedSelect', 'choice', array(
                 'label'=>'label_inresested_main',
                 'required'=>false,
                 'choices' => array(
                         'm' => 'label_man',
-                        'w' => 'label_woman'
+                        'w' => 'label_woman',
+                        'mw' => 'label_man_woman'
                 ),
                 'empty_value' => 'sex preference',
-                'expanded' => true,
-                'multiple' => true
+//                 'expanded' => true,
+//                 'multiple' => true
         ));
         
-        $races = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Race')->findAll();
-        foreach ($races as $race) {
-            $race_chioce[$race->getRaceName()] = $race->getRaceName();
-        }
         $builder->add('raceSelect','entity', array(
                 'class' => 'CyclogramProofPilotBundle:Race',
                 'property' => 'raceName',
                 'empty_value' => 'race',
                 'label'=>'label_race_main',
                 'required'=>false,
+                'expanded' => true,
+                'multiple' => true
                 ));
 
         $builder->add('confirm', 'submit', array(

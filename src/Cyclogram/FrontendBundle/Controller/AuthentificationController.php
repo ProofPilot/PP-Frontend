@@ -217,9 +217,40 @@ class AuthentificationController extends Controller
 
             if ($form->isValid()) {
                 $data = $form->getData();
-                $participant->setCountry($data['countrySelect']);
-                $participant->setRace($data['raceSelect']);
-                $participant->setSex($data['sexSelect']);
+                
+                $sex = $em->getRepository('CyclogramProofPilotBundle:Sex')->findOneBySexName($data['sexSelect']);
+                $participant->setSex($sex);
+                
+                $race = $em->getRepository('CyclogramProofPilotBundle:Race')->findOneByRaceName($data['raceSelect']);
+                $participant->setRace($race);
+                
+                $country = $em->getRepository('CyclogramProofPilotBundle:Country')->findOneByCountryName($data['countrySelect']);
+                $participant->setCountry($country);
+
+                $participant->setParticipantZipcode($data['zipcode']);
+                
+                $participant->setParticipantBirthdate($data['birthdateSelect']);
+                
+                $gradeLevel = $em->getRepository('CyclogramProofPilotBundle:GradeLevel')->findOneByGradeLevelName($data['gradeSelect']);
+                    $participant->setGradeLevel($gradeLevel);
+                
+                $industry = $em->getRepository('CyclogramProofPilotBundle:Industry')->findOneByIndustryName($data['industrySelect']);
+                $participant->setIndustry($industry);
+                
+                $participant->setAnnualIncome($data['annualIncome']);
+                
+                $maritalStatus = $em->getRepository('CyclogramProofPilotBundle:MaritalStatus')->findOneByMaritalStatusName($data['maritalStatusSelect']);
+                $participant->setMaritalStatus($maritalStatus);
+                
+                $participant->setParticipantInterested($data['interestedSelect']);
+                
+                if ($childern = $data['childrenSelect']) {
+                 if ($children == 'have')
+                    $participant->children(1);
+                 if ($children == 'nothave')
+                     $participant->children(0);
+                }
+                
                 $em->persist($participant);
                 $em->flush();
                 if ($request->isXmlHttpRequest()) {

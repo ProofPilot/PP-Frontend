@@ -1,14 +1,149 @@
-    <div class="mobile_reg">
-        <h1><span>Tailor your experience with ProofPilot. Pre-Qualify for Studies.</span> </h1>
-        <h1>Tell us a bit about yourself</h1>
-        <form  action="{{ path('_signup_about', {'studyCode' : studyCode}) }}" method="post" name="signup_about" id="signup_about_form" novalidate>
-        <span>I'am a 
-                      {{ form_widget(formAbout.sexSelect) }}
-                      of
-                      {{ form_widget(formAbout.raceSelect) }}
-                      who lives in
-                      {{ form_widget(formAbout.countrySelect) }}.
-        </span>
-      {{ form_widget(formAbout.confirm, {'attr':{'class' : 'submit with_min_width btn_login'}}) }}
-       </form>
-    </div>
+        			<div class="mobile_reg">
+                    
+                    <a class="close" href="#"></a>
+                    
+                    <p class="exlp">Tailor your experience with ProofPilot. Pre-Qualify for Studies.</p>
+                    
+                    <h1>Tell us a bit about yourself</h1>
+                    
+                    <div class="form_wrapper">
+                    
+                        <form  action="{{ path('_signup_about', {'studyCode' : studyCode}) }}" method="post" name="signup_about" id="signup_about_form" novalidate>
+                        
+                            <div class="form_content">
+                            
+                                <span class="text_wrapper">I’m a</span> 
+                                    <span class="default_drop width_67" close-dropmenu=".dropmenu" open-dropmenu=".dropmenu-sex" data-default-text="sex"><span class="bg"><span class="text">sex</span></span></span> 
+                                <span class="text_wrapper">of</span> <br class="break_before_race" /> 
+                                    <span class="default_drop width_121" close-dropmenu=".dropmenu" open-dropmenu=".dropmenu-race"><span class="bg"><span class="text">race</span></span></span>
+                                <span class="text_wrapper">who lives in</span> <br class="break_before_postcode"/> 
+                                <span class="default_drop width_136 mobile_margin" open-dropmenu=".dropmenu-country"><span class="bg"><span class="text">country</span></span></span> 
+                                    <br class="break_postcode" /> <span class="default_drop width_96 " open-dropmenu=".dropmenu-zipcode"><span class="bg"><span class="text">post code</span></span></span> .
+                                
+                                <span class="text_wrapper">I was born on the</span> 
+                                <span class="default_drop width_67" open-dropmenu=".dropmenu-birthdate"><span class="bg"><span class="text">{{ form_widget(formAbout.birthdateSelect) }}</span></span></span>
+                                <br class="break_year" />  
+                                <span class="text_wrapper">.</span><br class="break_1" /><span class="text_wrapper">I finished</span> <br class="break_grade" /> 
+                                <span class="default_drop width_146" open-dropmenu=".dropmenu-grade"><span class="bg"><span class="text">grade level,</span></span></span> <span class="text_wrapper">,</span>
+                                
+                                <br class="break_before_work" />
+                                <span class="text_wrapper">work in</span> 
+                                <span class="default_drop width_140" open-dropmenu=".dropmenu-industry"><span class="bg"><span class="text">industry</span></span></span> <span class="text_wrapper">and make approximately</span> 
+                                <span class="default_drop width_140" open-dropmenu=""><span class="bg"><span class="text">{{ form_widget(formAbout.annualIncome) }}</span></span></span> <span class="text_wrapper">per year.</span>
+                                
+                                <br class="break_row" />
+                                <span class="text_wrapper">I’m</span> <span class="default_drop width_129" open-dropmenu=".dropmenu-marital"><span class="bg"><span class="text">marital status</span></span></span> <span class="text_wrapper">,</span><span class="text_wrapper">interested in</span> <span class="default_drop width_134" close-dropmenu=".dropmenu" open-dropmenu=".dropmenu-interested" data-default-text="sex preference"><span class="bg"><span class="text">sex preference</span></span></span> <br class="break_and" /> <span class="text_wrapper">and</span> <span class="default_drop width_82" open-dropmenu=".dropmenu-children"><span class="bg"><span class="text">do not have</span></span></span> <span class="text_wrapper last">children.</span>
+                                
+                         
+                                <div class="dropmenu for_multiple dropmenu-race" data-update-text=".dropmenu-race">
+                                    <ul class="checkboxes">
+                                    {{ form_widget(formAbout.raceSelect) }}
+                                    </ul>
+                                    <div class="align_center">
+                                        <a href="#" class="btn small close_dropmenu">Ok. DONE.</a>
+                                    </div>
+                                </div>
+                                
+                                <div class="dropmenu for_multiple dropmenu-sex" data-update-text=".dropmenu-sex">
+                                    <ul class="checkboxes">
+                                        {{ form_widget(formAbout.sexSelect) }}
+                                    </ul>
+                                    <div class="align_center">
+                                        <a href="#" class="btn small close_dropmenu">Ok. DONE.</a>
+                                    </div>
+                                </div>
+                  
+                                <div class="dropmenu for_multiple dropmenu-country" data-update-text=".dropmenu-country">
+                                    <ul class="checkboxes">
+                                        {{ form_widget(formAbout.countrySelect) }}
+                                    </ul>
+                                    <div class="align_center">
+                                        <a href="#" class="btn small close_dropmenu">Ok. DONE.</a>
+                                    </div>
+                                </div>
+                                
+                                 <div class="dropmenu for_multiple dropmenu-zipcode" data-update-text=".dropmenu-zipcode">
+                                    <ul class="checkboxes">
+                                        {{ form_widget(formAbout.zipcode) }}
+                                    </ul>
+                                    <div class="align_center">
+                                        <a href="#" class="btn small close_dropmenu">Ok. DONE.</a>
+                                    </div>
+                                </div>
+                                
+                                <div class="dropmenu for_multiple dropmenu-birthdate" data-update-text=".dropmenu-birthdate">
+                                    <ul class="checkboxes">
+                                        {{ form_widget(formAbout.countrySelect) }}
+                                    </ul>
+                                    <div class="align_center">
+                                        <a href="#" class="btn small close_dropmenu">Ok. DONE.</a>
+                                    </div>
+                                </div>
+                                
+                                <div class="dropmenu for_multiple dropmenu-grade" data-update-text=".dropmenu-grade">
+                                    <ul class="checkboxes">
+                                        {{ form_widget(formAbout.gradeSelect) }}
+                                    </ul>
+                                    <div class="align_center">
+                                        <a href="#" class="btn small close_dropmenu">Ok. DONE.</a>
+                                    </div>
+                                </div>
+                                
+                                  <div class="dropmenu for_multiple dropmenu-industry" data-update-text=".dropmenu-industry">
+                                    <ul class="checkboxes">
+                                        {{ form_widget(formAbout.industrySelect) }}
+                                    </ul>
+                                    <div class="align_center">
+                                        <a href="#" class="btn small close_dropmenu">Ok. DONE.</a>
+                                    </div>
+                                </div>
+                                
+                                <div class="dropmenu for_multiple dropmenu-marital" data-update-text=".dropmenu-marital">
+                                    <ul class="checkboxes">
+                                        {{ form_widget(formAbout.maritalStatusSelect) }}
+                                    </ul>
+                                    <div class="align_center">
+                                        <a href="#" class="btn small close_dropmenu">Ok. DONE.</a>
+                                    </div>
+                                </div>
+                        
+                                <div class="dropmenu for_single dropmenu-interested" data-update-text=".dropmenu-interedsted">
+                                   {{ form_widget(formAbout.interestedSelect) }}
+                                </div>
+                       
+                       
+                                 <div class="dropmenu for_multiple dropmenu-children" data-update-text=".dropmenu-children">
+                                    <ul class="checkboxes">
+                                        {{ form_widget(formAbout.childrenSelect) }}
+                                    </ul>
+                                    <div class="align_center">
+                                        <a href="#" class="btn small close_dropmenu">Ok. DONE.</a>
+                                    </div>
+                                </div>
+                            
+                            </div>
+                        
+                    
+                    </div>
+                    
+                    <p class="note">Any information you share with us is completly confidental and secure. See our <a href="#">Security and Privacy policy</a></p>
+                    	
+    	           <div class="align_center">
+                        {{form_widget(formAbout.confirm, {'attr':{'class':'submit with_min_width btn_login'}}) }}
+                   </div>
+                    </form>
+                
+    			</div>
+    			<script src="{{ asset('js/jquery.uniform.min.js') }}"></script>
+    			  <script type="text/javascript">
+    			    $(document).ready(function(){
+    		            $("#signup_about_zipcode").on('blur', function() {
+    		            	$('#error').remove(); 
+    		            	var inputVal = $(this).val();
+    		                var zipReg = /^[0-9]\d{4}-\d{4}|[0-9]{5}$/;
+    		                if(!zipReg.test(inputVal)) {
+    		                    $(this).after('<p class="error" id="error">{% trans from "register" %}txt_check_zipcode{% endtrans %}</p>');
+    		            }});
+    			        });
+                  </script>
+    
