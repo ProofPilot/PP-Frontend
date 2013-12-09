@@ -1,0 +1,39 @@
+{% block frontend_choice_widget %}
+    {% spaceless %}
+        {% if multiple %}
+             <ul class="checkboxes">
+                {{ block('frontend_checkbox_widget') }}
+             </ul>
+        {% else %}
+            <ul class="single">
+                {{ block('choice_widget_collapsed') }}
+            </ul>
+    {% endspaceless %}
+{% endblock frontend_choice_widget %}
+
+{% block frontend_checkbox_widget %}
+    {% spaceless %}
+        {% for child in form %}
+            <li>
+                <div id="uniform-tmp1" class="checker">
+                    <span class="checked">
+                         <input id="tmp1" type="checkbox" value="{{ child.id }}" name="tmp1">
+                    </span>
+                </div>
+                <label for="tmp1">{{ child.name }}</label>
+            </li>
+        {% endfor %}
+    {% endspaceless %}
+{% endblock frontend_checkbox_widget %}
+
+{% block frontend_select_widget %}
+    {% spaceless %}
+        <ul class="single">
+        {% for child in form %}
+            <li>
+                <a rel="{{ child.name }}" href="#">{{ child.name }}</a>
+                <input id="tmp01" type="hidden" value="{{ child.id }}" name="tmp1">
+            </li>
+        {% endfor %}
+    {% endspaceless %}
+{% endblock frontend_select_widget %}
