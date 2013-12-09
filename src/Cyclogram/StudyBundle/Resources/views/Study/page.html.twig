@@ -176,7 +176,14 @@
                             }
                         } else {
                             $("#div_register").dialog('close');
-                            $("#div_register_step2").dialog();
+                            $("#div_register_step2").dialog({
+                                modal: true,
+                                width: 'auto',
+                                fluid: true,
+                                resizable: false,
+                                position: ['top',100],
+                                open: funcCustom
+                            });
                     }}
                 });
                 return false;

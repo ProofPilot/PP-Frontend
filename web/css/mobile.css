@@ -393,12 +393,10 @@
 	display: none;
 }
 .mobile_reg {
-	width: 440px;
 	margin: 0px auto;
 	margin-top: 70px;
 	margin-bottom: 40px;
 	border-radius: 5px;
-	width: 390px;
 	position: relative;
 	background: #fff;
 }
@@ -486,7 +484,9 @@
     color: #CC5C4C;
     font-size: 12px;
 }
+
 /*Forgot username*/
+
 #div_forgot_username .mobile_reg {
 	margin: 20px;
 }
@@ -496,13 +496,156 @@
 #mail_address_participantEmail {
 	margin-bottom: 20px;
 }
-/*Forgot username*/
+
+/*Forgot password*/
+
 #div_forgot_password .mobile_reg {
-	margin: 20px;
+	margin: 25px 20px 20px 20px;
 }
 #div_forgot_password .mobile_reg .enter_email {
 	margin-bottom: 5px;
 }
+
+/*Step2*/
+#div_register_step2 {
+	max-width: 700px;
+}
+#div_register_step2 .mobile_reg {
+	margin: 0px;
+	padding: 20px;
+}
+#div_register_step2 .mobile_reg p.exlp {
+    color: #BF3D2C;
+    font-size: 16px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+#div_register_step2 .mobile_reg h1 {
+    text-align: center;
+    color: #2F2F2F;
+    font-size: 30px;
+    font-weight: 400;
+    line-height: 30px;
+    margin-bottom: 35px;
+    padding: 0;
+}
+#div_register_step2 .mobile_reg .form_content {
+    -moz-box-sizing: border-box;
+    background: url("../images/form_row.png") repeat-y scroll 0 0 rgba(0, 0, 0, 0);
+    color: #383838;
+    float: left;
+    font-size: 16px;
+    line-height: 50px;
+    min-height: 64px;
+    padding: 0 0 0 14px;
+    position: relative;
+    width: 100%;
+}
+#div_register_step2 .mobile_reg .form_content span.text_wrapper {
+    display: inline-block;
+    line-height: 50px;
+    margin-bottom: 14px;
+    padding-left: 2px;
+    padding-right: 1px;
+}
+#div_register_step2 .mobile_reg .form_content span.default_drop.width_67 {
+    width: 67px;
+}
+#div_register_step2 .mobile_reg .form_content span.default_drop.width_73 {
+    width: 73px;
+}
+#div_register_step2 .mobile_reg .form_content span.default_drop.width_82 {
+    width: 82px;
+}
+#div_register_step2 .mobile_reg .form_content span.default_drop.width_96 {
+    width: 96px;
+}
+#div_register_step2 .mobile_reg .form_content span.default_drop.width_121 {
+    width: 121px;
+}
+#div_register_step2 .mobile_reg .form_content span.default_drop.width_129 {
+    width: 129px;
+}
+#div_register_step2 .mobile_reg .form_content span.default_drop.width_134 {
+    width: 134px;
+}
+#div_register_step2 .mobile_reg .form_content span.default_drop.width_136 {
+    width: 136px;
+}
+#div_register_step2 .mobile_reg .form_content span.default_drop.width_140 {
+    width: 140px;
+}
+#div_register_step2 .mobile_reg .form_content span.default_drop.width_146 {
+    width: 146px;
+}
+#div_register_step2 .mobile_reg .form_content span.default_drop {
+    -moz-box-sizing: border-box;
+    background: linear-gradient(to bottom, #FFFFFF 0%, #F2F2F2 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);
+    border: 1px solid #AFAFAF;
+    border-radius: 3px 3px 3px 3px;
+    color: #6F6F6F;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 14px;
+    height: 31px;
+    line-height: 29px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+#div_register_step2 .mobile_reg .form_content span.default_drop span.bg {
+    -moz-box-sizing: border-box;
+    background: url("../images/drop_arrows.png") no-repeat scroll 100% 4px / 4px 10px rgba(0, 0, 0, 0);
+    display: inline-block;
+    height: 18px;
+    line-height: 18px;
+    margin-bottom: -3px;
+    overflow: hidden;
+    padding-right: 7px;
+    width: 100%;
+}
+#div_register_step2  .mobile_reg .form_content span.default_drop span.bg span.text {
+    display: inline-block;
+    overflow: hidden;
+    width: 100%;
+}
+#div_register_step2 .mobile_reg .form_content .dropmenu.for_multiple {
+    padding: 12px 12px 0;
+}
+#div_register_step2 .mobile_reg .form_content .dropmenu {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #AFAFAF;
+    border-radius: 3px 3px 3px 3px;
+    display: none;
+    left: 0;
+    position: absolute;
+    top: 0;
+    z-index: 5500;
+}
+#div_register_step2 .mobile_reg p.note {
+    clear: both;
+    color: #767676;
+    font-size: 12px;
+    margin-bottom: 15px;
+    padding-top: 15px;
+    text-align: center;
+}
+#div_register_step2 .mobile_reg p.note a {
+    color: #CC5C4C;
+}
+#div_register_step2 .mobile_reg .align_center button {
+    color: #FFFFFF;
+    font-size: 18px;
+    font-weight: 700;
+    height: 47px;
+    line-height: 47px;
+    text-transform: uppercase;
+    width: 164px;
+}
+#div_register_step2 .align_center {
+	text-align: center;
+}
+
+
 #form_participantUsername {
 	margin-bottom: 20px;
 }

@@ -1246,7 +1246,7 @@
     .mobile_reg.login_form h2 {
         display: none;
     }
-    #div_consent {
+    #div_consent, #div_register_step2 {
     	margin-right: 45px;
     	margin-left: 45px;
     }
@@ -2223,7 +2223,7 @@
         font-size: 13px;
         margin-bottom: 12px;
     }
-    #div_consent {
+    #div_consent, #div_register_step2 {
         margin-left: 15px;
         margin-right: 15px;
 	} 
@@ -2345,6 +2345,49 @@
 
 }
 
+/* @media screen and (max-width: 535px) */ 
+@media screen and (max-width: 535px){
+    
+    #div_register_step2 .mobile_reg p.note {
+        padding-left: 10px;
+        padding-right: 10px;
+        margin-bottom: 20px;
+    }
+    #div_register_step2 .mobile_reg .align_center a.btn {
+        height: 43px;
+        line-height: 43px;
+        font-size: 16px;
+        width: 100%;
+        max-width: 100%;
+    }
+    #div_register_step2 .mobile_reg p.exlp {
+        text-align: left;
+        font-size: 16px;
+        line-height: 20px;
+    }
+    #div_register_step2 .mobile_reg h1 {
+        text-align: left;
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+    #div_register_step2 .mobile_reg .form_content {
+        width: 251px;
+        padding-left: 10px;
+        background: url(../images/fc_2.png) repeat-y 0px 0px;
+        line-height: 40px;
+        margin-bottom: 10px;
+        padding-right: 5px;
+        width: 100%;
+		box-sizing:border-box;
+		-moz-box-sizing:border-box;
+		-webkit-box-sizing:border-box;
+    }
+    #div_register_step2 .mobile_reg .form_content span.text_wrapper {
+        line-height: 40px;
+        margin-bottom: 5px;
+    }
+}
+
 /* @media screen and (max-width: 500px) */ 
 @media screen and (max-width: 500px){
 	
@@ -2420,6 +2463,10 @@
 	}
 	.mobile_reg .form_fields li.input_right.wide input {
 		width: 100%;
+	}
+	#div_register_step2 .mobile_reg {
+		width: auto;
+		background: #fff;
 	}
 	.mobile_reg {
 		margin-top: 20px;
