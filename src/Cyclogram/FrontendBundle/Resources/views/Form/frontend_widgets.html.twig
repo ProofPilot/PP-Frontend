@@ -1,39 +1,96 @@
 {% block frontend_choice_widget %}
+    {{ block('widget_script') }}
     {% spaceless %}
-        {% if multiple %}
-             <ul class="checkboxes">
-                {{ block('frontend_checkbox_widget') }}
-             </ul>
+        <span class="default_drop">
+            <span class="bg">
+                <span class="text" id="open_choice"></span>
+            </span>
+        </span>
+        {% if expanded %}
+            {{ block('frontend_checkbox_widget') }}
         {% else %}
-            <ul class="single">
-                {{ block('choice_widget_collapsed') }}
-            </ul>
+            {{ block('frontend_select_widget') }}
+        {% endif %}
     {% endspaceless %}
 {% endblock frontend_choice_widget %}
 
+{% block frontend_entity_widget %}
+    {{ block('widget_script') }}
+    {% spaceless %}
+        <span class="default_drop">
+            <span class="bg">
+                <span class="text" id="open_choice">{{ name }}</span>
+            </span>
+        </span>
+        {% if expanded %}
+            {{ block('frontend_checkbox_widget') }}
+        {% else %}
+            {{ block('frontend_select_widget') }}
+        {% endif %}
+    {% endspaceless %}
+{% endblock frontend_entity_widget %}
+
 {% block frontend_checkbox_widget %}
     {% spaceless %}
-        {% for child in form %}
-            <li>
-                <div id="uniform-tmp1" class="checker">
-                    <span class="checked">
-                         <input id="tmp1" type="checkbox" value="{{ child.id }}" name="tmp1">
-                    </span>
-                </div>
-                <label for="tmp1">{{ child.name }}</label>
-            </li>
-        {% endfor %}
+        <div class="dropmenu for_multiple" style="display: none;" id="multiple_choice">
+            <ul class="checkboxes">
+                {% for child in form %}
+                    <li>
+                        <div class="checker">
+                            <span>
+                                {{ form_widget(child) }}
+                            </span>
+                        </div>
+                        {{ form_label(child) }}
+                    </li>
+                {% endfor %}
+            </ul>
+            <div class="align_center">
+                <a href="#" class="btn small close_dropmenu" id="close_choice">Ok. DONE.</a>
+            </div>
+        </div>
     {% endspaceless %}
 {% endblock frontend_checkbox_widget %}
 
 {% block frontend_select_widget %}
     {% spaceless %}
-        <ul class="single">
-        {% for child in form %}
-            <li>
-                <a rel="{{ child.name }}" href="#">{{ child.name }}</a>
-                <input id="tmp01" type="hidden" value="{{ child.id }}" name="tmp1">
-            </li>
-        {% endfor %}
+        <div class="dropmenu for_single" style="display: none;" id="single_choice">
+            <ul class="single">
+                {% for child in form %}
+                    <li>
+                        <a rel="{{ child.name }}" href="#" id="selected_choice">{{ child.name }}</a>
+                        <input type="hidden" value="{{ child.id }}"}>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
     {% endspaceless %}
 {% endblock frontend_select_widget %}
+{% block widget_script %}
+    <script type="text/javascript">
+    $(document).ready(function(){
+        $("#open_choice").bind('click', function(e) {
+        	$("#multiple_choice").hide();
+        	$("#single_choice").hide();
+            e.preventDefault();
+            if ({{ expanded }}) {
+                $("#multiple_choice").show();
+            } else {
+                $("#single_choice").show();
+            }
+        });
+        $("#close_choice").bind('click', function(e) {
+        	var checked  = [];
+            $("input[name='choice_check']").each(function(){
+                if($(this).is(':checked')) {
+                    checked = $(this).parents('.checker').siblings('label').html();
+                }
+            });
+            $("#open_choice").html(checked[0]);
+        });
+        $("#selected_choice").bind('click', function(e) {
+        	$("#open_choice").html($("#selected_choice").html());
+        });
+    });
+    </script>
+{% endblock widget_script %}

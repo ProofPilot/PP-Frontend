@@ -46,4 +46,10 @@ services:
         class: Cyclogram\FrontendBundle\Aop\CheckInterceptor
         arguments: 
             - @annotation_reader
+            
+            
+    frontend.entity_type_extension:
+        class: Cyclogram\FrontendBundle\Form\Extension\FrontendChoiceTypeExtension
+        tags:
+            - { name: form.type_extension, alias: frontend_entity }
 

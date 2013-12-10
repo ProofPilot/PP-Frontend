@@ -30,6 +30,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\ExecutionContextInterface;
 
+
 class SignUpAboutForm extends AbstractType
 {
     protected $container;
@@ -58,16 +59,31 @@ class SignUpAboutForm extends AbstractType
                 )
         ));
         
-
-        $builder->add('birthdateSelect','date', array(
-                'input' => 'datetime',
-                'widget' => 'choice',
-                'empty_value' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day'),
-                'days' => range(1,31),
-                'months' => range(1,12),
-                'years' => range(1900,date("Y")),
-                'format' => 'yyyy-MM-dd'
+        $builder->add('daysSelect', 'choice', array(
+                'label'=>'label_children_main',
+                'choices' => array(
+                        'days' => range(1,31),
+                ),
+                'empty_value' => 'label_days'
         ));
+        
+        $builder->add('monthsSelect', 'choice', array(
+                'label'=>'label_children_main',
+                'choices' => array(
+                        'months' => range(1,12),
+                ),
+                'empty_value' => 'label_months'
+        ));
+
+        
+        $builder->add('yearsSelect', 'choice', array(
+                'label'=>'label_children_main',
+                'choices' => array(
+                        'years' => range(1950,date("Y")),
+                ),
+                'empty_value' => 'label_years'
+        ));
+
         
         $builder->add('gradeSelect','entity', array(
                 'class' => 'CyclogramProofPilotBundle:GradeLevel',
@@ -131,14 +147,14 @@ class SignUpAboutForm extends AbstractType
 //                 'multiple' => true
         ));
         
-        $builder->add('raceSelect','entity', array(
+        $builder->add('raceSelect',new Type\ForntendEntityType( $this->container->get('doctrine')), array(
                 'class' => 'CyclogramProofPilotBundle:Race',
                 'property' => 'raceName',
-                'empty_value' => 'race',
                 'label'=>'label_race_main',
                 'required'=>false,
+                'multiple' => true,
                 'expanded' => true,
-                'multiple' => true
+//                 'choice_empty_name' => 'race'
                 ));
 
         $builder->add('confirm', 'submit', array(
@@ -153,6 +169,13 @@ class SignUpAboutForm extends AbstractType
                 array('csrf_protection' => false,
                         'cascade_validation' => true,
                         'translation_domain' => 'signup_about',
+                        'constraints' => array(
+                                new Callback(array(
+
+                                        array($this, 'isDateValid'),
+
+
+                                )))
                 ));
     }
     
@@ -161,4 +184,17 @@ class SignUpAboutForm extends AbstractType
         return 'signup_about';
     }
 
+
+    public function isDateValid($data, ExecutionContextInterface $context){
+        if (!empty($data['yearsSelect']) || !empty($data['monthsSelect']) || !empty($data['daysSelect'])) {
+            $date = new \DateTime();
+            if (!$date->setDate($data['yearsSelect'], $data['monthsSelect'], $data['daysSelect'])){
+                if (empty($data['birthdateSelect'])) {
+                    $context->addViolationAt('[monthsSelect]', $this->container->get('translator')->trans('date_not_valid', array(), 'validators'));
+                }
+
+
+            }
+        }
+    }
 }
