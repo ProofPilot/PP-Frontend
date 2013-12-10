@@ -147,7 +147,7 @@ class SignUpAboutForm extends AbstractType
 //                 'multiple' => true
         ));
         
-        $builder->add('raceSelect',new Type\ForntendEntityType( $this->container->get('doctrine')), array(
+        $builder->add('raceSelect',new Type\FrontendEntityType( $this->container->get('doctrine')), array(
                 'class' => 'CyclogramProofPilotBundle:Race',
                 'property' => 'raceName',
                 'label'=>'label_race_main',

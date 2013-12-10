@@ -104,7 +104,7 @@
             //registration ajax
             $("#register").bind('click', function(e) {
                 e.preventDefault();
-                $("#div_register").dialog({ 
+                $("#div_register_step2").dialog({
                     modal: true,
                     width: 'auto',
                     fluid: true,
@@ -112,6 +112,14 @@
                     position: ['top',100],
                     open: funcCustom
                 });
+//                $("#div_register").dialog({ 
+//                    modal: true,
+//                    width: 'auto',
+//                    fluid: true,
+//                    resizable: false,
+//                    position: ['top',100],
+//                    open: funcCustom
+//                });
             });
             
             //consent ajax

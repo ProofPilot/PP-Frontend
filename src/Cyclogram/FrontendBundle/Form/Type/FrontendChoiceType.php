@@ -18,19 +18,15 @@
 */
 namespace Cyclogram\FrontendBundle\Form\Type;
 
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\OptionsResolver\Options;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Symfony\Component\Form\FormBuilder;
-use Symfony\Component\Form\FormView;
-use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
-class ForntendEntityType  extends EntityType
+class FrontendChoiceType  extends ChoiceType
 {
     
     public function getName()
     {
-        return 'frontend_entity';
+        return 'frontend_choice';
     }
+    
     
 }
