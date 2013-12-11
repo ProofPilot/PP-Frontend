@@ -70,6 +70,9 @@
 {% block widget_script %}
     <script type="text/javascript">
     $(document).ready(function(){
+    	// for_multiple checkboxes
+        $(".for_multiple input[type=checkbox]").uniform();
+
         $("#open_choice_{{ name }}").bind('click', function(e) {
             var expanded = null;
         	$("#multiple_choice_{{ name }}").hide();
