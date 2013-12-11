@@ -43,12 +43,13 @@ class SignUpAboutForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 
-        $builder->add('countrySelect', 'entity', array(
+        $builder->add('countrySelect', new Type\FrontendEntityType( $this->container->get('doctrine')), array(
                 'class' => 'CyclogramProofPilotBundle:Country',
                 'property' => 'countryName',
-                'empty_value' => 'country',
                 'label' =>'label_country_select',
-                'required'=>false
+                'required'=>false,
+                'expanded' =>true,
+                'multiple' => false
                 )
             );
         $builder->add('zipcode', 'text', array(
@@ -59,82 +60,91 @@ class SignUpAboutForm extends AbstractType
                 )
         ));
         
-        $builder->add('daysSelect', 'choice', array(
-                'label'=>'label_children_main',
+        $builder->add('daysSelect', new Type\FrontendChoiceType( $this->container->get('doctrine')), array(
+                'label'=>'label_day_main',
                 'choices' => array(
                         'days' => range(1,31),
                 ),
-                'empty_value' => 'label_days'
+                'required'=>false,
+                'expanded' =>true,
+                'multiple' => false
         ));
         
-        $builder->add('monthsSelect', 'choice', array(
-                'label'=>'label_children_main',
+        $builder->add('monthsSelect', new Type\FrontendChoiceType( $this->container->get('doctrine')), array(
+                'label'=>'label_monthmain',
                 'choices' => array(
                         'months' => range(1,12),
                 ),
-                'empty_value' => 'label_months'
+                'required'=>false,
+                'expanded' =>true,
+                'multiple' => false
         ));
 
         
-        $builder->add('yearsSelect', 'choice', array(
-                'label'=>'label_children_main',
+        $builder->add('yearsSelect', new Type\FrontendChoiceType( $this->container->get('doctrine')), array(
+                'label'=>'label_year_main',
                 'choices' => array(
                         'years' => range(1950,date("Y")),
                 ),
-                'empty_value' => 'label_years'
+                'required'=>false,
+                'expanded' =>true,
+                'multiple' => false
         ));
 
         
-        $builder->add('gradeSelect','entity', array(
+        $builder->add('gradeSelect',new Type\FrontendEntityType( $this->container->get('doctrine')), array(
                 'class' => 'CyclogramProofPilotBundle:GradeLevel',
                 'property' => 'gradeLevelName',
-                'empty_value' => 'grade level',
                 'label'=>'label_grade_level_main',
                 'required'=>false,
+                'expanded' =>true,
+                'multiple' => false
         ));
         
-        $builder->add('industrySelect','entity', array(
+        $builder->add('industrySelect',new Type\FrontendEntityType( $this->container->get('doctrine')), array(
                 'class' => 'CyclogramProofPilotBundle:Industry',
                 'property' => 'industryName',
-                'empty_value' => 'industry',
                 'label'=>'label_industry_main',
                 'required'=>false,
+                'expanded' =>true,
+                'multiple' => false
         ));
         
-        $builder->add('annualIncome', 'text', array(
-                'label'=>'label_annual_income',
-                'attr'=>array(
-                        'minLength'=>5,
-                        'maxlength'=>10,
-                )
+        $builder->add('anunalIncome', 'text', array(
+                'label'=>'label_annual_income'
         ));
         
-        $builder->add('maritalStatusSelect','entity', array(
+        $builder->add('maritalStatusSelect',new Type\FrontendEntityType( $this->container->get('doctrine')), array(
                 'class' => 'CyclogramProofPilotBundle:MaritalStatus',
                 'property' => 'maritalStatusName',
-                'empty_value' => 'maritalStatus',
                 'label'=>'label_marital_status_main',
                 'required'=>false,
+                'expanded' =>true,
+                'multiple' => false
         ));
         
-        $builder->add('sexSelect', 'entity', array(
+        $builder->add('sexSelect',new Type\FrontendEntityType( $this->container->get('doctrine')), array(
                 'class' => 'CyclogramProofPilotBundle:Sex',
                 'property' => 'sexName',
                 'label'=>'label_sex_main',
-                'empty_value' => 'sex',
-                'required'=>false
+                //'empty_value' => 'sex',
+                'required'=>false,
+                'expanded' =>true,
+                'multiple' => false
         ));
         
-        $builder->add('childrenSelect', 'choice', array(
+        $builder->add('childrenSelect', new Type\FrontendChoiceType( $this->container->get('doctrine')), array(
                 'label'=>'label_children_main',
                 'choices' => array(
                         'have' => 'label_have',
                         'nothave' => 'label_do_not_have',
                 ),
-                'empty_value' => 'label_do_not_have'
+                'required'=>false,
+                'expanded' =>true,
+                'multiple' => false
         ));
         
-        $builder->add('interestedSelect', 'choice', array(
+        $builder->add('interestedSelect', new Type\FrontendChoiceType( $this->container->get('doctrine')), array(
                 'label'=>'label_inresested_main',
                 'required'=>false,
                 'choices' => array(
@@ -142,9 +152,8 @@ class SignUpAboutForm extends AbstractType
                         'w' => 'label_woman',
                         'mw' => 'label_man_woman'
                 ),
-                'empty_value' => 'sex preference',
-//                 'expanded' => true,
-//                 'multiple' => true
+                'expanded' => true,
+                'multiple' => false
         ));
         
         $builder->add('raceSelect',new Type\FrontendEntityType( $this->container->get('doctrine')), array(
@@ -168,7 +177,7 @@ class SignUpAboutForm extends AbstractType
         ->setDefaults(
                 array('csrf_protection' => false,
                         'cascade_validation' => true,
-                        'translation_domain' => 'signup_about',
+                        'translation_domain' => 'db',
                         'constraints' => array(
                                 new Callback(array(
 
