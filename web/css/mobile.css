@@ -507,6 +507,9 @@
 }
 
 /*Step2*/
+#div_register_step2.signup_moblie_reg {
+	margin: 70px auto 40px;
+}
 #div_register_step2 {
 	max-width: 700px;
 }
@@ -616,9 +619,7 @@
     border: 1px solid #AFAFAF;
     border-radius: 3px 3px 3px 3px;
     display: none;
-    left: 0;
     position: absolute;
-    top: 0;
     z-index: 5500;
 }
 #div_register_step2 .mobile_reg p.note {
@@ -632,7 +633,7 @@
 #div_register_step2 .mobile_reg p.note a {
     color: #CC5C4C;
 }
-#div_register_step2 .mobile_reg .align_center button {
+#div_register_step2 .mobile_reg .align_center button, #div_register_step2 .mobile_reg .align_center a {
     color: #FFFFFF;
     font-size: 18px;
     font-weight: 700;
@@ -644,7 +645,58 @@
 #div_register_step2 .align_center {
 	text-align: center;
 }
-
+#div_register_step2 .mobile_reg .form_content .dropmenu ul.checkboxes li, #div_register_step2 .mobile_reg.form_content .dropmenu ul.single li {
+    color: #6F6F6F;
+    font-size: 14px;
+    line-height: 130%;
+    margin-bottom: 15px;
+}
+#div_register_step2 .mobile_reg .form_content .dropmenu ul.checkboxes li label {
+    cursor: pointer;
+    padding-left: 7px;
+}
+#div_register_step2 .mobile_reg .align_center a {
+    font-size: 13px;
+    height: 30px;
+    line-height: 30px;
+    margin-bottom: 15px;
+    width: 104px;
+}
+/*Dropdown positioning*/
+#multiple_choice_raceSelect {
+	left: 148px;
+	top: 5px;
+}
+/*Checkboxes*/
+div.checker, div.checker span, div.checker input, div.radio, div.radio span, div.radio input {
+    cursor: pointer;
+    height: 16px !important;
+    margin: 0;
+    width: 16px !important;
+}
+div.checker, div.checker span, div.checker input {
+    height: 19px;
+    width: 19px;
+}
+div.checker {
+    position: relative;
+}
+div.selector, div.selector *, div.radio, div.radio *, div.checker, div.checker *, div.uploader, div.uploader *, div.button, div.button * {
+    margin: 0;
+    padding: 0;
+}
+div.selector, div.checker, div.button, div.radio, div.uploader {
+    display: inline-block;
+}
+div.checker span {
+    background: url("../images/checker.gif") no-repeat scroll 0 100% rgba(0, 0, 0, 0) !important;
+}
+div.checker input {
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
+    border: medium none;
+    display: inline-block;
+    opacity: 0;
+}
 
 #form_participantUsername {
 	margin-bottom: 20px;
@@ -725,7 +777,7 @@
 .mobile_reg div.center_align.bottom_margin {
 	margin-bottom: 15px;
 }
-.mobile_reg button.submit {
+.mobile_reg button.submit, .mobile_reg .align_center a {
 	clear: both;
 	display: inline-block;
 	color: white;
@@ -736,8 +788,8 @@
 	font-size: 16px;
 	text-transform: uppercase;
 	line-height: 42px;
-	padding-left: 20px;
-	padding-right: 20px;
+/* 	padding-left: 20px;
+	padding-right: 20px; */
 	border: 1px solid #b9503e;
 	border-radius: 3px;
 	background: #e3624c; /* Old browsers */
