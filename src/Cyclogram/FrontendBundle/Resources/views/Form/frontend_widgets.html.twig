@@ -3,7 +3,7 @@
     {% spaceless %}
         <span class="default_drop">
             <span class="bg">
-                <span class="text" id="open_choice"></span>
+                <span class="text" id="open_choice_{{ name }}"></span>
             </span>
         </span>
         {% if expanded %}
@@ -19,7 +19,7 @@
     {% spaceless %}
         <span class="default_drop">
             <span class="bg">
-                <span class="text" id="open_choice_{{ label }}">{{ label }}</span>
+                <span class="text" id="open_choice_{{ name }}">{{ label }}</span>
             </span>
         </span>
         {% if expanded %}
@@ -32,7 +32,7 @@
 
 {% block frontend_checkbox_widget %}
     {% spaceless %}
-        <div class="dropmenu for_multiple" style="display: none;" id="multiple_choice_{{ label }}">
+        <div class="dropmenu for_multiple" style="display: none;" id="multiple_choice_{{ name }}">
             <ul class="checkboxes">
                 {% for child in form %}
                     <li>
@@ -46,7 +46,7 @@
                 {% endfor %}
             </ul>
             <div class="align_center">
-                <a href="#" class="btn small close_dropmenu" id="close_choice_{{ label }}">Ok. DONE.</a>
+                <a href="#" class="btn small close_dropmenu" id="close_choice_{{ name }}">Ok. DONE.</a>
             </div>
         </div>
     {% endspaceless %}
@@ -54,11 +54,11 @@
 
 {% block frontend_select_widget %}
     {% spaceless %}
-        <div class="dropmenu for_single" style="display: none;" id="single_choice_{{ label }}">
+        <div class="dropmenu for_single" style="display: none;" id="single_choice_{{ name }}">
             <ul class="single">
                 {% for child in form %}
                     <li>
-                        <a rel="{{ child.name }}" href="#" id="selected_choice_{{ label }}">{{ child.name }}</a>
+                        <a rel="{{ child.name }}" href="#" id="selected_choice_{{ name }}">{{ child.name }}</a>
                         <input type="hidden" value="{{ child.id }}"}>
                     </li>
                 {% endfor %}
@@ -70,17 +70,19 @@
 {% block widget_script %}
     <script type="text/javascript">
     $(document).ready(function(){
-        $("#open_choice_{{ label }}").bind('click', function(e) {
-        	$("#multiple_choice_{{ label }}").hide();
-        	$("#single_choice_{{ label }}").hide();
+        $("#open_choice_{{ name }}").bind('click', function(e) {
+            var expanded = null;
+        	$("#multiple_choice_{{ name }}").hide();
+        	$("#single_choice_{{ name }}").hide();
             e.preventDefault();
-            if ({{ expanded }}) {
-                $("#multiple_choice_{{ label }}").show();
+            expanded = {{ expanded }};
+            if (expanded != null) {
+                $("#multiple_choice_{{ name }}").show();
             } else {
-                $("#single_choice_{{ label }}").show();
+                $("#single_choice_{{ name }}").show();
             }
         });
-        $("#close_choice_{{ label }}").bind('click', function(e) {
+        $("#close_choice_{{ name }}").bind('click', function(e) {
             var checked;
             $("input[name='{{ full_name }}[]']").each(function(){
                 if($(this).is(':checked')) {
@@ -88,11 +90,12 @@
                     return;
                 }
             });
-            $("#open_choice_{{ label }}").html(checked);
-            $("#multiple_choice_{{ label }}").hide();
+            $("#open_choice_{{ name }}").html(checked);
+            $("#multiple_choice_{{ name }}").hide();
         });
-        $("#selected_choice_{{ label }}").bind('click', function(e) {
-        	$("#open_choice_{{ label }}").html($("#selected_choice_{{ label }}").html());
+        $("#selected_choice_{{ name }}").bind('click', function(e) {
+        	$("#open_choice_{{ name }}").html($("#selected_choice_{{ name }}").html());
+        	$("#single_choice_{{ name }}").hide();
         });
     });
     </script>
