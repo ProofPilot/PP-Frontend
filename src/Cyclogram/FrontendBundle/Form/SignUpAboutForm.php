@@ -163,7 +163,7 @@ class SignUpAboutForm extends AbstractType
                 ));
 
         $builder->add('confirm', 'submit', array(
-                'label' => 'btn_confirm',
+                'label' => $this->container->get('translator')->trans('btn_confirm', array(), 'signup_about'),
                 
         ));
     }

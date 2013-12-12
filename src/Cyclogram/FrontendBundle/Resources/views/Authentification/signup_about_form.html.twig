@@ -1,8 +1,8 @@
 {% form_theme formAbout 'CyclogramFrontendBundle:Form:frontend_widgets.html.twig' %}
 <div class="mobile_reg">
     <a class="close" href="#"></a>
-    <p class="exlp">Tailor your experience with ProofPilot. Pre-Qualify for Studies.</p>
-    <h1>Tell us a bit about yourself</h1>
+    <p class="exlp">{% trans from "signup_about" %}head_tailot_expirience{% endtrans %}</p>
+    <h1>{% trans from "signup_about" %}head_tell_a_bit{% endtrans %}</h1>
     <div class="form_wrapper">
         <form  action="{{ path('_signup_about', {'studyCode' : studyCode}) }}" method="post" name="signup_about" id="signup_about_form" novalidate>    
             <div class="form_content">
@@ -42,7 +42,7 @@
                             
                     </div>
                     
-                    <p class="note">Any information you share with us is completly confidental and secure. See our <a href="#">Security and Privacy policy</a></p>
+                    <p class="note">{% trans from "signup_about" %}text_any_information{% endtrans %} <a href="#">{% trans from "signup_about" %}secutiry_and_privacy{% endtrans %}</a></p>
                     	
     	           <div class="align_center">
                         {{form_widget(formAbout.confirm, {'attr':{'class':'submit with_min_width btn_login'}}) }}

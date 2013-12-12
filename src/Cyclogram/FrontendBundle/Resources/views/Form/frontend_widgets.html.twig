@@ -5,7 +5,7 @@
             <span class="bg">
                 <span class="text">{{ label }}</span>
             </span>
-         {% if (expanded and multiple) %}
+        {% if (expanded and multiple) %}
             {{ block('frontend_checkbox_widget') }}
         {% else %}
             {{ block('frontend_select_widget') }}
@@ -22,12 +22,13 @@
             <span class="bg">
                 <span class="text" >{{ label }}</span>
             </span>
-        {% if (expanded and multiple) %}
+         {% if (expanded and multiple) %}
             {{ block('frontend_checkbox_widget') }}
         {% else %}
             {{ block('frontend_select_widget') }}
         {% endif %}
         </span>
+
     {% endspaceless %}
 {% endblock frontend_entity_widget %}
 
@@ -64,7 +65,7 @@
 
                     {{ form_widget(child) }}
                 {% endfor %}
-                <input type="hidden" value="{{ value }}" name="{{ name }}"/>
+                <input type="hidden" value="" name="{{ name }}" id="single_hidden_{{ name }}"/>
             </ul>
         </div>
     {% endspaceless %}
@@ -88,20 +89,23 @@
         });
         if ({{ (expanded and multiple)|default(0)}} ) {
             $("#close_choice_{{ name }}").bind('click', function(e) {
+                e.stopPropagation();
                 var checked;
-                $("input[name='{{ full_name }}[]']").each(function(){
-                    if($(this).is(':checked')) {
+                $("#multiple_choice_{{ name }} div.checker span span").each(function(){
+                    if($(this).hasClass('checked')) {
                         checked = $(this).parents('.checker').siblings('label').html();
                         return;
                     }
                 });
-                $("#open_choice_{{ name }}").html((checked)?checked:'{{ label }}');
+                $("#open_choice_{{ name }} span[class='text']").html((checked)?checked:'{{ label }}');
                 $("#multiple_choice_{{ name }}").hide();
             });
         } else {
             $("#single_choice_{{ name }} a[class='selected_choice']").bind('click', function(e) {
-                $("#open_choice_{{ name }}").html($(this).html());
+                e.stopPropagation();
+                $("#open_choice_{{ name }} span[class='text']").html($(this).html());
                 $("#single_choice_{{ name }}").hide();
+                $("#single_hidden_{{ name }}").val($(this).attr('name'));
             });
         }
     });
@@ -112,7 +116,7 @@
 {% spaceless %}
     {% if value is not empty %}
     <li>
-        <a rel="{{ value }}" href="#" " class="selected_choice">{{ label|trans({}, translation_domain) }}</a> 
+        <a  href="#" class="selected_choice" name="{{ value }}">{{ label|trans({}, translation_domain) }}</a> 
     </li>
     {% endif %}
 {% endspaceless %}
@@ -121,12 +125,12 @@
 {% block form_widget_simple %}
 {% spaceless %}
     {% set type = type|default('text') %}
-        {% if type == 'text' %}
-        <div class="cusotm_input">
-            <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
-        </div>
-        {% else %}
-            <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
-        {% endif %}
+    {% if type == 'text' %}
+    <div class="cusotm_input">
+        <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+    </div>
+    {% else %}
+        <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+    {% endif %}
 {% endspaceless %}
 {% endblock form_widget_simple %}
