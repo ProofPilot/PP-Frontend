@@ -592,20 +592,21 @@
     font-size: 14px;
     height: 31px;
     line-height: 29px;
-    padding-left: 10px;
-    padding-right: 10px;
     position: relative;
+    top: 8px;
 }
 #div_register_step2 .mobile_reg .form_content span.default_drop span.bg {
     -moz-box-sizing: border-box;
-    background: url("../images/drop_arrows.png") no-repeat scroll 100% 4px / 4px 10px rgba(0, 0, 0, 0);
+    background: url("../images/drop_arrows.png") no-repeat scroll 93% 11px / 4px 10px rgba(0, 0, 0, 0);
     display: inline-block;
-    height: 18px;
-    line-height: 18px;
+    height: 31px;
+    line-height: 31px;
     margin-bottom: -3px;
     overflow: hidden;
     padding-right: 7px;
     width: 100%;
+    padding-left: 10px;
+    padding-right: 17px;
 }
 #div_register_step2  .mobile_reg .form_content span.default_drop span.bg span.text {
     display: inline-block;
@@ -702,7 +703,7 @@
 /*Dropdown positioning*/
 
 #multiple_choice_raceSelect {
-	min-width: 205px;
+	min-width: 230px;
 }
 #single_choice_countrySelect {
 	max-height: 300px;
@@ -713,14 +714,19 @@
 	font-size: 12px !important;
 	padding: 5px 10px !important;
 }
-#single_choice_daysSelect, #single_choice_yearsSelect, #single_choice_monthsSelect, #single_choice_gradeSelect {
+#single_choice_gradeSelect {
 	max-height: 190px;
 	overflow-y: scroll;
 	min-width: 200px;
 }
+#single_choice_daysSelect, #single_choice_monthsSelect, #single_choice_yearsSelect {
+	max-height: 190px;
+	overflow-y: scroll;
+}
 #single_choice_industrySelect {
 	max-height: 200px;
 	overflow-y: scroll;
+	min-width: 185px;
 }
 #single_choice_maritalStatusSelect {
 	max-height: 150px;
@@ -737,6 +743,9 @@
 	font-size: 11px;
 	position: absolute;
 	margin-top: -20px;
+}
+#single_choice_childrenSelect {
+	min-width: 200px;
 }
 
 /*Checkboxes*/
