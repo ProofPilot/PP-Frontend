@@ -693,7 +693,7 @@
     padding-right: 10px;
 }
 #signup_about_zipcode {
-	width: 76px;
+	width: 110px;
 }
 #signup_about_anunalIncome {
 	width: 120px;
@@ -728,6 +728,15 @@
 }
 #single_choice_daysSelect.for_single ul.single li a.selected_choice, #single_choice_yearsSelect.for_single ul.single li a.selected_choice, #single_choice_monthsSelect.for_single ul.single li a.selected_choice {
 	padding: 3px 7px !important;
+}
+#signup_about_form .cusotm_input {
+	display: inline-block;
+	height: 50px;
+}
+#signup_about_form .error {
+	font-size: 11px;
+	position: absolute;
+	margin-top: -20px;
 }
 
 /*Checkboxes*/
