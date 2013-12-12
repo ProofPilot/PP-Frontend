@@ -702,7 +702,7 @@
 /*Dropdown positioning*/
 
 #multiple_choice_raceSelect {
-	min-width: 205px;
+	min-width: 230px;
 }
 #single_choice_countrySelect {
 	max-height: 300px;
@@ -713,14 +713,19 @@
 	font-size: 12px !important;
 	padding: 5px 10px !important;
 }
-#single_choice_daysSelect, #single_choice_yearsSelect, #single_choice_monthsSelect, #single_choice_gradeSelect {
+#single_choice_gradeSelect {
 	max-height: 190px;
 	overflow-y: scroll;
 	min-width: 200px;
 }
+#single_choice_daysSelect, #single_choice_monthsSelect, #single_choice_yearsSelect {
+	max-height: 190px;
+	overflow-y: scroll;
+}
 #single_choice_industrySelect {
 	max-height: 200px;
 	overflow-y: scroll;
+	min-width: 185px;
 }
 #single_choice_maritalStatusSelect {
 	max-height: 150px;
@@ -737,6 +742,9 @@
 	font-size: 11px;
 	position: absolute;
 	margin-top: -20px;
+}
+#single_choice_childrenSelect {
+	min-width: 200px;
 }
 
 /*Checkboxes*/
