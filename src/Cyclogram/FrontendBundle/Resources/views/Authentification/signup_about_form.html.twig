@@ -53,6 +53,7 @@
     			<script src="{{ asset('js/jquery.uniform.min.js') }}"></script>
     			  <script type="text/javascript">
     			    $(document).ready(function(){
+    			    	$("input[type=checkbox]").uniform();
     		            $("#signup_about_zipcode").on('blur', function() {
     		            	$('#error').remove(); 
     		            	var inputVal = $(this).val();

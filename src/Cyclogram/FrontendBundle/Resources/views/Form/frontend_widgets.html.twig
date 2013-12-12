@@ -5,45 +5,42 @@
             <span class="bg">
                 <span class="text">{{ label }}</span>
             </span>
-        {% if (expanded and multiple) %}
+
+        </span>
+                 {% if (expanded and multiple) %}
             {{ block('frontend_checkbox_widget') }}
         {% else %}
             {{ block('frontend_select_widget') }}
-        {% endif %}
-        </span>
+        {% endif %}        
 
     {% endspaceless %}
 {% endblock frontend_choice_widget %}
 
 {% block frontend_entity_widget %}
-{#     {{ block('widget_script') }}#}
+    {{ block('widget_script') }}
     {% spaceless %}
         <span class="default_drop" id="open_choice_{{ name }}">
             <span class="bg">
                 <span class="text" >{{ label }}</span>
             </span>
-         {% if (expanded and multiple) %}
+                 {% if (expanded and multiple) %}
             {{ block('frontend_checkbox_widget') }}
         {% else %}
             {{ block('frontend_select_widget') }}
         {% endif %}
         </span>
+
 
     {% endspaceless %}
 {% endblock frontend_entity_widget %}
 
 {% block frontend_checkbox_widget %}
     {% spaceless %}{% set foo = "test" %}
-    {{ block('widget_script') }}
         <div class="dropmenu for_multiple" style="display: none;" id="multiple_choice_{{ name }}">
             <ul class="checkboxes">
                 {% for child in form %}
                     <li>
-                        <div class="checker">
-                            <span> 
-                                {{ form_widget(child) }}
-                            </span>
-                        </div>
+                        {{ form_widget(child) }}
                         {{ form_label(child) }}
                     </li>
                 {% endfor %}
@@ -58,7 +55,6 @@
 {% block frontend_select_widget %}
     {% spaceless %}
     {% set foo = "test" %}
-    {{ block('widget_script') }}
         <div class="dropmenu for_single" style="display: none;" id="single_choice_{{ name }}">
             <ul class="single">
                 {% for child in form %}
@@ -75,7 +71,7 @@
     <script type="text/javascript">
     $(document).ready(function(){
     	// for_multiple checkboxes
-        $(".for_multiple input[type=checkbox]").uniform();
+       
 
         $("#open_choice_{{ name }}").bind('click', function(e) {
         	$("[id^='multiple_choice']").hide();
