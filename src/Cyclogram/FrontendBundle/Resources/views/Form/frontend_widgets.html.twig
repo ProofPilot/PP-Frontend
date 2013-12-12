@@ -5,12 +5,13 @@
             <span class="bg">
                 <span class="text">{{ label }}</span>
             </span>
-        </span>
-        {% if (expanded and multiple) %}
+         {% if (expanded and multiple) %}
             {{ block('frontend_checkbox_widget') }}
         {% else %}
             {{ block('frontend_select_widget') }}
         {% endif %}
+        </span>
+
     {% endspaceless %}
 {% endblock frontend_choice_widget %}
 
@@ -21,12 +22,12 @@
             <span class="bg">
                 <span class="text" >{{ label }}</span>
             </span>
-        </span>
         {% if (expanded and multiple) %}
             {{ block('frontend_checkbox_widget') }}
         {% else %}
             {{ block('frontend_select_widget') }}
         {% endif %}
+        </span>
     {% endspaceless %}
 {% endblock frontend_entity_widget %}
 
