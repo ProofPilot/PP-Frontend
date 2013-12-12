@@ -6,35 +6,35 @@
     <div class="form_wrapper">
         <form  action="{{ path('_signup_about', {'studyCode' : studyCode}) }}" method="post" name="signup_about" id="signup_about_form" novalidate>    
             <div class="form_content">
-                <span class="text_wrapper">I’m a</span> 
+                <span class="text_wrapper">{% trans from "signup_about" %}text_i_am_a{% endtrans %}</span> 
                 {{ form_widget(formAbout.sexSelect) }}
-                <span class="text_wrapper">of</span>
+                <span class="text_wrapper">{% trans from "signup_about" %}text_of{% endtrans %}</span>
                     {{ form_widget(formAbout.raceSelect) }}
-                <span class="text_wrapper">who lives in</span> 
+                <span class="text_wrapper">{% trans from "signup_about" %}text_who_lives_in{% endtrans %}</span> 
                     {{ form_widget(formAbout.countrySelect) }}
-                {{ form_widget(formAbout.zipcode) }} .
-                <span class="text_wrapper">I was born on the</span> 
+                {{ form_widget(formAbout.zipcode,{'attr': {'placeholder' : 'postcode_text'|trans({}, 'signup_about')}}) }} .
+                <span class="text_wrapper">{% trans from "signup_about" %}text_i_was_born_on_the{% endtrans %}</span>     
                      {{ form_widget(formAbout.daysSelect) }}
-                <span class="text_wrapper">of</span>
+                <span class="text_wrapper">{% trans from "signup_about" %}text_of{% endtrans %}</span>
                     {{ form_widget(formAbout.monthsSelect) }}
                     {{ form_widget(formAbout.yearsSelect) }}
                 <span class="text_wrapper">.</span>
-                <span class="text_wrapper">I finished</span>
+                <span class="text_wrapper">{% trans from "signup_about" %}text_i_finished{% endtrans %}</span>
                 {{ form_widget(formAbout.gradeSelect) }}
                 <span class="text_wrapper">,</span>
-                <span class="text_wrapper">work in</span>
+                <span class="text_wrapper">{% trans from "signup_about" %}text_work_in{% endtrans %}</span>
                 {{ form_widget(formAbout.industrySelect) }}
-                <span class="text_wrapper">and make approximately</span> 
-                {{ form_widget(formAbout.anunalIncome) }}
-                <span class="text_wrapper">per year.</span>
-                <span class="text_wrapper">I’m</span>
+                <span class="text_wrapper">{% trans from "signup_about" %}text_and_make_approximately{% endtrans %}</span>
+                {{ form_widget(formAbout.anunalIncome,{'attr': {'placeholder' : 'annual_income_text'|trans({}, 'signup_about')}}) }}
+                <span class="text_wrapper">{% trans from "signup_about" %}text_per_year{% endtrans %}.</span>
+                <span class="text_wrapper">{% trans from "signup_about" %}text_i_am{% endtrans %}</span>
                 {{ form_widget(formAbout.maritalStatusSelect) }}
                 <span class="text_wrapper">,</span>
-                <span class="text_wrapper">interested in</span> 
+                <span class="text_wrapper">{% trans from "signup_about" %}text_interested_in{% endtrans %}</span> 
                 {{ form_widget(formAbout.interestedSelect) }}
-                <span class="text_wrapper">and</span>
+                <span class="text_wrapper">{% trans from "signup_about" %}text_and{% endtrans %}</span>
                 {{ form_widget(formAbout.childrenSelect) }}
-                <span class="text_wrapper last">have children.</span>
+                <span class="text_wrapper last">{% trans from "signup_about" %}text_have_children{% endtrans %}.</span>
                 <div class="dropmenu for_single dropmenu-interested" data-update-text=".dropmenu-interedsted">
                     {{ form_widget(formAbout.interestedSelect) }}
                 </div>
@@ -51,15 +51,15 @@
                 
     			</div>
     			<script src="{{ asset('js/jquery.uniform.min.js') }}"></script>
-{#     			  <script type="text/javascript">#}
-{#     			    $(document).ready(function(){#}
-{#     		            $("#signup_about_zipcode").on('blur', function() {#}
-{#     		            	$('#error').remove(); #}
-{#     		            	var inputVal = $(this).val();#}
-{#     		                var zipReg = /^[0-9]\d{4}-\d{4}|[0-9]{5}$/;#}
-{#     		                if(!zipReg.test(inputVal)) {#}
-{#     		                    $(this).after('<p class="error" id="error">{% trans from "register" %}txt_check_zipcode{% endtrans %}</p>');#}
-{#     		            }});#}
-{#     			        });#}
-{#                   </script>#}
->>>>>>> Stashed changes
+    			  <script type="text/javascript">
+    			    $(document).ready(function(){
+    		            $("#signup_about_zipcode").on('blur', function() {
+    		            	$('#error').remove(); 
+    		            	var inputVal = $(this).val();
+    		                var zipReg = /^[0-9]\d{4}-\d{4}|[0-9]{5}$/;
+    		                if(!zipReg.test(inputVal)) {
+    		                    $(this).after('<p class="error" id="error">{% trans from "register" %}txt_check_zipcode{% endtrans %}</p>');
+    		            }});
+    			        });
+                  </script>
+

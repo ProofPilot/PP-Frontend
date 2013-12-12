@@ -54,7 +54,6 @@ class SignUpAboutForm extends AbstractType
             );
         $builder->add('zipcode', 'text', array(
                 'label'=> $this->container->get('translator')->trans('label_zipcode', array(), 'signup_about'),
-                'data' => $this->container->get('translator')->trans('postcode_text', array(), 'signup_about'),
         ));
         
         $builder->add('daysSelect', new Type\FrontendChoiceType( $this->container->get('doctrine')), array(
@@ -109,7 +108,6 @@ class SignUpAboutForm extends AbstractType
         
         $builder->add('anunalIncome', 'text', array(
                 'label'=> $this->container->get('translator')->trans('label_annual_income', array(), 'signup_about'),
-                'data' => $this->container->get('translator')->trans('annual_income_text', array(), 'signup_about'),
         ));
         
         $builder->add('maritalStatusSelect',new Type\FrontendEntityType( $this->container->get('doctrine')), array(
@@ -134,8 +132,8 @@ class SignUpAboutForm extends AbstractType
         $builder->add('childrenSelect', new Type\FrontendChoiceType( $this->container->get('doctrine')), array(
                 'label'=> $this->container->get('translator')->trans('label_children_main', array(), 'signup_about'),
                 'choices' => array(
-                        'have' => 'label_have',
-                        'nothave' => 'label_do_not_have',
+                        'have' => $this->container->get('translator')->trans('label_have', array(), 'signup_about'),
+                        'nothave' => $this->container->get('translator')->trans('label_do_not_have', array(), 'signup_about'),
                 ),
                 'required'=>false,
                 'expanded' =>true,
@@ -146,9 +144,9 @@ class SignUpAboutForm extends AbstractType
                 'label'=> $this->container->get('translator')->trans('label_inresested_main', array(), 'signup_about'),
                 'required'=>false,
                 'choices' => array(
-                        'm' => 'label_man',
-                        'w' => 'label_woman',
-                        'mw' => 'label_man_woman'
+                        'm' => $this->container->get('translator')->trans('label_man', array(), 'signup_about'),
+                        'w' => $this->container->get('translator')->trans('label_woman', array(), 'signup_about'),
+                        'mw' => $this->container->get('translator')->trans('label_man_woman', array(), 'signup_about'),
                 ),
                 'expanded' => true,
                 'multiple' => false
