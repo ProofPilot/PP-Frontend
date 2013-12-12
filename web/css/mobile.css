@@ -592,20 +592,21 @@
     font-size: 14px;
     height: 31px;
     line-height: 29px;
-    padding-left: 10px;
-    padding-right: 10px;
     position: relative;
+    top: 8px;
 }
 #div_register_step2 .mobile_reg .form_content span.default_drop span.bg {
     -moz-box-sizing: border-box;
-    background: url("../images/drop_arrows.png") no-repeat scroll 100% 4px / 4px 10px rgba(0, 0, 0, 0);
+    background: url("../images/drop_arrows.png") no-repeat scroll 93% 11px / 4px 10px rgba(0, 0, 0, 0);
     display: inline-block;
-    height: 18px;
-    line-height: 18px;
+    height: 31px;
+    line-height: 31px;
     margin-bottom: -3px;
     overflow: hidden;
     padding-right: 7px;
     width: 100%;
+    padding-left: 10px;
+    padding-right: 17px;
 }
 #div_register_step2  .mobile_reg .form_content span.default_drop span.bg span.text {
     display: inline-block;
