@@ -117,3 +117,16 @@
     {% endif %}
 {% endspaceless %}
 {% endblock radio_widget %}
+
+{% block form_widget_simple %}
+{% spaceless %}
+    {% set type = type|default('text') %}
+        {% if type == 'text' %}
+        <div class="cusotm_input">
+            <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+        </div>
+        {% else %}
+            <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+        {% endif %}
+{% endspaceless %}
+{% endblock form_widget_simple %}
