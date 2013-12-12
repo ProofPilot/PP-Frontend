@@ -38,23 +38,28 @@
                 <div class="dropmenu for_single dropmenu-interested" data-update-text=".dropmenu-interedsted">
                     {{ form_widget(formAbout.interestedSelect) }}
                 </div>
-            </div>
-            <p class="note">Any information you share with us is completly confidental and secure. See our <a href="#">Security and Privacy policy</a></p>	
-    	    <div class="align_center">
-                {{form_widget(formAbout.confirm, {'attr':{'class':'submit with_min_width btn_login'}}) }}
-            </div>
-        </form>
-    </div>
-</div>
-<script src="{{ asset('js/jquery.uniform.min.js') }}"></script>
-<script type="text/javascript">
-    $(document).ready(function(){
-        $("#signup_about_zipcode").on('blur', function() {
-            $('#error').remove(); 
-            var inputVal = $(this).val();
-            var zipReg = /^[0-9]\d{4}-\d{4}|[0-9]{5}$/;
-            if(!zipReg.test(inputVal)) {
-                $(this).after('<p class="error" id="error">{% trans from "register" %}txt_check_zipcode{% endtrans %}</p>');
-        }});
-    });
-</script>
+
+                            
+                    </div>
+                    
+                    <p class="note">Any information you share with us is completly confidental and secure. See our <a href="#">Security and Privacy policy</a></p>
+                    	
+    	           <div class="align_center">
+                        {{form_widget(formAbout.confirm, {'attr':{'class':'submit with_min_width btn_login'}}) }}
+                   </div>
+                    </form>
+                
+    			</div>
+    			<script src="{{ asset('js/jquery.uniform.min.js') }}"></script>
+{#     			  <script type="text/javascript">#}
+{#     			    $(document).ready(function(){#}
+{#     		            $("#signup_about_zipcode").on('blur', function() {#}
+{#     		            	$('#error').remove(); #}
+{#     		            	var inputVal = $(this).val();#}
+{#     		                var zipReg = /^[0-9]\d{4}-\d{4}|[0-9]{5}$/;#}
+{#     		                if(!zipReg.test(inputVal)) {#}
+{#     		                    $(this).after('<p class="error" id="error">{% trans from "register" %}txt_check_zipcode{% endtrans %}</p>');#}
+{#     		            }});#}
+{#     			        });#}
+{#                   </script>#}
+>>>>>>> Stashed changes

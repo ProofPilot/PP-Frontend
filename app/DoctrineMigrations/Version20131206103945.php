@@ -51,6 +51,7 @@ class Version20131206103945 extends AbstractMigration
                        ('Health Care and Social Assistance'), (' Professional, Scientific, and Technical Services'), ('Real Estate'),
                        ('Restaurant, Hospitality & Travel'), ('Retail & Wholesale Trade'), ('Transportation & Warehousing'),
                        ('Technology');");
+
         
         $this->addSql("INSERT INTO `new-proofpilot`.`currency`
                        (`country_id`, `currency_name`)

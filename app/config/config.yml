@@ -46,7 +46,7 @@ twig:
     form:
         resources:
             - 'CyclogramFrontendBundle:Form:fields.html.twig'
-            - 'CyclogramFrontendBundle:Form:frontend_widgets.html.twig'
+#            - 'CyclogramFrontendBundle:Form:frontend_widgets.html.twig'
 
 # Assetic Configuration
 assetic:

@@ -46,22 +46,19 @@ class SignUpAboutForm extends AbstractType
         $builder->add('countrySelect', new Type\FrontendEntityType( $this->container->get('doctrine')), array(
                 'class' => 'CyclogramProofPilotBundle:Country',
                 'property' => 'countryName',
-                'label' =>'label_country_select',
+                'label' => $this->container->get('translator')->trans('label_country_select', array(), 'signup_about'),
                 'required'=>false,
                 'expanded' =>true,
                 'multiple' => false
                 )
             );
         $builder->add('zipcode', 'text', array(
-                'label'=>'label_zipcode',
-                'attr'=>array(
-                        'minLength'=>5,
-                        'maxlength'=>10,
-                )
+                'label'=> $this->container->get('translator')->trans('label_zipcode', array(), 'signup_about'),
+                'data' => $this->container->get('translator')->trans('postcode_text', array(), 'signup_about'),
         ));
         
         $builder->add('daysSelect', new Type\FrontendChoiceType( $this->container->get('doctrine')), array(
-                'label'=>'label_day_main',
+                'label'=> $this->container->get('translator')->trans('label_day_main', array(), 'signup_about'),
                 'choices' => array(
                         'days' => range(1,31),
                 ),
@@ -71,7 +68,7 @@ class SignUpAboutForm extends AbstractType
         ));
         
         $builder->add('monthsSelect', new Type\FrontendChoiceType( $this->container->get('doctrine')), array(
-                'label'=>'label_monthmain',
+                'label'=> $this->container->get('translator')->trans('label_monthmain', array(), 'signup_about'),
                 'choices' => array(
                         'months' => range(1,12),
                 ),
@@ -82,7 +79,7 @@ class SignUpAboutForm extends AbstractType
 
         
         $builder->add('yearsSelect', new Type\FrontendChoiceType( $this->container->get('doctrine')), array(
-                'label'=>'label_year_main',
+                'label'=> $this->container->get('translator')->trans('label_year_main', array(), 'signup_about'),
                 'choices' => array(
                         'years' => range(1950,date("Y")),
                 ),
@@ -95,7 +92,7 @@ class SignUpAboutForm extends AbstractType
         $builder->add('gradeSelect',new Type\FrontendEntityType( $this->container->get('doctrine')), array(
                 'class' => 'CyclogramProofPilotBundle:GradeLevel',
                 'property' => 'gradeLevelName',
-                'label'=>'label_grade_level_main',
+                'label'=> $this->container->get('translator')->trans('label_grade_level_main', array(), 'signup_about'),
                 'required'=>false,
                 'expanded' =>true,
                 'multiple' => false
@@ -104,20 +101,21 @@ class SignUpAboutForm extends AbstractType
         $builder->add('industrySelect',new Type\FrontendEntityType( $this->container->get('doctrine')), array(
                 'class' => 'CyclogramProofPilotBundle:Industry',
                 'property' => 'industryName',
-                'label'=>'label_industry_main',
+                'label'=> $this->container->get('translator')->trans('label_industry_main', array(), 'signup_about'),
                 'required'=>false,
                 'expanded' =>true,
                 'multiple' => false
         ));
         
         $builder->add('anunalIncome', 'text', array(
-                'label'=>'label_annual_income'
+                'label'=> $this->container->get('translator')->trans('label_annual_income', array(), 'signup_about'),
+                'data' => $this->container->get('translator')->trans('annual_income_text', array(), 'signup_about'),
         ));
         
         $builder->add('maritalStatusSelect',new Type\FrontendEntityType( $this->container->get('doctrine')), array(
                 'class' => 'CyclogramProofPilotBundle:MaritalStatus',
                 'property' => 'maritalStatusName',
-                'label'=>'label_marital_status_main',
+                'label'=> $this->container->get('translator')->trans('label_marital_status_main', array(), 'signup_about'),
                 'required'=>false,
                 'expanded' =>true,
                 'multiple' => false
@@ -126,7 +124,7 @@ class SignUpAboutForm extends AbstractType
         $builder->add('sexSelect',new Type\FrontendEntityType( $this->container->get('doctrine')), array(
                 'class' => 'CyclogramProofPilotBundle:Sex',
                 'property' => 'sexName',
-                'label'=>'label_sex_main',
+                'label'=> $this->container->get('translator')->trans('label_sex_main', array(), 'signup_about'),
                 //'empty_value' => 'sex',
                 'required'=>false,
                 'expanded' =>true,
@@ -134,7 +132,7 @@ class SignUpAboutForm extends AbstractType
         ));
         
         $builder->add('childrenSelect', new Type\FrontendChoiceType( $this->container->get('doctrine')), array(
-                'label'=>'label_children_main',
+                'label'=> $this->container->get('translator')->trans('label_children_main', array(), 'signup_about'),
                 'choices' => array(
                         'have' => 'label_have',
                         'nothave' => 'label_do_not_have',
@@ -145,7 +143,7 @@ class SignUpAboutForm extends AbstractType
         ));
         
         $builder->add('interestedSelect', new Type\FrontendChoiceType( $this->container->get('doctrine')), array(
-                'label'=>'label_inresested_main',
+                'label'=> $this->container->get('translator')->trans('label_inresested_main', array(), 'signup_about'),
                 'required'=>false,
                 'choices' => array(
                         'm' => 'label_man',
@@ -159,7 +157,7 @@ class SignUpAboutForm extends AbstractType
         $builder->add('raceSelect',new Type\FrontendEntityType( $this->container->get('doctrine')), array(
                 'class' => 'CyclogramProofPilotBundle:Race',
                 'property' => 'raceName',
-                'label'=>'label_race_main',
+                'label'=> $this->container->get('translator')->trans('label_race_main', array(), 'signup_about'),
                 'required'=>false,
                 'multiple' => true,
                 'expanded' => true,
@@ -167,7 +165,8 @@ class SignUpAboutForm extends AbstractType
                 ));
 
         $builder->add('confirm', 'submit', array(
-                'label' => 'btn_confirm'
+                'label' => 'btn_confirm',
+                
         ));
     }
     
