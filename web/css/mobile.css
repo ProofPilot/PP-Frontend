@@ -594,6 +594,7 @@
     line-height: 29px;
     padding-left: 10px;
     padding-right: 10px;
+    position: relative;
 }
 #div_register_step2 .mobile_reg .form_content span.default_drop span.bg {
     -moz-box-sizing: border-box;
@@ -624,6 +625,8 @@
     display: none;
     position: absolute;
     z-index: 5500;
+    left: -1px;
+    top: -6px;
 }
 #div_register_step2 .mobile_reg p.note {
     clear: both;
@@ -696,55 +699,15 @@
 	width: 120px;
 }
 
-/*Width*/
-
-#open_choice_sexSelect, #open_choice_raceSelect, #open_choice_countrySelect, #open_choice_daysSelect, #open_choice_monthsSelect, #open_choice_yearsSelect, #open_choice_gradeSelect, #open_choice_industrySelect, #open_choice_maritalStatusSelect, #open_choice_interestedSelect, #open_choice_childrenSelect {
-	overflow: hidden;
-	position: relative;
-	top: 10px;
-}
-#open_choice_sexSelect, #open_choice_daysSelect {
-	width: 67px;
-}
-#open_choice_monthsSelect, #open_choice_yearsSelect {
-	width: 73px;
-}
-#open_choice_childrenSelect {
-	width: 82px;
-}
-#open_choice_raceSelect {
-	width: 121px;
-}
-#open_choice_maritalStatusSelect {
-	width: 129px;
-}
-#open_choice_interestedSelect {
-	width: 134px;
-}
-#open_choice_countrySelect {
-	width: 136px;
-}
-#open_choice_industrySelect {
-	width: 140px;
-}
-#open_choice_gradeSelect {
-	width: 146px;
-}
 /*Dropdown positioning*/
+
 #multiple_choice_raceSelect {
-	left: 148px;
-	top: 5px;
-}
-#single_choice_sexSelect {
-	left: 55px;
-	top: 5px;
+	min-width: 205px;
 }
 #single_choice_countrySelect {
 	max-height: 300px;
 	overflow-y: scroll;
-	width: 250px;
-	right: 34px;
-	top: 5px;
+	min-width: 200px;
 }
 #single_choice_countrySelect.for_single ul.single li a.selected_choice {
 	font-size: 12px !important;
@@ -753,41 +716,15 @@
 #single_choice_daysSelect, #single_choice_yearsSelect, #single_choice_monthsSelect, #single_choice_gradeSelect {
 	max-height: 190px;
 	overflow-y: scroll;
-	top: 69px;
+	min-width: 200px;
 }
 #single_choice_industrySelect {
 	max-height: 200px;
 	overflow-y: scroll;
-	top: 133px;
-	left: 73px;
 }
 #single_choice_maritalStatusSelect {
 	max-height: 150px;
 	overflow-y: scroll;
-	top: 197px;
-}
-#single_choice_childrenSelect {
-	top: 197px;
-	right: 58px;
-}
-#single_choice_maritalStatusSelect {
-	left: 42px;
-}
-#single_choice_interestedSelect {
-	top: 197px;
-	left: 282px;
-}
-#single_choice_daysSelect {
-	left: 144px;
-}
-#single_choice_monthsSelect {
-	left: 237px;
-}
-#single_choice_yearsSelect {
-	left: 314px;	
-}
-#single_choice_gradeSelect {
-	right: 39px;
 }
 #single_choice_daysSelect.for_single ul.single li a.selected_choice, #single_choice_yearsSelect.for_single ul.single li a.selected_choice, #single_choice_monthsSelect.for_single ul.single li a.selected_choice {
 	padding: 3px 7px !important;
