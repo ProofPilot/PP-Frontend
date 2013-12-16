@@ -169,6 +169,13 @@ class Participant implements AdvancedUserInterface
     protected $participantEmailConfirmed;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="participant_basic_information", type="boolean", nullable=false)
+     */
+    protected $participantBasicInformation;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="participant_mobile_number", type="string", length=45, nullable=false)
@@ -1378,7 +1385,8 @@ class Participant implements AdvancedUserInterface
         return $this->gradeLevel;
     }
 
-    public function setGradeLevel(\Cyclogram\Bundle\ProofPilotBundle\Entity\GradeLevel $gradeLevel = null)
+    public function setGradeLevel(
+            \Cyclogram\Bundle\ProofPilotBundle\Entity\GradeLevel $gradeLevel = null)
     {
         $this->gradeLevel = $gradeLevel;
     }
@@ -1388,7 +1396,8 @@ class Participant implements AdvancedUserInterface
         return $this->industry;
     }
 
-    public function setIndustry(\Cyclogram\Bundle\ProofPilotBundle\Entity\Industry  $industry = null)
+    public function setIndustry(
+            \Cyclogram\Bundle\ProofPilotBundle\Entity\Industry $industry = null)
     {
         $this->industry = $industry;
     }
@@ -1398,7 +1407,8 @@ class Participant implements AdvancedUserInterface
         return $this->maritalStatus;
     }
 
-    public function setMaritalStatus(\Cyclogram\Bundle\ProofPilotBundle\Entity\MaritalStatus $maritalStatus=null)
+    public function setMaritalStatus(
+            \Cyclogram\Bundle\ProofPilotBundle\Entity\MaritalStatus $maritalStatus = null)
     {
         $this->maritalStatus = $maritalStatus;
     }
@@ -1421,6 +1431,17 @@ class Participant implements AdvancedUserInterface
     public function setChildren($children)
     {
         $this->children = $children;
+    }
+
+    public function getParticipantBasicInformation()
+    {
+        return $this->participantBasicInformation;
+    }
+
+    public function setParticipantBasicInformation(
+            $participantBasicInformation)
+    {
+        $this->participantBasicInformation = $participantBasicInformation;
     }
 
 }

@@ -68,6 +68,7 @@ class OAuth2UserProvider implements OAuthAwareUserProviderInterface
             $participant->setParticipantEmailConfirmed(false);
             if(!$participant->getParticipantPassword())
                 $participant->setParticipantPassword('');
+            $participant->setParticipantBasicInformation(false);
             $participant->setParticipantMobileSmsCodeConfirmed(false);
             $participant->setParticipantIncentiveBalance(false);
             $date = new \DateTime();

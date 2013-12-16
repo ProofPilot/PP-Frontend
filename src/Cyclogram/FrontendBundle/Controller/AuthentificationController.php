@@ -197,18 +197,29 @@ class AuthentificationController extends Controller
             return new Response(json_encode(array('error' => false, 'url' => $this->generateUrl("_main"))));
         }
         if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
-            return $this->redirect($this->generateUrl("_authentification", array('error' => true)));
+            return $this->redirect($this->generateUrl("_signup", array('error' => true)));
         }
+        return $this->redirect($this->generateUrl("_main"));
+    }
+    
+    
+    /**
+     * @Route("/doOauth/{studyCode}/{surveyId}", name="_do_oauth", defaults={"studyCode"= null, "surveyId"=null})
+     * @Template()
+     */
+    public function doOauthAction(Request $request, $studyCode, $surveyId){
+        $language = $this->getRequest()->getLocale();
+        $em = $this->getDoctrine()->getManager();
+        if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
+            return $this->redirect($this->generateUrl("_signup", array('error' => true)));
+        }
+        
         if (isset($studyCode)) {
             return $this->redirect($this->generateUrl("_signup_about", array('studyCode' => $studyCode)));
-//             $redirectUrl = $this->generateUrl("_main");
-//             $study = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
-//             $language = $em->getRepository('CyclogramProofPilotBundle:Language')->findOneByLocale($request->getLocale());
-//             $studyContent =  $this->getDoctrine()->getRepository("CyclogramProofPilotBundle:StudyContent")->findOneBy(array('study' => $study->getStudyId(),'language' => $language));
-//             return $this->redirect($this->generateUrl("_eligibility_survey", array('studyCode'=> $studyCode, 'surveyId' => $studyContent->getStudyElegibilitySurvey(), 'redirectUrl' => $redirectUrl)));
         }
         return $this->redirect($this->generateUrl("_signup_about"));
     }
+    
     
     /**
      * @Route("/signupabout/{studyCode}", name="_signup_about", defaults={"studyCode"= null})
@@ -218,11 +229,17 @@ class AuthentificationController extends Controller
         $em = $this->getDoctrine()->getManager();
         $session = $request->getSession();
         $participant = $this->get('security.context')->getToken()->getUser();
+        
+        if (($this->get('security.context')->isGranted('ROLE_FACEBOOK_USER') || $this->get('security.context')->isGranted('ROLE_GOOGLE_USER')) 
+                        && ($participant->getParticipantBasicInformation() == true)) {
+            return $this->OauthRedirect($studyCode);
+            
+        }
+
         if (empty($participant)) {
             return $this->render("::error.html.twig", array(
                     "error"=>"Wrong participant id"));
         }
-        
         $form = $this->createForm(new SignUpAboutForm($this->container));
         $clientIp = $request->getClientIp();
         if ($clientIp == '127.0.0.1') {
@@ -310,27 +327,20 @@ class AuthentificationController extends Controller
                          $participant->setChildren(0);
                 }
                 
+                $participant->setParticipantBasicInformation(true);
+                
                 $em->persist($participant);
                 $em->flush();
                 
                 if ($request->isXmlHttpRequest()) {
-                    if ($message == null) {
-                        $this->confirmParticipantEmail($participant);
+                    if ($message == null)
                         return new Response(json_encode(array('error' => false)));
-                    } else {
+                    else 
                         return new Response(json_encode(array('error' => true, 'message' => 'Invalid : '.implode(',', $message) )));
-                    }
                 }
                 if ($message == null) {
                     $this->confirmParticipantEmail($participant);
-                    if (isset($studyCode)) {
-                        $redirectUrl = $this->generateUrl("_main");
-                        $study = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
-                        $language = $em->getRepository('CyclogramProofPilotBundle:Language')->findOneByLocale($request->getLocale());
-                        $studyContent =  $this->getDoctrine()->getRepository("CyclogramProofPilotBundle:StudyContent")->findOneBy(array('study' => $study->getStudyId(),'language' => $language));
-                        return $this->redirect($this->generateUrl("_eligibility_survey", array('studyCode'=> $studyCode, 'surveyId' => $studyContent->getStudyElegibilitySurvey(), 'redirectUrl' => $redirectUrl)));
-                    }
-                    return $this->redirect($this->generateUrl("_main"));
+                    return $this->OauthRedirect($studyCode);
                 } else {
                    return $this->render('CyclogramFrontendBundle:Authentification:signup_about.html.twig',
                             array (
@@ -618,6 +628,7 @@ class AuthentificationController extends Controller
         $participant->setRecoveryQuestion($question);
         $participant->setRecoveryPasswordCode('Default');
         $participant->setParticipantEmailConfirmed(false);
+        $participant->setParticipantBasicInformation(false);
         //$participant->setParticipantMobileNumber('');
         $participant->setParticipantMobileSmsCodeConfirmed(false);
         $participant->setParticipantIncentiveBalance(false);
@@ -697,6 +708,21 @@ class AuthentificationController extends Controller
         }
     
         return $error;
+    }
+    
+    protected function OauthRedirect($studyCode = null)
+    {
+        $request = $this->getRequest();
+        $em = $this->getDoctrine()->getManager();
+        if (isset($studyCode)) {
+            $redirectUrl = $this->generateUrl("_main");
+            $study = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
+            $language = $em->getRepository('CyclogramProofPilotBundle:Language')->findOneByLocale($request->getLocale());
+            $studyContent =  $this->getDoctrine()->getRepository("CyclogramProofPilotBundle:StudyContent")->findOneBy(array('study' => $study->getStudyId(),'language' => $language));
+            return $this->redirect($this->generateUrl("_eligibility_survey", array('studyCode'=> $studyCode, 'surveyId' => $studyContent->getStudyElegibilitySurvey(), 'redirectUrl' => $redirectUrl)));
+        } else {
+            return $this->redirect($this->generateUrl("_main"));
+        }
     }
     
     /**
