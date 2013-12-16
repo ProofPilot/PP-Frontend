@@ -215,8 +215,8 @@ class CyclogramCommon {
     public function sendMail($to, $subject, $body, $attachment = null, $embedded = null, $renderTemplate = false, $renderParams = null) 
     {
         //do not send emails in production
-        if($this->container->get('kernel')->getEnvironment() == "prod")
-            return true;
+        //if($this->container->get('kernel')->getEnvironment() == "prod")
+        //    return true;
         
 //         $control_mail = $this->container->getParameter('control_mail');
         $templating = $this->container->get('templating');
