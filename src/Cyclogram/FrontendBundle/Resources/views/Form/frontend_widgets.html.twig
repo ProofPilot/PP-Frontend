@@ -1,17 +1,17 @@
 {% block frontend_choice_widget %}
     {{ block('widget_script') }}
     {% spaceless %}
-        <span class="default_drop" id="open_choice_{{ name }}">
-            <span class="bg">
+        <span class="default_drop" >
+            <span class="bg" id="open_choice_{{ name }}">
                 <span class="text">{{ label }}</span>
             </span>
-
+            {% if (expanded and multiple) %}
+                {{ block('frontend_checkbox_widget') }}
+            {% else %}
+                {{ block('frontend_select_widget') }}
+            {% endif %}   
         </span>
-                 {% if (expanded and multiple) %}
-            {{ block('frontend_checkbox_widget') }}
-        {% else %}
-            {{ block('frontend_select_widget') }}
-        {% endif %}        
+     
 
     {% endspaceless %}
 {% endblock frontend_choice_widget %}
@@ -19,15 +19,15 @@
 {% block frontend_entity_widget %}
     {{ block('widget_script') }}
     {% spaceless %}
-        <span class="default_drop" id="open_choice_{{ name }}">
-            <span class="bg">
-                <span class="text" >{{ label }}</span>
+        <span class="default_drop" >
+            <span class="bg" id="open_choice_{{ name }}">
+                <span class="text">{{ label }}</span>
             </span>
-                 {% if (expanded and multiple) %}
-            {{ block('frontend_checkbox_widget') }}
-        {% else %}
-            {{ block('frontend_select_widget') }}
-        {% endif %}
+            {% if (expanded and multiple) %}
+                {{ block('frontend_checkbox_widget') }}
+            {% else %}
+                {{ block('frontend_select_widget') }}
+            {% endif %}
         </span>
 
 
@@ -76,7 +76,6 @@
         $("#open_choice_{{ name }}").bind('click', function(e) {
         	$("[id^='multiple_choice']").hide();
         	$("[id^='single_choice']").hide();
-            e.preventDefault();
             if ({{ (expanded and multiple)|default(0) }} ) {
                 $("#multiple_choice_{{ name }}").show();
             } else {
@@ -87,7 +86,7 @@
             $("#close_choice_{{ name }}").bind('click', function(e) {
                 e.stopPropagation();
                 var checked;
-                $("#multiple_choice_{{ name }} div.checker span span").each(function(){
+                $("#multiple_choice_{{ name }} div.checker span").each(function(){
                     if($(this).hasClass('checked')) {
                         checked = $(this).parents('.checker').siblings('label').html();
                         return;

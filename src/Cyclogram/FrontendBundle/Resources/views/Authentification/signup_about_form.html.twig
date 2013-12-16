@@ -24,7 +24,8 @@
                 <span class="text_wrapper">,</span>
                 <span class="text_wrapper">{% trans from "signup_about" %}text_work_in{% endtrans %}</span>
                 {{ form_widget(formAbout.industrySelect) }}
-                <span class="text_wrapper">{% trans from "signup_about" %}text_and_make_approximately{% endtrans %}</span>
+                <span class="text_wrapper">{% trans from "signup_about" %}text_and_make_approximately{% endtrans %} </span>
+                <span class="text_wrapper" id="currency_symbol"></span>
                 {{ form_widget(formAbout.anunalIncome,{'attr': {'placeholder' : 'annual_income_text'|trans({}, 'signup_about')}}) }}
                 <span class="text_wrapper">{% trans from "signup_about" %}text_per_year{% endtrans %}.</span>
                 <span class="text_wrapper">{% trans from "signup_about" %}text_i_am{% endtrans %}</span>
@@ -38,8 +39,7 @@
                 <div class="dropmenu for_single dropmenu-interested" data-update-text=".dropmenu-interedsted">
                     {{ form_widget(formAbout.interestedSelect) }}
                 </div>
-
-                            
+                            <div id="signup_about_form_error"> {% if error is defined  %}<p class="error">{{ error }} </p>{% endif %}</div>
                     </div>
                     
                     <p class="note">{% trans from "signup_about" %}text_any_information{% endtrans %} <a href="#">{% trans from "signup_about" %}secutiry_and_privacy{% endtrans %}</a></p>
@@ -51,8 +51,29 @@
                 
     			</div>
     			<script src="{{ asset('js/jquery.uniform.min.js') }}"></script>
+    			<script src= {{ asset ('js/jquery.numeric.js') }}></script>
     			  <script type="text/javascript">
     			    $(document).ready(function(){
+    		            $('#single_choice_countrySelect a').bind('click', function(e){
+    		                $.ajax({
+    		                    dataType: "json",
+    		                    type: "POST",
+    		                    url: "{{ path('searchCurrencyWithAjax')}}",
+    		                    data: {country : $(this).html()}
+    		                })
+    		                    .done (function(response) {
+    		                        if(response.success) {
+    		                        	$('#currency_symbol').html(response.currencySymbol);
+    		                        }
+    		                    });
+    		                });
+    	                if ({{ countryName and countryId}}) {
+    	                    $('#open_choice_countrySelect span').html('{{ countryName }}');
+    	                    $('#single_hidden_countrySelect').val({{ countryId }});
+    	                    }
+	                    if ({{ currencySymbol is defined }}) {
+	                    	$('#currency_symbol').html('{{ currencySymbol }}');
+		                    }
     			    	$("input[type=checkbox]").uniform();
     		            $("#signup_about_zipcode").on('blur', function() {
     		            	$('#error').remove(); 
@@ -61,6 +82,8 @@
     		                if(!zipReg.test(inputVal)) {
     		                    $(this).after('<p class="error" id="error">{% trans from "register" %}txt_check_zipcode{% endtrans %}</p>');
     		            }});
+    		            $("#signup_about_anunalIncome").numeric();
     			        });
+    			    
                   </script>
 

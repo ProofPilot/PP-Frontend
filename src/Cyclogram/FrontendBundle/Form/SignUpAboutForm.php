@@ -49,9 +49,9 @@ class SignUpAboutForm extends AbstractType
                 'label' => $this->container->get('translator')->trans('label_country_select', array(), 'signup_about'),
                 'required'=>false,
                 'expanded' =>true,
-                'multiple' => false
-                )
-            );
+                'multiple' => false,
+                ));
+        
         $builder->add('zipcode', 'text', array(
                 'label'=> $this->container->get('translator')->trans('label_zipcode', array(), 'signup_about'),
         ));
@@ -59,7 +59,7 @@ class SignUpAboutForm extends AbstractType
         $builder->add('daysSelect', new Type\FrontendChoiceType( $this->container->get('doctrine')), array(
                 'label'=> $this->container->get('translator')->trans('label_day_main', array(), 'signup_about'),
                 'choices' => array(
-                        'days' => range(1,31),
+                        'days' => array_combine(range(1,31),range(1,31)),
                 ),
                 'required'=>false,
                 'expanded' =>true,
@@ -69,7 +69,7 @@ class SignUpAboutForm extends AbstractType
         $builder->add('monthsSelect', new Type\FrontendChoiceType( $this->container->get('doctrine')), array(
                 'label'=> $this->container->get('translator')->trans('label_monthmain', array(), 'signup_about'),
                 'choices' => array(
-                        'months' => range(1,12),
+                        'months' => array_combine(range(1,12),range(1,12)),
                 ),
                 'required'=>false,
                 'expanded' =>true,
@@ -80,7 +80,7 @@ class SignUpAboutForm extends AbstractType
         $builder->add('yearsSelect', new Type\FrontendChoiceType( $this->container->get('doctrine')), array(
                 'label'=> $this->container->get('translator')->trans('label_year_main', array(), 'signup_about'),
                 'choices' => array(
-                        'years' => range(1950,date("Y")),
+                        'years' => array_combine(range(1950,date("Y")),range(1950,date("Y"))),
                 ),
                 'required'=>false,
                 'expanded' =>true,
@@ -188,19 +188,5 @@ class SignUpAboutForm extends AbstractType
     public function getName()
     {
         return 'signup_about';
-    }
-
-
-    public function isDateValid($data, ExecutionContextInterface $context){
-        if (!empty($data['yearsSelect']) || !empty($data['monthsSelect']) || !empty($data['daysSelect'])) {
-            $date = new \DateTime();
-            if (!$date->setDate($data['yearsSelect'], $data['monthsSelect'], $data['daysSelect'])){
-                if (empty($data['birthdateSelect'])) {
-                    $context->addViolationAt('[monthsSelect]', $this->container->get('translator')->trans('date_not_valid', array(), 'validators'));
-                }
-
-
-            }
-        }
     }
 }

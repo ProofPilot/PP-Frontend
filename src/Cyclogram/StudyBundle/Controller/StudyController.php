@@ -191,6 +191,22 @@ class StudyController extends Controller
         $this->parameters['host'] = $this->container->getParameter('site_url');
         $this->parameters['studyUrl'] = $studyUrl;
         $this->parameters['last_username'] = $session->get(SecurityContext::LAST_USERNAME);
+        
+        $request = $this->container->get('request');
+        $clientIp = $request->getClientIp();
+        if ($clientIp == '127.0.0.1') {
+            $country = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Country')->findOneByCountryCode('UA');
+        }
+        $geoip = $this->container->get('maxmind.geoip')->lookup($clientIp);
+        if ($geoip != false) {
+            $countryCode = $geoip->getCountryCode();
+            $country = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Country')->findOneByCountryCode($countryCode);
+        }
+        $this->parameters['countryName'] = $country->getCountryName();
+        $this->parameters['countryId'] = $country->getCountryId();
+        $this->parameters['currencySymbol'] = $country->getCurrency()->getCurrencySymbol();
+        
+        
 
         return $this->render('CyclogramStudyBundle:Study:page.html.twig', $this->parameters);
 

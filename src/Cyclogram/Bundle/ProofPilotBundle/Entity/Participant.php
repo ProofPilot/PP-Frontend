@@ -283,16 +283,6 @@ class Participant implements AdvancedUserInterface
     protected $participantRole;
 
     /**
-     * @var \Race
-     *
-     * @ORM\ManyToOne(targetEntity="Race")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="race_id", referencedColumnName="race_id")
-     * })
-     */
-    protected $race;
-
-    /**
      * @var \RecoveryQuestion
      *
      * @ORM\ManyToOne(targetEntity="RecoveryQuestion")

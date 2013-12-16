@@ -132,4 +132,17 @@ class SearchController extends Controller
     
         return new Response('', 200);
     }
+    
+    /**
+     * @Route("/search_currency_ajax", name="searchCurrencyWithAjax", options={"expose"=true})
+     */
+    public function searchCurrencyWithAjaxAction(Request $request)
+    {
+        if ($request->isXmlHttpRequest()) {
+            $data = $request->request->all();
+            $country = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Country')->findOneByCountryName($data['country']);
+            
+            return new Response(json_encode(array('success' => true, 'currencySymbol' => $country->getCurrency()->getCurrencySymbol())));
+        }
+    }
 }

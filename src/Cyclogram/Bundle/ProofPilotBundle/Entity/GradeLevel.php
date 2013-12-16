@@ -36,14 +36,14 @@ class GradeLevel
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $gradeLevelId;
+    protected $gradeLevelId;
 
     /**
      * @var string
      *
      * @ORM\Column(name="grade_level_name", type="string", length=50, nullable=false)
      */
-    private $gradeLevelName;
+    protected $gradeLevelName;
 
     public function getGradeLevelId()
     {

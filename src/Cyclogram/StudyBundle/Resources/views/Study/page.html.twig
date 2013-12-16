@@ -104,7 +104,7 @@
             //registration ajax
             $("#register").bind('click', function(e) {
                 e.preventDefault();
-                $("#div_register_step2").dialog({
+                $("#div_register").dialog({ 
                     modal: true,
                     width: 'auto',
                     fluid: true,
@@ -112,14 +112,6 @@
                     position: ['top',100],
                     open: funcCustom
                 });
-//                $("#div_register").dialog({ 
-//                    modal: true,
-//                    width: 'auto',
-//                    fluid: true,
-//                    resizable: false,
-//                    position: ['top',100],
-//                    open: funcCustom
-//                });
             });
             
             //consent ajax
@@ -184,6 +176,10 @@
                             }
                         } else {
                             $("#div_register").dialog('close');
+                            if ({{ countryName and countryId }}) {
+                                $('#open_choice_countrySelect span').html('{{ countryName }}');
+                                $('#open_choice_countrySelect div.checker input[type=hidden]').val({{ countryId }});
+                                }
                             $("#div_register_step2").dialog({
                                 modal: true,
                                 width: 'auto',
@@ -283,6 +279,8 @@
                                 position: ['top',100],
                                 open: funcCustom
                             });
+                        } else if(json.error){
+                            $('#signup_about_form_error').html('<p class="error">'+json.message+'</p>');
                         }
                     }
                 });

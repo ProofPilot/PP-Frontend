@@ -36,14 +36,14 @@ class MaritalStatus
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $maritalStatusId;
+    protected $maritalStatusId;
 
     /**
      * @var string
      *
      * @ORM\Column(name="marital_status_name", type="string", length=50, nullable=false)
      */
-    private $maritalStatusName;
+    protected $maritalStatusName;
 
     public function getMaritalStatusId()
     {

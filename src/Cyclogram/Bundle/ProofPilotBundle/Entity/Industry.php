@@ -36,14 +36,14 @@ class Industry
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $industryId;
+    protected $industryId;
 
     /**
      * @var string
      *
      * @ORM\Column(name="industry_name", type="string", length=50, nullable=false)
      */
-    private $industryName;
+    protected $industryName;
 
     public function getIndustryId()
     {
