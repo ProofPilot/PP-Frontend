@@ -63,10 +63,10 @@ class AuthentificationController extends Controller
 {
 
     /**
-     * @Route("/signup/{studyCode}", name="_signup", defaults={"studyCode"= null})
+     * @Route("/signup/{studyCode}/{surveyId}", name="_signup", defaults={"studyCode"= null, "surveyId" = null})
      * @Template()
      */
-    public function signupStartAction(Request $request, $studyCode=null)
+    public function signupStartAction(Request $request, $studyCode=null, $surveyId=null)
     {
 
         $session = $request->getSession();
@@ -75,47 +75,19 @@ class AuthentificationController extends Controller
         // registration check
         $form = $this->createForm(new RegistrationForm($this->container));
         $form->handleRequest($request);
-        if ($request->isXmlHttpRequest()) {
-            if ($form->isValid()) {
-                $registration = $form->getData();
-                $this->createParticipant($registration);
-                return new Response(json_encode(array('error' => false)));
-             } else {
-                 $messages = array();
-                 $validator = $this->container->get('validator');
-                 $errors = $validator->validate($form);
-                 foreach ($errors as $err) {
-                    if(strpos($err->getPropertyPath(),'[')) {
-                        if ($err->getMessage() == "Passwords do not match") {
-                            $property = substr($err->getPropertyPath(),strpos($err->getPropertyPath(),'[')+1,strlen($err->getPropertyPath()));
-                            $messages[]= array('property' => substr($property,0,strlen($property)-1),
-                                               'message' => $err->getMessage(),
-                                               'password' => true);
-                        } else {
-                            $property = substr($err->getPropertyPath(),strpos($err->getPropertyPath(),'[')+1,strlen($err->getPropertyPath()));
-                            $property = substr($property,0,strpos($property,'.')-1);
-                            if ($property == "participantPassword" ) {
-                                $messages[]= array('property' => $property,
-                                                   'message' => $err->getMessage(),
-                                                   'password' => true);
-                            } else {
-                                $messages[]= array('property' => $property ,
-                                                   'message' => $err->getMessage(),
-                                                   'password' => false);
-                            }
-                        }
-                    }elseif(strpos($err->getPropertyPath(),'.')){
-                        $messages[]= array('property' => substr($err->getPropertyPath(),strpos($err->getPropertyPath(),'.')+1,strlen($err->getPropertyPath())),
-                                           'message' => $err->getMessage(),
-                                           'password' => false);
-                    }
+        if ($form->isValid()) {
+            $registration = $form->getData();
+            $this->createParticipant($registration);
+            if ($request->isXmlHttpRequest()) {
+                $study = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
+                if ($study->getStudySkipSteps() == 1) {
+                    $redirectUrl = $this->generateUrl("_main");
+                    return new Response(json_encode(array('error' => false, 'url' => $this->generateUrl("_eligibility_survey", array('studyCode' => $studyCode,'surveyId' => $surveyId, 'redirectUrl' => $redirectUrl)))));
+                    
                 }
-                return new Response(json_encode(array('error' => true, 'messages' => $messages)));
-            }
-        } elseif ($request->getMethod() == 'POST') {
-            if ($form->isValid()) {
-                $registration = $form->getData();
-                $this->createParticipant($registration);
+                return new Response(json_encode(array('error' => false)));
+            } elseif ($request->getMethod() == 'POST') {
+                
                 if ($session->has('SurveyInfo')) {
                     if ($session->has('referralSite') && $session->has('referralCampaign')){
                         $ls = $this->get('study_logic');
@@ -126,8 +98,12 @@ class AuthentificationController extends Controller
                         $session->remove('SurveyInfo');
                         $securityContext = $this->container->get('security.context');
                         $participant = $securityContext->getToken()->getUser();
-                        
+                
                         $ls->studyRegistration($participant, $studyCode, $surveyId, $saveId);
+                        $study = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
+                        if ($study->getStudySkipSteps() == 1) {
+                            return $this->redirect( $this->generateUrl("_main"));
+                        }
                     } else {
                         $study = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
                         $studyContent = $em->getRepository('CyclogramProofPilotBundle:StudyContent')->findOneByStudy($study);
@@ -135,14 +111,46 @@ class AuthentificationController extends Controller
                         return $this->redirect($this->generateUrl("_page", array("studyUrl" => $studyContent->getStudyUrl())));
                     }
                 }
-                
                 return $this->redirect( $this->generateUrl("_signup_about"));
             }
+                
+        } elseif ($request->isXmlHttpRequest() && !$form->isValid()){
+             $messages = array();
+             $validator = $this->container->get('validator');
+             $errors = $validator->validate($form);
+             foreach ($errors as $err) {
+                if(strpos($err->getPropertyPath(),'[')) {
+                    if ($err->getMessage() == "Passwords do not match") {
+                        $property = substr($err->getPropertyPath(),strpos($err->getPropertyPath(),'[')+1,strlen($err->getPropertyPath()));
+                        $messages[]= array('property' => substr($property,0,strlen($property)-1),
+                                           'message' => $err->getMessage(),
+                                           'password' => true);
+                    } else {
+                        $property = substr($err->getPropertyPath(),strpos($err->getPropertyPath(),'[')+1,strlen($err->getPropertyPath()));
+                        $property = substr($property,0,strpos($property,'.')-1);
+                        if ($property == "participantPassword" ) {
+                            $messages[]= array('property' => $property,
+                                               'message' => $err->getMessage(),
+                                               'password' => true);
+                        } else {
+                            $messages[]= array('property' => $property ,
+                                               'message' => $err->getMessage(),
+                                               'password' => false);
+                        }
+                    }
+                }elseif(strpos($err->getPropertyPath(),'.')){
+                    $messages[]= array('property' => substr($err->getPropertyPath(),strpos($err->getPropertyPath(),'.')+1,strlen($err->getPropertyPath())),
+                                       'message' => $err->getMessage(),
+                                       'password' => false);
+                    }
+                }
+                return new Response(json_encode(array('error' => true, 'messages' => $messages)));
         }
         //login check
         $error = $this->getErrorForRequest($request);
         if($error) {
             if ($request->isXmlHttpRequest()) 
+                
                 return new Response(json_encode(array('error' => true)));
             else
                 return $this->render('CyclogramFrontendBundle:Authentification:signup.html.twig', array(

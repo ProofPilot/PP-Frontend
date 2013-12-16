@@ -174,6 +174,8 @@
                                     $(property).after('<p class="error">'+message+'</p>');
                                 } 
                             }
+                        } else if (json.url != null){
+                        	window.location.replace(json.url);
                         } else {
                             $("#div_register").dialog('close');
                             if ({{ countryName and countryId }}) {
@@ -389,7 +391,11 @@
                        </a>
                        {% if is_registered_study(studyCode) %}
                            {% set redirectUrl = path('_signup')  %}
-                           <a href="" class="join" id="consent"><span>{% trans from "study" %}button_join_the_study_goal{% endtrans %}</span></a>
+                           {% if is_skip_steps_study(studyCode) %}
+                                <a href="{{ path('_eligibility_survey', {'studyCode': studyCode, 'surveyId': surveyId, 'redirectUrl': redirectUrl} ) }}" class="join"><span>{% trans from "study" %}button_join_the_study_goal{% endtrans %}</span></a>
+                           {% else %}
+                               <a href="" class="join" id="consent"><span>{% trans from "study" %}button_join_the_study_goal{% endtrans %}</span></a>
+                           {% endif %}
                        {% else %}
                            {% set redirectUrl = path('_main')  %}
                            <a href="" class="join" id="register"><span>{% trans from "study" %}button_join_the_study_goal{% endtrans %}</span></a>

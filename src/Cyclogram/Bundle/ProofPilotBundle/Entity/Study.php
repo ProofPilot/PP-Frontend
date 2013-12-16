@@ -124,6 +124,13 @@ class Study
     private $registerProccess;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="study_skip_steps", type="integer", nullable=false)
+     */
+    private $studySkipSteps;
+
+    /**
      * @var boolean
      *
      * @ORM\Column(name="study_real_time_graphics", type="boolean", nullable=false)
@@ -545,6 +552,16 @@ class Study
     public function setRegisterProccess($registerProccess)
     {
         $this->registerProccess = $registerProccess;
+    }
+
+    public function getStudySkipSteps()
+    {
+        return $this->studySkipSteps;
+    }
+
+    public function setStudySkipSteps($studySkipSteps)
+    {
+        $this->studySkipSteps = $studySkipSteps;
     }
 
 }

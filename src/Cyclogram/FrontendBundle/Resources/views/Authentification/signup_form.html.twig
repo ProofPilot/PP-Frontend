@@ -57,7 +57,11 @@
         </div>
         <div class="loginform_right">
         <h2>New ProofPilot Users</h2>
-          <form novalidate action="{{ path('_signup', {'studyCode' : studyCode}) }}" method="post" name="registration" id="registration_form">
+        {% if studyCode and surveyId is defined  %}
+          <form novalidate action="{{ path('_signup', {'studyCode' : studyCode, 'surveyId' : surveyId}) }}" method="post" name="registration" id="registration_form">
+        {% else  %}
+            <form novalidate action="{{ path('_signup') }}" method="post" name="registration" id="registration_form">
+        {% endif %}
               <label for="reg_field_1">{% trans from "register" %}enter_email{% endtrans %}</label> 
               {{ form_widget(form.participantEmail, {'attr' : {'class' : 'text', 'id' : 'reg_field_1'}}) }}
               {{ form_errors(form.participantEmail) }}
