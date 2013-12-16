@@ -9,7 +9,8 @@ forgot_password_message: "It happens to all of us more times that we'd like to a
 forgot_username: 'Forgot your Username'
 forgot_username_email_send: forgot_username_email_send
 forgot_username_message: 'No problem. Enter the email address you used to sign up and we will send your Username.'
-forgot_username_send_error: forgot_username_send_error
+header_exisiting_login: Existing User Log In
+header_login: Log in
 label_sms_code: 'Sms code'
 new_password_selection: "<p>Click on the link in the e-mail and you will be guided through the selection of a new password. You will need your mobile phone to complete this process.</p>\n<p>If it hasn't arrived within a few minutes, check your SPAM or junkmail folders</p>\n"
 specimen_msg: 'Please select a valid specimen option'

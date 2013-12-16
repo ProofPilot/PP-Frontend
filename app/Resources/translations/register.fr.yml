@@ -1,48 +1,31 @@
-already_joined: already_joined
 btn_next: btn_next
 btn_save_mailing_address: btn_save_mailing_address
-btn_send_confirmation: btn_send_confirmation
+btn_send_confirmation_email: btn_send_confirmation_email   # FIXME
 confirm_password: confirm_password
 create_password: create_password
-double_check: 'txt_double_check-you_entry'''
-enter_address: enter_address
-enter_aditional_mobile_phone: enter_aditional_mobile_phone
 enter_email: enter_email
-enter_mobile_phone: enter_mobile_phone
-enter_sms_code: enter_sms_code
+header_new_user_register: header_new_user_register   # FIXME
+header_register: header_register   # FIXME
 label_address1: label_address1
 label_address2: label_address2
-label_aditional_phone: label_aditional_phone
 label_city: label_city
 label_email: label_email
 label_firstname: label_firstname
 label_lastname: label_lastname
 label_not_sign: label_not_sign
 label_password: label_password
-label_phone_small: label_phone_small
-label_phone_wide: label_phone_wide
 label_repeat_password: label_repeat_password
 label_sign: label_sign
-label_sign_main: label_sign_main   # FIXME
+label_sign_main: label_sign_main
 label_state: label_state
 label_username: label_username
 label_zipcode: label_zipcode
 mail_confirmation_fail: mail_confirmation_fail
-mailing_header: mailing_header
 min_charachters: min_charachters
-no_code: no_code
-ok_verify: ok_verify
 pick_user: pick_user
-sms_verification_message: sms_verification_message
-txt_aditional_number_save: txt_aditional_number_save
-txt_basics: txt_basics
+study_register_error: study_register_error   # FIXME
 txt_check_email: txt_check_email
 txt_check_zipcode: txt_check_zipcode
 txt_join: txt_join
 txt_join_with: txt_join_with
-txt_popup_header: txt_popup_header
-txt_popup_link: txt_popup_link
-txt_popup_text: txt_popup_text
 txt_subtitle_check_email: txt_subtitle_check_email
-txt_why: txt_why
-wrong_back: wrong_back

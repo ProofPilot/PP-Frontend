@@ -3,10 +3,10 @@
     <div class="mobile_reg login_form">
       <div class="wrapper">
         <div class="mobile_login_switcher">
-            <a href="#" rel=".loginform_left">Log in</a>
+            <a href="#" rel=".loginform_left">{% trans from "login" %}header_login{% endtrans %}</a>
         </div>
         <div class="loginform_left register">
-        <h2>Existing User Log In</h2>
+        <h2>{% trans from "login" %}header_exisiting_login{% endtrans %}</h2>
             <form action="{{ path('login_check') }}" method="post" id="login_form">
             	<label for="reg_field_1">{% trans from "login" %}txt_form_username{% endtrans %}</label>
 				<a class="forgot" href="{{ path('_forgot_username') }}" id="forgot_username">Trouble logging in?</a>
@@ -53,10 +53,10 @@
           </div>
         </div>
         <div class="mobile_login_switcher">
-            <a href="#" rel=".loginform_right">Register</a>
+            <a href="#" rel=".loginform_right">{% trans from "register" %}header_register{% endtrans %}</a>
         </div>
         <div class="loginform_right">
-        <h2>New ProofPilot Users</h2>
+        <h2>{% trans from "register" %}header_new_user_register{% endtrans %}</h2>
         {% if studyCode and surveyId is defined  %}
           <form novalidate action="{{ path('_signup', {'studyCode' : studyCode, 'surveyId' : surveyId}) }}" method="post" name="registration" id="registration_form">
         {% else  %}

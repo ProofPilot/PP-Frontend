@@ -1,26 +1,27 @@
+alert_msg: alert_msg   # FIXME
 btn_confrimcoe_login: 'confirmer le code et login'
 cant_remember_username: 'Vous avez oublié votre nom d''utilisateur?'
 doesnt_match_records: 'Nous sommes désolés, votre entrée ne correspond pas à nos dossiers'
 email_sent_containing_password: 'Un e-mail a été envoyé contenant un lien pour réinitialiser votre mot de passe'
-enter_mobile_phone: 'Un e-mail a été envoyé contenant un lien pour réinitialiser votre mot de passe'
-enter_sms_code: 'Entrez le code que vous avez reçu par SMS'
+enter_email_address: enter_email_address   # FIXME
 forgot_password: 'Vous avez oublié votre mot de passe?'
 forgot_password_message: "Il arrive à chacun d'entre nous plus de temps que nous aimerions bien l'admettre.\nPas de problème, nous vous guiderons à travers la création d'un nouveau mot de passe, tout en protégeant votre vie privée et la sécurité."
 forgot_username: 'Nom d''utilisateur oublié?'
+forgot_username_email_send: forgot_username_email_send   # FIXME
 forgot_username_message: 'Pas de problème. Entrez le numéro de téléphone portable que vous avez utilisé pour vous inscrire et nous vous enverrons votre nom d''utilisateur par message texte.'
-havent_joined: 'N''ont pas encore adhéré?'
+header_exisiting_login: header_exisiting_login   # FIXME
+header_login: header_login   # FIXME
 label_sms_code: 'code SMS'
 new_password_selection: "<p> Cliquez sur le lien dans l'e-mail et vous serez guidé à travers la sélection d'un nouveau mot de passe. Vous aurez besoin de votre téléphone mobile pour compléter ce processus. </ P>\n<p> Si cela n'est pas arrivé au bout de quelques minutes, vérifiez votre Spam ou dossiers junkmail </ p>"
-send_another_code: 'Pas de code? Envoyer un autre'
+specimen_msg: specimen_msg   # FIXME
 txt_forgot_your_password: 'Vous avez oublié votre mot de passe?'
-txt_forgot_your_username: 'Oublié?'
 txt_form_password: 'Mot de passe'
 txt_form_username: 'Nom d''utilisateur'
-txt_log_in: Connexion
 txt_login_button: Connexion
 txt_login_error_message: 'Votre entrée ne correspond pas à nos dossiers'
 txt_login_securely: 'Accès sécurisé à vos comptes.'
 txt_login_with: Connexion
-txt_or: ou
 txt_stay_logged_in: 'Restez connecté'
+txt_why_popup: txt_why_popup   # FIXME
 username_sent: 'Votre nom d''utilisateur a été envoyé au numéro de téléphone mobile sur disque'
+why_popup_title: why_popup_title   # FIXME

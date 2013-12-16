@@ -3,27 +3,24 @@ btn_confrimcoe_login: 'confirmar o código e entrar'
 cant_remember_username: 'Não consegue lembrar seu nome de usuário?'
 doesnt_match_records: 'Desculpe, seu nome de usuário não coincide com os nossos registros'
 email_sent_containing_password: 'Um código foi enviado para o número de celular associado a esta conta. Por favor, verifique o seu telefone e digite o código aqui para completar o processo de seleção de uma nova senha e continue.'
-enter_mobile_phone: 'Digite o telefone celular'
-enter_sms_code: 'Digite o código que você recebeu por SMS'
+enter_email_address: enter_email_address   # FIXME
 forgot_password: 'Esqueceu senha?'
 forgot_password_message: 'Sim, isso acontece com todos nós! Você não lembra sua senha, tudo  bem. Clique neste link para redefinir sua senha.'
 forgot_username: 'Esqueceu seu nome de usuário'
+forgot_username_email_send: forgot_username_email_send   # FIXME
 forgot_username_message: 'Não tem problema. Digite o número do telefone celular que você usou para se inscrever e vamos enviar seu nome de usuário via mensagem de texto.'
-havent_joined: 'Ainda não se cadastrou?'
+header_exisiting_login: header_exisiting_login   # FIXME
+header_login: header_login   # FIXME
 label_sms_code: 'Código SMS'
 new_password_selection: 'Clique no link  em seu e-mail e você será guiado para criar uma nova senha. Você vai precisar do seu telefone celular para completar este processo. Se a mensagem não chegar em poucos minutos, verifique sua caixa de spam ou lixeira.'
-send_another_code: 'Nenhum código? Enviar outro'
 specimen_msg: specimen_msg
 txt_forgot_your_password: "Esqueceu seu nome de senha?\n"
-txt_forgot_your_username: "Esqueceu seu nome de senha?\n"
 txt_form_password: Senha
 txt_form_username: Usuário
-txt_log_in: Logar
 txt_login_button: Logar
 txt_login_error_message: 'Sua entrada não coincide com os nossos resgistros'
 txt_login_securely: 'Entrar de forma segura com as suas contas.'
 txt_login_with: Logar
-txt_or: ou
 txt_stay_logged_in: 'Permanecer conectado'
 txt_why_popup: 'Use seu Facebook ou credenciais do Google para participar de forma segura e log-in. Você não tem que se lembrar de outra senha - e não vamos compartilhar qualquer coisa com qualquer serviço.'
 username_sent: 'Seu nome de usuário foi enviado ao número de celular registrado'
