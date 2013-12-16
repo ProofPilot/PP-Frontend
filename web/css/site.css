@@ -3355,8 +3355,8 @@ footer .row_2 p {
 .why_popup {
 	position: absolute;
 	z-index: 500;
-	top: 60px;
-	left: -25px;
+	bottom: 45px;
+	left: 45px;
 	width: 267px;
 	padding: 15px;
 	padding-bottom: 5px;

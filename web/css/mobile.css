@@ -428,6 +428,9 @@
     padding: 7px 7px 7px 12px;
     width: 100%;
 }
+#div_consent .mobile_reg .list_box p {
+	text-align: left;
+}
 #div_consent .mobile_reg .list_box .arrow_list {
     margin-top: 10px;
 }
