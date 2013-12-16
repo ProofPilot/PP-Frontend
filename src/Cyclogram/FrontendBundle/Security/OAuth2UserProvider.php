@@ -73,6 +73,8 @@ class OAuth2UserProvider implements OAuthAwareUserProviderInterface
             $date = new \DateTime();
             $participant->setParticipantLastTouchDatetime($date);
             $participant->setParticipantRegistrationTime($date);
+            $mailCode = substr(md5( md5( $participant->getParticipantEmail() . md5(microtime()))), 0, 4);
+            $participant->setParticipantEmailCode($mailCode);
             $participant->setParticipantZipcode('');
             $participant->setLocale($request->getLocale());
             $language = $this->userManager->getRepository('CyclogramProofPilotBundle:Language')->findOneByLocale($request->getLocale());
