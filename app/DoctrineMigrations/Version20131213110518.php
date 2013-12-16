@@ -25,7 +25,8 @@ class Version20131213110518 extends AbstractMigration
                 `currency_name` VARCHAR(50) NULL ,
                 `currency_symbol` VARCHAR(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
                 PRIMARY KEY (`currency_code`))
-                ENGINE = InnoDB");
+                CHARACTER SET utf8 COLLATE utf8_general_ci
+                ENGINE = InnoDB;");
         
         $this->addSql("INSERT INTO `new-proofpilot`.`currency` (`currency_name`,`currency_code`,`currency_symbol`) VALUES ('Albania Lek','ALL',N'Lek');
                        INSERT INTO `new-proofpilot`.`currency` (`currency_name`,`currency_code`,`currency_symbol`) VALUES ('Afghanistan Afghani','AFN',N'؋');
