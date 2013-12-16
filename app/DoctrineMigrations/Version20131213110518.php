@@ -15,6 +15,9 @@ class Version20131213110518 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != "mysql");
         
+        $this->addSql("ALTER TABLE `new-proofpilot`.`participant` DROP FOREIGN KEY `fk_particpant_currency`;
+                ALTER TABLE `new-proofpilot`.`participant` DROP COLUMN `currency_id`");
+        
         $this->addSql("DROP  TABLE IF EXISTS `new-proofpilot`.`currency`");
         
         $this->addSql("CREATE  TABLE IF NOT EXISTS `new-proofpilot`.`currency` (
