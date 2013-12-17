@@ -597,10 +597,11 @@
     line-height: 29px;
     position: relative;
     top: 8px;
+    padding-right: 12px;
 }
 #div_register_step2 .mobile_reg .form_content span.default_drop span.bg {
     -moz-box-sizing: border-box;
-    background: url("../images/drop_arrows.png") no-repeat scroll 93% 11px / 4px 10px rgba(0, 0, 0, 0);
+    background: url("../images/drop_arrows.png") no-repeat scroll 100% 11px / 4px 10px rgba(0, 0, 0, 0);
     display: inline-block;
     height: 31px;
     line-height: 31px;
@@ -608,7 +609,7 @@
     overflow: hidden;
     padding-right: 7px;
     padding-left: 10px;
-    padding-right: 17px;
+    padding-right: 15px;
 }
 #div_register_step2  .mobile_reg .form_content span.default_drop span.bg span.text {
     display: inline-block;
