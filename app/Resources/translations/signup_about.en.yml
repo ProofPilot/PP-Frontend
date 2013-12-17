@@ -20,6 +20,18 @@ label_sex_main: sex
 label_woman: Woman
 label_year_main: year
 label_zipcode: postcode
+month_apr: Apr
+month_aug: Aug
+month_dec: Dec
+month_feb: Feb
+month_jan: Jan
+month_jul: Jul
+month_jun: Jun
+month_mar: Mar
+month_may: May
+month_nov: Nov
+month_oct: Oct
+month_sep: Sep
 postcode_text: postcode
 secutiry_and_privacy: 'Security and Privacy policy'
 text_and: and

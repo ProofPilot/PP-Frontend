@@ -1,11 +1,17 @@
 btn_next: Siguiente
 btn_save_mailing_address: btn_save_mailing_address
-btn_send_confirmation_email: btn_send_confirmation_email   # FIXME
+btn_send_confirmation_email: btn_send_confirmation_email
 confirm_password: 'Confirme contraseña'
+consent_accept_join: consent_accept_join
+consent_any_information: consent_any_information
+consent_close_window: consent_close_window
+consent_good_to_go: consent_good_to_go
+consent_security_privacy: consent_security_privacy   # FIXME
+consent_what_to_know: consent_what_to_know
 create_password: 'Crear una contraseña'
 enter_email: 'Ingrese su e-mail'
-header_new_user_register: header_new_user_register   # FIXME
-header_register: header_register   # FIXME
+header_new_user_register: header_new_user_register
+header_register: header_register
 label_address1: label_address1
 label_address2: label_address2
 label_city: label_city
@@ -24,6 +30,8 @@ mail_confirmation_fail: mail_confirmation_fail
 min_charachters: '(8 caractéres mínimo)'
 pick_user: 'Escoja su usuario'
 study_register_error: study_register_error   # FIXME
+sms_verification_message: sms_verification_message
+study_register_error: study_register_error
 txt_check_email: txt_check_email
 txt_check_zipcode: txt_check_zipcode
 txt_join: Unase

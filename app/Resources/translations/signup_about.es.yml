@@ -1,5 +1,5 @@
 annual_income_text: annual_income_text
-btn_confirm: btn_confirm   # FIXME
+btn_confirm: btn_confirm
 head_tailot_expirience: head_tailot_expirience
 head_tell_a_bit: head_tell_a_bit
 label_annual_income: label_annual_income
@@ -20,6 +20,18 @@ label_sex_main: label_sex_main
 label_woman: label_woman
 label_year_main: label_year_main
 label_zipcode: label_zipcode
+month_apr: month_apr   # FIXME
+month_aug: month_aug   # FIXME
+month_dec: month_dec   # FIXME
+month_feb: month_feb   # FIXME
+month_jan: month_jan   # FIXME
+month_jul: month_jul   # FIXME
+month_jun: month_jun   # FIXME
+month_mar: month_mar   # FIXME
+month_may: month_may   # FIXME
+month_nov: month_nov   # FIXME
+month_oct: month_oct   # FIXME
+month_sep: month_sep   # FIXME
 postcode_text: postcode_text
 secutiry_and_privacy: secutiry_and_privacy
 text_and: text_and

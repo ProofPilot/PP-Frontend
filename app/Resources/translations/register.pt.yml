@@ -1,11 +1,17 @@
 btn_next: Próximo>
 btn_save_mailing_address: 'guardar e entrar'
-btn_send_confirmation_email: btn_send_confirmation_email   # FIXME
+btn_send_confirmation_email: btn_send_confirmation_email
 confirm_password: 'confirme a senha'
+consent_accept_join: consent_accept_join
+consent_any_information: consent_any_information
+consent_close_window: consent_close_window
+consent_good_to_go: consent_good_to_go
+consent_security_privacy: consent_security_privacy   # FIXME
+consent_what_to_know: consent_what_to_know
 create_password: 'Crie uma senha (minímo de 8 caracteres com pelo menos 2 números)'
 enter_email: 'Por favor insira um endereço de e-mail válido'
-header_new_user_register: header_new_user_register   # FIXME
-header_register: header_register   # FIXME
+header_new_user_register: header_new_user_register
+header_register: header_register
 label_address1: Rua
 label_address2: Complemento
 label_city: Cidade
@@ -24,6 +30,8 @@ mail_confirmation_fail: 'Falha ao confirmar o e-mail. O usuário não existe!'
 min_charachters: "(minímo de 8 caracteres)\n"
 pick_user: 'Escolha o seu nome de usuário'
 study_register_error: study_register_error   # FIXME
+sms_verification_message: 'Seu ProofPilot SMS logar código é:'
+study_register_error: study_register_error
 txt_check_email: 'Por favor, verifique o seu endereço de e-mail'
 txt_check_zipcode: 'Por favor, verifique o seu cep'
 txt_join: Junte-se

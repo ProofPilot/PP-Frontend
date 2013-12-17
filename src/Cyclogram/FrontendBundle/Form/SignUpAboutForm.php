@@ -66,10 +66,24 @@ class SignUpAboutForm extends AbstractType
                 'multiple' => false
         ));
         
+        $months = array(
+                 $this->container->get('translator')->trans('month_jan', array(), 'signup_about'),
+                 $this->container->get('translator')->trans('month_feb', array(), 'signup_about'),
+                 $this->container->get('translator')->trans('month_mar', array(), 'signup_about'),
+                 $this->container->get('translator')->trans('month_apr', array(), 'signup_about'),
+                 $this->container->get('translator')->trans('month_may', array(), 'signup_about'),
+                 $this->container->get('translator')->trans('month_jun', array(), 'signup_about'),
+                 $this->container->get('translator')->trans('month_jul', array(), 'signup_about'),
+                 $this->container->get('translator')->trans('month_aug', array(), 'signup_about'),
+                 $this->container->get('translator')->trans('month_sep', array(), 'signup_about'),
+                 $this->container->get('translator')->trans('month_oct', array(), 'signup_about'),
+                 $this->container->get('translator')->trans('month_nov', array(), 'signup_about'),
+                 $this->container->get('translator')->trans('month_dec', array(), 'signup_about'));
+        
         $builder->add('monthsSelect', new Type\FrontendChoiceType( $this->container->get('doctrine')), array(
                 'label'=> $this->container->get('translator')->trans('label_monthmain', array(), 'signup_about'),
                 'choices' => array(
-                        'months' => array_combine(range(1,12),range(1,12)),
+                        'months' => array_combine(range(1,12),$months),
                 ),
                 'required'=>false,
                 'expanded' =>true,

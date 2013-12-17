@@ -2,14 +2,14 @@
     <div class="wrapper">
         <div class="popup_text join">
             <a href="#" class="close"></a>
-                <h2>Here’s what you need to know to participate</h2>
+                <h2>{% trans from "register" %}consent_what_to_know{% endtrans %}</h2>
                 <div class="list_box">
                     {{ studycontent.studyConsent|raw }}
                 </div>
-                <h3>Good to go? Accept and Join the Study</h3>
-                <p>Any information you share with us is completly confidental and secure. <a href="#">See our Security and Privacy policy</a></p>
-                <div class="align_center"><a href="{{ path('_consent', {'studyCode': studyCode, 'surveyId': surveyId}) }}" class="btn"><span>I ACCEPT. Join the study</span></a></div>
-                <p class="note">Close window to decline</p>
+                <h3>{% trans from "register" %}consent_good_to_go{% endtrans %}</h3>
+                <p>{% trans from "register" %}consent_any_information{% endtrans %} <a href="#">{% trans from "register" %}consent_security_privacy{% endtrans %}</a></p>
+                <div class="align_center"><a href="{{ path('_consent', {'studyCode': studyCode, 'surveyId': surveyId}) }}" class="btn"><span>{% trans from "register" %}consent_accept_join{% endtrans %}</span></a></div>
+                <p class="note">{% trans from "register" %}consent_close_window{% endtrans %}</p>
             </div>		
         </div>
     </div>

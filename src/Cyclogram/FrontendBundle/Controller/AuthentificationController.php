@@ -71,7 +71,9 @@ class AuthentificationController extends Controller
 
         $session = $request->getSession();
         $em = $this->getDoctrine()->getManager();
-        
+        if ($this->get('security.context')->isGranted("ROLE_USER")){
+            return $this->redirect($this->get('router')->generate("_main"));
+        }
         // registration check
         $form = $this->createForm(new RegistrationForm($this->container));
         $form->handleRequest($request);
