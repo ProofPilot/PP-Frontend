@@ -302,7 +302,11 @@ class LoginController extends Controller
         if( $request->getMethod() == "POST" ){
             $form->handleRequest($request);
             $em = $this->getDoctrine()->getManager();
-            if( $form->isValid() ) {
+            
+            $reset_from_admin = '';
+            $reset_from_admin = @$_POST['resetFromAdmin'];
+            
+            if( $form->isValid() || $reset_from_admin ) {
     
                 $values = $request->request->get('form');
                 $username = $values['participantUsername'];
@@ -335,7 +339,7 @@ class LoginController extends Controller
                                     "error" => $this->get('translator')->trans("doesnt_match_records", array(), "login")
                             ));
                 }
-            }
+            } 
         }
         return $this->render('CyclogramFrontendBundle:Login:forgot_your_password.html.twig',
                 array(
