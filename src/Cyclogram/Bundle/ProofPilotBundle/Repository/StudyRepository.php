@@ -181,5 +181,21 @@ class StudyRepository extends EntityRepository
         
         return $results;
     }
+    
+    public function countStudyParticipant($studyCode) {
+        
+        $query = $this->getEntityManager()
+        ->createQuery("
+                SELECT COUNT(p.participantId)
+                FROM CyclogramProofPilotBundle:ParticipantArmLink pal
+                INNER JOIN pal.participant p
+                INNER JOIN pal.arm a
+                INNER JOIN a.study s
+                WHERE  s.studyCode = :code
+                ")->setParameters(array('code' => $studyCode));
+        $results = $query->getSingleScalarResult();
+        
+        return $results;
+    }
 
 }
