@@ -472,7 +472,18 @@
                     </div>
                     <div class="box alt staff last">
                         <h4>{% trans from "study" %}txt_staff{% endtrans %}</h4>
-                        <p>Patty Bouvier, Nelson Muntz, Barney Gumble, Lionel Hutz, Charles Montgomery Burns</p>
+                        
+                        <p>{% set length = 0 %}
+                            {% for staff in studyStaff %} 
+                            
+                            {% if length < studyStaff|length %}
+                                {{ staff.representativeFirstname }} {{ staff.representativeLastname }},
+                                {% set length =  length+1 %}
+                            {% else  %}
+                                {{ staff.representativeFirstname }} {{ staff.representativeLastname }}
+                            {% endif %}
+                        {% endfor %}</p>
+                        
                     </div>
                 </aside>
             </div>

@@ -220,5 +220,29 @@ class StudyRepository extends EntityRepository
                 ))
                 ->getResult();
     }
+    
+    public function getStudyStaff($studyCode) {
+    
+        $query = $this->getEntityManager()
+        ->createQuery("
+                SELECT r.representativeFirstname, r.representativeLastname
+                FROM CyclogramProofPilotBundle:Representative r
+                INNER JOIN r.user u
+                INNER JOIN r.organization o
+                WHERE o.organizationId IN (SELECT org.organizationId FROM CyclogramProofPilotBundle:StudyOrganizationLink sol
+                                         JOIN sol.study s
+                                         JOIN sol.organization org
+                                         WHERE s.studyCode = :code)
+                AND u.userId IN (SELECT usr.userId FROM CyclogramProofPilotBundle:UserRoleLink url
+                                 JOIN url.userUser usr
+                                 JOIN url.userRoleUserRole ur
+                                 WHERE ur.userRoleName = 'ROLE_STUDY_COORDINATOR'
+                                 OR ur.userRoleName = 'ROLE_SITE_COORDINATOR'
+                                 OR ur.userRoleName = 'ROLE_REPRESENTATIVE')
+                ")->setParameters(array('code' => $studyCode));
+        $results = $query->getResult();
+    
+        return $results;
+    }
 
 }
