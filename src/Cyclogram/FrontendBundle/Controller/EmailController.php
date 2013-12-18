@@ -273,7 +273,14 @@ class EmailController extends Controller
      */
     function showErrorAction()
     {
-        return $this->render('::error.html.twig', array("error"=>"Error"));
+        $em = $this->container->get('doctrine')->getManager();
+        $timezone = $em->getRepository('CyclogramProofPilotBundle:ParticipantTimezone')->find(1);
+        $currentInTz = new \DateTime(null, new \DateTimeZone($timezone->getParticipantTimezoneName()));
+        $weekDayInTz = (int)$currentInTz->format("w");
+        $weekNo = date('W');
+        
+        
+        return new Response('Current week: '.$weekNo.' prev: '.$weekDayInTz);
     }
     
     

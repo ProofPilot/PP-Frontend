@@ -75,13 +75,17 @@
 	                    	$('#currency_symbol').html('{{ currencySymbol }}');
 		                    }
     			    	$("input[type=checkbox]").uniform();
-    		            $("#signup_about_zipcode").on('blur', function() {
+    		            $("#signup_about_confirm").on('click', function(e) {
     		            	$('#error').remove(); 
-    		            	var inputVal = $(this).val();
+    		            	var inputVal = $('#signup_about_zipcode').val();
     		                var zipReg = /^[0-9]\d{4}-\d{4}|[0-9]{5}$/;
-    		                if(!zipReg.test(inputVal)) {
-    		                    $(this).after('<p class="error" id="error">{% trans from "register" %}txt_check_zipcode{% endtrans %}</p>');
-    		            }});
+    		                if (!$('#signup_about_zipcode').is(':empty')) {
+        		                if(!zipReg.test(inputVal)) {
+        		                    $('#signup_about_zipcode').after('<p class="error" id="error">{% trans from "register" %}txt_check_zipcode{% endtrans %}</p>');
+        		                    return false;
+        		                    }
+    		            }
+        		        });
     		            $("#signup_about_anunalIncome").numeric();
     			        });
     			    

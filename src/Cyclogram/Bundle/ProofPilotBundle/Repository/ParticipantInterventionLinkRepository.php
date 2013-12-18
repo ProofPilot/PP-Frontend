@@ -127,9 +127,7 @@ class ParticipantInterventionLinkRepository extends EntityRepository
                 INNER JOIN i.interventionType it
                 WHERE pil.participant = :userid
                 AND pil.status  = :pilstatus
-                AND pil.participantInterventionLinkSendSmsTime IS NULL
                 AND it.interventionTypeName <> \'Test\'
-                AND s.studyCode <> \'sexpro\'
                 ')
                 ->setParameters(array(
                         'userid' => $userid,
@@ -144,9 +142,7 @@ class ParticipantInterventionLinkRepository extends EntityRepository
                     INNER JOIN i.interventionType it
                     WHERE pil.participant = :userid
                     AND pil.status  = :pilstatus
-                    AND pil.participantInterventionLinkSendEmailTime IS NULL
                     AND it.interventionTypeName <> \'Test\'
-                    AND s.studyCode <> \'sexpro\'
                     ')
                     ->setParameters(array(
                             'userid' => $userid,

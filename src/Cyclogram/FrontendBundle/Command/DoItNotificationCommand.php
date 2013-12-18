@@ -122,6 +122,7 @@ class DoItNotificationCommand extends ContainerAwareCommand
         $parameters["interventions"] = array();
         if (!empty($interventionLinks)){
             foreach($interventionLinks as $interventionLink) {
+                if (!$sendTime = $interventionLink->getParticipantInterventionLinkSendEmailTime()){ 
                 
                     $interventionId = $interventionLink->getIntervention()->getInterventionId();
                     $interventionContent = $this->getContainer()->get('doctrine')->getRepository("CyclogramProofPilotBundle:Intervention")->getInterventionContent($interventionId, $locale);
@@ -140,6 +141,25 @@ class DoItNotificationCommand extends ContainerAwareCommand
                     $interventionLink->setParticipantInterventionLinkSendEmailTime(new \DateTime());
                     $em->persist($interventionLink);
                     $em->flush();
+                } elseif ((date('W') - $interventionLink->getParticipantInterventionLinkSendEmailTime()->format('W')) == 1) {
+                    $interventionId = $interventionLink->getIntervention()->getInterventionId();
+                    $interventionContent = $this->getContainer()->get('doctrine')->getRepository("CyclogramProofPilotBundle:Intervention")->getInterventionContent($interventionId, $locale);
+                    
+                    $study = $interventionLink->getIntervention()->getStudy();
+                    $studyId = $study->getStudyId();
+                    $studyContent = $this->getContainer()->get('doctrine')->getRepository('CyclogramProofPilotBundle:StudyContent')->getStudyContentById($studyId, $locale);
+                    
+                    $intervention = array();
+                    $intervention["title"] = $interventionContent->getInterventionTitle();
+                    $intervention["content"] = $interventionContent->getInterventionDescripton();
+                    
+                    $intervention["url"] = $this->getInterventionUrl($interventionLink, $locale);
+                    $intervention["logo"] = $this->getContainer()->getParameter('study_image_url') . "/" . $studyId . "/" . $studyContent->getStudyLogo();
+                    $parameters["interventions"][] = $intervention;
+                    $interventionLink->setParticipantInterventionLinkSendEmailTime(new \DateTime());
+                    $em->persist($interventionLink);
+                    $em->flush();
+                }
             }
         
             $parameters['email'] = $participant->getParticipantEmail();
@@ -179,15 +199,38 @@ class DoItNotificationCommand extends ContainerAwareCommand
         $interventions = array();
         if (!empty($interventionLinks)){
             foreach($interventionLinks as $interventionLink) {
-                $interventionId = $interventionLink->getIntervention()->getInterventionId();
-                $interventionContent = $this->getContainer()->get('doctrine')->getRepository("CyclogramProofPilotBundle:Intervention")->getInterventionContent($interventionId, $locale);
-        
-                $study = $interventionLink->getIntervention()->getStudy();
-                $studyId = $study->getStudyId();
-                $studyContent = $this->getContainer()->get('doctrine')->getRepository('CyclogramProofPilotBundle:StudyContent')->getStudyContentById($studyId, $locale);
-        
-                $intervention = array();
-                $interventionTitle = strip_tags($interventionContent->getInterventionName());
+                if (!$sendTime = $interventionLink->getParticipantInterventionLinkSendEmailTime())  {
+                    $interventionId = $interventionLink->getIntervention()->getInterventionId();
+                    $interventionContent = $this->getContainer()->get('doctrine')->getRepository("CyclogramProofPilotBundle:Intervention")->getInterventionContent($interventionId, $locale);
+            
+                    $study = $interventionLink->getIntervention()->getStudy();
+                    $studyId = $study->getStudyId();
+                    $studyContent = $this->getContainer()->get('doctrine')->getRepository('CyclogramProofPilotBundle:StudyContent')->getStudyContentById($studyId, $locale);
+            
+                    $intervention = array();
+                    $interventionTitle = strip_tags($interventionContent->getInterventionName());
+                        $interventionUrl = $cc::generateGoogleShorURL($this->getContainer()->getParameter('site_url').$this->getInterventionUrl($interventionLink, $locale));
+                        $sms = $this->getContainer()->get('sms');
+                        $message = $this->getContainer()->get('translator')->trans('sms_title', array(), 'security', $locale);
+                        $sentSms = $sms->sendSmsAction( array('message' => $message .': '. $interventionTitle.' '.$interventionUrl, 'phoneNumber'=> $participant->getParticipantMobileNumber()) );
+                        if ($sentSms){
+                            $interventionLink->setParticipantInterventionLinkSendSmsTime(new \DateTime());
+                            $em->persist($interventionLink);
+                            $em->flush();
+                            return array('send' => true, 'message' => 'sent sms');
+                        } else {
+                            return array('send' => false, 'message' => 'sms not send');
+                        }
+                } elseif ((date('W') - $interventionLink->getParticipantInterventionLinkSendEmailTime()->format('W')) == 1) {
+                    $interventionId = $interventionLink->getIntervention()->getInterventionId();
+                    $interventionContent = $this->getContainer()->get('doctrine')->getRepository("CyclogramProofPilotBundle:Intervention")->getInterventionContent($interventionId, $locale);
+                    
+                    $study = $interventionLink->getIntervention()->getStudy();
+                    $studyId = $study->getStudyId();
+                    $studyContent = $this->getContainer()->get('doctrine')->getRepository('CyclogramProofPilotBundle:StudyContent')->getStudyContentById($studyId, $locale);
+                    
+                    $intervention = array();
+                    $interventionTitle = strip_tags($interventionContent->getInterventionName());
                     $interventionUrl = $cc::generateGoogleShorURL($this->getContainer()->getParameter('site_url').$this->getInterventionUrl($interventionLink, $locale));
                     $sms = $this->getContainer()->get('sms');
                     $message = $this->getContainer()->get('translator')->trans('sms_title', array(), 'security', $locale);
@@ -200,6 +243,7 @@ class DoItNotificationCommand extends ContainerAwareCommand
                     } else {
                         return array('send' => false, 'message' => 'sms not send');
                     }
+                }
             }
         }
         return array('send' => false, 'message' => '');
