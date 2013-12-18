@@ -3234,6 +3234,7 @@ footer .row_1 {
 .intro_page .text_wrapper aside .box.s_by p {
     color: #414141;
     font-size: 15px;
+    height: 75px;
 }
 .intro_page .text_wrapper aside .box ul.aff_org_list {
     clear: both;
