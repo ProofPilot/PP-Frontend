@@ -197,5 +197,28 @@ class StudyRepository extends EntityRepository
         
         return $results;
     }
+    
+    public function getStudyOrganizations($studyCode)
+    {
+        return $this->getEntityManager()
+        ->createQuery("
+                SELECT o.organizationName, o.organizationAddress1
+                FROM CyclogramProofPilotBundle:Organization o
+                WHERE o.status = :organizationstatus
+                AND o.organizationId IN (SELECT org.organizationId FROM CyclogramProofPilotBundle:StudyOrganizationLink sol
+                                         JOIN sol.study s
+                                         JOIN sol.organization org
+                                         WHERE s.studyCode = :code
+                                         AND sol.status = :solstatus 
+                                         GROUP BY sol.organization, sol.study)
+                
+                ")
+                ->setParameters(array(
+                        'code' => $studyCode,
+                        'solstatus' => StudyOrganizationLink::STATUS_ACTIVE,
+                        'organizationstatus' => Organization::STATUS_ACTIVE,
+                ))
+                ->getResult();
+    }
 
 }

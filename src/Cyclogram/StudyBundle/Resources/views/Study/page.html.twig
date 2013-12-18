@@ -433,23 +433,25 @@
                     </div>
                     {{ studycontent.studyAbout |raw }}
                     {{ studycontent.studyWhatsInvolved | raw }}
-                    <div class="see_more">
-                        <div class="col1">
-                            <h3 class="about">{% trans from "study" %}txt_more_studies_about{% endtrans %}</h3>
-                            <p>Social Studies, Behaviourism, Clinical depression</p>
-                        </div>
-                        <div class="col2">
-                            <h3 class="location">{% trans from "study" %}txt_more_studies_in{% endtrans %}</h3>
-                            <p>Los Angeles, San Diego, Los Angeles, San Diego, Los Angeles</p>
-                        </div> 
-                    </div>
+{#                     <div class="see_more">#}
+{#                         <div class="col1">#}
+{#                             <h3 class="about">{% trans from "study" %}txt_more_studies_about{% endtrans %}</h3>#}
+{#                             <p>Social Studies, Behaviourism, Clinical depression</p>#}
+{#                         </div>#}
+{#                         <div class="col2">#}
+{#                             <h3 class="location">{% trans from "study" %}txt_more_studies_in{% endtrans %}</h3>#}
+{#                             <p>Los Angeles, San Diego, Los Angeles, San Diego, Los Angeles</p>#}
+{#                         </div> #}
+{#                     </div>#}
                 </div>
                 <aside>
                     <div class="box alt s_by">
                         <h4>{% trans from "study" %}txt_conducted_by{% endtrans %}</h4>
-                        <img width="60" height="75" src="{{ asset('images/tmp_logo_1.jpg') }}" class="logo_img">
-                        <p>Autism Research Team Rush University, <br />
-                        <span>Chicago, IL USA</span></p>
+                        {% for organization in studyOrganizations %}
+                            <img width="60" height="75" src="{{ asset('images/tmplogo_none.jpg') }}" class="logo_img">
+                            <p>{{ organization.organizationName }}, <br />
+                            <span>{{ organization.organizationAddress1 }}</span></p>
+                        {% endfor %}
                     </div>
                     <div class="box alt s_org">
                         <h4>{% trans from "study" %}txt_affiliated_organizations{% endtrans %}</h4>
