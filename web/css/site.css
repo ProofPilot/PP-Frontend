@@ -2067,7 +2067,8 @@ div.panel div.panel_right div.prev_next ul li a.next span {
 	background: white;
 }
 .intro_page .home_welcome {
-	height: 161px;
+	overflow: hidden;
+	padding-bottom: 20px;
 }
 .intro_page .home_welcome .welcome_banner {
 	float: left;
@@ -2093,7 +2094,7 @@ div.panel div.panel_right div.prev_next ul li a.next span {
 	font-size: 15px;	
 }
 .intro_page .choose_action {
-	height: 17px;
+/* 	height: 17px; */
 	background: #396276; /* Old browsers */
     background: -moz-linear-gradient(top, #396276 0%, #294a5c 100%); /* FF3.6+ */
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#396276), color-stop(100%,#294a5c)); /* Chrome,Safari4+ */
@@ -2102,18 +2103,18 @@ div.panel div.panel_right div.prev_next ul li a.next span {
     background: -ms-linear-gradient(top, #396276 0%,#294a5c 100%); /* IE10+ */
     background: linear-gradient(to bottom, #396276 0%,#294a5c 100%); /* W3C */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#396276', endColorstr='#294a5c',GradientType=0 ); /* IE6-9 */
-	line-height: 67px;
+/* 	line-height: 67px; */
 	width: 1009px;
 	margin-left: -7px;
 }
 .intro_page .choose_action h3 {
-	float: left;
+/* 	float: left; */
 	color: white;
 	font-size: 20px;
 	font-family: 'Roboto';
 	font-style: normal;
 	font-weight: 700;
-	padding-left: 40px;
+	padding: 20px 30px;
 }
 .intro_page .choose_action ul {
 	float: right;
