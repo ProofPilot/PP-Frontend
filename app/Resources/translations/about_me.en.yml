@@ -11,13 +11,13 @@ label_female: Female
 label_inresested_main: 'Select interest'
 label_interested: label_interested
 label_male: Male
-label_man: Man
+label_man: Men
 label_race: label_race
 label_race_main: 'Select your race'
 label_sex: label_sex
 label_sex_main: 'Selecy your sex'
 label_transgendered: Transgendered
-label_woman: Woman
+label_woman: Women
 label_zipcode: label_zipcode
 label_zipcode_new: 'New Zip code'
 race_change: race_change
