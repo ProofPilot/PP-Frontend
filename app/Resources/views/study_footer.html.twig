@@ -10,10 +10,10 @@
         <div class="footer_col_middle">
             <ul>
                 <li>
-                    <a class="fb" href="#"><span>{% trans from "study" %}txt_like_proofpilot{% endtrans %}<br>{% trans from "study" %}txt_on_facebook{% endtrans %}</span></a>
+                    <a class="fb" href="" onClick="fbslike_click(300, 25)"><span>{% trans from "study" %}txt_like_proofpilot{% endtrans %}<br>{% trans from "study" %}txt_on_facebook{% endtrans %}</span></a>
                 </li>
                 <li>
-                    <a class="tw" href="#"><span>{% trans from "study" %}txt_like_proofpilot{% endtrans %}<br>{% trans from "study" %}txt_on_twitter{% endtrans %}</span></a>
+                    <a class="tw" href="https://twitter.com/intent/follow?screen_name=proofpilot"><span>{% trans from "study" %}txt_like_proofpilot{% endtrans %}<br>{% trans from "study" %}txt_on_twitter{% endtrans %}</span></a>
                 </li>
             </ul>
         </div>
@@ -22,7 +22,7 @@
   </div>
   <div class="row_2">
     <div class="site_container">
-        <p>© 2011-2013 ProofPilot<sup>TM</sup> - All rights reserved</p>
+        <p>© 2011-{{"now"|date('Y')}} ProofPilot<sup>TM</sup> - All rights reserved</p>
     </div>
   </div>
 </footer>
