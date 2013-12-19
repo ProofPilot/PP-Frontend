@@ -333,7 +333,7 @@
 {% block content %}
     <div class="intro_page">
         <div class="choose_action alt for_mobile">
-        {% if studycontent.studySponsorBy is defined %}
+        {% if studycontent.studySponsorBy is not empty %}
             <h3>{% trans from "study" %}txt_sponsored_by{% endtrans %}: {{ studycontent.studySponsorBy }}</h3>
 {#             <a href="#" class="learn_more"><span>{% trans from "study" %}txt_learn_how{% endtrans %}</span></a>#}
         {% endif %}
@@ -349,7 +349,7 @@
             <p>{{ studycontent.studyTagline | raw}}</p>
         </div>
         <div class="choose_action">
-        {% if studycontent.studySponsorBy is defined %}
+        {% if studycontent.studySponsorBy is not empty %}
                <h3>{% trans from "study" %}txt_sponsored_by{% endtrans %}: {{ studycontent.studySponsorBy }}</h3>
 {#             <a href="#" class="learn_more"><span>{% trans from "study" %}txt_learn_how{% endtrans %}</span></a>#}
         {% endif %}
