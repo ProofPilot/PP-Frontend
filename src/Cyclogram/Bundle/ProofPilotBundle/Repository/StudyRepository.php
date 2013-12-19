@@ -236,9 +236,7 @@ class StudyRepository extends EntityRepository
                 AND u.userId IN (SELECT usr.userId FROM CyclogramProofPilotBundle:UserRoleLink url
                                  JOIN url.userUser usr
                                  JOIN url.userRoleUserRole ur
-                                 WHERE ur.userRoleName = 'ROLE_STUDY_COORDINATOR'
-                                 OR ur.userRoleName = 'ROLE_SITE_COORDINATOR'
-                                 OR ur.userRoleName = 'ROLE_REPRESENTATIVE')
+                                 WHERE ur.userRoleName = 'ROLE_STUDY_COORDINATOR')
                 ")->setParameters(array('code' => $studyCode));
         $results = $query->getResult();
     
