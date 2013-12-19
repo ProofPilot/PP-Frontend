@@ -2106,6 +2106,7 @@ div.panel div.panel_right div.prev_next ul li a.next span {
 /* 	line-height: 67px; */
 	width: 1009px;
 	margin-left: -7px;
+	min-height: 17px;
 }
 .intro_page .choose_action h3 {
 /* 	float: left; */
