@@ -11,13 +11,13 @@ label_grade_level_main: 'grade level'
 label_have: have
 label_industry_main: industry
 label_inresested_main: 'sex preference'
-label_man: Man
-label_man_woman: 'Man&Woman'
+label_man: Men
+label_man_woman: 'Men&Women'
 label_marital_status_main: 'marital status'
 label_monthmain: month
 label_race_main: race
 label_sex_main: sex
-label_woman: Woman
+label_woman: Women
 label_year_main: year
 label_zipcode: postcode
 month_apr: Apr
