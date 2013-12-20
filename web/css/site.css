@@ -3516,3 +3516,94 @@ footer .row_2 p {
 	right: 8px;
 	cursor: pointer;
 }
+/*Pledge popup*/
+#pledge_popup {
+	padding: 20px 20px 0px 20px;
+	background-color: #F7F7F7;
+	overflow: hidden;
+	border-radius: 5px;
+}
+#pledge_popup .content_banner {
+	margin-left: 5px;
+	float: left;
+}
+#pledge_popup .content_text {
+	float: left;
+	margin-left: 25px;
+}
+#pledge_popup .content_text h1 {
+    color: #D2503C;
+    font-family: 'Roboto';
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+}
+#pledge_popup .content_text textarea {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    resize: none;
+}
+#pledge_popup .content_text p, #pledge_popup .content_text textarea {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #DCDCDC;
+    border-radius: 3px 3px 3px 3px;
+    color: #767676;
+    height: 70px;
+    padding: 13px 15px 0;
+    width: 369px;
+}
+#pledge_popup ul.social {
+    background: #EDEDED;
+    border-top: 1px solid #C7C7C8;
+    clear: both;
+    float: left;
+    height: 55px;
+    list-style: none outside none;
+    margin: 20px 0 0 -20px;
+    padding: 15px 0 0;
+    width: 108%;
+}
+#pledge_popup ul.social li.col_1 {
+    margin-left: 125px;
+    margin-right: 15px;
+}
+#pledge_popup ul.social li {
+    float: left;
+}
+#pledge_popup ul.social li a.fb {
+    background: linear-gradient(to bottom, #3D629B 0%, #2D4F89 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);
+    border: 1px solid #3C5A9A;
+}
+#pledge_popup ul.social li a {
+    border-radius: 3px 3px 3px 3px;
+    color: #FFFFFF;
+    display: inline-block;
+    font-family: 'Roboto';
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    height: 36px;
+    line-height: 36px;
+    min-width: 145px;
+    padding-left: 15px;
+    padding-right: 15px;
+    text-align: center;
+}
+#pledge_popup ul.social li a.fb span {
+    background: url("../images/icon_btn_reg_fb.png") no-repeat scroll 0 50% / 9px 17px rgba(0, 0, 0, 0);
+}
+#pledge_popup ul.social li a span {
+    display: inline-block;
+    line-height: 36px;
+    padding-left: 25px;
+}
+#pledge_popup ul.social li a.tw {
+    background: linear-gradient(to bottom, #2FCBFD 0%, #1DB1E1 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);
+    border: 1px solid #2BB0DB;
+}
+#pledge_popup ul.social li a.tw span {
+    background: url("../images/icon_tw.png") no-repeat scroll 0 50% / 17px 13px rgba(0, 0, 0, 0);
+}
