@@ -3,6 +3,9 @@
         <div class="popup_text join">
             <a href="#" class="close"></a>
                 <h2>{% trans from "register" %}consent_what_to_know{% endtrans %}</h2>
+                <div class="for_mobile_center">
+                    <a href="{{ path('_consent', {'studyCode': studyCode, 'surveyId': surveyId}) }}" class="btn"><span>{% trans from "register" %}consent_accept_join{% endtrans %}</span></a>
+                </div>
                 <div class="list_box">
                     {{ studycontent.studyConsent|raw }}
                 </div>

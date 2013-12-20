@@ -1045,7 +1045,7 @@
 	.intro_page .text_wrapper .video_wrapper .video_text {
         display: block;
         width: 100%;
-        padding-bottom: 20px;
+        padding-bottom: 80px;
     }
     .intro_page .text_wrapper .video_wrapper .video_text ul.participants_num li {
     	width: 50%;
@@ -1074,7 +1074,7 @@
 	}
 	.intro_page .text_wrapper .video_wrapper .video_text ul.participants_num {
 		position: absolute;
-		top: 165px;
+		bottom: 0px;
 	}
 	
 }
@@ -1254,6 +1254,7 @@
     	display: block;
     }
     .ui-dialog {
+        background: none;
     	border: none;
     }
     .mobile_reg.login_form .loginform_left .actions_row {
@@ -1490,10 +1491,7 @@
 	.modal_close_btn {
 		display: none;
 	}
-	#div_consent .modal_close_btn {
-		display: block;
-	}
-	#pledge_popup .modal_close_btn {
+	#div_consent .modal_close_btn, #email_list .modal_close_btn, #pledge_popup .modal_close_btn {
 		display: block;
 	}
 	
@@ -2246,9 +2244,7 @@
         width: 100%;
     }
     #div_consent .mobile_reg.login_form .popup_text.join h2 {
-        text-align: left;
         font-size: 20px;
-        max-width: 200px;
         margin-bottom: 18px;
     }
     #div_consent .mobile_reg.login_form .popup_text.join .list_box {
@@ -2277,7 +2273,14 @@
     #div_consent, #div_register_step2 {
         margin-left: 15px;
         margin-right: 15px;
-	} 
+	}
+	#div_consent .mobile_reg .join .align_center a.btn {
+		display: none;
+	}
+	#div_consent .for_mobile_center {
+		display: block;
+		margin-bottom: 20px;
+	}
 	.panel .panel_right .dashboard_panel ul.settings_form li.left_text ,
 	.panel .panel_right .dashboard_panel ul.settings_form li.middle_input {
 		clear: both;
@@ -2437,6 +2440,7 @@
         line-height: 40px;
         margin-bottom: 5px;
     }
+
 }
 
 /* @media screen and (max-width: 500px) */ 
