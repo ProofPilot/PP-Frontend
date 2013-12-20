@@ -397,7 +397,7 @@
                         </li>
                         <li class="right">
                             <span class="text">{% trans from "study" %}txt_goal{% endtrans %}</span>
-                            <span class="num">3000</span>
+                            <span class="num">{{ studyGoal }}</span>
                         </li>
                     </ul>
                    {% if not is_granted('ROLE_PARTICIPANT') or not is_granted('IS_AUTHENTICATED_REMEMBERED') %}

@@ -90,6 +90,7 @@ class DashboardController extends Controller
             $studyContent = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:StudyContent')->getStudyContentById($studyId, $participant->getLocale());
             
             $intervention = array();
+            $intervention["name"] = $interventionContent->getInterventionName();
             $intervention["title"] = $interventionContent->getInterventionTitle();
             $intervention["content"] = $interventionContent->getInterventionDescripton();
             if ($study->getStudyCode() == 'defaultparticipant') {
@@ -102,6 +103,9 @@ class DashboardController extends Controller
                 $intervention["url"] = $this->getInterventionUrl($interventionLink, $locale);
             }
             $intervention["logo"] = $this->container->getParameter('study_image_url') . "/" . $studyId . "/" . $studyContent->getStudyLogo();
+            $interventionTypeName = $interventionLink->getIntervention()->getInterventionType()->getInterventionTypeName();
+            if ($interventionTypeName == "Pledge" )
+                $intervention['type'] = $interventionTypeName;
             $parameters["studyCode"] = $study->getStudyCode();
             $parameters["interventions"][] = $intervention;
         }

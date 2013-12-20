@@ -126,6 +126,20 @@ class Study
     /**
      * @var integer
      *
+     * @ORM\Column(name="study_number_of_current_participants", type="integer", nullable=false)
+     */
+    private $studyNumberOfCurrentParticipants;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="study_participants_goal", type="integer", nullable=false)
+     */
+    private $studyParticipantsGoal;
+
+    /**
+     * @var integer
+     *
      * @ORM\Column(name="study_skip_steps", type="integer", nullable=false)
      */
     private $studySkipSteps;
@@ -562,6 +576,27 @@ class Study
     public function setStudySkipSteps($studySkipSteps)
     {
         $this->studySkipSteps = $studySkipSteps;
+    }
+
+    public function getStudyNumberOfCurrentParticipants()
+    {
+        return $this->studyNumberOfCurrentParticipants;
+    }
+
+    public function setStudyNumberOfCurrentParticipants(
+            $studyNumberOfCurrentParticipants)
+    {
+        $this->studyNumberOfCurrentParticipants = $studyNumberOfCurrentParticipants;
+    }
+
+    public function getStudyParticipantsGoal()
+    {
+        return $this->studyParticipantsGoal;
+    }
+
+    public function setStudyParticipantsGoal($studyParticipantsGoal)
+    {
+        $this->studyParticipantsGoal = $studyParticipantsGoal;
     }
 
 }

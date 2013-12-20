@@ -79,6 +79,11 @@ class StudyLogic
             $campaignLink = $this->campaignRegistration($participant, $uniqId);
             $this->participantSurveyLinkRegistration($surveyId, $saveId, $participant, $uniqId);
             $this->studies[$studyCode]->studyRegistration($participant,$surveyId, $saveId, $campaignLink);
+            $study = $em->getRepository("CyclogramProofPilotBundle:Study")->findOneByStudyCode($studyCode);
+            $studyParticipants = $study->getStudyNumberOfCurrentParticipants();
+            $study->setStudyNumberOfCurrentParticipants(++$studyParticipants);
+            $em->persist($study);
+            $em->flush();
         }
         $session->remove('participantId');
         

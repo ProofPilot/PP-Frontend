@@ -18,23 +18,23 @@
 	}
 	
 	
-//	function resize_text_box(){
-//		
-//		var cont_height = $(".featured_box").height();
-//		
-//		$(".featured_box .text_box").each(function(){
-//			
-//			var text_height = $(this).height();
-//			
-//			var new_margin = (cont_height - text_height) / 2;
-//			
-//			$(this).css('margin-top' , new_margin);
-//			
-//		});
-//		
-//		
-//		
-//	}
+	function resize_text_box(){
+		
+		var cont_height = $(".featured_box").height();
+		
+		$(".featured_box .text_box").each(function(){
+			
+			var text_height = $(this).height();
+			
+			var new_margin = (cont_height - text_height) / 2;
+			
+			$(this).css('margin-top' , new_margin);
+			
+		});
+		
+		
+		
+	}
 	
 	function resize_dashboard_title_align_to_middle(){
 		
