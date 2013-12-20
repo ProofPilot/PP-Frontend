@@ -59,7 +59,8 @@
             function funcCustom() {
             	$(this).dialog("widget").find(".ui-dialog-titlebar").hide();
                 $('<div class="modal_close_btn">×</div>').appendTo($(this));
-                $('.modal_close_btn, .cancel a').on('click', function() {
+                $('.modal_close_btn, .cancel a, .btn_cancel').on('click', function(e) {
+                    e.preventDefault();
                     $(this).closest('.ui-dialog-content').dialog("close");
                 });
             }
@@ -69,7 +70,7 @@
                 e.preventDefault();
                 $('#email_list').dialog({
                     modal: true,
-                    width: '300',
+                    width: '330',
                     fluid: true,
                     resizable: false,
                     position: ['top',100],
@@ -78,7 +79,7 @@
             });
 
             var count = 1;
-            $('#email_list').on('click', 'a', function(e) {
+            $('#email_list .others').on('click', 'a', function(e) {
                 if (count < 5 ){
                     e.preventDefault();
                     $('<input type="text" name="send_to['+count+']"/>').insertBefore($(this));
@@ -523,16 +524,25 @@
          {% include 'CyclogramFrontendBundle:Authentification:reset_password_confirmation_content.html.twig' %}
     </div>
     <form id="email_list" action="{{path('_email_to_friend', {'studyCode' : studyCode})}}">
-        <p  id="mail_send_result" style="display: none"></p>
-        <label>E-mail from:</label>
-        <input type="text" name="send_from"/>
-        <label>E-mail to:</label>
-        <input type="text" name="send_to[0]"/>
-        <a href=""> + add email(up to 5 e-mails )</a>
-        <label>Subject:</label>
-        <input type="text" name="subject" value="{%  trans from "study" %}social_join_study{% endtrans %}{{ studycontent.studyName }} {%  trans from "study" %}social_at_proofpilot{% endtrans %}"/>
-        <textarea rows="" cols="22" name="description">{{ studycontent.studyAbout |striptags }}</textarea>
-        <input type="submit" class="submit btn_login" value="SEND"/>
+        <h1>Send e-mail to a friend</h1>
+        <div class="sender_info">
+            <label for="tmp_who">Who is sending?</label>
+            <input id="tmp_who" type="text" class="text" placeholder="Type your e-mail" /><br />
+            <label for="tmp_to">Who are you sending to?</label>
+            <input id="tmp_to" type="text" class="text" placeholder="Type recipient email" /><br />
+            <p class="others">
+                <a href="#">+ Add another e-mail</a>
+                <span>(up to 5 e-mails)</span>
+            </p>
+        </div>
+        <div class="msg_details">
+            <label for="tmp_subject">Subject</label>
+            <input id="tmp_subject" type="text" class="text" placeholder="Join the study,Sexual Health Promotion ..." />
+            <label for="tmp_msg">Message</label>
+            <input id="tmp_msg" type="text" class="text" placeholder="Join the study,Sexual Health Promotion ..." />
+            <a href="#" class="btn_cancel">Cancel</a>
+            <a href="#" class="btn_send_mail">Send e-mail</a>
+        </div>
     </form>
     <div id="embed_list" style="display:none;">
         <code><a href="{{host}}{{path('_page', {'studyUrl' : studyUrl})}}">{{host}}{{path('_page', {'studyUrl' : studyUrl})}}</a></code>

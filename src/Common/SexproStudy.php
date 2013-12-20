@@ -198,7 +198,7 @@ class SexproStudy extends AbstractStudy implements StudyInterface
                     $iSexProActivity = $em
                             ->getRepository(
                                         'CyclogramProofPilotBundle:Intervention')
-                                ->findOneByInterventionCode("SexProTestPledge");
+                                ->findOneByInterventionCode("SexproPledge");
                         $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')
                                 ->addParticipantInterventionLink($participant,$iSexProActivity);
                     }

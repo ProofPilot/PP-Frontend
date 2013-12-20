@@ -1319,10 +1319,11 @@ header .header_menu span.text  , .footer_col_right span.text  {
 	float: left;
 	background: #f8f7ef;
 	border: 1px solid #dfded5;
-	border-radius: 5px;
+	border-radius: 5px 0px;
 	padding: 20px 14px 20px 14px;
 	width: 100%;
 	max-width: 653px;
+	position: relative;
 }
 .panel .panel_right .dashboard_panel .choices_box h2 {
 	color: #c4433a;
@@ -1347,6 +1348,7 @@ header .header_menu span.text  , .footer_col_right span.text  {
 	background: white;
 	width: 100%;
 	max-width: 651px;
+	position: relative;
 }
 .panel .panel_right .dashboard_panel .choices_box .featured_box  .banner_box {
 	float: left;
@@ -1401,7 +1403,6 @@ header .header_menu span.text  , .footer_col_right span.text  {
 .panel .panel_right .dashboard_panel .choices_box .featured_box  .text_box {
 	float: left;
 	width: 360px;
-	padding-top: 40px;
 	width: 330px;
 	padding-right: 30px;
 }
@@ -3453,32 +3454,6 @@ footer .row_2 p {
 	position: relative;
 	left: 5px;
 }
-#embed_list {
-	padding: 20px;
-}
-#email_list {
-	display: none;
-	padding: 20px;
-}
-#email_list input {
-	margin-bottom: 15px;
-	width: 98%;
-}
-#email_list a {
-	font-size: 12px;
-	color: #4283a8;
-	display: block;
-	margin-bottom: 15px;
-}
-#email_list textarea {
-	width: 100%;
-	min-height: 100px;
-}
-#email_list .submit {
-	width: 100px;
-	margin-top: 25px;
-	margin-left: 80px;
-}
 .ui-widget-header {
 	background: linear-gradient(to bottom, #CB4E45 0%, #BB392A 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);
 }
@@ -3515,4 +3490,286 @@ footer .row_2 p {
 	top: 5px;
 	right: 8px;
 	cursor: pointer;
+}
+/*Pledge popup*/
+#pledge_popup {
+	padding: 20px 20px 0px 20px;
+	background-color: #F7F7F7;
+	overflow: hidden;
+	border-radius: 5px;
+}
+#pledge_popup .content_banner {
+	margin-left: 5px;
+	float: left;
+}
+#pledge_popup .content_text {
+	float: left;
+	margin-left: 25px;
+}
+#pledge_popup .content_text h1 {
+    color: #D2503C;
+    font-family: 'Roboto';
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+}
+#pledge_popup .content_text textarea {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    resize: none;
+}
+#pledge_popup .content_text p, #pledge_popup .content_text textarea {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #DCDCDC;
+    border-radius: 3px 3px 3px 3px;
+    color: #767676;
+    height: 70px;
+    padding: 13px 15px 0;
+    width: 369px;
+}
+#pledge_popup ul.social {
+    background: #EDEDED;
+    border-top: 1px solid #C7C7C8;
+    clear: both;
+    float: left;
+    height: 55px;
+    list-style: none outside none;
+    margin: 20px 0 0 -20px;
+    padding: 15px 0 0;
+    width: 108%;
+}
+#pledge_popup ul.social li.col_1 {
+    margin-left: 125px;
+    margin-right: 15px;
+}
+#pledge_popup ul.social li {
+    float: left;
+}
+#pledge_popup ul.social li a.fb {
+    background: linear-gradient(to bottom, #3D629B 0%, #2D4F89 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);
+    border: 1px solid #3C5A9A;
+}
+#pledge_popup ul.social li a {
+    border-radius: 3px 3px 3px 3px;
+    color: #FFFFFF;
+    display: inline-block;
+    font-family: 'Roboto';
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    height: 36px;
+    line-height: 36px;
+    min-width: 145px;
+    padding-left: 15px;
+    padding-right: 15px;
+    text-align: center;
+}
+#pledge_popup ul.social li a.fb span {
+    background: url("../images/icon_btn_reg_fb.png") no-repeat scroll 0 50% / 9px 17px rgba(0, 0, 0, 0);
+}
+#pledge_popup ul.social li a span {
+    display: inline-block;
+    line-height: 36px;
+    padding-left: 25px;
+}
+#pledge_popup ul.social li a.tw {
+    background: linear-gradient(to bottom, #2FCBFD 0%, #1DB1E1 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);
+    border: 1px solid #2BB0DB;
+}
+#pledge_popup ul.social li a.tw span {
+    background: url("../images/icon_tw.png") no-repeat scroll 0 50% / 17px 13px rgba(0, 0, 0, 0);
+}
+.panel .panel_right .dashboard_panel .choices_box a.close_all {
+    color: #727272;
+    display: block;
+    font-size: 13px;
+    position: absolute;
+    right: 22px;
+    top: 23px;
+    z-index: 10;
+}
+.panel .panel_right .dashboard_panel .choices_box a.close_all span, .panel .panel_right .dashboard_panel .choices_box .featured_box a.close {
+    background: url("../images/close_all_x.png") no-repeat scroll 100% 50% / 9px 9px rgba(0, 0, 0, 0);
+    display: inline-block;
+    padding-right: 20px;
+}
+.panel .panel_right .dashboard_panel .choices_box .featured_box a.close {
+    height: 9px;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    width: 9px;
+    z-index: 10;
+}
+/*More studies box*/
+.panel .panel_right .dashboard_panel .box_more_studies {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    -moz-box-sizing: border-box;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-color: -moz-use-text-color #DFDED5 #DFDED5;
+    border-image: none;
+    border-right: 1px solid #DFDED5;
+    border-style: none solid solid;
+    border-width: 0 1px 1px;
+    float: left;
+    margin-bottom: 20px;
+    padding: 20px 30px 30px;
+    position: relative;
+    width: 100%;
+}
+.panel .panel_right .dashboard_panel .box_more_studies a.more {
+    color: #727272;
+    font-size: 13px;
+    position: absolute;
+    right: 40px;
+    top: 25px;
+    z-index: 10;
+}
+.panel .panel_right .dashboard_panel .box_more_studies a.more span {
+    background: url("../images/box_more_studies_more.png") no-repeat scroll 100% 50% / 7px 11px rgba(0, 0, 0, 0);
+    display: inline-block;
+    padding-right: 18px;
+}
+.panel .panel_right .dashboard_panel .box_more_studies h3 {
+    color: #33383F;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 25px;
+}
+.panel .panel_right .dashboard_panel .studies_wrapper {
+    -moz-box-sizing: border-box;
+    clear: both;
+    float: left;
+    width: 100%;
+}
+.panel .panel_right .dashboard_panel .box_more_studies .more_studies_col {
+    float: left;
+    padding-right: 40px;
+    width: 176px;
+}
+.panel .panel_right .dashboard_panel .box_more_studies .more_studies_col img {
+    margin-bottom: 10px;
+}
+.panel .panel_right .dashboard_panel .box_more_studies .more_studies_col h4 a {
+    color: #33383F;
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
+}
+.panel .panel_right .dashboard_panel .box_more_studies .more_studies_col.last {
+    padding-right: 0;
+}
+.panel .panel_right .dashboard_panel .box_more_studies .more_studies_col p {
+    color: #4D4D4D;
+    font-size: 12px;
+    margin: 0;
+}
+.panel .panel_right .dashboard_panel .box_more_studies .more_studies_col p.category {
+    color: #9B9B9B;
+    margin-bottom: 12px;
+}
+/*Email to a friend popup*/
+#email_list {
+    padding: 15px 20px;
+}
+#email_list .modal_close_btn {
+	top: 12px;
+}
+#email_list h1 {
+    background: url("../images/mail_icon.png") no-repeat scroll 0px 50% / 18px 12px rgba(0, 0, 0, 0);
+    color: #BF3D2C;
+    font-size: 16px;
+    text-transform: uppercase;
+    padding-right: 45px;
+    padding-left: 15px;
+    text-align: center;
+    margin-bottom: 45px;
+}
+#email_list .sender_info {
+	padding-bottom: 15px;
+}
+#email_list .sender_info label, #email_list .msg_details label {
+    color: #4F4F4F;
+    display: inline-block;
+    font-weight: 700;
+    margin-bottom: 3px;
+    width: 100%;
+}
+#email_list .sender_info input, #email_list .msg_details input {
+    border: 1px solid #C9C9C9;
+    border-radius: 3px 3px 3px 3px;
+    color: #6F6F6F;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    line-height: 38px;
+    font-size: 13px;
+    height: 32px;
+    margin-bottom: 15px;
+    padding-left: 10px;
+    width: 100%;
+    -moz-box-sizing: border-box;
+}
+#email_list .sender_info p.others {
+    font-size: 13px;
+    margin: 0;
+    text-align: center;
+}
+#email_list .sender_info p.others a {
+    color: #C1402E;
+}
+#email_list .sender_info p.others a:hover {
+	text-decoration: underline;
+}
+#email_list .sender_info p.others span {
+    clear: both;
+    display: block;
+    width: 100%;
+    color: #6F6F6F;
+}
+#email_list .msg_details {
+    background: none repeat scroll 0 0 #F5F6F7;
+    padding-bottom: 15px;
+    padding-top: 15px;
+    -moz-box-sizing: border-box;
+    float: left;
+    margin-left: -20px;
+    padding-left: 20px;
+    padding-right: 18px;
+    width: 114%;
+}
+#email_list .msg_details a.btn_cancel {
+    clear: both;
+    color: #6F6F6F;
+    float: left;
+    font-size: 13px;
+    line-height: 42px;
+    margin-left: 5px;
+}
+#email_list .msg_details a.btn_send_mail {
+    background: linear-gradient(to bottom, #E4634C 0%, #BC3A2A 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);
+    border: 1px solid #BA4C3A;
+    border-radius: 3px 3px 3px 3px;
+    color: #FFFFFF;
+    display: block;
+    float: right;
+    font-weight: 700;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    width: 73px;
+    display: inline-block !important;
+    font-size: 18px;
+    height: 42px !important;
+    line-height: 42px !important;
+    padding: 0 !important;
+    text-transform: uppercase;
+    width: 164px !important;
 }
