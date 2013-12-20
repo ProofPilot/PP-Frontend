@@ -146,7 +146,7 @@ class SexproStudy extends AbstractStudy implements StudyInterface
             $participantInterventionLink = new ParticipantInterventionLink();
             $intervention = $em
                     ->getRepository('CyclogramProofPilotBundle:Intervention')
-                    ->findOneByInterventionCode('SexProBaselineSurvey');
+                    ->findOneByInterventionCode('SexproPledge');
             $participantInterventionLink->setIntervention($intervention);
             $participantInterventionLink->setParticipant($participant);
             $participantInterventionLink
