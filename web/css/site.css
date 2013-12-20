@@ -1319,10 +1319,11 @@ header .header_menu span.text  , .footer_col_right span.text  {
 	float: left;
 	background: #f8f7ef;
 	border: 1px solid #dfded5;
-	border-radius: 5px;
+	border-radius: 5px 0px;
 	padding: 20px 14px 20px 14px;
 	width: 100%;
 	max-width: 653px;
+	position: relative;
 }
 .panel .panel_right .dashboard_panel .choices_box h2 {
 	color: #c4433a;
@@ -1347,6 +1348,7 @@ header .header_menu span.text  , .footer_col_right span.text  {
 	background: white;
 	width: 100%;
 	max-width: 651px;
+	position: relative;
 }
 .panel .panel_right .dashboard_panel .choices_box .featured_box  .banner_box {
 	float: left;
@@ -1401,7 +1403,6 @@ header .header_menu span.text  , .footer_col_right span.text  {
 .panel .panel_right .dashboard_panel .choices_box .featured_box  .text_box {
 	float: left;
 	width: 360px;
-	padding-top: 40px;
 	width: 330px;
 	padding-right: 30px;
 }
@@ -3606,4 +3607,97 @@ footer .row_2 p {
 }
 #pledge_popup ul.social li a.tw span {
     background: url("../images/icon_tw.png") no-repeat scroll 0 50% / 17px 13px rgba(0, 0, 0, 0);
+}
+.panel .panel_right .dashboard_panel .choices_box a.close_all {
+    color: #727272;
+    display: block;
+    font-size: 13px;
+    position: absolute;
+    right: 22px;
+    top: 23px;
+    z-index: 10;
+}
+.panel .panel_right .dashboard_panel .choices_box a.close_all span, .panel .panel_right .dashboard_panel .choices_box .featured_box a.close {
+    background: url("../images/close_all_x.png") no-repeat scroll 100% 50% / 9px 9px rgba(0, 0, 0, 0);
+    display: inline-block;
+    padding-right: 20px;
+}
+.panel .panel_right .dashboard_panel .choices_box .featured_box a.close {
+    height: 9px;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    width: 9px;
+    z-index: 10;
+}
+/*More studies box*/
+.panel .panel_right .dashboard_panel .box_more_studies {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    -moz-box-sizing: border-box;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-color: -moz-use-text-color #DFDED5 #DFDED5;
+    border-image: none;
+    border-right: 1px solid #DFDED5;
+    border-style: none solid solid;
+    border-width: 0 1px 1px;
+    float: left;
+    margin-bottom: 20px;
+    padding: 20px 30px 30px;
+    position: relative;
+    width: 100%;
+}
+.panel .panel_right .dashboard_panel .box_more_studies a.more {
+    color: #727272;
+    font-size: 13px;
+    position: absolute;
+    right: 40px;
+    top: 25px;
+    z-index: 10;
+}
+.panel .panel_right .dashboard_panel .box_more_studies a.more span {
+    background: url("../images/box_more_studies_more.png") no-repeat scroll 100% 50% / 7px 11px rgba(0, 0, 0, 0);
+    display: inline-block;
+    padding-right: 18px;
+}
+.panel .panel_right .dashboard_panel .box_more_studies h3 {
+    color: #33383F;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 25px;
+}
+.panel .panel_right .dashboard_panel .studies_wrapper {
+    -moz-box-sizing: border-box;
+    clear: both;
+    float: left;
+    width: 100%;
+}
+.panel .panel_right .dashboard_panel .box_more_studies .more_studies_col {
+    float: left;
+    padding-right: 40px;
+    width: 176px;
+}
+.panel .panel_right .dashboard_panel .box_more_studies .more_studies_col img {
+    margin-bottom: 10px;
+}
+.panel .panel_right .dashboard_panel .box_more_studies .more_studies_col h4 a {
+    color: #33383F;
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
+}
+.panel .panel_right .dashboard_panel .box_more_studies .more_studies_col.last {
+    padding-right: 0;
+}
+.panel .panel_right .dashboard_panel .box_more_studies .more_studies_col p {
+    color: #4D4D4D;
+    font-size: 12px;
+    margin: 0;
+}
+.panel .panel_right .dashboard_panel .box_more_studies .more_studies_col p.category {
+    color: #9B9B9B;
+    margin-bottom: 12px;
 }
