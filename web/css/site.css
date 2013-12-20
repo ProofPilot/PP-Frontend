@@ -2265,6 +2265,7 @@ div.panel div.panel_right div.prev_next ul li a.next span {
 	color: #7e7e7e;
 	font-size: 15px;
 	line-height: 150%;
+	margin-bottom: 20px;
 }
 .intro_page .text_wrapper  .page_bg {
 	background: url(../images/bg_text_page.png) repeat-y 0px 0px;
@@ -3678,6 +3679,8 @@ footer .row_2 p {
 /*Email to a friend popup*/
 #email_list {
     padding: 15px 20px;
+    background: #fff;
+    border-radius: 5px;
 }
 #email_list .modal_close_btn {
 	top: 12px;
@@ -3743,7 +3746,7 @@ footer .row_2 p {
     margin-left: -20px;
     padding-left: 20px;
     padding-right: 18px;
-    width: 114%;
+    width: 113.7%;
 }
 #email_list .msg_details a.btn_cancel {
     clear: both;

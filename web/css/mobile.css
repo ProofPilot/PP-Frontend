@@ -457,6 +457,9 @@
 #div_consent .mobile_reg .align_center {
     text-align: center;
 }
+#div_consent .for_mobile_center {
+	display: none;
+}
 #div_consent .mobile_reg .join a.btn {
 	background: linear-gradient(to bottom, #97C52C 0%, #7EA61F 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);
     border: 1px solid #7EA61F;
