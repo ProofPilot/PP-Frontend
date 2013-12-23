@@ -3776,3 +3776,24 @@ footer .row_2 p {
     text-transform: uppercase;
     width: 164px !important;
 }
+/*Social icons*/
+.social_icons_block {
+	overflow: hidden;
+	margin-top: 50px;
+}
+.twitter_icon, .facebook_icon, .google_plus_icon {
+	width: 25px;
+	height: 25px;
+	float: left;
+	margin-right: 10px;
+	display: block;
+}
+.twitter_icon {
+	background: url(../images/twitter_social_icon.png) no-repeat;
+}
+.facebook_icon {
+	background: url(../images/facebook_social_icon.png) no-repeat;
+}
+.google_plus_icon {
+	background: url(../images/googleplus_social_icon.png) no-repeat;
+}
