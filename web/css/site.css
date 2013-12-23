@@ -3664,7 +3664,7 @@ footer .row_2 p {
     margin: 0;
     padding: 0;
 }
-.panel .panel_right .dashboard_panel .box_more_studies .more_studies_col.last {
+.panel .panel_right .dashboard_panel .box_more_studies .more_studies_col:last-child {
     padding-right: 0;
 }
 .panel .panel_right .dashboard_panel .box_more_studies .more_studies_col p {
