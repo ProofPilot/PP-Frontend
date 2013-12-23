@@ -19,6 +19,8 @@
 namespace Cyclogram\Bundle\ProofPilotBundle\Repository;
 
 
+use Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantArmLink;
+
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\Mapping as ORM;
@@ -32,10 +34,12 @@ class ParticipantArmLinkRepository extends EntityRepository{
                 INNER JOIN pal.arm  a
                 INNER JOIN a.study s
                 WHERE pal.participant = :username
-                AND s.studyCode = :studycode')
+                AND s.studyCode = :studycode
+                AND pal.status <> :dismiss')
                 ->setParameters(array(
                         'username' => $participant,
-                        'studycode' => $studyCode
+                        'studycode' => $studyCode,
+                        'dismiss' => ParticipantArmLink::STATUS_DISMISS
                 ))
                 ->getOneOrNullResult();
         
@@ -49,8 +53,10 @@ class ParticipantArmLinkRepository extends EntityRepository{
                 INNER JOIN pal.arm a
                 WHERE a.armCode = :armCode
                 AND p.participantEmail = :email
+                AND pal.status <> :dismiss
                 ")->setParameters(array('armCode' => $armCode,
-                        'email' => $participantEmail))->getSingleResult();
+                        'email' => $participantEmail,
+                        'dismiss' => ParticipantArmLink::STATUS_DISMISS))->getSingleResult();
     
     }
     
@@ -59,7 +65,9 @@ class ParticipantArmLinkRepository extends EntityRepository{
        return $this->getEntityManager()->createQuery("SELECT pal FROM  CyclogramProofPilotBundle:ParticipantArmLink pal
                 INNER JOIN pal.participant p
                 WHERE p.participantEmail = :email
-                ")->setParameter('email', $participantEmail)->getResult();
+                AND pal.status <> :dismiss
+                ")->setParameter('email', $participantEmail)
+                  ->setParameter('dismiss',ParticipantArmLink::STATUS_DISMISS)->getResult();
     }
     
 }

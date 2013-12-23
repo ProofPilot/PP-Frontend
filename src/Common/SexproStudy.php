@@ -165,68 +165,70 @@ class SexproStudy extends AbstractStudy implements StudyInterface
         $participantArm = $em
                 ->getRepository('CyclogramProofPilotBundle:ParticipantArmLink')
                 ->getStudyArm($participant, $this->getStudyCode());
-        $participantArmName = $participantArm->getArm()->getArmName();
-        //get all participant intervention links
-        $interventionLinks = $em
-                ->getRepository(
-                        'CyclogramProofPilotBundle:ParticipantInterventionLink')
-                ->getStudyInterventionLinks($participant, $this->getStudyCode());
-
-        foreach ($interventionLinks as $interventionLink) {
-            $interventionTypeName = $interventionLink->getIntervention()
-                    ->getInterventionType()->getInterventionTypeName();
-            $intervention = $interventionLink->getIntervention();
-            $status = $interventionLink->getStatus();
-
-            switch ($interventionTypeName) {
-            case "Survey & Observation":
-                $surveyId = $intervention->getSidId();
-                if ($status == ParticipantInterventionLink::STATUS_ACTIVE) {
-                    $passed = $em
-                            ->getRepository(
-                                    'CyclogramProofPilotBundle:ParticipantSurveyLink')
-                            ->checkIfSurveyPassed($participant, $surveyId);
-                    if ($passed) {
-                        $this->createIncentive($participant, $intervention);
-                        $interventionLink->setStatus(ParticipantInterventionLink::STATUS_CLOSED);
-                        $em->persist($interventionLink);
-                        $em->flush();
-                        $status = ParticipantInterventionLink::STATUS_CLOSED;
+        if (isset($participantArm)) {
+            $participantArmName = $participantArm->getArm()->getArmName();
+            //get all participant intervention links
+            $interventionLinks = $em
+                    ->getRepository(
+                            'CyclogramProofPilotBundle:ParticipantInterventionLink')
+                    ->getStudyInterventionLinks($participant, $this->getStudyCode());
+    
+            foreach ($interventionLinks as $interventionLink) {
+                $interventionTypeName = $interventionLink->getIntervention()
+                        ->getInterventionType()->getInterventionTypeName();
+                $intervention = $interventionLink->getIntervention();
+                $status = $interventionLink->getStatus();
+    
+                switch ($interventionTypeName) {
+                case "Survey & Observation":
+                    $surveyId = $intervention->getSidId();
+                    if ($status == ParticipantInterventionLink::STATUS_ACTIVE) {
+                        $passed = $em
+                                ->getRepository(
+                                        'CyclogramProofPilotBundle:ParticipantSurveyLink')
+                                ->checkIfSurveyPassed($participant, $surveyId);
+                        if ($passed) {
+                            $this->createIncentive($participant, $intervention);
+                            $interventionLink->setStatus(ParticipantInterventionLink::STATUS_CLOSED);
+                            $em->persist($interventionLink);
+                            $em->flush();
+                            $status = ParticipantInterventionLink::STATUS_CLOSED;
+                        }
                     }
-                }
-                if (($status == ParticipantInterventionLink::STATUS_CLOSED)) {
-                    $iSexProActivity = $em
-                            ->getRepository(
-                                        'CyclogramProofPilotBundle:Intervention')
-                                ->findOneByInterventionCode("SexproPledge");
-                        $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')
-                                ->addParticipantInterventionLink($participant,$iSexProActivity);
-                    }
-                break;
-            case "Activity":
-                if ($participantArmName == 'SexPro3Month') {
-                    if ($intervention->getInterventionCode()
-                            == "SexProActivity") {
-                        $em->remove($interventionLink);
-                        $em->flush();
-                    }
-                }
-                break;
-            case "Pledge":
-                
-                if ($participantArmName == 'SexProBaseLine') {
-                    if (($status == ParticipantInterventionLink::STATUS_CLOSED)
-                            && ($intervention->getInterventionCode()
-                                    == "SexProBaselineSurvey")) {
+                    if (($status == ParticipantInterventionLink::STATUS_CLOSED)) {
                         $iSexProActivity = $em
-                        ->getRepository(
-                                'CyclogramProofPilotBundle:Intervention')
-                                ->findOneByInterventionCode("SexProActivity");
-                        $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')
-                        ->addParticipantInterventionLink($participant,$iSexProActivity);
+                                ->getRepository(
+                                            'CyclogramProofPilotBundle:Intervention')
+                                    ->findOneByInterventionCode("SexproPledge");
+                            $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')
+                                    ->addParticipantInterventionLink($participant,$iSexProActivity);
+                        }
+                    break;
+                case "Activity":
+                    if ($participantArmName == 'SexPro3Month') {
+                        if ($intervention->getInterventionCode()
+                                == "SexProActivity") {
+                            $em->remove($interventionLink);
+                            $em->flush();
+                        }
                     }
+                    break;
+                case "Pledge":
+                    
+                    if ($participantArmName == 'SexProBaseLine') {
+                        if (($status == ParticipantInterventionLink::STATUS_CLOSED)
+                                && ($intervention->getInterventionCode()
+                                        == "SexProBaselineSurvey")) {
+                            $iSexProActivity = $em
+                            ->getRepository(
+                                    'CyclogramProofPilotBundle:Intervention')
+                                    ->findOneByInterventionCode("SexProActivity");
+                            $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')
+                            ->addParticipantInterventionLink($participant,$iSexProActivity);
+                        }
+                    }
+                    break;
                 }
-                break;
             }
         }
     }

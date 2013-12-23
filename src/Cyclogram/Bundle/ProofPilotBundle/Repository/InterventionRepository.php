@@ -18,6 +18,8 @@
 */
 namespace Cyclogram\Bundle\ProofPilotBundle\Repository;
 
+use Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantInterventionLink;
+
 use Doctrine\ORM\EntityRepository;
 
 class InterventionRepository extends EntityRepository {
@@ -92,8 +94,10 @@ class InterventionRepository extends EntityRepository {
                     INNER JOIN pil.participant p 
                     WHERE i.interventionCode = :interventionCode
                     AND p.participantEmail = :email
+                    AND pil.status <> :dismiss
                     ")->setParameters(array('interventionCode' => $interventionCode,
-                                            'email' => $participantEmail))->getSingleResult();
+                                            'email' => $participantEmail,
+                                            'dismiss' => ParticipantInterventionLink::STATUS_DISMISS))->getSingleResult();
 
     }
 
@@ -103,7 +107,9 @@ class InterventionRepository extends EntityRepository {
         return $this->getEntityManager()->createQuery("SELECT pil FROM CyclogramProofPilotBundle:ParticipantInterventionLink pil
                 INNER JOIN pil.participant p
                 WHERE p.participantEmail = :email
-                ")->setParameter('email',$participantEmail)->getResult();;
+                AND pil.status <> :dismiss
+                ")->setParameter('email',$participantEmail)
+                 ->setParameter('dismiss' , ParticipantInterventionLink::STATUS_DISMISS)->getResult();
         
 
     }

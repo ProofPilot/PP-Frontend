@@ -75,35 +75,36 @@ class PledgeStudy extends AbstractStudy implements StudyInterface
         $em = $this->container->get('doctrine')->getManager();
         
         $participantArm = $em->getRepository('CyclogramProofPilotBundle:ParticipantArmLink')->getStudyArm($participant, $this->getStudyCode());
-        $participantArmName = $participantArm->getArm()->getArmCode();
-        //get all participant intervention links
-        $interventionLinks = $em
-        ->getRepository(
-                'CyclogramProofPilotBundle:ParticipantInterventionLink')
-                ->getStudyInterventionLinks($participant, $this->getStudyCode());
-        foreach ($interventionLinks as $interventionLink) {
-            $interventionCode = $interventionLink->getIntervention()->getInterventionCode();
-            $intervention = $interventionLink->getIntervention();
-            $status = $interventionLink->getStatus();
-            switch ($interventionCode) {
-                case 'MPFORM' :
-                    $surveyId = $intervention->getSidId();
-                    if ($status == ParticipantInterventionLink::STATUS_ACTIVE) {
-                        $passed = $em->getRepository('CyclogramProofPilotBundle:ParticipantSurveyLink')
-                        ->checkIfSurveyPassed($participant, $surveyId);
-                        if ($passed) {
-                            $this->createIncentive($participant, $intervention);
-                            $interventionLink->setStatus(ParticipantInterventionLink::STATUS_CLOSED);
-                            $em->persist($interventionLink);
-                            $em->flush();
-                            $intervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')
-                                ->findOneByInterventionCode("MPFOCUS");
-                            $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')
-                                ->addParticipantInterventionLink($participant,$intervention, false);
+        if (isset($participantArm))
+            $participantArmName = $participantArm->getArm()->getArmCode();
+            //get all participant intervention links
+            $interventionLinks = $em
+            ->getRepository(
+                    'CyclogramProofPilotBundle:ParticipantInterventionLink')
+                    ->getStudyInterventionLinks($participant, $this->getStudyCode());
+            foreach ($interventionLinks as $interventionLink) {
+                $interventionCode = $interventionLink->getIntervention()->getInterventionCode();
+                $intervention = $interventionLink->getIntervention();
+                $status = $interventionLink->getStatus();
+                switch ($interventionCode) {
+                    case 'MPFORM' :
+                        $surveyId = $intervention->getSidId();
+                        if ($status == ParticipantInterventionLink::STATUS_ACTIVE) {
+                            $passed = $em->getRepository('CyclogramProofPilotBundle:ParticipantSurveyLink')
+                            ->checkIfSurveyPassed($participant, $surveyId);
+                            if ($passed) {
+                                $this->createIncentive($participant, $intervention);
+                                $interventionLink->setStatus(ParticipantInterventionLink::STATUS_CLOSED);
+                                $em->persist($interventionLink);
+                                $em->flush();
+                                $intervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')
+                                    ->findOneByInterventionCode("MPFOCUS");
+                                $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')
+                                    ->addParticipantInterventionLink($participant,$intervention, false);
+                            }
                         }
-                    }
-                    break;
-            }
+                        break;
+                }
         }
     }
     

@@ -169,19 +169,16 @@
                                         <h4>{{ intervention.title  | raw }}</h4>
                                         <p>{{ intervention.content | raw }}</p>
                                     </div>
-{#                                     {% if intervention.url is defined and intervention.url is not empty%}#}
-{#                                         <div class="button_box"> <a href="{{ intervention.url }}"><span>{% trans from "dashboard" %}do_it{% endtrans %}</span></a> </div> #}
-{#                                     {% endif %}#}
-{#                                     {% if intervention.type is defined %}#}
-{#                                         <div class="button_box">#}
-{#                                         <a href="#" id="pledge"><span>{% trans from "dashboard" %}do_it{% endtrans %}</span></a> #}
-{#                                          </div>#}
-{#                                     {% endif %}#}
+                                     {% if intervention.url is defined and intervention.url is not empty%}
+                                         <div class="button_box"> <a href="{{ intervention.url }}"><span>{% trans from "dashboard" %}do_it{% endtrans %}</span></a> </div> 
+                                     {% endif %}
+                                     {% if intervention.type is defined %}
                                     <div class="social_icons_block">
                                         <a href="" class="twitter_icon"></a>
                                         <a href="" class="facebook_icon"></a>
                                         <a href="" class="google_plus_icon"></a>
                                     </div>
+                                     {% endif %}
                                 </div>
                             {% endfor %}
                         {% else %}

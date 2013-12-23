@@ -216,15 +216,20 @@ class DashboardController extends Controller
             $data = $request->request->all();
             if (isset($data['interventionCode'])) {
                 $intervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')->findOneByInterventionCode($data['interventionCode']);
-                $studyCode = $em->getRepository('CyclogramProofPilotBundle:Intervention')->getInterventionStudyCode($intervention->getInterventionId());
-                $participantInterventionLink =  $em->getRepository('CyclogramProofPilotBundle:Intervention')->getInterventionByParticipantandCode($participantEmail, $data['interventionCode']);
+                $interventionType = $intervention->getInterventionType()->getInterventionTypeName();
+                
+                $participantInterventionLink = $em->getRepository('CyclogramProofPilotBundle:Intervention')->getInterventionByParticipantandCode($participantEmail, $data['interventionCode']);
                 $participantInterventionLink->setStatus(ParticipantInterventionLink::STATUS_DISMISS);
                 $em->persist($participantInterventionLink);
-                $arm = $em->getRepository('CyclogramProofPilotBundle:ParticipantArmLink')->getStudyArm($participant, $studyCode);
-                $participantArmLink = $em->getRepository('CyclogramProofPilotBundle:ParticipantArmLink')->getArmByParticipantandCode ( $participantEmail, $arm->getArm()->getArmCode());
-                $participantArmLink->setStatus(ParticipantArmLink::STATUS_DISMISS);
-                $em->persist($participantArmLink);
                 $em->flush();
+                if ($interventionType != 'Pledge' || $interventionType != 'Referral') {
+                    $studyCode = $em->getRepository('CyclogramProofPilotBundle:Intervention')->getInterventionStudyCode($intervention->getInterventionId());
+                    $arm = $em->getRepository('CyclogramProofPilotBundle:ParticipantArmLink')->getStudyArm($participant, $studyCode);
+                    $participantArmLink = $em->getRepository('CyclogramProofPilotBundle:ParticipantArmLink')->getArmByParticipantandCode ( $participantEmail, $arm->getArm()->getArmCode());
+                    $participantArmLink->setStatus(ParticipantArmLink::STATUS_DISMISS);
+                    $em->persist($participantArmLink);
+                    $em->flush();
+                }
                 $session->set('dismiss_message', $this->get('translator')->trans('txt_dismiss', array('%interventionName%' => $intervention->getInterventionName()), 'dashboard'));
                 return new Response(json_encode(array('url' => $this->generateUrl("_main"))));
             } else {
@@ -232,6 +237,7 @@ class DashboardController extends Controller
                 foreach ($interventions as $int) {
                     $int->setStatus(ParticipantInterventionLink::STATUS_DISMISS);
                     $em->persist($int);
+                    $intervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')->findOneByInterventionCode($int->getIntervention()->getInterventionCode());
                     $em->flush();
                 }
                 $arms = $em->getRepository('CyclogramProofPilotBundle:ParticipantArmLink')->getAllParticipantArms($participantEmail);
