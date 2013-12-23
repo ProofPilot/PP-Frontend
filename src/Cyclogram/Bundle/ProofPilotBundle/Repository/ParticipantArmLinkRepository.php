@@ -41,4 +41,25 @@ class ParticipantArmLinkRepository extends EntityRepository{
         
     }
     
+    public function getArmByParticipantandCode ( $participantEmail, $armCode )
+    {
+    
+        return $this->getEntityManager()->createQuery("SELECT pal FROM CyclogramProofPilotBundle:ParticipantArmLink pal
+                INNER JOIN pal.participant p
+                INNER JOIN pal.arm a
+                WHERE a.armCode = :armCode
+                AND p.participantEmail = :email
+                ")->setParameters(array('armCode' => $armCode,
+                        'email' => $participantEmail))->getSingleResult();
+    
+    }
+    
+    public function getAllParticipantArms ($participantEmail)
+    {
+       return $this->getEntityManager()->createQuery("SELECT pal FROM  CyclogramProofPilotBundle:ParticipantArmLink pal
+                INNER JOIN pal.participant p
+                WHERE p.participantEmail = :email
+                ")->setParameter('email', $participantEmail)->getResult();
+    }
+    
 }

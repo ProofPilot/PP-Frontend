@@ -21,11 +21,17 @@ namespace Cyclogram\FrontendBundle\Controller;
 
 
 
+use Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantArmLink;
+
+use Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantInterventionLink;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Cyclogram\Bundle\ProofPilotBundle\Entity\Participant;
 use JMS\SecurityExtraBundle\Annotation\Secure;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @Route("/main")
@@ -62,6 +68,8 @@ class DashboardController extends Controller
                     $parameters);
         }
         
+        $session = $this->getRequest()->getSession();
+        
         $request = $this->getRequest();
         $locale = $this->getRequest()->getLocale();
         
@@ -73,7 +81,7 @@ class DashboardController extends Controller
         $surveyscount = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')->getActiveParticipantInterventionsCount($participant);
         $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')->getActiveParticipantInterventionLinks($participant);
 
-        $session = $this->getRequest()->getSession();
+        
         
         $parameters = array();
         $parameters["interventioncount"] = $surveyscount;
@@ -93,6 +101,7 @@ class DashboardController extends Controller
             $intervention["name"] = $interventionContent->getInterventionName();
             $intervention["title"] = $interventionContent->getInterventionTitle();
             $intervention["content"] = $interventionContent->getInterventionDescripton();
+            $intervention["code"] = $interventionContent->getInterventionCode();
             if ($study->getStudyCode() == 'defaultparticipant') {
                 if ($interventionLink->getIntervention()->getInterventionCode() == 'DefaultParticipantCommunicationPreferences') {
                     $intervention["url"] =  $this->get('router')->generate('_contact_prefs');
@@ -108,8 +117,9 @@ class DashboardController extends Controller
                 $intervention['type'] = $interventionTypeName;
             $parameters["studyCode"] = $study->getStudyCode();
             $parameters["interventions"][] = $intervention;
+            
         }
-        
+        $parameters["studies"] = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:Study')->getRandomStudyInfo($locale);
         $parameters["actions"] = array(
                 array('activity' => $this->get('translator')->trans('past_activity.emai_confirmation_status', array(), 'dashboard'),
                         'class' => 'icon1 first'
@@ -154,6 +164,13 @@ class DashboardController extends Controller
             $parameters["confirm_email"] = false;
             $parameters["email_alert"] = $this->get('translator')->trans('txt_please_verify_email', array(), 'dashboard');
         }
+        if ($session->has('dismiss_message')) {
+            $parameters['dismiss_message'] = $session->get('dismiss_message');
+            $session->remove('dismiss_message');
+        } elseif ($session->has('dismiss_error_message')) {
+            $parameters['dismiss_message'] = $session->gets('dismiss_error_message');
+            $session->remove('dismiss_error_message');
+        }
 
       return $this->render('CyclogramFrontendBundle:Dashboard:main.html.twig', $parameters);
     
@@ -183,4 +200,52 @@ class DashboardController extends Controller
             
         }
     }
+    
+    /**
+     * @Route("/dismiss_ajax/", name="_dismiss_ajax")
+     * @Secure(roles="ROLE_PARTICIPANT, IS_AUTHENTICATED_REMEMBERED")
+     * @Template()
+     */
+    public function dismissAjaxAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $session = $this->getRequest()->getSession();
+        $participant = $this->get('security.context')->getToken()->getUser();
+        $participantEmail = $participant->getParticipantEmail();
+        if($request->isXmlHttpRequest()) {
+            $data = $request->request->all();
+            if (isset($data['interventionCode'])) {
+                $intervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')->findOneByInterventionCode($data['interventionCode']);
+                $studyCode = $em->getRepository('CyclogramProofPilotBundle:Intervention')->getInterventionStudyCode($intervention->getInterventionId());
+                $participantInterventionLink =  $em->getRepository('CyclogramProofPilotBundle:Intervention')->getInterventionByParticipantandCode($participantEmail, $data['interventionCode']);
+                $participantInterventionLink->setStatus(ParticipantInterventionLink::STATUS_DISMISS);
+                $em->persist($participantInterventionLink);
+                $arm = $em->getRepository('CyclogramProofPilotBundle:ParticipantArmLink')->getStudyArm($participant, $studyCode);
+                $participantArmLink = $em->getRepository('CyclogramProofPilotBundle:ParticipantArmLink')->getArmByParticipantandCode ( $participantEmail, $arm->getArm()->getArmCode());
+                $participantArmLink->setStatus(ParticipantArmLink::STATUS_DISMISS);
+                $em->persist($participantArmLink);
+                $em->flush();
+                $session->set('dismiss_message', $this->get('translator')->trans('txt_dismiss', array('%interventionName%' => $intervention->getInterventionName()), 'dashboard'));
+                return new Response(json_encode(array('url' => $this->generateUrl("_main"))));
+            } else {
+                $interventions = $em->getRepository('CyclogramProofPilotBundle:Intervention')->getAllParticipantIntervention($participantEmail);
+                foreach ($interventions as $int) {
+                    $int->setStatus(ParticipantInterventionLink::STATUS_DISMISS);
+                    $em->persist($int);
+                    $em->flush();
+                }
+                $arms = $em->getRepository('CyclogramProofPilotBundle:ParticipantArmLink')->getAllParticipantArms($participantEmail);
+                foreach ($arms as $arm) {
+                    $arm->setStatus(ParticipantArmLink::STATUS_DISMISS);
+                    $em->persist($arm);
+                    $em->flush();
+                }
+                $session->set('dismiss_message', $this->get('translator')->trans('txt_dismiss_all', array(), 'dashboard'));
+                return new Response(json_encode(array('url' => $this->generateUrl("_main"))));
+            }
+            $session->set('dismiss_error_message', $this->get('translator')->trans('txt_dismiss', array('%interventionName%' => $intervention->getInterventionName()), 'dashboard'));
+            return new Response(json_encode(array('url' => $this->generateUrl("_main"))));
+        }
+    }
+    
 }

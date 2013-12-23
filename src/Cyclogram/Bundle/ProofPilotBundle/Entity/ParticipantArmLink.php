@@ -30,6 +30,8 @@ use Doctrine\ORM\Mapping as ORM;
 class ParticipantArmLink
 {
     const STATUS_ACTIVE =1;
+    const STATUS_DISMISS = 28;
+    
     /**
      * @var integer
      *

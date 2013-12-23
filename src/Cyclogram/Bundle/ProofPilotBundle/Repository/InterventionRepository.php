@@ -84,5 +84,27 @@ class InterventionRepository extends EntityRepository {
             
     }
     
+    public function getInterventionByParticipantandCode ( $participantEmail, $interventionCode )
+    {
+            
+            return $this->getEntityManager()->createQuery("SELECT pil FROM CyclogramProofPilotBundle:ParticipantInterventionLink pil
+                    INNER JOIN pil.intervention i
+                    INNER JOIN pil.participant p 
+                    WHERE i.interventionCode = :interventionCode
+                    AND p.participantEmail = :email
+                    ")->setParameters(array('interventionCode' => $interventionCode,
+                                            'email' => $participantEmail))->getSingleResult();
 
+    }
+
+    
+    public function getAllParticipantIntervention ($participantEmail)
+    {
+        return $this->getEntityManager()->createQuery("SELECT pil FROM CyclogramProofPilotBundle:ParticipantInterventionLink pil
+                INNER JOIN pil.participant p
+                WHERE p.participantEmail = :email
+                ")->setParameter('email',$participantEmail)->getResult();;
+        
+
+    }
 }

@@ -646,10 +646,11 @@ class AuthentificationController extends Controller
         $participant->setParticipantRole($role);
         $participant->setStatus(Participant::STATUS_ACTIVE);
         $mailCode = substr(md5( md5( $participant->getParticipantEmail() . md5(microtime()))), 0, 4);
+        $roles = array("ROLE_USER", "ROLE_PARTICIPANT");
+        $participant->setRoles($roles);
         $participant->setParticipantEmailCode($mailCode);
         $em->persist($participant);
         $em->flush($participant);
-        $roles = array("ROLE_USER", "ROLE_PARTICIPANT");
         
         $token = new UsernamePasswordToken($participant, null, 'main', $roles);
         $this->get('security.context')->setToken($token);

@@ -1,1 +1,225 @@
-{%  extends '::dashboard.html.twig' %}{% use '::facebook_blocks.html.twig' %}{% use '::google_blocks.html.twig' %}{% block javascripts %}    <script type="text/javascript" >         $(document).ready(function(){        	//responsive jQuery UI            $(window).resize(function () {                fluidDialog();            });            $(document).on("dialogopen", ".ui-dialog", function (event, ui) {                fluidDialog();            });            function fluidDialog() {                var $visible = $(".ui-dialog:visible");                // each open dialog                $visible.each(function () {                    var $this = $(this);                    var dialog = $this.find(".ui-dialog-content").data("ui-dialog");                    // if fluid option == true                    if (dialog.options.fluid) {                        var wWidth = $(window).width();                        // check window width against dialog width                        if (wWidth < dialog.options.maxWidth + 50) {                            // keep dialog from filling entire screen                            $this.css("max-width", "90%");                        } else {                            // fix maxWidth bug                            $this.css("max-width", dialog.options.maxWidth);                        }                        //reposition dialog                        dialog.option("position", dialog.options.position);                    }                });            }                        $('#pledge').bind('click', function(e) {                $('#pledge_popup').dialog({                    modal: true,                    width: 'auto',                    fluid: true,                    resizable: false,                    position: ['top',100],                    open: function() {                        $(this).dialog("widget").find(".ui-dialog-titlebar").hide();                        $('<div class="modal_close_btn">×</div>').appendTo($(this));                        $('.modal_close_btn, .cancel a').on('click', function() {                            $(this).closest('.ui-dialog-content').dialog("close");                        });                    }                });            });            $('.close').bind('click', function(e) {                $('#pledge_popup').dialog('close');            });            $('.icon_logout').click(function() {                {% if is_granted('ROLE_FACEBOOK_USER') %}                    fbLogout();                {% elseif is_granted('ROLE_GOOGLE_USER') %}                    gLogout();                {% endif %}                    window.location=Routing.generate('_logout');            });        });    </script>{% endblock javascripts %}{% block content %}    <div class="site_container">        {% include '::header.html.twig'%}        <div class="panel">            <div class="panel_left">                {% include '::profile_info.html.twig' %}                <div class="menu_cont">                    {% if studyCode != 'knowathome' %}                        {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createSideDashboardMenu',                            {'template': 'CyclogramFrontendBundle:Knp:knp_side_menu.html.twig',                              'currentClass': 'active', 'dashboardClass': 'branded'})                         }}                    {% else %}                    {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createSideDashboardMenu',                          {'template': 'CyclogramFrontendBundle:Knp:knp_side_menu.html.twig',                            'currentClass': 'active'})                     }}                    {% endif %}                </div>            </div>            <div class="panel_right">                <div class="dashboard_title main {% if studyCode != 'knowathome' %}branded{% endif %}">                    <h1>{% trans from "dashboard" %}txt_dashboard{% endtrans %}</h1>                    <p>{% trans from "dashboard" %}dashboard_subtitle {% endtrans %}</p>                </div>                <div class="dashboard_panel">                    {% if confirm_email == false %}                        <p class="notice green"><span>{{ email_alert| raw }}</span> <a href="{{path('_main',{'sendMail' :  true})}}">{% trans from "dashboard" %}send_again{% endtrans %}</a></p>                    {% endif %}                    {% if confirmed is defined %}                        <p class="notice green"><span>{{ confirmed }}</span></p>                    {% endif %}                    <div class="choices_box">                        <h2>{% trans from "dashboard" %}do_it_now{% endtrans %}<span> ({{ interventioncount }})</span></h2>                        <a class="close_all" href="#"><span>Dismiss all</span></a>                        {% if interventioncount > 0 %}                            {% for intervention in interventions %}                                <div class="featured_box">                                    <a class="close" href="#"></a>                                    {% if intervention.logo is defined %}                                        <div class="banner_box"><span class="icon_1"><span></span></span><img title="" alt="" src="{{ intervention.logo }}" height="126" width="126"></div>                                    {% endif %}                                    <div class="text_box">                                         <h4>{{ intervention.title  | raw }}</h4>                                        <p>{{ intervention.content | raw }}</p>                                    </div>                                    <div id="pledge_popup" style="display:none">                                        <a class="close" href="#"></a>                                        <div class="content_banner">                                            <span class="icon_2">                                                <span></span>                                            </span>                                            <img height="126" width="126" src="{{ intervention.logo }}" alt="" title="">                                        </div>                                        <div class="content_text">                                            <h1>{{ intervention.name | raw }}</h1>                                            <textarea>{{ intervention.content | raw }}</textarea>                                        </div>                                        <ul class="social">                                            <li class="col_1"><a class="fb" href="#"><span>Share on Facebook</span></a></li>                                            <li class="col_2"><a class="tw" href="#"><span>Post to Twitter</span></a></li>                                        </ul>                                    </div>                                    <div class="mobile featured_box_s_desc">                                        <h4>{{ intervention.title  | raw }}</h4>                                        <p>{{ intervention.content | raw }}</p>                                    </div>{#                                     {% if intervention.url is defined and intervention.url is not empty%}#}{#                                         <div class="button_box"> <a href="{{ intervention.url }}"><span>{% trans from "dashboard" %}do_it{% endtrans %}</span></a> </div>#}{#                                     {% endif %}#}{#                                     {% if intervention.type is defined %}#}{#                                         <div class="button_box"> <a href="#" id="pledge"><span>{% trans from "dashboard" %}do_it{% endtrans %}</span></a> </div>#}{#                                     {% endif %}#}                                    <div class="social_icons_block">                                        <a href="" class="twitter_icon"></a>                                        <a href="" class="facebook_icon"></a>                                        <a href="" class="google_plus_icon"></a>                                    </div>                                </div>                            {% endfor %}                        {% else %}                            <div class="featured_box">                                <h2>                                    <br>                                    <span></span>                                </h2>                                <h2><span>{% trans from "dashboard" %}no_do_it{% endtrans %}  <br></span></h2>                                <p><br></p>                                <div class="mobile featured_box_s_desc">                                    <p>{% trans from "dashboard" %}no_do_it{% endtrans %}</p>                                </div>                            </div>                        {% endif %}                    </div>                    <div class="box_more_studies">                        <a href="#" class="more"><span>More studies</span></a>                        <h3>Join a study</h3>                        <div class="studies_wrapper">                            <div class="more_studies_col first">                                <a href="#"><img src="{{ asset('images/tmp_study.jpg') }}" width="176" height="116" alt="" title=""/></a>                                <h4><a href="#">Sexual healt promotion</a></h4>                                <p class="category">Category: Sex, Health</p>                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy</p>                            </div>                            <div class="more_studies_col">                                <a href="#"><img src="{{ asset('images/tmp_study.jpg') }}" width="176" height="116" alt="" title=""/></a>                                <h4><a href="#">Sexual healt promotion</a></h4>                                <p class="category">Category: Sex, Health</p>                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy</p>                            </div>                            <div class="more_studies_col last">                                <a href="#"><img src="{{ asset('images/tmp_study.jpg') }}" width="176" height="116" alt="" title=""/></a>                                <h4><a href="#">Sexual healt promotion</a></h4>                                <p class="category">Category: Sex, Health</p>                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy</p>                            </div>                                                    </div>                    </div>                </div>            </div>        </div>    </div>    {% include '::footer.html.twig' %}{% endblock content %}
+
+{%  extends '::dashboard.html.twig' %}
+
+{% use '::facebook_blocks.html.twig' %}
+{% use '::google_blocks.html.twig' %}
+
+{% block javascripts %}
+    <script type="text/javascript" > 
+        $(document).ready(function(){
+
+        	//responsive jQuery UI
+            $(window).resize(function () {
+                fluidDialog();
+            });
+            $(document).on("dialogopen", ".ui-dialog", function (event, ui) {
+                fluidDialog();
+            });
+
+            function fluidDialog() {
+                var $visible = $(".ui-dialog:visible");
+                // each open dialog
+                $visible.each(function () {
+                    var $this = $(this);
+                    var dialog = $this.find(".ui-dialog-content").data("ui-dialog");
+                    // if fluid option == true
+                    if (dialog.options.fluid) {
+                        var wWidth = $(window).width();
+                        // check window width against dialog width
+                        if (wWidth < dialog.options.maxWidth + 50) {
+                            // keep dialog from filling entire screen
+                            $this.css("max-width", "90%");
+                        } else {
+                            // fix maxWidth bug
+                            $this.css("max-width", dialog.options.maxWidth);
+                        }
+                        //reposition dialog
+                        dialog.option("position", dialog.options.position);
+                    }
+                });
+            }
+            
+            $('#pledge').bind('click', function(e) {
+                $('#pledge_popup').dialog({
+                    modal: true,
+                    width: 'auto',
+                    fluid: true,
+                    resizable: false,
+                    position: ['top',100],
+                    open: function() {
+                        $(this).dialog("widget").find(".ui-dialog-titlebar").hide();
+                        $('<div class="modal_close_btn">×</div>').appendTo($(this));
+                        $('.modal_close_btn, .cancel a').on('click', function() {
+                            $(this).closest('.ui-dialog-content').dialog("close");
+                        });
+                    }
+                });
+            });
+            $('.close').bind('click', function(e) {
+                $('#pledge_popup').dialog('close');
+            });
+            $('.icon_logout').click(function() {
+                {% if is_granted('ROLE_FACEBOOK_USER') %}
+                    fbLogout();
+                {% elseif is_granted('ROLE_GOOGLE_USER') %}
+                    gLogout();
+                {% endif %}
+                    window.location=Routing.generate('_logout');
+            });
+
+        });
+        
+        function dismiss(interventionCode) {
+            $.ajax({
+                dataType: "json",
+                type: "POST",
+                url: "{{ path('_dismiss_ajax')}}",
+                data: {interventionCode : interventionCode}
+            })
+                .done (function(response) {
+                    	window.location.replace(response.url);
+                });
+        }
+
+        function dismissAll() {
+            $.ajax({
+                dataType: "json",
+                type: "POST",
+                url: "{{ path('_dismiss_ajax')}}"
+            })
+                .done (function(response) {
+                    	window.location.replace(response.url);
+                });
+        }
+    </script>
+{% endblock javascripts %}
+
+{% block content %}
+    <div class="site_container">
+        {% include '::header.html.twig'%}
+        <div class="panel">
+            <div class="panel_left">
+                {% include '::profile_info.html.twig' %}
+                <div class="menu_cont">
+                    {% if studyCode != 'knowathome' %}
+                        {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createSideDashboardMenu',
+                            {'template': 'CyclogramFrontendBundle:Knp:knp_side_menu.html.twig', 
+                             'currentClass': 'active', 'dashboardClass': 'branded'}) 
+                        }}
+                    {% else %}
+                    {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createSideDashboardMenu',
+                          {'template': 'CyclogramFrontendBundle:Knp:knp_side_menu.html.twig', 
+                           'currentClass': 'active'}) 
+                    }}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="panel_right">
+                <div class="dashboard_title main {% if studyCode != 'knowathome' %}branded{% endif %}">
+                    <h1>{% trans from "dashboard" %}txt_dashboard{% endtrans %}</h1>
+                    <p>{% trans from "dashboard" %}dashboard_subtitle {% endtrans %}</p>
+                </div>
+                <div class="dashboard_panel">
+                    
+                    <div id="dismiss_message"> </div>
+                    {% if confirm_email == false%}
+                        <p class="notice green"><span>{{ email_alert| raw }}</span> <a href="{{path('_main',{'sendMail' :  true})}}">{% trans from "dashboard" %}send_again{% endtrans %}</a></p>
+                        {% endif %}
+                    {% if dismiss_message is defined %}
+                        <p class="notice green"><span>{{ dismiss_message }}</span></p>
+                    {% endif %}
+                    {% if confirmed is defined %}
+                        <p class="notice green"><span>{{ confirmed }}</span></p>
+                    {% endif %}
+                    {% if dismiss_error_message is defined %}
+                        <p class="notice green"><span>{{ dismiss_error_message }}</span></p>
+                    {% endif %}
+                    <div class="choices_box">
+                        <h2>{% trans from "dashboard" %}do_it_now{% endtrans %}<span> ({{ interventioncount }})</span></h2>
+                        <a class="close_all dismiss" href="#" onClick = "return  dismissAll()"><span>Dismiss all</span></a>
+                        {% if interventioncount > 0 %}
+                            {% for intervention in interventions %}
+                                <div class="featured_box">
+                                    <a class="close dismiss" href="#" onClick = "return dismiss('{{ intervention.code}}')"></a>
+                                    {% if intervention.logo is defined %}
+                                        <div class="banner_box"><span class="icon_1"><span></span></span><img title="" alt="" src="{{ intervention.logo }}" height="126" width="126"></div>
+                                    {% endif %}
+                                    <div class="text_box"> 
+                                        <h4>{{ intervention.title  | raw }}</h4>
+                                        <p>{{ intervention.content | raw }}</p>
+                                    </div>
+                                    <div id="pledge_popup" style="display:none">
+                                        <a class="close" href="#"></a>
+                                        <div class="content_banner">
+                                            <span class="icon_2">
+                                                <span></span>
+                                            </span>
+                                            <img height="126" width="126" src="{{ intervention.logo }}" alt="" title="">
+                                        </div>
+                                        <div class="content_text">
+                                            <h1>{{ intervention.name | raw }}</h1>
+                                            <textarea>{{ intervention.content | raw }}</textarea>
+                                        </div>
+                                        <ul class="social">
+                                            <li class="col_1"><a class="fb" href="#"><span>Share on Facebook</span></a></li>
+                                            <li class="col_2"><a class="tw" href="#"><span>Post to Twitter</span></a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="mobile featured_box_s_desc">
+                                        <h4>{{ intervention.title  | raw }}</h4>
+                                        <p>{{ intervention.content | raw }}</p>
+                                    </div>
+{#                                     {% if intervention.url is defined and intervention.url is not empty%}#}
+{#                                         <div class="button_box"> <a href="{{ intervention.url }}"><span>{% trans from "dashboard" %}do_it{% endtrans %}</span></a> </div> #}
+{#                                     {% endif %}#}
+{#                                     {% if intervention.type is defined %}#}
+{#                                         <div class="button_box">#}
+{#                                         <a href="#" id="pledge"><span>{% trans from "dashboard" %}do_it{% endtrans %}</span></a> #}
+{#                                          </div>#}
+{#                                     {% endif %}#}
+                                    <div class="social_icons_block">
+                                        <a href="" class="twitter_icon"></a>
+                                        <a href="" class="facebook_icon"></a>
+                                        <a href="" class="google_plus_icon"></a>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class="featured_box">
+                                <h2>
+                                    <br>
+                                    <span></span>
+                                </h2>
+                                <h2><span>{% trans from "dashboard" %}no_do_it{% endtrans %}  <br></span></h2>
+                                <p><br></p>
+                                <div class="mobile featured_box_s_desc">
+                                    <p>{% trans from "dashboard" %}no_do_it{% endtrans %}</p>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="box_more_studies">
+{#                         <a href="#" class="more"><span>More studies</span></a>#}
+                        <h3>Join a study</h3>
+                        <div class="studies_wrapper">
+                            {% for study in studies %}
+                                <div class="more_studies_col first">
+                                {% if study.studyLogo is empty %}
+                                    <a href="#"><img src="{{ asset('images/tmplogo_none.jpg') }}" width="176" height="116" alt="" title=""/></a>
+                                {% else %}
+                                    <a href="#"><img src="{{ study_image_url }}/{{ study.studyId }}/{{ study.studyLogo }}" width="176" height="116" alt="" title=""/></a>
+                                {% endif %}
+                                    <h4><a href="#">{{ study.studyName }}</a></h4>
+{#                                 <p class="category">Category: Sex, Health</p>#}
+                                    <p>{{ study.studyTagline | raw }}</p>
+                                </div>      
+                             {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include '::footer.html.twig' %}
+{% endblock content %}
+

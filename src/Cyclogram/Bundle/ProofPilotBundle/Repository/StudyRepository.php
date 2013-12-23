@@ -242,5 +242,27 @@ class StudyRepository extends EntityRepository
     
         return $results;
     }
+    
+    public function getRandomStudyInfo($locale) {
+        
+        $language =  $this->getEntityManager()->getRepository('CyclogramProofPilotBundle:Language')->findOneByLocale($locale);
+    
+        $rows = $this->getEntityManager()
+        ->createQuery("SELECT count(sc.studyId) 
+                FROM CyclogramProofPilotBundle:StudyContent sc
+                WHERE sc.language = :lang")->setParameters(array('lang' => $language))->getSingleScalarResult();
+        
+        $offset = max(0, rand(0, $rows - 4));
+        
+        $results = $this->getEntityManager()
+        ->createQuery("
+                SELECT sc.studyId, sc.studyLogo, sc.studyName, sc.studyTagline
+                FROM CyclogramProofPilotBundle:StudyContent sc
+                 WHERE sc.language = :lang")->setParameters(array('lang' => $language))->setMaxResults(3)
+                ->setFirstResult($offset)->getResult();
+
+
+        return $results;
+    }
 
 }
