@@ -18,6 +18,8 @@
 */
 namespace Cyclogram\Bundle\ProofPilotBundle\Repository;
 
+use Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantArmLink;
+
 use Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantInterventionLink;
 
 use Doctrine\ORM\EntityRepository;
@@ -176,9 +178,11 @@ class ParticipantRepository extends EntityRepository implements
                 INNER JOIN a.study s
                 WHERE s.studyCode = :studycode
                 AND pal.participant = :participant
+                AND pal.status <> :dismiss
                 ')
                 ->setParameter('studycode', $studyCode)
                 ->setParameter('participant', $participant)
+                ->setParameter('dismiss', ParticipantArmLink::STATUS_DISMISS)
                 ->getSingleScalarResult();
         if($result)
             return true;
