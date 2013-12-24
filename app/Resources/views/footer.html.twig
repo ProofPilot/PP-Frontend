@@ -1,15 +1,30 @@
-<footer class="dash_footer">
-  <div class="site_container">
-    <div class="footer_col_left">
-	  {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createBottomLeftMenu',{'template': 'CyclogramFrontendBundle:Knp:knp_menu.html.twig'}) }}
+<footer>
+  <div class="row_1">
+      <div class="site_container">
+        <div class="footer_col_left">
+            {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createTopLeftMenu',{'template': 'CyclogramFrontendBundle:Knp:knp_menu.html.twig'}) }}
+        </div>
+        <div class="footer_col_right">
+    	    {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createBottomStudyRightMenu',{'template': 'CyclogramFrontendBundle:Knp:knp_menu.html.twig'}) }}
+    	</div>
+        <div class="footer_col_middle">
+            <ul>
+                <li>
+                    <a class="fb" href="" onClick="fbslike_click(300, 25)"><span>{% trans from "study" %}txt_like_proofpilot{% endtrans %}<br>{% trans from "study" %}txt_on_facebook{% endtrans %}</span></a>
+                </li>
+                <li>
+                    <a class="tw" href="https://twitter.com/intent/follow?screen_name=proofpilot"><span>{% trans from "study" %}txt_like_proofpilot{% endtrans %}<br>{% trans from "study" %}txt_on_twitter{% endtrans %}</span></a>
+                </li>
+                <li>
+{#                 <a href="http://www.facebook.com/plugins/like.php?href=http://www.facebook.com/plugins/like.php?href=https://www.facebook.com/proofpilot&width&layout=standard&action=like&show_faces=false&share=false&height=35"> Facebook </a><li>#}
+            </ul>
+        </div>
+        {% if branding == 'default' %}<span class="footer_cyclogram">(c) Cyclogram 2011-2013, California USA</span>{% endif %}
+      </div>
+  </div>
+  <div class="row_2">
+    <div class="site_container">
+        <p>© 2011-{{"now"|date('Y')}} ProofPilot<sup>TM</sup> - All rights reserved</p>
     </div>
-    <div class="footer_col_middle"><a class="to_top" href="#"><span>{% trans %}txt_footer_top{% endtrans %}</span></a></div>
-    {% if app.user %}
-      <div class="footer_col_right">
-	    {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createBottomRightMenu',{'template': 'CyclogramFrontendBundle:Knp:knp_menu.html.twig'}) }}
-	  </div>
-    {% endif %}
-    <br />
-    {% if branding == 'default' %}<span class="footer_cyclogram">(c) Cyclogram 2011-2013, California USA</span>{% endif %}
   </div>
 </footer>

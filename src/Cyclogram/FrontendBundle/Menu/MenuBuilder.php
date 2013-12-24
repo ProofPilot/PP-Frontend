@@ -168,25 +168,46 @@ class MenuBuilder extends ContainerAware implements TranslationContainerInterfac
     public function createTopSettingsMenu(FactoryInterface $factory,
             array $options)
     {
+        $participant = $this->container->get('security.context')->getToken()->getUser();
+        $lastAccess = $participant->getParticipantLastTouchDatetime()->format('d M Y, H:i');
         $studyCode = $this->container->get('request')->get('studyCode');
         
         $menu = $factory->createItem('root');
         $menu->setChildrenAttribute('class', 'header_menu');
 
-//         $menu->addChild('top_menu.help', array('route' => '_page', 'routeParameters' => array('studyUrl' => $this->getThemeParameter())))
-//                 ->setAttribute('class', 'icon_help')
-//                 ->setExtra('translation_domain', 'generalmenus');
-        $menu->addChild('top_menu.logout', array('route' => '_logout'))
-                ->setAttribute('class', 'icon_logout normal')
-                ->setExtra('translation_domain', 'generalmenus');
         $menu->addChild('top_menu.settings', array(
                 'route' => '_settings',
                 'routeParameters' => array(
                         'studyCode' => $studyCode
                         )))
-                ->setAttribute('class', 'icon_settings')
+                ->setAttribute('class', 'header_user_logged_btn')
                 ->setAttribute("dropdown", true)
+                ->setAttribute("user_name", $participant->getParticipantUserName())
                 ->setExtra('translation_domain', 'generalmenus');
+        $menu['top_menu.settings']
+        ->addChild($participant->getParticipantUserName())
+                        ->setAttribute("nospan", true)
+                        ->setAttribute("header", true)
+                        ->setAttribute("last_access", $lastAccess)
+                        ->setAttribute("user_name", $participant->getParticipantFirstname() . ' ' . $participant->getParticipantLastname())
+                        ->setExtra('translation_domain', 'generalmenus');
+        $menu['top_menu.settings']
+        ->addChild('top_menu.dashboard',
+                array(
+                        'route' => '_main'))
+                        ->setAttribute('class', 'submenu_icon_general')
+                        ->setAttribute("nospan", true)
+                        ->setExtra('translation_domain', 'generalmenus');
+        $menu['top_menu.settings']
+        ->addChild('top_menu.general_settings',
+                array(
+                        'route' => '_settings',
+                        'routeParameters' => array(
+                                'studyCode' => $studyCode
+                        )))
+                        ->setAttribute('class', 'submenu_icon_general')
+                        ->setAttribute("nospan", true)
+                        ->setExtra('translation_domain', 'generalmenus');
         $menu['top_menu.settings']
                 ->addChild('top_menu.general_settings',
                         array(
@@ -227,14 +248,11 @@ class MenuBuilder extends ContainerAware implements TranslationContainerInterfac
                         ->setAttribute('class', 'submenu_icon_contact')
                         ->setAttribute("nospan", true)
                         ->setExtra('translation_domain', 'generalmenus');
-//         $menu['top_menu.settings']
-//                 ->addChild('top_menu.shipping_information',
-//                         array(
-//                               'route' => '_survey_eligibility', 
-//                               'routeParameters' => array('studyUrl' => 'sexpro')))
-//                 ->setAttribute('class', 'submenu_icon_shipping')
-//                 ->setAttribute("nospan", true)
-//                 ->setExtra('translation_domain', 'generalmenus');
+        $menu['top_menu.settings']
+                ->addChild('top_menu.logout', array('route' => '_logout'))
+                ->setAttribute('class', 'icon_logout normal')
+                ->setAttribute("nospan", true)
+                ->setExtra('translation_domain', 'generalmenus');
 
         return $menu;
     }
@@ -398,6 +416,7 @@ class MenuBuilder extends ContainerAware implements TranslationContainerInterfac
                 'top_left_menu.browse',
                 'top_left_menu.launch',
                 //top menu
+                'top_menu.dashboard',
                 'top_menu.help',
                 'top_menu.logout',
                 'top_menu.settings',

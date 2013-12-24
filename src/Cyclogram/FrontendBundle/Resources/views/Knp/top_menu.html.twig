@@ -73,11 +73,11 @@
 {# displaying the item #}
     {% import _self as knp_menu %}
     <li>
-        {%- if item.uri is not empty and (not matcher.isCurrent(item) or options.currentAsLink) %}
+{#         {%- if item.uri is not empty and (not matcher.isCurrent(item) or options.currentAsLink) %}#}
         {{ block('linkElement') }}
-        {%- else %}
-        {{ block('spanElement') }}
-        {%- endif %}
+{#         {%- else %}#}
+{#         {{ block('spanElement') }}#}
+{#         {%- endif %}#}
 {# render the list of children#}
         {%- set childrenClasses = item.childrenAttribute('class') is not empty ? [item.childrenAttribute('class')] : [] %}
         {%- set childrenClasses = childrenClasses|merge(['menu_level_' ~ item.level]) %}
@@ -94,11 +94,24 @@
 
 {% block linkElement %}
     {% import _self as knp_menu %}
-    <a href="{{ item.uri }}"{{ knp_menu.attributes(attributes) }}>
+    
+
     {% if item.attribute('nospan') == true %}
-        {{ block('label') }}
+        {% if item.attribute('header') == true %}
+            <div class="menu_header">
+                <img src="{{ asset('images/tmpavatar3.png') }}" width="40" height="42"/>
+                <span class="name">{{ block('label') }}</span>
+                <span class="type">Last Access: {{ item.attribute('last_access') }} </span>
+            </div>
+         {% else %}
+         <a href="{{ item.uri }}"{{ knp_menu.attributes(attributes) }}>
+             {{ block('label') }}
+         {% endif %}
     {% else %}
-      <span>  {{ block('label') }}</span>
+    <a href="{{ item.uri }}"class="header_user_logged_btn">
+            <img src="{{ asset('images/tmpavatar3.png') }}" width="40" height="42"/>
+            <span class="name">{{ item.attribute('user_name') }}</span>
+            <span class="type">{{ block('label') }}</span>  
     {% endif %}
     </a>
     {% endblock %}

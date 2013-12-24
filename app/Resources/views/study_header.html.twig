@@ -30,8 +30,8 @@
     <div class="menu_wrapper">
         <a class="close" href="#"></a>
         <a class="logo"></a>
-        {% if app.user %}
-            {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createTopSettingsStudyMenu',{'template': 'CyclogramFrontendBundle:Knp:top_menu.html.twig'}) }}
+        {% if is_granted('ROLE_PARTICIPANT') or is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+            {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createTopSettingsMenu',{'template': 'CyclogramFrontendBundle:Knp:top_menu.html.twig'}) }}
         {% else %}
             <ul>         
                 <li><a href="{{ path('_signup') }}" class="icon_login"><span>{% trans %}txt_header_login{% endtrans %}</span></a></li>

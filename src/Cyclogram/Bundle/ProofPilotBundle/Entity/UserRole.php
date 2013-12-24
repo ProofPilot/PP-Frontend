@@ -45,7 +45,7 @@ class UserRole implements RoleInterface
      *
      * @ORM\Column(name="user_role_name", type="string", length=45, nullable=false)
      */
-    public $userRoleName;
+    protected $userRoleName;
 
     /**
      * @var integer
