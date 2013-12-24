@@ -1,16 +1,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-	<title>NEWSLETTER</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<meta name="viewport" content="width=device-width">
-	<style type="text/css">
-	    table {
-	        width: 620px;
-	    }
-	    p {
-	        font-size: 11px;
-	    }
+    <title>NEWSLETTER</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width">
+    <style type="text/css">
+        table {
+            width: 640px;
+        }
+        p {
+            font-size: 11px;
+        }
         @media only screen and (max-device-width: 480px) {      
             /* mobile-specific CSS styles go here */
             .top_menu td {
@@ -54,80 +54,56 @@
         }
     </style>
 </head>
-<body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0" {% if branding != 'knowathome' %} style="margin: 0px; padding: 0px; background: #1e2833;
-      background: -moz-linear-gradient(top, #1e2833 0%, #496275 100%); background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#1e2833), color-stop(100%,#496275));  
-      background: -webkit-linear-gradient(top, #1e2833 0%,#496275 100%); background: -o-linear-gradient(top, #1e2833 0%,#496275 100%); background: -ms-linear-gradient(top, #1e2833 0%,#496275 100%); 
-      background: linear-gradient(to bottom, #1e2833 0%,#496275 100%); filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e2833', endColorstr='#496275',GradientType=0 );" {% endif %}
+<body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0" {% if branding != 'knowathome' %} style="margin: 0px; padding: 0px; background: #132F3E;" {% endif %}
       style="margin: 0px; padding: 0px; background: #878681; filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e2833', endColorstr='#496275',GradientType=0 );">
 
-	<table cellpadding="0" cellspacing="0" align="center" class="top_menu">
-		<tr>
-			<td>
-				{% if branding != 'knowathome' %}<a href="#"><img src="{{ images.logo_top }}" alt="" title="" style="display: block;" /></a>{% else %}
-				<a href="#"><img src="{{ images.logo_knowathome }}" alt="" title="" style="display: block;" /></a>{% endif %}
-			</td>
-			{#<td>
-				<a href="{{ host }}/{{ locale }}/main" style="color: #bcbfc2; font-family: Arial; text-decoration: none;">{{ 'my_dahsboard' | trans({}, "email", locale) }}</a>
-			</td>#}
-			<td align="right">
-				<a href="{{ host }}/{{ locale }}/main/contact_prefs" style="color: #bcbfc2; font-family: Arial; text-decoration: none;">{{ 'communictaion_preferences' | trans({}, "email", locale) }}</a>
-			</td>
-			{#<td>
-				<a href="{{ host }}/{{ locale }}/sexpro/is_it_secure" style="color: #bcbfc2; font-family: Arial; text-decoration: none;">{{ 'our_security' | trans({}, "email", locale) }}</a>
-			</td>
-			<td align="right" class="login_btn">
-				{% if siteurl is defined %}<a href="{{ host }}/{{ locale }}/signup" style="background: #B73B32; 
-                border-radius: 3px 3px 3px 3px; color: #FFFFFF; display: inline-block;
-                height: 30px; line-height: 30px; padding-left: 25px; padding-right: 25px; text-decoration: none;">{% else %}<a href="#"> {% endif %}Login</a>
-			</td>#}
-		</tr>
-	</table>
+    <table cellpadding="0" cellspacing="0" align="center" class="top_menu">
+        <tr>
+            <td>
+                {% if branding != 'knowathome' %}<a href="#"><img src="{{ images.logo_top }}" alt="" title="" style="display: block;" /></a>{% else %}
+                <a href="#"><img src="{{ images.logo_knowathome }}" alt="" title="" style="display: block;" /></a>{% endif %}
+            </td>
+            <td align="right">
+                <a href="{{ host }}" style="color: #bcbfc2; font-family: Arial; text-decoration: none;"><img width="18" height="14" style="display: inline-block !important;" src="{{ images.login }}" />{{ 'email_login' | trans({}, "email", locale) }}</a>
+            </td>
+        </tr>
+    </table>
 
-	<table cellpadding="0" cellspacing="0" align="center" style="background-color: #fff;">
-		<tr style="border: none;">
-			<td height="35" colspan="3"><img src="{{ images.white_top }}" width="620" height="35" alt="" title="" style="display: block;" /></td>
-		</tr>
-		<tr style="border: none;">
-			<td width="31">&nbsp;</td>
-			{% block email_content %}
-            
-			{% endblock %}
-			<td width="26">&nbsp;</td>
-		</tr>		
-		<tr style="border: none;">
-			<td height="16" colspan="3"><img src="{{ images.white_bottom }}" width="620" height="16" alt="" title="" style="display: block;" /></td>
-		</tr>
-	</table>
-	
-	<table cellpadding="0" cellspacing="0" align="center">
-		<tr>
-			<td height="55">&nbsp;</td>
-		</tr>
-	</table>
-	
-	<table cellpadding="0" cellspacing="0" align="center">
-		<tr>
-			<td style="background-color: #221e1e; height: 260px; text-align: center;">
-			
-				<table width="530" cellpadding="0" cellspacing="0" align="center">
-					<tr>
-						<td>
-                            {% if branding != 'knowathome' %} <p style="margin: 0px; padding: 0px; margin-bottom: 30px; text-align: center;"><img src="{{ images.logo_footer }}" width="104" height="20" alt="" title="" style="display: inline-block;" /></p> {% else %}
-                            <p style="margin: 0px; padding: 0px; margin-bottom: 30px; text-align: center;"><img src="{{ images.logo_knowathome }}" width="104" height="20" alt="" title="" style="display: inline-block;" /></p>{% endif %}
+    <table cellpadding="0" cellspacing="0" align="center" style="background-color: #fff; border-top: 4px solid #B73B32;">
+        <tr>
+            <td height="35" colspan="3"></td>
+        </tr>
+        <tr style="border: none;">
+            {% block email_content %}
 
-							<p style="margin: 0px; padding: 0px; color: #918f8f; font-family: Arial; line-height: 15px; margin-bottom: 15px; text-align: center;">{{ 'bottom_text' | trans({'%mail_to%': email, '%general_settings_link%': url('_settings',{'_locale' : locale})}, "email", locale) | raw }}</p>
-							
-							<p style="margin: 0px; padding: 0px; color: #918f8f; font-family: Arial; line-height: 15px; margin-bottom: 15px; text-align: center;">{{ 'bottom_street' | trans({}, "email", locale) | raw }}</p>
-							
-							<p style="margin: 0px; padding: 0px; color: #b14040; font-family: Arial; line-height: 15px; text-align: center;">{{ 'bottom_no_reply' | trans({}, "email", locale) }}</p>						
-						
-						</td>
-					</tr>
-				</table>		
-				
-			</td>
-		</tr>
-	</table>
+            {% endblock %}
+        </tr>		
+        <tr style="border: none;">
+            <td height="16" colspan="3"></td>
+        </tr>
+    </table>
 
+    <table cellpadding="0" cellspacing="0" align="center">
+        <tr>
+            <td style="background: #183849; padding-left: 20px; padding-right: 20px; padding-top: 30px;" align="center" colspan="2">
+                {% if branding != 'knowathome' %} <p style="margin: 0px; padding: 0px; margin-bottom: 20px; text-align: center;"><img src="{{ images.logo_footer }}" width="104" height="20" alt="" title="" style="display: inline-block;" /></p> {% else %}
+                <p style="margin: 0px; padding: 0px; margin-bottom: 20px; text-align: center;"><img src="{{ images.logo_knowathome }}" width="104" height="20" alt="" title="" style="display: inline-block;" /></p>{% endif %}
+                <p style="font-size: 12px; margin: 0px; padding: 0px; color: #6F90A2; font-family: Arial; line-height: 18px; margin-bottom: 15px; text-align: center;">{{ 'bottom_text' | trans({'%mail_to%': email, '%general_settings_link%': url('_settings',{'_locale' : locale})}, "email", locale) | raw }}</p>
+                <p style="margin-bottom: 30px; padding: 0px; color: #fff; font-size: 15px; font-family: Arial; line-height: 18px; text-align: center;">{{ 'bottom_no_reply' | trans({}, "email", locale) }}</p>								
+            </td>
+        </tr>
+        <tr>
+            <td style="color: #4A697A; padding-top: 20px;" align="center" colspan="2">
+                <p>
+                   "c" 2010-2013 ProofPilot. / All Rights Reserved
+                    <br>
+                    Cyclogram: 8605 Santa Monica Blvd #75475 West Hollywood, CA 90069
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td height="50" align="center" colspan="2">   </td>
+        </tr>
+    </table>
 </body>
 </html>

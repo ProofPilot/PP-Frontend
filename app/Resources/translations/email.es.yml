@@ -1,13 +1,19 @@
 bottom_no_reply: bottom_no_reply
 bottom_street: bottom_street
 bottom_text: bottom_text
-communictaion_preferences: communictaion_preferences
 confirm_verify_text: confirm_verify_text
 confirm_verify_title: confirm_verify_title
+do_it: do_it   # FIXME
 do_it_task_email_title: do_it_task_email_title
+email_friend_subject: email_friend_subject
+email_login: email_login
 email_reset_password: email_reset_password
 email_title_notice: email_title_notice
 email_title_verify: email_title_verify
+forgot_username: forgot_username
+forgot_username_text: forgot_username_text
+forgot_username_title: forgot_username_title
+join: join
 notice_verification: notice_verification
 notice_verification_text: notice_verification_text
 reset_pass_link: reset_pass_link
