@@ -419,8 +419,7 @@
                         <a class="gp" id="google_button_landing_page" href="">
                             <span>{% trans from "register" %}txt_join_with{% endtrans %} Google</span>
                         </a> 
-                    {% endif %}
-                    {% if is_granted('ROLE_PARTICIPANT') or is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                    {% elseif is_granted('ROLE_PARTICIPANT') or is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                         {% if is_enrolled_in_study(studyCode) %}
                             <p class="already_joined"><span>You are a participant</span></p>
                             <ul class="short_menu">

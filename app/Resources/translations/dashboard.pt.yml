@@ -1,4 +1,5 @@
-dashboard_subtitle: 'Sua participação em um piscar de olhos. O que você precisa fazer agora e os próximos passos.'
+'dashboard_dismiss_confirmation ': 'dashboard_dismiss_confirmation '   # FIXME
+'dashboard_subtitle ': 'dashboard_subtitle '   # FIXME
 do_it: 'FACA ISSO'
 do_it_now: 'Faça-o agora'
 no_do_it: no_do_it
@@ -11,6 +12,8 @@ past_activity:
 
 send_again: send_again
 txt_dashboard: 'Painel de controle'
+txt_dismiss: txt_dismiss   # FIXME
+txt_dismiss_all: txt_dismiss_all   # FIXME
 txt_please_verify_email: "Por favor, verifique o seu endereço de e-mail. <br/>\nPara participar de estudos necessitamos de um endereço de e-mail válido - por favor, vá para o seu e-mail e clique no link"
 
 what_next_list:

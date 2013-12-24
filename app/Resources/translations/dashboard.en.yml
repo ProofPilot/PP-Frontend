@@ -1,3 +1,4 @@
+'dashboard_dismiss_confirmation ': 'dashboard_dismiss_confirmation '   # FIXME
 'dashboard_subtitle ': 'dashboard_subtitle '
 do_it: 'DO IT'
 do_it_now: 'Do It Now'
@@ -11,6 +12,8 @@ past_activity:
 
 send_again: 'Didn''t get it? Check your Junk mail and/or send again.'
 txt_dashboard: Dashboard
+txt_dismiss: Task %interventionName% dismissed
+txt_dismiss_all: 'All tasks dismissed'
 txt_please_verify_email: 'We just sent you an e-mail to verify your e-mail address. Please click the link.'
 
 what_next_list:

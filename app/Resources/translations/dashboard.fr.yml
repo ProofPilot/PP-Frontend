@@ -1,4 +1,5 @@
-dashboard_subtitle: 'Votre participation à un coup d''œil. Ce que vous devez faire maintenant et ce qui est prochain.'
+'dashboard_dismiss_confirmation ': 'dashboard_dismiss_confirmation '   # FIXME
+'dashboard_subtitle ': 'dashboard_subtitle '   # FIXME
 do_it: FAIRE
 do_it_now: 'Faites-le maintenant'
 no_do_it: no_do_it
@@ -11,6 +12,8 @@ past_activity:
 
 send_again: send_again
 txt_dashboard: 'Tableau de bord'
+txt_dismiss: txt_dismiss   # FIXME
+txt_dismiss_all: txt_dismiss_all   # FIXME
 txt_please_verify_email: txt_please_verify_email
 
 what_next_list:

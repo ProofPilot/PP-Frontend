@@ -1,3 +1,4 @@
+'dashboard_dismiss_confirmation ': 'dashboard_dismiss_confirmation '   # FIXME
 'dashboard_subtitle ': 'dashboard_subtitle '
 do_it: 'DO IT'
 do_it_now: 'Hazlo Ahora'
@@ -11,6 +12,8 @@ past_activity:
 
 send_again: send_again
 txt_dashboard: Escritorio
+txt_dismiss: txt_dismiss   # FIXME
+txt_dismiss_all: txt_dismiss_all   # FIXME
 txt_please_verify_email: "Porfavor verifique su dirección de e-mail.<br>\nPara participar en los estudios necesitamos un e-mail válido - Porfavor vaya al e-mail y haga click en el enlace."
 
 what_next_list:
