@@ -143,18 +143,43 @@ class SexproStudy extends AbstractStudy implements StudyInterface
             $em->persist($participantArmLink);
             $em->flush($participantArmLink);
 
-            $participantInterventionLink = new ParticipantInterventionLink();
+            $participantInterventionLinkSexproPledge = new ParticipantInterventionLink();
             $intervention = $em
                     ->getRepository('CyclogramProofPilotBundle:Intervention')
                     ->findOneByInterventionCode('SexproPledge');
-            $participantInterventionLink->setIntervention($intervention);
-            $participantInterventionLink->setParticipant($participant);
-            $participantInterventionLink
+            $participantInterventionLinkSexproPledge ->setIntervention($intervention);
+            $participantInterventionLinkSexproPledge ->setParticipant($participant);
+            $participantInterventionLinkSexproPledge 
                     ->setParticipantInterventionLinkDatetimeStart(
                             new \DateTime("now"));
-            $participantInterventionLink->setStatus(ParticipantInterventionLink::STATUS_ACTIVE);
-            $em->persist($participantInterventionLink);
-            $em->flush($participantInterventionLink);
+            $participantInterventionLinkSexproPledge ->setStatus(ParticipantInterventionLink::STATUS_ACTIVE);
+            $em->persist($participantInterventionLinkSexproPledge);
+            
+            $participantInterventionLinkBaseline = new ParticipantInterventionLink();
+            $intervention = $em
+            ->getRepository('CyclogramProofPilotBundle:Intervention')
+            ->findOneByInterventionCode('SexProBaselineSurvey');
+            $participantInterventionLinkBaseline->setIntervention($intervention);
+            $participantInterventionLinkBaseline->setParticipant($participant);
+            $participantInterventionLinkBaseline
+            ->setParticipantInterventionLinkDatetimeStart(
+                    new \DateTime("now"));
+            $participantInterventionLinkBaseline->setStatus(ParticipantInterventionLink::STATUS_ACTIVE);
+            $em->persist($participantInterventionLinkBaseline);
+            
+            $participantInterventionLinkSexproReferral = new ParticipantInterventionLink();
+            $intervention = $em
+            ->getRepository('CyclogramProofPilotBundle:Intervention')
+            ->findOneByInterventionCode('SexproReferral');
+            $participantInterventionLinkSexproReferral->setIntervention($intervention);
+            $participantInterventionLinkSexproReferral->setParticipant($participant);
+            $participantInterventionLinkSexproReferral
+            ->setParticipantInterventionLinkDatetimeStart(
+                    new \DateTime("now"));
+            $participantInterventionLinkSexproReferral->setStatus(ParticipantInterventionLink::STATUS_ACTIVE);
+            $em->persist($participantInterventionLinkSexproReferral);
+            
+            $em->flush();
         }
     }
 

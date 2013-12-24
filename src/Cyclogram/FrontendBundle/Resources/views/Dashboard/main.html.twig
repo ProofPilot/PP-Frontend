@@ -99,6 +99,17 @@
             	 return;
             	 }
         }
+        function fbs_click(width, height, name, content, logo) {
+            var leftPosition, topPosition;
+            //Allow for borders.
+            leftPosition = (window.screen.width / 2) - ((width / 2) + 10);
+            //Allow for title and status bars.
+            topPosition = (window.screen.height / 2) - ((height / 2) + 50);
+            var windowFeatures = "status=no,height=" + height + ",width=" + width + ",resizable=yes,left=" + leftPosition + ",top=" + topPosition + ",screenX=" + leftPosition + ",screenY=" + topPosition + ",toolbar=no,menubar=no,scrollbars=no,location=no,directories=no";
+            u=location.href;
+            window.open('http://www.facebook.com/sharer.php?s=100&p[url]='+encodeURIComponent(u)+'&p[title]='+name+'&p[summary]='+content+'&p[images][0]='+logo,'sharer', windowFeatures);
+            return false;
+        }
     </script>
 {% endblock javascripts %}
 
@@ -180,11 +191,18 @@
                                      {% if intervention.url is defined and intervention.url is not empty%}
                                          <div class="button_box"> <a href="{{ intervention.url }}"><span>{% trans from "dashboard" %}do_it{% endtrans %}</span></a> </div> 
                                      {% endif %}
-                                     {% if intervention.type is defined %}
+                                     {% if intervention.type == 'Pledge' %}
                                     <div class="social_icons_block">
-                                        <a href="" class="twitter_icon"></a>
-                                        <a href="" class="facebook_icon"></a>
+                                        <a href="" class="twitter_icon" onclick="popUp=window.open('https://twitter.com/share?url={{ intervention.shortstudyUrl }}&text={%  trans from "study" %}social_join_study{% endtrans %} {{ intervention.studyName }} {%  trans from "study" %}social_at_proofpilot{% endtrans %}', 'popupwindow', 'scrollbars=yes,width=800,height=400');popUp.focus();return false"></a>
+                                        <a href="" class="facebook_icon" onClick="return fbs_click(400, 300,'{{ intervention.name | raw }}','{{ intervention.content | raw }}','{{ intervention.logo }}')"></a>
                                         <a href="" class="google_plus_icon"></a>
+                                    </div>
+                                     {% endif %}
+                                    {% if intervention.type == 'Referral' %}
+                                    <div class="referal_social">
+                                        <a href="#" class="tw"></a>
+                                        <a href="#" class="fb" ></a>
+                                        <a href="#" class="email"></a>
                                     </div>
                                      {% endif %}
                                 </div>

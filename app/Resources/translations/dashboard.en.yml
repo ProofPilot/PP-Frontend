@@ -1,4 +1,4 @@
-'dashboard_dismiss_confirmation ': 'dashboard_dismiss_confirmation '   # FIXME
+'dashboard_dismiss_confirmation ': 'Are you sure you want to dismiss? It may affect your ability to continue with the study'
 'dashboard_subtitle ': 'dashboard_subtitle '
 do_it: 'DO IT'
 do_it_now: 'Do It Now'

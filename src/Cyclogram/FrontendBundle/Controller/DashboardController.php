@@ -48,6 +48,7 @@ class DashboardController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         $participant = $this->get('security.context')->getToken()->getUser();
+        $cc = $this->container->get('cyclogram.common');
         
         if (!is_null($sendMail) && !$em->getRepository('CyclogramProofPilotBundle:Participant')->isEnrolledInStudy($participant, 'sexpro')){
             $cc = $this->get('cyclogram.common');
@@ -113,8 +114,11 @@ class DashboardController extends Controller
             }
             $intervention["logo"] = $this->container->getParameter('study_image_url') . "/" . $studyId . "/" . $studyContent->getStudyLogo();
             $interventionTypeName = $interventionLink->getIntervention()->getInterventionType()->getInterventionTypeName();
-            if ($interventionTypeName == "Pledge" )
-                $intervention['type'] = $interventionTypeName;
+            $intervention['type'] = $interventionTypeName;
+            if ($interventionTypeName == "Pledge" ) {
+                $intervention['shortstudyUrl'] = $cc::generateGoogleShorURL($this->container->getParameter('site_url')."/".$locale."/".$studyContent->getStudyUrl());
+                $intervention['studyName'] = $studyContent->getStudyName();
+            }
             $parameters["studyCode"] = $study->getStudyCode();
             $parameters["interventions"][] = $intervention;
             
@@ -153,6 +157,7 @@ class DashboardController extends Controller
         $parameters["user"]["name"] = $participant->getParticipantFirstname() . ' ' . $participant->getParticipantLastname();
         $parameters["username"] = $participant->getParticipantUsername();
         $parameters["user"]["last_access"] = $participant->getParticipantLastTouchDatetime();
+
         
         
         if ($participant->getParticipantEmailConfirmed()){

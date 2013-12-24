@@ -43,7 +43,7 @@ twig:
         google_analytics_account: %google_analytics_account%
         branding: %branding%
         random_themes: %random_themes%
-        study_image_url: %admin_project_url%
+        study_image_url: %study_image_url%
     form:
         resources:
             - 'CyclogramFrontendBundle:Form:fields.html.twig'
