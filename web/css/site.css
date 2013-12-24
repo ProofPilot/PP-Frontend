@@ -3678,7 +3678,7 @@ footer .row_2 p {
 }
 /*Email to a friend popup*/
 #email_list {
-    padding: 15px 20px;
+    padding-top: 15px;
     background: #fff;
     border-radius: 5px;
 }
@@ -3693,10 +3693,10 @@ footer .row_2 p {
     padding-right: 45px;
     padding-left: 15px;
     text-align: center;
-    margin-bottom: 45px;
+    margin: 0px 20px 20px 45px;
 }
 #email_list .sender_info {
-	padding-bottom: 15px;
+	padding: 0px 20px 20px 15px;
 }
 #email_list .sender_info label, #email_list .msg_details label {
     color: #4F4F4F;
@@ -3712,12 +3712,13 @@ footer .row_2 p {
     font-family: 'Roboto';
     font-style: normal;
     font-weight: 400;
-    line-height: 38px;
+    line-height: 32px;
     font-size: 13px;
     height: 32px;
     margin-bottom: 15px;
     padding-left: 10px;
     width: 100%;
+    box-sizing: border-box;
     -moz-box-sizing: border-box;
 }
 #email_list .sender_info p.others {
@@ -3739,14 +3740,10 @@ footer .row_2 p {
 }
 #email_list .msg_details {
     background: none repeat scroll 0 0 #F5F6F7;
-    padding-bottom: 15px;
-    padding-top: 15px;
+	padding: 15px 20px;
+	box-sizing: border-box;
     -moz-box-sizing: border-box;
-    float: left;
-    margin-left: -20px;
-    padding-left: 20px;
-    padding-right: 18px;
-    width: 113.7%;
+    overflow: hidden;
 }
 #email_list .msg_details a.btn_cancel {
     clear: both;
