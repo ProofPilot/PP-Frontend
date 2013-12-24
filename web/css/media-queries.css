@@ -1060,10 +1060,10 @@
 		padding: 15px;
 		padding-bottom: 0px;
 	}
-	.video_wrapper a.fb {
+	.intro_page .text_wrapper .video_wrapper a.fb {
 		display: block;
 	}
-	.intro_page .text_wrapper .video_wrapper .video_text .social_col a.fb {
+	.intro_page .text_wrapper .video_wrapper .video_text a.fb {
 		display: none;
 	}
 	.intro_page .text_wrapper .video_wrapper .video_text {
@@ -1074,7 +1074,7 @@
 	}
 	.intro_page .text_wrapper .video_wrapper .video_text ul.participants_num {
 		position: absolute;
-		bottom: 0px;
+		bottom: -10px;
 	}
 	
 }
@@ -1990,6 +1990,9 @@
 		margin: 0px;
 		padding: 15px;
 		height: auto;
+	}
+	.intro_page .home_welcome {
+		overflow: visible;
 	}
 	.intro_page .home_welcome .welcome_banner img {
 		width: 100%;
