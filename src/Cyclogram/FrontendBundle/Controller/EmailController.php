@@ -66,7 +66,7 @@ class EmailController extends Controller
             $cc->sendMail(null,
                     $email,
                     'Test Email from Cyclogram',
-                    'CyclogramFrontendBundle:Email:email_test.html.twig',
+                    'CyclogramFrontendBundle:Email:email_confirmation.html.twig',
                     null,
                     $embedded,
                     true,
