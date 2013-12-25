@@ -19,6 +19,8 @@
 namespace Cyclogram\Bundle\ProofPilotBundle\Repository;
 
 
+use Cyclogram\Bundle\ProofPilotBundle\Entity\Study;
+
 use Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantArmLink;
 
 use Cyclogram\Bundle\ProofPilotBundle\Entity\Site;
@@ -243,23 +245,38 @@ class StudyRepository extends EntityRepository
         return $results;
     }
     
-    public function getRandomStudyInfo($locale) {
+    public function getRandomStudyInfo($locale, $participant) {
         
         $language =  $this->getEntityManager()->getRepository('CyclogramProofPilotBundle:Language')->findOneByLocale($locale);
+        $enrolledStudies = $this->getEntityManager()->getRepository('CyclogramProofPilotBundle:Participant')->getEnrolledStudies($participant);
+        $enroledStudyName = array();
+        foreach ($enrolledStudies as $study) {
+            $enroledStudyName[$study->getStudyId()] = $study->getStudyCode();
+        }
     
         $rows = $this->getEntityManager()
         ->createQuery("SELECT count(sc.studyId) 
                 FROM CyclogramProofPilotBundle:StudyContent sc
-                WHERE sc.language = :lang")->setParameters(array('lang' => $language))->getSingleScalarResult();
+                INNER JOIN sc.study s
+                WHERE sc.language = :lang
+                AND s.status =:status")->setParameters(array('lang' => $language,
+                                            'status' => Study::STATUS_ACTIVE))->getSingleScalarResult();
         
-        $offset = max(0, rand(0, $rows - 4));
+        $offset = max(0, rand(0, $rows-3));
         
-        $results = $this->getEntityManager()
+        $studyies = $this->getEntityManager()
         ->createQuery("
-                SELECT sc.studyId, sc.studyLogo, sc.studyName, sc.studyTagline
+                SELECT sc.studyId, sc.studyLogo, sc.studyName, sc.studyTagline, s.studyCode
                 FROM CyclogramProofPilotBundle:StudyContent sc
-                 WHERE sc.language = :lang")->setParameters(array('lang' => $language))->setMaxResults(3)
+                INNER JOIN sc.study s
+                 WHERE sc.language = :lang
+                AND s.status =:status")->setParameters(array('lang' => $language,'status' => Study::STATUS_ACTIVE))->setMaxResults(3)
                 ->setFirstResult($offset)->getResult();
+        $results = array();
+        foreach ($studyies as $study) {
+            if (!array_key_exists($study['studyId'],$enroledStudyName))
+                $results[] = $study;
+        }
 
 
         return $results;

@@ -1,7 +1,8 @@
-'dashboard_dismiss_confirmation ': 'dashboard_dismiss_confirmation '   # FIXME
-'dashboard_subtitle ': 'dashboard_subtitle '   # FIXME
+'dashboard_dismiss_confirmation ': 'dashboard_dismiss_confirmation '
+'dashboard_subtitle ': 'dashboard_subtitle '
 do_it: 'FACA ISSO'
 do_it_now: 'Faça-o agora'
+join_a_study: join_a_study   # FIXME
 no_do_it: no_do_it
 
 past_activity:
@@ -12,8 +13,8 @@ past_activity:
 
 send_again: send_again
 txt_dashboard: 'Painel de controle'
-txt_dismiss: txt_dismiss   # FIXME
-txt_dismiss_all: txt_dismiss_all   # FIXME
+txt_dismiss: txt_dismiss
+txt_dismiss_all: txt_dismiss_all
 txt_please_verify_email: "Por favor, verifique o seu endereço de e-mail. <br/>\nPara participar de estudos necessitamos de um endereço de e-mail válido - por favor, vá para o seu e-mail e clique no link"
 
 what_next_list:

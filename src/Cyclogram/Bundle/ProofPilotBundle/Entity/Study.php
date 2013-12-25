@@ -29,6 +29,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Study
 {
     const STATUS_ACTIVE = 1;
+    const STATUS_INACTIVE = 2;
     const STATUS_NEW = 6;
     /**
      * @var integer
@@ -37,119 +38,119 @@ class Study
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $studyId;
+    protected $studyId;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="study_recruitment_start", type="datetime", nullable=true)
      */
-    private $studyRecruitmentStart;
+    protected $studyRecruitmentStart;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="study_recruitment_end", type="datetime", nullable=true)
      */
-    private $studyRecruitmentEnd;
+    protected $studyRecruitmentEnd;
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="study_recruitment_extend_end", type="boolean", nullable=true)
      */
-    private $studyRecruitmentExtendEnd;
+    protected $studyRecruitmentExtendEnd;
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="study_allow_invites", type="boolean", nullable=false)
      */
-    private $studyAllowInvites;
+    protected $studyAllowInvites;
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="study_allow_sharing", type="boolean", nullable=false)
      */
-    private $studyAllowSharing;
+    protected $studyAllowSharing;
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="study_invite_only", type="boolean", nullable=false)
      */
-    private $studyInviteOnly;
+    protected $studyInviteOnly;
 
     /**
      * @var string
      *
      * @ORM\Column(name="study_facebook_page", type="string", length=255, nullable=true)
      */
-    private $studyFacebookPage;
+    protected $studyFacebookPage;
 
     /**
      * @var string
      *
      * @ORM\Column(name="study_twitter_page", type="string", length=255, nullable=true)
      */
-    private $studyTwitterPage;
+    protected $studyTwitterPage;
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="study_allow_mobile_devices_store_date", type="boolean", nullable=false)
      */
-    private $studyAllowMobileDevicesStoreDate;
+    protected $studyAllowMobileDevicesStoreDate;
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="study_barcode_required", type="boolean", nullable=false)
      */
-    private $studyBarcodeRequired;
+    protected $studyBarcodeRequired;
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="email_verification_required", type="boolean", nullable=false)
      */
-    private $emailVerificationRequired;
+    protected $emailVerificationRequired;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="register_proccess", type="integer", nullable=false)
      */
-    private $registerProccess;
+    protected $registerProccess;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="study_number_of_current_participants", type="integer", nullable=false)
      */
-    private $studyNumberOfCurrentParticipants;
+    protected $studyNumberOfCurrentParticipants;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="study_participants_goal", type="integer", nullable=false)
      */
-    private $studyParticipantsGoal;
+    protected $studyParticipantsGoal;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="study_skip_steps", type="integer", nullable=false)
      */
-    private $studySkipSteps;
+    protected $studySkipSteps;
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="study_real_time_graphics", type="boolean", nullable=false)
      */
-    private $studyRealTimeGraphics;
+    protected $studyRealTimeGraphics;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -164,21 +165,21 @@ class Study
      *   }
      * )
      */
-    private $language;
+    protected $language;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="status_id", type="integer", nullable=false)
      */
-    private $status;
+    protected $status;
 
     /**
      * @var string
      *
      * @ORM\Column(name="study_code", type="string", length=45, nullable=true)
      */
-    private $studyCode;
+    protected $studyCode;
 
     /**
      * Constructor

@@ -286,16 +286,16 @@
                     </form>
                     <div class="box_more_studies">
 {#                         <a href="#" class="more"><span>More studies</span></a>#}
-                        <h3>Join a study</h3>
+                        <h3>{% trans from "dashboard" %}join_a_study{% endtrans %}</h3>
                         <div class="studies_wrapper">
                             {% for study in studies %}
                                 <div class="more_studies_col first">
                                 {% if study.studyLogo is empty %}
-                                    <a href="#"><img src="{{ asset('images/tmplogo_none.jpg') }}" width="176" height="116" alt="" title=""/></a>
+                                    <a href="{{ path('_page', {'studyUrl' : study.studyCode}) }}"><img src="{{ asset('images/tmplogo_none.jpg') }}" width="176" height="116" alt="" title=""/></a>
                                 {% else %}
-                                    <a href="#"><img src="{{ study_image_url }}/{{ study.studyId }}/{{ study.studyLogo }}" width="176" height="116" alt="" title=""/></a>
+                                    <a href="{{ path('_page', {'studyUrl' : study.studyCode}) }}"><img src="{{ study_image_url }}/{{ study.studyId }}/{{ study.studyLogo }}" width="176" height="116" alt="" title=""/></a>
                                 {% endif %}
-                                    <h4><a href="#">{{ study.studyName }}</a></h4>
+                                    <h4><a href="{{ path('_page', {'studyUrl' : study.studyCode}) }}">{{ study.studyName }}</a></h4>
 {#                                 <p class="category">Category: Sex, Health</p>#}
                                     <p>{{ study.studyTagline | raw }}</p>
                                 </div>      
