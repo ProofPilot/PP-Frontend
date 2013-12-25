@@ -195,7 +195,7 @@ class MenuBuilder extends ContainerAware implements TranslationContainerInterfac
         ->addChild('top_menu.dashboard',
                 array(
                         'route' => '_main'))
-                        ->setAttribute('class', 'submenu_icon_general')
+                        ->setAttribute('class', 'submenu_icon_dashboard')
                         ->setAttribute("nospan", true)
                         ->setExtra('translation_domain', 'generalmenus');
         $menu['top_menu.settings']
@@ -215,7 +215,7 @@ class MenuBuilder extends ContainerAware implements TranslationContainerInterfac
                             'routeParameters' => array(
                             'studyCode' => $studyCode
                         )))
-                ->setAttribute('class', 'submenu_icon_general')
+                ->setAttribute('class', 'submenu_icon_contact')
                 ->setAttribute("nospan", true)
                 ->setExtra('translation_domain', 'generalmenus');
         $menu['top_menu.settings']
@@ -235,7 +235,7 @@ class MenuBuilder extends ContainerAware implements TranslationContainerInterfac
                         'routeParameters' => array(
                                 'studyCode' => $studyCode
                         )))
-                        ->setAttribute('class', 'submenu_icon_contact')
+                        ->setAttribute('class', 'submenu_icon_shipping')
                         ->setAttribute("nospan", true)
                         ->setExtra('translation_domain', 'generalmenus');
         $menu['top_menu.settings']
@@ -245,7 +245,7 @@ class MenuBuilder extends ContainerAware implements TranslationContainerInterfac
                         'routeParameters' => array(
                                 'studyCode' => $studyCode
                         )))
-                        ->setAttribute('class', 'submenu_icon_contact')
+                        ->setAttribute('class', 'submenu_icon_logout')
                         ->setAttribute("nospan", true)
                         ->setExtra('translation_domain', 'generalmenus');
         $menu['top_menu.settings']

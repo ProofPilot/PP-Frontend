@@ -15,7 +15,19 @@
                     $(this).closest('.ui-dialog-content').dialog("close");
                 });
             }
+            
             //mail to friends
+            $('.email').bind('click', function(e) {
+                e.preventDefault();
+                $('#email_list').dialog({
+                    modal: true,
+                    width: '330',
+                    fluid: true,
+                    resizable: false,
+                    position: ['top',100],
+                    open: funcCustom
+                });
+            });
             $('.google_plus_icon').bind('click', function(e) {
                 e.preventDefault();
                 $('#email_list').dialog({
