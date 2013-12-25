@@ -161,7 +161,6 @@
 	.panel .panel_left {
 		width: 26%;
 		max-width: none;
-		display:none;
 		-webkit-box-sizing:border-box;
 		   -moz-box-sizing:border-box;
 			    box-sizing:border-box;
@@ -176,8 +175,7 @@
 		-webkit-box-sizing:border-box;
 		   -moz-box-sizing:border-box;
 		        box-sizing:border-box;
-		width: 100%;
-		max-width: none;
+		        width: 74%;
 	}
 	.panel, .panel.alt_bg {
 		background: white;
@@ -2343,7 +2341,7 @@
 		padding-left: 90px;
 		margin-top: -45px; 
 	}
-	.social_icons_block {
+	.social_icons_block, .referal_social {
 		width: 100%;
 		margin-top: 0px;
 		margin-right: 0px;
