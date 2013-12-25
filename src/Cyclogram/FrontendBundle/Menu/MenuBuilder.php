@@ -208,16 +208,16 @@ class MenuBuilder extends ContainerAware implements TranslationContainerInterfac
                         ->setAttribute('class', 'submenu_icon_general')
                         ->setAttribute("nospan", true)
                         ->setExtra('translation_domain', 'generalmenus');
-        $menu['top_menu.settings']
-                ->addChild('top_menu.general_settings',
-                        array(
-                            'route' => '_settings',
-                            'routeParameters' => array(
-                            'studyCode' => $studyCode
-                        )))
-                ->setAttribute('class', 'submenu_icon_contact')
-                ->setAttribute("nospan", true)
-                ->setExtra('translation_domain', 'generalmenus');
+//         $menu['top_menu.settings']
+//                 ->addChild('top_menu.general_settings',
+//                         array(
+//                             'route' => '_settings',
+//                             'routeParameters' => array(
+//                             'studyCode' => $studyCode
+//                         )))
+//                 ->setAttribute('class', 'submenu_icon_contact')
+//                 ->setAttribute("nospan", true)
+//                 ->setExtra('translation_domain', 'generalmenus');
         $menu['top_menu.settings']
                 ->addChild('top_menu.contact_preferences',
                         array(
@@ -245,12 +245,12 @@ class MenuBuilder extends ContainerAware implements TranslationContainerInterfac
                         'routeParameters' => array(
                                 'studyCode' => $studyCode
                         )))
-                        ->setAttribute('class', 'submenu_icon_logout')
+                        ->setAttribute('class', 'submenu_icon_about')
                         ->setAttribute("nospan", true)
                         ->setExtra('translation_domain', 'generalmenus');
         $menu['top_menu.settings']
                 ->addChild('top_menu.logout', array('route' => '_logout'))
-                ->setAttribute('class', 'icon_logout normal')
+                ->setAttribute('class', 'submenu_icon_logout')
                 ->setAttribute("nospan", true)
                 ->setExtra('translation_domain', 'generalmenus');
 

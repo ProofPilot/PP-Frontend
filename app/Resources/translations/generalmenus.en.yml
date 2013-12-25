@@ -21,6 +21,7 @@ top_left_menu:
 top_menu:
     about_me: 'About me'
     contact_preferences: 'Contact preferences'
+    dashboard: Dashboard
     general_settings: 'General settings'
     help: Help
     logout: Logout
