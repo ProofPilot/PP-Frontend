@@ -1166,7 +1166,7 @@
     }
     .mobile_reg.login_form {
         width: 290px;
-        margin-left: -145px;
+/*         margin-left: -145px; */
         margin-top: 30px;
         background: white;
         padding-top: 20px;
