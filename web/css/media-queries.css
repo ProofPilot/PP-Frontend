@@ -189,14 +189,14 @@
 		padding: 12px 20px 0px 20px;
 	}
 	.panel .panel_right .dashboard_title ,
-	.panel .panel_right .dashboard_title.green {
+/* 	.panel .panel_right .dashboard_title.green {
 		box-sizing:border-box;
 		-moz-box-sizing:border-box;
 		-webkit-box-sizing:border-box; 	
 		max-width: none;
 		height: 128px;
 		padding-right: 10px;
-	}
+	} */
 	.panel .panel_right .dashboard_title {
 		height: 118px;
 	}
@@ -329,13 +329,13 @@
 		float: right;
 		margin-right: 20px;
 	}
-	.panel .panel_right .dashboard_title.main {
+/* 	.panel .panel_right .dashboard_title.main {
 		padding: 15px 0px 0px 95px;
 	}
 	.panel .panel_right .dashboard_title.branded {
 		background: url("../images/h1_dashboard.jpg") no-repeat scroll 26px 15px #F8F7EF;
 		max-width: none;
-	}
+	} */
 	.intro_page .text_wrapper .video_wrapper .video_text ul.participants_num li {
         width: 50%;
     }

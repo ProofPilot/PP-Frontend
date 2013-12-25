@@ -169,7 +169,7 @@ header .header_menu a ,
 	font-family: 'Roboto';
 	font-style: normal;
 	font-weight: 500;
-	height: 55px;
+	height: 40px;
 }
 header .header_menu a {
 	font-weight: 400;
@@ -206,12 +206,13 @@ header .header_menu li .submenu a {
 	padding: 0px;
 	margin: 0px;
 	font-size: 13px;
-	line-height: 52px;
+	line-height: 40px;
 	padding-left: 45px;
 	font-size: 13px;
 	width: 100%;
 	display: block;
 	color: #fff;
+	text-transform: uppercase;
 }
 header .user_logged_menu .submenu .menu_header {
     background: url("../images/submenu_close.png") no-repeat scroll 248px 50% / 14px 9px #A83027;
@@ -243,6 +244,9 @@ header .user_logged_menu .submenu .menu_header span.type {
     font-size: 11px;
     width: 180px;
 }
+header .header_menu li .submenu a.submenu_icon_dashboard {
+	background: url("../images/icon_my_dashboard.png") no-repeat scroll 16px 50% / 18px 12px rgba(0, 0, 0, 0)
+}
 header .header_menu li .submenu a.submenu_icon_general {
 	background: url(../images/submenu_icon_general.png) no-repeat 16px 50%;
 	background-size: 16px 16px;
@@ -263,6 +267,12 @@ header .header_menu li .submenu a.submenu_icon_shipping {
 }
 .lt-ie9 header .header_menu li .submenu a.submenu_icon_shipping  {
 	background: url(../images/100_submenu_icon_shipping.png) no-repeat 16px 50%;
+}
+header .header_menu li .submenu a.submenu_icon_about {
+	background: url("../images/submenu_icon_help.png") no-repeat scroll 16px 50% rgba(0, 0, 0, 0);		
+}
+header .header_menu li .submenu a.submenu_icon_logout {
+	background: url("../images/submenu_icon_logout.png") no-repeat scroll 16px 50% / 13px 14px rgba(0, 0, 0, 0);		
 }
 header .header_menu li .submenu a:hover {
 	color: #e1ada9;
@@ -723,12 +733,11 @@ header .header_menu span.text  , .footer_col_right span.text  {
 	float: left;
 	width: 100%;
 	border-bottom: 1px solid #e9e8df;
-	height: 117px;
 	padding-left: 100px;
 	padding-top: 37px;
 	height: 80px;
 	width: 638px;
-	background: #f8f7ef url(../images/h1_dashboard.jpg) no-repeat 26px 32px;	
+	background: url(../images/h1_dashboard_white.jpg) no-repeat 26px 32px;	
 	width: 100%;
 	max-width: 638px;
 }
