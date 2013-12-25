@@ -145,6 +145,7 @@ header .site_logo {
 	height: 55px;
 	background:  url(../branding/default/logo.png) no-repeat 0px 50%;
 	background-size: 117px 22px;
+	margin-top: 5px;
 }
 .lt-ie9 header .site_logo {
 		background:  url(../images/100_logo.png) no-repeat 0px 50%;
@@ -169,14 +170,18 @@ header .header_menu a ,
 	font-style: normal;
 	font-weight: 500;
 	height: 55px;
-	line-height: 55px;
-	color: white;
-	text-transform: uppercase;
 }
 header .header_menu a {
 	font-weight: 400;
 }
-
+header .header_user_logged_btn {
+    background: url("../images/icon_header_user_logged_btn.png") no-repeat scroll 100% 40% / 14px 9px rgba(0, 0, 0, 0);
+    display: block;
+    float: right;
+    margin-top: 13px;
+    overflow: hidden;
+    width: 210px;
+}
 header .header_menu li .submenu {
 	position: absolute;
 	z-index: 2000;
@@ -185,7 +190,7 @@ header .header_menu li .submenu {
 	background: #b73b32;
 	border-radius: 4px;
 	box-shadow: 0px 0px 15px rgba(0,0,0,0.3);
-	width: 250px;
+	width: 271px;
 	display: none;	
 }
 header .header_menu li:hover .submenu {
@@ -206,6 +211,37 @@ header .header_menu li .submenu a {
 	font-size: 13px;
 	width: 100%;
 	display: block;
+	color: #fff;
+}
+header .user_logged_menu .submenu .menu_header {
+    background: url("../images/submenu_close.png") no-repeat scroll 248px 50% / 14px 9px #A83027;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    float: left;
+    height: 53px;
+    margin-bottom: 10px;
+    padding: 8px 0 0 8px;
+    width: 263px;
+}
+header .user_logged_menu .submenu .menu_header img {
+    float: left;
+    margin-right: 17px;
+}
+header .user_logged_menu .submenu .menu_header span.name {
+    color: #FFFFFF;
+    display: block;
+    float: left;
+    font-size: 13px;
+    padding-bottom: 2px;
+    padding-top: 5px;
+    width: 180px;
+}
+header .user_logged_menu .submenu .menu_header span.type {
+    color: #D49893;
+    display: block;
+    float: left;
+    font-size: 11px;
+    width: 180px;
 }
 header .header_menu li .submenu a.submenu_icon_general {
 	background: url(../images/submenu_icon_general.png) no-repeat 16px 50%;
@@ -237,12 +273,25 @@ header .header_menu a:hover ,
 }
 header .header_menu a span,
 .mobile_sitemenu .menu_wrapper ul li a span {
-	padding-left: 25px;
 	display: inline-block;
+}
+header .header_menu a span.name {
+	color: #889298;
+	width: 155px;
+	padding-top: 3px;
+}
+header .header_menu a span.type {
+	color: #fff;
+	text-transform: uppercase;
+}
+header .header_user_logged_btn img {
+    float: left;
+    margin-right: 15px;
 }
 header .new_menu {
     float: left;
     margin-left: 35px;
+    margin-top: 8px;
 }
 header .new_menu li {
     float: left;
@@ -256,7 +305,7 @@ header .new_menu li span {
 }
 header .search_form {
     float: left;
-    margin-top: 14px;
+    margin-top: 21px;
 }
 header .search_form input {
     -moz-border-bottom-colors: none;
