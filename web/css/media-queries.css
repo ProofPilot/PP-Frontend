@@ -344,6 +344,10 @@
 	.intro_page .text_wrapper .video_wrapper .video_text ul.participants_num li span.num {
         font-size: 36px;
     }
+	.panel .panel_right .dashboard_panel .box_more_studies .more_studies_col {
+		width: 33%;
+		padding-right: 3px;
+	}
     
 }
 
@@ -505,9 +509,9 @@
 /* @media screen and (max-width: 900px) */ 
 @media screen and (max-width: 900px){
 	
-	.panel .panel_right .dashboard_panel .choices_box .featured_box .text_box {
+	/* .panel .panel_right .dashboard_panel .choices_box .featured_box .text_box {
 		padding-top: 20px;
-	}
+	} */
 	.panel .panel_right .dashboard_panel .choices_box .featured_box .text_box h4 {
 		font-size: 16px;
 		margin-bottom: 5px;
@@ -1494,6 +1498,14 @@
 	#div_consent .modal_close_btn, #email_list .modal_close_btn, #pledge_popup .modal_close_btn {
 		display: block;
 	}
+	.panel .panel_right .dashboard_panel .box_more_studies .more_studies_col img {
+    	width: 100%;
+	}
+	.panel .panel_right .dashboard_panel .box_more_studies .more_studies_col {
+		box-sizing:border-box;
+		-moz-box-sizing:border-box; /* Firefox */
+		padding-right: 10px;
+	}
 	
 }
 
@@ -1568,7 +1580,6 @@
 	.intro_page .text_wrapper aside .box.alt.s_org, .intro_page .text_wrapper aside .box.staff, .intro_page .text_wrapper aside .box.last.staff {
 		border-top: 0px none;
 	}
-	
 }
 
 /* @media screen and (max-width: 690px) */ 
@@ -2234,6 +2245,13 @@
 	.intro_page .home_welcome .welcome_text {
     	padding-top: 10px;
 	}
+	.panel .panel_right .dashboard_panel .box_more_studies .more_studies_col {
+		width: 100%;
+		margin-bottom: 20px;
+	}
+	.panel .panel_right .dashboard_panel .box_more_studies .more_studies_col img {
+    	width: auto;
+	}
 	
 }
 
@@ -2303,8 +2321,9 @@
 		padding: 0px;
 		margin-top: 20px;
 	}
-	.panel .panel_right .dashboard_panel .choices_box h2 {
-		text-align: center;
+	.panel .panel_right .dashboard_panel .choices_box a.close_all {
+		top: 5px;
+		right: 10px;
 	}
 	.panel .panel_right .dashboard_panel .choices_box .featured_box {
 		background: #f9f8f1;
@@ -2322,7 +2341,15 @@
 		padding: 0px;
 		width: 100%;
 		padding-left: 90px;
-		margin-top: -90px; 
+		margin-top: -45px; 
+	}
+	.social_icons_block {
+		width: 100%;
+		margin-top: 0px;
+		margin-right: 0px;
+	}
+	.panel .panel_right .dashboard_panel .box_more_studies {
+		border: none;
 	}
 	.panel .panel_right .dashboard_panel .choices_box .featured_box .banner_box img {
 		width: 100%;
@@ -2399,7 +2426,7 @@
 		padding: 0px;
 		margin-bottom: 10px;
 	}
-
+	
 }
 
 /* @media screen and (max-width: 535px) */ 

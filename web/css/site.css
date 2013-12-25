@@ -1255,9 +1255,11 @@ header .header_menu span.text  , .footer_col_right span.text  {
 	font-style: normal;
 	font-weight: 700;
 	font-size: 14px;
-	/*line-height: 37px;*/
-	line-height: 37px;
+	line-height: 30px;
 	min-height: 37px;
+}
+.panel .panel_right .dashboard_panel p.notice.green a {
+	color: #C4433A;
 }
 .panel .panel_right .dashboard_panel p.notice.nomargin {
 	margin-bottom: 0px;
@@ -1273,6 +1275,7 @@ header .header_menu span.text  , .footer_col_right span.text  {
 .panel .panel_right .dashboard_panel p.notice.green {
 	background-color: #e4eecc;
 	border-color: #b5cd7e;
+	padding: 0px 5px;
 }
 .panel .panel_right .dashboard_panel p.notice.green span {
 	background: url(../images/ok_green.png) no-repeat 0px 50%;
@@ -1405,6 +1408,7 @@ header .header_menu span.text  , .footer_col_right span.text  {
 	width: 360px;
 	width: 330px;
 	padding-right: 30px;
+	margin-top: 40px;
 }
 .panel .panel_right .dashboard_panel .choices_box .featured_box  .text_box h4 {
 	color: #33383f;
@@ -3786,7 +3790,8 @@ footer .row_2 p {
 }
 /*Social icons*/
 .social_icons_block {
-	overflow: hidden;
+	float: right;
+	margin-right: 35px;
 	margin-top: 50px;
 }
 .twitter_icon, .facebook_icon, .google_plus_icon {
