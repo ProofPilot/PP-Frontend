@@ -1166,7 +1166,7 @@ class Participant implements AdvancedUserInterface
 
     public function getRoles()
     {
-        return array_merge($this->participantRoles, array('ROLE_USER'));
+        return array_merge($this->participantRoles, array('ROLE_USER', 'ROLE_PARTICIPANT'));
     }
 
     public function setRoles($roles)
