@@ -88,16 +88,15 @@
                     e.preventDefault();
                 }
             });
-            $('#email_list').submit(function(e){
-                $(this).ajaxSubmit({
+            $('#email_submit').bind('click' , function(e){
+                $('#email_list').ajaxSubmit({
                     dataType: "json",
                     success: function(json) {
                         if(json.error) {
-                            $('#mail_send_result').removeClass("notice green").addClass("error");
-                            $('#mail_send_result').show().html('<span>'+json.message+'</span>');
+                            alert(json.message);
                         } else {
-                            $('#mail_send_result').removeClass("error").addClass("notice green")
-                            $('#mail_send_result').show().html('<span>'+json.message+'</span>');
+                            $('#email_list').dialog('close');
+                            alert(json.message);
                         }}
                 });
                 return false;
@@ -530,9 +529,9 @@
         <h1>Send e-mail to a friend</h1>
         <div class="sender_info">
             <label for="tmp_who">Who is sending?</label>
-            <input id="tmp_who" type="text" class="text" placeholder="Type your e-mail" /><br />
+            <input id="tmp_who" type="text" name="send_from" class="text" placeholder="Type your e-mail" /><br />
             <label for="tmp_to">Who are you sending to?</label>
-            <input id="tmp_to" type="text" class="text" placeholder="Type recipient email" /><br />
+            <input id="tmp_to" type="text" name="send_to[0]" class="text" placeholder="Type recipient email" /><br />
             <p class="others">
                 <a href="#">+ Add another e-mail</a>
                 <span>(up to 5 e-mails)</span>
@@ -540,11 +539,11 @@
         </div>
         <div class="msg_details">
             <label for="tmp_subject">Subject</label>
-            <input id="tmp_subject" type="text" class="text" placeholder="Join the study,Sexual Health Promotion ..." />
+            <input id="tmp_subject" type="text" name="subject" class="text" placeholder="Join the study,Sexual Health Promotion ..." />
             <label for="tmp_msg">Message</label>
-            <input id="tmp_msg" type="text" class="text" placeholder="Join the study,Sexual Health Promotion ..." />
+            <input id="tmp_msg" type="text" name="description" class="text" placeholder="Join the study,Sexual Health Promotion ..." />
             <a href="#" class="btn_cancel">Cancel</a>
-            <a href="#" class="btn_send_mail">Send e-mail</a>
+            <a href="#" class="btn_send_mail" id ="email_submit">Send e-mail</a>
         </div>
     </form>
     <div id="embed_list" style="display:none;">
