@@ -16,7 +16,7 @@ AUSTRIA: AUSTRIA
 AZERBAIJAN: AZERBAIJAN
 'African descent': 'African descent'
 'Agriculture, Forestry, and Fishing': 'Agriculture, Forestry, and Fishing'
-'Arab/Middle Eastern': 'Arab/Middle Eastern'
+'Arab/Middle Eastern': 'Arab/Middle Eastern descent'
 'Arts, Entertainment & Media': 'Arts, Entertainment & Media'
 'Associates or Professional School': 'Associates or Professional School'
 BAHAMAS: BAHAMAS
@@ -77,7 +77,7 @@ EGYPT: EGYPT
 ERITREA: ERITREA
 ESTONIA: ESTONIA
 ETHIOPIA: ETHIOPIA
-'East Asian': 'East Asian'
+'East Asian': 'East Asian descent'
 Education: Education
 'Elementary School': 'Elementary School'
 Engaded: Engaded
@@ -117,7 +117,7 @@ HONDURAS: HONDURAS
 HUNGARY: HUNGARY
 'Health Care and Social Assistance': 'Health Care and Social Assistance'
 'High school': 'High school'
-'Hispanic and/or Latino': 'Hispanic and/or Latino'
+'Hispanic and/or Latino': 'Hispanic and/or Latino descent'
 ICELAND: ICELAND
 INDIA: INDIA
 INDONESIA: INDONESIA
@@ -188,7 +188,7 @@ NIUE: NIUE
 'NORFOLK ISLAND': 'NORFOLK ISLAND'
 'NORTHERN MARIANA ISLANDS': 'NORTHERN MARIANA ISLANDS'
 NORWAY: NORWAY
-'Native American or Aboriginal': 'Native American or Aboriginal'
+'Native American or Aboriginal': 'Native American or Aboriginal descent'
 OMAN: OMAN
 Other: Other
 PAKISTAN: PAKISTAN
@@ -250,7 +250,7 @@ Separated: Separated
 Single: Single
 'Some College': 'Some College'
 'Some Highschool': 'Some Highschool'
-'South Asian': 'South Asian'
+'South Asian': 'South Asian descent'
 'TAIWAN, PROVINCE OF CHINA': 'TAIWAN, PROVINCE OF CHINA'
 TAJIKISTAN: TAJIKISTAN
 'TANZANIA, UNITED REPUBLIC OF': 'TANZANIA, UNITED REPUBLIC OF'
