@@ -51,6 +51,7 @@ class EmailController extends Controller
     function sendTestEmailAction(Request $request, $email)
     {
 //         $branding = $this->get('branding');
+        $locale = $this->getRequest()->getLocale();
         $cc = $this->get('cyclogram.common');
         $embedded = array();
         $embedded = $cc->getEmbeddedImages();
@@ -60,7 +61,8 @@ class EmailController extends Controller
         $parameters['email'] = "ok@ok.com";
         $parameters['confirmed'] = 1;
         $parameters['host'] = $this->container->getParameter('site_url');
-        $parameters['locale'] = $request->getLocale();;
+        $parameters['locale'] = $request->getLocale();
+        $parameters["studies"] = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:Study')->getRandomStudyInfo($locale, $participant);
 
         try{
             $cc->sendMail(null,
@@ -173,7 +175,7 @@ class EmailController extends Controller
             $em = $this->getDoctrine()->getManager();
             $participant = $em->getRepository('CyclogramProofPilotBundle:Participant')->find($id);
             $cc = $this->get('cyclogram.common');
-            
+            $locale = $this->getRequest()->getLocale();
             $embedded = array();
             $embedded = $cc->getEmbeddedImages();
         
@@ -181,6 +183,7 @@ class EmailController extends Controller
             $parameters['locale'] = $participant->getLocale() ? $participant->getLocale() : $request->getLocale();
             $parameters['host'] = $this->container->getParameter('site_url');
             $parameters['code'] = $participant->getParticipantEmailCode();
+            $parameters["studies"] = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:Study')->getRandomStudyInfo($locale, $participant);
             try{
             $send = $cc->sendMail(null,
                     $participant->getParticipantEmail(),
@@ -199,14 +202,14 @@ class EmailController extends Controller
     }
     
     /**
-     * @Route("/email_to_friend/{studyCode}" , name="_email_to_friend" , defaults={"studyCode"="null"})
+     * @Route("/email_to_friend/{studyCode}/{participantName}" , name="_email_to_friend" , defaults={"studyCode"=null})
      * @Template()
      */
-    function emailToFriendAction(Request $request, $studyCode)
+    function emailToFriendAction(Request $request, $studyCode, $participantName)
     {
         $em = $this->getDoctrine()->getManager();
         $cc = $this->get('cyclogram.common');
-        
+        $participant = $em->getRepository('CyclogramProofPilotBundle:Participant')->findOneByParticipantUsername($participantName);
         $locale = $request->getLocale();
         
         if ($request->isXmlHttpRequest()) {
@@ -239,6 +242,7 @@ class EmailController extends Controller
             $parameters['desription'] = $description;
             $parameters['host'] = $this->container->getParameter('site_url');
             $parameters["graphic"] = $this->container->getParameter('study_image_url') . '/' . $studyContent->getStudyId(). '/' .$studyContent->getStudyLogo();
+            $parameters["studies"] = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:Study')->getRandomStudyInfo($locale, $participant);
             try{
                 $send = $cc->sendMail($from,$to,
                         $subject,

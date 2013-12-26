@@ -461,6 +461,16 @@ class Participant implements AdvancedUserInterface
     protected $contacttimelinks;
 
     /**
+     * @var \Race
+     *
+     * @ORM\ManyToOne(targetEntity="Race")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="race_id", referencedColumnName="race_id")
+     * })
+     */
+    protected $race;
+    
+    /**
      * Get participantId
      *
      * @return integer 
@@ -960,7 +970,7 @@ class Participant implements AdvancedUserInterface
     }
 
     /**
-     * Set race
+     * Set race 
      *
      * @param \Cyclogram\Bundle\ProofPilotBundle\Entity\Race $race
      * @return Participant

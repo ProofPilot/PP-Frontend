@@ -662,6 +662,7 @@ class AuthentificationController extends Controller
      */
     private function confirmParticipantEmail(Participant $participant, $studyCode = null)
     {
+        $locale = $this->getRequest()->getLocale();
         $em = $this->getDoctrine()->getManager();
         if($participant->getParticipantEmailConfirmed() == false) {
             $cc = $this->get('cyclogram.common');
@@ -679,6 +680,7 @@ class AuthentificationController extends Controller
     
             $parameters['locale'] = $participant->getLocale() ? $participant->getLocale() : $request->getLocale();
             $parameters['host'] = $this->container->getParameter('site_url');
+            $parameters["studies"] = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:Study')->getRandomStudyInfo($locale, $participant);
     
             $cc->sendMail(null,
                     $participant->getParticipantEmail(),

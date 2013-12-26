@@ -312,7 +312,7 @@ class CyclogramCommon {
         $embedded['white_bottom'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_white_bottom.png");
         $embedded['login'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/login.jpg");
         $embedded['arrow'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/arrow.jpg");
-        $embedded['tmp'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/tmp1.jpg");
+        $embedded['tmp_logo'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/tmplogo_none.jpg");
         
         return $embedded;
     }

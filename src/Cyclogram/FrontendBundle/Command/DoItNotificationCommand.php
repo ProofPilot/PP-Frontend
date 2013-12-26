@@ -166,6 +166,7 @@ class DoItNotificationCommand extends ContainerAwareCommand
             $parameters['locale'] = $participant->getLocale();
             $parameters['host'] = $this->getContainer()->getParameter('site_url');
             $parameters['siteurl'] = $this->getContainer()->getParameter('site_url').$this->getInterventionUrl($interventionLink, $locale);
+            $parameters["studies"] = $this->getContainer()->get('doctrine')->getRepository('CyclogramProofPilotBundle:Study')->getRandomStudyInfo($locale, $participant);
             
             if (!empty($parameters["interventions"])){
                 $send = $cc->sendMail(null,

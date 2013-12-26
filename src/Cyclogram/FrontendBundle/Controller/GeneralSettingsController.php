@@ -129,6 +129,7 @@ class GeneralSettingsController  extends Controller
                     $parameters['locale'] = $locale;
                     $parameters['host'] = $this->container->getParameter('site_url');
                     $parameters['code'] = $participant->getParticipantEmailCode();
+                    $parameters["studies"] = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:Study')->getRandomStudyInfo($locale, $participant);
                     
                     $cc->sendMail(null,
                             $participant->getParticipantEmail(),

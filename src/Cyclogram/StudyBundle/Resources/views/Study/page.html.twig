@@ -525,8 +525,9 @@
          {% include 'CyclogramFrontendBundle:Authentification:reset_password_confirmation_content.html.twig' %}
     </div>
 
-    <form id="email_list" style="display: none; "action="{{path('_email_to_friend', {'studyCode' : studyCode})}}">
+    <form id="email_list" style="display: none; "action="{{path('_email_to_friend', {'studyCode' : studyCode, 'participantName' : app.user.username})}}">
         <h1>Send e-mail to a friend</h1>
+        
         <div class="sender_info">
             <label for="tmp_who">Who is sending?</label>
             <input id="tmp_who" type="text" name="send_from" class="text" placeholder="Type your e-mail" /><br />

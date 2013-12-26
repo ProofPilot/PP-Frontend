@@ -49,8 +49,10 @@ class DashboardController extends Controller
         $em = $this->getDoctrine()->getManager();
         $participant = $this->get('security.context')->getToken()->getUser();
         $cc = $this->container->get('cyclogram.common');
+        $locale = $this->getRequest()->getLocale();
         
-        if (!is_null($sendMail) && !$em->getRepository('CyclogramProofPilotBundle:Participant')->isEnrolledInStudy($participant, 'sexpro')){
+        
+        if (!is_null($sendMail)){
             $cc = $this->get('cyclogram.common');
             $embedded = array();
             $embedded = $cc->getEmbeddedImages();
@@ -58,6 +60,7 @@ class DashboardController extends Controller
             $parameters['locale'] = $participant->getLocale() ? $participant->getLocale() : $request->getLocale();
             $parameters['host'] = $this->container->getParameter('site_url');
             $parameters['code'] = $participant->getParticipantEmailCode();
+            $parameters["studies"] = $em->getRepository('CyclogramProofPilotBundle:Study')->getRandomStudyInfo($locale, $participant);
             
             $cc->sendMail(null,
                     $participant->getParticipantEmail(),
@@ -72,7 +75,7 @@ class DashboardController extends Controller
         $session = $this->getRequest()->getSession();
         
         $request = $this->getRequest();
-        $locale = $this->getRequest()->getLocale();
+        
         
         
         $this->get('study_logic')->interventionLogic($participant);
@@ -85,6 +88,7 @@ class DashboardController extends Controller
         
         
         $parameters = array();
+        $parameters["studies"] = $em->getRepository('CyclogramProofPilotBundle:Study')->getRandomStudyInfo($locale, $participant);
         $parameters["interventioncount"] = $surveyscount;
 
 
@@ -123,7 +127,7 @@ class DashboardController extends Controller
             $parameters["interventions"][] = $intervention;
             
         }
-        $parameters["studies"] = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:Study')->getRandomStudyInfo($locale, $participant);
+        
         $parameters["actions"] = array(
                 array('activity' => $this->get('translator')->trans('past_activity.emai_confirmation_status', array(), 'dashboard'),
                         'class' => 'icon1 first'
