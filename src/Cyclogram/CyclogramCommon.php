@@ -239,7 +239,7 @@ class CyclogramCommon {
         else
             $message->setFrom($from)->setTo($to);
 //         ->addBcc($control_mail);
-        
+        $message->setSender('crew@cyclogram.com');
         if($subject)
             $message->setSubject($subject);
         

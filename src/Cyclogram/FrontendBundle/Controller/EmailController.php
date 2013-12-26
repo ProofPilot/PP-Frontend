@@ -202,7 +202,7 @@ class EmailController extends Controller
     }
     
     /**
-     * @Route("/email_to_friend/{studyCode}/{participantName}" , name="_email_to_friend" , defaults={"studyCode"=null})
+     * @Route("/email_to_friend/{studyCode}/{participantName}" , name="_email_to_friend" , defaults={"studyCode"=null, "participantName"= null })
      * @Template()
      */
     function emailToFriendAction(Request $request, $studyCode, $participantName)

@@ -245,14 +245,10 @@ class StudyRepository extends EntityRepository
         return $results;
     }
     
-    public function getRandomStudyInfo($locale, $participant) {
+    public function getRandomStudyInfo($locale, $participant = null) {
         
         $language =  $this->getEntityManager()->getRepository('CyclogramProofPilotBundle:Language')->findOneByLocale($locale);
-        $enrolledStudies = $this->getEntityManager()->getRepository('CyclogramProofPilotBundle:Participant')->getEnrolledStudies($participant);
-        $enroledStudyName = array();
-        foreach ($enrolledStudies as $study) {
-            $enroledStudyName[$study->getStudyId()] = $study->getStudyCode();
-        }
+
     
         $rows = $this->getEntityManager()
         ->createQuery("SELECT count(sc.studyId) 
@@ -273,9 +269,20 @@ class StudyRepository extends EntityRepository
                 AND s.status =:status")->setParameters(array('lang' => $language,'status' => Study::STATUS_ACTIVE))->setMaxResults(3)
                 ->setFirstResult($offset)->getResult();
         $results = array();
-        foreach ($studyies as $study) {
-            if (!array_key_exists($study['studyId'],$enroledStudyName))
+        if (isset($participant)) {
+            $enrolledStudies = $this->getEntityManager()->getRepository('CyclogramProofPilotBundle:Participant')->getEnrolledStudies($participant);
+            $enroledStudyName = array();
+            foreach ($enrolledStudies as $study) {
+                $enroledStudyName[$study->getStudyId()] = $study->getStudyCode();
+            }
+            foreach ($studyies as $study) {
+                if (!array_key_exists($study['studyId'],$enroledStudyName))
+                    $results[] = $study;
+            }
+        } else {
+            foreach ($studyies as $study) {
                 $results[] = $study;
+            }
         }
 
 

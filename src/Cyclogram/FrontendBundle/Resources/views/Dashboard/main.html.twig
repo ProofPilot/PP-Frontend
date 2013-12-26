@@ -5,6 +5,7 @@
 {% use '::google_blocks.html.twig' %}
 
 {% block javascripts %}
+ <script src="{{ asset('/js/jquery.form.js') }}"></script>
     <script type="text/javascript" > 
         $(document).ready(function(){
             function funcCustom() {
@@ -275,7 +276,7 @@
                             </div>
                         {% endif %}
                     </div>
-                    <form id="email_list" style="display: none; "action="{{path('_email_to_friend', {'studyCode' : studyCode})}}">
+                    <form id="email_list" style="display: none; "action="{{path('_email_to_friend', {'studyCode' : studyCode, 'participantName' : app.user.username})}}">
                         <h1>Send e-mail to a friend</h1>
                         <div class="sender_info">
                             <label for="tmp_who">Who is sending?</label>
