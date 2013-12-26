@@ -1213,6 +1213,7 @@ div.checker input {
 	background: linear-gradient(to bottom, #4268a0 0%,#2c4f89 100%); /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4268a0', endColorstr='#2c4f89',GradientType=0 ); /* IE6-9 */
 	color: #fff;
+	display: block;
 }
 .mobile_login_switcher a span {
 	background: url(../images/icon_arrow_right.png) no-repeat scroll 236px 50%;
@@ -1220,6 +1221,7 @@ div.checker input {
 	display: block;
 }
 .mobile_login_switcher a.google {
+	display: block;
 	border: 1px solid #b9503e;
 	background: #e3624b; /* Old browsers */
 	background: -moz-linear-gradient(top, #e3624b 0%, #bc3a2a 100%); /* FF3.6+ */
@@ -1344,7 +1346,7 @@ div.checker input {
     float: right;
 }
 .mobile_reg.login_form .loginform_left .actions_row {
-    margin-bottom: 58px;
+    margin-bottom: 75px;
 }
 .mobile_reg.login_form .loginform_right .actions_row  input.checkbox {
 	margin-right: 5px;

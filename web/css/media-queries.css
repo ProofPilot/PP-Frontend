@@ -1198,6 +1198,12 @@
         width: 100%;
         border-radius: 5px;
     }
+    .loginform_left .row_or_text {
+    	display: none;
+    }
+    .loginform_left .btns_wapper {
+    	display: none;
+    }
     .mobile_login_switcher a {
         display: block;
         color: #383838;

@@ -31,10 +31,10 @@
                 </form>
                 <div class="row_or_text">OR</div>
                 <div class="btns_wapper">
-                    <a class="btn_reg fb" id="facebook_button" href="">
+                    <a class="btn_reg fb" class="facebook_button" href="">
                         <span>{% trans from "register" %}txt_join_with{% endtrans %} Facebook</span>
                     </a>
-                    <a class="btn_reg google" id="google_button" href="">
+                    <a class="btn_reg google" class="google_button" href="">
                         <span>{% trans from "register" %}txt_join_with{% endtrans %} Google</span>
                     </a> 
                 </div>
@@ -80,13 +80,13 @@
                     {{ form_errors(form) }}
                     </form>
             </div>
-            <div class="mobile_login_switcher facebook">
-                <a class="btn_reg fb" href="">
+            <div class="mobile_login_switcher">
+                <a class="btn_reg fb facebook_button" href="">
                     <span>{% trans from "register" %}txt_join_with{% endtrans %} Facebook</span>
                 </a>
             </div>
-            <div class="mobile_login_switcher google">
-                <a class="btn_reg google" href="">
+            <div class="mobile_login_switcher">
+                <a class="btn_reg google google_button" href="">
                     <span>{% trans from "register" %}txt_join_with{% endtrans %} Google</span>
                 </a>
             </div>
