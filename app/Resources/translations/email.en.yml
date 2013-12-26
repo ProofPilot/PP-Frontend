@@ -13,7 +13,7 @@ email_title_verify: 'Please Verify Your E-mail Address'
 forgot_username: forgot_username
 forgot_username_text: forgot_username_text
 forgot_username_title: forgot_username_title
-join: join
+join: 'JOIN STUDY'
 notice_verification: notice_verification
 notice_verification_text: 'Hey, this is ProofPilot. We noticed you haven’t confirmed your e-mail address.'
 reset_pass_link: 'Click here to reset your password'

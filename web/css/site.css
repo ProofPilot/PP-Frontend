@@ -175,12 +175,12 @@ header .header_menu a {
 	font-weight: 400;
 }
 header .header_user_logged_btn {
-    background: url("../images/icon_header_user_logged_btn.png") no-repeat scroll 100% 40% / 14px 9px rgba(0, 0, 0, 0);
+    background: url("../images/icon_header_user_logged_btn.png") no-repeat scroll 100% 50% / 14px 9px rgba(0, 0, 0, 0);
     display: block;
     float: right;
-    margin-top: 13px;
-    overflow: hidden;
+    margin-top: 11px;
     width: 210px;
+    margin-bottom: 15px;
 }
 header .header_menu li .submenu {
 	position: absolute;
@@ -400,6 +400,7 @@ header .header_menu a.login , .footer_col_right a.login {
 	padding-right: 25px;
 	margin-top: 12px;
 	margin-right: -4px;
+	color: #fff;
 }
 header .header_menu a.login:hover , .footer_col_right a.login:hover {
 	border-color: #872f20;

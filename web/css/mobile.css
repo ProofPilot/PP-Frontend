@@ -30,18 +30,15 @@
 	left: 0px;
 	width: 100%;
 	z-index: 3000;
-	height: 236px;
+/* 	height: 236px; */
 	background: #142835;
 	display: none;
-}
-.mobile_sitemenu.register {
-	height: 200px;
 }
 .mobile_sitemenu .menu_wrapper {
 	position: relative;
 	width: 100%;
-	height: 236px;
 	text-align: center;
+	overflow: hidden;
 }
 .mobile_sitemenu.with_general_settings {
 	height: 356px;
@@ -63,7 +60,7 @@
 	text-indent: -9999px;
 	width: 117px;
 	background:  url(../images/logo_2.png) no-repeat 0px 50%;
-	background-size: 117px 22px;
+	background-size: 117px 24px;
 }
 .mobile_sitemenu .menu_wrapper a.logo.knowathome {
 	background:  url(../branding/knowathome/logo.png) no-repeat 0px 50%;
@@ -78,6 +75,7 @@
 	padding-top: 10px;
 	border-top: 1px solid #1e313e;	
 	margin-bottom: 20px;
+	overflow: hidden;
 }
 .mobile_sitemenu .menu_wrapper ul li {
 	width: 100%;
@@ -122,13 +120,14 @@
 }
 .mobile_header_menu ul li.right {
 	float: right;
+	width: 20%;
 }
 .mobile_header_menu ul li a.trigger_left_menu {
 	display: block;
 	float: left;
 	height: 55px;
 	width: 55px;
-	background:  url(../images/trigger_left_menu.png) no-repeat 50% 50%;
+	background:  url(../images/trigger_sitemenu.png) no-repeat 50% 18px;
 	background-size: 20px 20px;
 }
 .mobile_header_menu ul li a.trigger_searchmenu {
@@ -138,12 +137,20 @@
     height: 55px;
     width: 48px;
 }
-.mobile_header_menu ul li a.trigger_sitemenu {
+.mobile_header_menu.nologin ul li a.trigger_sitemenu {
 	float: right;
 	height: 55px;
 	width: 48px;
 	background:  url(../images/trigger_sitemenu.png) no-repeat 50% 18px;
 	background-size: 24px 17px;
+	margin-right: 5px;
+}
+.mobile_header_menu ul li a.trigger_sitemenu {
+	float: right;
+	height: 55px;
+	width: 48px;
+	background:  url(../images/trigger_left_menu.png) no-repeat 50% 50%;
+	background-size: 20px 20px;
 	margin-right: 5px;
 }
 .mobile_header_menu ul li.logo a {
@@ -154,6 +161,9 @@
 	width: 117px;
 	text-indent: -9999px;
 	margin: 0px auto;
+}
+.mobile_sitemenu.nologin .menu_wrapper a.logo {
+	float: none;
 }
 .mobile_sitemenu.search {
     height: 126px;
