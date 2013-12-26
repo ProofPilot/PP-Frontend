@@ -127,8 +127,7 @@
 	float: left;
 	height: 55px;
 	width: 55px;
-	background:  url(../images/trigger_sitemenu.png) no-repeat 50% 18px;
-	background-size: 20px 20px;
+	background:  url("../images/trigger_sitemenu.png") no-repeat scroll 50% 18px / 24px 17px rgba(0, 0, 0, 0);
 }
 .mobile_header_menu ul li a.trigger_searchmenu {
     background: url("../images/trigger_searchmenu.png") no-repeat scroll 50% 18px / 19px 19px rgba(0, 0, 0, 0);
@@ -152,6 +151,12 @@
 	background:  url(../images/trigger_left_menu.png) no-repeat 50% 50%;
 	background-size: 20px 20px;
 	margin-right: 5px;
+}
+.mobile_header_menu.logged_in ul li a.trigger_sitemenu {
+	background: url("../images/icon_dropdown_2.png") no-repeat scroll 100% 50% / 9px 6px rgba(0, 0, 0, 0);
+	height: 32px;
+    margin: 12px 8px 0 0;
+    width: 43px;
 }
 .mobile_header_menu ul li.logo a {
 	display: inline-block;
