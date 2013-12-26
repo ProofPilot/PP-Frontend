@@ -563,7 +563,6 @@
     min-height: 64px;
     padding: 0 0 0 14px;
     position: relative;
-    width: 100%;
 }
 #div_register_step2 .mobile_reg .form_content span.text_wrapper {
     display: inline-block;
@@ -700,7 +699,6 @@
     display: block;
     font-size: 14px;
     padding: 10px 10px 10px 10px;
-    width: 100%;
 }
 #signup_about_zipcode, #signup_about_anunalIncome {
 	moz-box-sizing: border-box;
@@ -714,6 +712,8 @@
     line-height: 29px;
     padding-left: 10px;
     padding-right: 10px;
+    position: relative;
+    top: -2px;
 }
 #signup_about_zipcode {
 	width: 110px;
