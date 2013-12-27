@@ -3403,6 +3403,9 @@ footer .row_1 .footer_col_middle span:hover {
 	float: left;
 	margin-top: 3px;
 }
+#registration_form .input_placeholder {
+	position: relative;
+}
 footer .row_2 {
     background: none repeat scroll 0 0 #262626;
     height: 48px;

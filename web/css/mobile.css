@@ -1206,6 +1206,10 @@ div.checker input {
 .mobile_reg.login_form {
 	overflow: auto;
 }
+.mobile_reg.login_form .wrapper {
+	overflow: hidden;
+	background-color: #F7F7F7;
+}
 .mobile_reg.login_form h1 {
 	text-align: center;
 	color: #494949;
@@ -1218,11 +1222,8 @@ div.checker input {
 .mobile_reg.login_form .loginform_left {
 	float: left;
 	width: 252px;
-	padding-top: 30px;
-	padding-left: 48px;
-	padding-right: 48px;
+	padding: 30px 48px;
 	position: relative;
-	height: 465px;
 	background: #fff;
 }
 .why_register_mobile {
@@ -1380,7 +1381,6 @@ div.checker input {
 	padding-left: 48px;
 	padding-right: 48px;
 	padding-top: 30px;
-	height: 465px;
 	background-color: #F7F7F7;
 }
 .mobile_reg.login_form .loginform_right label, .loginform_left label {
