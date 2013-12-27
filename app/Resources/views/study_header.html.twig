@@ -31,7 +31,8 @@
         <a class="close" href="#"></a>
         <a class="logo"></a>
         {% if is_granted('ROLE_PARTICIPANT') or is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-            {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createTopSettingsMenu',{'template': 'CyclogramFrontendBundle:Knp:top_menu.html.twig'}) }}
+            {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createTopSettingsMenuMobileHeader',{'template': 'CyclogramFrontendBundle:Knp:top_menu_mobile_header.html.twig'}) }}
+            {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createTopSettingsMenuMobile',{'template': 'CyclogramFrontendBundle:Knp:top_menu_mobile_body.html.twig'}) }}
         {% else %}
             <ul>         
                 <li><a href="{{ path('_signup') }}" class="icon_login"><span>{% trans %}txt_header_login{% endtrans %}</span></a></li>

@@ -33,17 +33,7 @@ use Knp\Menu\FactoryInterface;
 
 class MenuBuilder extends ContainerAware implements TranslationContainerInterface
 {
-//     private $factory;
-//     private $container;
-    
-//     /**
-//      * @param FactoryInterface $factory
-//      */
-//     public function __construct(FactoryInterface $factory, Container $container)
-//     {
-//         $this->factory = $factory;
-//         $this->container = $container;
-//     }
+
     private function getThemeParameter()
     {
         $branding = $this->container->getParameter('branding');
@@ -69,30 +59,6 @@ class MenuBuilder extends ContainerAware implements TranslationContainerInterfac
                 'route' => '_main'
                 ))
                 ->setAttribute('class', 'icon_dashboard')->setExtra('translation_domain', 'sidemenu')->setAttribute("news", $interventioncount);
-//         $menu->addChild('side_dasboard_menu.survey', array(
-//                 'route' => '_main',
-//                 'routeParameters' => array(
-//                         'studyCode' => $studyCode
-//                         )))
-//                 ->setAttribute('class', 'icon_survey')->setExtra('translation_domain', 'sidemenu');
-//         $menu->addChild('side_dasboard_menu.activities', array(
-//                 'route' => '_main',
-//                 'routeParameters' => array(
-//                         'studyCode' => $studyCode
-//                         )))
-//                 ->setAttribute('class', 'icon_activities')->setExtra('translation_domain', 'sidemenu');
-//         $menu->addChild('side_dasboard_menu.measurements', array(
-//                 'route' => '_main',
-//                 'routeParameters' => array(
-//                         'studyCode' => $studyCode
-//                         )))
-//                 ->setAttribute('class', 'icon_measurments');
-//         $menu->addChild('side_dasboard_menu.treatment', array(
-//                 'route' => '_main',
-//                 'routeParameters' => array(
-//                         'studyCode' => $studyCode
-//                         )))
-//                 ->setAttribute('class', 'icon_treatment')->setExtra('translation_domain', 'sidemenu');
 
         return $menu;
     }
@@ -105,19 +71,9 @@ class MenuBuilder extends ContainerAware implements TranslationContainerInterfac
         $menu = $factory->createItem('root');
 
         $menu->addChild('bottom_study_right_menu.privacy_and_security'
-//                 , array('route' => '_page', 'routeParameters' => array('studyUrl' => $this->getThemeParameter()))
         )
                 ->setExtra('translation_domain', 'generalmenus');
-//         $menu->addChild('bottom_study_right_menu.help'
-//                 , array('route' => '_logout')
-//                 )
-//                 ->setAttribute('class', 'icon_logout normal')->setExtra('translation_domain', 'generalmenus');
         $menu->addChild('bottom_study_right_menu.contact_us'
-//                 , array(
-//                 'route' => '_settings',
-//                 'routeParameters' => array(
-//                         'studyCode' => $studyCode
-//                         ))
                 )
                 ->setAttribute('class', 'icon_settings')->setExtra('translation_domain', 'generalmenus');
 
@@ -131,8 +87,6 @@ class MenuBuilder extends ContainerAware implements TranslationContainerInterfac
     
         $menu = $factory->createItem('root');
     
-//         $menu->addChild('bottom_right_menu.help', array('route' => '_page', 'routeParameters' => array('studyUrl' => $this->getThemeParameter())))
-//         ->setAttribute('class', 'icon_help')->setExtra('translation_domain', 'generalmenus');
         $menu->addChild('bottom_right_menu.logout', array('route' => '_logout'))
         ->setAttribute('class', 'icon_logout normal')->setExtra('translation_domain', 'generalmenus');
         $menu->addChild('bottom_right_menu.my_settings', array(
@@ -208,16 +162,6 @@ class MenuBuilder extends ContainerAware implements TranslationContainerInterfac
                         ->setAttribute('class', 'submenu_icon_general')
                         ->setAttribute("nospan", true)
                         ->setExtra('translation_domain', 'generalmenus');
-//         $menu['top_menu.settings']
-//                 ->addChild('top_menu.general_settings',
-//                         array(
-//                             'route' => '_settings',
-//                             'routeParameters' => array(
-//                             'studyCode' => $studyCode
-//                         )))
-//                 ->setAttribute('class', 'submenu_icon_contact')
-//                 ->setAttribute("nospan", true)
-//                 ->setExtra('translation_domain', 'generalmenus');
         $menu['top_menu.settings']
                 ->addChild('top_menu.contact_preferences',
                         array(
@@ -258,77 +202,83 @@ class MenuBuilder extends ContainerAware implements TranslationContainerInterfac
     }
     
     
-    public function createTopSettingsStudyMenu(FactoryInterface $factory,
+    public function createTopSettingsMenuMobileHeader(FactoryInterface $factory,
             array $options)
     {
-        $studyCode = $this->container->get('request')->get('studyCode');
-    
         $menu = $factory->createItem('root');
-        $menu->setChildrenAttribute('class', 'header_menu');
-    
-        //         $menu->addChild('top_menu.help', array('route' => '_page', 'routeParameters' => array('studyUrl' => $this->getThemeParameter())))
-        //                 ->setAttribute('class', 'icon_help')
-        //                 ->setExtra('translation_domain', 'generalmenus');
-//         $menu->addChild('top_menu.logout', array('route' => '_logout'))
-//         ->setAttribute('class', 'icon_logout normal')
-//         ->setExtra('translation_domain', 'generalmenus');
-        $menu->addChild('top_menu.settings', array(
-                'route' => '_settings',
-                'routeParameters' => array(
-                        'studyCode' => $studyCode
-                )))
-                ->setAttribute('class', 'icon_settings')
-                ->setAttribute("dropdown", true)
+        
+        $menu->setAttribute("mobile_header", true);
+        
+        $menu->addChild('top_mobile_menu.settings', array())
+//                 ->setAttribute("mobile_header", true)
                 ->setExtra('translation_domain', 'generalmenus');
-        $menu['top_menu.settings']
-        ->addChild('top_menu.general_settings',
+        
+        return $menu;
+    }
+    
+    public function createTopSettingsMenuMobile(FactoryInterface $factory,
+            array $options)
+    {
+        $participant = $this->container->get('security.context')->getToken()->getUser();
+        $lastAccess = $participant->getParticipantLastTouchDatetime()->format('d M Y, H:i');
+        $studyCode = $this->container->get('request')->get('studyCode');
+        $menu = $factory->createItem('root');
+        
+        $menu->setAttribute("mobile_body", true);
+    
+        $menu->addChild($participant->getParticipantUserName())
+                        ->setAttribute("nospan", true)
+                        ->setAttribute("header", true)
+                        ->setAttribute("last_access", $lastAccess)
+                        ->setAttribute("user_name", $participant->getParticipantFirstname() . ' ' . $participant->getParticipantLastname())
+                        ->setExtra('translation_domain', 'generalmenus');
+        $menu->addChild('top_mobile_menu.dashboard',
+                array(
+                        'route' => '_main'))
+                        ->setAttribute('class', 'icon_my_dashboard')
+                        ->setAttribute("nospan", true)
+                        ->setExtra('translation_domain', 'generalmenus');
+        $menu->addChild('top_mobile_menu.general_settings',
                 array(
                         'route' => '_settings',
                         'routeParameters' => array(
                                 'studyCode' => $studyCode
                         )))
-                        ->setAttribute('class', 'submenu_icon_general')
+                        ->setAttribute('class', 'icon_settings')
                         ->setAttribute("nospan", true)
                         ->setExtra('translation_domain', 'generalmenus');
-        $menu['top_menu.settings']
-        ->addChild('top_menu.contact_preferences',
-                array(
-                        'route' => '_contact_prefs',
-                        'routeParameters' => array(
-                                'studyCode' => $studyCode
+        $menu->addChild('top_mobile_menu.contact_preferences',
+                        array(
+                            'route' => '_contact_prefs',
+                            'routeParameters' => array(
+                            'studyCode' => $studyCode
                         )))
-                        ->setAttribute('class', 'submenu_icon_contact')
-                        ->setAttribute("nospan", true)
-                        ->setExtra('translation_domain', 'generalmenus');
-        $menu['top_menu.settings']
-        ->addChild('top_menu.shipping_information',
+                ->setAttribute('class', 'icon_contact_prefs')
+                ->setAttribute("nospan", true)
+                ->setExtra('translation_domain', 'generalmenus');
+        $menu->addChild('top_mobile_menu.shipping_information',
                 array(
                         'route' => '_shipping',
                         'routeParameters' => array(
                                 'studyCode' => $studyCode
                         )))
-                        ->setAttribute('class', 'submenu_icon_contact')
+                        ->setAttribute('class', 'icon_shipping')
                         ->setAttribute("nospan", true)
                         ->setExtra('translation_domain', 'generalmenus');
-        $menu['top_menu.settings']
-        ->addChild('top_menu.about_me',
+        $menu->addChild('top_mobile_menu.about_me',
                 array(
                         'route' => '_about_me',
                         'routeParameters' => array(
                                 'studyCode' => $studyCode
                         )))
-                        ->setAttribute('class', 'submenu_icon_contact')
+                        ->setAttribute('class', 'icon_about')
                         ->setAttribute("nospan", true)
                         ->setExtra('translation_domain', 'generalmenus');
-        //         $menu['top_menu.settings']
-        //                 ->addChild('top_menu.shipping_information',
-        //                         array(
-        //                               'route' => '_survey_eligibility',
-        //                               'routeParameters' => array('studyUrl' => 'sexpro')))
-        //                 ->setAttribute('class', 'submenu_icon_shipping')
-        //                 ->setAttribute("nospan", true)
-        //                 ->setExtra('translation_domain', 'generalmenus');
-    
+        $menu->addChild('top_mobile_menu.logout', array('route' => '_logout'))
+                ->setAttribute('class', 'icon_logout')
+                ->setAttribute("nospan", true)
+                ->setExtra('translation_domain', 'generalmenus');
+        
         return $menu;
     }
     
@@ -340,21 +290,15 @@ class MenuBuilder extends ContainerAware implements TranslationContainerInterfac
         $menu->setChildrenAttribute('class', 'new_menu');
     
         $menu->addChild('top_left_menu.what_proofpilot'
-//                 array(
-//                 'route' => '#'
-//         )
+
                 )->setExtra('translation_domain', 'generalmenus');
         
         $menu->addChild('top_left_menu.browse'
-//                 array(
-//                 'route' => '#'
-//         )
+
                 )->setExtra('translation_domain', 'generalmenus');
         
         $menu->addChild('top_left_menu.launch'
-//                 array(
-//                 'route' => '#'
-//         )
+
                 )->setExtra('translation_domain', 'generalmenus');
     
         return $menu;

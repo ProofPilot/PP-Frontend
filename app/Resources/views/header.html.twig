@@ -14,29 +14,33 @@
             </ul>
         {% endif %}
 </header>
-<div class="mobile_header_menu logged_in">
+<div class="mobile_header_menu nologin">
         <ul>
-            <li>
-                <a class="trigger_left_menu alt" href="#"></a>
-            </li>
-            <li class="logo">
-                <a class="site_logo {{ branding }}" href="{{ path('_main') }}"></a>
-            </li>
-            <li class="right">
-                <a class="trigger_sitemenu {% if app.user %}nologin{% endif %}" href="#"></a>
-            </li>
-        </ul>
-</div>
-<div class="mobile_sitemenu register {% if app.user %}nologin{% else %}logged_in{% endif %}">
-        <div class="menu_wrapper">
-        <a class="close" href="#"></a>
-        <a class="logo" href="#"></a>
-        {% if app.user %}
-            {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createTopSettingsMenu',{'template': 'CyclogramFrontendBundle:Knp:top_menu.html.twig'}) }}
+         <li>
+            <a class="trigger_left_menu alt" href="#"></a>
+         </li>
+         <li class="logo">
+            <a class="site_logo {{ branding }}" href="{{ path('_main') }}"></a>
+         </li>
+        {% if is_granted('ROLE_PARTICIPANT') or is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+            {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createTopSettingsMenuMobileHeader',{'template': 'CyclogramFrontendBundle:Knp:top_menu_mobile_header.html.twig'}) }}
         {% else %}
             <ul>         
                 <li><a class="login" href="{{ path('_signup') }}"><span>{% trans %}txt_header_login{% endtrans %}</span></a></li>
             </ul>
         {% endif %}
+        </ul>
+</div>
+<div class="mobile_sitemenu register nologin">
+        <div class="menu_wrapper">
+            <a class="close" href="#"></a>
+            <a class="logo" href="#"></a>
+            {% if is_granted('ROLE_PARTICIPANT') or is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createTopSettingsMenuMobile',{'template': 'CyclogramFrontendBundle:Knp:top_menu_mobile_body.html.twig'}) }}
+            {% else %}
+                <ul>         
+                    <li><a class="login" href="{{ path('_signup') }}"><span>{% trans %}txt_header_login{% endtrans %}</span></a></li>
+                </ul>
+            {% endif %}
         </div>
 </div>
