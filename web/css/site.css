@@ -3884,3 +3884,55 @@ footer .row_2 p {
 .referal_social .email {
 	background: url("../../images/icon_share_email.png") no-repeat scroll 0 50% / 20px 14px rgba(0, 0, 0, 0);
 }
+
+/*You are participant menu*/
+.intro_page .text_wrapper .video_wrapper .video_text p.already_joined, .intro_page .text_wrapper .video_wrapper .video_text p.completed {
+    -moz-box-sizing: border-box;
+    background: none repeat scroll 0 0 #E3E3E3;
+    border-radius: 3px 3px 3px 3px;
+    clear: both;
+    color: #424242;
+    margin-bottom: 30px;
+    padding: 15px;
+    text-align: center;
+    text-transform: uppercase;
+    width: 100%;
+}
+.intro_page .text_wrapper .video_wrapper .video_text p.already_joined span, .intro_page .text_wrapper .video_wrapper .video_text p.completed span {
+    background: url("../images/icon_ok_green_1.png") no-repeat scroll 0 50% / 20px 16px rgba(0, 0, 0, 0);
+    display: inline-block;
+    padding-left: 30px;
+    margin-bottom: 0px;
+}
+.intro_page .text_wrapper .video_wrapper .video_text ul.short_menu {
+    clear: both;
+    float: left;
+    width: 100%;
+}
+.intro_page .text_wrapper .video_wrapper .video_text ul.short_menu li {
+    float: left;
+    margin-bottom: 25px;
+    width: 100%;
+}
+.intro_page .text_wrapper .video_wrapper .video_text ul.short_menu li a {
+    color: #424242;
+    display: block;
+    float: left;
+    font-size: 15px;
+    padding-left: 45px;
+}
+.intro_page .text_wrapper .video_wrapper .video_text ul.short_menu li.last {
+    margin-bottom: 0;
+}
+.intro_page .text_wrapper .video_wrapper .video_text ul.short_menu li a.sm_icon_1 {
+    background: url("../images/icon_survey.png") no-repeat scroll 18px 40% / 14px 18px rgba(0, 0, 0, 0);
+}
+.intro_page .text_wrapper .video_wrapper .video_text ul.short_menu li a.sm_icon_2 {
+    background: url("../images/sm_icon_2.png") no-repeat scroll 18px 40% / 14px 15px rgba(0, 0, 0, 0);
+}
+.intro_page .text_wrapper .video_wrapper .video_text ul.short_menu li a.sm_icon_4 {
+    background: url("../images/sm_icon_4.png") no-repeat scroll 18px 40% / 10px 10px rgba(0, 0, 0, 0);
+}
+.intro_page .text_wrapper .video_wrapper .video_text ul.short_menu li a.sm_icon_3 {
+    background: url("../images/sm_icon_3.png") no-repeat scroll 18px 40% / 13px 13px rgba(0, 0, 0, 0);
+}
