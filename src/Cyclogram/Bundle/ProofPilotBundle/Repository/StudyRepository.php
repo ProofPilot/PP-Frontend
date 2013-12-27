@@ -277,9 +277,12 @@ class StudyRepository extends EntityRepository
             foreach ($resultsKeys as $key=>$val) {
                 $studyResults[] = $results[$val]; 
             }
+            return $studyResults;
+        } else {
+            return $results;
         }
 
-        return $studyResults;
+        
     }
 
 }
