@@ -154,7 +154,8 @@
 	margin-right: 5px;
 }
 .mobile_header_menu.logged_in ul li a.trigger_sitemenu {
-	background: url("../images/icon_dropdown_2.png") no-repeat scroll 100% 50% / 9px 6px rgba(0, 0, 0, 0);
+	background: url("../images/icon_dropdown_2.png") no-repeat scroll 100% 50% rgba(0, 0, 0, 0);
+	background-size: 9px 6px;
 	height: 32px;
     margin: 12px 8px 0 0;
     width: 43px;
@@ -288,7 +289,8 @@
 	text-transform: uppercase;
 }
 .mobile_sitemenu .menu_wrapper ul li a.icon_my_dashboard span {
-    background: url("../images/icon_my_dashboard.png") no-repeat scroll 10px 50% / 18px 12px rgba(0, 0, 0, 0);
+    background: url("../images/icon_my_dashboard.png") no-repeat scroll 10px 50% rgba(0, 0, 0, 0);
+    background-size: 18px 12px;
 }
 .mobile_sitemenu .menu_wrapper ul li a.icon_settings span {
     background-position: 10px 50%;
@@ -300,7 +302,8 @@
     background-position: 10px 50%;
 }
 .mobile_sitemenu .menu_wrapper ul li a.icon_about span {
-    background: url("../images/icon_help.png") no-repeat scroll 10px 50% / 16px 16px rgba(0, 0, 0, 0);
+    background: url("../images/icon_help.png") no-repeat scroll 10px 50% rgba(0, 0, 0, 0);
+    background-size: 16px 16px;
 }
 .mobile_sitemenu .menu_wrapper ul li a.icon_logout span {
     background-position: 10px 50%;

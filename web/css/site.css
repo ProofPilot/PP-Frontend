@@ -2932,11 +2932,13 @@ footer .row_1 .footer_col_middle ul li {
     display: inline-block;
 }
 footer .row_1 .footer_col_middle a.fb {
-    background: url("../images/icon_footer_fb.png") no-repeat scroll 0 50% / 10px 20px rgba(0, 0, 0, 0);
+    background: url("../images/icon_footer_fb.png") no-repeat scroll 0 50% rgba(0, 0, 0, 0);
+    background-size: 10px 20px;
     color: #839FDE !important;
 }
 footer .row_1 .footer_col_middle a.tw {
-    background: url("../images/icon_footer_tw.png") no-repeat scroll 0 50% / 22px 16px rgba(0, 0, 0, 0);
+    background: url("../images/icon_footer_tw.png") no-repeat scroll 0 50% rgba(0, 0, 0, 0);
+    background-size: 22px 16px;
     color: #0099D6;
     padding-left: 30px;
 }
@@ -3878,7 +3880,8 @@ footer .row_2 p {
 	background: url(../images/facebook_social_icon.png) no-repeat;
 }
 .google_plus_icon {
-	background: url("../images/icon_share_email.png") no-repeat scroll 0 50% / 20px 14px rgba(0, 0, 0, 0);
+	background: url("../images/icon_share_email.png") no-repeat scroll 0 50% rgba(0, 0, 0, 0);
+	background-size: 20px 14px;
 }
 /*Referral social*/
 .referal_social {
@@ -3893,13 +3896,16 @@ footer .row_2 p {
 	margin-right: 10px;
 }
 .referal_social .tw {
-	background: url("../../images/icon_share_fb.png") no-repeat scroll 0 50% / 15px 24px rgba(0, 0, 0, 0);
+	background: url("../../images/icon_share_fb.png") no-repeat scroll 0 50% rgba(0, 0, 0, 0);
+	background-size: 15px 24px;
 }
 .referal_social .fb {
-	background: url("../../images/icon_share_tw.png") no-repeat scroll 0 50% / 23px 18px rgba(0, 0, 0, 0);
+	background: url("../../images/icon_share_tw.png") no-repeat scroll 0 50% rgba(0, 0, 0, 0);
+	background-size: 23px 18px;
 }
 .referal_social .email {
-	background: url("../../images/icon_share_email.png") no-repeat scroll 0 50% / 20px 14px rgba(0, 0, 0, 0);
+	background: url("../../images/icon_share_email.png") no-repeat scroll 0 50% rgba(0, 0, 0, 0);
+	background-size: 20px 14px;
 }
 
 /*You are participant menu*/
