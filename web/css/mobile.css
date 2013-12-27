@@ -127,8 +127,7 @@
 	float: left;
 	height: 55px;
 	width: 55px;
-	background:  url(../images/trigger_sitemenu.png) no-repeat 50% 18px;
-	background-size: 20px 20px;
+	background:  url("../images/trigger_sitemenu.png") no-repeat scroll 50% 18px / 24px 17px rgba(0, 0, 0, 0);
 }
 .mobile_header_menu ul li a.trigger_searchmenu {
     background: url("../images/trigger_searchmenu.png") no-repeat scroll 50% 18px / 19px 19px rgba(0, 0, 0, 0);
@@ -152,6 +151,12 @@
 	background:  url(../images/trigger_left_menu.png) no-repeat 50% 50%;
 	background-size: 20px 20px;
 	margin-right: 5px;
+}
+.mobile_header_menu.logged_in ul li a.trigger_sitemenu {
+	background: url("../images/icon_dropdown_2.png") no-repeat scroll 100% 50% / 9px 6px rgba(0, 0, 0, 0);
+	height: 32px;
+    margin: 12px 8px 0 0;
+    width: 43px;
 }
 .mobile_header_menu ul li.logo a {
 	display: inline-block;
@@ -558,7 +563,6 @@
     min-height: 64px;
     padding: 0 0 0 14px;
     position: relative;
-    width: 100%;
 }
 #div_register_step2 .mobile_reg .form_content span.text_wrapper {
     display: inline-block;
@@ -695,7 +699,6 @@
     display: block;
     font-size: 14px;
     padding: 10px 10px 10px 10px;
-    width: 100%;
 }
 #signup_about_zipcode, #signup_about_anunalIncome {
 	moz-box-sizing: border-box;
@@ -709,6 +712,8 @@
     line-height: 29px;
     padding-left: 10px;
     padding-right: 10px;
+    position: relative;
+    top: -2px;
 }
 #signup_about_zipcode {
 	width: 110px;
@@ -1197,6 +1202,37 @@ div.checker input {
     text-align: left;
     width: 100%;
 }
+.mobile_login_switcher a.fb {
+	border: 1px solid #314f8d;
+	background: #4268a0; /* Old browsers */
+	background: -moz-linear-gradient(top, #4268a0 0%, #2c4f89 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#4268a0), color-stop(100%,#2c4f89)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #4268a0 0%,#2c4f89 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #4268a0 0%,#2c4f89 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, #4268a0 0%,#2c4f89 100%); /* IE10+ */
+	background: linear-gradient(to bottom, #4268a0 0%,#2c4f89 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4268a0', endColorstr='#2c4f89',GradientType=0 ); /* IE6-9 */
+	color: #fff;
+	display: block;
+}
+.mobile_login_switcher a span {
+	background: url(../images/icon_arrow_right.png) no-repeat scroll 236px 50%;
+	background-size: 16px 22px;
+	display: block;
+}
+.mobile_login_switcher a.google {
+	display: block;
+	border: 1px solid #b9503e;
+	background: #e3624b; /* Old browsers */
+	background: -moz-linear-gradient(top, #e3624b 0%, #bc3a2a 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#e3624b), color-stop(100%,#bc3a2a)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #e3624b 0%,#bc3a2a 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #e3624b 0%,#bc3a2a 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, #e3624b 0%,#bc3a2a 100%); /* IE10+ */
+	background: linear-gradient(to bottom, #e3624b 0%,#bc3a2a 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e3624b', endColorstr='#bc3a2a',GradientType=0 ); /* IE6-9 */
+	color: #fff;
+}
 .mobile_reg.login_form .loginform_left a.btn_reg.fb span {
 	background: url(../images/icon_btn_reg_fb.png) no-repeat 20px 50%;
 	background-size: 13px 25px;
@@ -1310,7 +1346,7 @@ div.checker input {
     float: right;
 }
 .mobile_reg.login_form .loginform_left .actions_row {
-    margin-bottom: 58px;
+    margin-bottom: 75px;
 }
 .mobile_reg.login_form .loginform_right .actions_row  input.checkbox {
 	margin-right: 5px;

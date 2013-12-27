@@ -3867,7 +3867,7 @@ footer .row_2 p {
 	background: url(../images/facebook_social_icon.png) no-repeat;
 }
 .google_plus_icon {
-	background: url(../images/googleplus_social_icon.png) no-repeat;
+	background: url("../images/icon_share_email.png") no-repeat scroll 0 50% / 20px 14px rgba(0, 0, 0, 0);
 }
 /*Referral social*/
 .referal_social {
