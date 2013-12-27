@@ -322,16 +322,20 @@
 	display: none;
 }
 .intro_page .text_wrapper .v_toolbar.for_mobile ul li a.tw {
-    background: url("../images/icon_share_tw.png") no-repeat scroll 50% 50% / 23px 18px rgba(0, 0, 0, 0);
+    background: url("../images/icon_share_tw.png") no-repeat scroll 50% 50% rgba(0, 0, 0, 0);
+    background-size: 24px 24px;
 }
 .intro_page .text_wrapper .v_toolbar.for_mobile ul li a.fb {
-    background: url("../images/icon_share_fb.png") no-repeat scroll 50% 50% / 15px 24px rgba(0, 0, 0, 0);
+    background: url("../images/icon_share_fb.png") no-repeat scroll 50% 50% rgba(0, 0, 0, 0);
+    background-size: 14px 22px;
 }
 .intro_page .text_wrapper .v_toolbar.for_mobile ul li a.embed {
-    background: url("../images/icon_share_embed.png") no-repeat scroll 50% 10px / 20px 25px rgba(0, 0, 0, 0);
+    background: url("../images/icon_share_embed.png") no-repeat scroll 50% 10px rgba(0, 0, 0, 0);
+    background-size: 25px 20px;
 }
 .intro_page .text_wrapper .v_toolbar.for_mobile ul li a.email {
-    background: url("../images/icon_share_email.png") no-repeat scroll 50% 50% / 20px 14px rgba(0, 0, 0, 0);
+    background: url("../images/icon_share_email.png") no-repeat scroll 50% 50% rgba(0, 0, 0, 0);
+    background-size: 24px 18px;
 }
 .panel .panel_right .prev_next.for_mobile ul {
 	width: 100%;
@@ -441,7 +445,6 @@
     margin-bottom: 25px;
     overflow: auto;
     padding: 7px 7px 7px 12px;
-    width: 100%;
 }
 #div_consent .mobile_reg .list_box p {
 	text-align: left;

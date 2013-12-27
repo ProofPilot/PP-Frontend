@@ -1092,6 +1092,12 @@
 		position: absolute;
 		bottom: -10px;
 	}
+	.intro_page .text_wrapper .video_wrapper .video_text a.join {
+		display: none;
+	}
+	.intro_page .join.for_mobile {
+		display: block;
+	}
 	
 }
 

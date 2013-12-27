@@ -2581,7 +2581,7 @@ div.panel div.panel_right div.prev_next ul li a.next span {
 	background: linear-gradient(to bottom, #3d629b 0%,#2d5089 100%); /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3d629b', endColorstr='#2d5089',GradientType=0 ); /* IE6-9 */
 }
-.intro_page .text_wrapper .video_wrapper .video_text a.join  {
+.intro_page .text_wrapper .video_wrapper .video_text a.join, .intro_page .join.for_mobile {
     background: #97c52c; /* Old browsers */
 	background: -moz-linear-gradient(top, #97c52c 0%, #7ea61f 100%); /* FF3.6+ */
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#97c52c), color-stop(100%,#7ea61f)); /* Chrome,Safari4+ */
@@ -2608,7 +2608,19 @@ div.panel div.panel_right div.prev_next ul li a.next span {
     margin-top: 0px;
     margin-right: 0px;
 }
-
+.intro_page .join.for_mobile {
+	display: none;
+	margin: 0 30px 20px 30px;
+	width: auto;
+}
+.intro_page .join.for_mobile span {
+	background: url("../../images/check_white.png") no-repeat scroll 12px 50% rgba(0, 0, 0, 0);
+	background-size: 19px 15px;
+    color: #FFFFFF;
+    display: inline-block;
+    min-height: 16px;
+    width: 100%;
+}
 .intro_page .text_wrapper .video_wrapper .video_text a.join span {
     background: url("../images/check_white.png") no-repeat scroll 12px 50% / 19px 15px rgba(0, 0, 0, 0);
     color: #FFFFFF;
@@ -2707,7 +2719,8 @@ div.panel div.panel_right div.prev_next ul li a.next span {
     margin: 25px 15px 10px 20px;
 }
 .video_wrapper > a.fb span {
-    background: url("../../images/icon_btn_reg_fb.png") no-repeat scroll 15px 50% / 13px 25px rgba(0, 0, 0, 0);
+    background: url("../../images/icon_btn_reg_fb.png") no-repeat scroll 15px 50% rgba(0, 0, 0, 0);
+    background-size: 13px 24px;
     display: block;
 }
 .video_wrapper > a.fb {
@@ -2735,7 +2748,8 @@ div.panel div.panel_right div.prev_next ul li a.next span {
     width: 100%;
 }
 .intro_page .text_wrapper .video_wrapper .video_text a.gp span {
-    background: url("../images/icon_btn_reg_google.png") no-repeat scroll 15px 50% / 23px 22px rgba(0, 0, 0, 0);
+    background: url("../images/icon_btn_reg_google.png") no-repeat scroll 15px 50% rgba(0, 0, 0, 0);
+    background-size: 23px 22px;
 }
 .intro_page .text_wrapper .video_wrapper .video_text a.fb span {
     background: url("../images/icon_btn_reg_fb.png") no-repeat scroll 15px 50% / 13px 25px rgba(0, 0, 0, 0);
@@ -3887,6 +3901,7 @@ footer .row_2 p {
 
 /*You are participant menu*/
 .intro_page .text_wrapper .video_wrapper .video_text p.already_joined, .intro_page .text_wrapper .video_wrapper .video_text p.completed {
+	box-sizing: border-box;
     -moz-box-sizing: border-box;
     background: none repeat scroll 0 0 #E3E3E3;
     border-radius: 3px 3px 3px 3px;

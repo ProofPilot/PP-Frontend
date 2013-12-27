@@ -359,6 +359,9 @@
         <div class="mobile desc">
             <p>{{ studycontent.studyTagline | raw}}</p>
         </div>
+        {% if not is_enrolled_in_study(studyCode) %}
+            <a href="" class="join for_mobile" id="consent"><span>{% trans from "study" %}button_join_the_study_goal{% endtrans %}</span></a>
+        {% endif %}
         <div class="choose_action">
         {% if studycontent.studySponsorBy is not empty %}
                <h3>{% trans from "study" %}txt_sponsored_by{% endtrans %}: {{ studycontent.studySponsorBy }}</h3>
