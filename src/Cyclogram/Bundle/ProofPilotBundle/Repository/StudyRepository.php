@@ -248,17 +248,6 @@ class StudyRepository extends EntityRepository
     public function getRandomStudyInfo($locale, $participant = null) {
         
         $language =  $this->getEntityManager()->getRepository('CyclogramProofPilotBundle:Language')->findOneByLocale($locale);
-
-    
-        $rows = $this->getEntityManager()
-        ->createQuery("SELECT count(sc.studyId) 
-                FROM CyclogramProofPilotBundle:StudyContent sc
-                INNER JOIN sc.study s
-                WHERE sc.language = :lang
-                AND s.status =:status")->setParameters(array('lang' => $language,
-                                            'status' => Study::STATUS_ACTIVE))->getSingleScalarResult();
-        
-        $offset = max(0, rand(0, $rows-3));
         
         $studyies = $this->getEntityManager()
         ->createQuery("
@@ -266,8 +255,7 @@ class StudyRepository extends EntityRepository
                 FROM CyclogramProofPilotBundle:StudyContent sc
                 INNER JOIN sc.study s
                  WHERE sc.language = :lang
-                AND s.status =:status")->setParameters(array('lang' => $language,'status' => Study::STATUS_ACTIVE))->setMaxResults(3)
-                ->setFirstResult($offset)->getResult();
+                AND s.status =:status")->setParameters(array('lang' => $language,'status' => Study::STATUS_ACTIVE))->getResult();
         $results = array();
         if (isset($participant)) {
             $enrolledStudies = $this->getEntityManager()->getRepository('CyclogramProofPilotBundle:Participant')->getEnrolledStudies($participant);
@@ -284,9 +272,14 @@ class StudyRepository extends EntityRepository
                 $results[] = $study;
             }
         }
+        if (count($results) >= 3) {
+            $resultsKeys = array_rand($results, 3);
+            foreach ($resultsKeys as $key=>$val) {
+                $studyResults[] = $results[$val]; 
+            }
+        }
 
-
-        return $results;
+        return $studyResults;
     }
 
 }
