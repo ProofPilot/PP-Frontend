@@ -202,10 +202,10 @@ class EmailController extends Controller
     }
     
     /**
-     * @Route("/email_to_friend/{studyCode}/{participantName}" , name="_email_to_friend" , defaults={"studyCode"=null, "participantName"= null })
+     * @Route("/email_to_friend/{participantName}/{studyCode}" , name="_email_to_friend" , defaults={ "participantName"= null, "studyCode"=null })
      * @Template()
      */
-    function emailToFriendAction(Request $request, $studyCode, $participantName)
+    function emailToFriendAction(Request $request, $participantName, $studyCode)
     {
         $em = $this->getDoctrine()->getManager();
         $cc = $this->get('cyclogram.common');
@@ -238,7 +238,8 @@ class EmailController extends Controller
             $parameters['email'] = $to[0];
             $parameters['studycontent'] = $studyContent = $this->getDoctrine()->getRepository("CyclogramProofPilotBundle:StudyContent")->getStudyContent($studyCode, $locale);
             $parameters['locale'] = $locale;
-            $parameters['url'] = $this->container->getParameter('site_url').DIRECTORY_SEPARATOR.$locale.DIRECTORY_SEPARATOR.$studyCode;
+            if (isset($studyCode))
+                $parameters['url'] = $this->container->getParameter('site_url').DIRECTORY_SEPARATOR.$locale.DIRECTORY_SEPARATOR.$studyCode;
             $parameters['desription'] = $description;
             $parameters['host'] = $this->container->getParameter('site_url');
             $parameters["graphic"] = $this->container->getParameter('study_image_url') . '/' . $studyContent->getStudyId(). '/' .$studyContent->getStudyLogo();

@@ -31,7 +31,9 @@
             </tr>
             <tr>
                 <td style="padding-bottom: 45px; padding-top: 40px; text-align: center;"colspan="2">
+                {% if url is defined %}
                     <a href="{{ url }}" style="background: none repeat scroll 0 0 #8AB524; border: 1px solid #7EA61F; border-radius: 4px 4px 4px 4px; color: #FFFFFF; display: inline-block;
+                {% endif %}
                     font-size: 20px; font-weight: bold; padding: 15px 50px 15px 60px; text-align: center; text-decoration: none;">{{ 'join' | trans({}, "email", locale) }}</a>
                 </td>
             </tr>
