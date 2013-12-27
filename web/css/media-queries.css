@@ -355,7 +355,7 @@
 	}
     .panel .panel_right .dashboard_panel .box_more_studies .more_studies_col img {
     	height: auto;
-    	width: 100%;
+    	width: 60%;
     }
     .panel .panel_right .dashboard_panel .box_more_studies .more_studies_col:last-child {
     	padding-right: 10px;
@@ -2264,9 +2264,6 @@
 	.panel .panel_right .dashboard_panel .box_more_studies .more_studies_col {
 		width: 100%;
 		margin-bottom: 20px;
-	}
-	.panel .panel_right .dashboard_panel .box_more_studies .more_studies_col img {
-    	width: auto;
 	}
 	
 }
