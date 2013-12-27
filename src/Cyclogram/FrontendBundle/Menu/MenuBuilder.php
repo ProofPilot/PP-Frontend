@@ -232,13 +232,13 @@ class MenuBuilder extends ContainerAware implements TranslationContainerInterfac
                         ->setAttribute("last_access", $lastAccess)
                         ->setAttribute("user_name", $participant->getParticipantFirstname() . ' ' . $participant->getParticipantLastname())
                         ->setExtra('translation_domain', 'generalmenus');
-        $menu->addChild('top_mobile_menu.dashboard',
+        $menu->addChild('top_menu.dashboard',
                 array(
                         'route' => '_main'))
                         ->setAttribute('class', 'icon_my_dashboard')
                         ->setAttribute("nospan", true)
                         ->setExtra('translation_domain', 'generalmenus');
-        $menu->addChild('top_mobile_menu.general_settings',
+        $menu->addChild('top_menu.general_settings',
                 array(
                         'route' => '_settings',
                         'routeParameters' => array(
@@ -247,7 +247,7 @@ class MenuBuilder extends ContainerAware implements TranslationContainerInterfac
                         ->setAttribute('class', 'icon_settings')
                         ->setAttribute("nospan", true)
                         ->setExtra('translation_domain', 'generalmenus');
-        $menu->addChild('top_mobile_menu.contact_preferences',
+        $menu->addChild('top_menu.contact_preferences',
                         array(
                             'route' => '_contact_prefs',
                             'routeParameters' => array(
@@ -256,7 +256,7 @@ class MenuBuilder extends ContainerAware implements TranslationContainerInterfac
                 ->setAttribute('class', 'icon_contact_prefs')
                 ->setAttribute("nospan", true)
                 ->setExtra('translation_domain', 'generalmenus');
-        $menu->addChild('top_mobile_menu.shipping_information',
+        $menu->addChild('top_menu.shipping_information',
                 array(
                         'route' => '_shipping',
                         'routeParameters' => array(
@@ -265,7 +265,7 @@ class MenuBuilder extends ContainerAware implements TranslationContainerInterfac
                         ->setAttribute('class', 'icon_shipping')
                         ->setAttribute("nospan", true)
                         ->setExtra('translation_domain', 'generalmenus');
-        $menu->addChild('top_mobile_menu.about_me',
+        $menu->addChild('top_menu.about_me',
                 array(
                         'route' => '_about_me',
                         'routeParameters' => array(
@@ -274,7 +274,7 @@ class MenuBuilder extends ContainerAware implements TranslationContainerInterfac
                         ->setAttribute('class', 'icon_about')
                         ->setAttribute("nospan", true)
                         ->setExtra('translation_domain', 'generalmenus');
-        $menu->addChild('top_mobile_menu.logout', array('route' => '_logout'))
+        $menu->addChild('top_menu.logout', array('route' => '_logout'))
                 ->setAttribute('class', 'icon_logout')
                 ->setAttribute("nospan", true)
                 ->setExtra('translation_domain', 'generalmenus');
