@@ -127,7 +127,8 @@
 	float: left;
 	height: 55px;
 	width: 55px;
-	background:  url("../images/trigger_sitemenu.png") no-repeat scroll 50% 18px / 24px 17px rgba(0, 0, 0, 0);
+	background:  url("../images/trigger_sitemenu.png") no-repeat scroll 50% 18px rgba(0, 0, 0, 0);
+	background-size: 24px 17px;
 }
 .mobile_header_menu ul li a.trigger_searchmenu {
     background: url("../images/trigger_searchmenu.png") no-repeat scroll 50% 18px / 19px 19px rgba(0, 0, 0, 0);
@@ -223,10 +224,91 @@
 	background: url(../images/mobile_sitemenu_icon_shipping.png) no-repeat 0px 50%;
 	background-size: 13px 15px;
 }
+.mobile_sitemenu .menu_wrapper .user_box ul {
+    -moz-box-sizing: border-box;
+    float: left;
+    padding: 20px 0 20px 20px;
+    width: 100%;
+}
+.mobile_sitemenu .menu_wrapper .user_box ul li {
+    float: left;
+    text-align: left;
+    padding-left: 0px;
+}
+.mobile_sitemenu .menu_wrapper .user_box ul li.left {
+    height: 58px;
+    padding-right: 24px;
+    width: 80px;
+}
+.mobile_sitemenu .menu_wrapper .user_box ul li.right {
+    max-width: 190px;
+}
+.user_box ul li.right span.name {
+    color: #FFFFFF;
+    display: inline-block;
+    font-size: 15px;
+    margin-bottom: 1px;
+    padding-top: 3px;
+    width: 100%;
+}
+.mobile_sitemenu .menu_wrapper .user_box ul li.right span.time {
+    color: #8A949A;
+    display: inline-block;
+    font-size: 12px;
+    width: 100%;
+}
+.mobile_sitemenu .menu_wrapper ul.links {
+    border-top: none;
+    margin-bottom: 5px;
+    padding: 0;
+    width: 100%;
+}
+.mobile_sitemenu.register .menu_wrapper ul.links li {
+    -moz-box-sizing: border-box;
+    clear: both;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+.mobile_sitemenu.alt .menu_wrapper ul li a {
+    height: 45px;
+    line-height: 45px;
+    text-align: left;
+}
+.mobile_sitemenu .menu_wrapper ul.links li a {
+	box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    display: block;
+    text-align: center;
+    width: 100%;
+    text-align: left;
+    color: #fff;
+}
+.mobile_sitemenu .menu_wrapper ul.links li a span {
+	padding-left: 55px;
+	text-transform: uppercase;
+}
+.mobile_sitemenu .menu_wrapper ul li a.icon_my_dashboard span {
+    background: url("../images/icon_my_dashboard.png") no-repeat scroll 10px 50% / 18px 12px rgba(0, 0, 0, 0);
+}
+.mobile_sitemenu .menu_wrapper ul li a.icon_settings span {
+    background-position: 10px 50%;
+}
+.mobile_sitemenu .menu_wrapper ul li a.icon_contact_prefs span {
+    background-position: 10px 50%;
+}
+.mobile_sitemenu .menu_wrapper ul li a.icon_shipping span {
+    background-position: 10px 50%;
+}
+.mobile_sitemenu .menu_wrapper ul li a.icon_about span {
+    background: url("../images/icon_help.png") no-repeat scroll 10px 50% / 16px 16px rgba(0, 0, 0, 0);
+}
+.mobile_sitemenu .menu_wrapper ul li a.icon_logout span {
+    background-position: 10px 50%;
+}
 .panel .dashboard_panel .mobile.about_box {
 	clear: both;
 	/*min-height: 51px;*/
-		display: none;
+	display: none;
 	/*min-height: 21px;*/
 	text-align: center;
 	width: 100%;
