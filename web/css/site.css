@@ -1381,7 +1381,7 @@ header .header_menu span.text  , .footer_col_right span.text  {
 	float: left;
 	background: #f8f7ef;
 	border: 1px solid #dfded5;
-	border-radius: 5px 0px;
+	border-radius: 5px 5px 0px 0px;
 	padding: 20px 14px 20px 14px;
 	width: 100%;
 	max-width: 653px;
@@ -3681,18 +3681,12 @@ footer .row_2 p {
 }
 /*More studies box*/
 .panel .panel_right .dashboard_panel .box_more_studies {
-    -moz-border-bottom-colors: none;
-    -moz-border-left-colors: none;
-    -moz-border-right-colors: none;
-    -moz-border-top-colors: none;
-    -moz-box-sizing: border-box;
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
-    border-color: -moz-use-text-color #DFDED5 #DFDED5;
-    border-image: none;
-    border-right: 1px solid #DFDED5;
-    border-style: none solid solid;
-    border-width: 0 1px 1px;
+    border-right: 1px solid #dfded5;
+    border-left: 1px solid #dfded5;
+    border-bottom: 1px solid #dfded5;
+    box-sizing:border-box;
+	-moz-box-sizing: border-box;
+	border-radius: 0px 0px 5px 5px;
     float: left;
     margin-bottom: 20px;
     padding: 20px 30px 30px;
