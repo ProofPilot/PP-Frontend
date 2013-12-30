@@ -202,17 +202,21 @@ class EmailController extends Controller
     }
     
     /**
-     * @Route("/email_to_friend/{participantName}/{studyCode}" , name="_email_to_friend" , defaults={ "participantName"= null, "studyCode"=null })
+     * @Route("/email_to_friend" , name="_email_to_friend" )
      * @Template()
      */
-    function emailToFriendAction(Request $request, $participantName, $studyCode)
+    function emailToFriendAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $cc = $this->get('cyclogram.common');
-        $participant = $em->getRepository('CyclogramProofPilotBundle:Participant')->findOneByParticipantUsername($participantName);
+      
         $locale = $request->getLocale();
         
         if ($request->isXmlHttpRequest()) {
+            $participantName = $request->get('participant');
+            $studyCode = $request->get('studyCode');
+            
+            
             $from = $request->get('send_from');
             $to = $request->get('send_to');
             $to = array_filter($to);
@@ -243,7 +247,12 @@ class EmailController extends Controller
             $parameters['desription'] = $description;
             $parameters['host'] = $this->container->getParameter('site_url');
             $parameters["graphic"] = $this->container->getParameter('study_image_url') . '/' . $studyContent->getStudyId(). '/' .$studyContent->getStudyLogo();
-            $parameters["studies"] = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:Study')->getRandomStudyInfo($locale, $participant);
+            if (isset($participantName)) {
+                $participant = $em->getRepository('CyclogramProofPilotBundle:Participant')->findOneByParticipantUsername($participantName);
+                $parameters["studies"] = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:Study')->getRandomStudyInfo($locale, $participant);
+            } else {
+                $parameters["studies"] = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:Study')->getRandomStudyInfo($locale, null);
+            }
             try{
                 $send = $cc->sendMail($from,$to,
                         $subject,

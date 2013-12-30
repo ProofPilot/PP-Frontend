@@ -276,7 +276,7 @@
                             </div>
                         {% endif %}
                     </div>
-                    <form id="email_list" style="display: none; "action="{{path('_email_to_friend', {'studyCode' : studyCode, 'participantName' : app.user.username})}}">
+                    <form id="email_list" style="display: none; "action="{{path('_email_to_friend')}}">
                         <h1>Send e-mail to a friend</h1>
                         <div class="sender_info">
                             <label for="tmp_who">Who is sending?</label>
@@ -293,6 +293,12 @@
                             <input id="tmp_subject" type="text" name="subject" class="text" placeholder="Join the study,Sexual Health Promotion ..." />
                             <label for="tmp_msg">Message</label>
                             <input id="tmp_msg" type="text" name="description" class="text" placeholder="Join the study,Sexual Health Promotion ..." />
+                            {% if app.user %}
+                                <input type="hidden" value="{{ app.user.username }}"  name="participant">
+                            {% endif %}
+                            {% if studyCode is defined %}
+                                <input type="hidden" value="{{ studyCode }}"  name="studyCode">
+                            {% endif %}
                             <a href="#" class="btn_cancel">Cancel</a>
                             <a href="#" class="btn_send_mail" id ="email_submit">Send e-mail</a>
                         </div>
