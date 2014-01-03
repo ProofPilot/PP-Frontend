@@ -144,6 +144,20 @@ class StudyController extends Controller
             $this->parameters["message"] = $session->get("message");
             $session->remove("message");
         }
+        $referer = $request->headers->get('referer');
+        $url = parse_url($referer);
+        $securityContext = $this->container->get('security.context');
+        if( $securityContext->isGranted('ROLE_PARTICIPANT') || $securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED') ){
+            $referer = $request->headers->get('referer');
+            if (!isset($referer)) {
+                return $this->redirect($this->generateUrl('_main'));
+            }else {
+                $url = parse_url($referer);
+                if ($url['scheme'].'://'.$url['host'] != $this->container->getParameter('site_url')) {
+                    return $this->redirect($this->generateUrl('_main'));
+                }
+            }
+        }
         
         //depending on request parameters get campaign and site name
         if($this->getRequest()->get('utm_source') && $this->getRequest()->get('utm_campaign')) {
