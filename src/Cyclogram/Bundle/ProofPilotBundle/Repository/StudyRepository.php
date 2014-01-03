@@ -251,7 +251,7 @@ class StudyRepository extends EntityRepository
         
         $studyies = $this->getEntityManager()
         ->createQuery("
-                SELECT sc.studyId, sc.studyLogo, sc.studyName, sc.studyTagline, s.studyCode
+                SELECT sc.studyId, sc.studyLogo, sc.studyName, sc.studyTagline, sc.studyGraphic, s.studyCode
                 FROM CyclogramProofPilotBundle:StudyContent sc
                 INNER JOIN sc.study s
                  WHERE sc.language = :lang
