@@ -124,9 +124,16 @@
                     window.location=Routing.generate('_logout');
             });
             $('#location').bind('click', function(e) {
-            	e.preventDefault();
-                $('#div_location').dialog();
-                })
+                e.preventDefault();
+                $('#div_location').dialog({
+                    modal: true,
+                    width: 'auto',
+                    fluid: true,
+                    resizable: false,
+                    position: ['top',100],
+                    open: funcCustom
+                });
+            });
         });
 
         function dismiss(interventionCode) {

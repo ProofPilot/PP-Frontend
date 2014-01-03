@@ -1461,3 +1461,234 @@ div.checker input {
 	min-width: 70px;
 	text-align: center;
 }
+/*Locations*/
+#div_location .mobile_reg {
+	margin: 0px;
+	width: 880px;
+	border-radius: 5px;
+	box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+}
+#div_location .mobile_reg .wrapper {
+	background-color: #fff;
+}
+#div_location .mobile_reg .popup_sidebar .maps_search input.text, #div_location .mobile_reg input.text, #div_location .mobile_reg .loginform_right input.text, #div_location .mobile_reg li.input_right input {
+    border: 1px solid #C9C9C9;
+    border-radius: 3px 3px 3px 3px;
+    color: #6F6F6F;
+    font-family: 'Roboto';
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 400;
+    height: 38px;
+    line-height: 38px;
+}
+#div_location .mobile_reg .popup_header {
+    -moz-box-sizing: border-box;
+    background: none repeat scroll 0 0 #F1F1F1;
+    float: left;
+    height: 52px;
+    line-height: 52px;
+    padding: 0 21px;
+    position: relative;
+    width: 100%;
+}
+#div_location .mobile_reg .popup_header h1 {
+    color: #C54432;
+    display: inline;
+    font-size: 22px;
+    font-weight: 700;
+    margin: 0;
+    padding: 0 10px 0 0;
+    text-align: left;
+}
+#div_location .mobile_reg .popup_header span {
+    color: #353535;
+    font-size: 15px;
+}
+#div_location .mobile_reg .popup_sidebar {
+    clear: both;
+    float: left;
+    position: relative;
+    width: 350px;
+    z-index: 15;
+}
+#div_location .mobile_reg .popup_sidebar .maps_search {
+    -moz-box-sizing: border-box;
+    float: left;
+    height: 89px;
+    padding: 14px 14px 20px 20px;
+    width: 100%;
+    background-color: #fff;
+}
+#div_location .mobile_reg .popup_sidebar .maps_search p.input_note {
+    color: #4F4F4F;
+    font-size: 13px;
+    margin-bottom: 5px;
+}
+#div_location .mobile_reg .popup_sidebar .maps_search input.text {
+    font-size: 13px;
+    height: 29px;
+    line-height: 29px;
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 214px;
+}
+#div_location .mobile_reg .popup_sidebar .maps_search a.submit_form {
+    background: linear-gradient(to bottom, #E4634C 0%, #BC3A2A 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);
+    border: 1px solid #BA4C3A;
+    border-radius: 3px 3px 3px 3px;
+    color: #FFFFFF;
+    display: block;
+    float: right;
+    font-weight: 700;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    width: 73px;
+}
+#div_location .mobile_reg .popup_sidebar .results {
+    background: url("../images/bg_popup_sidebar.jpg") repeat-x scroll 0 0 rgba(0, 0, 0, 0);
+    float: left;
+    height: 464px;
+    min-height: 52px;
+    overflow: auto;
+    padding-top: 10px;
+    width: 100%;
+}
+#div_location .mobile_reg .popup_sidebar .results ul {
+    -moz-box-sizing: border-box;
+    float: left;
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 100%;
+}
+#div_location .mobile_reg .popup_sidebar .results ul li {
+    border-bottom: 1px solid #E9E9E9;
+    float: left;
+    margin-bottom: 4px;
+    padding-bottom: 4px;
+    width: 100%;
+}
+#div_location .mobile_reg .popup_sidebar .results ul li:hover {
+	background-color: #F3F3F3;
+}
+#div_location .mobile_reg .popup_sidebar .results ul li .text_wrapper {
+    float: left;
+    padding-top: 12px;
+    width: 100%;
+}
+#div_location .mobile_reg .popup_sidebar .results ul li .text_left {
+    background: url("../images/map_pin.png") no-repeat scroll 12px 4px / 15px 21px rgba(0, 0, 0, 0);
+    float: left;
+    padding-bottom: 14px;
+    padding-left: 40px;
+    padding-right: 10px;
+    width: 185px;
+}
+#div_location .mobile_reg .popup_sidebar .results ul li .text_left h2 {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 18px;
+    margin: 0 0 3px;
+    padding: 0;
+}
+#div_location .mobile_reg .popup_sidebar .results ul li .text_left h2 a {
+    color: #C54432;
+}
+#div_location .mobile_reg .popup_sidebar .results ul li .text_left p {
+    color: #4F4F4F;
+    font-size: 11px;
+    margin: 0;
+}
+#div_location .mobile_reg .popup_sidebar .results ul li .text_right {
+    float: right;
+    width: 63px;
+}
+#div_location .mobile_reg .popup_sidebar .results ul li .text_right a, #div_location .mobile_reg .popup_sidebar div.results ul li div.text_wrapper div.mobile_info a.close {
+    background: linear-gradient(to bottom, #FFFFFF 0%, #F7F7F7 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);
+    border: 1px solid #D3D3D3;
+    border-radius: 3px 3px 3px 3px;
+    color: #505050;
+    display: block;
+    float: left;
+    font-size: 13px;
+    font-weight: 700;
+    height: 24px;
+    line-height: 24px;
+    text-align: center;
+    text-transform: uppercase;
+    width: 61px;
+}
+#div_location .mobile_reg .popup_sidebar .results ul li .info_box {
+	margin-left: 340px;
+    position: absolute;
+    width: 152%;
+    bottom: 0;
+}
+#div_location .mobile_reg .popup_sidebar .results ul li .info_box .text_cont .wrapper {
+	background-color: #F8F8F8; 
+}
+#div_location .mobile_reg .popup_sidebar .results ul li .info_box .box_bg {
+	background-color: #F8F8F8;
+}
+#div_location .mobile_reg .popup_map {
+    -moz-box-sizing: border-box;
+    float: right;
+    height: 563px;
+    margin-top: -563px;
+    overflow: hidden;
+    padding-left: 350px;
+    position: relative;
+    width: 100%;
+}
+#div_location .modal_close_btn {
+	right: 15px;
+    top: 13px;
+}
+#div_location .mobile_reg .info_box .text_cont {
+    -moz-box-sizing: border-box;
+    height: 424px;
+    padding: 25px 25px 0px 25px;
+    position: relative;
+    width: 100%;
+}
+#div_location .mobile_reg .info_box .text_cont a.close {
+    background: url("../images/close_big.png") no-repeat scroll 0 0 / 16px 16px rgba(0, 0, 0, 0);
+    display: block;
+    height: 16px;
+    position: absolute;
+    right: 25px;
+    top: 25px;
+    width: 16px;
+    z-index: 10;
+}
+#div_location .mobile_reg .info_box .text_cont h1 {
+    color: #C54432;
+    font-size: 18px;
+    font-weight: 400;
+    margin-bottom: 15px;
+    text-align: left;
+}
+#div_location .mobile_reg .info_box .text_cont p {
+    color: #4F4F4F;
+    font-size: 13px;
+    margin-bottom: 20px;
+}
+#div_location .mobile_reg .info_box .text_cont .wrapper {
+    -moz-box-sizing: border-box;
+    height: 259px;
+    left: 0;
+    overflow: auto;
+    padding-left: 25px;
+    padding-right: 25px;
+    position: absolute;
+    width: 100%;
+}
+#div_location .mobile_reg .info_box .text_cont .wrapper p:last-child {
+	margin-bottom: 0px;
+}
+.select_btn {
+	background: linear-gradient(to bottom, #BB3929 0%, #E3624B 100%) repeat scroll 0 0 rgba(0, 0, 0, 0) !important;
+    border-color: #BD4635 !important;
+    color: #FFFFFF !important;
+}
