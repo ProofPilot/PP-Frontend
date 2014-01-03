@@ -4,11 +4,11 @@
                 {% for study in studies %}
                     <td style="vertical-align: top;">
                         {% if study.studyLogo is empty %}
-                            <a href="{{  url('_page', {'studyUrl' : study.studyCode}) }}"  style="display: inline-block; margin: 0 auto; width: 164px;"><img src="{{ images.tmp_logo }}" width="165"   style="margin-bottom: 20px;" alt="" title=""/></a>
+                            <a href="{{  url('_page', {'_locale' : locale, 'studyUrl' : study.studyCode}) }}"  style="display: inline-block; margin: 0 auto; width: 164px;"><img src="{{ images.tmp_logo }}" width="165"   style="margin-bottom: 20px;" alt="" title=""/></a>
                         {% else %}
-                             <a href="{{  url('_page', {'studyUrl' : study.studyCode}) }}"  style="display: inline-block; margin: 0 auto; width: 164px;"><img src="{{ study_image_url }}/{{ study.studyId }}/{{ study.studyGraphic }}" width="165"   style="margin-bottom: 20px;" alt="" title=""/></a>
+                             <a href="{{  url('_page', {'_locale' : locale,'studyUrl' : study.studyCode}) }}"  style="display: inline-block; margin: 0 auto; width: 164px;"><img src="{{ study_image_url }}/{{ study.studyId }}/{{ study.studyGraphic }}" width="165"   style="margin-bottom: 20px;" alt="" title=""/></a>
                         {% endif %}
-                        <h4 style="font-size: 1.1em; margin: 0 0 15px; padding: 0; text-align: left; width: 165px;"><a style="color: #000 !important; font-size: 0.8em; text-decoration: none;"href="{{ url('_page', {'studyUrl' : study.studyCode}) }}">{{ study.studyName }}</a></h4>
+                        <h4 style="font-size: 1.1em; margin: 0 0 15px; padding: 0; text-align: left; width: 165px;"><a style="color: #000 !important; font-size: 0.8em; text-decoration: none;"href="{{ url('_page', {'_locale' : locale,'studyUrl' : study.studyCode}) }}">{{ study.studyName }}</a></h4>
                         <p style="color: #969696; text-align: left; width: 165px;">{{ study.studyTagline | raw }}</p>
                     </td>
                 {% endfor %}

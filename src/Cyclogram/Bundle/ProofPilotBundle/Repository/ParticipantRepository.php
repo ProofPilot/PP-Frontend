@@ -189,6 +189,23 @@ class ParticipantRepository extends EntityRepository implements
         
     }
     
+    public function isEnrolledInIntervention($participant, $interventionCode) {
+        $result = $this->getEntityManager()
+        ->createQuery('SELECT COUNT(i) FROM CyclogramProofPilotBundle:ParticipantInterventionLink pil
+                INNER JOIN pil.intervention i
+                WHERE pil.participant = :participant
+                AND i.inte4rvenyionCode =: interventionCode
+                ')
+                ->setParameter('interventionCode', $interventionCode)
+                ->setParameter('participant', $participant)
+                ->getSingleScalarResult();
+        if($result)
+            return true;
+        else
+            return false;
+    
+    }
+    
     /**
      * Get all enrolled studies of participant
      * @param unknown_type $participant
@@ -220,7 +237,7 @@ class ParticipantRepository extends EntityRepository implements
      * @param int $timeZoneId - time zone currently processed
      * @param int $contactTimeId - time frame
      */
-    public function getParticipantsForEmailNotifications($reminderId, $timeZoneId, $contactTimeId, $weekDayId)
+    public function getParticipantsForEmailNotifications($reminderId, $timeZoneId, $contactTimeId, $weekDayId, $studyCode = null, $interventionCode = null)
     {
         $query = $this->getEntityManager()
         ->createQuery("
@@ -240,9 +257,19 @@ class ParticipantRepository extends EntityRepository implements
                 ->setParameter("contactTimeId", $contactTimeId)
                 ->setParameter("reminderId", $reminderId)
                 ->setParameter("weekDayId", $weekDayId);
-        $results = $query->getResult();
-        
-        return $results;
+        $participants = $query->getResult();
+        if (isset($studyCode) && isset($interventionCode )) {
+            $results = array();
+            foreach ($participants as $participant) {
+                $enrolledStudies = $this->getEntityManager()->getRepository('CyclogramProofPilotBundle:Participant')->isEnrolledInStudy($participant, $studyCode);
+                $enrolledIntervention = $this->getEntityManager()->getRepository('CyclogramProofPilotBundle:Participant')->isEnrolledInStudy($participant, $studyCode);
+                if ($enrolledStudies && $enrolledIntervention)
+                    $results[] = $participant;
+            }
+            return $results;
+        } else {
+            return $participants;
+        }
     }
     
     /**
@@ -251,7 +278,7 @@ class ParticipantRepository extends EntityRepository implements
      * @param int $timeZoneId - time zone currently processed
      * @param int $contactTimeId - time frame
      */
-    public function getParticipantsForSmsNotifications($reminderId, $timeZoneId, $contactTimeId, $weekDayId)
+    public function getParticipantsForSmsNotifications($reminderId, $timeZoneId, $contactTimeId, $weekDayId, $studyCode = null, $interventionCode = null)
     {
         $query = $this->getEntityManager()
         ->createQuery("
@@ -271,9 +298,19 @@ class ParticipantRepository extends EntityRepository implements
                 ->setParameter("contactTimeId", $contactTimeId)
                 ->setParameter("reminderId", $reminderId)
                 ->setParameter("weekDayId", $weekDayId);
-        $results = $query->getResult();
-    
-        return $results;
+        $participants = $query->getResult();
+        if (isset($studyCode) && isset($interventionCode )) {
+            $results = array();
+            foreach ($participants as $participant) {
+                $enrolledStudies = $this->getEntityManager()->getRepository('CyclogramProofPilotBundle:Participant')->isEnrolledInStudy($participant, $studyCode);
+                $enrolledIntervention = $this->getEntityManager()->getRepository('CyclogramProofPilotBundle:Participant')->isEnrolledInStudy($participant, $studyCode);
+                if ($enrolledStudies && $enrolledIntervention)
+                    $results[] = $participant;
+            }
+            return $results;
+        } else {
+            return $participants;
+        }
     }
     
     public function getParticipantsWithNotConfirmedEmails()
