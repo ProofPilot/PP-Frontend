@@ -384,10 +384,10 @@ class AuthentificationController extends Controller
 
     
     /**
-     * @Route("/signup_email_verify/{email}/{code}/studyCode", name="email_verify")
+     * @Route("/signup_email_verify/{email}/{code}", name="email_verify")
      * @Template()
      */
-    public function confirmEmailAction($email, $code, $studyCode = null)
+    public function confirmEmailAction($email, $code)
     {
         $request = $this->getRequest();
         $session = $this->getRequest()->getSession();
@@ -401,10 +401,7 @@ class AuthentificationController extends Controller
             $em->flush($participant);
     
             $session->set('confirmed', "Congratilations!!! Your e-mail is confirmed!");
-            if (!empty($studyCode))
-                return $this->redirect( $this->generateUrl("_main"));
-            else
-                return $this->redirect( $this->generateUrl("_main"));
+            return $this->redirect( $this->generateUrl("_main"));
     
         } else {
             $error = $this->get('translator')->trans('mail_confirmation_fail', array(), 'register');

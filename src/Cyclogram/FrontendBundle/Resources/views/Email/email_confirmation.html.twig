@@ -1,10 +1,10 @@
 {%  extends 'CyclogramFrontendBundle:Email:email.html.twig' %}
 {% block email_content %}
-{% if studyCode is defined %}
-    {% set confirmurl = url('email_verify', {'_locale': locale, 'email': email, 'code': code, 'studyCode' : studyCode})  %}
-{% else %}
+{# {% if studyCode is defined %}#}
+{#     {% set confirmurl = url('email_verify', {'_locale': locale, 'email': email, 'code': code, 'studyCode' : studyCode})  %}#}
+{# {% else %}#}
     {% set confirmurl = url('email_verify', {'_locale': locale,'email': email, 'code': code }) %}
-{% endif %}
+{# {% endif %}#}
     <td style="background-color: white; padding-left: 30px; padding-right: 30px;">
         <p style="margin: 0px; padding: 0px; margin-bottom: 25px; color: #ae4840; font-family: Arial; font-weight: bold; font-size: 30px; text-align: center;">{{ 'confirm_verify_title' | trans({}, "email", locale) }}</p>
         <p style="margin: 0px; padding: 0px; margin-bottom: 35px; color: #555; font-family: Arial; font-size: 15px; line-height: 20px; text-align: center;">{% trans from "email" %}confirm_verify_text{% endtrans %}</p>
@@ -31,22 +31,6 @@
                 </tr>
             </tbody>
         </table>
-        <table style="width: 580px">
-            <tbody>
-                <tr>
-                    {% for study in studies %}
-                        <td style="vertical-align: top;">
-                            {% if study.studyLogo is empty %}
-                                <a href="{{  url('_page', {'studyUrl' : study.studyCode}) }}"  style="display: inline-block; margin: 0 auto; width: 164px;"><img src="{{ images.tmp_logo }}" width="165" height="109"  style="margin-bottom: 20px;" alt="" title=""/></a>
-                            {% else %}
-                                 <a href="{{  url('_page', {'studyUrl' : study.studyCode}) }}"  style="display: inline-block; margin: 0 auto; width: 164px;"><img src="{{ study_image_url }}/{{ study.studyId }}/{{ study.studyLogo }}" width="165" height="109"  style="margin-bottom: 20px;" alt="" title=""/></a>
-                            {% endif %}
-                            <h4 style="font-size: 1.1em; margin: 0 0 15px; padding: 0; text-align: left; width: 165px;"><a style="color: #000 !important; font-size: 0.8em; text-decoration: none;"href="{{ url('_page', {'studyUrl' : study.studyCode}) }}">{{ study.studyName }}</a></h4>
-                            <p style="color: #969696; text-align: left; width: 165px;">{{ study.studyTagline | raw }}</p>
-                        </td>
-                    {% endfor %}
-                </tr>
-            </tbody>
-        </table>
+{% include 'CyclogramFrontendBundle:Email:email_studies_list.html.twig' %}
     </td>
 {% endblock %}
