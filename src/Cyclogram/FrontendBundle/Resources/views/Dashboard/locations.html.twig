@@ -1,0 +1,158 @@
+<div class="popup_overlay" id="popup_overlay"></div>
+        <div class="popup_cont">
+    		<div class="mobile_reg login_form ontop wide_popup with_map">
+    			
+    			<div class="wrapper">
+    
+                    <div class="popup_header">
+                        
+                        <a href="#" class="close"></a>
+                        
+                        <h1>LOCATIONS</h1>
+                        <span>near New York, NY</span>
+                        
+                    </div>
+                    
+                    <div class="popup_sidebar">
+                    
+                        <div class="maps_search">
+                            <form>
+                                <p class="input_note">Input your locations to search</p>
+                                <input type="text" name="" placeholder="Zip code or city & state, etc." class="text"/>
+                                <a href="#" class="submit_form">SEARCH</a>
+                                
+                            </form>
+                        </div>
+                        
+                    
+                        <div class="mobile_switcher">
+                            <a href="#" class="contacts active">CONTACTS</a>
+                            <a href="#" class="map">MAP</a> 
+                        </div>
+                        
+                        <div class="results">
+    
+                            <ul>
+                            {% for organization in organizations %}
+                                <li>
+                                    <div class="text_wrapper">
+                                        <div class="text_left">
+                                            <h2><a href="" class="location_details">{{ organization.organizationName }}</a></h2>
+                                            <p>{{ organization.organizationAddress1 }}<br>
+                                               {{ organization.organizationAddress2 }}</p>
+                                             <div class="text_right">
+                                                 <a href="#" rel="Close">Select</a>
+                                             </div>   
+                                        
+                                            <div class="popup_map" style="display:none;">
+                                                <div class="info_box">
+                                                    <div class="box_bg">
+{#                                 <div class="map_cont"><iframe width="100%" height="89" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=watson+near+Osage+Park,+Danville,+CA,+United+States&amp;aq=0&amp;oq=watson+park+osage+park&amp;sll=37.0625,-95.677068&amp;sspn=64.025309,135.263672&amp;t=m&amp;ie=UTF8&amp;hq=watson&amp;hnear=Osage+Park,+Danville,+California+94526&amp;fll=37.829718,-122.251654&amp;fspn=0.063657,0.132093&amp;st=109146043351405611748&amp;rq=1&amp;ev=zi&amp;split=1&amp;ll=37.66045,-122.120247&amp;spn=0.076509,0.090809&amp;z=13&amp;output=embed"></iframe></div>#}
+                                                        <div class="text_cont">
+                                                            <a href="#" class="close"></a>
+                                                            <h1>{{ organization.organizationName }}</h1>
+                                                            <p>{{ organization.organizationAddress1 }}<br>
+                                                               {{ organization.organizationAddress2 }}</p>
+                                                            <hr />
+                                                            <div class="wrapper">
+                                        
+                                                                <p><strong>Organization Type:</strong><br />
+                                                                Clinic</p>
+                                        
+                                                                <p><strong>On the Web:</strong><br />
+                                                                <a href="#">www.cbwchc.org</a></p>
+                                        
+                                                                <p><strong>Hours of Operation:</strong><br />
+                                                                Mon, Tues, Thurs, Wed, 9:30am-7pm; Sat, Sun, 8:30am-6pm.</p>
+                                        
+                                                                <p><strong>Services:</strong><br />
+                                                                - Maecenas in mi vitae ligula suscipit hendrerit nec et eros.<br />
+                                                                - Donec luctus quam at ipsum malesuada sodales.<br />
+                                                                - Sed pulvinar enim non iaculis tempor.<br />
+                                                                - Sed pulvinar enim non iaculis tempor.<br />
+                                                                - Sed pulvinar enim non iaculis tempor.<br />
+                                                                - Sed pulvinar enim non iaculis tempor.<br />
+                                                                - Aenean at felis nec ligula congue pharetra.</p>
+                                                            </div>
+                                                        </div>                            
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+        
+                                        
+{#                                         <div class="mobile_info">#}
+                                            
+{#                                             <div class="map_wrapper">#}
+{# {#                                                 <iframe width="100%" height="109" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=watson+near+Osage+Park,+Danville,+CA,+United+States&amp;aq=0&amp;oq=watson+park+osage+park&amp;sll=37.0625,-95.677068&amp;sspn=64.025309,135.263672&amp;t=m&amp;ie=UTF8&amp;hq=watson&amp;hnear=Osage+Park,+Danville,+California+94526&amp;fll=37.829718,-122.251654&amp;fspn=0.063657,0.132093&amp;st=109146043351405611748&amp;rq=1&amp;ev=zi&amp;split=1&amp;ll=37.66045,-122.120247&amp;spn=0.076509,0.090809&amp;z=13&amp;output=embed"></iframe>#}
+{#                                             </div>#}
+                                            
+{#                                             <p>841 N Broadway<br />#}
+{#                                             Wichita, Kansas 67214<br />#}
+{#                                             Tel: +28 4567890<br />#}
+{#                                             E-mail: c-wang@wchc.com<br />#}
+{#                                             Distance: 0.45 miles</p>#}
+                                            
+{#                                             <hr />#}
+                                            
+{#                                             <div class="wrapper">#}
+                                                
+{#                                                 <p><strong>Organization Type:</strong><br />#}
+{#                                                 Clinic</p>#}
+                                                
+{#                                                 <p><strong>On the Web:</strong><br />#}
+{#                                                 <a href="#">www.cbwchc.org</a></p>#}
+                                                
+{#                                                 <p><strong>Hours of Operation:</strong><br />#}
+{#                                                 Mon, Tues, Thurs, Wed, 9:30am-7pm; Sat, Sun, 8:30am-6pm.</p>#}
+                                                
+{#                                                 <p><strong>Services:</strong><br />#}
+{#                                                 - Maecenas in mi vitae ligula suscipit hendrerit nec et eros.<br />#}
+{#                                                 - Donec luctus quam at ipsum malesuada sodales.<br />#}
+{#                                                 - Sed pulvinar enim non iaculis tempor.<br />#}
+{#                                                 - Sed pulvinar enim non iaculis tempor.<br />#}
+{#                                                 - Sed pulvinar enim non iaculis tempor.<br />#}
+{#                                                 - Sed pulvinar enim non iaculis tempor.<br />#}
+{#                                                 - Aenean at felis nec ligula congue pharetra.</p>#}
+{#                                                 <a href="#" class="close">Close</a>#}
+{#                                             </div>#}
+{#                                         </div>#}
+                                    </div>
+                                </li>
+                                {% endfor %}
+                            </ul>
+{#                             <div width="100%" height="563" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" id="map-canvas"> </div>#}
+                            <iframe width="100%" height="563" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=watson+near+Osage+Park,+Danville,+CA,+United+States&amp;aq=0&amp;oq=watson+park+osage+park&amp;sll=37.0625,-95.677068&amp;sspn=64.025309,135.263672&amp;t=m&amp;ie=UTF8&amp;hq=watson&amp;hnear=Osage+Park,+Danville,+California+94526&amp;fll=37.829718,-122.251654&amp;fspn=0.063657,0.132093&amp;st=109146043351405611748&amp;rq=1&amp;ev=zi&amp;split=1&amp;ll=37.66045,-122.120247&amp;spn=0.076509,0.090809&amp;z=13&amp;output=embed"></iframe>
+                        
+                        </div>
+                    
+                    </div>
+                    
+    					
+    			
+    			</div>
+    			
+    
+    			
+    		</div>        
+        </div>
+                <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAgFoz3VYlZpWVsuIKfplU6c0yr8VaaoMc&sensor=false"></script>
+            	<script type="text/javascript">
+    			    $(document).ready(function(){
+    		            $('.location_details').bind('click', function(e){
+    		            	$(this).siblings('.popup_map').show();
+    		            });
+    		            $('.close').bind('click', function(e) {
+    		                $('.popup_map').hide();
+    		            });
+    			     });
+    			    function initialize() {
+    			        var mapOptions = {
+    			          center: new google.maps.LatLng(-34.397, 150.644),
+    			          zoom: 8
+    			        };
+    			        var map = new google.maps.Map(document.getElementById("map-canvas"),
+    			            mapOptions);
+    			      }
+    			      google.maps.event.addDomListener(window, 'load', initialize);
+                  </script>

@@ -91,14 +91,8 @@ class SignUpAboutForm extends AbstractType
         ));
 
         
-        $builder->add('yearsSelect', new Type\FrontendChoiceType( $this->container->get('doctrine')), array(
-                'label'=> $this->container->get('translator')->trans('label_year_main', array(), 'signup_about'),
-                'choices' => array(
-                        'years' => array_combine(range(1950,date("Y")),range(1950,date("Y"))),
-                ),
-                'required'=>false,
-                'expanded' =>true,
-                'multiple' => false
+        $builder->add('yearsSelect', 'text', array(
+                'label'=> $this->container->get('translator')->trans('label_year_main', array(), 'signup_about')
         ));
 
         

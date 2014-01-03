@@ -6,7 +6,7 @@ consent_accept_join: 'I ACCEPT. Join the study'
 consent_any_information: 'Any information you share with us is completly confidental and secure.'
 consent_close_window: 'Close window to decline'
 consent_good_to_go: 'Good to go? Accept and Join the Study'
-consent_security_privacy: See our Security and Privacy policy
+consent_security_privacy: 'See our Security and Privacy policy'
 consent_what_to_know: 'Here’s what you need to know to participate'
 create_password: 'Create a Password'
 enter_email: 'Enter your e-mail'
@@ -29,11 +29,11 @@ label_zipcode: 'Zip Code'
 mail_confirmation_fail: 'Failed to confirm the email. No such user!'
 min_charachters: '(8 characters min)'
 pick_user: 'Pick Username'
-study_register_error: study_register_error   # FIXME
-sms_verification_message: 'Your ProofPilot SMS Log-in code is:'
 study_register_error: 'There was a problem - try the entire registration process again'
 txt_check_email: 'Please check your email'
 txt_check_zipcode: 'Please check your zipcode'
 txt_join: JOIN
 txt_join_with: 'Join with'
 txt_subtitle_check_email: 'Please check your email address'
+txt_year_to_old: Are you sure
+txt_year_to_young: Please ask your parents to participate.

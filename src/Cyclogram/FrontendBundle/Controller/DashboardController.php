@@ -128,6 +128,7 @@ class DashboardController extends Controller
             
         }
         
+        $parameters['organizations'] = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:Organization')->findAll();
         $parameters["actions"] = array(
                 array('activity' => $this->get('translator')->trans('past_activity.emai_confirmation_status', array(), 'dashboard'),
                         'class' => 'icon1 first'

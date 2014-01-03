@@ -247,6 +247,7 @@ class EmailController extends Controller
             $parameters['desription'] = $description;
             $parameters['host'] = $this->container->getParameter('site_url');
             $parameters["graphic"] = $this->container->getParameter('study_image_url') . '/' . $studyContent->getStudyId(). '/' .$studyContent->getStudyLogo();
+            $parameters['from'] = $from;
             if (isset($participantName)) {
                 $participant = $em->getRepository('CyclogramProofPilotBundle:Participant')->findOneByParticipantUsername($participantName);
                 $parameters["studies"] = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:Study')->getRandomStudyInfo($locale, $participant);
@@ -298,5 +299,12 @@ class EmailController extends Controller
     }
     
     
+    /**
+     * @Route("/testGoogleSearch" , name="_test_google_search")
+     */
+    function testGoogleEarthAction()
+    {
+        return $this->render('CyclogramFrontendBundle:Email:googleSearch.html.twig');
+    }
 
 }
