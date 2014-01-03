@@ -179,6 +179,18 @@ class SexproStudy extends AbstractStudy implements StudyInterface
             $participantInterventionLinkSexproReferral->setStatus(ParticipantInterventionLink::STATUS_ACTIVE);
             $em->persist($participantInterventionLinkSexproReferral);
             
+            $participantInterventionLinkSexproLocation = new ParticipantInterventionLink();
+            $intervention = $em
+            ->getRepository('CyclogramProofPilotBundle:Intervention')
+            ->findOneByInterventionCode('SexproLocation');
+            $participantInterventionLinkSexproLocation->setIntervention($intervention);
+            $participantInterventionLinkSexproLocation->setParticipant($participant);
+            $participantInterventionLinkSexproLocation
+            ->setParticipantInterventionLinkDatetimeStart(
+                    new \DateTime("now"));
+            $participantInterventionLinkSexproLocation->setStatus(ParticipantInterventionLink::STATUS_ACTIVE);
+            $em->persist($participantInterventionLinkSexproLocation);
+            
             $em->flush();
         }
     }
