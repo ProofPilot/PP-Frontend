@@ -2282,9 +2282,9 @@
         margin-bottom: 18px;
     }
     #div_consent .mobile_reg.login_form .popup_text.join .list_box {
-		box-sizing:content-box;
-		-moz-box-sizing:content-box;
-		-webkit-box-sizing:content-box;
+		box-sizing: content-box;
+		-moz-box-sizing: content-box;
+		-webkit-box-sizing: content-box;
         height: auto;
         overflow: auto;
         background: #f1f1f1;
@@ -2314,6 +2314,10 @@
 	#div_consent .for_mobile_center {
 		display: block;
 		margin-bottom: 20px;
+	}
+	#div_consent .wrapper {
+		background-color: #fff;
+		overflow: visible;
 	}
 	.panel .panel_right .dashboard_panel ul.settings_form li.left_text ,
 	.panel .panel_right .dashboard_panel ul.settings_form li.middle_input {
