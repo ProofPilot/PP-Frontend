@@ -17,7 +17,7 @@
                      {{ form_widget(formAbout.daysSelect) }}
                 <span class="text_wrapper">{% trans from "signup_about" %}text_of{% endtrans %}</span>
                     {{ form_widget(formAbout.monthsSelect) }}
-                    {{ form_widget(formAbout.yearsSelect) }}
+                    {{ form_widget(formAbout.yearsSelect,{'attr': {'placeholder' : 'YYYY'}}) }}
                 <span class="text_wrapper">.</span>
                 <span class="text_wrapper">{% trans from "signup_about" %}text_i_finished{% endtrans %}</span>
                 {{ form_widget(formAbout.gradeSelect) }}
@@ -76,17 +76,31 @@
 		                    }
     			    	$("input[type=checkbox]").uniform();
     		            $("#signup_about_confirm").on('click', function(e) {
+        		            var status = true
     		            	$('#error').remove(); 
     		            	var inputVal = $('#signup_about_zipcode').val();
     		                var zipReg = /^[0-9]\d{4}-\d{4}|[0-9]{5}$/;
-    		                if (!$('#signup_about_zipcode').is(':empty')) {
+    		                if ($('#signup_about_zipcode').val() !== "") {
         		                if(!zipReg.test(inputVal)) {
         		                    $('#signup_about_zipcode').after('<p class="error" id="error">{% trans from "register" %}txt_check_zipcode{% endtrans %}</p>');
-        		                    return false;
+        		                    status = false
         		                    }
-    		            }
+        		                }
+    		                if ($('#signup_about_yearsSelect').val() !== "") {
+        		                var year = $('#signup_about_yearsSelect').val();
+    		                    if (year < 1910) {
+    		                    	$('#signup_about_yearsSelect').after('<p class="error" id="error">{% trans from "register" %}txt_year_to_old{% endtrans %}</p>');
+    		                    	status = false
+        		                    }
+    		                    if (year > 1999) {
+    		                    	$('#signup_about_yearsSelect').after('<p class="error" id="error">{% trans from "register" %}txt_year_to_young{% endtrans %}</p>');
+    		                    	status = false
+        		                    }
+    		                } 
+    		                return status;
         		        });
     		            $("#signup_about_anunalIncome").numeric();
+    		            $("#signup_about_yearsSelect").numeric();
     			        });
     			    
                   </script>

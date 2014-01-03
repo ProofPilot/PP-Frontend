@@ -788,7 +788,7 @@
     font-size: 14px;
     padding: 10px 10px 10px 10px;
 }
-#signup_about_zipcode, #signup_about_anunalIncome {
+#signup_about_zipcode, #signup_about_anunalIncome, #signup_about_yearsSelect {
 	moz-box-sizing: border-box;
     background: linear-gradient(to bottom, #FFFFFF 0%, #F2F2F2 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);
     border: 1px solid #AFAFAF;
@@ -808,6 +808,10 @@
 }
 #signup_about_anunalIncome {
 	width: 120px;
+}
+
+#signup_about_yearsSelect {
+	width: 70px;
 }
 
 /*Dropdown positioning*/

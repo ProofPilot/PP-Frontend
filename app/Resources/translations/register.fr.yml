@@ -6,7 +6,7 @@ consent_accept_join: consent_accept_join
 consent_any_information: consent_any_information
 consent_close_window: consent_close_window
 consent_good_to_go: consent_good_to_go
-consent_security_privacy: consent_security_privacy   # FIXME
+consent_security_privacy: consent_security_privacy
 consent_what_to_know: consent_what_to_know
 create_password: create_password
 enter_email: enter_email
@@ -29,11 +29,11 @@ label_zipcode: label_zipcode
 mail_confirmation_fail: mail_confirmation_fail
 min_charachters: min_charachters
 pick_user: pick_user
-study_register_error: study_register_error   # FIXME
-sms_verification_message: sms_verification_message
 study_register_error: study_register_error
 txt_check_email: txt_check_email
 txt_check_zipcode: txt_check_zipcode
 txt_join: txt_join
 txt_join_with: txt_join_with
 txt_subtitle_check_email: txt_subtitle_check_email
+txt_year_to_old: txt_year_to_old   # FIXME
+txt_year_to_young: txt_year_to_young   # FIXME
