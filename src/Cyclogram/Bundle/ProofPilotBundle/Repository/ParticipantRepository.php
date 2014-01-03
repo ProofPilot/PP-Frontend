@@ -194,7 +194,7 @@ class ParticipantRepository extends EntityRepository implements
         ->createQuery('SELECT COUNT(i) FROM CyclogramProofPilotBundle:ParticipantInterventionLink pil
                 INNER JOIN pil.intervention i
                 WHERE pil.participant = :participant
-                AND i.interventionCode =: interventionCode
+                AND i.interventionCode = :interventionCode
                 ')
                 ->setParameter('interventionCode', $interventionCode)
                 ->setParameter('participant', $participant)
