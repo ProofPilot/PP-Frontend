@@ -24,6 +24,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Doctrine\Common\Collections\Criteria;
 
 
 class DoItNotificationCommand extends ContainerAwareCommand
@@ -85,7 +86,13 @@ class DoItNotificationCommand extends ContainerAwareCommand
                         $weekDayInTz //weekday in timezone
                     );
             foreach($participants as $participant) {
-                $result = $this->sendDoItNowEmail($participant);
+            	if (isset($studyCode) && isset($interventionCode))
+            	{
+            		$result = $this->sendDoItNowEmail($participant, $interventionCode);
+            	} else {
+            		$result = $this->sendDoItNowEmail($participant);
+            	}
+                
                 if($result['send'] == true){
                     $output->writeln($participant->getParticipantEmail());
                     $output->writeln("sent email");
@@ -133,7 +140,7 @@ class DoItNotificationCommand extends ContainerAwareCommand
         }
     }
     
-    private function sendDoItNowEmail($participant) 
+    private function sendDoItNowEmail($participant, $interventionCode = null) 
     {
         $cc = $this->getContainer()->get('cyclogram.common');
         $em = $this->getContainer()->get('doctrine')->getManager();
@@ -144,6 +151,12 @@ class DoItNotificationCommand extends ContainerAwareCommand
         $embedded = $cc->getEmbeddedImages();
         
         $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')->getNotSendParticipantInterventionLinks($participant, 'email');
+	    if(isset($interventionCode))
+	    {    
+	        $criteria = Criteria::create()
+	        ->where(Criteria::expr()->eq("intervention_id", $interventionCode));
+	        $interventionLinks = $interventionLinks->matching($criteria);
+	    }
         
         $parameters["interventions"] = array();
         if (!empty($interventionLinks)){

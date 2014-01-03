@@ -194,7 +194,7 @@ class ParticipantRepository extends EntityRepository implements
         ->createQuery('SELECT COUNT(i) FROM CyclogramProofPilotBundle:ParticipantInterventionLink pil
                 INNER JOIN pil.intervention i
                 WHERE pil.participant = :participant
-                AND i.inte4rvenyionCode =: interventionCode
+                AND i.interventionCode =: interventionCode
                 ')
                 ->setParameter('interventionCode', $interventionCode)
                 ->setParameter('participant', $participant)
@@ -262,7 +262,7 @@ class ParticipantRepository extends EntityRepository implements
             $results = array();
             foreach ($participants as $participant) {
                 $enrolledStudies = $this->getEntityManager()->getRepository('CyclogramProofPilotBundle:Participant')->isEnrolledInStudy($participant, $studyCode);
-                $enrolledIntervention = $this->getEntityManager()->getRepository('CyclogramProofPilotBundle:Participant')->isEnrolledInStudy($participant, $studyCode);
+                $enrolledIntervention = $this->getEntityManager()->getRepository('CyclogramProofPilotBundle:Participant')->isEnrolledInIntervention($participant, $interventionCode);
                 if ($enrolledStudies && $enrolledIntervention)
                     $results[] = $participant;
             }
@@ -303,7 +303,7 @@ class ParticipantRepository extends EntityRepository implements
             $results = array();
             foreach ($participants as $participant) {
                 $enrolledStudies = $this->getEntityManager()->getRepository('CyclogramProofPilotBundle:Participant')->isEnrolledInStudy($participant, $studyCode);
-                $enrolledIntervention = $this->getEntityManager()->getRepository('CyclogramProofPilotBundle:Participant')->isEnrolledInStudy($participant, $studyCode);
+                $enrolledIntervention = $this->getEntityManager()->getRepository('CyclogramProofPilotBundle:Participant')->isEnrolledInIntervention($participant, $interventionCode);
                 if ($enrolledStudies && $enrolledIntervention)
                     $results[] = $participant;
             }
