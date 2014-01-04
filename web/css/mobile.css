@@ -789,19 +789,18 @@
     padding: 10px 10px 10px 10px;
 }
 #signup_about_zipcode, #signup_about_anunalIncome, #signup_about_yearsSelect {
-	moz-box-sizing: border-box;
+	-moz-box-sizing: border-box;
     background: linear-gradient(to bottom, #FFFFFF 0%, #F2F2F2 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);
     border: 1px solid #AFAFAF;
     border-radius: 3px 3px 3px 3px;
     color: #6F6F6F;
     display: inline-block;
     font-size: 14px;
-    height: 27px;
-    line-height: 29px;
-    padding-left: 10px;
-    padding-right: 10px;
+    height: 31px;
+    line-height: 30px;
+    padding: 0px 10px;
     position: relative;
-    top: -2px;
+    top: 0px;
 }
 #signup_about_zipcode {
 	width: 110px;

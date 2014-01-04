@@ -2494,13 +2494,15 @@
  
  	#div_register_step2 .mobile_reg .form_content span.default_drop {
 	    margin-top: 4px;
-	    margin-bottom: 6px;
+	    margin-bottom: 8px;
     } 
     
     #signup_about_form .cusotm_input {
     	height: 45px;
     }
-
+	#signup_about_zipcode, #signup_about_anunalIncome, #signup_about_yearsSelect {
+		top: -1px;
+	}
 }
 
 /* @media screen and (max-width: 500px) */ 
