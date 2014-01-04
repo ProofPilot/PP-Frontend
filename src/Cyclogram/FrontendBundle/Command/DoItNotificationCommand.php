@@ -165,8 +165,9 @@ class DoItNotificationCommand extends ContainerAwareCommand
         if (!empty($interventionLinks)){
             foreach($interventionLinks as $interventionLink) {
                 $sendTime = $interventionLink->getParticipantInterventionLinkSendEmailTime();
-                $weekly = date('W') - $interventionLink->getParticipantInterventionLinkSendEmailTime()->format('W');
-                if (!$sendTime || $weekly == 1 || $weekly == -51){ 
+                if (!is_null($sendTime))
+                    $sendTime = date('W') - $interventionLink->getParticipantInterventionLinkSendEmailTime()->format('W');
+                if (!$sendTime || $sendTime == 1 || $sendTime == -51){ 
                 
                     $interventionId = $interventionLink->getIntervention()->getInterventionId();
                     $interventionContent = $this->getContainer()->get('doctrine')->getRepository("CyclogramProofPilotBundle:Intervention")->getInterventionContent($interventionId, $locale);
@@ -230,9 +231,10 @@ class DoItNotificationCommand extends ContainerAwareCommand
         $interventions = array();
         if (!empty($interventionLinks)){
             foreach($interventionLinks as $interventionLink) {
-                $sendTime = $interventionLink->getParticipantInterventionLinkSendEmailTime();
-                $weekly = date('W') - $interventionLink->getParticipantInterventionLinkSendEmailTime()->format('W');
-                if (!$sendTime || $weekly == 1 || $weekly == -51){
+                $sendTime = $interventionLink->getParticipantInterventionLinkSendSmsTime();
+                if (!is_null($sendTime))
+                    $sendTime = date('W') - $interventionLink->getParticipantInterventionLinkSendSmsTime()->format('W');
+                if (!$sendTime || $sendTime == 1 || $sendTime == -51){
                     $interventionId = $interventionLink->getIntervention()->getInterventionId();
                     $interventionContent = $this->getContainer()->get('doctrine')->getRepository("CyclogramProofPilotBundle:Intervention")->getInterventionContent($interventionId, $locale);
             
