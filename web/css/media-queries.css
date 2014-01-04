@@ -514,7 +514,17 @@
 	.intro_page .text_wrapper .video_wrapper .video_text p.note {
     	margin-bottom: 20px;
 	}
-	
+	.ui-dialog {
+        background: none;
+    	border: none;
+    }
+	#div_location {
+		margin: 0 45px;
+		background: transparent !important;
+	}
+	#div_location .mobile_reg {
+		width: 100%;
+	}
 }
 
 /* @media screen and (max-width: 900px) */ 
@@ -1281,10 +1291,6 @@
     #div_consent .mobile_reg.login_form h2 {
     	display: block;
     }
-    .ui-dialog {
-        background: none;
-    	border: none;
-    }
     .mobile_reg.login_form .loginform_left .actions_row {
         padding: 0px;
         font-size: 13px;
@@ -1353,7 +1359,7 @@
         padding-top: 0px;
         height: auto;
     }
-    .mobile_reg.login_form.wide_popup.with_map .popup_header {
+    .mobile_reg.login_form.wide_popup.with_map .popup_header, #div_location .mobile_reg .wrapper .popup_header {
         background: white;
         line-height: inherit;
         padding-top: 20px;
@@ -1519,10 +1525,63 @@
 	.modal_close_btn {
 		display: none;
 	}
+	#div_location .modal_close_btn {
+		display: block;
+	}
 	#div_consent .modal_close_btn, #email_list .modal_close_btn, #pledge_popup .modal_close_btn {
 		display: block;
 	}
-	
+	#div_location .mobile_reg .popup_sidebar {
+    	width: 100%;
+	}
+	#div_location .mobile_reg .popup_sidebar .maps_search {
+		padding-top: 0;
+	}
+	#div_location .mobile_reg .popup_sidebar .maps_search input.text {
+		width: 100%;
+	}
+	#div_location .mobile_reg .popup_sidebar .maps_search a.submit_form {
+		width: 100%;
+		height: 32px;
+		line-height: 32px;
+	}
+	#div_location .mobile_reg .popup_sidebar .results {
+    	background: none repeat scroll 0 0 #F1F1F1;
+    	height: auto;
+	}
+	#div_location .mobile_reg.login_form h2 {
+		display: block;
+	}
+	#div_location .mobile_reg .popup_sidebar .results ul li .text_left {
+	    -moz-box-sizing: border-box;
+	    background-position: 4px 4px;
+	    padding-left: 30px;
+	    padding-right: 73px;
+	    width: 100%;
+	}
+	#div_location .mobile_reg .popup_map {
+		margin-top: 0px;
+		height: auto;
+		padding-left: 15px;
+	}
+	#div_location .mobile_reg .popup_sidebar .results ul li .info_box {
+		margin-left: 0px;
+		position: static;
+		width: auto;
+	}
+	#div_location .mobile_reg .info_box .text_cont {
+		padding-left: 0px;
+	}
+	#div_location .mobile_reg .popup_sidebar .results ul li .info_box .box_bg {
+		background: none;
+	}
+	#div_location .mobile_reg .popup_sidebar .results ul li .info_box .text_cont .wrapper {
+		background-color: #F1F1F1;
+		padding-left: 0px;
+	}
+	#div_location .mobile_reg .info_box .text_cont a.close, #div_location .mobile_reg .info_box .text_cont h1 {
+		display: none;
+	}
 }
 
 /* @media screen and (max-width: 680px) */ 
