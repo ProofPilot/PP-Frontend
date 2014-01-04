@@ -66,6 +66,13 @@ class Participant implements AdvancedUserInterface
     protected $participantState;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="participant_refferal_id", type="integer")
+     */
+    protected $participantRefferalId;
+
+    /**
      * @var \ParticipantTimezone
      *
      * @ORM\ManyToOne(targetEntity="ParticipantTimezone")
@@ -469,7 +476,7 @@ class Participant implements AdvancedUserInterface
      * })
      */
     protected $race;
-    
+
     /**
      * Get participantId
      *
@@ -1176,7 +1183,8 @@ class Participant implements AdvancedUserInterface
 
     public function getRoles()
     {
-        return array_merge($this->participantRoles, array('ROLE_USER', 'ROLE_PARTICIPANT'));
+        return array_merge($this->participantRoles,
+                array('ROLE_USER', 'ROLE_PARTICIPANT'));
     }
 
     public function setRoles($roles)
@@ -1452,6 +1460,16 @@ class Participant implements AdvancedUserInterface
             $participantBasicInformation)
     {
         $this->participantBasicInformation = $participantBasicInformation;
+    }
+
+    public function getParticipantRefferalId()
+    {
+        return $this->participantRefferalId;
+    }
+
+    public function setParticipantRefferalId($participantRefferalId)
+    {
+        $this->participantRefferalId = $participantRefferalId;
     }
 
 }

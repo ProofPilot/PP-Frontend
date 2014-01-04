@@ -123,6 +123,16 @@ class DashboardController extends Controller
                 $intervention['shortstudyUrl'] = $cc::generateGoogleShorURL($this->container->getParameter('site_url')."/".$locale."/".$studyContent->getStudyUrl());
                 $intervention['studyName'] = $studyContent->getStudyName();
             }
+            if ($interventionTypeName == "Referral" ) {
+                
+                $site = $em->getRepository('CyclogramProofPilotBundle:Study')->getDefaultSites($studyId);
+                $siteId = $em->getRepository('CyclogramProofPilotBundle:Site')->findOneBySiteName($site[0]['siteName']);
+                $siteCampaignLink = $em->getRepository('CyclogramProofPilotBundle:CampaignSiteLink')->findOneBySite($siteId);
+                $intervention['studyName'] = $studyContent->getStudyName();
+                $intervention['refferalStudyUrl'] = $this->container->getParameter('site_url')."/".$locale."/".$study->getStudyCode()."/?utm_campaign=".$siteCampaignLink->getCampaign()->getCampaignName()."&utm_medium-Clinic&utm_source=".$site[0]['siteName']."&pid=".$participant->getParticipantId();
+                $intervention['reffferalShortStudyUrl'] = $cc::generateGoogleShorURL($this->container->getParameter('site_url')."/".$locale."/".$study->getStudyCode()."/?utm_campaign=".$siteCampaignLink->getCampaign()->getCampaignName()."&utm_medium-Clinic&utm_source=".$site[0]['siteName']."&pid=".$participant->getParticipantId());
+                $intervention['studyName'] = $studyContent->getStudyName();
+            }
             $parameters["studyCode"] = $study->getStudyCode();
             $parameters["interventions"][] = $intervention;
             

@@ -611,6 +611,7 @@ class AuthentificationController extends Controller
      * @param Participant $formData
      */
     private function createParticipant($formData) {
+        $session = $this->getRequest()->getSession();
         $request = $this->getRequest();
         $em = $this->getDoctrine()->getManager();
         $participant = new Participant();
@@ -646,6 +647,8 @@ class AuthentificationController extends Controller
         $roles = array("ROLE_USER", "ROLE_PARTICIPANT");
         $participant->setRoles($roles);
         $participant->setParticipantEmailCode($mailCode);
+        if ($session->has('refferal_participant')) 
+            $participant->setParticipantRefferalId($session->get('refferal_participant'));
         $em->persist($participant);
         $em->flush($participant);
         

@@ -21,21 +21,12 @@ frontend_oauth_service_redirect:
 
 
 _root:
-    path: /{study}/
-    requirements:
-        study: "[0-9a-zA-Z ]*"
+    path: /
     defaults:
         _controller: lunetics_locale.switcher_controller:switchAction
-        route: _page
+        route: _index
         statusCode: 301
         useReferrer: false
-
-CyclogramKnowatHomeBundle:
-    resource: "@CyclogramKnowatHomeBundle/Resources/config/routing.yml"
-    prefix:   /{_locale}/{studyCode}
-    requirements:
-        _locale: en|es|pt|fr|es_MX|pt_BR
-        studyCode: knowathome|eStamp4
 
 cyclogram_frontend:
     resource: "@CyclogramFrontendBundle/Controller/"
@@ -47,9 +38,32 @@ cyclogram_frontend:
 cyclogram_study:
     resource: "@CyclogramStudyBundle/Controller/"
     type:     annotation
-    prefix: /{_locale}/{studyUrl}
+    prefix: /{_locale}
     requirements:
         _locale: en|es|pt|fr|es_MX|pt_BR
+
+_study_switch:
+    path: /{study}/
+    requirements:
+        study: "[0-9a-zA-Z ]+"
+    defaults:
+        _controller: lunetics_locale.switcher_controller:switchStudyAction
+        route: _page
+        statusCode: 301
+        useReferrer: false
+
+#CyclogramKnowatHomeBundle:
+#    resource: "@CyclogramKnowatHomeBundle/Resources/config/routing.yml"
+#    prefix:   /{_locale}/{studyCode}
+#    requirements:
+#        _locale: en|es|pt|fr|es_MX|pt_BR
+#        studyCode: knowathome|eStamp4
+
+
+
+
+
+
 
 
     

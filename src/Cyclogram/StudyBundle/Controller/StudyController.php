@@ -128,8 +128,10 @@ class StudyController extends Controller
         return $this->render('CyclogramStudyBundle:Study:error.html.twig', $this->parameters);
     }
     
+
+    
     /**
-     * @Route("", name="_page")
+     * @Route("/{studyUrl}/", name="_page")
      * @Template()
      */
     public function pageAction($studyUrl)
@@ -139,25 +141,27 @@ class StudyController extends Controller
         $session = $this->getRequest()->getSession();
         $request = $this->getRequest();
         $cc = $this->container->get('cyclogram.common');
-
+        $url_query = $request->query->all();
+        if (isset ($url_query['pid']))
+            $session->set('refferal_participant', $url_query['pid']);
         if ($session->has("message")) {
             $this->parameters["message"] = $session->get("message");
             $session->remove("message");
         }
-        $referer = $request->headers->get('referer');
-        $url = parse_url($referer);
-        $securityContext = $this->container->get('security.context');
-        if( $securityContext->isGranted('ROLE_PARTICIPANT') || $securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED') ){
-            $referer = $request->headers->get('referer');
-            if (!isset($referer)) {
-                return $this->redirect($this->generateUrl('_main'));
-            }else {
-                $url = parse_url($referer);
-                if ($url['scheme'].'://'.$url['host'] != $this->container->getParameter('site_url')) {
-                    return $this->redirect($this->generateUrl('_main'));
-                }
-            }
-        }
+//         $referer = $request->headers->get('referer');
+//         $url = parse_url($referer);
+//         $securityContext = $this->container->get('security.context');
+//         if( $securityContext->isGranted('ROLE_PARTICIPANT') || $securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED') ){
+//             $referer = $request->headers->get('referer');
+//             if (!isset($referer)) {
+//                 return $this->redirect($this->generateUrl('_main'));
+//             }else {
+//                 $url = parse_url($referer);
+//                 if ($url['scheme'].'://'.$url['host'] != $this->container->getParameter('site_url')) {
+//                     return $this->redirect($this->generateUrl('_main'));
+//                 }
+//             }
+//         }
         
         //depending on request parameters get campaign and site name
         if($this->getRequest()->get('utm_source') && $this->getRequest()->get('utm_campaign')) {

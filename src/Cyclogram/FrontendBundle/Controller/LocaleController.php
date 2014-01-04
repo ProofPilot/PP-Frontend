@@ -67,8 +67,9 @@ class LocaleController
         $this->container = $container;
     }
 
+    
     /**
-     * Action for locale switch
+     * Action for locale switch 
      *
      * @param Request $request
      *
@@ -78,12 +79,55 @@ class LocaleController
     public function switchAction(Request $request)
     {
         $_locale = $request->attributes->get('_locale', $request->getLocale());
+
+        $statusCode = $request->attributes->get('statusCode', $this->statusCode);
+        $useReferrer = $request->attributes->get('useReferrer', $this->useReferrer);
+        $redirectToRoute = $request->attributes->get('route', $this->redirectToRoute);
+    
+        $queryParameters = $request->query->all();
+    
+        $routeParameters = $queryParameters;
+    
+        $metaValidator = $this->metaValidator;
+        if (!$metaValidator->isAllowed($_locale)) {
+            throw new \InvalidArgumentException(sprintf('Not allowed to switch to locale %s', $_locale));
+        }
+    
+        $securityContext = $this->container->get('security.context');
+        // Redirect the User
+        if( $securityContext->isGranted('ROLE_PARTICIPANT') || $securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED') ){
+            $response = new RedirectResponse($this->router->generate("_main"), $statusCode);
+        } elseif ($useReferrer && $request->headers->has('referer')) {
+            $response = new RedirectResponse($request->headers->get('referer'), $statusCode);
+        } elseif ($this->router && $redirectToRoute) {
+            $response = new RedirectResponse($this->router->generate("_page", array('studyUrl' => 'sexpro')));
+        } else {
+            // TODO: this seems broken, as it will not handle if the site runs in a subdir
+            // TODO: also it doesn't handle the locale at all and can therefore lead to an infinite redirect
+            $response = new RedirectResponse($request->getScheme() . '://' . $request->getHttpHost() . '/', $statusCode);
+        }
+    
+        return $response;
+    
+    }
+    
+    /**
+     * Action for locale switch study
+     *
+     * @param Request $request
+     *
+     * @throws \InvalidArgumentException
+     * @return RedirectResponse
+     */
+    public function switchStudyAction(Request $request)
+    {
+        $_locale = $request->attributes->get('_locale', $request->getLocale());
         $studyUrl = $request->get('study');
         if(empty($studyUrl)) {
-            $branding = $this->container->getParameter('branding');
-            if ($branding == 'knowathome')
-                $studyUrl = "knowathome";
-            else
+//             $branding = $this->container->getParameter('branding');
+//             if ($branding == 'knowathome')
+//                 $studyUrl = "knowathome";
+//             else
                 $studyUrl = "sexpro";
         }
         $statusCode = $request->attributes->get('statusCode', $this->statusCode);
@@ -92,11 +136,15 @@ class LocaleController
         
         $queryParameters = $request->query->all();
 
-        $routeParameters = array_merge(
-                $queryParameters,  
-                array(
-                     "studyUrl" => $studyUrl
-                ));
+        if(!empty($studyUrl)){
+            $routeParameters = array_merge(
+                    $queryParameters,  
+                    array(
+                          "studyUrl" => $studyUrl
+                    ));
+        } else {
+            $routeParameters = $queryParameters;
+        }
 
         $metaValidator = $this->metaValidator;
         if (!$metaValidator->isAllowed($_locale)) {

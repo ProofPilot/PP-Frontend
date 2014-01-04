@@ -23,7 +23,7 @@
     {% if item.attribute('dropdown') == true  %}
     <div class="user_logged_menu">
         <a href="{{ item.uri }}"class="header_user_logged_btn">
-            <img src="{{ asset('images/tmpavatar3.png') }}" width="40" height="42"/>
+{#             <img src="{{ asset('images/tmpavatar3.png') }}" width="40" height="42"/>#}
             <span class="name">{{ item.attribute('user_name') }}</span>
             <span class="type">{{ block('label') }}</span>  
         </a>
@@ -52,7 +52,7 @@
 {% for item in currentItem.children %}
     {% if item.attribute('header') == true %}
         <div class="menu_header">
-            <img src="{{ asset('images/tmpavatar3.png') }}" width="40" height="42"/>
+{#             <img src="{{ asset('images/tmpavatar3.png') }}" width="40" height="42"/>#}
             <span class="name">{{ block('label') }}</span>
             <span class="type">Last Access: {{ item.attribute('last_access') }} </span>
         </div>
