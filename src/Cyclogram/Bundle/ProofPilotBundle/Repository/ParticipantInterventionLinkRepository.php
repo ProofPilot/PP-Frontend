@@ -117,38 +117,39 @@ class ParticipantInterventionLinkRepository extends EntityRepository
                         ->getResult();
     }
     
-    public function getNotSendParticipantInterventionLinks($userid, $sendType){
+    public function getNotSendParticipantInterventionLinks($userid,$interventionCode = null ){
        
-        if ($sendType == 'sms') {
-        return $this->getEntityManager()
-        ->createQuery('SELECT pil, i, it FROM CyclogramProofPilotBundle:ParticipantInterventionLink pil
-                INNER JOIN pil.intervention i
-                INNER JOIN i.study s
-                INNER JOIN i.interventionType it
-                WHERE pil.participant = :userid
-                AND pil.status  = :pilstatus
-                AND it.interventionTypeName <> \'Test\'
-                ')
-                ->setParameters(array(
-                        'userid' => $userid,
-                        'pilstatus' => ParticipantInterventionLink::STATUS_ACTIVE))
-                        ->getResult();
-        } 
-        if ($sendType == 'email') {
-            return $this->getEntityManager()
-            ->createQuery('SELECT pil, i, it FROM CyclogramProofPilotBundle:ParticipantInterventionLink pil
-                    INNER JOIN pil.intervention i
-                    INNER JOIN i.study s
-                    INNER JOIN i.interventionType it
-                    WHERE pil.participant = :userid
-                    AND pil.status  = :pilstatus
-                    AND it.interventionTypeName <> \'Test\'
-                    ')
-                    ->setParameters(array(
-                            'userid' => $userid,
-                            'pilstatus' => ParticipantInterventionLink::STATUS_ACTIVE))
-                            ->getResult();
-        }
+        
+            if (isset($interventionCode))
+                return $this->getEntityManager()
+                ->createQuery('SELECT pil, i, it FROM CyclogramProofPilotBundle:ParticipantInterventionLink pil
+                        INNER JOIN pil.intervention i
+                        INNER JOIN i.study s
+                        INNER JOIN i.interventionType it
+                        WHERE pil.participant = :userid
+                        AND pil.status  = :pilstatus
+                        AND it.interventionTypeName <> \'Test\'
+                        AND i.interventionCode = :interventionCode
+                        ')
+                        ->setParameters(array(
+                                'userid' => $userid,
+                                'pilstatus' => ParticipantInterventionLink::STATUS_ACTIVE,
+                                'interventionCode' => $interventionCode))
+                                ->getResult();
+            else
+                return $this->getEntityManager()
+                ->createQuery('SELECT pil, i, it FROM CyclogramProofPilotBundle:ParticipantInterventionLink pil
+                        INNER JOIN pil.intervention i
+                        INNER JOIN i.study s
+                        INNER JOIN i.interventionType it
+                        WHERE pil.participant = :userid
+                        AND pil.status  = :pilstatus
+                        AND it.interventionTypeName <> \'Test\'
+                        ')
+                        ->setParameters(array(
+                                'userid' => $userid,
+                                'pilstatus' => ParticipantInterventionLink::STATUS_ACTIVE))
+                                ->getResult();
     }
     
     public function getParticipantByInterventionCodeAndPeriod($interventionCode, $period) {
