@@ -308,10 +308,10 @@ class CyclogramCommon {
             $embedded['logo_footer'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newletter_logo_footer.png");
         }
         //            $embedded['login_button'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_small_login.jpg");
-        $embedded['white_top'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_white_top.png");
-        $embedded['white_bottom'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_white_bottom.png");
+        //$embedded['white_top'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_white_top.png");
+        //$embedded['white_bottom'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/newsletter_white_bottom.png");
         $embedded['login'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/login.jpg");
-        $embedded['arrow'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/arrow.jpg");
+        //$embedded['arrow'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/arrow.jpg");
         $embedded['tmp_logo'] = realpath($this->container->getParameter('kernel.root_dir') . "/../web/images/tmplogo_none.jpg");
         
         return $embedded;
