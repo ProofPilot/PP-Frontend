@@ -31,7 +31,9 @@ class DoItNotificationCommand extends ContainerAwareCommand
     protected function configure(){
         
         $this->setName('send:doitnotification')
-        ->setDescription('Send email with doit tasks');
+        ->setDescription('Send email with doit tasks')
+        ->addArgument('study', InputArgument::OPTIONAL,'Input study code')
+        ->addArgument('intervention', InputArgument::OPTIONAL,'Input intervention code');;
     }
     
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -62,7 +64,20 @@ class DoItNotificationCommand extends ContainerAwareCommand
             $output->writeln("Timezone weekday is ".$weekDayInTz);
             
             $output->writeln("Looking for participants with email notification... ");
+            $studyCode = $input->getArgument('study');
+            $interventionCode = $input->getArgument('intervention');
+            if (isset($studyCode) && isset($interventionCode))
             $participants = $em->getRepository('CyclogramProofPilotBundle:Participant')
+                ->getParticipantsForEmailNotifications(
+                        1, //reminder type
+                        $timezone->getParticipantTimezoneId(),  //timezone   
+                        $periodId, //id of period in timezone
+                        $weekDayInTz, //weekday in timezone
+                        $studyCode,
+                        $interventionCode
+                    );
+            else
+                $participants = $em->getRepository('CyclogramProofPilotBundle:Participant')
                 ->getParticipantsForEmailNotifications(
                         1, //reminder type
                         $timezone->getParticipantTimezoneId(),  //timezone   
@@ -70,7 +85,12 @@ class DoItNotificationCommand extends ContainerAwareCommand
                         $weekDayInTz //weekday in timezone
                     );
             foreach($participants as $participant) {
-                $result = $this->sendDoItNowEmail($participant);
+                if (isset($studyCode) && isset($interventionCode))
+            	{
+            		$result = $this->sendDoItNowEmail($participant, $interventionCode);
+            	} else {
+            		$result = $this->sendDoItNowEmail($participant);
+            	}
                 if($result['send'] == true){
                     $output->writeln($participant->getParticipantEmail());
                     $output->writeln("sent email");
@@ -84,15 +104,31 @@ class DoItNotificationCommand extends ContainerAwareCommand
             }
             
             $output->writeln("Looking for participants with SMS notification... ");
-            $participants = $em->getRepository('CyclogramProofPilotBundle:Participant')
-            ->getParticipantsForSmsNotifications(
-                    1, //reminder type
-                    $timezone->getParticipantTimezoneId(),  //timezone
-                    $periodId, //id of period in timezone
-                    $weekDayInTz //weekday in timezone
-            );
+            if (isset($studyCode) && isset($interventionCode))
+                $participants = $em->getRepository('CyclogramProofPilotBundle:Participant')
+                ->getParticipantsForSmsNotifications(
+                        1, //reminder type
+                        $timezone->getParticipantTimezoneId(),  //timezone
+                        $periodId, //id of period in timezone
+                        $weekDayInTz, //weekday in timezone
+                        $studyCode,
+                        $interventionCode
+                );
+            else 
+                $participants = $em->getRepository('CyclogramProofPilotBundle:Participant')
+                ->getParticipantsForSmsNotifications(
+                        1, //reminder type
+                        $timezone->getParticipantTimezoneId(),  //timezone
+                        $periodId, //id of period in timezone
+                        $weekDayInTz //weekday in timezone
+                );
             foreach($participants as $participant) {
-                $result = $this->sendDoItNowSMS($participant);
+                            if (isset($studyCode) && isset($interventionCode))
+                {
+                    $result = $this->sendDoItNowSMS($participant, $interventionCode);
+                } else {
+                    $result = $this->sendDoItNowSMS($participant);
+                }
                 if($result['send'] == true){
                     $output->writeln($participant->getParticipantUsername()." phone number: ".$participant->getParticipantMobileNumber());
                     $output->writeln("sent sms");
@@ -107,7 +143,7 @@ class DoItNotificationCommand extends ContainerAwareCommand
         }
     }
     
-    private function sendDoItNowEmail($participant) 
+    private function sendDoItNowEmail($participant, $interventionCode = null) 
     {
         $cc = $this->getContainer()->get('cyclogram.common');
         $em = $this->getContainer()->get('doctrine')->getManager();
@@ -117,7 +153,11 @@ class DoItNotificationCommand extends ContainerAwareCommand
         $embedded = array();
         $embedded = $cc->getEmbeddedImages();
         
-        $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')->getNotSendParticipantInterventionLinks($participant, 'email');
+        if(isset($interventionCode))
+            $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')->getNotSendParticipantInterventionLinks($participant,'email', $interventionCode);
+        else
+            $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')->getNotSendParticipantInterventionLinks($participant, 'email');
+        
         
         $parameters["interventions"] = array();
         if (!empty($interventionLinks)){
@@ -137,7 +177,8 @@ class DoItNotificationCommand extends ContainerAwareCommand
                     $intervention["url"] = $this->getInterventionUrl($interventionLink, $locale);
                     $intervention["logo"] = $this->getContainer()->getParameter('study_image_url') . "/" . $studyId . "/" . $studyContent->getStudyLogo();
                     $parameters["interventions"][] = $intervention;
-                    $interventionLink->setParticipantInterventionLinkSendEmailTime(new \DateTime());
+                    if (!isset($interventionCode))
+                        $interventionLink->setParticipantInterventionLinkSendEmailTime(new \DateTime());
                     $em->persist($interventionLink);
                     $em->flush();
             }
@@ -168,13 +209,16 @@ class DoItNotificationCommand extends ContainerAwareCommand
         }
     }
     
-    private function sendDoItNowSMS($participant) {
+    private function sendDoItNowSMS($participant, $interventionCode = null) {
         $locale = $participant->getLocale();
         
         $cc = $this->getContainer()->get('cyclogram.common');
         $em = $this->getContainer()->get('doctrine')->getManager();
         
-        $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')->getNotSendParticipantInterventionLinks($participant, 'sms');
+                if(isset($interventionCode))
+            $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')->getNotSendParticipantInterventionLinks($participant,'sms', $interventionCode);
+        else
+            $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')->getNotSendParticipantInterventionLinks($participant, 'sms');
         
         $interventions = array();
         if (!empty($interventionLinks)){
@@ -193,7 +237,8 @@ class DoItNotificationCommand extends ContainerAwareCommand
                     $message = $this->getContainer()->get('translator')->trans('sms_title', array(), 'security', $locale);
                     $sentSms = $sms->sendSmsAction( array('message' => $message .': '. $interventionTitle.' '.$interventionUrl, 'phoneNumber'=> $participant->getParticipantMobileNumber()) );
                     if ($sentSms){
-                        $interventionLink->setParticipantInterventionLinkSendSmsTime(new \DateTime());
+                        if (!isset($interventionCode))
+                            $interventionLink->setParticipantInterventionLinkSendSmsTime(new \DateTime());
                         $em->persist($interventionLink);
                         $em->flush();
                         return array('send' => true, 'message' => 'sent sms');

@@ -36,7 +36,9 @@ class GeneralCommand extends ContainerAwareCommand
 
         $this->setName('run:generalcommand')
         ->setDescription('Run all proofpilot CLI commands')
-         ->addArgument('hour', InputArgument::REQUIRED,'Write hour when run commands');
+        ->addArgument('hour', InputArgument::REQUIRED,'Write hour when run commands')
+        ->addArgument('study', InputArgument::OPTIONAL,'Input study code')
+        ->addArgument('intervention', InputArgument::OPTIONAL,'Input intervention code');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -44,6 +46,8 @@ class GeneralCommand extends ContainerAwareCommand
         $currentDate = new \DateTime();
         $currentHour =  $currentDate->format('H');
         $currentDay = $currentDate->format('z');
+        $studyCode = $input->getArgument('study');
+        $interventionCode = $input->getArgument('intervention');
         if ($currentHour == $input->getArgument('hour')) {
             //send:verificationNotice
             $VerificationNoticeCommand = $this->getApplication()->find('send:verificationNotice');
@@ -79,7 +83,14 @@ class GeneralCommand extends ContainerAwareCommand
         //send:doitnotification
         $DoItNotificationCommand = $this->getApplication()->find('send:doitnotification');
         $output->writeln("<!--Running command send:doitnotification--!>");
-        $input = new ArrayInput(array('command' => 'send:doitnotification'));
+        if (isset($studyCode) && isset($interventionCode)){
+            $input = new ArrayInput(array(
+                                        'command' => 'send:doitnotification',
+                                        'study' => $studyCode,
+                                        'intervention' => $interventionCode));
+        } else  {
+            $input = new ArrayInput(array('command' => 'send:doitnotification'));
+        }
         $returnCode = $DoItNotificationCommand->run($input, $output);
         if ($returnCode == 0) {
             $output->writeln("<!--send:doitnotification command complitet--!>"); 
