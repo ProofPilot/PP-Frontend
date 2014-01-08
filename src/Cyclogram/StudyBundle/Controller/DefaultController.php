@@ -35,7 +35,8 @@ use Cyclogram\FrontendBundle\Form\RegistrationForm;
 use Cyclogram\FrontendBundle\Form\SignUpAboutForm;
 use Cyclogram\FrontendBundle\Form\MailAddressForm;
 use Symfony\Component\Security\Core\SecurityContext;
-class DefaultController
+use Symfony\Component\HttpFoundation\Request;
+class DefaultController extends Controller
 
 {
     /**
@@ -45,5 +46,28 @@ class DefaultController
     public function indexAction()
     {
         return new Response('sdfds');
+    }
+    
+    /**
+     * @Route("/is_it_secure", name="_secure")
+     * @Template()
+     */
+    public function isItSecureAction()
+    {
+        $locale = $this->getRequest()->getLocale();
+        $em = $this->getDoctrine()->getManager();
+    
+    
+        $blockContent = $em->getRepository("CyclogramProofPilotBundle:StaticBlocks")->getBlockContent("security_privacy_title", $locale);
+        $parameters["title"] = $blockContent;
+    
+        $blockContent = $em->getRepository("CyclogramProofPilotBundle:StaticBlocks")->getBlockContent("privacy_security", $locale);
+        $parameters["content"] = $blockContent;
+    
+        $blockContent = $em->getRepository("CyclogramProofPilotBundle:StaticBlocks")->getBlockContent("about_proofpilot", $locale);
+        $parameters["about"] = $blockContent;
+    
+    
+        return $this->render('CyclogramStudyBundle:Study:is_it_secure.html.twig', $parameters);
     }
 }
