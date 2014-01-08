@@ -342,6 +342,7 @@
                                     <a href="{{ path('_page', {'studyUrl' : study.studyCode}) }}"><img src="{{ asset('images/tmplogo_none.jpg') }}" width="176"  alt="" title=""/></a>
                                 {% else %}
                                     <a href="{{ path('_page', {'studyUrl' : study.studyCode}) }}"><img src="{{ study_image_url }}/{{ study.studyId }}/{{ study.studyGraphic }}" width="176"  alt="" title=""/></a>
+                                    <a href="{{ path('_page', {'studyUrl' : study.studyCode}) }}"><img src="{{ asset('images/tmplogo_none.jpg') }}" style="display:none;" width="176"  alt="" title=""/></a>
                                 {% endif %}
                                     <h4><a href="{{ path('_page', {'studyUrl' : study.studyCode}) }}">{{ study.studyName }}</a></h4>
 {#                                 <p class="category">Category: Sex, Health</p>#}
