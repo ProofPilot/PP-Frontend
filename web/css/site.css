@@ -607,7 +607,6 @@ header .header_menu span.text  , .footer_col_right span.text  {
 	color: #6c6f72;
 	font-size: 13px;
 	text-transform: uppercase;
-	line-height: 65px;
 	padding-left: 55px;
 	width: 205px;
 	border-bottom: 1px solid #d4d4d4;
@@ -618,6 +617,11 @@ header .header_menu span.text  , .footer_col_right span.text  {
 .panel .panel_left .menu_cont ul.left_menu li a.icon_survey {
 	background: url(../images/icon_survey.png) no-repeat 18px 50%;
 	background-size: 14px 18px;
+}
+.panel .panel_left .menu_cont ul.left_menu li a.icon_survey span {
+	display: table-cell;
+	vertical-align: middle;
+	height: 65px;
 }
 .lt-ie9 .panel .panel_left .menu_cont ul.left_menu li a.icon_survey {
 	background: url(../images/100_icon_survey.png) no-repeat 18px 50%;
@@ -3985,4 +3989,14 @@ footer .row_2 p {
 	background: -ms-linear-gradient(top, #e3624b 0%,#bc3a2a 100%); /* IE10+ */
 	background: linear-gradient(to bottom, #e3624b 0%,#bc3a2a 100%); /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e3624b', endColorstr='#bc3a2a',GradientType=0 ); /* IE6-9 */
+}
+.share_slide {
+	overflow: hidden;
+	padding: 10px 10px 10px 55px;
+}
+.share_slide a {
+	border: none !important;
+	padding-left: 0px !important;
+	width: 25px !important;
+	height: 25px !important;
 }
