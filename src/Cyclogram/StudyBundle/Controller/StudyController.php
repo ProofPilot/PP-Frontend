@@ -72,7 +72,9 @@ class StudyController extends Controller
         $this->parameters['studyCode'] = $study->getStudyCode();
         $this->parameters['studyParticipants'] = $study->getStudyNumberOfCurrentParticipants();
         $this->parameters['studyGoal'] = $study->getStudyParticipantsGoal();
+        $this->parameters['adminProjectUrl'] = $this->container->getParameter('admin_project_url');
         $this->parameters['studyOrganizations'] = $this->getDoctrine()->getRepository("CyclogramProofPilotBundle:Study")->getStudyOrganizations($study->getStudyCode());
+        $this->parameters['affiliatedOrganizations'] = $this->getDoctrine()->getRepository("CyclogramProofPilotBundle:Study")->getAffiliatedOrganization($studyId);
         $this->parameters['studyStaff'] = $this->getDoctrine()->getRepository("CyclogramProofPilotBundle:Study")-> getStudyStaff($study->getStudyCode());
         $this->parameters['surveyId'] = $studyContent->getStudyElegibilitySurvey();
         $this->parameters["logo"] = $this->container->getParameter('study_image_url') . '/' . $studyId. '/' .$studyContent->getStudyLogo();

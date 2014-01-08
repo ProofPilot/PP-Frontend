@@ -66,6 +66,33 @@ class StudyRepository extends EntityRepository
     }
     
     /**
+     * Check if study has organization with Affiliate role linked
+     * @param unknown_type $studyId
+     */
+    public function getAffiliatedOrganization($studyId)
+    {
+        return $this->getEntityManager()
+        ->createQuery("
+                SELECT sol.studyOrganizationLinkId, o.organizationName, o.organizationLogo
+                FROM CyclogramProofPilotBundle:StudyOrganizationLink sol
+                INNER JOIN sol.studyOrganizationRole role
+                INNER JOIN sol.study study
+                INNER JOIN sol.organization o
+                WHERE
+                study.studyId = :studyId
+                AND sol.status = :solstatus
+                AND o.status = :organizationstatus
+                AND role.studyOrganizationRoleName = 'Affiliate'
+                ")
+                ->setParameters(array(
+                        'studyId' => $studyId,
+                        'solstatus' => StudyOrganizationLink::STATUS_ACTIVE,
+                        'organizationstatus' => Organization::STATUS_ACTIVE,
+                ))
+                ->getResult();
+    }
+    
+    /**
      * Check if studie's organization has any active default sites
      * @param unknown_type $studyId
      * @return boolean

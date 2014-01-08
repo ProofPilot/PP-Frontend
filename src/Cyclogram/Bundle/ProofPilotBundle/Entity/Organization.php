@@ -1,24 +1,23 @@
 <?php
 /*
-* This is part of the ProofPilot package.
-*
-* (c)2012-2013 Cyclogram, Inc, West Hollywood, CA <crew@proofpilot.com>
-* ALL RIGHTS RESERVED
-*
-* This software is provided by the copyright holders to Manila Consulting for use on the
-* Center for Disease Control's Evaluation of Rapid HIV Self-Testing among MSM in High
-* Prevalence Cities until 2016 or the project is completed.
-*
-* Any unauthorized use, modification or resale is not permitted without expressed permission
-* from the copyright holders.
-*
-* KnowatHome branding, URL, study logic, survey instruments, and resulting data are not part
-* of this copyright and remain the property of the prime contractor.
-*
-*/
+ * This is part of the ProofPilot package.
+ *
+ * (c)2012-2013 Cyclogram, Inc, West Hollywood, CA <crew@proofpilot.com>
+ * ALL RIGHTS RESERVED
+ *
+ * This software is provided by the copyright holders to Manila Consulting for use on the
+ * Center for Disease Control's Evaluation of Rapid HIV Self-Testing among MSM in High
+ * Prevalence Cities until 2016 or the project is completed.
+ *
+ * Any unauthorized use, modification or resale is not permitted without expressed permission
+ * from the copyright holders.
+ *
+ * KnowatHome branding, URL, study logic, survey instruments, and resulting data are not part
+ * of this copyright and remain the property of the prime contractor.
+ *
+ */
 
 namespace Cyclogram\Bundle\ProofPilotBundle\Entity;
-
 use Doctrine\Common\Collections\ArrayCollection;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -33,7 +32,7 @@ use Cyclogram\Bundle\ProofPilotBundle\Entity\StudyOrganizationLink;
  */
 class Organization
 {
-    const STATUS_ACTIVE =1;
+    const STATUS_ACTIVE = 1;
     /**
      * @var integer
      *
@@ -139,31 +138,34 @@ class Organization
     /**
      * @var integer
      *
+     * @ORM\Column(name="organization_logo", type="string", length=255, nullable=true)
+     */
+    private $organizationLogo;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="status_id", type="integer", nullable=false)
      */
     private $status;
-    
-    
+
     /**
      * @ORM\OneToMany(targetEntity="Site", mappedBy="organization")
      * @var unknown_type
      * @var unknown_type
      */
     private $sites;
-    
-    
-    
+
     /**
      * @ORM\OneToMany(targetEntity="StudyOrganizationLink", mappedBy="organization")
      * @var unknown_type
      */
     private $studyOrganizationLinks;
-    
-    
-    public function __construct() {
+
+    public function __construct()
+    {
         $this->studyOrganizationLinks = new ArrayCollection();
     }
-
 
     /**
      * Get organizationId
@@ -184,7 +186,7 @@ class Organization
     public function setOrganizationName($organizationName)
     {
         $this->organizationName = $organizationName;
-    
+
         return $this;
     }
 
@@ -207,7 +209,7 @@ class Organization
     public function setOrganizationAddress1($organizationAddress1)
     {
         $this->organizationAddress1 = $organizationAddress1;
-    
+
         return $this;
     }
 
@@ -230,7 +232,7 @@ class Organization
     public function setOrganizationAddress2($organizationAddress2)
     {
         $this->organizationAddress2 = $organizationAddress2;
-    
+
         return $this;
     }
 
@@ -253,7 +255,7 @@ class Organization
     public function setOrganizationZipcode($organizationZipcode)
     {
         $this->organizationZipcode = $organizationZipcode;
-    
+
         return $this;
     }
 
@@ -273,10 +275,11 @@ class Organization
      * @param string $organizationContactFirstname
      * @return Organization
      */
-    public function setOrganizationContactFirstname($organizationContactFirstname)
+    public function setOrganizationContactFirstname(
+            $organizationContactFirstname)
     {
         $this->organizationContactFirstname = $organizationContactFirstname;
-    
+
         return $this;
     }
 
@@ -296,10 +299,11 @@ class Organization
      * @param string $organizationContactLastname
      * @return Organization
      */
-    public function setOrganizationContactLastname($organizationContactLastname)
+    public function setOrganizationContactLastname(
+            $organizationContactLastname)
     {
         $this->organizationContactLastname = $organizationContactLastname;
-    
+
         return $this;
     }
 
@@ -322,7 +326,7 @@ class Organization
     public function setOrganizationContactEmail($organizationContactEmail)
     {
         $this->organizationContactEmail = $organizationContactEmail;
-    
+
         return $this;
     }
 
@@ -345,7 +349,7 @@ class Organization
     public function setOrganizationContactPhone1($organizationContactPhone1)
     {
         $this->organizationContactPhone1 = $organizationContactPhone1;
-    
+
         return $this;
     }
 
@@ -368,7 +372,7 @@ class Organization
     public function setOrganizationContactPhone2($organizationContactPhone2)
     {
         $this->organizationContactPhone2 = $organizationContactPhone2;
-    
+
         return $this;
     }
 
@@ -388,10 +392,11 @@ class Organization
      * @param \Cyclogram\Bundle\ProofPilotBundle\Entity\City $cityCity
      * @return Organization
      */
-    public function setCityCity(\Cyclogram\Bundle\ProofPilotBundle\Entity\City $cityCity = null)
+    public function setCityCity(
+            \Cyclogram\Bundle\ProofPilotBundle\Entity\City $cityCity = null)
     {
         $this->cityCity = $cityCity;
-    
+
         return $this;
     }
 
@@ -411,10 +416,11 @@ class Organization
      * @param \Cyclogram\Bundle\ProofPilotBundle\Entity\Country $country
      * @return Organization
      */
-    public function setCountry(\Cyclogram\Bundle\ProofPilotBundle\Entity\Country $country = null)
+    public function setCountry(
+            \Cyclogram\Bundle\ProofPilotBundle\Entity\Country $country = null)
     {
         $this->country = $country;
-    
+
         return $this;
     }
 
@@ -434,10 +440,11 @@ class Organization
      * @param \Cyclogram\Bundle\ProofPilotBundle\Entity\State $state
      * @return Organization
      */
-    public function setState(\Cyclogram\Bundle\ProofPilotBundle\Entity\State $state = null)
+    public function setState(
+            \Cyclogram\Bundle\ProofPilotBundle\Entity\State $state = null)
     {
         $this->state = $state;
-    
+
         return $this;
     }
 
@@ -460,7 +467,7 @@ class Organization
     public function setStatus($status)
     {
         $this->status = $status;
-    
+
         return $this;
     }
 
@@ -473,9 +480,10 @@ class Organization
     {
         return $this->status;
     }
-    
-    public function __toString() {
-    	return $this->organizationName;
+
+    public function __toString()
+    {
+        return $this->organizationName;
     }
 
     public function getStudyOrganizationLinks()
@@ -497,4 +505,15 @@ class Organization
     {
         $this->sites = $sites;
     }
+
+    public function getOrganizationLogo()
+    {
+        return $this->organizationLogo;
+    }
+
+    public function setOrganizationLogo($organizationLogo)
+    {
+        $this->organizationLogo = $organizationLogo;
+    }
+
 }
