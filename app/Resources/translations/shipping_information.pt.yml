@@ -1,4 +1,4 @@
-shipping_subtitle: shipping_subtitle
-shipping_title: shipping_title
-'shipping_update ': 'shipping_update '
-shipping_update_button: shipping_update_button
+shipping_subtitle: 'Por favor, digite seu endereço de correspondência, para que possamos enviar o seu kit de teste:'
+shipping_title: 'Informação do transporte'
+'shipping_update ': 'Atualização do transporte '
+shipping_update_button: Atualizar

@@ -1,9 +1,9 @@
-'dashboard_dismiss_confirmation ': 'dashboard_dismiss_confirmation '
-'dashboard_subtitle ': 'dashboard_subtitle '
+'dashboard_dismiss_confirmation ': 'Tem certeza de que quer demitir? Ela pode afetar sua capacidade de continuar com o estudo'
+'dashboard_subtitle ': 'Subtítulo do Dashboard'
 do_it: 'FACA ISSO'
 do_it_now: 'Faça-o agora'
-join_a_study: join_a_study   # FIXME
-no_do_it: no_do_it
+join_a_study: 'Junte-se um estudo'
+no_do_it: 'Você não tem tarefas de estudo agora'
 
 past_activity:
     emai_confirmation_status: 'Seu Email foi confirmado'
@@ -11,10 +11,10 @@ past_activity:
     mobile_status: 'Seu número de celular foi confirmado'
     welcome_study: 'Bem-vindo ao estudo Know@Home: Colocando à prova o teste'
 
-send_again: send_again
+send_again: 'Não entendeu? Verificar o correio de sucata e/ou enviar novamente.'
 txt_dashboard: 'Painel de controle'
-txt_dismiss: txt_dismiss
-txt_dismiss_all: txt_dismiss_all
+txt_dismiss: 'Tarefa %interventionName% demitido'
+txt_dismiss_all: 'Todas as tarefas de demitidos'
 txt_please_verify_email: "Por favor, verifique o seu endereço de e-mail. <br/>\nPara participar de estudos necessitamos de um endereço de e-mail válido - por favor, vá para o seu e-mail e clique no link"
 
 what_next_list:

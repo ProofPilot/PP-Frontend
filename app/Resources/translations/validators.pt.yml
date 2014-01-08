@@ -1,4 +1,6 @@
 email_already_registered: "O endereço de e-mail já está registrado\n"
+email_not_send_try_later: 'Não é possível enviar e-mail. Por favor, tente novamente mais tarde'
+email_not_valid: 'Não é um e-mail válido'
 error_max_area_code_length: "Código de área deve ter no máximo 3 dígitos\n"
 error_max_phone_code_length: "Telefone deve ter no máximo 11 dígitos\n"
 error_min_area_code_length: 'Código de área deve ter de pelo menos 1 dígito'
@@ -9,18 +11,16 @@ error_not_blank_choice: 'Por favor, faça uma escolha'
 error_not_blank_city: 'Por favor insira uma cidade'
 error_not_blank_lastname: 'Por favor, indique um nome'
 error_not_blank_name: 'Por favor, indique um nome'
-error_not_blank_state: error_not_blank_state
+error_not_blank_state: 'Por favor insira um estado válido'
 error_not_blank_street1: 'Por favor insira um endereço de rua'
 error_not_blank_voice: 'Por favor insira um número de telefone onde você pode receber chamadas de voz'
 error_not_blank_zipcode: 'Por favor, introduza o código postal'
 error_not_valid_email: "E-mail não é válido\n"
 error_password_short: "A senha deve ter no mínimo 8 caracteres\n"
 error_passwords_do_not_match: "As senhas não conferem\n"
-error_state_length: error_state_length
-incorrect_city: incorrect_city
+error_state_length: 'Estado - deve ser 2 caracteres'
+incorrect_city: 'Insira uma cidade válida'
 please_fill_this_field: 'Por favor, preencher este campo'
 username_already_registered: "Nome de usuário já está registrado\n"
 wrong_code: 'Você escreveu um código incorreto'
 wrong_pass: 'Você escreveu uma senha incorreta'
-email_not_valid: email_not_valid
-email_not_send_try_later: email_not_send_try_later

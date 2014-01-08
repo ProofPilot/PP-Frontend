@@ -1,8 +1,8 @@
 'dashboard_dismiss_confirmation ': 'Are you sure you want to dismiss? It may affect your ability to continue with the study'
-'dashboard_subtitle ': 'dashboard_subtitle '
+'dashboard_subtitle ': 'Dashboard subtitle '
 do_it: 'DO IT'
 do_it_now: 'Do It Now'
-join_a_study: Join a study
+join_a_study: 'Join a study'
 no_do_it: 'You have no study tasks right now'
 
 past_activity:

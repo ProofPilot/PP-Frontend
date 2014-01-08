@@ -1,40 +1,40 @@
-'African descent': 'African descent'
-'Arab/Middle Eastern': 'Arab/Middle Eastern'
-'East Asian': 'East Asian'
-'Hispanic and/or Latino': 'Hispanic and/or Latino'
-'Native American or Aboriginal': 'Native American or Aboriginal'
-Other: Other
-'South Asian': 'South Asian'
-'White and/or Eurpoean descent': 'White and/or Eurpoean descent'
-about_me_subtitle: about_me_subtitle
-about_me_title: about_me_title
-birthdate_change: birthdate_change   # FIXME
-btn_confirm: btn_confirm
-country_change: country_change   # FIXME
-interest_change: interest_change   # FIXME
-label_birthdate: label_birthdate
-label_country: label_country
-label_country_select: label_country_select
-label_female: label_female
-label_inresested_main: label_inresested_main
-label_interested: label_interested
-label_male: label_male
-label_man: label_man
-label_race: label_race
-label_race_main: label_race_main
-label_sex: label_sex
-label_sex_main: label_sex_main
-label_transgendered: label_transgendered
-label_woman: label_woman
-label_zipcode: label_zipcode
-label_zipcode_new: label_zipcode_new
-race_change: race_change   # FIXME
-sex_change: sex_change   # FIXME
-txt_birthdate: txt_birthdate
-txt_change: txt_change
-txt_country: txt_country
-txt_interested: txt_interested
-txt_race: txt_race
-txt_sex: txt_sex
-txt_zip_code: txt_zip_code
-zipcode_change: zipcode_change   # FIXME
+'African descent': 'ascendência Africano'
+'Arab/Middle Eastern': 'Árabe / Oriente Médio'
+'East Asian': 'Leste Asiático'
+'Hispanic and/or Latino': 'Hispânicos e/ou Latino'
+'Native American or Aboriginal': 'Nativo Americano ou Aborígene'
+Other: Outro
+'South Asian': 'Sul da Ásia'
+'White and/or Eurpoean descent': 'Ascendência Branca e/ou Eurpoean'
+about_me_subtitle: 'Sobre mim'
+about_me_title: 'Sobre mim'
+birthdate_change: 'alterar Data de nascimento'
+btn_confirm: Confirmar
+country_change: 'Alterar país'
+interest_change: 'Mude juros'
+label_birthdate: 'Data de nascimento'
+label_country: 'Selecione o país'
+label_country_select: 'Selecione o país'
+label_female: Feminino
+label_inresested_main: 'Selecione juros'
+label_interested: Interessado
+label_male: Masculino
+label_man: Homens
+label_race: Corrida
+label_race_main: 'Escolha a sua raça'
+label_sex: Sexo
+label_sex_main: 'Selecione seu sexo'
+label_transgendered: Transsexuais
+label_woman: Mulheres
+label_zipcode: CEP
+label_zipcode_new: 'Novo código postal'
+race_change: 'Mudança corrida'
+sex_change: 'Mudança de sexo'
+txt_birthdate: 'Data de nascimento'
+txt_change: Mudança
+txt_country: País
+txt_interested: Interessado
+txt_race: Corrida
+txt_sex: Sexo
+txt_zip_code: CEP
+zipcode_change: 'Alterar código postal'
