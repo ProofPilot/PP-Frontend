@@ -90,12 +90,21 @@ class DashboardController extends Controller
         $parameters = array();
         $parameters["studies"] = $em->getRepository('CyclogramProofPilotBundle:Study')->getRandomStudyInfo($locale, $participant);
         $enrolledStudies = $em->getRepository('CyclogramProofPilotBundle:Participant')->getEnrolledStudies($participant);
+        $parameters["enrolledStudies"] = array();
         foreach ($enrolledStudies as $study) {
             $studyContent = $em->getRepository('CyclogramProofPilotBundle:StudyContent')->getStudyContent($study->getStudyCode(), $locale);
-            $parameters["enrolledStudies"][] = $studyContent;
+            $enroledStudy['studyName'] = $studyContent->getStudyName();
+            $enroledStudy['studyUrl'] = $studyContent->getStudyUrl();
+            $enroledStudy['studyGraphic'] = $studyContent->getStudyGraphic();
+            $site = $em->getRepository('CyclogramProofPilotBundle:Study')->getDefaultSites($study->getStudyId());
+            $siteId = $em->getRepository('CyclogramProofPilotBundle:Site')->findOneBySiteName($site[0]['siteName']);
+            $siteCampaignLink = $em->getRepository('CyclogramProofPilotBundle:CampaignSiteLink')->findOneBySite($siteId);
+            $enroledStudy['studyRefferalShortUrl'] = $cc::generateGoogleShorURL($this->container->getParameter('site_url')."/".$locale."/".$study->getStudyCode()."/?utm_campaign=".$siteCampaignLink->getCampaign()->getCampaignName()."&utm_medium-Clinic&utm_source=".$site[0]['siteName']."&pid=".$participant->getParticipantId());
+            $parameters["enrolledStudies"][] = $enroledStudy;
         }
         $parameters["interventioncount"] = $surveyscount;
 
+       
 
         $parameters["interventions"] = array();
         foreach($interventionLinks as $interventionLink) {
@@ -129,16 +138,15 @@ class DashboardController extends Controller
                 $intervention['studyName'] = $studyContent->getStudyName();
             }
             if ($interventionTypeName == "Referral" ) {
-                
                 $site = $em->getRepository('CyclogramProofPilotBundle:Study')->getDefaultSites($studyId);
                 $siteId = $em->getRepository('CyclogramProofPilotBundle:Site')->findOneBySiteName($site[0]['siteName']);
                 $siteCampaignLink = $em->getRepository('CyclogramProofPilotBundle:CampaignSiteLink')->findOneBySite($siteId);
-                $intervention['studyName'] = $studyContent->getStudyName();
                 $intervention['refferalStudyUrl'] = $this->container->getParameter('site_url')."/".$locale."/".$study->getStudyCode()."/?utm_campaign=".$siteCampaignLink->getCampaign()->getCampaignName()."&utm_medium-Clinic&utm_source=".$site[0]['siteName']."&pid=".$participant->getParticipantId();
                 $intervention['reffferalShortStudyUrl'] = $cc::generateGoogleShorURL($this->container->getParameter('site_url')."/".$locale."/".$study->getStudyCode()."/?utm_campaign=".$siteCampaignLink->getCampaign()->getCampaignName()."&utm_medium-Clinic&utm_source=".$site[0]['siteName']."&pid=".$participant->getParticipantId());
                 $intervention['studyName'] = $studyContent->getStudyName();
             }
             $parameters["studyCode"] = $study->getStudyCode();
+          
             $parameters['shortstudyUrl'] = $cc::generateGoogleShorURL($this->container->getParameter('site_url')."/".$locale."/".$study->getStudyCode());
             $parameters["studycontent"] = $this->getDoctrine()->getRepository("CyclogramProofPilotBundle:StudyContent")->getStudyContent($study->getStudyCode(), $locale);
             $parameters["interventions"][] = $intervention;

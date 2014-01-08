@@ -221,8 +221,8 @@
 							<li class="first">
 							    <a class="icon_survey" href="{{ path('_page', {'studyUrl' : study.studyUrl}) }}"><span>{{ study.studyName }}</span></a>
 							    <div class="share_slide" style="display:none">
-                                    <a href='' class="twitter_icon" onClick="return fbs_click(400, 300)" target = "_blank"></a>
-                                    <a href="#" class="facebook_icon" onclick="popUp=window.open('https://twitter.com/share?url={{ shortstudyUrl }}&text={%  trans from "study" %}social_join_study{% endtrans %} {{ studycontent.studyName }} {%  trans from "study" %}social_at_proofpilot{% endtrans %}', 'popupwindow', 'scrollbars=yes,width=800,height=400');popUp.focus();return false" class="tw"></a>
+                                    <a href='' class="twitter_icon" onclick="popUp=window.open('https://twitter.com/share?url={{ study.studyRefferalShortUrl }}&text={%  trans from "study" %}social_join_study{% endtrans %} {{ study.studyName }} {%  trans from "study" %}social_at_proofpilot{% endtrans %}', 'popupwindow', 'scrollbars=yes,width=800,height=400');popUp.focus();return false" class="tw"></a>
+                                    <a href="#" class="facebook_icon" onClick="popUp=window.open('http://www.facebook.com/sharer.php?s=100&p[url]='+encodeURIComponent(location.href)+'&p[title]={{ study.studyName | raw }}&p[summary]={{ study.studyRefferalShortUrl }}&p[images][0]={{ study.studyGraphic }}','sharer','scrollbars=yes,width=800,height=400')"></a>
 							        <a href="" class="google_plus_icon"></a>
 							    </div>
 							</li>
