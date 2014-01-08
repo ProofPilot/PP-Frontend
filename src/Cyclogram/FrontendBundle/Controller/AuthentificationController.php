@@ -400,7 +400,7 @@ class AuthentificationController extends Controller
             $em->persist($participant);
             $em->flush($participant);
     
-            $session->set('confirmed', "Congratilations!!! Your e-mail is confirmed!");
+            $session->set('confirmed', $this->get('translator')->trans('mail_confirmation_success', array(), 'register'));
             return $this->redirect( $this->generateUrl("_main"));
     
         } else {

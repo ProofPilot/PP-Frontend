@@ -27,6 +27,7 @@ label_state: label_state
 label_username: label_username
 label_zipcode: label_zipcode
 mail_confirmation_fail: mail_confirmation_fail
+mail_confirmation_success: mail_confirmation_success   # FIXME
 min_charachters: '(8 caractéres mínimo)'
 pick_user: 'Escoja su usuario'
 study_register_error: study_register_error
@@ -35,5 +36,5 @@ txt_check_zipcode: txt_check_zipcode
 txt_join: Unase
 txt_join_with: 'Unase con'
 txt_subtitle_check_email: txt_subtitle_check_email
-txt_year_to_old: txt_year_to_old   # FIXME
-txt_year_to_young: txt_year_to_young   # FIXME
+txt_year_to_old: txt_year_to_old
+txt_year_to_young: txt_year_to_young

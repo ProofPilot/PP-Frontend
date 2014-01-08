@@ -27,6 +27,7 @@ label_state: State
 label_username: Username
 label_zipcode: 'Zip Code'
 mail_confirmation_fail: 'Failed to confirm the email. No such user!'
+mail_confirmation_success: 'Congratilations!!! Your e-mail is confirmed!'
 min_charachters: '(8 characters min)'
 pick_user: 'Pick Username'
 study_register_error: 'There was a problem - try the entire registration process again'
@@ -35,5 +36,5 @@ txt_check_zipcode: 'Please check your zipcode'
 txt_join: JOIN
 txt_join_with: 'Join with'
 txt_subtitle_check_email: 'Please check your email address'
-txt_year_to_old: Are you sure
-txt_year_to_young: Please ask your parents to participate.
+txt_year_to_old: 'Are you sure'
+txt_year_to_young: 'Please ask your parents to participate.'
