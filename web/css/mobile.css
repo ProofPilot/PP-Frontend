@@ -602,9 +602,9 @@
 
 /*Forgot username*/
 
-#div_forgot_username .mobile_reg {
+/* #div_forgot_username .mobile_reg {
 	margin: 20px;
-}
+} */
 #div_forgot_username .mobile_reg .enter_email {
 	margin-bottom: 5px;
 }
@@ -614,9 +614,9 @@
 
 /*Forgot password*/
 
-#div_forgot_password .mobile_reg {
+/* #div_forgot_password .mobile_reg {
 	margin: 25px 20px 20px 20px;
-}
+} */
 #div_forgot_password .mobile_reg .enter_email {
 	margin-bottom: 5px;
 }

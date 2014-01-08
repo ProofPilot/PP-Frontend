@@ -2655,6 +2655,9 @@
 		width: 260px;
 		padding-bottom: 0px;
 	}
+	.mobile_reg.forgot_password, .mobile_reg.forgot_username {
+		width: 260px;
+	}
 	.mobile_reg .form_fields li.input_right input.pw_input {
 		width: 240px;
 	} 

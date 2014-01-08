@@ -4000,3 +4000,6 @@ footer .row_2 p {
 	width: 25px !important;
 	height: 25px !important;
 }
+.mobile_reg.forgot_password, .mobile_reg.forgot_username {
+	width: 400px;
+}
