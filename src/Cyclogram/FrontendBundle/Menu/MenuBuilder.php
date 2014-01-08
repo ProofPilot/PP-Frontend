@@ -289,9 +289,12 @@ class MenuBuilder extends ContainerAware implements TranslationContainerInterfac
         $menu = $factory->createItem('root');
         $menu->setChildrenAttribute('class', 'new_menu');
     
-        $menu->addChild('top_left_menu.what_proofpilot'
-
-                )->setExtra('translation_domain', 'generalmenus');
+        $menu->addChild('top_left_menu.what_proofpilot',
+        				array(
+        					'uri' => 'http://www.proofpilot.com/'
+        				))
+        		->setAttribute('target', '_blank')
+        		->setExtra('translation_domain', 'generalmenus');
         
         $menu->addChild('top_left_menu.browse'
 
