@@ -134,14 +134,13 @@
                     open: funcCustom
                 });
             });
-            $('.icon_survey').hover(function() {
-                $(this).siblings('.share_slide').slideDown('slow');
-                $(this).parent().siblings('li').find('.share_slide').slideUp("slow");
-             });
+            $('.left_menu .first').hover(function() {
+                $(this).find('.share_slide').slideDown('slow');
+            }, function() {
+            	$(this).find('.share_slide').slideUp('slow');
+            });
         });
 
-
-        
         function dismiss(interventionCode) {
             if (confirm('{% trans from "dashboard" %}dashboard_dismiss_confirmation {% endtrans %}')) {
                 $.ajax({
