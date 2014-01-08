@@ -1220,6 +1220,9 @@
     .loginform_left .btns_wapper {
     	display: none;
     }
+    .sign_up_header {
+    	display: none;
+    }
     .mobile_login_switcher a {
         display: block;
         color: #383838;

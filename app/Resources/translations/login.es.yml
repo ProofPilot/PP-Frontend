@@ -9,10 +9,11 @@ forgot_password_message: 'Nos sucede a todos nosotros mas veces de las que nos g
 forgot_username: '¿Olvidó su usuario?'
 forgot_username_email_send: forgot_username_email_send
 forgot_username_message: 'No hay problema. Ingrese su número de teléfono móbil que usó durante el registro and le envíaremos su usuario por mensajes de texto.'
-header_exisiting_login: header_exisiting_login   # FIXME
-header_login: header_login   # FIXME
+header_exisiting_login: header_exisiting_login
+header_login: header_login
 label_sms_code: label_sms_code
 new_password_selection: "<p>Haga click en el enlace del e-mail y será guiado atravez de la selección de una nueva contraseña. Necesitará su teléfono móbil para completar este proceso. </p>\n<p>Si no ha arrivado en pocos minutos revise la carpeta de correo basura.</p>"
+sign_up_header: sign_up_header
 specimen_msg: specimen_msg
 txt_forgot_your_password: '¿Olvidó su contraseña?'
 txt_form_password: Contraseña
