@@ -27,7 +27,7 @@ label_state: State
 label_username: Username
 label_zipcode: 'Zip Code'
 mail_confirmation_fail: 'Failed to confirm the email. No such user!'
-mail_confirmation_success: 'Congratilations!!! Your e-mail is confirmed!'
+mail_confirmation_success: 'Congratulations!!! Your e-mail is confirmed!'
 min_charachters: '(8 characters min)'
 pick_user: 'Pick Username'
 study_register_error: 'There was a problem - try the entire registration process again'
