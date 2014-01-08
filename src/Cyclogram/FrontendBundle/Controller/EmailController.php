@@ -216,14 +216,14 @@ class EmailController extends Controller
             $participantName = $request->get('participant');
             $studyCode = $request->get('studyCode');
             
-            
+            $parameters['locale'] = $locale;
             $from = $request->get('send_from');
             $to = $request->get('send_to');
             $to = array_filter($to);
             $description = $request->get('description');
             $subject = $request->get('subject');
-            if (empty($subject)) 
-                $this->get('translator')->trans("email_friend_subject", array(), "email", $parameters['locale']);
+//             if (empty($subject)) 
+//                 $this->get('translator')->trans("email_friend_subject", array(), "email", $parameters['locale']);
             if (!isset($from) || empty($from)){
                 return new Response(json_encode(array('error' => true, 'message' => 'Insert the sender e-mail')));
             }
@@ -232,16 +232,16 @@ class EmailController extends Controller
                 return new Response(json_encode(array('error' => true, 'message' => 'Insert at least one reciver e-mail')));
             } 
             
-            if (!isset($description) || empty($description)){
-                return new Response(json_encode(array('error' => true, 'message' => 'Please fill e-mail body')));
-            }
+//             if (!isset($description) || empty($description)){
+//                 return new Response(json_encode(array('error' => true, 'message' => 'Please fill e-mail body')));
+//             }
             
             $embedded = array();
             $embedded = $cc->getEmbeddedImages();
             
             $parameters['email'] = $to[0];
             $parameters['studycontent'] = $studyContent = $this->getDoctrine()->getRepository("CyclogramProofPilotBundle:StudyContent")->getStudyContent($studyCode, $locale);
-            $parameters['locale'] = $locale;
+            
             if (isset($studyCode))
                 $parameters['url'] = $this->container->getParameter('site_url').DIRECTORY_SEPARATOR.$locale.DIRECTORY_SEPARATOR.$studyCode;
             $parameters['desription'] = $description;
