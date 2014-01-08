@@ -219,7 +219,7 @@
                     	<ul class="left_menu">
                     	{% for study in enrolledStudies %}
 							<li class="first">
-							    <a class="icon_survey" href="#"><span>{{ study.studyName }}</span></a>
+							    <a class="icon_survey" href="{{ path('_page', {'studyUrl' : study.studyUrl}) }}"><span>{{ study.studyName }}</span></a>
 							    <div class="share_slide" style="display:none">
                                     <a href='' class="twitter_icon" onClick="return fbs_click(400, 300)" target = "_blank"></a>
                                     <a href="#" class="facebook_icon" onclick="popUp=window.open('https://twitter.com/share?url={{ shortstudyUrl }}&text={%  trans from "study" %}social_join_study{% endtrans %} {{ studycontent.studyName }} {%  trans from "study" %}social_at_proofpilot{% endtrans %}', 'popupwindow', 'scrollbars=yes,width=800,height=400');popUp.focus();return false" class="tw"></a>

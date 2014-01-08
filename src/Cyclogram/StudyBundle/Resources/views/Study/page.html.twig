@@ -321,7 +321,11 @@
         topPosition = (window.screen.height / 2) - ((height / 2) + 50);
         var windowFeatures = "status=no,height=" + height + ",width=" + width + ",resizable=yes,left=" + leftPosition + ",top=" + topPosition + ",screenX=" + leftPosition + ",screenY=" + topPosition + ",toolbar=no,menubar=no,scrollbars=no,location=no,directories=no";
         u=location.href;
+        {% if reffferalShortStudyUrl is defined %}
+        window.open('http://www.facebook.com/sharer.php?s=100&p[url]='+encodeURIComponent(u)+'&p[title]={{ studycontent.studyName }}+&p[summary]={{ reffferalShortStudyUrl }}&p[images][0]={{ graphic }}','sharer', windowFeatures);
+        {% else %}
         window.open('http://www.facebook.com/sharer.php?s=100&p[url]='+encodeURIComponent(u)+'&p[title]={{ studycontent.studyName }}+&p[summary]={{ facebookcontent }}&p[images][0]={{ graphic }}','sharer', windowFeatures);
+        {% endif %}
         return false;
     }
     function fbslike_click(width, height) {
@@ -389,8 +393,11 @@
                     <ul class="social_share">
                         <li><span>Share:</span></li>
                         <li><a href='http://www.facebook.com/share.php?u=http://new-frontend-bogdand.proofpilot.dyndns.org' class="fb" onClick="return fbs_click(400, 300)" target = "_blank"></a></li>
+                        {% if reffferalShortStudyUrl is defined %}
+                        <li><a href="#" onclick="popUp=window.open('https://twitter.com/share?url={{ reffferalShortStudyUrl }}&text={%  trans from "study" %}social_join_study{% endtrans %} {{ studycontent.studyName }} {%  trans from "study" %}social_at_proofpilot{% endtrans %}', 'popupwindow', 'scrollbars=yes,width=800,height=400');popUp.focus();return false" class="tw"></a></li>
+                        {% else %}
                         <li><a href="#" onclick="popUp=window.open('https://twitter.com/share?url={{ shortstudyUrl }}&text={%  trans from "study" %}social_join_study{% endtrans %} {{ studycontent.studyName }} {%  trans from "study" %}social_at_proofpilot{% endtrans %}', 'popupwindow', 'scrollbars=yes,width=800,height=400');popUp.focus();return false" class="tw"></a></li>
-                        {#<li><a href="#" class="embed"></a></li>#}
+                        {% endif %}
                         <li><a target="_blank" class="email" href="#"></a></li>
                     </ul>
                 </div>
@@ -445,9 +452,12 @@
                 <div class="home_text">
                     <div class="v_toolbar">
                         <ul class="social_share">
-                            <li><a href='' class="fb" onClick="return fbs_click(400, 300)" target = "_blank"> {% trans from "study" %}txt_share{% endtrans %}</a></li>
+                        <li><a href='' class="fb" onClick="return fbs_click(400, 300)" target = "_blank"> {% trans from "study" %}txt_share{% endtrans %}</a></li>
+                        {% if reffferalShortStudyUrl is defined %}
+                            <li><a href="#" onclick="popUp=window.open('https://twitter.com/share?url={{ reffferalShortStudyUrl }}&text={%  trans from "study" %}social_join_study{% endtrans %} {{ studycontent.studyName }} {%  trans from "study" %}social_at_proofpilot{% endtrans %}', 'popupwindow', 'scrollbars=yes,width=800,height=400');popUp.focus();return false" class="tw">{% trans from "study" %}txt_tweet{% endtrans %}</a></li>
+                        {% else %}
                             <li><a href="#" onclick="popUp=window.open('https://twitter.com/share?url={{ shortstudyUrl }}&text={%  trans from "study" %}social_join_study{% endtrans %} {{ studycontent.studyName }} {%  trans from "study" %}social_at_proofpilot{% endtrans %}', 'popupwindow', 'scrollbars=yes,width=800,height=400');popUp.focus();return false" class="tw">{% trans from "study" %}txt_tweet{% endtrans %}</a></li>
-                            {#<li><a href="#" class="embed">{% trans from "study" %}txt_embed{% endtrans %}</a></li>#}
+                        {% endif %}
                             <li><a class="email" href="#">{% trans from "study" %}txt_email_to_friend{% endtrans %}</a></li>
                         </ul>
                     </div>

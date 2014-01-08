@@ -52,8 +52,19 @@ class StudyController extends Controller
         if (empty($studyContent))
             throw new NotFoundHttpException();
         
+        $cc = $this->container->get('cyclogram.common');
         $study = $studyContent->getStudy();
         $studyId = $studyContent->getStudyId();
+        $securityContext = $this->container->get('security.context');
+        if ($this->get('security.context')->isGranted("ROLE_USER")){
+            $participant = $this->get('security.context')->getToken()->getUser();
+            $site = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:Study')->getDefaultSites($studyId);
+            $siteId = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:Site')->findOneBySiteName($site[0]['siteName']);
+            $siteCampaignLink = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:CampaignSiteLink')->findOneBySite($siteId);
+            $this->parameters['reffferalShortStudyUrl'] = $cc::generateGoogleShorURL($this->container->getParameter('site_url')."/".$locale."/".$study->getStudyCode()."/?utm_campaign=".$siteCampaignLink->getCampaign()->getCampaignName()."&utm_medium-Clinic&utm_source=".$site[0]['siteName']."&pid=".$participant->getParticipantId());
+        }else {
+            $this->parameters['shortstudyUrl'] = $cc::generateGoogleShorURL($this->container->getParameter('site_url')."/".$locale."/".$studyUrl);
+        }
         $this->parameters["studycontent"] = $studyContent;
         $this->parameters["facebookcontent"] = str_replace(array("\r\n", "\r", "\n"), "", urlencode(strip_tags($studyContent->getStudyAbout())));
         $this->parameters['studyUrl'] = $studyUrl;
@@ -204,8 +215,7 @@ class StudyController extends Controller
         ->add('sendPass', 'submit', array(
                 'label' => 'btn_send_pass'))
                 ->getForm();
-            
-        $this->parameters['shortstudyUrl'] = $cc::generateGoogleShorURL($this->container->getParameter('site_url')."/".$locale."/".$studyUrl);
+
         $this->parameters['form'] =  $form->createView();
         $this->parameters['formAbout'] =  $formAbout->createView();
         $this->parameters['formForgorUsername'] = $formForgorUsername->createView();
