@@ -145,7 +145,8 @@ class SurveyController extends Controller
             $participant = $this->get('security.context')->getToken()->getUser();
             if ($studyContent->getStudyElegibilitySurvey() == $surveyId) {
                 if ($session->has('referralSite') && $session->has('referralCampaign')){
-                    $logic->studyRegistration($participant, $studyCode, $surveyId, $saveId);
+                    if($isEligible)
+                        $logic->studyRegistration($participant, $studyCode, $surveyId, $saveId);
                 } else {
                     $study = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
                     $studyContent = $em->getRepository('CyclogramProofPilotBundle:StudyContent')->findOneByStudy($study);
@@ -156,7 +157,7 @@ class SurveyController extends Controller
                 $loggedUser = $this->get('security.context')->getToken()->getUser();
                 $logic->participantSurveyLinkRegistration($surveyId, $saveId, $loggedUser, uniqid());
             }
-        } else {
+        } elseif($isEligible) {
             //store surveyid and saveid in session
             $session = $this->getRequest()->getSession();
             $bag = new AttributeBag();
