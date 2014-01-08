@@ -89,6 +89,11 @@ class DashboardController extends Controller
         
         $parameters = array();
         $parameters["studies"] = $em->getRepository('CyclogramProofPilotBundle:Study')->getRandomStudyInfo($locale, $participant);
+        $enrolledStudies = $em->getRepository('CyclogramProofPilotBundle:Participant')->getEnrolledStudies($participant);
+        foreach ($enrolledStudies as $study) {
+            $studyContent = $em->getRepository('CyclogramProofPilotBundle:StudyContent')->getStudyContent($study->getStudyCode(), $locale);
+            $parameters["enrolledStudies"][] = $studyContent;
+        }
         $parameters["interventioncount"] = $surveyscount;
 
 
@@ -134,6 +139,8 @@ class DashboardController extends Controller
                 $intervention['studyName'] = $studyContent->getStudyName();
             }
             $parameters["studyCode"] = $study->getStudyCode();
+            $parameters['shortstudyUrl'] = $cc::generateGoogleShorURL($this->container->getParameter('site_url')."/".$locale."/".$study->getStudyCode());
+            $parameters["studycontent"] = $this->getDoctrine()->getRepository("CyclogramProofPilotBundle:StudyContent")->getStudyContent($study->getStudyCode(), $locale);
             $parameters["interventions"][] = $intervention;
             
         }
