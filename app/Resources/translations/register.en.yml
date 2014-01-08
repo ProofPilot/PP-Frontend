@@ -1,9 +1,9 @@
 btn_next: JOIN
-btn_save_mailing_address: 'save and login'
+btn_save_mailing_address: 'Save and login'
 btn_send_confirmation_email: btn_send_confirmation_email
 confirm_password: 'Confirm Password'
 consent_accept_join: 'I ACCEPT. Join the study'
-consent_any_information: 'Any information you share with us is completly confidental and secure.'
+consent_any_information: 'Any information you share with us is completely confidential and secure.'
 consent_close_window: 'Close window to decline'
 consent_good_to_go: 'Good to go? Accept and Join the Study'
 consent_security_privacy: 'See our Security and Privacy policy'
@@ -22,7 +22,7 @@ label_not_sign: 'The package can be left without my signature'
 label_password: Password
 label_repeat_password: 'Repeat password'
 label_sign: 'I prefer to sign to receive my package'
-label_sign_main: 'Intro text to choice of how we want things delivered'
+label_sign_main: 'How do you want things delivered:'
 label_state: State
 label_username: Username
 label_zipcode: 'Zip Code'
@@ -32,9 +32,9 @@ min_charachters: '(8 characters min)'
 pick_user: 'Pick Username'
 study_register_error: 'There was a problem - try the entire registration process again'
 txt_check_email: 'Please check your email'
-txt_check_zipcode: 'Please check your zipcode'
+txt_check_zipcode: 'Please check your zip code'
 txt_join: JOIN
 txt_join_with: 'Join with'
 txt_subtitle_check_email: 'Please check your email address'
-txt_year_to_old: 'Are you sure'
+txt_year_to_old: 'Are you sure?'
 txt_year_to_young: 'Please ask your parents to participate.'

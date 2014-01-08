@@ -9,7 +9,7 @@ label_new_pass: 'New password'
 label_repeat_pass: 'Repeat password'
 label_username: Username
 txt_footer_top: 'ON TOP'
-txt_header_login: Signup
+txt_header_login: 'Sign up'
 txt_header_or: or
 txt_header_register: Register
 txt_header_register_here: 'Register Here'

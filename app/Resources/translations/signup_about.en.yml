@@ -11,13 +11,13 @@ label_grade_level_main: 'grade level'
 label_have: have
 label_industry_main: industry
 label_inresested_main: 'sex preference'
-label_man: Men
-label_man_woman: 'Men&Women'
+label_man: men
+label_man_woman: 'men & women'
 label_marital_status_main: 'marital status'
 label_monthmain: month
 label_race_main: race
 label_sex_main: sex
-label_woman: Women
+label_woman: women
 label_year_main: year
 label_zipcode: postcode
 month_apr: Apr
@@ -33,10 +33,10 @@ month_nov: Nov
 month_oct: Oct
 month_sep: Sep
 postcode_text: postcode
-secutiry_and_privacy: 'Security and Privacy policy'
+secutiry_and_privacy: 'Security and Privacy Policy'
 text_and: and
 text_and_make_approximately: 'and make approximately'
-text_any_information: 'Any information you share with us is completly confidental and secure. See our'
+text_any_information: 'Any information you share with us is completely confidential and secure. See our'
 text_have_children: children
 text_i_am: 'I am'
 text_i_am_a: 'I''m a'

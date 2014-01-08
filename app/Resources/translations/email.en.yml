@@ -1,22 +1,22 @@
 bottom_no_reply: 'Please do not reply to this email as the inbox is not monitored'
-bottom_street: '"c" 2010-2013 ProofPilot. / All Rights Reserved<br /> Cyclogram: 8605 Santa Monica Blvd #75475 West Hollywood, CA 90069<br'
+bottom_street: '"c" 2010-2014 ProofPilot. / All Rights Reserved<br /> Cyclogram: 8605 Santa Monica Blvd #75475 West Hollywood, CA 90069<br'
 bottom_text: 'This message was sent to <span style="color: #BBC2CB;">%mail_to%</span><br />If you would like to update your e-mail address, please <a href = "%general_settings_link%" style="color: #BBC2CB; text-decoration: none;">click here</a><br /> Visit Contact Preferences to manage your e-mail and mobile alerts<br /> Please add <span style="color: #BBC2CB;">crew@proofpilot.com</span> to your address book to ensure delivery of our e-mails to your inbox.<br /> Note: We never share your ProofPilot.com passwords with anyone via e-mail, including us.'
 confirm_verify_text: 'Yes, it''s part of any website registration and ProofPilot is no different. Please click on the link below to verify your e-mail address and get going'
 confirm_verify_title: 'Please Verify Your E-mail Address'
 do_it: 'DO IT NOW'
 do_it_task_email_title: 'What you''ve got to do at ProofPilot'
-email_friend_subject: email_friend_subject
+email_friend_subject: 'Email friend subject'
 email_login: 'Login to ProofPilot'
 email_reset_password: 'Reset Your Password'
-email_title_notice: email_title_notice
+email_title_notice: 'Email title notice'
 email_title_verify: 'Please Verify Your E-mail Address'
-forgot_username: forgot_username
-forgot_username_text: forgot_username_text
-forgot_username_title: forgot_username_title
+forgot_username: 'Forgot username'
+forgot_username_text: 'Forgot username'
+forgot_username_title: 'Forgot username title'
 join: 'JOIN STUDY'
-notice_verification: notice_verification
+notice_verification: 'Notice verification'
 notice_verification_text: 'Hey, this is ProofPilot. We noticed you haven’t confirmed your e-mail address.'
 reset_pass_link: 'Click here to reset your password'
 reset_pass_text: 'Yes, it happens to all of us: you can''t remember your password. That''s OK. Click this link to reset your password'
 reset_pass_title: 'Reset Your Password'
-send_verification_email: 'send verification email'
+send_verification_email: 'Send verification email'
