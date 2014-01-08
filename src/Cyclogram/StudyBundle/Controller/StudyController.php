@@ -276,28 +276,7 @@ class StudyController extends Controller
     
 
     
-    /**
-     * @Route("/is_it_secure", name="_secure")
-     * @Template()
-     */
-    public function isItSecureAction()
-    {
-        $locale = $this->getRequest()->getLocale();
-        $em = $this->getDoctrine()->getManager();
-        
-        
-        $blockContent = $em->getRepository("CyclogramProofPilotBundle:StaticBlocks")->getBlockContent("security_privacy_title", $locale);
-        $this->parameters["title"] = $blockContent;
-        
-        $blockContent = $em->getRepository("CyclogramProofPilotBundle:StaticBlocks")->getBlockContent("privacy_security", $locale);
-        $this->parameters["content"] = $blockContent;
-        
-        $blockContent = $em->getRepository("CyclogramProofPilotBundle:StaticBlocks")->getBlockContent("about_proofpilot", $locale);
-        $this->parameters["about"] = $blockContent;
 
-        
-        return $this->render('CyclogramStudyBundle:Study:is_it_secure.html.twig', $this->parameters);
-    }
 
 
 
