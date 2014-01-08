@@ -10,7 +10,7 @@
                     {{ studycontent.studyConsent|raw }}
                 </div>
                 <h3>{% trans from "register" %}consent_good_to_go{% endtrans %}</h3>
-                <p>{% trans from "register" %}consent_any_information{% endtrans %} <a href="#">{% trans from "register" %}consent_security_privacy{% endtrans %}</a></p>
+                <p>{% trans from "register" %}consent_any_information{% endtrans %} <a href="{{ path('_secure') }}">{% trans from "register" %}consent_security_privacy{% endtrans %}</a></p>
                 <div class="align_center"><a href="{{ path('_consent', {'studyCode': studyCode, 'surveyId': surveyId}) }}" class="btn"><span>{% trans from "register" %}consent_accept_join{% endtrans %}</span></a></div>
                 <p class="note">{% trans from "register" %}consent_close_window{% endtrans %}</p>
             </div>		
