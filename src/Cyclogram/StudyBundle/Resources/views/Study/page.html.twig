@@ -306,7 +306,16 @@
                 e.preventDefault();
                 $('#embed_list').dialog();
             });
-
+            $(".temporaty_unavailable").bind('click', function(){
+                $("#div_temporaty_unavailable").dialog({
+              	  modal: true,
+                    width: 'auto',
+                    fluid: true,
+                    resizable: false,
+                    position: ['top',100],
+                    open: funcCustom
+                });
+                });
             // mobile_login_switcher
             $(".mobile_login_switcher a").bind('click', function(){
                 if( $(this).attr('rel') ){
@@ -448,12 +457,12 @@
                     {% endif %}
                     {% if is_granted('ROLE_PARTICIPANT') or is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                         {% if is_enrolled_in_study(studyCode) %}
-                            <p class="already_joined"><span>You are a participant</span></p>
+                            <p class="already_joined"><span>{% trans from "study" %}you_are_participant{% endtrans %}</span></p>
                             <ul class="short_menu">
-                                <li><a href="#" class="sm_icon_1">View consent information</a></li>
-                                <li><a href="#" class="sm_icon_2">Personalized insight</a></li>
-                                <li><a href="#" class="sm_icon_3">Study findings</a></li>
-                                <li class="last"><a href="#" class="sm_icon_4">Leave study</a></li>
+                                <li><a href="#" class="sm_icon_1 consent">{% trans from "study" %}button_view_consent{% endtrans %}</a></li>
+                                <li><a href="#" class="sm_icon_2 temporaty_unavailable">{% trans from "study" %}button_personalized_insight{% endtrans %}</a></li>
+                                <li><a href="#" class="sm_icon_3 temporaty_unavailable">{% trans from "study" %}button_study_findings{% endtrans %}</a></li>
+                                <li class="last"><a href="#" class="sm_icon_4">{% trans from "study" %}button_leave_study{% endtrans %}</a></li>
                             </ul>
                         {% else %}
                             {% set redirectUrl = path('_main')  %}
@@ -580,6 +589,7 @@
             <a href="#" class="btn_send_mail" id ="email_submit">Send e-mail</a>
         </div>
     </form>
+    <div id="div_temporaty_unavailable" style="display:none;"><h1>{%  trans from "study" %}unavailable_functionality{% endtrans %}</h1></div>
     <div id="embed_list" style="display:none;">
         <code><a href="{{host}}{{path('_page', {'studyUrl' : studyUrl})}}">{{host}}{{path('_page', {'studyUrl' : studyUrl})}}</a></code>
     </div>

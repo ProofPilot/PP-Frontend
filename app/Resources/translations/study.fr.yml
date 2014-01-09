@@ -1,5 +1,9 @@
 button_join_the_study_goal: button_join_the_study_goal
-inivted_to_study: inivted_to_study   # FIXME
+button_leave_study: button_leave_study   # FIXME
+button_personalized_insight: button_personalized_insight   # FIXME
+button_study_findings: button_study_findings   # FIXME
+button_view_consent: button_view_consent   # FIXME
+inivted_to_study: inivted_to_study
 msg_not_eligible: 'You are not eligible for ''%studyname%'' at this time.'
 social_at_proofpilot: social_at_proofpilot
 social_join_study: social_join_study
@@ -13,7 +17,6 @@ txt_email_to_friend: txt_email_to_friend
 txt_goal: txt_goal
 txt_join_before_goal: txt_join_before_goal
 txt_like_proofpilot: txt_like_proofpilot
-txt_on_facebook: txt_on_facebook
 txt_on_twitter: txt_on_twitter
 txt_participants: txt_participants
 txt_share: txt_share
@@ -22,3 +25,4 @@ txt_staff: txt_staff
 txt_tweet: txt_tweet
 txt_you_are_eligible: 'Vous êtes admissible'
 warning_message: 'Avant de continuer, s''il vous plaît lire cette information importante et à accepter au bas de la page'
+you_are_participant: you_are_participant   # FIXME
