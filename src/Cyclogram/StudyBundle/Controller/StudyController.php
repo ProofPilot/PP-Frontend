@@ -229,13 +229,15 @@ class StudyController extends Controller
         
         $request = $this->container->get('request');
         $clientIp = $request->getClientIp();
-        if ($clientIp == '127.0.0.1') {
-            $country = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Country')->findOneByCountryCode('UA');
-        }
+
         $geoip = $this->container->get('maxmind.geoip')->lookup($clientIp);
         if ($geoip != false) {
             $countryCode = $geoip->getCountryCode();
             $country = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Country')->findOneByCountryCode($countryCode);
+        } elseif ($clientIp == '127.0.0.1' || strpos($clientIp, '192.168.244.')!== false) {
+            $country = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Country')->findOneByCountryCode('UA');
+        } else {
+            $country = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Country')->findOneByCountryCode('US');
         }
         $this->parameters['countryName'] = $country->getCountryName();
         $this->parameters['countryId'] = $country->getCountryId();
