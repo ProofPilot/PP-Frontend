@@ -4009,3 +4009,10 @@ footer .row_2 p {
 .mobile_reg.forgot_password, .mobile_reg.forgot_username {
 	width: 400px;
 }
+#div_temporaty_unavailable {
+	background: #fff;
+	border-radius: 5px;
+	color: #C1402E;
+	padding: 25px;
+	text-align: center;
+}

@@ -309,7 +309,7 @@
             $(".temporaty_unavailable").bind('click', function(){
                 $("#div_temporaty_unavailable").dialog({
               	  modal: true,
-                    width: 'auto',
+                    width: '260px',
                     fluid: true,
                     resizable: false,
                     position: ['top',100],
@@ -589,7 +589,7 @@
             <a href="#" class="btn_send_mail" id ="email_submit">Send e-mail</a>
         </div>
     </form>
-    <div id="div_temporaty_unavailable" style="display:none;"><h1>{%  trans from "study" %}unavailable_functionality{% endtrans %}</h1></div>
+    <div id="div_temporaty_unavailable" style="display:none;">{%  trans from "study" %}unavailable_functionality{% endtrans %}</div>
     <div id="embed_list" style="display:none;">
         <code><a href="{{host}}{{path('_page', {'studyUrl' : studyUrl})}}">{{host}}{{path('_page', {'studyUrl' : studyUrl})}}</a></code>
     </div>
