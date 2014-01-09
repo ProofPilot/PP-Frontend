@@ -3808,7 +3808,7 @@ footer .row_2 p {
     font-size: 13px;
     height: 32px;
     margin-bottom: 15px;
-    padding-left: 10px;
+    padding: 0px 10px;
     width: 100%;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -3864,6 +3864,12 @@ footer .row_2 p {
     padding: 0 !important;
     text-transform: uppercase;
     width: 164px !important;
+}
+#email_list .sender_info label, #email_list .msg_details textarea {
+	width: 100%;
+	margin-bottom: 10px;
+	box-sizing: border-box;
+    -moz-box-sizing: border-box;
 }
 /*Social icons*/
 .social_icons_block {
