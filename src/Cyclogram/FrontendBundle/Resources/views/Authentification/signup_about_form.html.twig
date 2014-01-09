@@ -4,13 +4,6 @@
     <p class="exlp">{% trans from "signup_about" %}head_tailot_expirience{% endtrans %}</p>
     <h1>{% trans from "signup_about" %}head_tell_a_bit{% endtrans %}</h1>
     <div class="form_wrapper">
-    {% if studyCode is defined %}
-    {{ studyCode }}
-    {% endif %}
-    
-        {% if surveyId is defined %}
-    {{ surveyId }}
-    {% endif %}
         {% if studyCode and surveyId is defined  %}
             <form  action="{{ path('_signup_about', {'studyCode' : studyCode, 'surveyId' : surveyId }) }}" method="post" name="signup_about" id="signup_about_form" novalidate> 
         {% else %}

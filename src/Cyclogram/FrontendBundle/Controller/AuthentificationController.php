@@ -113,9 +113,6 @@ class AuthentificationController extends Controller
                         return $this->redirect($this->generateUrl("_page", array("studyUrl" => $studyContent->getStudyUrl())));
                     }
                 }
-                if ($study->getStudySkipAboutMe())
-                    return $this->redirect( $this->generateUrl("_main"));
-                else
                     return $this->redirect( $this->generateUrl("_signup_about"));
             }
                 
