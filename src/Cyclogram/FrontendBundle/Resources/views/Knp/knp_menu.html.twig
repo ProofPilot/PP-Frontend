@@ -80,6 +80,6 @@
 
 {% block linkElement %}{% import _self as knp_menu %}<a href="{{ item.uri }}"{{ knp_menu.attributes(attributes) }}><span>{{ block('label') }}</span></a>{% endblock %}
 
-{% block spanElement %}{% import _self as knp_menu %}<span{{ knp_menu.attributes(item.labelAttributes) }}>{{ block('label') }}</span>{% endblock %}
+{% block spanElement %}{% import _self as knp_menu %}{% if item.attribute('contact_us') %} <a href="mailto:{{ item.attribute('mail') }}"><span{{ knp_menu.attributes(item.labelAttributes) }}>{{ block('label') }}</span></a>" {% else %}<span{{ knp_menu.attributes(item.labelAttributes) }}>{{ block('label') }}</span>{% endif %}{% endblock %}
 
 {% block label %}{% if options.allow_safe_labels and item.getExtra('safe_label', false) %}{{ item.label|raw }}{% else %}{{ item.label|trans(item.getExtra('translation_params', {}), item.getExtra('translation_domain', 'generalmenus')) }}{% endif %}{% endblock %}

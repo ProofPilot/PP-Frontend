@@ -76,7 +76,7 @@ class MenuBuilder extends ContainerAware implements TranslationContainerInterfac
                 ->setExtra('translation_domain', 'generalmenus');
         $menu->addChild('bottom_study_right_menu.contact_us'
                 )
-                ->setAttribute('class', 'icon_settings')->setExtra('translation_domain', 'generalmenus');
+                ->setAttribute('class', 'icon_settings')->setExtra('translation_domain', 'generalmenus')->setAttribute('contact_us', true)->setAttribute('mail', $this->container->getParameter('mailer_from') );
 
         return $menu;
     }
