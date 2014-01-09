@@ -2946,6 +2946,9 @@ footer .row_1 .footer_col_middle a.tw {
     background-size: 22px 16px;
     color: #0099D6;
     padding-left: 30px;
+    position: relative;
+    top: -25px;
+    margin-left: 5px;
 }
 footer .footer_col_middle a:hover {
 	color: #dbdbdb;
