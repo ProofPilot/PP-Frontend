@@ -163,6 +163,7 @@
                 $(this).ajaxSubmit({
                     dataType: "json",
                     success: function(json) {
+                    	{% set skipAboutMe = is_skip_about_me(studyCode) %}
                         if(json.error){
                             var messages = json.messages;
                             for (var i = 0; i < messages .length; i++){
@@ -177,6 +178,16 @@
                             }
                         } else if (json.url != null){
                         	window.location.replace(json.url);
+                        } else if ({{ skipAboutMe|default(0)}}){
+                        	$("#div_register").dialog('close');
+                            $("#div_consent").dialog({
+                                modal: true,
+                                width: 'auto',
+                                fluid: true,
+                                resizable: false,
+                                position: ['top',100],
+                                open: funcCustom
+                            });
                         } else {
                             $("#div_register").dialog('close');
                             if ({{ countryName and countryId }}) {
@@ -272,7 +283,11 @@
                 $(this).ajaxSubmit({
                     dataType: "json",
                     success: function(json) {
-                        if(!json.error){
+                       if(json.error){
+                            $('#signup_about_form_error').html('<p class="error">'+json.message+'</p>');
+                        } else if (json.url){
+                        	window.location.replace(json.url);
+                        }else {
                             $("#div_register_step2").dialog('close');
                             $("#div_consent").dialog({
                                 modal: true,
@@ -282,8 +297,6 @@
                                 position: ['top',100],
                                 open: funcCustom
                             });
-                        } else if(json.error){
-                            $('#signup_about_form_error').html('<p class="error">'+json.message+'</p>');
                         }
                     }
                 });
@@ -418,9 +431,9 @@
                        <a class="fb" id="facebook_button_landing_page" href="">
                            <span>{% trans from "register" %}txt_join_with{% endtrans %} Facebook</span>
                        </a>
-                       {% if is_registered_study(studyCode) %}
+                       {% if is_participant_register_last(studyCode) %}
                            {% set redirectUrl = path('_signup')  %}
-                           {% if is_skip_steps_study(studyCode) %}
+                           {% if is_skip_consent(studyCode) %}
                                 <a href="{{ path('_eligibility_survey', {'studyCode': studyCode, 'surveyId': surveyId, 'redirectUrl': redirectUrl} ) }}" class="join"><span>{% trans from "study" %}button_join_the_study_goal{% endtrans %}</span></a>
                            {% else %}
                                <a href="" class="join consent"><span>{% trans from "study" %}button_join_the_study_goal{% endtrans %}</span></a>
@@ -495,7 +508,7 @@
                             {% if organization.organizationLogo is empty %}
                                 <img src="{{ asset('images/tmplogo_none.jpg') }}" width="61" height="61"/>
                             {% else %}
-                                <img src="{{ adminProjectUrl }}/web/org/{{ organization.organizationLogo }}" width="61" height="61"/>
+                                <img src="{{ urlAssets }}/web/org/{{ organization.organizationLogo }}" width="61" height="61"/>
                             {% endif %}
                                 <p>{{ organization.organizationName }}</p>
                             </li>

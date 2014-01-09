@@ -43,8 +43,9 @@ class GlobalExtension extends \Twig_Extension
                         )),
                 'is_enrolled_in_study' => new \Twig_Function_Method($this, 'isEnrolledInStudy'),
                 'is_study_logic_implemented' => new \Twig_Function_Method($this, 'isStudyLogicImplemented'),
-                'is_registered_study'  => new \Twig_Function_Method($this, 'isRegisteredStudy'),
-                'is_skip_steps_study'  => new \Twig_Function_Method($this, 'isSkipStepsStudy')
+                'is_participant_register_last'  => new \Twig_Function_Method($this, 'isParticipantRegisterLast'),
+                'is_skip_consent'  => new \Twig_Function_Method($this, 'isSkipConsent'),
+                'is_skip_about_me'=> new \Twig_Function_Method($this, 'isSkipAboutMe')
 //                 'google_campaign_info' => new \Twig_Function_Method($this, 'getGoogleCampaignInfo')
         );
     }
@@ -95,20 +96,28 @@ class GlobalExtension extends \Twig_Extension
         return in_array(strtolower($studyCode), $supportedStudies) ? true : false;
     }
     
-    public function isRegisteredStudy($studyCode)
+    public function isParticipantRegisterLast($studyCode)
     {
         $study =  $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
-        if($study->getRegisterProccess() == 1)
+        if($study->getParticipantRegisterLast() == 1)
             return true;
         else return false;
     }
     
-    public function isSkipStepsStudy($studyCode)
+    public function isSkipConsent($studyCode)
     {
         $study =  $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
-        if($study->getStudySkipSteps() == 1)
+        if($study->getStudySkipConsent() == 1)
             return true;
         else return false;
+    }
+    
+    public function isSkipAboutMe($studyCode)
+    {
+        $study =  $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
+        if($study->getStudySkipAboutMe() == 1)
+            return true;
+       else return false;
     }
     
 //     public function getGoogleCampaignInfo($studyId)

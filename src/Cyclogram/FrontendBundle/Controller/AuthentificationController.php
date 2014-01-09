@@ -82,7 +82,7 @@ class AuthentificationController extends Controller
             $this->createParticipant($registration);
             if ($request->isXmlHttpRequest()) {
                 $study = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
-                if ($study->getStudySkipSteps() == 1) {
+                if ($study->getStudySkipAboutMe() && $study->getStudySkipConsent()) {
                     $redirectUrl = $this->generateUrl("_main");
                     return new Response(json_encode(array('error' => false, 'url' => $this->generateUrl("_eligibility_survey", array('studyCode' => $studyCode,'surveyId' => $surveyId, 'redirectUrl' => $redirectUrl)))));
                     
@@ -103,7 +103,7 @@ class AuthentificationController extends Controller
                 
                         $ls->studyRegistration($participant, $studyCode, $surveyId, $saveId);
                         $study = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
-                        if ($study->getStudySkipSteps() == 1) {
+                        if ($study->getStudySkipAboutMe()) {
                             return $this->redirect( $this->generateUrl("_main"));
                         }
                     } else {
@@ -113,7 +113,10 @@ class AuthentificationController extends Controller
                         return $this->redirect($this->generateUrl("_page", array("studyUrl" => $studyContent->getStudyUrl())));
                     }
                 }
-                return $this->redirect( $this->generateUrl("_signup_about"));
+                if ($study->getStudySkipAboutMe())
+                    return $this->redirect( $this->generateUrl("_main"));
+                else
+                    return $this->redirect( $this->generateUrl("_signup_about"));
             }
                 
         } elseif ($request->isXmlHttpRequest() && !$form->isValid()){
@@ -224,10 +227,10 @@ class AuthentificationController extends Controller
     
     
     /**
-     * @Route("/signupabout/{studyCode}", name="_signup_about", defaults={"studyCode"= null})
+     * @Route("/signupabout/{studyCode}/{surveyId}", name="_signup_about", defaults={"studyCode"= null, "surveyId" = null})
      * @Template()
      */
-    public function signupAboutAction(Request $request, $studyCode=null) {
+    public function signupAboutAction(Request $request, $studyCode=null, $surveyId = null) {
         $em = $this->getDoctrine()->getManager();
         $session = $request->getSession();
         $participant = $this->get('security.context')->getToken()->getUser();
@@ -335,10 +338,24 @@ class AuthentificationController extends Controller
                 $em->flush();
                 
                 if ($request->isXmlHttpRequest()) {
-                    if ($message == null)
-                        return new Response(json_encode(array('error' => false)));
-                    else 
+                    if ($message == null) {
+                        $study = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
+                        if ($study->getStudySkipConsent()) {
+                            $participant = $this->get('security.context')->getToken()->getUser();
+                            if ($participant != 'anon.') {
+                                $redirectUrl = $this->generateUrl("_main");
+                                if ($participant->getParticipantEmailConfirmed() == false)
+                                    $this->confirmParticipantEmail($participant);
+                            } else {
+                                $redirectUrl = $this->generateUrl("_signup");
+                            }
+                             return new Response(json_encode(array('error' => false, 'url' => $this->generateUrl("_eligibility_survey", array('studyCode' => $studyCode,'surveyId' => $surveyId, 'redirectUrl' => $redirectUrl)))));
+                        } else {
+                            return new Response(json_encode(array('error' => false)));
+                        }
+                    } else { 
                         return new Response(json_encode(array('error' => true, 'message' => 'Invalid : '.implode(',', $message) )));
+                    }
                 }
                 if ($message == null) {
                     $this->confirmParticipantEmail($participant);
