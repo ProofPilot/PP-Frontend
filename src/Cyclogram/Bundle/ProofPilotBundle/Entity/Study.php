@@ -120,9 +120,9 @@ class Study
     /**
      * @var integer
      *
-     * @ORM\Column(name="register_proccess", type="integer", nullable=false)
+     * @ORM\Column(name="participant_register_last", type="integer", nullable=false)
      */
-    protected $registerProccess;
+    protected $participantRegisterLast;
 
     /**
      * @var integer
@@ -141,9 +141,16 @@ class Study
     /**
      * @var integer
      *
-     * @ORM\Column(name="study_skip_steps", type="integer", nullable=false)
+     * @ORM\Column(name="study_skip_consent", type="integer", nullable=false)
      */
-    protected $studySkipSteps;
+    protected $studySkipConsent;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="study_skip_about_me", type="integer", nullable=false)
+     */
+    protected $studySkipAboutMe;
 
     /**
      * @var boolean
@@ -559,26 +566,6 @@ class Study
         $this->studyCode = $studyCode;
     }
 
-    public function getRegisterProccess()
-    {
-        return $this->registerProccess;
-    }
-
-    public function setRegisterProccess($registerProccess)
-    {
-        $this->registerProccess = $registerProccess;
-    }
-
-    public function getStudySkipSteps()
-    {
-        return $this->studySkipSteps;
-    }
-
-    public function setStudySkipSteps($studySkipSteps)
-    {
-        $this->studySkipSteps = $studySkipSteps;
-    }
-
     public function getStudyNumberOfCurrentParticipants()
     {
         return $this->studyNumberOfCurrentParticipants;
@@ -598,6 +585,36 @@ class Study
     public function setStudyParticipantsGoal($studyParticipantsGoal)
     {
         $this->studyParticipantsGoal = $studyParticipantsGoal;
+    }
+
+    public function getParticipantRegisterLast()
+    {
+        return $this->participantRegisterLast;
+    }
+
+    public function setParticipantRegisterLast($participantRegisterLast)
+    {
+        $this->participantRegisterLast = $participantRegisterLast;
+    }
+
+    public function getStudySkipConsent()
+    {
+        return $this->studySkipConsent;
+    }
+
+    public function setStudySkipConsent($studySkipConsent)
+    {
+        $this->studySkipConsent = $studySkipConsent;
+    }
+
+    public function getStudySkipAboutMe()
+    {
+        return $this->studySkipAboutMe;
+    }
+
+    public function setStudySkipAboutMe($studySkipAboutMe)
+    {
+        $this->studySkipAboutMe = $studySkipAboutMe;
     }
 
 }
