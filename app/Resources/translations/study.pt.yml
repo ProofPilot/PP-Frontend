@@ -1,4 +1,5 @@
 button_join_the_study_goal: 'Junte-se ao estudo'
+inivted_to_study: inivted_to_study   # FIXME
 msg_not_eligible: 'Não são elegíveis para ''%studyname%'' neste momento.'
 social_at_proofpilot: 'em ProofPilot'
 social_join_study: 'Junte-se ao estudo,'
@@ -11,14 +12,10 @@ txt_eligible_dsc: 'Sua participação em um piscar de olhos. O que você precisa
 txt_email_to_friend: 'E-mail para um amigo'
 txt_goal: Objetivo
 txt_join_before_goal: 'Junte-se ao estudo antes de atingir a meta e ganhar pontos de incentivo em seu perfil de usuário.'
-txt_learn_how: 'Saiba como ProofPilot mantém a imparcialidade da investigação'
 txt_like_proofpilot: 'Como ProofPilot'
-txt_more_studies_about: 'Veja mais estudos sobre'
-txt_more_studies_in: 'Veja mais estudos'
 txt_on_facebook: 'no Facebook'
 txt_on_twitter: 'no Twitter'
 txt_participants: Participantes
-txt_security_privacy: 'Segurança e Privacidade com ProofPilot'
 txt_share: Ação
 txt_sponsored_by: 'Este estudo é patrocinado pela'
 txt_staff: Pessoal

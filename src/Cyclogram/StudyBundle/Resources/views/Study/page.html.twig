@@ -567,10 +567,9 @@
         </div>
         <div class="msg_details">
             <label for="tmp_subject">Subject</label>
-            <input id="tmp_subject" type="text" name="subject" class="text" placeholder="Join the study,Sexual Health Promotion ..." />
+            <input id="tmp_subject" type="text" name="subject" class="text" value="{%  trans from "study" %}inivted_to_study{% endtrans %} {{ studycontent.studyName }}" />
             <label for="tmp_msg">Message</label>
             <textarea rows="3" cols="28.5" name="description" class="text"></textarea>
-{#             <input id="tmp_msg" type="text" name="description" class="text" placeholder="Join the study,Sexual Health Promotion ..." />#}
             {% if app.user %}
                 <input type="hidden" value="{{ app.user.username }}"  name="participant"/>
             {% endif %}
