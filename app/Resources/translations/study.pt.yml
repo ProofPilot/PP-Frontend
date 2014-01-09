@@ -1,8 +1,8 @@
 button_join_the_study_goal: 'Junte-se ao estudo'
-button_leave_study: button_leave_study   # FIXME
-button_personalized_insight: button_personalized_insight   # FIXME
-button_study_findings: button_study_findings   # FIXME
-button_view_consent: button_view_consent   # FIXME
+button_leave_study: button_leave_study
+button_personalized_insight: button_personalized_insight
+button_study_findings: button_study_findings
+button_view_consent: button_view_consent
 inivted_to_study: inivted_to_study
 msg_not_eligible: 'Não são elegíveis para ''%studyname%'' neste momento.'
 social_at_proofpilot: 'em ProofPilot'
@@ -24,5 +24,6 @@ txt_sponsored_by: 'Este estudo é patrocinado pela'
 txt_staff: Pessoal
 txt_tweet: Chilrear
 txt_you_are_eligible: 'Você é elegível'
+unavailable_functionality: unavailable_functionality   # FIXME
 warning_message: 'Antes de prosseguir, por favor leia esta informação importante e clique em "recuso" ou "aceito" na parte inferior da página.'
-you_are_participant: you_are_participant   # FIXME
+you_are_participant: you_are_participant
