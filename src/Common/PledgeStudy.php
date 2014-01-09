@@ -134,7 +134,7 @@ class PledgeStudy extends AbstractStudy implements StudyInterface
     }
     public static function getStudyCode()
     {
-        return 'S4581';
+        return 'newhiv';
     }
     public function commandInterventionLogic()
     {

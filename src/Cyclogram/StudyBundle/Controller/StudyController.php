@@ -70,6 +70,7 @@ class StudyController extends Controller
         $this->parameters['studyUrl'] = $studyUrl;
         $this->parameters['studyId'] = $studyId;
         $this->parameters['studyCode'] = $study->getStudyCode();
+        $this->parameters['studyAllowSharing'] = $study->getStudyAllowSharing();
         $this->parameters['studyParticipants'] = $study->getStudyNumberOfCurrentParticipants();
         $this->parameters['studyGoal'] = $study->getStudyParticipantsGoal();
         $this->parameters['adminProjectUrl'] = $this->container->getParameter('admin_project_url');

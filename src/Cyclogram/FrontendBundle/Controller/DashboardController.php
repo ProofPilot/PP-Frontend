@@ -100,6 +100,7 @@ class DashboardController extends Controller
             $siteId = $em->getRepository('CyclogramProofPilotBundle:Site')->findOneBySiteName($site[0]['siteName']);
             $siteCampaignLink = $em->getRepository('CyclogramProofPilotBundle:CampaignSiteLink')->findOneBySite($siteId);
             $enroledStudy['studyRefferalShortUrl'] = $cc::generateGoogleShorURL($this->container->getParameter('site_url')."/".$locale."/".$study->getStudyCode()."/?utm_campaign=".$siteCampaignLink->getCampaign()->getCampaignName()."&utm_medium-Clinic&utm_source=".$site[0]['siteName']."&pid=".$participant->getParticipantId());
+            $enroledStudy['studyAllowSharing'] = $study->getStudyAllowSharing();
             $parameters["enrolledStudies"][] = $enroledStudy;
         }
         $parameters["interventioncount"] = $surveyscount;

@@ -282,6 +282,7 @@ class StudyRepository extends EntityRepository
                 FROM CyclogramProofPilotBundle:StudyContent sc
                 INNER JOIN sc.study s
                  WHERE sc.language = :lang
+                AND s.studyAllowSharing = 1
                 AND s.status =:status")->setParameters(array('lang' => $language,'status' => Study::STATUS_ACTIVE))->getResult();
         $results = array();
         if (isset($participant)) {

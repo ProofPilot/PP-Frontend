@@ -390,6 +390,7 @@
                 {% endif %}
                 <div class="video_placeholder"><img src="{{ graphic }}" height="393" width="670"></div>
                 <div class="v_toolbar for_mobile">
+                {% if studyAllowSharing %}
                     <ul class="social_share">
                         <li><span>Share:</span></li>
                         <li><a href='http://www.facebook.com/share.php?u=http://new-frontend-bogdand.proofpilot.dyndns.org' class="fb" onClick="return fbs_click(400, 300)" target = "_blank"></a></li>
@@ -400,6 +401,7 @@
                         {% endif %}
                         <li><a target="_blank" class="email" href="#"></a></li>
                     </ul>
+                  {% endif %}
                 </div>
                 <div class="video_text">
                     <ul class="participants_num _rows_2">
@@ -451,6 +453,7 @@
             <div class="page_bg">
                 <div class="home_text">
                     <div class="v_toolbar">
+                    {% if studyAllowSharing %}
                         <ul class="social_share">
                         <li><a href='' class="fb" onClick="return fbs_click(400, 300)" target = "_blank"> {% trans from "study" %}txt_share{% endtrans %}</a></li>
                         {% if reffferalShortStudyUrl is defined %}
@@ -460,6 +463,7 @@
                         {% endif %}
                             <li><a class="email" href="#">{% trans from "study" %}txt_email_to_friend{% endtrans %}</a></li>
                         </ul>
+                        {% endif %}
                     </div>
                     {{ studycontent.studyAbout |raw }}
                     {{ studycontent.studyWhatsInvolved | raw }}
