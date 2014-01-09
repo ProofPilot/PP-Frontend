@@ -70,8 +70,9 @@ class MenuBuilder extends ContainerAware implements TranslationContainerInterfac
         
         $menu = $factory->createItem('root');
 
-        $menu->addChild('bottom_study_right_menu.privacy_and_security'
-        )
+        $menu->addChild('bottom_study_right_menu.privacy_and_security', array(
+                'route' => '_secure'
+                ))
                 ->setExtra('translation_domain', 'generalmenus');
         $menu->addChild('bottom_study_right_menu.contact_us'
                 )
@@ -296,13 +297,13 @@ class MenuBuilder extends ContainerAware implements TranslationContainerInterfac
         		->setAttribute('target', '_blank')
         		->setExtra('translation_domain', 'generalmenus');
         
-        $menu->addChild('top_left_menu.browse'
+//         $menu->addChild('top_left_menu.browse'
 
-                )->setExtra('translation_domain', 'generalmenus');
+//                 )->setExtra('translation_domain', 'generalmenus');
         
-        $menu->addChild('top_left_menu.launch'
+//         $menu->addChild('top_left_menu.launch'
 
-                )->setExtra('translation_domain', 'generalmenus');
+//                 )->setExtra('translation_domain', 'generalmenus');
     
         return $menu;
     }
