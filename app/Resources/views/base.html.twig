@@ -13,11 +13,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     
     <title>{% if branding != 'knowathome' %}
-                {% if studycontent is defined %}
-                    {{ studycontent.studyName }}
-                {% else %}
-                     - ProofPilot
-                {% endif %}
+    			{% block title %}
+	                {% if studycontent is defined %}
+	                    {{ studycontent.studyName }}
+	                {% else %}
+	                     - ProofPilot
+	                {% endif %}
+                {% endblock title %}
            {% else %}
                 KnowAtHome 
                 {% endif %}
