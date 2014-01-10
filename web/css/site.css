@@ -2954,7 +2954,7 @@ footer .footer_col_middle a:hover {
 }
 footer .footer_col_right {
 	float: right;
-	width: 33%;
+	width: 34%;
 }
 footer .footer_col_right ul {
 	float: right;
@@ -4024,4 +4024,7 @@ footer .row_2 p {
 	color: #C1402E;
 	padding: 25px;
 	text-align: center;
+}
+.footer_col_middle iframe table {
+	float: right;
 }
