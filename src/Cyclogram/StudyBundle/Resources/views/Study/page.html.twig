@@ -412,9 +412,9 @@
                 {% endif %}
                 <div class="video_placeholder">
                     {% if studycontent.studyVideo is defined %}
-                        <iframe title="YouTube video player" class="youtube-player" type="text/html" 
-                        width="670" height="393" src="{{ studycontent.studyVideo }}"
-                        frameborder="0" allowFullScreen></iframe>
+                    <iframe width="670" height="393" 
+                        src="{{ studycontent.studyVideo }}" frameborder="0" allowfullscreen>
+                    </iframe>
                     {% else %}
                         <img src="{{ graphic }}" height="393" width="670">
                     {% endif %}
