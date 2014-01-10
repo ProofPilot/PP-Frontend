@@ -1,18 +1,27 @@
 bottom_no_reply: bottom_no_reply
-bottom_street: bottom_street
 bottom_text: bottom_text
 confirm_verify_text: confirm_verify_text
 confirm_verify_title: confirm_verify_title
-do_it: do_it   # FIXME
+do_it: do_it
 do_it_task_email_title: do_it_task_email_title
-email_friend_subject: email_friend_subject
 email_login: email_login
+email_not_send_try_later: email_not_send_try_later
 email_reset_password: email_reset_password
 email_title_notice: email_title_notice
 email_title_verify: email_title_verify
+email_to_friends_add_email: email_to_friends_add_email   # FIXME
+email_to_friends_cancle: email_to_friends_cancle   # FIXME
+email_to_friends_message: email_to_friends_message   # FIXME
+email_to_friends_send_button: email_to_friends_send_button   # FIXME
+email_to_friends_subject: email_to_friends_subject   # FIXME
+email_to_friends_title: email_to_friends_title   # FIXME
+email_to_friends_who_are_you_sending: email_to_friends_who_are_you_sending   # FIXME
+email_to_friends_who_sending: email_to_friends_who_sending   # FIXME
 forgot_username: forgot_username
 forgot_username_text: forgot_username_text
 forgot_username_title: forgot_username_title
+insert_receiver_email: insert_receiver_email
+insert_sender_email: insert_sender_email
 join: join
 notice_verification: notice_verification
 notice_verification_text: notice_verification_text
@@ -20,3 +29,4 @@ reset_pass_link: reset_pass_link
 reset_pass_text: reset_pass_text
 reset_pass_title: reset_pass_title
 send_verification_email: send_verification_email
+sent_email_to_friends: sent_email_to_friends

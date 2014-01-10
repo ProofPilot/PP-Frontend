@@ -225,11 +225,11 @@ class EmailController extends Controller
 //             if (empty($subject)) 
 //                 $this->get('translator')->trans("email_friend_subject", array(), "email", $parameters['locale']);
             if (!isset($from) || empty($from)){
-                return new Response(json_encode(array('error' => true, 'message' => 'Insert the sender e-mail')));
+                return new Response(json_encode(array('error' => true, 'message' => $this->get('translator')->trans("insert_sender_email", array(), "email", $parameters['locale']))));
             }
             
             if (!isset($to[0]) || empty($to[0])){
-                return new Response(json_encode(array('error' => true, 'message' => 'Insert at least one reciver e-mail')));
+                return new Response(json_encode(array('error' => true, 'message' => $this->get('translator')->trans("insert_receiver_email", array(), "email", $parameters['locale']))));
             } 
             
 //             if (!isset($description) || empty($description)){
@@ -263,12 +263,12 @@ class EmailController extends Controller
                         true,
                         $parameters);
             } catch (\Exception $exc){
-                 return new Response(json_encode(array('error' => true, 'message' => $this->container->get('translator')->trans('email_not_send_try_later', array(), 'validators'))));
+                 return new Response(json_encode(array('error' => true, 'message' => $this->container->get('translator')->trans('email_not_send_try_later', array(), "email", $parameters['locale']))));
             }
             if ($send['status'] == false) {
                 return new Response(json_encode(array('error' => true, 'message' => $send['message'])));
             } 
-            return new Response(json_encode(array('error' => false, 'message' => "Send")));
+            return new Response(json_encode(array('error' => false, 'message' => $this->get('translator')->trans("sent_email_to_friends", array(), "email", $parameters['locale']))));
         }
     }
     

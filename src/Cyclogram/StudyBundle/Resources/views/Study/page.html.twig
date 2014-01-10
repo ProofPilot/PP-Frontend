@@ -571,21 +571,21 @@
     </div>
     
     <form id="email_list" style="display: none; " action="{{path('_email_to_friend')}}">
-        <h1>Send e-mail to a friend</h1>
+        <h1>{%  trans from "email" %}email_to_friends_title{% endtrans %}</h1>
         <div class="sender_info">
-            <label for="tmp_who">Who is sending?</label>
+            <label for="tmp_who">{%  trans from "email" %}email_to_friends_who_sending{% endtrans %}</label>
             <input id="tmp_who" type="text" name="send_from" class="text" placeholder="Type your e-mail" /><br />
-            <label for="tmp_to">Who are you sending to?</label>
+            <label for="tmp_to">{%  trans from "email" %}email_to_friends_who_are_you_sending{% endtrans %}</label>
             <input id="tmp_to" type="text" name="send_to[0]" class="text" placeholder="Type recipient email" /><br />
             <p class="others">
-                <a href="#">+ Add another e-mail</a>
+                <a href="#">+ {%  trans from "email" %}email_to_friends_add_email{% endtrans %}</a>
                 <span>(up to 5 e-mails)</span>
             </p>
         </div>
         <div class="msg_details">
-            <label for="tmp_subject">Subject</label>
+            <label for="tmp_subject">{%  trans from "email" %}email_to_friends_subject{% endtrans %}Subject</label>
             <input id="tmp_subject" type="text" name="subject" class="text" value="{%  trans from "study" %}inivted_to_study{% endtrans %} {{ studycontent.studyName }}" />
-            <label for="tmp_msg">Message</label>
+            <label for="tmp_msg">{%  trans from "email" %}email_to_friends_message{% endtrans %}</label>
             <textarea rows="3" cols="28.5" name="description" class="text"></textarea>
             {% if app.user %}
                 <input type="hidden" value="{{ app.user.username }}"  name="participant"/>
@@ -593,8 +593,8 @@
             {% if studyCode is defined %}
                 <input type="hidden" value="{{ studyCode }}"  name="studyCode"/>
             {% endif %}
-            <a href="#" class="btn_cancel">Cancel</a>
-            <a href="#" class="btn_send_mail" id ="email_submit">Send e-mail</a>
+            <a href="#" class="btn_cancel">{%  trans from "email" %}email_to_friends_cancle{% endtrans %}</a>
+            <a href="#" class="btn_send_mail" id ="email_submit">{%  trans from "email" %}email_to_friends_send_button{% endtrans %}</a>
         </div>
     </form>
     <div id="div_temporaty_unavailable" style="display:none;">{%  trans from "study" %}unavailable_functionality{% endtrans %}</div>

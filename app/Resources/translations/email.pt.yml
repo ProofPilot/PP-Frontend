@@ -1,16 +1,32 @@
 bottom_no_reply: 'Por favor, não responda a este e-mail como a caixa de entrada não é monitorada'
-bottom_street: '"c" 2010-2014 ProofPilot. / All Rights Reserved<br /> Cyclogram: 8605 Santa Monica Blvd #75475 West Hollywood, CA 90069<br'
 bottom_text: bottom_text
-communictaion_preferences: 'Preferências communictaion'
 confirm_verify_text: 'Sim, é parte de qualquer registro do site e ProofPilot não é diferente. Por favor, clique no link abaixo para verificar o seu endereço de e-mail e ir andando'
 confirm_verify_title: 'Por favor, verifique seu e-mail'
+do_it: do_it
 do_it_task_email_title: 'O que você tem a fazer no ProofPilot'
+email_login: email_login
+email_not_send_try_later: email_not_send_try_later
 email_reset_password: 'Redefinir sua senha'
 email_title_notice: 'Título do aviso Email'
 email_title_verify: 'Por favor, verifique seu e-mail'
+email_to_friends_add_email: email_to_friends_add_email   # FIXME
+email_to_friends_cancle: email_to_friends_cancle   # FIXME
+email_to_friends_message: email_to_friends_message   # FIXME
+email_to_friends_send_button: email_to_friends_send_button   # FIXME
+email_to_friends_subject: email_to_friends_subject   # FIXME
+email_to_friends_title: email_to_friends_title   # FIXME
+email_to_friends_who_are_you_sending: email_to_friends_who_are_you_sending   # FIXME
+email_to_friends_who_sending: email_to_friends_who_sending   # FIXME
+forgot_username: forgot_username
+forgot_username_text: forgot_username_text
+forgot_username_title: forgot_username_title
+insert_receiver_email: insert_receiver_email
+insert_sender_email: insert_sender_email
+join: join
 notice_verification: 'Verificação Notificação'
 notice_verification_text: 'Ei, isso é ProofPilot. Notamos que você ainda não confirmou seu endereço de e-mail.'
 reset_pass_link: 'Clique aqui para redefinir sua senha'
 reset_pass_text: 'Sim, isso acontece com todos nós: você não lembra da sua senha. Isso é OK. Clique neste link para redefinir sua senha'
 reset_pass_title: 'Redefinir sua senha'
 send_verification_email: 'Enviar e-mail de verificação'
+sent_email_to_friends: sent_email_to_friends
