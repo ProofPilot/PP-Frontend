@@ -515,10 +515,17 @@
 #div_register .modal_close_btn {
 	top: 65px;
 }
+#div_consent {
+	margin: 70px auto 40px;
+	width: 700px;
+}
 #div_consent .mobile_reg {
 	background-color: #f1f1f1;
 	padding: 25px 20px 20px;
 	max-width: 620px;
+}
+#div_consent .mobile_reg .wrapper {
+	background: none;
 }
 #div_consent .mobile_reg h2 {
 	color: #C64533;

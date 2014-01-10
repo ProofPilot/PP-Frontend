@@ -1287,6 +1287,9 @@
     .mobile_reg.login_form h2 {
         display: none;
     }
+    #div_consent {
+    	width: 100%;
+    }
     #div_consent, #div_register_step2 {
     	margin-right: 45px;
     	margin-left: 45px;
