@@ -612,6 +612,7 @@ header .header_menu span.text  , .footer_col_right span.text  {
 	border-bottom: 1px solid #d4d4d4;
 	display: table-cell;
     vertical-align: middle;
+    padding-right: 10px;
 }
 .panel .panel_left .menu_cont ul.left_menu li a:hover {
 	color: #b73b32;
