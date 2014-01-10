@@ -11,7 +11,9 @@
                 <div class="list_box">
                     {{ studycontent.studyConsent|raw }}
                 </div>
-                <h3>{% trans from "register" %}consent_good_to_go{% endtrans %}</h3>
+                {% if  not is_enrolled_in_study(studyCode)%}
+                    <h3>{% trans from "register" %}consent_good_to_go{% endtrans %}</h3>
+                {% endif %}
                 <p>{% trans from "register" %}consent_any_information{% endtrans %} <a href="{{ path('_secure') }}" target="_blank">{% trans from "register" %}consent_security_privacy{% endtrans %}</a></p>
                 {% if  not is_enrolled_in_study(studyCode)%}
                 <div class="align_center">

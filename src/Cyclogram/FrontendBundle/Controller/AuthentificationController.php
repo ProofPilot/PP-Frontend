@@ -218,7 +218,13 @@ class AuthentificationController extends Controller
             return $this->redirect($this->generateUrl("_signup", array('error' => true)));
         }
         
+        $participant = $this->get('security.context')->getToken()->getUser();
+        
+        
         if (isset($studyCode)) {
+            $isEnrolled = $em->getRepository('CyclogramProofPilotBundle:Participant')->isEnrolledInStudy($participant, $studyCode);
+            if ($isEnrolled)
+                return $this->redirect($this->generateUrl("_main"));
             $study = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
             $studyContent =  $this->getDoctrine()->getRepository("CyclogramProofPilotBundle:StudyContent")->findOneBy(array('study' => $study->getStudyId(),'language' => $language));
             if ($study->getStudySkipAboutMe() && $study->getStudySkipConsent()) {
