@@ -3864,11 +3864,20 @@ footer .row_2 p {
     text-transform: uppercase;
     width: 164px !important;
 }
-#email_list .sender_info label, #email_list .msg_details textarea {
+#email_list .msg_details textarea {
 	width: 100%;
 	margin-bottom: 10px;
 	box-sizing: border-box;
     -moz-box-sizing: border-box;
+    resize: none;
+    border: 1px solid #C9C9C9;
+    border-radius: 3px;
+    padding: 10px;
+    color: #6F6F6F;
+    font-family: 'Roboto';
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
 }
 /*Social icons*/
 .social_icons_block {
