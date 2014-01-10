@@ -210,14 +210,27 @@ class AuthentificationController extends Controller
      * @Template()
      */
     public function doOauthAction(Request $request, $studyCode, $surveyId){
-        $language = $this->getRequest()->getLocale();
         $em = $this->getDoctrine()->getManager();
+        $locale = $this->getRequest()->getLocale()?$this->getRequest()->getLocale():'en';
+        $language = $em->getRepository('CyclogramProofPilotBundle:Language')->findOneByLocale($locale);
+        
         if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
             return $this->redirect($this->generateUrl("_signup", array('error' => true)));
         }
         
         if (isset($studyCode)) {
-            return $this->redirect($this->generateUrl("_signup_about", array('studyCode' => $studyCode)));
+            $study = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
+            $studyContent =  $this->getDoctrine()->getRepository("CyclogramProofPilotBundle:StudyContent")->findOneBy(array('study' => $study->getStudyId(),'language' => $language));
+            if ($study->getStudySkipAboutMe() && $study->getStudySkipConsent()) {
+                $redirectUrl = $this->generateUrl("_main");
+                $study = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
+                $language = $em->getRepository('CyclogramProofPilotBundle:Language')->findOneByLocale($request->getLocale());
+                return $this->redirect($this->generateUrl("_eligibility_survey", array('studyCode'=> $studyCode, 'surveyId' => $studyContent->getStudyElegibilitySurvey(), 'redirectUrl' => $redirectUrl)));
+            }elseif ($study->getStudySkipAboutMe()) {
+                return $this->render('CyclogramFrontendBundle:Authentification:consent_main.html.twig', array('studyCode' => $studyCode, 'surveyId' => $studyContent->getStudyElegibilitySurvey(),'studycontent' => $studyContent));
+            } else {
+                return $this->redirect($this->generateUrl("_signup_about", array('studyCode' => $studyCode, 'surveyId' => $studyContent->getStudyElegibilitySurvey())));
+            }
         }
         return $this->redirect($this->generateUrl("_signup_about"));
     }
@@ -228,14 +241,24 @@ class AuthentificationController extends Controller
      * @Template()
      */
     public function signupAboutAction(Request $request, $studyCode=null, $surveyId = null) {
+        $locale = $this->getRequest()->getLocale();
         $em = $this->getDoctrine()->getManager();
         $session = $request->getSession();
         $participant = $this->get('security.context')->getToken()->getUser();
+
         
         if (($this->get('security.context')->isGranted('ROLE_FACEBOOK_USER') || $this->get('security.context')->isGranted('ROLE_GOOGLE_USER')) 
                         && ($participant->getParticipantBasicInformation() == true)) {
-            return $this->OauthRedirect($studyCode);
-            
+            if (isset($studyCode)) {
+                $study = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
+                $studyContent =  $this->getDoctrine()->getRepository("CyclogramProofPilotBundle:StudyContent")->getStudyContent($study->getStudyCode(), $locale);
+                if ($study->getStudySkipConsent())
+                    return $this->OauthRedirect($studyCode);
+                else
+                    return $this->render('CyclogramFrontendBundle:Authentification:consent_main.html.twig', array('studyCode' => $studyCode, 'surveyId' => $studyContent->getStudyElegibilitySurvey(), 'studycontent' => $studyContent));
+            } else {
+                return $this->OauthRedirect($studyCode);
+            }
         }
 
         if (empty($participant)) {
@@ -356,7 +379,16 @@ class AuthentificationController extends Controller
                 }
                 if ($message == null) {
                     $this->confirmParticipantEmail($participant);
-                    return $this->OauthRedirect($studyCode);
+                    if (isset($studyCode)) {
+                        $study = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
+                        $studyContent =  $this->getDoctrine()->getRepository("CyclogramProofPilotBundle:StudyContent")->getStudyContent($study->getStudyCode(), $locale);
+                        if ($study->getStudySkipConsent())
+                            return $this->OauthRedirect($studyCode);
+                        else
+                            return $this->render('CyclogramFrontendBundle:Authentification:consent_main.html.twig', array('studyCode' => $studyCode, 'surveyId' => $studyContent->getStudyElegibilitySurvey(), 'studycontent' => $studyContent));
+                    } else {
+                        return $this->OauthRedirect($studyCode);
+                    }
                 } else {
                    return $this->render('CyclogramFrontendBundle:Authentification:signup_about.html.twig',
                             array (

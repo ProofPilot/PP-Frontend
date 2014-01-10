@@ -6,8 +6,10 @@
     <div class="form_wrapper">
         {% if studyCode and surveyId is defined  %}
             <form  action="{{ path('_signup_about', {'studyCode' : studyCode, 'surveyId' : surveyId }) }}" method="post" name="signup_about" id="signup_about_form" novalidate> 
+        {% elseif  studyCode is defined %}
+            <form  action="{{ path('_signup_about', {'studyCode' : studyCode }) }}" method="post" name="signup_about" id="signup_about_form" novalidate> 
         {% else %}
-        <form  action="{{ path('_signup_about') }}" method="post" name="signup_about" id="signup_about_form" novalidate>
+            <form  action="{{ path('_signup_about') }}" method="post" name="signup_about" id="signup_about_form" novalidate>
         {% endif %}   
             <div class="form_content">
                 <span class="text_wrapper">{% trans from "signup_about" %}text_i_am_a{% endtrans %}</span> 
