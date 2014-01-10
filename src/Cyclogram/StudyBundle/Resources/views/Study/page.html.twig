@@ -411,7 +411,7 @@
                     <a class="fb" id="facebook_button_landing_page" href=""><span>{% trans from "register" %}txt_join_with{% endtrans %} Facebook</span></a>
                 {% endif %}
                 <div class="video_placeholder">
-                    {% if studycontent.studyVideo is defined %}
+                    {% if studycontent.studyVideo is not empty %}
                     <iframe width="670" height="393" 
                         src="{{ studycontent.studyVideo }}" frameborder="0" allowfullscreen>
                     </iframe>
