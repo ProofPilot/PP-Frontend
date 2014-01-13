@@ -9,20 +9,21 @@ email_not_send_try_later: email_not_send_try_later
 email_reset_password: email_reset_password
 email_title_notice: 'Forget to Verify Your E-mail Address with ProofPilot?'
 email_title_verify: 'Forget to Verify Your E-mail Address with ProofPilot?'
-email_to_friends_add_email: email_to_friends_add_email   # FIXME
-email_to_friends_cancle: email_to_friends_cancle   # FIXME
-email_to_friends_message: email_to_friends_message   # FIXME
-email_to_friends_send_button: email_to_friends_send_button   # FIXME
-email_to_friends_subject: email_to_friends_subject   # FIXME
-email_to_friends_title: email_to_friends_title   # FIXME
-email_to_friends_who_are_you_sending: email_to_friends_who_are_you_sending   # FIXME
-email_to_friends_who_sending: email_to_friends_who_sending   # FIXME
+email_to_friends_add_email: email_to_friends_add_email
+email_to_friends_cancle: email_to_friends_cancle
+email_to_friends_message: email_to_friends_message
+email_to_friends_send_button: email_to_friends_send_button
+email_to_friends_subject: email_to_friends_subject
+email_to_friends_title: email_to_friends_title
+email_to_friends_who_are_you_sending: email_to_friends_who_are_you_sending
+email_to_friends_who_sending: email_to_friends_who_sending
 forgot_username: forgot_username
 forgot_username_text: forgot_username_text
 forgot_username_title: forgot_username_title
 insert_receiver_email: insert_receiver_email
 insert_sender_email: insert_sender_email
 join: join
+link_below_to_confirm: link_below_to_confirm   # FIXME
 notice_verification: 'Thanks for verifying?'
 notice_verification_text: notice_verification_text
 reset_pass_link: reset_pass_link

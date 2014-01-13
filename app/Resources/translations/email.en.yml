@@ -9,20 +9,21 @@ email_not_send_try_later: 'Email not sent try later'
 email_reset_password: 'Reset Your Password'
 email_title_notice: 'Email title notice'
 email_title_verify: 'Please Verify Your E-mail Address'
-email_to_friends_add_email: Add another e-mail
+email_to_friends_add_email: 'Add another e-mail'
 email_to_friends_cancle: Cancle
 email_to_friends_message: Message
-email_to_friends_send_button: Send e-mail
+email_to_friends_send_button: 'Send e-mail'
 email_to_friends_subject: Subject
-email_to_friends_title: Send e-mail to a friend
-email_to_friends_who_are_you_sending: Who are you sending to?
-email_to_friends_who_sending: Who is sending?
+email_to_friends_title: 'Send e-mail to a friend'
+email_to_friends_who_are_you_sending: 'Who are you sending to?'
+email_to_friends_who_sending: 'Who is sending?'
 forgot_username: 'Forgot username'
 forgot_username_text: 'Forgot username'
 forgot_username_title: 'Forgot username title'
 insert_receiver_email: 'Insertat least one receiver email'
 insert_sender_email: 'Insertsender email'
 join: 'JOIN STUDY'
+link_below_to_confirm: 'If for some reason, you can''t click button, use link below to confirm the registration'
 notice_verification: 'Notice verification'
 notice_verification_text: 'Hey, this is ProofPilot. We noticed you haven’t confirmed your e-mail address.'
 reset_pass_link: 'Click here to reset your password'

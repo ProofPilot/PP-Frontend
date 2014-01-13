@@ -15,7 +15,7 @@
                     </a>
                 </div>
                 <div>
-                    <p>If for some reason, you can't click button, use link below to confirm the registration:</p>
+                    <p>{% trans from "email" %}link_below_to_confirm{% endtrans %}:</p>
                     <a href="{{ siteurl }}">{{ siteurl }}</a>
                 </div>
                 {% include 'CyclogramFrontendBundle:Email:email_studies_list.html.twig' %}

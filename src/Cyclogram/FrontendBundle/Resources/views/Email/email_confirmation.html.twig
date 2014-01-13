@@ -12,7 +12,7 @@
                                           display: inline-block; font-size: 20px; font-weight: bold; margin-bottom: 30px; padding: 20px 70px; text-decoration: none;">
             {{ 'do_it' | trans({}, "email", locale) }}
         </a>
-        <p style="text-align: center; border-bottom: 1px dotted #999D93; border-top: 1px dotted #999D93; color: #555555; font-size: 12px; margin-bottom: 20px; padding-bottom: 25px; padding-top: 25px;">If for some reason, you can't click button, use link below to confirm the registration:
+        <p style="text-align: center; border-bottom: 1px dotted #999D93; border-top: 1px dotted #999D93; color: #555555; font-size: 12px; margin-bottom: 20px; padding-bottom: 25px; padding-top: 25px;">{% trans from "email" %}link_below_to_confirm{% endtrans %}:
             <br/>
             <a style="color: #BA433B; text-decoration: none;" href="{{ confirmurl }}">{{ confirmurl }}</a>
         </p>
