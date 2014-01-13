@@ -34,7 +34,7 @@ class PledgeStudy extends AbstractStudy implements StudyInterface
     }
     public function getInterventionCodes()
     {
-        return array('MPFOCUS', 'MPFORM');
+        return array('Pledgereferral');
     }
     public function studyRegistration($participant, $surveyId, $saveId,
             $campaignLink)
@@ -45,6 +45,9 @@ class PledgeStudy extends AbstractStudy implements StudyInterface
         if (isset($participantSurveyLink)) {
             $participantSurveyLink->setStatus(ParticipantSurveyLink::STATUS_CLOSED);
             $em->persist($participantSurveyLink);
+            $participantBalance = $participant->getParticipantIncentiveBalance();
+            $participant->setParticipantIncentiveBalance($participantBalance + 15);
+            $em->persist($participant);
             $em->flush();
         
             $ArmParticipantLink = null;
@@ -61,7 +64,7 @@ class PledgeStudy extends AbstractStudy implements StudyInterface
         
             $participantInterventionLink = new ParticipantInterventionLink();
         
-            $intervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')->findOneByInterventionCode('MPFORM');
+            $intervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')->findOneByInterventionCode('Pledgereferral');
             $participantInterventionLink->setIntervention($intervention);
             $participantInterventionLink->setParticipant($participant);
             $participantInterventionLink->setParticipantInterventionLinkDatetimeStart(new \DateTime("now"));
@@ -72,40 +75,41 @@ class PledgeStudy extends AbstractStudy implements StudyInterface
     }
     public function interventionLogic($participant)
     {
-        $em = $this->container->get('doctrine')->getManager();
+//         $em = $this->container->get('doctrine')->getManager();
         
-        $participantArm = $em->getRepository('CyclogramProofPilotBundle:ParticipantArmLink')->getStudyArm($participant, $this->getStudyCode());
-        if (isset($participantArm))
-            $participantArmName = $participantArm->getArm()->getArmCode();
-            //get all participant intervention links
-            $interventionLinks = $em
-            ->getRepository(
-                    'CyclogramProofPilotBundle:ParticipantInterventionLink')
-                    ->getStudyInterventionLinks($participant, $this->getStudyCode());
-            foreach ($interventionLinks as $interventionLink) {
-                $interventionCode = $interventionLink->getIntervention()->getInterventionCode();
-                $intervention = $interventionLink->getIntervention();
-                $status = $interventionLink->getStatus();
-                switch ($interventionCode) {
-                    case 'MPFORM' :
-                        $surveyId = $intervention->getSidId();
-                        if ($status == ParticipantInterventionLink::STATUS_ACTIVE) {
-                            $passed = $em->getRepository('CyclogramProofPilotBundle:ParticipantSurveyLink')
-                            ->checkIfSurveyPassed($participant, $surveyId);
-                            if ($passed) {
-                                $this->createIncentive($participant, $intervention);
-                                $interventionLink->setStatus(ParticipantInterventionLink::STATUS_CLOSED);
-                                $em->persist($interventionLink);
-                                $em->flush();
-                                $intervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')
-                                    ->findOneByInterventionCode("MPFOCUS");
-                                $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')
-                                    ->addParticipantInterventionLink($participant,$intervention, false);
-                            }
-                        }
-                        break;
-                }
-        }
+//         $participantArm = $em->getRepository('CyclogramProofPilotBundle:ParticipantArmLink')->getStudyArm($participant, $this->getStudyCode());
+//         if (isset($participantArm))
+//             $participantArmName = $participantArm->getArm()->getArmCode();
+//             //get all participant intervention links
+//             $interventionLinks = $em
+//             ->getRepository(
+//                     'CyclogramProofPilotBundle:ParticipantInterventionLink')
+//                     ->getStudyInterventionLinks($participant, $this->getStudyCode());
+//             foreach ($interventionLinks as $interventionLink) {
+//                 $interventionCode = $interventionLink->getIntervention()->getInterventionCode();
+//                 $intervention = $interventionLink->getIntervention();
+//                 $status = $interventionLink->getStatus();
+//                 switch ($interventionCode) {
+//                     case 'MPFORM' :
+//                         $surveyId = $intervention->getSidId();
+//                         if ($status == ParticipantInterventionLink::STATUS_ACTIVE) {
+//                             $passed = $em->getRepository('CyclogramProofPilotBundle:ParticipantSurveyLink')
+//                             ->checkIfSurveyPassed($participant, $surveyId);
+//                             if ($passed) {
+//                                 $this->createIncentive($participant, $intervention);
+//                                 $interventionLink->setStatus(ParticipantInterventionLink::STATUS_CLOSED);
+//                                 $em->persist($interventionLink);
+//                                 $em->flush();
+//                                 $intervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')
+//                                     ->findOneByInterventionCode("MPFOCUS");
+//                                 $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')
+//                                     ->addParticipantInterventionLink($participant,$intervention, false);
+//                             }
+//                         }
+//                         break;
+//                 }
+//         }    
+        return true;
     }
     
     public function checkEligibility($surveyResult)
@@ -113,19 +117,19 @@ class PledgeStudy extends AbstractStudy implements StudyInterface
         $isEligible = true;
         $reason = array();
 
-        if (isset($surveyResult['481663X739X7418'])
-                && intval($surveyResult['481663X739X7418'] < 18)) {
+        if (isset($surveyResult['399419X758X7914'])
+                && intval($surveyResult['399419X758X7914'] < 16)) {
             $isElegible = false;
-            $reason[] = "Less than 18 years";
+            $reason[] = "Less than 16 years";
         }
 
-        if (isset($surveyResult['481663X739X7425'])
-                &&  !in_array($surveyResult['481663X739X7425'], array('A2','A4'))) {
+        if (isset($surveyResult['399419X758X7915'])
+                &&  !in_array($surveyResult['399419X758X7915'], array('A2','A4'))) {
             $isEligible = false;
-            $reason[] = "Gender";
+            $reason[] = "Invalid city";
         }
 
-        if (isset($surveyResult['481663X739X7424SQ002']) && $surveyResult['481663X739X7424SQ002'] != 'Y') {
+        if (isset($surveyResult['399419X758X7921SQ002']) && $surveyResult['399419X758X7921SQ002'] != 'Y') {
             $isEligible = false;
             $reason[] = "Sex in last 12 months with a male";
         }
