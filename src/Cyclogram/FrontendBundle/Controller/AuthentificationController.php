@@ -211,6 +211,7 @@ class AuthentificationController extends Controller
      */
     public function doOauthAction(Request $request, $studyCode, $surveyId){
         $em = $this->getDoctrine()->getManager();
+        $session = $request->getSession();
         $locale = $this->getRequest()->getLocale()?$this->getRequest()->getLocale():'en';
         $language = $em->getRepository('CyclogramProofPilotBundle:Language')->findOneByLocale($locale);
         
@@ -219,6 +220,10 @@ class AuthentificationController extends Controller
         }
         
         $participant = $this->get('security.context')->getToken()->getUser();
+        if ($session->has('confirmation')) {
+            $this->confirmParticipantEmail($participant);
+            $session->remove('confirmation');
+        }
         
         
         if (isset($studyCode)) {
@@ -370,8 +375,6 @@ class AuthentificationController extends Controller
                             $participant = $this->get('security.context')->getToken()->getUser();
                             if ($participant != 'anon.') {
                                 $redirectUrl = $this->generateUrl("_main");
-                                if ($participant->getParticipantEmailConfirmed() == false)
-                                    $this->confirmParticipantEmail($participant);
                             } else {
                                 $redirectUrl = $this->generateUrl("_signup");
                             }
@@ -384,7 +387,6 @@ class AuthentificationController extends Controller
                     }
                 }
                 if ($message == null) {
-                    $this->confirmParticipantEmail($participant);
                     if (isset($studyCode)) {
                         $study = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
                         $studyContent =  $this->getDoctrine()->getRepository("CyclogramProofPilotBundle:StudyContent")->getStudyContent($study->getStudyCode(), $locale);
@@ -424,8 +426,6 @@ class AuthentificationController extends Controller
             $participant = $this->get('security.context')->getToken()->getUser();
             if ($participant != 'anon.') {
                 $redirectUrl = $this->generateUrl("_main");
-                if ($participant->getParticipantEmailConfirmed() == false)
-                    $this->confirmParticipantEmail($participant);
             } else {
                 $redirectUrl = $this->generateUrl("_signup");
             }
@@ -699,6 +699,8 @@ class AuthentificationController extends Controller
         $roles = array("ROLE_USER", "ROLE_PARTICIPANT");
         $participant->setRoles($roles);
         $participant->setParticipantEmailCode($mailCode);
+        if ($participant->getParticipantEmailConfirmed() == false)
+            $this->confirmParticipantEmail($participant);
         if ($session->has('refferal_participant')) 
             $participant->setParticipantRefferalId($session->get('refferal_participant'));
         $em->persist($participant);
@@ -712,7 +714,7 @@ class AuthentificationController extends Controller
      * Send email to confirm participant has indicated a real email address
      * @param Participant $participant
      */
-    private function confirmParticipantEmail(Participant $participant, $studyCode = null)
+    public  function confirmParticipantEmail(Participant $participant, $studyCode = null)
     {
         $locale = $this->getRequest()->getLocale();
         $em = $this->getDoctrine()->getManager();

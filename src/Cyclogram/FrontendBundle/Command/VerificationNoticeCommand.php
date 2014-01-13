@@ -39,8 +39,9 @@ class VerificationNoticeCommand extends ContainerAwareCommand
 
         $em = $this->getContainer()->get('doctrine')->getManager();
         $participants = $em->getRepository('CyclogramProofPilotBundle:Participant')->getParticipantsWithNotConfirmedEmails();
+        
         foreach ($participants as $participant) {
-            if (!$em->getRepository('CyclogramProofPilotBundle:Participant')->isEnrolledInStudy($participant, 'sexpro')) {
+//             if (!$em->getRepository('CyclogramProofPilotBundle:Participant')->isEnrolledInStudy($participant, 'sexpro')) {
                 // send email
                 $result = $this->sendDoItNowEmail($participant);
                 if($result['send'] == true){
@@ -65,7 +66,7 @@ class VerificationNoticeCommand extends ContainerAwareCommand
                     }
                 }
             }
-        }
+//         }
     }
     
     private function sendDoItNowEmail($participant) 
@@ -75,11 +76,13 @@ class VerificationNoticeCommand extends ContainerAwareCommand
         
         $embedded = array();
         $embedded = $cc->getEmbeddedImages();
+        $locale = $participant->getLocale();
         
         $parameters['email'] = $participant->getParticipantEmail();
         $parameters['locale'] = $participant->getLocale();
         $parameters['host'] = $this->getContainer()->getParameter('site_url');
         $parameters['code'] = $participant->getParticipantEmailCode();
+        $parameters["studies"] = $this->getContainer()->get('doctrine')->getRepository('CyclogramProofPilotBundle:Study')->getRandomStudyInfo($locale, $participant);
         $path = $this->getContainer()->get('router')->generate('_send_verification_email', array(
                 '_locale' => $parameters['locale'],
                 'email' => $parameters['email'],

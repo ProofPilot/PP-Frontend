@@ -117,7 +117,10 @@ class OAuth2UserProvider implements OAuthAwareUserProviderInterface
                     $participant->setRoles(array("ROLE_GOOGLE_USER","ROLE_PARTICIPANT"));
                     break;
             }
-
+            if ($participant->getParticipantEmailConfirmed() == false){
+                $session->set('confirmation', false);
+            }
+            
             $this->userManager->persist($participant);
             $this->userManager->flush();
             
