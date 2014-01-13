@@ -31,6 +31,7 @@ class ParticipantInterventionLink
     const STATUS_ACTIVE = 1;
     const STATUS_CLOSED = 11;
     const STATUS_DISMISS = 28;
+    const STATUS_REFERRAL = 8;
     /**
      * @var integer
      *

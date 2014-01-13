@@ -701,8 +701,7 @@ class AuthentificationController extends Controller
         $participant->setParticipantEmailCode($mailCode);
         if ($participant->getParticipantEmailConfirmed() == false)
             $this->confirmParticipantEmail($participant);
-        if ($session->has('refferal_participant')) 
-            $participant->setParticipantRefferalId($session->get('refferal_participant'));
+
         $em->persist($participant);
         $em->flush($participant);
         

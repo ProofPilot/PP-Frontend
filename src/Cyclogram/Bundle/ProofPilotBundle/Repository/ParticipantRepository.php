@@ -326,5 +326,25 @@ class ParticipantRepository extends EntityRepository implements
         
         return $results;
     }
+    
+    public function countParticipantRefferals($intervetionCode, $participant)
+    {
+        $query = $this->getEntityManager()
+        ->createQuery("
+                SELECT COUNT (pil)
+                FROM CyclogramProofPilotBundle:ParticipantInterventionLink pil
+                INNER JOIN pil.intervention i
+                WHERE pil.status = :pilstatus
+                AND pil.participant = :participant
+                AND i.interventionCode = :interventionCode
+                ")                ->setParameters(array(
+                                      'pilstatus' => ParticipantInterventionLink::STATUS_REFERRAL,
+                                      'participant' => $participant->getParticipantId(),
+                                      'interventionCode' => $intervetionCode
+                        ));
+        $results = $query->getSingleScalarResult();
+    
+        return $results;
+    }
 
 }

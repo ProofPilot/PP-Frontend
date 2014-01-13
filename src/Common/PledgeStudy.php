@@ -39,15 +39,25 @@ class PledgeStudy extends AbstractStudy implements StudyInterface
     public function studyRegistration($participant, $surveyId, $saveId,
             $campaignLink)
     {
+        $session = $this->container->get('session');
         $em = $this->container->get('doctrine')->getManager();
         $participantSurveyLink = $em->getRepository('CyclogramProofPilotBundle:ParticipantSurveyLink')
         ->findOneBy(array('saveId'=>$saveId, 'sidId'=>$surveyId));
         if (isset($participantSurveyLink)) {
             $participantSurveyLink->setStatus(ParticipantSurveyLink::STATUS_CLOSED);
             $em->persist($participantSurveyLink);
-            $participantBalance = $participant->getParticipantIncentiveBalance();
-            $participant->setParticipantIncentiveBalance($participantBalance + 15);
-            $em->persist($participant);
+            
+            $participantInterventionLink = new ParticipantInterventionLink();
+            
+            $intervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')->findOneByInterventionCode('MPFORM');
+            $participantInterventionLink->setIntervention($intervention);
+            $participantInterventionLink->setParticipant($participant);
+            $participantInterventionLink->setParticipantInterventionLinkDatetimeStart(new \DateTime("now"));
+            $participantInterventionLink->setStatus(ParticipantInterventionLink::STATUS_REFERRAL);
+            $em->persist($participantInterventionLink);
+
+            $this->createIncentive($participant, $intervention);
+
             $em->flush();
         
             $ArmParticipantLink = null;
@@ -71,6 +81,28 @@ class PledgeStudy extends AbstractStudy implements StudyInterface
             $participantInterventionLink->setStatus(ParticipantInterventionLink::STATUS_ACTIVE);
             $em->persist($participantInterventionLink);
             $em->flush($participantInterventionLink);
+            
+            if ($session->has('refferal_participant')){
+                $participant->setParticipantRefferalId($session->get('refferal_participant'));
+                $em->flush();
+                $referralParticipant = $em->getRepository('CyclogramProofPilotBundle:Participant')->find($session->get('refferal_participant'));
+                $intervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')->findOneByInterventionCode('Pledgereferral');
+                $countReferrals = $em->getRepository('CyclogramProofPilotBundle:Participant')->countParticipantRefferals($intervention->getInterventionCode(), $referralParticipant);
+                if ($countReferrals <3) {
+                    $participantInterventionLink = new ParticipantInterventionLink();
+                    
+                    $intervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')->findOneByInterventionCode('Pledgereferral');
+                    $participantInterventionLink->setIntervention($intervention);
+                    $participantInterventionLink->setParticipant($referralParticipant);
+                    $participantInterventionLink->setParticipantInterventionLinkDatetimeStart(new \DateTime("now"));
+                    $participantInterventionLink->setStatus(ParticipantInterventionLink::STATUS_REFERRAL);
+                    $em->persist($participantInterventionLink);
+                    $em->flush($participantInterventionLink);
+                    
+                    $this->createIncentive($referralParticipant, $intervention);
+                }
+                $session->remove('refferal_participant');
+            }
         }
     }
     public function interventionLogic($participant)

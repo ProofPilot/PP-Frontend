@@ -304,7 +304,10 @@ class EmailController extends Controller
      */
     function testGoogleEarthAction()
     {
-        return $this->render('CyclogramFrontendBundle:Email:googleSearch.html.twig');
+        $em = $this->container->get('doctrine')->getManager();
+        $referralParticipant = $em->getRepository('CyclogramProofPilotBundle:Participant')->find(403);
+        $result = $em->getRepository('CyclogramProofPilotBundle:Participant')->countParticipantRefferals('Pledgereferral', $referralParticipant);
+        return new Response ($result);
     }
 
 }
