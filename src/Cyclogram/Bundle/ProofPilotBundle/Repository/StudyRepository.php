@@ -310,7 +310,6 @@ class StudyRepository extends EntityRepository
             return $results;
         }
 
-        
     }
 
 }
