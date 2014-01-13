@@ -88,7 +88,7 @@ class PledgeStudy extends AbstractStudy implements StudyInterface
                 $referralParticipant = $em->getRepository('CyclogramProofPilotBundle:Participant')->find($session->get('refferal_participant'));
                 $intervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')->findOneByInterventionCode('Pledgereferral');
                 $countReferrals = $em->getRepository('CyclogramProofPilotBundle:Participant')->countParticipantRefferals($intervention->getInterventionCode(), $referralParticipant);
-                if ($countReferrals <3) {
+                if ($countReferrals <2) {
                     $participantInterventionLink = new ParticipantInterventionLink();
                     
                     $intervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')->findOneByInterventionCode('Pledgereferral');
