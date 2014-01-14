@@ -207,6 +207,7 @@ class DashboardController extends Controller
             $parameters['dismiss_message'] = $session->gets('dismiss_error_message');
             $session->remove('dismiss_error_message');
         }
+        $parameters['participant_email'] = $participant->getParticipantEmail();
 
       return $this->render('CyclogramFrontendBundle:Dashboard:main.html.twig', $parameters);
     
