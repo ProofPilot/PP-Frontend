@@ -3883,15 +3883,14 @@ footer .row_2 p {
 /*Social icons*/
 .social_icons_block {
 	float: right;
-	margin-right: 35px;
+	margin-right: 30px;
 	margin-top: 50px;
 }
-.twitter_icon, .facebook_icon, .email {
+.twitter_icon, .facebook_icon {
 	width: 25px;
 	height: 25px;
-	float: left;
+	display: inline-block;
 	margin-right: 10px;
-	display: block;
 }
 .twitter_icon {
 	background: url(../images/twitter_social_icon.png) no-repeat;
@@ -3909,7 +3908,7 @@ footer .row_2 p {
 	margin-right: 30px;
 	margin-top: 50px;
 }
-.referal_social .tw, .referal_social .fb, .referal_social .email {
+.referal_social .tw, .referal_social .fb, .email {
 	width: 25px;
 	height: 25px;
 	display: inline-block;
