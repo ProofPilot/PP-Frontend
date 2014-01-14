@@ -16,11 +16,12 @@
                     $(this).closest('.ui-dialog-content').dialog("close");
                 });
             }
-            
+            var email_to_friens_study = null;
             //mail to friends
             $('.email').bind('click', function(e) {
                 e.preventDefault();
-                $('.email_list').dialog({
+               $('#tmp_subject').val($('#tmp_subject').val()+" " +$(this).children('.email_to_friends_study').val());
+                $('#email_list').dialog({
                     modal: true,
                     width: '330',
                     fluid: true,
@@ -298,8 +299,9 @@
                                     </div>
                                      {% endif %}
                                 </div>
+                                
                             {% endfor %}
-                                <form class="email_list" style="display: none; " action="{{path('_email_to_friend')}}">
+                                <form id="email_list" style="display: none; " action="{{path('_email_to_friend')}}">
                                     <h1>{%  trans from "email" %}email_to_friends_title{% endtrans %}</h1>
                                     <div class="sender_info">
                                         <label for="tmp_who">{%  trans from "email" %}email_to_friends_who_sending{% endtrans %}</label>
@@ -312,7 +314,7 @@
                                         </p>
                                     </div>
                                     <div class="msg_details">
-                                        <label for="tmp_subject">{%  trans from "email" %}email_to_friends_subject{% endtrans %}Subject</label>
+                                        <label for="tmp_subject">{%  trans from "email" %}email_to_friends_subject{% endtrans %}</label>
                                         <input id="tmp_subject" type="text" name="subject" class="text" value="{%  trans from "study" %}inivted_to_study{% endtrans %} " />
                                         <label for="tmp_msg">{%  trans from "email" %}email_to_friends_message{% endtrans %}</label>
                                         <textarea rows="3" cols="28.5" name="description" class="text"></textarea>
@@ -323,7 +325,7 @@
                                             <input type="hidden" value="{{ studyCode }}"  name="studyCode"/>
                                         {% endif %}
                                         <a href="#" class="btn_cancel">{%  trans from "email" %}email_to_friends_cancle{% endtrans %}</a>
-                                        <a href="#" class="btn_send_mail" class ="email_submit">{%  trans from "email" %}email_to_friends_send_button{% endtrans %}</a>
+                                        <a href="#" class="btn_send_mail" id="email_submit">{%  trans from "email" %}email_to_friends_send_button{% endtrans %}</a>
                                     </div>
                                 </form>
                         {% else %}
