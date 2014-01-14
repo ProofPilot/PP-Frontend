@@ -20,7 +20,7 @@
             //mail to friends
             $('.email').bind('click', function(e) {
                 e.preventDefault();
-                $('#email_list').dialog({
+                $('.email_list').dialog({
                     modal: true,
                     width: '330',
                     fluid: true,
@@ -212,7 +212,7 @@
 							    <div class="share_slide" style="display:none">
                                     <a href='' class="twitter_icon" onclick="popUp=window.open('https://twitter.com/share?url={{ study.studyRefferalShortUrl }}&text={%  trans from "study" %}social_join_study{% endtrans %} {{ study.studyName }} {%  trans from "study" %}social_at_proofpilot{% endtrans %}', 'popupwindow', 'scrollbars=yes,width=800,height=400');popUp.focus();return false" class="tw"></a>
                                     <a href="#" class="facebook_icon" onClick="popUp=window.open('http://www.facebook.com/sharer.php?s=100&p[url]='+encodeURIComponent(location.href)+'&p[title]={{ study.studyName | raw }}&p[summary]={{ study.studyRefferalShortUrl }}&p[images][0]={{ study.studyGraphic }}','sharer','scrollbars=yes,width=800,height=400')"></a>
-							        <a href="" class="email"></a>
+							        <a href="" class="email"><input type="hidden" class="email_to_friends_study" value="{{ study.studyName }}"></a>
 							    </div>
 							    {% endif %}
 							</li>
@@ -281,14 +281,14 @@
                                     <div class="social_icons_block">
                                         <a href="" class="twitter_icon" onclick="popUp=window.open('https://twitter.com/share?url={{ intervention.shortstudyUrl }}&text={%  trans from "study" %}social_join_study{% endtrans %} {{ intervention.studyName }} {%  trans from "study" %}social_at_proofpilot{% endtrans %}', 'popupwindow', 'scrollbars=yes,width=800,height=400');popUp.focus();return false"></a>
                                         <a href="" class="facebook_icon" onClick="return fbs_click(400, 300,'{{ intervention.name | raw }}','{{ intervention.content | raw }}','{{ intervention.logo }}')"></a>
-                                        <a href="" class="email"></a>
+                                        <a href="" class="email"><input type="hidden" class="email_to_friends_study" value="{{ intervention.studyName }}"></a>
                                     </div>
                                      {% endif %}
                                     {% if intervention.type == 'Referral' %}
                                     <div class="referal_social">
                                         <a href="#" class="tw" onclick="popUp=window.open('https://twitter.com/share?url={{ intervention.reffferalShortStudyUrl }}&text={%  trans from "study" %}social_join_study{% endtrans %} {{ intervention.studyName }} {%  trans from "study" %}social_at_proofpilot{% endtrans %}', 'popupwindow', 'scrollbars=yes,width=800,height=400');popUp.focus();return false"></a>
                                         <a href="#" class="fb" onClick="popUp=window.open('http://www.facebook.com/sharer.php?s=100&p[url]='+encodeURIComponent(location.href)+'&p[title]={{ intervention.name | raw }}&p[summary]={{ intervention.content | raw }} {{ intervention.reffferalShortStudyUrl }}&p[images][0]={{ intervention.logo }}','sharer','scrollbars=yes,width=800,height=400')"></a>
-                                        <a href="#" class="email"></a>
+                                        <a href="#" class="email"><input type="hidden" class="email_to_friends_study" value="{{ intervention.studyName }}"></a>
                                     </div>
                                      {% endif %}
                                      {% if intervention.type == 'Choose Location' %}
@@ -298,7 +298,8 @@
                                     </div>
                                      {% endif %}
                                 </div>
-                                <form id="email_list" style="display: none; " action="{{path('_email_to_friend')}}">
+                            {% endfor %}
+                                <form class="email_list" style="display: none; " action="{{path('_email_to_friend')}}">
                                     <h1>{%  trans from "email" %}email_to_friends_title{% endtrans %}</h1>
                                     <div class="sender_info">
                                         <label for="tmp_who">{%  trans from "email" %}email_to_friends_who_sending{% endtrans %}</label>
@@ -312,7 +313,7 @@
                                     </div>
                                     <div class="msg_details">
                                         <label for="tmp_subject">{%  trans from "email" %}email_to_friends_subject{% endtrans %}Subject</label>
-                                        <input id="tmp_subject" type="text" name="subject" class="text" value="{%  trans from "study" %}inivted_to_study{% endtrans %} {{ studycontent.studyName }}" />
+                                        <input id="tmp_subject" type="text" name="subject" class="text" value="{%  trans from "study" %}inivted_to_study{% endtrans %} " />
                                         <label for="tmp_msg">{%  trans from "email" %}email_to_friends_message{% endtrans %}</label>
                                         <textarea rows="3" cols="28.5" name="description" class="text"></textarea>
                                         {% if app.user %}
@@ -322,10 +323,9 @@
                                             <input type="hidden" value="{{ studyCode }}"  name="studyCode"/>
                                         {% endif %}
                                         <a href="#" class="btn_cancel">{%  trans from "email" %}email_to_friends_cancle{% endtrans %}</a>
-                                        <a href="#" class="btn_send_mail" id ="email_submit">{%  trans from "email" %}email_to_friends_send_button{% endtrans %}</a>
+                                        <a href="#" class="btn_send_mail" class ="email_submit">{%  trans from "email" %}email_to_friends_send_button{% endtrans %}</a>
                                     </div>
                                 </form>
-                            {% endfor %}
                         {% else %}
                             <div class="featured_box">
                                 <h2>
