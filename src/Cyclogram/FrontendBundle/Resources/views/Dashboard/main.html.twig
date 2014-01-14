@@ -136,7 +136,7 @@
         });
 
         function dismiss(interventionCode) {
-            if (confirm('{% trans from "dashboard" %}dashboard_dismiss_confirmation {% endtrans %}')) {
+            if (confirm('{% trans from "dashboard" %}dashboard_dismiss_confirmation{% endtrans %}')) {
                 $.ajax({
                     dataType: "json",
                     type: "POST",
@@ -152,7 +152,7 @@
         }
 
         function dismissAll() {
-        	 if (confirm('{% trans from "dashboard" %}dashboard_dismiss_confirmation {% endtrans %}')) {
+        	 if (confirm('{% trans from "dashboard" %}dashboard_dismiss_confirmation{% endtrans %}')) {
                 $.ajax({
                     dataType: "json",
                     type: "POST",
@@ -228,7 +228,7 @@
             <div class="panel_right">
                 <div class="dashboard_title main {% if studyCode != 'knowathome' %}branded{% endif %}">
                     <h1>{% trans from "dashboard" %}txt_dashboard{% endtrans %}</h1>
-                    <p>{% trans from "dashboard" %}dashboard_subtitle {% endtrans %}</p>
+                    <p>{% trans from "dashboard" %}dashboard_subtitle{% endtrans %}</p>
                 </div>
                 <div class="dashboard_panel">
                     

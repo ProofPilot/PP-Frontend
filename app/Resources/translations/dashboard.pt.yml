@@ -1,5 +1,5 @@
-'dashboard_dismiss_confirmation ': 'Tem certeza de que quer demitir? Ela pode afetar sua capacidade de continuar com o estudo'
-'dashboard_subtitle ': 'Subtítulo do Dashboard'
+dashboard_dismiss_confirmation: dashboard_dismiss_confirmation
+dashboard_subtitle: dashboard_subtitle
 do_it: 'FACA ISSO'
 do_it_now: 'Faça-o agora'
 join_a_study: 'Junte-se um estudo'

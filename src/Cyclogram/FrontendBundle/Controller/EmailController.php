@@ -23,6 +23,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 use Symfony\Component\HttpFoundation\Request;
 
+use Symfony\Component\Yaml\Exception\ParseException;
+use Symfony\Component\Yaml\Parser;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -304,10 +306,16 @@ class EmailController extends Controller
      */
     function testGoogleEarthAction()
     {
-        $em = $this->container->get('doctrine')->getManager();
-        $referralParticipant = $em->getRepository('CyclogramProofPilotBundle:Participant')->find(403);
-        $result = $em->getRepository('CyclogramProofPilotBundle:Participant')->countParticipantRefferals('Pledgereferral', $referralParticipant);
-        return new Response ($result);
+        $yaml = new Parser();
+
+        try {
+            $value = $yaml->parse(file_get_contents($path = $this->get('kernel')->getRootDir() . '/../web/DSL/SexproLogic.yml'));
+        } catch (ParseException $e) {
+            printf("Unable to parse the YAML string: %s", $e->getMessage());
+        }
+        return new Response(var_dump($value));
     }
+    
+    
 
 }
