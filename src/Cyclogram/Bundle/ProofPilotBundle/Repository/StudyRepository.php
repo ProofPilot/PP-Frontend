@@ -311,5 +311,21 @@ class StudyRepository extends EntityRepository
         }
 
     }
+    
+    public function getStudyParticipantInterventions($studyCode, $participant) {
+        return $this->getEntityManager()
+        ->createQuery('SELECT pil FROM
+                CyclogramProofPilotBundle:ParticipantInterventionLink pil
+                INNER JOIN pil.participant p
+                INNER JOIN pil.intervention i
+                INNER JOIN i.study s
+                WHERE p.participantEmail = :email
+                AND s.studyCode = :studyCode')
+                ->setParameters(array(
+                        'email' => $participant->getParticipantEmail(),
+                        'studyCode' => $studyCode
+                ))
+                ->getResult();
+    }
 
 }

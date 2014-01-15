@@ -182,6 +182,7 @@ class DoItNotificationCommand extends ContainerAwareCommand
             
                     $intervention["url"] = $this->getInterventionUrl($interventionLink, $locale);
                     $intervention["logo"] = $this->getContainer()->getParameter('study_image_url') . "/" . $studyId . "/" . $studyContent->getStudyLogo();
+                    
                     $parameters["interventions"][] = $intervention;
                     if (!isset($interventionCode))
                         $interventionLink->setParticipantInterventionLinkSendEmailTime(new \DateTime());

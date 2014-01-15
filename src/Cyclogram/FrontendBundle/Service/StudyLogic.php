@@ -79,6 +79,7 @@ class StudyLogic
             $campaignLink = $this->campaignRegistration($participant, $uniqId);
             $this->participantSurveyLinkRegistration($surveyId, $saveId, $participant, $uniqId);
             $this->studies[$studyCode]->studyRegistration($participant,$surveyId, $saveId, $campaignLink);
+            $this->studyWelcomeEmail($participant, $studyCode);
             $study = $em->getRepository("CyclogramProofPilotBundle:Study")->findOneByStudyCode($studyCode);
             $studyParticipants = $study->getStudyNumberOfCurrentParticipants();
             $study->setStudyNumberOfCurrentParticipants(++$studyParticipants);
@@ -205,4 +206,69 @@ class StudyLogic
         else 
             $defaultParticipantStudy->participantDefaultInterventionLogic($participant);
     }
+    
+    private function studyWelcomeEmail($participant, $studyCode) {
+        $cc = $this->container->get('cyclogram.common');
+        $interventionLinks =  $this->container->get('doctrine')->getRepository("CyclogramProofPilotBundle:Study")->getStudyParticipantInterventions($studyCode, $participant);
+        $embedded = array();
+        $locale = $participant->getLocale();
+        $study = $this->container->get('doctrine')->getRepository("CyclogramProofPilotBundle:Study")->findOneByStudyCode($studyCode);
+        $studyContent = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:StudyContent')->getStudyContentById($study->getStudyId(), $locale);
+        
+        $parameters['studyName'] = $studyContent->getStudyName(); 
+        $parameters['studyInvolved'] = $studyContent->getStudyWhatsInvolved();
+        if (!empty($interventionLinks)){
+            foreach($interventionLinks as $interventionLink) {
+                $interventionId = $interventionLink->getIntervention()->getInterventionId();
+                $interventionContent = $this->container->get('doctrine')->getRepository("CyclogramProofPilotBundle:Intervention")->getInterventionContent($interventionId, $locale);
+                $intervention = array();
+                $intervention["title"] = $interventionContent->getInterventionTitle();
+                $intervention["content"] = $interventionContent->getInterventionDescripton();
+    
+                $intervention["url"] =  $this->container->getParameter('site_url').$this->getInterventionUrl($interventionLink, $locale);
+                $intervention["logo"] = $this->container->getParameter('study_image_url') . "/" . $study->getStudyId() . "/" . $studyContent->getStudyLogo();
+                $parameters["interventions"][] = $intervention;
+            }
+        }
+        $embedded = $cc->getEmbeddedImages();
+        $parameters['email'] = $participant->getParticipantEmail();
+        $parameters['locale'] = $locale;
+        $parameters['host'] = $this->container->getParameter('site_url');
+        $parameters["studies"] = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Study')->getRandomStudyInfo($locale, $participant);
+    
+        $cc->sendMail(null,
+                $participant->getParticipantEmail(),
+                $this->container->get('translator')->trans("welcome_to_study", array(), "email", $parameters['locale'])." ". $parameters['studyName'],
+                'CyclogramFrontendBundle:Email:study_welcome.html.twig',
+                null,
+                $embedded,
+                true,
+                $parameters);
+    }
+    
+    private function getInterventionUrl($interventionLink, $locale) {
+        $intervention = $interventionLink->getIntervention();
+    
+        $studyCode = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Intervention')
+        ->getInterventionStudyCode($intervention->getInterventionId());
+    
+        $typeName = $interventionLink->getIntervention()->getInterventionType()->getInterventionTypeName();
+        switch($typeName) {
+            case 'Activity':
+                return $intervention->getInterventionUrl();
+            case 'Survey & Observation':
+                $surveyId = $intervention->getSidId();
+                $redirectPath = $this->container->get('router')->generate('_main', array('_locale' => $locale));
+                $path = $this->container->get('router')->generate('_survey_protected', array(
+                        '_locale' => $locale,
+                        'studyCode' => $studyCode,
+                        'surveyId' => $surveyId,
+                        'redirectUrl' => urlencode($redirectPath)
+    
+                ));
+                return $path;
+    
+        }
+    }
+    
 }

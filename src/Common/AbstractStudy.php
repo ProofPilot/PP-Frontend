@@ -54,5 +54,6 @@ class AbstractStudy
         $em->persist($participant);
         $em->flush();
     }
-
+    
+   
 }
