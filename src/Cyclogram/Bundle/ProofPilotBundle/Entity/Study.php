@@ -120,7 +120,7 @@ class Study
     /**
      * @var integer
      *
-     * @ORM\Column(name="participant_register_last", type="integer", nullable=false)
+     * @ORM\Column(name="participant_register_last", type="boolean", nullable=false)
      */
     protected $participantRegisterLast;
 
@@ -141,14 +141,14 @@ class Study
     /**
      * @var integer
      *
-     * @ORM\Column(name="study_skip_consent", type="integer", nullable=false)
+     * @ORM\Column(name="study_skip_consent", type="boolean", nullable=false)
      */
     protected $studySkipConsent;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="study_skip_about_me", type="integer", nullable=false)
+     * @ORM\Column(name="study_skip_about_me", type="boolean", nullable=false)
      */
     protected $studySkipAboutMe;
 

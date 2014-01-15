@@ -180,7 +180,7 @@ class DoItNotificationCommand extends ContainerAwareCommand
                     $intervention["title"] = $interventionContent->getInterventionTitle();
                     $intervention["content"] = $interventionContent->getInterventionDescripton();
             
-                    $intervention["url"] = $this->getInterventionUrl($interventionLink, $locale);
+                    $intervention["url"] = $this->getContainer()->getParameter('site_url').$this->getInterventionUrl($interventionLink, $locale);
                     $intervention["logo"] = $this->getContainer()->getParameter('study_image_url') . "/" . $studyId . "/" . $studyContent->getStudyLogo();
                     
                     $parameters["interventions"][] = $intervention;
