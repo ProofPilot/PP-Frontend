@@ -348,6 +348,7 @@
                     </div>
                     <div class="box_more_studies">
 {#                         <a href="#" class="more"><span>More studies</span></a>#}
+                        {% if studies is not empty  %}
                         <h3>{% trans from "dashboard" %}join_a_study{% endtrans %}</h3>
                         <div class="studies_wrapper">
                             {% for study in studies %}
@@ -364,6 +365,7 @@
                                 </div>      
                              {% endfor %}
                         </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
