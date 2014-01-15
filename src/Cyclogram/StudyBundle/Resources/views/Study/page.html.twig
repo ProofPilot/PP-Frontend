@@ -574,7 +574,11 @@
         <h1>{%  trans from "email" %}email_to_friends_title{% endtrans %}</h1>
         <div class="sender_info">
             <label for="tmp_who">{%  trans from "email" %}email_to_friends_who_sending{% endtrans %}</label>
-            <input id="tmp_who" type="text" name="send_from" class="text" placeholder="Type your e-mail" /><br />
+            {% if participant_email is not defined %}
+                <input id="tmp_who" type="text" name="send_from" class="text" placeholder="Type your e-mail"/><br />
+            {% else %}
+                <input id="tmp_who" type="text" name="send_from" class="text" value="{{ participant_email }}"/><br />
+            {% endif %}
             <label for="tmp_to">{%  trans from "email" %}email_to_friends_who_are_you_sending{% endtrans %}</label>
             <input id="tmp_to" type="text" name="send_to[0]" class="text" placeholder="Type recipient email" /><br />
             <p class="others">

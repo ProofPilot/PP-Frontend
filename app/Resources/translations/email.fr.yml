@@ -23,7 +23,8 @@ forgot_username_title: forgot_username_title
 insert_receiver_email: insert_receiver_email
 insert_sender_email: insert_sender_email
 join: join
-link_below_to_confirm: link_below_to_confirm   # FIXME
+link_below_to_confirm: link_below_to_confirm
+message_from: message_from   # FIXME
 notice_verification: 'Thanks for verifying?'
 notice_verification_text: notice_verification_text
 reset_pass_link: reset_pass_link

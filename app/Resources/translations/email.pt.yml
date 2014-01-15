@@ -23,7 +23,8 @@ forgot_username_title: forgot_username_title
 insert_receiver_email: insert_receiver_email
 insert_sender_email: insert_sender_email
 join: join
-link_below_to_confirm: link_below_to_confirm   # FIXME
+link_below_to_confirm: link_below_to_confirm
+message_from: message_from   # FIXME
 notice_verification: 'Verificação Notificação'
 notice_verification_text: 'Ei, isso é ProofPilot. Notamos que você ainda não confirmou seu endereço de e-mail.'
 reset_pass_link: 'Clique aqui para redefinir sua senha'

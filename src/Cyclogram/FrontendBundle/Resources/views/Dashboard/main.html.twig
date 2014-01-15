@@ -284,7 +284,7 @@
                                      {% endif %}
                                      {% if intervention.type == 'Pledge' %}
                                     <div class="social_icons_block">
-                                        <a href="" class="twitter_icon" onclick="popUp=window.open('https://twitter.com/share?url={{ intervention.shortstudyUrl }}&text={%  trans from "study" %}social_join_study{% endtrans %} {{ intervention.studyName }} {%  trans from "study" %}social_at_proofpilot{% endtrans %}', 'popupwindow', 'scrollbars=yes,width=800,height=400');popUp.focus();return false"></a>
+                                        <a href="" class="twitter_icon" onclick="popUp=window.open('https://twitter.com/share?url={{ intervention.reffferalShortStudyUrl }}&text={%  trans from "study" %}social_join_study{% endtrans %} {{ intervention.studyName }} {%  trans from "study" %}social_at_proofpilot{% endtrans %}', 'popupwindow', 'scrollbars=yes,width=800,height=400');popUp.focus();return false"></a>
                                         <a href="" class="facebook_icon" onClick="return fbs_click(400, 300,'{{ intervention.name | raw }}','{{ intervention.content | raw }}','{{ intervention.logo }}')"></a>
                                         <a href="" class="email"><input type="hidden" class="email_to_friends_study" value="{{ intervention.studyName }}"></a>
                                     </div>
