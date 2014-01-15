@@ -62,11 +62,12 @@ class StudyController extends Controller
             $siteId = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:Site')->findOneBySiteName($site[0]['siteName']);
             $siteCampaignLink = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:CampaignSiteLink')->findOneBySite($siteId);
             $this->parameters['reffferalShortStudyUrl'] = $cc::generateGoogleShorURL($this->container->getParameter('site_url')."/".$locale."/".$study->getStudyCode()."/?utm_campaign=".$siteCampaignLink->getCampaign()->getCampaignName()."&utm_medium-Clinic&utm_source=".$site[0]['siteName']."&pid=".$participant->getParticipantId());
+            $this->parameters["facebookcontent"] = str_replace(array("\r\n", "\r", "\n"), "", urlencode(strip_tags(substr($studyContent->getStudyAbout(), 0,250))));
         }else {
             $this->parameters['shortstudyUrl'] = $cc::generateGoogleShorURL($this->container->getParameter('site_url')."/".$locale."/".$studyUrl);
+            $this->parameters["facebookcontent"] = str_replace(array("\r\n", "\r", "\n"), "", urlencode(strip_tags($studyContent->getStudyAbout())));
         }
         $this->parameters["studycontent"] = $studyContent;
-        $this->parameters["facebookcontent"] = str_replace(array("\r\n", "\r", "\n"), "", urlencode(strip_tags($studyContent->getStudyAbout())));
         $this->parameters['studyUrl'] = $studyUrl;
         $this->parameters['studyId'] = $studyId;
         $this->parameters['studyCode'] = $study->getStudyCode();

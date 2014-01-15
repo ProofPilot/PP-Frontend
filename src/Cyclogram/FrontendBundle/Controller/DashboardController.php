@@ -101,6 +101,7 @@ class DashboardController extends Controller
             $siteCampaignLink = $em->getRepository('CyclogramProofPilotBundle:CampaignSiteLink')->findOneBySite($siteId);
             $enroledStudy['studyRefferalShortUrl'] = $cc::generateGoogleShorURL($this->container->getParameter('site_url')."/".$locale."/".$study->getStudyCode()."/?utm_campaign=".$siteCampaignLink->getCampaign()->getCampaignName()."&utm_medium-Clinic&utm_source=".$site[0]['siteName']."&pid=".$participant->getParticipantId());
             $enroledStudy['studyAllowSharing'] = $study->getStudyAllowSharing();
+            $enroledStudy['studyContent'] = str_replace(array("\r\n", "\r", "\n"), "", urlencode(strip_tags(substr($studyContent->getStudyAbout(), 0,250))));
             $parameters["enrolledStudies"][] = $enroledStudy;
         }
         $parameters["interventioncount"] = $surveyscount;
@@ -147,6 +148,7 @@ class DashboardController extends Controller
                 $intervention['refferalStudyUrl'] = $this->container->getParameter('site_url')."/".$locale."/".$study->getStudyCode()."/?utm_campaign=".$siteCampaignLink->getCampaign()->getCampaignName()."&utm_medium-Clinic&utm_source=".$site[0]['siteName']."&pid=".$participant->getParticipantId();
                 $intervention['reffferalShortStudyUrl'] = $cc::generateGoogleShorURL($this->container->getParameter('site_url')."/".$locale."/".$study->getStudyCode()."/?utm_campaign=".$siteCampaignLink->getCampaign()->getCampaignName()."&utm_medium-Clinic&utm_source=".$site[0]['siteName']."&pid=".$participant->getParticipantId());
                 $intervention['studyName'] = $studyContent->getStudyName();
+                $intervention['studyContent'] = str_replace(array("\r\n", "\r", "\n"), "", urlencode(strip_tags(substr($studyContent->getStudyAbout(), 0,250))));
             }
             $parameters["studyCode"] = $study->getStudyCode();
           

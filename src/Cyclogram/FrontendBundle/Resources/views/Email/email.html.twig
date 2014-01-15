@@ -5,6 +5,9 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width">
     <style type="text/css">
+        table {
+            width: 640px;
+        }
         p {
             font-size: 11px;
         }
@@ -84,8 +87,9 @@
             <td height="16" colspan="3"></td>
         </tr>
     </table>
-
+    
     <table cellpadding="0" cellspacing="0" align="center" style="width: 640px;">
+        {% if hideFooter is defined %}
         <tr>
             <td style="background: #183849; padding-left: 20px; padding-right: 20px; padding-top: 30px;" align="center" colspan="2">
                 {% if branding != 'knowathome' %} <p style="margin: 0px; padding: 0px; margin-bottom: 20px; text-align: center;"><img src="{{ images.logo_footer }}" width="104" height="20" alt="" title="" style="display: inline-block;" /></p> {% else %}
@@ -94,6 +98,7 @@
                 <p style="margin-bottom: 30px; padding: 0px; color: #fff; font-size: 15px; font-family: Arial; line-height: 18px; text-align: center;">{{ 'bottom_no_reply' | trans({}, "email", locale) }}</p>								
             </td>
         </tr>
+        {% endif %}
         <tr>
             <td style="color: #4A697A; padding-top: 20px;" align="center" colspan="2">
                 <p>
@@ -107,5 +112,6 @@
             <td height="50" align="center" colspan="2">   </td>
         </tr>
     </table>
+    
 </body>
 </html>
