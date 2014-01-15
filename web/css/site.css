@@ -3932,7 +3932,7 @@ footer .row_2 p {
 .intro_page .text_wrapper .video_wrapper .video_text p.already_joined, .intro_page .text_wrapper .video_wrapper .video_text p.completed {
 	box-sizing: border-box;
     -moz-box-sizing: border-box;
-    background: none repeat scroll 0 0 #E3E3E3;
+    background: url("../images/icon_ok_green_1.png") no-repeat scroll 20px 50% / 20px 16px #E3E3E3;
     border-radius: 3px 3px 3px 3px;
     clear: both;
     color: #424242;
@@ -3943,9 +3943,8 @@ footer .row_2 p {
     width: 100%;
 }
 .intro_page .text_wrapper .video_wrapper .video_text p.already_joined span, .intro_page .text_wrapper .video_wrapper .video_text p.completed span {
-    background: url("../images/icon_ok_green_1.png") no-repeat scroll 0 50% / 20px 16px rgba(0, 0, 0, 0);
     display: inline-block;
-    padding-left: 30px;
+    padding-left: 20px;
     margin-bottom: 0px;
 }
 .intro_page .text_wrapper .video_wrapper .video_text ul.short_menu {

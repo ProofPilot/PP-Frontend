@@ -26,4 +26,4 @@ txt_tweet: Tweet
 txt_you_are_eligible: 'You are eligible. Accept consent to continue ...'
 unavailable_functionality: 'There are no interim results for this study yet. We will notify you when results area available for you to review.'
 warning_message: 'Before proceeding, please read this important information and accept at the bottom of the page'
-you_are_participant: "ENROLLED!\nGOTO DASHBOARD"
+you_are_participant: "ENROLLED!<br><small>GO TO DASHBOARD</small>"
