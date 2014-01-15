@@ -249,7 +249,7 @@ class EmailController extends Controller
             $parameters['host'] = $this->container->getParameter('site_url');
             $parameters["graphic"] = $this->container->getParameter('study_image_url') . '/' . $studyContent->getStudyId(). '/' .$studyContent->getStudyLogo();
             $parameters['from'] = $from;
-            $parameters['hide_footer'] = true;
+            $parameters['hideFooter'] = true;
             if (isset($participantName)) {
                 $study = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
                 $site = $em->getRepository('CyclogramProofPilotBundle:Study')->getDefaultSites($study->getStudyId());
