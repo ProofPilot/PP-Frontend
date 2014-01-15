@@ -16,11 +16,11 @@
                     $(this).closest('.ui-dialog-content').dialog("close");
                 });
             }
-            var email_to_friens_study = null;
             //mail to friends
             $('.email').bind('click', function(e) {
                 e.preventDefault();
-               $('#tmp_subject').val($('#tmp_subject').val()+" " +$(this).children('.email_to_friends_study').val());
+               $('#tmp_subject').val('{%  trans from "study" %}inivted_to_study{% endtrans %}'+" " +$(this).children('.email_to_friends_study').val());
+               $('#tmp_who').val('{{ participant_email }}')
                 $('#email_list').dialog({
                     modal: true,
                     width: '330',
@@ -54,6 +54,10 @@
                 });
                 return false;
             });
+            $('#email_list').on('click', '.modal_close_btn', function() {
+                $(this).parent().find('input[type="text"]').val('');
+                $(this).parent().find('textarea').val('');
+             });
         	//responsive jQuery UI
             $(window).resize(function () {
                 fluidDialog();
@@ -132,7 +136,7 @@
         });
 
         function dismiss(interventionCode) {
-            if (confirm('{% trans from "dashboard" %}dashboard_dismiss_confirmation {% endtrans %}')) {
+            if (confirm('{% trans from "dashboard" %}dashboard_dismiss_confirmation{% endtrans %}')) {
                 $.ajax({
                     dataType: "json",
                     type: "POST",
@@ -148,7 +152,7 @@
         }
 
         function dismissAll() {
-        	 if (confirm('{% trans from "dashboard" %}dashboard_dismiss_confirmation {% endtrans %}')) {
+        	 if (confirm('{% trans from "dashboard" %}dashboard_dismiss_confirmation{% endtrans %}')) {
                 $.ajax({
                     dataType: "json",
                     type: "POST",
@@ -224,7 +228,7 @@
             <div class="panel_right">
                 <div class="dashboard_title main {% if studyCode != 'knowathome' %}branded{% endif %}">
                     <h1>{% trans from "dashboard" %}txt_dashboard{% endtrans %}</h1>
-                    <p>{% trans from "dashboard" %}dashboard_subtitle {% endtrans %}</p>
+                    <p>{% trans from "dashboard" %}dashboard_subtitle{% endtrans %}</p>
                 </div>
                 <div class="dashboard_panel">
                     
@@ -315,7 +319,7 @@
                                     </div>
                                     <div class="msg_details">
                                         <label for="tmp_subject">{%  trans from "email" %}email_to_friends_subject{% endtrans %}</label>
-                                        <input id="tmp_subject" type="text" name="subject" class="text" value="{%  trans from "study" %}inivted_to_study{% endtrans %} " />
+                                        <input id="tmp_subject" type="text" name="subject" class="text" value=" " />
                                         <label for="tmp_msg">{%  trans from "email" %}email_to_friends_message{% endtrans %}</label>
                                         <textarea rows="3" cols="28.5" name="description" class="text"></textarea>
                                         {% if app.user %}
