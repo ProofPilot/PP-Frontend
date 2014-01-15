@@ -16,21 +16,17 @@
             <br/>
             <a style="color: #BA433B; text-decoration: none;" href="{{ confirmurl }}">{{ confirmurl }}</a>
         </p>
+        {% if studies is not defined %}
         <table style="width: 580px">
             <tbody>
                 <tr>
                     <td width="60%" style="padding-bottom: 20px;">
-                        <h3 style="color: #B9433A; font-size: 2em; font-weight: bold; margin: 0; padding: 0;">Join a study</h3>
+                        <h3 style="color: #B9433A; font-size: 2em; font-weight: bold; margin: 0; padding: 0;">{% trans from "email" %}confirm_join_study{% endtrans %}Join a study</h3>
                     </td>
-{#                     <td width="40%" align="right" style="padding-bottom: 20px;">#}
-{#                         <a href="#" style="color: #727272; font-size: 13px; text-decoration: none;">#}
-{#                             More studies#}
-{#                             <img width="13" height="11" style="display: inline-block !important;" src="{{ images.arrow }}">#}
-{#                         </a>#}
-{#                     </td>#}
                 </tr>
             </tbody>
         </table>
+        {% endif %}
 {% include 'CyclogramFrontendBundle:Email:email_studies_list.html.twig' %}
     </td>
 {% endblock %}

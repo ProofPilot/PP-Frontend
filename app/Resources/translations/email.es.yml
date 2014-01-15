@@ -1,9 +1,11 @@
 bottom_no_reply: bottom_no_reply
 bottom_text: bottom_text
+confirm_join_study: confirm_join_study   # FIXME
 confirm_verify_text: confirm_verify_text
 confirm_verify_title: confirm_verify_title
 do_it: do_it
 do_it_task_email_title: do_it_task_email_title
+doit_email_what_you_got: doit_email_what_you_got   # FIXME
 email_login: email_login
 email_not_send_try_later: email_not_send_try_later
 email_reset_password: email_reset_password
@@ -24,7 +26,7 @@ insert_receiver_email: insert_receiver_email
 insert_sender_email: insert_sender_email
 join: join
 link_below_to_confirm: link_below_to_confirm
-message_from: message_from   # FIXME
+message_from: message_from
 notice_verification: notice_verification
 notice_verification_text: notice_verification_text
 reset_pass_link: reset_pass_link
@@ -32,3 +34,8 @@ reset_pass_text: reset_pass_text
 reset_pass_title: reset_pass_title
 send_verification_email: send_verification_email
 sent_email_to_friends: sent_email_to_friends
+study_welcome_excited: study_welcome_excited   # FIXME
+study_welcome_hold_on: study_welcome_hold_on   # FIXME
+study_welcome_joint_other_studies: study_welcome_joint_other_studies   # FIXME
+study_welcome_welcome_to: study_welcome_welcome_to   # FIXME
+welcome_to_study: welcome_to_study   # FIXME
