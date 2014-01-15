@@ -224,10 +224,10 @@ class CyclogramCommon {
 //                 return $result = array('status' => false, 'message' =>  $verify['message']);
 //         }
         //do not send emails in production
-        if($this->container->get('kernel')->getEnvironment() == "prod"){
-            $result['status'] = true;
-            return $result;
-        }
+//         if($this->container->get('kernel')->getEnvironment() == "prod"){
+//             $result['status'] = true;
+//             return $result;
+//         }
         
 //         $control_mail = $this->container->getParameter('control_mail');
         $templating = $this->container->get('templating');
@@ -273,7 +273,7 @@ class CyclogramCommon {
         }
         
         try {
-            $this->container->get('mailer')->send($message);
+            $resilt = $this->container->get('mailer')->send($message);
         } catch (\Swift_TransportException $exc) {
              return $result = array('status' => false, 'message' => $this->container->get('translator')->trans('email_not_send_try_later', array(), 'validators'));
         }
