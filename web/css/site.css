@@ -3947,6 +3947,9 @@ footer .row_2 p {
     padding-left: 20px;
     margin-bottom: 0px;
 }
+.intro_page .text_wrapper .video_wrapper .video_text p.already_joined small, .intro_page .text_wrapper .video_wrapper .video_text p.completed small {
+    font-weight: 400;
+}
 .intro_page .text_wrapper .video_wrapper .video_text ul.short_menu {
     clear: both;
     float: left;
