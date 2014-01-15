@@ -3225,6 +3225,7 @@ footer a.icon_update span {
     background: url("../images/icon_share_email.png") no-repeat scroll 0 50% / 20px 14px rgba(0, 0, 0, 0);
     margin-right: 0;
     padding-left: 30px;
+    width: 100%;
 }
 .popup_content #popup_text ul.social li a {
 	display: inline-block;
