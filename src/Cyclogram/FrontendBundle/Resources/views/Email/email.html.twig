@@ -65,11 +65,11 @@
     <table cellpadding="0" cellspacing="0" align="center" class="top_menu" style="width: 640px;">
         <tr>
             <td align="left">
-                {% if branding != 'knowathome' %}<a href="#"><img src="{{ images.logo_top }}" alt="" title="" style="display: block;" /></a>{% else %}
+                {% if branding != 'knowathome' %}{% if images.logo_top is defined %}<a href="#"><img src="{{ images.logo_top }}" alt="" title="" style="display: block;" /></a>{% endif %}{% else %}
                 <a href="#"><img src="{{ images.logo_knowathome }}" alt="" title="" style="display: block;" /></a>{% endif %}
             </td>
             <td align="right">
-                <a href="{{ host }}" style="color: #bcbfc2; font-family: Arial; text-decoration: none;"><img width="18" height="14" style="display: inline-block !important;" src="{{ images.login }}" />{{ 'email_login' | trans({}, "email", locale) }}</a>
+                <a href="{{ host }}" style="color: #bcbfc2; font-family: Arial; text-decoration: none;">{% if images.login is defined %}<img width="18" height="14" style="display: inline-block !important;" src="{{ images.login }}" />{% endif %}{{ 'email_login' | trans({}, "email", locale) }}</a>
             </td>
         </tr>
     </table>
@@ -89,10 +89,10 @@
     </table>
     
     <table cellpadding="0" cellspacing="0" align="center" style="width: 640px;">
-        {% if hideFooter is defined %}
+        {% if hideFooter is not defined%}
         <tr>
             <td style="background: #183849; padding-left: 20px; padding-right: 20px; padding-top: 30px;" align="center" colspan="2">
-                {% if branding != 'knowathome' %} <p style="margin: 0px; padding: 0px; margin-bottom: 20px; text-align: center;"><img src="{{ images.logo_footer }}" width="104" height="20" alt="" title="" style="display: inline-block;" /></p> {% else %}
+                {% if branding != 'knowathome' %} {% if images.logo_footer is defined %}<p style="margin: 0px; padding: 0px; margin-bottom: 20px; text-align: center;"><img src="{{ images.logo_footer }}" width="104" height="20" alt="" title="" style="display: inline-block;" /></p> {% endif %}{% else %}
                 <p style="margin: 0px; padding: 0px; margin-bottom: 20px; text-align: center;"><img src="{{ images.logo_knowathome }}" width="104" height="20" alt="" title="" style="display: inline-block;" /></p>{% endif %}
                 <p style="font-size: 12px; margin: 0px; padding: 0px; color: #6F90A2; font-family: Arial; line-height: 18px; margin-bottom: 15px; text-align: center;">{{ 'bottom_text' | trans({'%mail_to%': email, '%general_settings_link%': url('_settings',{'_locale' : locale})}, "email", locale) | raw }}</p>
                 <p style="margin-bottom: 30px; padding: 0px; color: #fff; font-size: 15px; font-family: Arial; line-height: 18px; text-align: center;">{{ 'bottom_no_reply' | trans({}, "email", locale) }}</p>								
