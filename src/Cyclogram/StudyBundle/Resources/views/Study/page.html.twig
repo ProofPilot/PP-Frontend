@@ -394,7 +394,14 @@
             <p class="main_notification">
                 <span>{% trans with {'%studyname%': studycontent.studyName } from "study" %}msg_not_eligible{% endtrans %}</span>
             </p>
+        {% elseif is_granted('ROLE_PARTICIPANT') or is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+            {% if is_not_eligible_in_study(studyCode) %}
+            <p class="main_notification">
+                <span>{% trans with {'%studyname%': studycontent.studyName } from "study" %}msg_not_eligible{% endtrans %}</span>
+            </p>
+            {% endif %}
         {% endif %}
+        
         <div class="text_wrapper">
             <div class="video_wrapper">
                 {% if not is_granted('ROLE_PARTICIPANT') or not is_granted('IS_AUTHENTICATED_REMEMBERED') %}
