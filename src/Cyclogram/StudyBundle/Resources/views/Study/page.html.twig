@@ -508,44 +508,49 @@
 {#                     </div>#}
                 </div>
                 <aside>
-                    <div class="box alt s_by">
-                        <h4>{% trans from "study" %}txt_conducted_by{% endtrans %}</h4>
-                        {% for organization in studyOrganizations %}
-                            <img width="60" height="75" src="{{ asset('images/tmplogo_none.jpg') }}" class="logo_img">
-                            <p>{{ organization.organizationName }}, <br />
-                            <span>{{ organization.organizationAddress1 }}</span></p>
-                        {% endfor %}
-                    </div>
-                    <div class="box alt s_org">
-                        <h4>{% trans from "study" %}txt_affiliated_organizations{% endtrans %}</h4>
-                        <ul class="aff_org_list">
-                       {% for organization in affiliatedOrganizations %}
-                            <li>
-                            {% if organization.organizationLogo is empty %}
-                                <img src="{{ asset('images/tmplogo_none.jpg') }}" width="61" height="61"/>
-                            {% else %}
-                                <img src="{{ urlAssets }}/web/org/{{ organization.organizationLogo }}" width="61" height="61"/>
-                            {% endif %}
-                                <p>{{ organization.organizationName }}</p>
-                            </li>
-                        {% endfor %}
-                        </ul>
-                    </div>
-                    <div class="box alt staff last">
-                        <h4>{% trans from "study" %}txt_staff{% endtrans %}</h4>
-                        
-                        <p>{% set length = 0 %}
-                            {% for staff in studyStaff %} 
+                    {% if studyOrganizations is not empty %}
+                        <div class="box alt s_by">
+                            <h4>{% trans from "study" %}txt_conducted_by{% endtrans %}</h4>
+                            {% for organization in studyOrganizations %}
+                                <img width="60" height="75" src="{{ asset('images/tmplogo_none.jpg') }}" class="logo_img">
+                                <p>{{ organization.organizationName }}, <br />
+                                <span>{{ organization.organizationAddress1 }}</span></p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    {% if affiliatedOrganizations is not empty %}
+                        <div class="box alt s_org">
+                            <h4>{% trans from "study" %}txt_affiliated_organizations{% endtrans %}</h4>
+                            <ul class="aff_org_list">
+                           {% for organization in affiliatedOrganizations %}
+                                <li>
+                                {% if organization.organizationLogo is empty %}
+                                    <img src="{{ asset('images/tmplogo_none.jpg') }}" width="61" height="61"/>
+                                {% else %}
+                                    <img src="{{ urlAssets }}/web/org/{{ organization.organizationLogo }}" width="61" height="61"/>
+                                {% endif %}
+                                    <p>{{ organization.organizationName }}</p>
+                                </li>
+                            {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                    {% if studyStaff is not empty %}
+                        <div class="box alt staff last">
+                            <h4>{% trans from "study" %}txt_staff{% endtrans %}</h4>
                             
-                            {% if length < studyStaff|length %}
-                                {{ staff.representativeFirstname }} {{ staff.representativeLastname }},
-                                {% set length =  length+1 %}
-                            {% else  %}
-                                {{ staff.representativeFirstname }} {{ staff.representativeLastname }}
-                            {% endif %}
-                        {% endfor %}</p>
-                        
-                    </div>
+                            <p>{% set length = 0 %}
+                                {% for staff in studyStaff %} 
+                                
+                                {% if length < studyStaff|length %}
+                                    {{ staff.representativeFirstname }} {{ staff.representativeLastname }},
+                                    {% set length =  length+1 %}
+                                {% else  %}
+                                    {{ staff.representativeFirstname }} {{ staff.representativeLastname }}
+                                {% endif %}
+                            {% endfor %}</p>
+                        </div>
+                    {% endif %}
                 </aside>
             </div>
         </div>
