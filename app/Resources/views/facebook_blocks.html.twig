@@ -39,6 +39,20 @@
           		  } 
           		 });
             }
+
+
+            function postFeed(link, title,description, image ){
+
+                    FB.ui({method: 'feed',
+                picture: image ,
+                link: link,
+                caption: title,
+                description: description,
+                    },function(response) {
+                        self.close();
+                    });
+                return false;
+            }
         
             window.fbAsyncInit = function() {
                 FB.init({

@@ -341,7 +341,7 @@
         leftPosition = (window.screen.width / 2) - ((width / 2) + 10);
         //Allow for title and status bars.
         topPosition = (window.screen.height / 2) - ((height / 2) + 50);
-        var windowFeatures = "status=no,height=" + height + ",width=" + width + ",resizable=yes,left=" + leftPosition + ",top=" + topPosition + ",screenX=" + leftPosition + ",screenY=" + topPosition + ",toolbar=no,menubar=no,scrollbars=no,location=no,directories=no";
+        var windowFeatures = "status=no,height=" + height + ",width=" + width + ",resizable=no,left=" + leftPosition + ",top=" + topPosition + ",screenX=" + leftPosition + ",screenY=" + topPosition + ",toolbar=no,menubar=no,scrollbars=no,location=no,directories=no";
         u=location.href;
         {% if reffferalShortStudyUrl is defined %}
         window.open('http://www.facebook.com/sharer.php?s=100&p[url]='+encodeURIComponent(u)+'&p[title]={{ studycontent.studyName }}+&p[summary]={{ facebookcontent }}... {{ reffferalShortStudyUrl }}&p[images][0]={{ graphic }}','sharer', windowFeatures);
@@ -413,7 +413,7 @@
                 {% if studyAllowSharing %}
                     <ul class="social_share">
                         <li><span>Share:</span></li>
-                        <li><a href='http://www.facebook.com/share.php?u=http://new-frontend-bogdand.proofpilot.dyndns.org' class="fb" onClick="return fbs_click(800, 400)" target = "_blank"></a></li>
+                        <li><a href='' class="fb" onClick="return postFeed('{{ reffferalFacebookStudyUrl }}','{{ studycontent.studyName }}','{{ facebookcontent }}','{{ graphic }}')"> {% trans from "study" %}txt_share{% endtrans %}</a></li>
                         {% if reffferalShortStudyUrl is defined %}
                         <li><a href="#" onclick="popUp=window.open('https://twitter.com/share?url={{ reffferalShortStudyUrl }}&text={%  trans from "study" %}social_join_study{% endtrans %} {{ studycontent.studyName }} {%  trans from "study" %}social_at_proofpilot{% endtrans %}', 'popupwindow', 'scrollbars=yes,width=800,height=400');popUp.focus();return false" class="tw"></a></li>
                         {% else %}
@@ -475,7 +475,7 @@
                     <div class="v_toolbar">
                     {% if studyAllowSharing %}
                         <ul class="social_share">
-                        <li><a href='' class="fb" onClick="return fbs_click(800, 400)" target = "_blank"> {% trans from "study" %}txt_share{% endtrans %}</a></li>
+                        <li><a href='' class="fb" onClick="return postFeed('{{ reffferalFacebookStudyUrl }}','{{ studycontent.studyName }}','{{ facebookcontent }}','{{ graphic }}')"> {% trans from "study" %}txt_share{% endtrans %}</a></li>
                         {% if reffferalShortStudyUrl is defined %}
                             <li><a href="#" onclick="popUp=window.open('https://twitter.com/share?url={{ reffferalShortStudyUrl }}&text={%  trans from "study" %}social_join_study{% endtrans %} {{ studycontent.studyName }} {%  trans from "study" %}social_at_proofpilot{% endtrans %}', 'popupwindow', 'scrollbars=yes,width=800,height=400');popUp.focus();return false" class="tw">{% trans from "study" %}txt_tweet{% endtrans %}</a></li>
                         {% else %}

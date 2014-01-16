@@ -100,8 +100,10 @@ class DashboardController extends Controller
             $siteId = $em->getRepository('CyclogramProofPilotBundle:Site')->findOneBySiteName($site[0]['siteName']);
             $siteCampaignLink = $em->getRepository('CyclogramProofPilotBundle:CampaignSiteLink')->findOneBySite($siteId);
             $enroledStudy['studyRefferalShortUrl'] = $cc::generateGoogleShorURL($this->container->getParameter('site_url')."/".$locale."/".$study->getStudyCode()."/?utm_campaign=".$siteCampaignLink->getCampaign()->getCampaignName()."&utm_medium-Clinic&utm_source=".$site[0]['siteName']."&pid=".$participant->getParticipantId());
+            $enroledStudy['reffferalFacebookStudyUrl'] = $this->container->getParameter('site_url')."/".$locale."/".$study->getStudyCode()."/?utm_campaign=".$siteCampaignLink->getCampaign()->getCampaignName()."&utm_medium-Clinic&utm_source=".$site[0]['siteName']."&pid=".$participant->getParticipantId();
             $enroledStudy['studyAllowSharing'] = $study->getStudyAllowSharing();
-            $enroledStudy['studyContent'] = str_replace(array("\r\n", "\r", "\n"), "", urlencode(strip_tags(substr($studyContent->getStudyAbout(), 0,250))));
+            $enroledStudy["graphic"] = $this->container->getParameter('study_image_url') . '/' .$study->getStudyId(). '/' .$studyContent->getStudyGraphic();
+            $enroledStudy['studyContent'] = str_replace(array("\r\n", "\r", "\n"), "", strip_tags($studyContent->getStudyAbout()));
             $parameters["enrolledStudies"][] = $enroledStudy;
         }
         $parameters["interventioncount"] = $surveyscount;
@@ -139,6 +141,7 @@ class DashboardController extends Controller
             $interventionTypeName = $interventionLink->getIntervention()->getInterventionType()->getInterventionTypeName();
             $intervention['type'] = $interventionTypeName;
             if ($interventionTypeName == "Pledge" ) {
+                $intervention['reffferalFacebookStudyUrl'] = $this->container->getParameter('site_url')."/".$locale."/".$study->getStudyCode()."/?utm_campaign=".$siteCampaignLink->getCampaign()->getCampaignName()."&utm_medium-Clinic&utm_source=".$site[0]['siteName']."&pid=".$participant->getParticipantId();
                 $intervention['refferalStudyUrl'] = $this->container->getParameter('site_url')."/".$locale."/".$study->getStudyCode()."/?utm_campaign=".$siteCampaignLink->getCampaign()->getCampaignName()."&utm_medium-Clinic&utm_source=".$site[0]['siteName']."&pid=".$participant->getParticipantId();
                 $intervention['reffferalShortStudyUrl'] = $cc::generateGoogleShorURL($this->container->getParameter('site_url')."/".$locale."/".$study->getStudyCode()."/?utm_campaign=".$siteCampaignLink->getCampaign()->getCampaignName()."&utm_medium-Clinic&utm_source=".$site[0]['siteName']."&pid=".$participant->getParticipantId());
                 $intervention['studyName'] = $studyContent->getStudyName();
@@ -147,8 +150,10 @@ class DashboardController extends Controller
               
                 $intervention['refferalStudyUrl'] = $this->container->getParameter('site_url')."/".$locale."/".$study->getStudyCode()."/?utm_campaign=".$siteCampaignLink->getCampaign()->getCampaignName()."&utm_medium-Clinic&utm_source=".$site[0]['siteName']."&pid=".$participant->getParticipantId();
                 $intervention['reffferalShortStudyUrl'] = $cc::generateGoogleShorURL($this->container->getParameter('site_url')."/".$locale."/".$study->getStudyCode()."/?utm_campaign=".$siteCampaignLink->getCampaign()->getCampaignName()."&utm_medium-Clinic&utm_source=".$site[0]['siteName']."&pid=".$participant->getParticipantId());
+                $intervention['reffferalFacebookStudyUrl'] = $this->container->getParameter('site_url')."/".$locale."/".$study->getStudyCode()."/?utm_campaign=".$siteCampaignLink->getCampaign()->getCampaignName()."&utm_medium-Clinic&utm_source=".$site[0]['siteName']."&pid=".$participant->getParticipantId();
                 $intervention['studyName'] = $studyContent->getStudyName();
-                $intervention['studyContent'] = str_replace(array("\r\n", "\r", "\n"), "", urlencode(strip_tags(substr($studyContent->getStudyAbout(), 0,250))));
+                $intervention['studyContent'] = str_replace(array("\r\n", "\r", "\n"), "", strip_tags(substr($studyContent->getStudyAbout(), 0,250)));
+                $intervention["graphic"] = $this->container->getParameter('study_image_url') . '/' .$study->getStudyId(). '/' .$studyContent->getStudyGraphic();
             }
             $parameters["studyCode"] = $study->getStudyCode();
           

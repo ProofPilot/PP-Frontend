@@ -1,4 +1,3 @@
-
 {%  extends '::dashboard.html.twig' %}
 
 {% use '::facebook_blocks.html.twig' %}
@@ -171,7 +170,7 @@
             leftPosition = (window.screen.width / 2) - ((width / 2) + 10);
             //Allow for title and status bars.
             topPosition = (window.screen.height / 2) - ((height / 2) + 50);
-            var windowFeatures = "status=no,height=" + height + ",width=" + width + ",resizable=yes,left=" + leftPosition + ",top=" + topPosition + ",screenX=" + leftPosition + ",screenY=" + topPosition + ",toolbar=no,menubar=no,scrollbars=no,location=no,directories=no";
+            var windowFeatures = "status=no,height=" + height + ",width=" + width + ",resizable=no,left=" + leftPosition + ",top=" + topPosition + ",screenX=" + leftPosition + ",screenY=" + topPosition + ",toolbar=no,menubar=no,scrollbars=no,location=no,directories=no";
             u=location.href;
             window.open('http://www.facebook.com/sharer.php?s=100&p[url]='+encodeURIComponent(u)+'&p[title]='+name+'&p[summary]='+content+'&p[images][0]='+logo,'sharer', windowFeatures);
             return false;
@@ -204,7 +203,7 @@
 							    {% if study.studyAllowSharing %}
 							    <div class="share_slide" style="display:none">
                                     <a href='' class="twitter_icon" onclick="popUp=window.open('https://twitter.com/share?url={{ study.studyRefferalShortUrl }}&text={%  trans from "study" %}social_join_study{% endtrans %} {{ study.studyName }} {%  trans from "study" %}social_at_proofpilot{% endtrans %}', 'popupwindow', 'scrollbars=yes,width=800,height=400');popUp.focus();return false" class="tw"></a>
-                                    <a href="#" class="facebook_icon" onClick="popUp=window.open('http://www.facebook.com/sharer.php?s=100&p[url]='+encodeURIComponent(location.href)+'&p[title]={{ study.studyName | raw }}&p[summary]={{ study.studyContent }}... {{ study.studyRefferalShortUrl }}&p[images][0]={{ study.studyGraphic }}','sharer','scrollbars=yes,width=800,height=400')"></a>
+                                    <a href="#" class="facebook_icon" onClick="return postFeed('{{ study.reffferalFacebookStudyUrl }}','{{ study.studyName }}','{{ study.studyContent}}','{{ study.graphic }}')"></a>
 							        <a href="" class="email"><input type="hidden" class="email_to_friends_study" value="{{ study.studyName }}"></a>
 							    </div>
 							    {% endif %}
@@ -273,14 +272,14 @@
                                      {% if intervention.type == 'Pledge' %}
                                     <div class="social_icons_block">
                                         <a href="" class="twitter_icon" onclick="popUp=window.open('https://twitter.com/share?url={{ intervention.reffferalShortStudyUrl }}&text={%  trans from "study" %}social_join_study{% endtrans %} {{ intervention.studyName }} {%  trans from "study" %}social_at_proofpilot{% endtrans %}', 'popupwindow', 'scrollbars=yes,width=800,height=400');popUp.focus();return false"></a>
-                                        <a href="" class="facebook_icon" onClick="return fbs_click(800, 400,'{{ intervention.name | raw }}','{{ intervention.content | raw }}','{{ intervention.logo }}')"></a>
+                                        <a href="" class="facebook_icon" onClick="return postFeed('{{ intervention.reffferalFacebookStudyUrl }}','{{ intervention.name }}','{{ intervention.content }}','{{ intervention.logo }}')"></a>
                                         <a href="" class="email"><input type="hidden" class="email_to_friends_study" value="{{ intervention.studyName }}"></a>
                                     </div>
                                      {% endif %}
                                     {% if intervention.type == 'Referral' %}
                                     <div class="referal_social">
                                         <a href="#" class="tw" onclick="popUp=window.open('https://twitter.com/share?url={{ intervention.reffferalShortStudyUrl }}&text={%  trans from "study" %}social_join_study{% endtrans %} {{ intervention.studyName }} {%  trans from "study" %}social_at_proofpilot{% endtrans %}', 'popupwindow', 'scrollbars=yes,width=800,height=400');popUp.focus();return false"></a>
-                                        <a href="#" class="fb" onClick="popUp=window.open('http://www.facebook.com/sharer.php?s=100&p[url]='+encodeURIComponent(location.href)+'&p[title]={{ intervention.name | raw }}&p[summary]={{ intervention.studyContent }}... {{ intervention.reffferalShortStudyUrl }}&p[images][0]={{ intervention.logo }}','sharer','scrollbars=yes,width=800,height=400')"></a>
+                                        <a href="#" class="fb" onClick="return postFeed('{{ intervention.reffferalFacebookStudyUrl }}','{{ intervention.studyName }}','{{ intervention.studyContent }}','{{ intervention.graphic }}')"></a>
                                         <a href="#" class="email"><input type="hidden" class="email_to_friends_study" value="{{ intervention.studyName }}"></a>
                                     </div>
                                      {% endif %}
