@@ -455,7 +455,7 @@
                     {% endif %}
                     {% if is_granted('ROLE_PARTICIPANT') or is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                         {% if is_enrolled_in_study(studyCode) %}
-                            <p class="already_joined"><span>{% trans from "study" %}you_are_participant{% endtrans %}</span></p>
+                            <a href="{{ path('_main')}}"><p class="already_joined"><span>{% trans from "study" %}you_are_participant{% endtrans %}</span></p></a>
                             <ul class="short_menu">
                                 <li><a href="#" class="sm_icon_1 consent">{% trans from "study" %}button_view_consent{% endtrans %}</a></li>
                                 <li><a href="#" class="sm_icon_2 temporaty_unavailable">{% trans from "study" %}button_personalized_insight{% endtrans %}</a></li>
