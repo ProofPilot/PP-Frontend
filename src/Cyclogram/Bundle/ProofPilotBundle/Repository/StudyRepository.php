@@ -158,7 +158,6 @@ class StudyRepository extends EntityRepository
                 INNER JOIN a.study s
                 WHERE s.studyCode = :study_code
                 ")
-                ->setParameter('armcodes', $arm_codes)
                 ->setParameter('study_code', $study_code)
                 ->getResult();
     }

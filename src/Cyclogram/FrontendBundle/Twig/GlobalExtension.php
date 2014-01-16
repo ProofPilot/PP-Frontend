@@ -45,7 +45,8 @@ class GlobalExtension extends \Twig_Extension
                 'is_study_logic_implemented' => new \Twig_Function_Method($this, 'isStudyLogicImplemented'),
                 'is_participant_register_last'  => new \Twig_Function_Method($this, 'isParticipantRegisterLast'),
                 'is_skip_consent'  => new \Twig_Function_Method($this, 'isSkipConsent'),
-                'is_skip_about_me'=> new \Twig_Function_Method($this, 'isSkipAboutMe')
+                'is_skip_about_me'=> new \Twig_Function_Method($this, 'isSkipAboutMe'),
+                'is_not_eligible_in_study' => new \Twig_Function_Method($this, 'isNotEligible')
 //                 'google_campaign_info' => new \Twig_Function_Method($this, 'getGoogleCampaignInfo')
         );
     }
@@ -83,6 +84,12 @@ class GlobalExtension extends \Twig_Extension
     {
         $participant = $this->securityContext->getToken()->getUser();
         return $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Participant')->isEnrolledInStudy($participant, $studyCode);
+    }
+    
+    public function isNotEligible($studyCode)
+    {
+        $participant = $this->securityContext->getToken()->getUser();
+        return $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Participant')->isNotEligibleInStudy($participant, $studyCode);
     }
     
     public function isStudyLogicImplemented($studyCode) {

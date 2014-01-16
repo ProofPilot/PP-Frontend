@@ -178,9 +178,11 @@ class ParticipantRepository extends EntityRepository implements
                 INNER JOIN a.study s
                 WHERE s.studyCode = :studycode
                 AND pal.participant = :participant
+                AND pal.status <> :noteligibleStatus
                 ')
                 ->setParameter('studycode', $studyCode)
                 ->setParameter('participant', $participant)
+                ->setParameter('noteligibleStatus', ParticipantArmLink::STATUS_NOT_ELIGIBLE)
                 ->getSingleScalarResult();
         if($result)
             return true;
@@ -343,6 +345,28 @@ class ParticipantRepository extends EntityRepository implements
                                       'interventionCode' => $intervetionCode
                         ));
         $results = $query->getSingleScalarResult();
+    
+        return $results;
+    }
+    
+    public function isNotEligibleInStudy($participant, $studyCode)
+    {
+        $result = $this->getEntityManager()
+        ->createQuery('SELECT COUNT(a) FROM CyclogramProofPilotBundle:ParticipantArmLink pal
+                INNER JOIN pal.arm a
+                INNER JOIN a.study s
+                WHERE s.studyCode = :studycode
+                AND pal.participant = :participant
+                AND pal.status = :noteligibleStatus
+                ')
+                ->setParameter('studycode', $studyCode)
+                ->setParameter('participant', $participant)
+                ->setParameter('noteligibleStatus', ParticipantArmLink::STATUS_NOT_ELIGIBLE)
+                ->getSingleScalarResult();
+        if($result)
+            return true;
+        else
+            return false;
     
         return $results;
     }

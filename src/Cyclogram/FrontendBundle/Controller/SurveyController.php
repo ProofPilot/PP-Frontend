@@ -33,6 +33,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
+use Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantArmLink;
 
 class SurveyController extends Controller
 {
@@ -172,13 +173,25 @@ class SurveyController extends Controller
         }
         
         
-        if($isEligible)
+        if($isEligible) {
             return $this->redirect($redirectUrl);
-        else
+        } else{
+            if($this->get('security.context')->isGranted("ROLE_PARTICIPANT")) {
+                $participant = $this->get('security.context')->getToken()->getUser();
+                $studyArms = $em->getRepository('CyclogramProofPilotBundle:Study')->getStudyArms($studyCode);
+                $participantArmLink = new ParticipantArmLink();
+                $participantArmLink->setArm($studyArms[0]);
+                $participantArmLink->setParticipant($participant);
+                $participantArmLink->setStatus(ParticipantArmLink::STATUS_NOT_ELIGIBLE);
+                $participantArmLink->setParticipantArmLinkDatetime(new \DateTime());
+                $em->persist($participantArmLink);
+                $em->flush($participantArmLink);
+            }
             return $this->redirect($this->generateUrl('_page', array(
                         'studyUrl' => $studyContent->getStudyUrl(),
                         'eligible' => false
                     )));
+        }
     }
     
     private function getSurveyData($surveyId, $locale)

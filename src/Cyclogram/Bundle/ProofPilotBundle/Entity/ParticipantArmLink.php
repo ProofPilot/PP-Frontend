@@ -31,6 +31,7 @@ class ParticipantArmLink
 {
     const STATUS_ACTIVE =1;
     const STATUS_DISMISS = 28;
+    const STATUS_NOT_ELIGIBLE = 29;
     
     /**
      * @var integer
