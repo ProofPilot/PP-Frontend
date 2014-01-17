@@ -273,7 +273,7 @@ class CyclogramCommon {
         }
         
         try {
-            $resilt = $this->container->get('mailer')->send($message);
+            $this->container->get('mailer')->send($message);
         } catch (\Swift_TransportException $exc) {
              return $result = array('status' => false, 'message' => $this->container->get('translator')->trans('email_not_send_try_later', array(), 'validators'));
         }

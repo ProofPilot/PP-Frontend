@@ -310,7 +310,7 @@
                                         <label for="tmp_msg">{%  trans from "email" %}email_to_friends_message{% endtrans %}</label>
                                         <textarea rows="3" cols="28.5" name="description" class="text"></textarea>
                                         {% if app.user %}
-                                            <input type="hidden" value="{{ app.user.username }}"  name="participant"/>
+                                            <input type="hidden" value="{{ participant_email }}"  name="participant"/>
                                         {% endif %}
                                         {% if studyCode is defined %}
                                             <input type="hidden" value="{{ studyCode }}"  name="studyCode"/>

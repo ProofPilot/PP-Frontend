@@ -215,7 +215,7 @@ class EmailController extends Controller
         $locale = $request->getLocale();
         
         if ($request->isXmlHttpRequest()) {
-            $participantName = $request->get('participant');
+            $participantEmail = $request->get('participant');
             $studyCode = $request->get('studyCode');
             
             $parameters['locale'] = $locale;
@@ -250,12 +250,12 @@ class EmailController extends Controller
             $parameters["graphic"] = $this->container->getParameter('study_image_url') . '/' . $studyContent->getStudyId(). '/' .$studyContent->getStudyLogo();
             $parameters['from'] = $from;
             $parameters['hideFooter'] = true;
-            if (isset($participantName)) {
+            if (!is_null($participantEmail)) {
                 $study = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
                 $site = $em->getRepository('CyclogramProofPilotBundle:Study')->getDefaultSites($study->getStudyId());
                 $siteId = $em->getRepository('CyclogramProofPilotBundle:Site')->findOneBySiteName($site[0]['siteName']);
                 $siteCampaignLink = $em->getRepository('CyclogramProofPilotBundle:CampaignSiteLink')->findOneBySite($siteId);
-                $participant = $em->getRepository('CyclogramProofPilotBundle:Participant')->findOneByParticipantUsername($participantName);
+                $participant = $em->getRepository('CyclogramProofPilotBundle:Participant')->findOneByParticipantEmail($participantEmail);
                 $parameters["studies"] = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:Study')->getRandomStudyInfo($locale, $participant);
                 $parameters['url'] = $this->container->getParameter('site_url')."/".$locale."/".$study->getStudyCode()."/?utm_campaign=".$siteCampaignLink->getCampaign()->getCampaignName()."&utm_medium-Clinic&utm_source=".$site[0]['siteName']."&pid=".$participant->getParticipantId();
             } else {

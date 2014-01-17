@@ -109,7 +109,12 @@
             </td>
         </tr>
         <tr>
-            <td height="50" align="center" colspan="2">   </td>
+            <td height="50" align="center" colspan="2"> 
+                  {% if images.tmp_logo is defined %}<img  style="display: none !important;" src="{{ images.tmp_logo }}" width="165"   style="margin-bottom: 20px;" alt="" title=""/>{% endif %}
+                  {% if images.login is defined %}<img style="display: none !important;" src="{{ images.login }}" width="165"   style="margin-bottom: 20px;" alt="" title=""/>{% endif %}
+                  {% if images.logo_footer is defined %}<img style="display: none !important;" src="{{ images.logo_top }}" width="165"   style="margin-bottom: 20px;" alt="" title=""/>{% endif %}
+                  {% if images.logo_top is defined %}<img style="display: none !important;" src="{{ images.logo_footer }}" width="165"   style="margin-bottom: 20px;" alt="" title=""/>{% endif %}
+              </td>
         </tr>
     </table>
     

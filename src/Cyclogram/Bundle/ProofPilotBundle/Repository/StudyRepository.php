@@ -19,6 +19,8 @@
 namespace Cyclogram\Bundle\ProofPilotBundle\Repository;
 
 
+use Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantInterventionLink;
+
 use Cyclogram\Bundle\ProofPilotBundle\Entity\Study;
 
 use Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantArmLink;
@@ -319,10 +321,12 @@ class StudyRepository extends EntityRepository
                 INNER JOIN pil.intervention i
                 INNER JOIN i.study s
                 WHERE p.participantEmail = :email
-                AND s.studyCode = :studyCode')
+                AND s.studyCode = :studyCode
+                AND pil.status <> :pilstatus')
                 ->setParameters(array(
                         'email' => $participant->getParticipantEmail(),
-                        'studyCode' => $studyCode
+                        'studyCode' => $studyCode,
+                        'pilstatus' => ParticipantInterventionLink::STATUS_REFERRAL
                 ))
                 ->getResult();
     }

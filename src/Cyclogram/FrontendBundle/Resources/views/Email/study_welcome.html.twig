@@ -4,7 +4,7 @@
     <table style="height: 136px;">
         <tbody>
             <tr>
-                <td style="padding-right: 25px;" valign="top"> <img src="images/logo_tmp.jpg" height="82" width="80"></td>
+                <td style="padding-right: 25px;" valign="top"> {% if study_logo is defined %} <img src="{{ study_logo }}" height="82" width="80"> {% else %}<img src="{{ {{ images.tmp_logo }} }}" height="82" width="80">{% endif %}</td>
                 <td>
                     <h2 style="color: #353535; font-size: 20px; font-weight: bold; margin: 0 0 20px; padding: 0;">{% trans from "email" %}study_welcome_welcome_to{% endtrans %} {{ studyName }}</h2>
                     <p style="font-size: 13px; line-height: 18px; margin-bottom: 25px; color: #555555;">{% trans from "email" %}study_welcome_excited{% endtrans %} {{ studyName }}:</p>

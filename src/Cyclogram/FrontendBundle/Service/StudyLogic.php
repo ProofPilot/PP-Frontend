@@ -214,7 +214,7 @@ class StudyLogic
         $locale = $participant->getLocale();
         $study = $this->container->get('doctrine')->getRepository("CyclogramProofPilotBundle:Study")->findOneByStudyCode($studyCode);
         $studyContent = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:StudyContent')->getStudyContentById($study->getStudyId(), $locale);
-        
+        $parameters['study_logo'] = $this->container->getParameter('study_image_url') . '/' .$study->getStudyId(). '/' .$studyContent->getStudyGraphic();
         $parameters['studyName'] = $studyContent->getStudyName(); 
         $parameters['studyInvolved'] = $studyContent->getStudyWhatsInvolved();
         if (!empty($interventionLinks)){
@@ -235,6 +235,7 @@ class StudyLogic
         $parameters['locale'] = $locale;
         $parameters['host'] = $this->container->getParameter('site_url');
         $parameters["studies"] = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Study')->getRandomStudyInfo($locale, $participant);
+
     
         $cc->sendMail(null,
                 $participant->getParticipantEmail(),
