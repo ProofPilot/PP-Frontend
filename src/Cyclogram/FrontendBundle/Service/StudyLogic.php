@@ -160,7 +160,7 @@ class StudyLogic
         $participantLink->setParticipant($participant);
         $participantLink->setSidId($surveyId);
         $participantLink->setSaveId($saveId);
-        $participantLink->setStatus(ParticipantSurveyLink::STATUS_ACTIVE);
+        $participantLink->setStatus(ParticipantSurveyLink::STATUS_CLOSED);
 
         $em->persist($participantLink);
         $em->flush();

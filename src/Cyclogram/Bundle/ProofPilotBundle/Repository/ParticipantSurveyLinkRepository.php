@@ -60,7 +60,7 @@ class ParticipantSurveyLinkRepository extends EntityRepository
                 ->setParameters(array(
                         'surveyId' => $surveyId,
                         'participant' => $participant,
-                        'statusActive' => ParticipantSurveyLink::STATUS_ACTIVE
+                        'statusActive' => ParticipantSurveyLink::STATUS_CLOSED
                 ))->getOneOrNullResult();
         if($result) {
             $result->setStatus(ParticipantSurveyLink::STATUS_CLOSED);
