@@ -1,21 +1,21 @@
 <?php
 /*
-* This is part of the ProofPilot package.
-*
-* (c)2012-2013 Cyclogram, Inc, West Hollywood, CA <crew@proofpilot.com>
-* ALL RIGHTS RESERVED
-*
-* This software is provided by the copyright holders to Manila Consulting for use on the
-* Center for Disease Control's Evaluation of Rapid HIV Self-Testing among MSM in High
-* Prevalence Cities until 2016 or the project is completed.
-*
-* Any unauthorized use, modification or resale is not permitted without expressed permission
-* from the copyright holders.
-*
-* KnowatHome branding, URL, study logic, survey instruments, and resulting data are not part
-* of this copyright and remain the property of the prime contractor.
-*
-*/
+ * This is part of the ProofPilot package.
+ *
+ * (c)2012-2013 Cyclogram, Inc, West Hollywood, CA <crew@proofpilot.com>
+ * ALL RIGHTS RESERVED
+ *
+ * This software is provided by the copyright holders to Manila Consulting for use on the
+ * Center for Disease Control's Evaluation of Rapid HIV Self-Testing among MSM in High
+ * Prevalence Cities until 2016 or the project is completed.
+ *
+ * Any unauthorized use, modification or resale is not permitted without expressed permission
+ * from the copyright holders.
+ *
+ * KnowatHome branding, URL, study logic, survey instruments, and resulting data are not part
+ * of this copyright and remain the property of the prime contractor.
+ *
+ */
 
 namespace Cyclogram\Bundle\ProofPilotBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
@@ -29,7 +29,8 @@ use Doctrine\ORM\Mapping as ORM;
 class Intervention
 {
     const STATUS_ACTIVE = 1;
-    
+    const STATUS_EXPIRED = 30;
+
     /**
      * @var integer
      *
@@ -80,6 +81,20 @@ class Intervention
      * @ORM\Column(name="intervention_descripton", type="string", length=750, nullable=true)
      */
     private $interventionDescripton;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="intervention_expiration_period", type="integer", length=750, nullable=true)
+     */
+    private $interventionExpirationPeriod;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="intervention_expiration_date", type="datetime", length=750, nullable=true)
+     */
+    private $interventionExpirationDate;
 
     /**
      * @var float
@@ -422,6 +437,26 @@ class Intervention
             $interventionIncentiveAmount)
     {
         $this->interventionIncentiveAmount = $interventionIncentiveAmount;
+    }
+
+    public function getInterventionExpirationPeriod()
+    {
+        return $this->interventionExpirationPeriod;
+    }
+
+    public function setInterventionExpirationPeriod($interventionExpirationPeriod)
+    {
+        $this->interventionExpirationPeriod = $interventionExpirationPeriod;
+    }
+
+    public function getInterventionExpirationDate()
+    {
+        return $this->interventionExpirationDate;
+    }
+
+    public function setInterventionExpirationDate($interventionExpirationDate)
+    {
+        $this->interventionExpirationDate = $interventionExpirationDate;
     }
 
 }

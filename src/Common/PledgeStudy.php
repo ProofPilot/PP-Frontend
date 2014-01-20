@@ -75,10 +75,15 @@ class PledgeStudy extends AbstractStudy implements StudyInterface
             $participantInterventionLink = new ParticipantInterventionLink();
         
             $intervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')->findOneByInterventionCode('Pledgereferral');
+
             $participantInterventionLink->setIntervention($intervention);
             $participantInterventionLink->setParticipant($participant);
             $participantInterventionLink->setParticipantInterventionLinkDatetimeStart(new \DateTime("now"));
-            $participantInterventionLink->setStatus(ParticipantInterventionLink::STATUS_ACTIVE);
+            $this->setInterventionLinkExpiration($intervention, $participantInterventionLink);
+            if ($em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionlink')->checkIfIntervetionExpire($intervention))
+                $participantInterventionLink->setStatus(ParticipantInterventionLink::STATUS_EXPIRED);
+            else
+                $participantInterventionLink->setStatus(ParticipantInterventionLink::STATUS_ACTIVE);
             $em->persist($participantInterventionLink);
             $em->flush($participantInterventionLink);
             

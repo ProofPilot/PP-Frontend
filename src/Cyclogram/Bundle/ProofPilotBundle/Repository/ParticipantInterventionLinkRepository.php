@@ -18,6 +18,8 @@
 */
 namespace Cyclogram\Bundle\ProofPilotBundle\Repository;
 
+use Cyclogram\Bundle\ProofPilotBundle\Entity\Intervention;
+
 use Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantInterventionLink;
 
 use Doctrine\ORM\EntityRepository;
@@ -85,13 +87,14 @@ class ParticipantInterventionLinkRepository extends EntityRepository
                 INNER JOIN i.language l
                 WHERE pil.participant = :userid
                 AND pil.participantInterventionLinkDatetimeStart <= :currentDate
-                AND pil.status = :pilstatus
+                AND (pil.status = :pilstatus OR i.status = :istatus)
                 AND it.interventionTypeName <> 'Test'
                 AND l.locale = 'en'")
                 ->setParameters(array(
                         'userid' => $userid,
                         'currentDate' => $currentDate,
-                        'pilstatus' => ParticipantInterventionLink::STATUS_ACTIVE
+                        'pilstatus' => ParticipantInterventionLink::STATUS_ACTIVE,
+                        'istatus' => Intervention::STATUS_ACTIVE
                 ));
         return $query->getSingleScalarResult();
     }
@@ -107,7 +110,7 @@ class ParticipantInterventionLinkRepository extends EntityRepository
                 INNER JOIN i.interventionType it
                 WHERE pil.participant = :userid
                 AND pil.participantInterventionLinkDatetimeStart <= :currentDate
-                AND pil.status  = :pilstatus
+                AND pil.status  = :pilstatus 
                 AND it.interventionTypeName <> \'Test\'
                 ')
                 ->setParameters(array(
@@ -187,4 +190,50 @@ class ParticipantInterventionLinkRepository extends EntityRepository
         else
             return false;
     }
+    
+    public function checkIfIntervetionExpire($intervention){
+        $result = $this->getEntityManager()
+        ->createQuery('SELECT i.interventionId FROM CyclogramProofPilotBundle:Intervention i
+                WHERE i.interventionCode = :code
+                AND DATEDIFF(i.interventionExpirationDate, CURRENT_DATE()) <= 0
+                ')
+                ->setParameter('code', $intervention->getInterventionCode())
+                ->getOneOrNullResult();
+        if($result)
+            return true;
+        else
+            return false;
+    }
+    
+    public function checkIfIntervetionLinkExpire($intervention, $participant){
+        $result = $this->getEntityManager()
+        ->createQuery('SELECT pil.participantInterventionLinkId FROM CyclogramProofPilotBundle:ParticipantInterventionLink pil
+                INNER JOIN pil.participant p
+                INNER JOIN pil.intervention i
+                WHERE i.interventionCode = :code
+                AND p.participantId = :participant
+                AND DATEDIFF(pil.participantInterventionLinkExpiarationDate, CURRENT_DATE()) <= 0
+                ')
+                ->setParameter('code', $intervention->getInterventionCode())
+                ->setParameter('participant', $participant->getParticipantId())
+                ->getOneOrNullResult();
+        if($result)
+            return true;
+        else
+            return false;
+    }
+    
+    public function getAllActiveInterventionLinks () {
+        return $this->getEntityManager()
+        ->createQuery('SELECT pil FROM CyclogramProofPilotBundle:ParticipantInterventionLink pil
+                INNER JOIN pil.participant p
+                INNER JOIN pil.intervention i
+                WHERE pil.status = :status
+                AND pil.participantInterventionLinkExpiarationDate is not null
+                ')
+                ->setParameter('status', ParticipantInterventionLink::STATUS_ACTIVE)
+                ->getResult();
+    }
+    
+    
 }

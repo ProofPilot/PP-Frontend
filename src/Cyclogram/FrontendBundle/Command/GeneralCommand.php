@@ -79,6 +79,21 @@ class GeneralCommand extends ContainerAwareCommand
                 $output->writeln("<!--Cant't find send:interventionstart command--!>");
             }
             $output->writeln("\n");
+            //send:interventionexpirecheck
+            $InterventionExpiredCommand = $this->getApplication()->find('send:interventionexpirecheck');
+            if (!empty($InterventionExpiredCommand)) {
+                $output->writeln("<!--Running command send:interventionexpirecheck--!>");
+                $input = new ArrayInput(array('command' => 'send:interventionexpirecheck'));
+                $returnCode = $InterventionExpiredCommand->run($input, $output);
+                if ($returnCode == 0) {
+                    $output->writeln("<!--send:interventionexpirecheck command complitet--!>");
+                } else {
+                    $output->writeln("<!--send:interventionexpirecheck error--!>");
+                }
+            } else {
+                $output->writeln("<!--Cant't find send:interventionexpirecheck command--!>");
+            }
+            $output->writeln("\n");
         }
         
         //send:doitnotification

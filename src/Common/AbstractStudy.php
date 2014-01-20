@@ -18,6 +18,8 @@
 */
 namespace Common;
 
+use Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantInterventionLink;
+
 use Cyclogram\Bundle\ProofPilotBundle\Entity\Participant;
 
 use Cyclogram\Bundle\ProofPilotBundle\Entity\Incentive;
@@ -54,6 +56,16 @@ class AbstractStudy
         $em->persist($participant);
         $em->flush();
     }
-    
    
+    public function setInterventionLinkExpiration(Intervention $intervention, ParticipantInterventionLink $interventionLink) {
+        $interventionExpiredDate = $intervention->getInterventionExpirationDate();
+        $interventionExpiredPeriod = $intervention->getInterventionExpirationPeriod();
+        if (isset($interventionExpiredDate)) {
+            $interventionLink->setParticipantInterventionLinkExpiarationDate($interventionExpiredDate);
+        } elseif (isset($interventionExpiredPeriod)) {
+            $date = new \DateTime("now");
+            $date->add(new \DateInterval('P'.$interventionExpiredPeriod.'D'));
+            $interventionLink->setParticipantInterventionLinkExpiarationDate($date);
+        }
+    }
 }

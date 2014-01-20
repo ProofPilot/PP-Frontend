@@ -32,6 +32,7 @@ class ParticipantInterventionLink
     const STATUS_CLOSED = 11;
     const STATUS_DISMISS = 28;
     const STATUS_REFERRAL = 8;
+    const STATUS_EXPIRED = 30;
     /**
      * @var integer
      *
@@ -61,6 +62,13 @@ class ParticipantInterventionLink
      * @ORM\Column(name="participant_intervention_link_send_doit_email_time", type="datetime", nullable=true)
      */
     private $participantInterventionLinkSendEmailTime;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="participant_intervention_link_expiration_date", type="datetime", nullable=true)
+     */
+    private $participantInterventionLinkExpiarationDate;
 
     /**
      * @var \DateTime
@@ -262,7 +270,7 @@ class ParticipantInterventionLink
     }
 
     public function setParticipantInterventionLinkSendEmailTime(
-             $participantInterventionLinkSendEmailTime)
+            $participantInterventionLinkSendEmailTime)
     {
         $this->participantInterventionLinkSendEmailTime = $participantInterventionLinkSendEmailTime;
     }
@@ -276,6 +284,17 @@ class ParticipantInterventionLink
             $participantInterventionLinkSendSmsTime)
     {
         $this->participantInterventionLinkSendSmsTime = $participantInterventionLinkSendSmsTime;
+    }
+
+    public function getParticipantInterventionLinkExpiarationDate()
+    {
+        return $this->participantInterventionLinkExpiarationDate;
+    }
+
+    public function setParticipantInterventionLinkExpiarationDate(
+            \DateTime $participantInterventionLinkExpiarationDate)
+    {
+        $this->participantInterventionLinkExpiarationDate = $participantInterventionLinkExpiarationDate;
     }
 
 }
