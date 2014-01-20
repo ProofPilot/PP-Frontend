@@ -124,6 +124,11 @@ class MenuBuilder extends ContainerAware implements TranslationContainerInterfac
             array $options)
     {
         $participant = $this->container->get('security.context')->getToken()->getUser();
+        if($this->container->get('security.context')->isGranted("ROLE_FACEBOOK_USER") || $this->container->get('security.context')->isGranted("ROLE_GOOGLE_USER"))
+            $userName = $participant->getParticipantEmail();
+        else 
+            $userName = $participant->getParticipantUserName();
+            
         $lastAccess = $participant->getParticipantLastTouchDatetime()->format('d M Y, H:i');
         $studyCode = $this->container->get('request')->get('studyCode');
         
@@ -137,7 +142,7 @@ class MenuBuilder extends ContainerAware implements TranslationContainerInterfac
                         )))
                 ->setAttribute('class', 'header_user_logged_btn')
                 ->setAttribute("dropdown", true)
-                ->setAttribute("user_name", $participant->getParticipantUserName())
+                ->setAttribute("user_name", $userName)
                 ->setExtra('translation_domain', 'generalmenus');
         $menu['top_menu.settings']
         ->addChild($participant->getParticipantUserName())
