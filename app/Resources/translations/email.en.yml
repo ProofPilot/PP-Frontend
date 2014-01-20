@@ -33,7 +33,7 @@ reset_pass_link: 'Click here to reset your password'
 reset_pass_text: 'Yes, it happens to all of us: you can''t remember your password. That''s OK. Click this link to reset your password'
 reset_pass_title: 'Reset Your Password'
 send_verification_email: 'Do It'
-sent_email_to_friends: Sent
+sent_email_to_friends: 'Thank you for inviting a friend to this study.. '
 study_welcome_excited: 'We''re really excited to have you on board. Here''s what to expect on your journey with'
 study_welcome_hold_on: 'Hold On! Here''s Your First Study Task'
 study_welcome_joint_other_studies: 'Join Other Studies at ProofPilot'

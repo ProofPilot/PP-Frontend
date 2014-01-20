@@ -15,7 +15,7 @@ txt_decline_btn: 'DECLINE - MAYBE LATER'
 txt_eligible_dsc: 'Your participation at a glance: What you need to do now and what’s next.'
 txt_email_to_friend: 'E-mail to friend'
 txt_goal: Goal
-txt_join_before_goal: 'Join the study before it reaches the goal and earn incentive points on your user profile.'
+txt_join_before_goal: 'Join the study before it reaches the goal and earn valuable incentives.'
 txt_like_proofpilot: 'Like ProofPilot'
 txt_on_twitter: 'on Twitter'
 txt_participants: Participants
@@ -26,4 +26,4 @@ txt_tweet: Tweet
 txt_you_are_eligible: 'You are eligible. Accept consent to continue ...'
 unavailable_functionality: 'There are no interim results for this study yet. We will notify you when results area available for you to review.'
 warning_message: 'Before proceeding, please read this important information and accept at the bottom of the page'
-you_are_participant: "ENROLLED!<br><small>GO TO DASHBOARD</small>"
+you_are_participant: 'ENROLLED!<br><small>GO TO DASHBOARD</small>'
