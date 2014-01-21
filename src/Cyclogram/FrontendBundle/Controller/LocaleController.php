@@ -100,7 +100,7 @@ class LocaleController
         } elseif ($useReferrer && $request->headers->has('referer')) {
             $response = new RedirectResponse($request->headers->get('referer'), $statusCode);
         } elseif ($this->router && $redirectToRoute) {
-            $response = new RedirectResponse($this->router->generate("_page", array('studyUrl' => 'sexpro')));
+            $response = new RedirectResponse($this->router->generate("_page", array('studyUrl' => 'newhiv')));
         } else {
             // TODO: this seems broken, as it will not handle if the site runs in a subdir
             // TODO: also it doesn't handle the locale at all and can therefore lead to an infinite redirect
@@ -128,7 +128,7 @@ class LocaleController
 //             if ($branding == 'knowathome')
 //                 $studyUrl = "knowathome";
 //             else
-                $studyUrl = "sexpro";
+                $studyUrl = "newhiv";
         }
         $statusCode = $request->attributes->get('statusCode', $this->statusCode);
         $useReferrer = $request->attributes->get('useReferrer', $this->useReferrer);
