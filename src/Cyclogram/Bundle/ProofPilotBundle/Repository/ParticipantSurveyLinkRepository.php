@@ -60,12 +60,31 @@ class ParticipantSurveyLinkRepository extends EntityRepository
                 ->setParameters(array(
                         'surveyId' => $surveyId,
                         'participant' => $participant,
-                        'statusActive' => ParticipantSurveyLink::STATUS_CLOSED
+                        'statusActive' => ParticipantSurveyLink::STATUS_ACTIVE
                 ))->getOneOrNullResult();
         if($result) {
             $result->setStatus(ParticipantSurveyLink::STATUS_CLOSED);
             $em->persist($result);
             $em->flush();
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    public function checkIfSurveyClosed($participant, $surveyId) {
+        $em = $this->getEntityManager();
+        $result = $em->createQuery('SELECT psl FROM CyclogramProofPilotBundle:ParticipantSurveyLink psl
+                WHERE psl.participant = :participant
+                AND psl.sidId = :surveyId
+                AND psl.status = :statusActive
+                ')
+                ->setParameters(array(
+                        'surveyId' => $surveyId,
+                        'participant' => $participant,
+                        'statusActive' => ParticipantSurveyLink::STATUS_CLOSED
+                ))->getOneOrNullResult();
+        if($result) {
             return true;
         } else {
             return false;

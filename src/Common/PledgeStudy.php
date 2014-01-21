@@ -85,7 +85,7 @@ class PledgeStudy extends AbstractStudy implements StudyInterface
             else
                 $participantInterventionLink->setStatus(ParticipantInterventionLink::STATUS_ACTIVE);
             $em->persist($participantInterventionLink);
-            $em->flush($participantInterventionLink);
+            $em->flush();
             
             if ($session->has('refferal_participant')){
                 $participant->setParticipantRefferalId($session->get('refferal_participant'));

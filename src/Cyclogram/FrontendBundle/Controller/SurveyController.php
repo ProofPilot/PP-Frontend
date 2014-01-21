@@ -90,12 +90,18 @@ class SurveyController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $participant = $this->get('security.context')->getToken()->getUser();
-
         
+        $closed = $em->getRepository('CyclogramProofPilotBundle:ParticipantSurveyLink')->checkIfSurveyClosed($participant, $surveyId);
         $passed = $em->getRepository('CyclogramProofPilotBundle:ParticipantSurveyLink')->checkIfSurveyPassed($participant, $surveyId);
-        if($passed)
+        if($closed || $passed)
             return $this->render("::error.html.twig", array(
                     "error" => "You have already passed this survey"));
+        
+        
+//         $passed = $em->getRepository('CyclogramProofPilotBundle:ParticipantSurveyLink')->checkIfSurveyPassed($participant, $surveyId);
+//         if($passed)
+//             return $this->render("::error.html.twig", array(
+//                     "error" => "You have already passed this survey"));
         
         $locale = $this->getRequest()->getLocale();
     

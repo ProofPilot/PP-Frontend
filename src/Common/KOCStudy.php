@@ -115,7 +115,7 @@ class KOCStudy extends AbstractStudy implements StudyInterface
         $em = $this->container->get('doctrine')->getManager();
         
         $participantArm = $em->getRepository('CyclogramProofPilotBundle:ParticipantArmLink')->getStudyArm($participant, $this->getStudyCode());
-        if (isset($participantAr)){
+        if (isset($participantArm)){
             $participantArmName = $participantArm->getArm()->getArmCode();
             $participantArm = $em
             ->getRepository('CyclogramProofPilotBundle:ParticipantArmLink')

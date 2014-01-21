@@ -87,14 +87,13 @@ class ParticipantInterventionLinkRepository extends EntityRepository
                 INNER JOIN i.language l
                 WHERE pil.participant = :userid
                 AND pil.participantInterventionLinkDatetimeStart <= :currentDate
-                AND (pil.status = :pilstatus OR i.status = :istatus)
+                AND pil.status = :pilstatus
                 AND it.interventionTypeName <> 'Test'
                 AND l.locale = 'en'")
                 ->setParameters(array(
                         'userid' => $userid,
                         'currentDate' => $currentDate,
-                        'pilstatus' => ParticipantInterventionLink::STATUS_ACTIVE,
-                        'istatus' => Intervention::STATUS_ACTIVE
+                        'pilstatus' => ParticipantInterventionLink::STATUS_ACTIVE
                 ));
         return $query->getSingleScalarResult();
     }

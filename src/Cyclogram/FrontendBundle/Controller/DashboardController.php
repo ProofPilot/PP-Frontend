@@ -76,17 +76,11 @@ class DashboardController extends Controller
         
         $request = $this->getRequest();
         
-        
-        
         $this->get('study_logic')->interventionLogic($participant);
         $this->get('study_logic')->participantDefaultInterventionLogic($participant);
 
-        
-        $surveyscount = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')->getActiveParticipantInterventionsCount($participant);
         $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')->getActiveParticipantInterventionLinks($participant);
 
-        
-        
         $parameters = array();
         $parameters["studies"] = $em->getRepository('CyclogramProofPilotBundle:Study')->getRandomStudyInfo($locale, $participant);
         $enrolledStudies = $em->getRepository('CyclogramProofPilotBundle:Participant')->getEnrolledStudies($participant);
@@ -106,6 +100,7 @@ class DashboardController extends Controller
             $enroledStudy['studyContent'] = str_replace(array("\r\n", "\r", "\n"), "", strip_tags($studyContent->getStudyAbout()));
             $parameters["enrolledStudies"][] = $enroledStudy;
         }
+        $surveyscount = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')->getActiveParticipantInterventionsCount($participant);
         $parameters["interventioncount"] = $surveyscount;
 
        
