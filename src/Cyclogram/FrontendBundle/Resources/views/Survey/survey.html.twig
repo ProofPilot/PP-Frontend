@@ -31,7 +31,7 @@
     {% include '::footer.html.twig' %}
     <script type="text/javascript">
         $('#iframe1').load(function(){
-            location.href='#';
+            window.scrollTo(0,0);
             var frame = $(this);
             var frameSize = function() {
                 var frameHeight = frame.contents().find("#content-wrapper").height();
@@ -49,7 +49,8 @@
             var saveId = surveydata.attr('saveid');
 
             if(surveyId !== undefined && saveId !== undefined) {
-                window.location = {% if app.environment == "prod" %}'/app.php'{% else %}'/app_dev.php'{% endif %} + '/' + '{{ app.request.locale }}' + '/surveyResponse?&studyCode={{ studyCode }}&surveyId=' + surveyId + '&saveId=' + saveId + '&redirectUrl=' + '{{ app.request.get('redirectUrl') }}';
+                var redirectUrl = {% if app.environment == "prod" %}'/app.php'{% else %}'/app_dev.php'{% endif %} + '/' + '{{ app.request.locale }}' + '/surveyResponse?&studyCode={{ studyCode }}&surveyId=' + surveyId + '&saveId=' + saveId + '&redirectUrl=' + '{{ app.request.get('redirectUrl') }}';
+                window.location = redirectUrl;
             }
 
         });
