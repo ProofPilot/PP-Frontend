@@ -1,47 +1,49 @@
 <header>
     <a class="site_logo {{ branding }}" href="{{ path('_main') }}"></a>
-        {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createTopLeftMenu',{'template': 'CyclogramFrontendBundle:Knp:knp_menu.html.twig'}) }}
-{#         <div class="search_form">#}
-{#             <form method="" action="">#}
-{#                 <input type="text" title="Search" placeholder="Search" name="">#}
-{#             </form>#}
-{#         </div>#}
+    {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createTopLeftMenu',{'template': 'CyclogramFrontendBundle:Knp:knp_menu.html.twig'}) }}
     {% if is_granted('ROLE_PARTICIPANT') or is_granted('IS_AUTHENTICATED_REMEMBERED') %}
         {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createTopSettingsMenu',{'template': 'CyclogramFrontendBundle:Knp:top_menu.html.twig'}) }}
-        {% else %}
-            <ul class="header_menu">
-                <li><a class="login" href="{{ path('_signup') }}"><span>{% trans %}txt_header_login{% endtrans %}</span></a></li>
-            </ul>
-        {% endif %}
-</header>
-<div class="mobile_header_menu logged_in">
-        <ul>
-         <li>
-            <a class="trigger_left_menu alt" href="#"></a>
-         </li>
-         <li class="logo">
-            <a class="site_logo {{ branding }}" href="{{ path('_main') }}"></a>
-         </li>
-        {% if is_granted('ROLE_PARTICIPANT') or is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-            {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createTopSettingsMenuMobileHeader',{'template': 'CyclogramFrontendBundle:Knp:top_menu_mobile_header.html.twig'}) }}
-		{% else %}
-            <ul>         
-                <li><a class="login" href="{{ path('_signup') }}"><span>{% trans %}txt_header_login{% endtrans %}</span></a></li>
-            </ul>
-        {% endif %}
+    {% else %}
+        <ul class="header_menu">
+            <li><a class="login" href="{{ path('_signup') }}"><span>{% trans %}txt_header_login{% endtrans %}</span></a></li>
         </ul>
-</div>
+    {% endif %}
+</header>
+{% if is_granted('ROLE_PARTICIPANT') or is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+    <div class="mobile_header_menu logged_in">
+        <ul>
+            <li>
+                <a class="trigger_left_menu alt" href="#"></a>
+            </li>
+            <li class="logo">
+                <a class="site_logo {{ branding }}" href="{{ path('_main') }}"></a>
+            </li>
+            {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createTopSettingsMenuMobileHeader',{'template': 'CyclogramFrontendBundle:Knp:top_menu_mobile_header.html.twig'}) }}
+        </ul>
+    </div>
+{% else %}
+    <div class="mobile_header_menu nologin">
+        <ul>
+            <li class="logo">
+                <a class="site_logo {{ branding }}" href="{{ path('_main') }}"></a>
+            </li>
+            <li class="right">
+                <a class="trigger_sitemenu" href="#"></a>
+            </li>
+        </ul>
+    </div>
+{% endif %}
 <div class="mobile_sitemenu register {% if app.user %}nologin{% else %}logged_in{% endif %}">
-        <div class="menu_wrapper">
+    <div class="menu_wrapper">
         <a class="close" href="#"></a>
         <a class="logo" href="#"></a>
         {% if is_granted('ROLE_PARTICIPANT') or is_granted('IS_AUTHENTICATED_REMEMBERED') %}
             {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createTopSettingsMenuMobile',{'template': 'CyclogramFrontendBundle:Knp:top_menu_mobile_body.html.twig'}) }}
         {% else %}
             <ul>         
-                <li><a class="login" href="{{ path('_signup') }}"><span>{% trans %}txt_header_login{% endtrans %}</span></a></li>
+                <li><a class="icon_login" href="{{ path('_signup') }}"><span>{% trans %}txt_header_login{% endtrans %}</span></a></li>
             </ul>
         {% endif %}
-        </div>
+    </div>
 </div>
 
