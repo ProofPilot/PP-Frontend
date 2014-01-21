@@ -1,3 +1,4 @@
+_email_to_friends_join: 'Join'
 bottom_no_reply: 'Please do not reply to this email as the inbox is not monitored'
 bottom_text: 'This message was sent to <span style="color: #BBC2CB;">%mail_to%</span><br />If you would like to update your e-mail address, please <a href = "%general_settings_link%" style="color: #BBC2CB; text-decoration: none;">click here</a><br /> Visit Contact Preferences to manage your e-mail and mobile alerts<br /> Please add <span style="color: #BBC2CB;">crew@proofpilot.com</span> to your address book to ensure delivery of our e-mails to your inbox.<br /> Note: We never share your ProofPilot.com passwords with anyone via e-mail, including us.'
 confirm_join_study: 'Join a study'

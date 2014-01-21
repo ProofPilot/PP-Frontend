@@ -1,11 +1,12 @@
+_email_to_friends_join: _email_to_friends_join   # FIXME
 bottom_no_reply: 'Por favor, não responda a este e-mail como a caixa de entrada não é monitorada'
 bottom_text: bottom_text
-confirm_join_study: confirm_join_study   # FIXME
+confirm_join_study: confirm_join_study
 confirm_verify_text: 'Sim, é parte de qualquer registro do site e ProofPilot não é diferente. Por favor, clique no link abaixo para verificar o seu endereço de e-mail e ir andando'
 confirm_verify_title: 'Por favor, verifique seu e-mail'
 do_it: do_it
 do_it_task_email_title: 'O que você tem a fazer no ProofPilot'
-doit_email_what_you_got: doit_email_what_you_got   # FIXME
+doit_email_what_you_got: doit_email_what_you_got
 email_login: email_login
 email_not_send_try_later: email_not_send_try_later
 email_reset_password: 'Redefinir sua senha'
@@ -34,8 +35,8 @@ reset_pass_text: 'Sim, isso acontece com todos nós: você não lembra da sua se
 reset_pass_title: 'Redefinir sua senha'
 send_verification_email: 'Enviar e-mail de verificação'
 sent_email_to_friends: sent_email_to_friends
-study_welcome_excited: study_welcome_excited   # FIXME
-study_welcome_hold_on: study_welcome_hold_on   # FIXME
-study_welcome_joint_other_studies: study_welcome_joint_other_studies   # FIXME
-study_welcome_welcome_to: study_welcome_welcome_to   # FIXME
-welcome_to_study: welcome_to_study   # FIXME
+study_welcome_excited: study_welcome_excited
+study_welcome_hold_on: study_welcome_hold_on
+study_welcome_joint_other_studies: study_welcome_joint_other_studies
+study_welcome_welcome_to: study_welcome_welcome_to
+welcome_to_study: welcome_to_study

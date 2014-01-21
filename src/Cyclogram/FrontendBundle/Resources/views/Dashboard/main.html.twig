@@ -204,7 +204,7 @@
 							    <div class="share_slide" style="display:none">
                                     <a href='' class="twitter_icon" onclick="popUp=window.open('https://twitter.com/share?url={{ study.studyRefferalShortUrl }}&text={%  trans from "study" %}social_join_study{% endtrans %} {{ study.studyName }} {%  trans from "study" %}social_at_proofpilot{% endtrans %}', 'popupwindow', 'scrollbars=yes,width=800,height=400');popUp.focus();return false" class="tw"></a>
                                     <a href="#" class="facebook_icon" onClick="return postFeed('{{ study.reffferalFacebookStudyUrl }}','{{ study.studyName }}','{{ study.studyContent}}','{{ study.graphic }}')"></a>
-							        <a href="" class="email"><input type="hidden" class="email_to_friends_study" value="{{ study.studyName }}"></a>
+							        <a href="#" class="email"><input type="hidden" class="email_to_friends_study" value="{{ study.studyName }}"></a>
 							    </div>
 							    {% endif %}
 							</li>
