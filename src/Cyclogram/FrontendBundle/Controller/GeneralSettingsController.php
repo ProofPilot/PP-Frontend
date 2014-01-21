@@ -316,7 +316,7 @@ class GeneralSettingsController  extends Controller
             }
         }
         
-        $parameters['form'] = $form->createView();
+        $parameters['formShippingInformation'] = $form->createView();
     
         return $this->render('CyclogramFrontendBundle:GeneralSettings:shipping_information.html.twig', $parameters);
     }
@@ -415,7 +415,7 @@ class GeneralSettingsController  extends Controller
         $parameters["user"]["name"] = $participant->getParticipantFirstname() . ' ' . $participant->getParticipantLastname();
         $parameters["user"]["username"] = $participant->getParticipantUsername();
         $parameters["user"]["last_access"] = $participant->getParticipantLastTouchDatetime();
-        $parameters['form'] = $form->createView();
+        $parameters['formAboutMe'] = $form->createView();
         
         return $this->render('CyclogramFrontendBundle:GeneralSettings:about_me.html.twig', $parameters);
     }

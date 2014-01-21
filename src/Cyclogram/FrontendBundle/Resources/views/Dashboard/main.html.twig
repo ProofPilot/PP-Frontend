@@ -46,6 +46,18 @@
                 });
             });
 
+            $('#shipping_information').bind('click', function(e) {
+            	e.preventDefault();
+                $('#shipping_information_popup').dialog({
+                    modal: true,
+                    width: '330',
+                    fluid: true,
+                    resizable: false,
+                    position: ['top',100],
+                    open: funcCustom
+                });
+            });
+
             var count = 1;
             $('#email_list .others').on('click', 'a', function(e) {
                 if (count < 5 ){

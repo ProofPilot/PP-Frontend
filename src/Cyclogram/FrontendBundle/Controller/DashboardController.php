@@ -156,11 +156,11 @@ class DashboardController extends Controller
                     break;
                 case "Shipping Info" :
                     $formShippingInformation = $this->createForm(new MailingAddressForm($this->container));
-                    $parameters['form'] =  $formShippingInformation->createView();
+                    $parameters['formShippingInformation'] =  $formShippingInformation->createView();
                     break;
                 case "About Me Info" :
                     $formAboutMe = $this->createForm(new AboutMeForm($this->container));
-                    $parameters['form'] =  $formAboutMe->createView();
+                    $parameters['formAboutMe'] =  $formAboutMe->createView();
                     $parameters["expandedFormClass"] = '';
                     $interested = $participant->getParticipantInterested();
                     if (isset($interested) && $interested == 'w') {
