@@ -38,7 +38,7 @@
             	e.preventDefault();
                 $('#about_me_popup').dialog({
                     modal: true,
-                    width: '330',
+                    width: '700',
                     fluid: true,
                     resizable: false,
                     position: ['top',100],
@@ -311,7 +311,7 @@
                                      {% endif %}
                                      {% if intervention.type == 'About Me Info'%}
                                      <div class="button_box"> <a href="#" id="about_me"><span>{% trans from "dashboard" %}do_it{% endtrans %}</span></a> </div>
-                                         <div id="about_me_popup" style="display: none;">
+                                         <div id="about_me_popup" class="dashboard_panel" style="display: none;">
                                              {% include 'CyclogramFrontendBundle:GeneralSettings:about_me_form.html.twig' %}
                                          </div>
                                      {% endif %}
