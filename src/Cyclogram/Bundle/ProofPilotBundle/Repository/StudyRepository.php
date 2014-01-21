@@ -232,7 +232,7 @@ class StudyRepository extends EntityRepository
     {
         return $this->getEntityManager()
         ->createQuery("
-                SELECT o.organizationName, o.organizationAddress1
+                SELECT o.organizationName, o.organizationAddress1, o.organizationLogo
                 FROM CyclogramProofPilotBundle:Organization o
                 WHERE o.status = :organizationstatus
                 AND o.organizationId IN (SELECT org.organizationId FROM CyclogramProofPilotBundle:StudyOrganizationLink sol

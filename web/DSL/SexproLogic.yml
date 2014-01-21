@@ -1,0 +1,26 @@
+elegibilty:
+    399419X758X7914:
+        type: input
+        rules:
+            GT: 15
+            AND:
+            LT: 25
+            eligible: true
+          
+    399419X758X7915:
+        type: radio
+        rules:
+            ISSET: 'A2'
+            OR:
+              ISSET: 'A4'
+            eligible: true
+           
+    399419X758X7921SQ002:
+        type: checkbox
+        rules:
+            EQ: 'Y'
+            eligible: true
+
+studyRegistration:
+    LimeSurvey468727:
+        age:

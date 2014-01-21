@@ -512,7 +512,11 @@
                         <div class="box alt s_by">
                             <h4>{% trans from "study" %}txt_conducted_by{% endtrans %}</h4>
                             {% for organization in studyOrganizations %}
+                            {% if organization.organizationLogo is empty %}
                                 <img width="60" height="75" src="{{ asset('images/tmplogo_none.jpg') }}" class="logo_img">
+                            {% else %}
+                                <img width="60" height="75" src="{{ urlAssets }}/web/org/{{ organization.organizationLogo }}" class="logo_img">
+                            {% endif %}
                                 <p>{{ organization.organizationName }}, <br />
                                 <span>{{ organization.organizationAddress1 }}</span></p>
                             {% endfor %}
