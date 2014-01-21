@@ -1,0 +1,168 @@
+{% form_theme form '::fields_theme2.html.twig' %}
+
+{% from '::macro.html.twig' import showonerror,hideonerror %}
+           
+            <form action="{{ path('_about_me') }}" method="POST", name="about_me">
+              <ul class="settings_form">
+                <li class="left_text form-country">{% trans from "about_me" %}txt_country{% endtrans %}</li>
+                <li class="form_expanded form-country" {{ showonerror('country',expandedFormClass) }}>
+                  <div class="wrapper">
+                    <div class="current_text">{{ participant.country}}</div>
+                    <div class="close_cont"><a href="#" data-form-cont=".form-country">Cancel</a></div>
+                    <div class="new_inputs_cont">
+                      <div class="for_label">{{ form_label(form.countrySelect) }}</div>
+                      {{ form_widget(form.countrySelect) }}
+                      {{ form_errors(form.countrySelect) }}
+                    </div>
+                    <div class="new_inputs_cont">
+                    <div class="confirm_cont">
+                        {{ form_widget(form.countryConfirm, {'attr':{'class' : 'btn_confirm'}}) }}
+                    </div>
+                  </div>
+                </li>
+                <li class="middle_input form-country" {{ hideonerror('country',expandedFormClass) }}>
+                    {{ form_widget(form.country, {'attr' : {'class' : 'middle_input', 'readonly' : 'readonly'}, 'value': participant.country}) }}
+                    {{ form_errors(form.country) }}
+                </li>
+                <li class="edit_btn form-country" {{ hideonerror('country',expandedFormClass) }}><a href="#" data-form-cont=".form-country">{% trans from "about_me" %}txt_change{% endtrans %}</a></li>
+                
+                
+                {# zipcode #}
+                <li class="left_text form-zipCode">{% trans from "about_me" %}txt_zip_code{% endtrans %}</li>
+                <li class="form_expanded form-zipCode"  {{ showonerror('zipCode',expandedFormClass) }}>
+                  <div class="wrapper">
+                   <div class="current_text">{{ participant.participantZipcode}}</div>
+                    <div class="close_cont"><a href="#" data-form-cont=".form-zipCode">Cancel</a></div>
+
+                        <div class="new_inputs_cont with_margin">
+                          <div class="for_label">{{ form_label(form.newzipcode) }}</div>
+                              {{ form_widget(form.newzipcode) }}
+                              {{ form_errors(form.newzipcode) }}
+                        </div>
+                    <div class="confirm_cont">
+                        {{ form_widget(form.zipcodeConfirm, {'attr':{'class' : 'btn_confirm'}}) }}
+                    </div>
+                </li>
+                <li class="middle_input form-zipCode" {{ hideonerror('zipCode',expandedFormClass) }}>
+
+                    {{ form_widget(form.zipcode, {'attr' : {'class' : 'middle_input', 'value' : participant.participantZipcode ,'readonly' : 'readonly'}}) }}
+                    {{ form_errors(form.zipcode) }}
+                <li class="edit_btn form-zipCode" {{ hideonerror('zipCode',expandedFormClass) }}><a href="#" data-form-cont=".form-zipCode">{% trans from "about_me" %}txt_change{% endtrans %}</a></li>
+                
+                {# birthdate #}                
+                <li class="left_text form-birthdate">{% trans from "about_me" %}txt_birthdate{% endtrans %}</li>
+                <li class="form_expanded form-birthdate"  {{ showonerror('birthdate',expandedFormClass) }}>
+                  <div class="wrapper">
+                  {% if  participant.participantBirthdate is not null %}
+                    <div class="current_text">{{ participant.participantBirthdate|date('d F Y') }}</div>
+                    {% endif %}
+                    <div class="close_cont"><a href="#" data-form-cont=".form-birthdate">Cancel</a></div>
+                    <div class="new_inputs_cont">
+                      <span class="input_container">
+                          {{ form_label(form.birthdateSelect) }}
+                          {{ form_widget(form.birthdateSelect, {'attr' : {'readonly' : 'readonly'}}) }}
+                          {{ form_errors(form.birthdateSelect) }}
+                      </span>
+                    </div>
+                    <div class="confirm_cont">
+                        {{ form_widget(form.birthdateConfirm, {'attr':{'class' : 'btn_confirm'}}) }}
+                  </div>
+                </li>
+                <li class="middle_input form-birthdate" {{ hideonerror('birthdate',expandedFormClass) }}>
+                {% if  participant.participantBirthdate is not null %}
+                    {{ form_widget(form.birthdate, {'attr' : {'class' : 'middle_input', 'readonly' : 'readonly', 'value' : participant.participantBirthdate|date('d F Y')}}) }}
+                {% else %}
+                    {{ form_widget(form.birthdate, {'attr' : {'class' : 'middle_input', 'readonly' : 'readonly'}}) }}
+               {% endif %}
+                    {{ form_errors(form.birthdate) }}
+                <li class="edit_btn form-birthdate" {{ hideonerror('birthdate',expandedFormClass) }}><a href="#" data-form-cont=".form-birthdate">{% trans from "about_me" %}txt_change{% endtrans %}</a></li>
+                
+                {# sex #}      
+                <li class="left_text form-sex">{% trans from "about_me" %}txt_sex{% endtrans %}</li>
+                <li class="form_expanded form-sex"  {{ showonerror('sex',expandedFormClass) }}>
+                  <div class="wrapper">
+                  {% if  participant.sex is not null %}
+                    <div class="current_text">{{ participant.sex.sexName }}</div>
+                  {% endif %}
+                    <div class="close_cont"><a href="#" data-form-cont=".form-sex">Cancel</a></div>
+                    <div class="new_inputs_cont">
+                      <span class="input_container">
+                      {{ form_label(form.sexSelect) }}
+                          {{ form_widget(form.sexSelect) }}
+                          {{ form_errors(form.sexSelect) }}
+                      </span>
+                    </div>
+                    <div class="confirm_cont">
+                        {{ form_widget(form.sexConfirm, {'attr':{'class' : 'btn_confirm'}}) }}
+                  </div>
+                </li>
+                <li class="middle_input form-sex" {{ hideonerror('sex',expandedFormClass) }}>
+                {% if  participant.sex is not null %}
+                    {{ form_widget(form.sex, {'attr' : {'class' : 'middle_input', 'readonly' : 'readonly', 'value' : participant.sex.sexName}}) }}
+                {% else %}
+                    {{ form_widget(form.sex, {'attr' : {'class' : 'middle_input', 'readonly' : 'readonly'}}) }}
+                {% endif %}
+                    {{ form_errors(form.sex) }}
+                <li class="edit_btn form-sex" {{ hideonerror('incentiveEmail',expandedFormClass) }}><a href="#" data-form-cont=".form-sex">{% trans from "about_me" %}txt_change{% endtrans %}</a></li>
+                
+                {# interested #}
+                <li class="left_text form-interested">{% trans from "about_me" %}txt_interested{% endtrans %}</li>
+                  
+                <li class="form_expanded form-interested"  {{ showonerror('interested',expandedFormClass) }}>
+                  <div class="wrapper">
+                    <div class="current_text"> {{ interest }} </div>
+                    <div class="close_cont"><a href="#" data-form-cont=".form-interested">Cancel</a></div>
+                    <div class="new_inputs_cont">
+                      <div class="for_label">{{ form_label(form.interestedSelect) }}</div>
+                      <span class="input_container">
+                          {{ form_widget(form.interestedSelect) }}
+                          {{ form_errors(form.interestedSelect) }}
+                      </span>
+                    </div>
+                    <div class="confirm_cont">
+                        {{ form_widget(form.interestedConfirm, {'attr':{'class' : 'btn_confirm'}}) }}
+                  
+                </li>
+                <li class="middle_input form-interested" {{ hideonerror('interested',expandedFormClass) }}>
+                    {{ form_widget(form.interested, {'attr' : {'class' : 'middle_input', 'readonly' : 'readonly', 'value' : interest}}) }}
+                    {{ form_errors(form.interested) }}
+                </li>
+                   <li class="edit_btn form-interested" {{ hideonerror('interested',expandedFormClass) }}><a href="#" data-form-cont=".form-interested">{% trans from "about_me" %}txt_change{% endtrans %}</a></li>
+                   
+                   
+                    {# race #}
+                <li class="left_text form-race">{% trans from "about_me" %}txt_race{% endtrans %}</li>
+                <li class="form_expanded form-race"  {{ showonerror('race',expandedFormClass) }}>
+                  <div class="wrapper">
+                  {% if  participant.race is not null %}
+                    <div class="current_text">{{ participant.race.raceName }}</div>
+                  {% endif %}
+                    <div class="close_cont"><a href="#" data-form-cont=".form-race">Cancel</a></div>
+                    <div class="new_inputs_cont">
+                      <span class="input_container">
+                          <span class="input_placeholder">
+                          {{ form_label(form.raceSelect) }}
+                              {{ form_widget(form.raceSelect) }}
+                              {{ form_errors(form.raceSelect) }}
+                          </span>
+                      </span>
+                      </div>
+                    <div class="confirm_cont">
+                        {{ form_widget(form.raceConfirm, {'attr':{'class' : 'btn_confirm'}}) }}
+                     </div>
+                  
+                </li>
+                <li class="middle_input form-race" {{ hideonerror('race',expandedFormClass) }}>
+                {% if  participant.race is not null %}
+                    {{ form_widget(form.race, {'attr' : {'class' : 'middle_input', 'readonly' : 'readonly', 'value' : participant.race.raceName}}) }}
+                {% else %}
+                    {{ form_widget(form.race, {'attr' : {'class' : 'middle_input', 'readonly' : 'readonly'}}) }}
+                {% endif %}
+                    {{ form_errors(form.race) }}
+                </li>
+                   <li class="edit_btn form-race" {{ hideonerror('race',expandedFormClass) }}><a href="#" data-form-cont=".form-race">{% trans from "about_me" %}txt_change{% endtrans %}</a></li>
+              </ul>
+              {{ form_widget(form.validationCheck) }}
+{#               {{ form_rest(form) }}#}
+              {{ form_errors(form) }}
+            </form>

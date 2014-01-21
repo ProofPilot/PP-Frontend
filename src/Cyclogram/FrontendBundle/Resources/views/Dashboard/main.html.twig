@@ -3,7 +3,11 @@
 {% use '::facebook_blocks.html.twig' %}
 {% use '::google_blocks.html.twig' %}
 
+
+
 {% block javascripts %}
+ <script src="{{ asset('js/jquery-ui-1.10.3/jquery-ui.min.js') }}"></script>
+ <script src="{{ asset('js/jquery-ui-1.10.3/jquery.ui.datepicker.min.js') }}"></script>
  <script src="{{ asset('/js/jquery.form.js') }}"></script>
     <script type="text/javascript" > 
         $(document).ready(function(){
@@ -21,6 +25,18 @@
                $('#tmp_subject').val('{%  trans from "study" %}inivted_to_study{% endtrans %}'+" " +$(this).children('.email_to_friends_study').val());
                $('#tmp_who').val('{{ participant_email }}')
                 $('#email_list').dialog({
+                    modal: true,
+                    width: '330',
+                    fluid: true,
+                    resizable: false,
+                    position: ['top',100],
+                    open: funcCustom
+                });
+            });
+
+            $('#about_me').bind('click', function(e) {
+            	e.preventDefault();
+                $('#about_me_popup').dialog({
                     modal: true,
                     width: '330',
                     fluid: true,
@@ -218,8 +234,12 @@
                     <p>{% trans from "dashboard" %}dashboard_subtitle{% endtrans %}</p>
                 </div>
                 <div class="dashboard_panel">
-                    
+{#                                                          <div class="button_box"> <a href="#" id="about_me"><span>{% trans from "dashboard" %}do_it{% endtrans %}</span></a> </div>#}
+{#                                          <div id="about_me_popup"style="dispaly:none">#}
+{#                                              {% include 'CyclogramFrontendBundle:GeneralSettings:about_me_form.html.twig' %}#}
+{#                                          </div>#}
                     <div id="dismiss_message"> </div>
+                    
                     {% if confirm_email == false%}
                         <p class="notice green"><span>{{ email_alert| raw }}</span> <a href="{{path('_main',{'sendMail' :  true})}}">{% trans from "dashboard" %}send_again{% endtrans %}</a></p>
                         {% endif %}
@@ -288,6 +308,18 @@
                                      <div id="div_location" style="display:none;">
                                          {% include 'CyclogramFrontendBundle:Dashboard:locations.html.twig' %}
                                     </div>
+                                     {% endif %}
+                                     {% if intervention.type == 'About Me Info'%}
+                                     <div class="button_box"> <a href="#" id="about_me"><span>{% trans from "dashboard" %}do_it{% endtrans %}</span></a> </div>
+                                         <div id="about_me_popup" style="display: none;">
+                                             {% include 'CyclogramFrontendBundle:GeneralSettings:about_me_form.html.twig' %}
+                                         </div>
+                                     {% endif %}
+                                     {% if intervention.type == 'Shipping Info'%}
+                                     <div class="button_box"> <a href="#" id="shipping_information"><span>{% trans from "dashboard" %}do_it{% endtrans %}</span></a> </div>
+                                         <div id="shipping_information_popup" style="display: none;">
+                                             {% include 'CyclogramFrontendBundle:GeneralSettings:shipping_information_form.html.twig' %}
+                                         </div>
                                      {% endif %}
                                 </div>
                                 

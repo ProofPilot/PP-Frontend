@@ -21,6 +21,10 @@ namespace Cyclogram\FrontendBundle\Controller;
 
 
 
+use Cyclogram\FrontendBundle\Form\AboutMeForm;
+
+use Cyclogram\FrontendBundle\Form\MailingAddressForm;
+
 use Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantArmLink;
 
 use Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantInterventionLink;
@@ -135,21 +139,44 @@ class DashboardController extends Controller
             $intervention["logo"] = $this->container->getParameter('study_image_url') . "/" . $studyId . "/" . $studyContent->getStudyLogo();
             $interventionTypeName = $interventionLink->getIntervention()->getInterventionType()->getInterventionTypeName();
             $intervention['type'] = $interventionTypeName;
-            if ($interventionTypeName == "Pledge" ) {
-                $intervention['reffferalFacebookStudyUrl'] = $this->container->getParameter('site_url')."/".$locale."/".$study->getStudyCode()."/?utm_campaign=".$siteCampaignLink->getCampaign()->getCampaignName()."&utm_medium-Clinic&utm_source=".$site[0]['siteName']."&pid=".$participant->getParticipantId();
-                $intervention['refferalStudyUrl'] = $this->container->getParameter('site_url')."/".$locale."/".$study->getStudyCode()."/?utm_campaign=".$siteCampaignLink->getCampaign()->getCampaignName()."&utm_medium-Clinic&utm_source=".$site[0]['siteName']."&pid=".$participant->getParticipantId();
-                $intervention['reffferalShortStudyUrl'] = $cc::generateGoogleShorURL($this->container->getParameter('site_url')."/".$locale."/".$study->getStudyCode()."/?utm_campaign=".$siteCampaignLink->getCampaign()->getCampaignName()."&utm_medium-Clinic&utm_source=".$site[0]['siteName']."&pid=".$participant->getParticipantId());
-                $intervention['studyName'] = $studyContent->getStudyName();
+            switch ($interventionTypeName) {
+                case "Pledge" :
+                    $intervention['reffferalFacebookStudyUrl'] = $this->container->getParameter('site_url')."/".$locale."/".$study->getStudyCode()."/?utm_campaign=".$siteCampaignLink->getCampaign()->getCampaignName()."&utm_medium-Clinic&utm_source=".$site[0]['siteName']."&pid=".$participant->getParticipantId();
+                    $intervention['refferalStudyUrl'] = $this->container->getParameter('site_url')."/".$locale."/".$study->getStudyCode()."/?utm_campaign=".$siteCampaignLink->getCampaign()->getCampaignName()."&utm_medium-Clinic&utm_source=".$site[0]['siteName']."&pid=".$participant->getParticipantId();
+                    $intervention['reffferalShortStudyUrl'] = $cc::generateGoogleShorURL($this->container->getParameter('site_url')."/".$locale."/".$study->getStudyCode()."/?utm_campaign=".$siteCampaignLink->getCampaign()->getCampaignName()."&utm_medium-Clinic&utm_source=".$site[0]['siteName']."&pid=".$participant->getParticipantId());
+                    $intervention['studyName'] = $studyContent->getStudyName();
+                    break;
+                case "Referral" :
+                    $intervention['refferalStudyUrl'] = $this->container->getParameter('site_url')."/".$locale."/".$study->getStudyCode()."/?utm_campaign=".$siteCampaignLink->getCampaign()->getCampaignName()."&utm_medium-Clinic&utm_source=".$site[0]['siteName']."&pid=".$participant->getParticipantId();
+                    $intervention['reffferalShortStudyUrl'] = $cc::generateGoogleShorURL($this->container->getParameter('site_url')."/".$locale."/".$study->getStudyCode()."/?utm_campaign=".$siteCampaignLink->getCampaign()->getCampaignName()."&utm_medium-Clinic&utm_source=".$site[0]['siteName']."&pid=".$participant->getParticipantId());
+                    $intervention['reffferalFacebookStudyUrl'] = $this->container->getParameter('site_url')."/".$locale."/".$study->getStudyCode()."/?utm_campaign=".$siteCampaignLink->getCampaign()->getCampaignName()."&utm_medium-Clinic&utm_source=".$site[0]['siteName']."&pid=".$participant->getParticipantId();
+                    $intervention['studyName'] = $studyContent->getStudyName();
+                    $intervention['studyContent'] = str_replace(array("\r\n", "\r", "\n"), "", strip_tags(substr($studyContent->getStudyAbout(), 0,250)));
+                    $intervention["graphic"] = $this->container->getParameter('study_image_url') . '/' .$study->getStudyId(). '/' .$studyContent->getStudyGraphic();
+                    break;
+                case "Shipping Info" :
+                    $formShippingInformation = $this->createForm(new MailingAddressForm($this->container));
+                    $parameters['form'] =  $formShippingInformation->createView();
+                    break;
+                case "About Me Info" :
+                    $formAboutMe = $this->createForm(new AboutMeForm($this->container));
+                    $parameters['form'] =  $formAboutMe->createView();
+                    $parameters["expandedFormClass"] = '';
+                    $interested = $participant->getParticipantInterested();
+                    if (isset($interested) && $interested == 'w') {
+                        $parameters['interest'] = 'Woman';
+                    } elseif (isset($interested) && $interested == 'm') {
+                        $parameters['interest'] = 'Man';
+                    } elseif (isset($interested) && $interested == 'mw') {
+                        $parameters['interest'] = 'Man&Woman';
+                    }else {
+                        $parameters['interest'] = "";
+                    }
+                    break;
+                    
             }
-            if ($interventionTypeName == "Referral" ) {
-              
-                $intervention['refferalStudyUrl'] = $this->container->getParameter('site_url')."/".$locale."/".$study->getStudyCode()."/?utm_campaign=".$siteCampaignLink->getCampaign()->getCampaignName()."&utm_medium-Clinic&utm_source=".$site[0]['siteName']."&pid=".$participant->getParticipantId();
-                $intervention['reffferalShortStudyUrl'] = $cc::generateGoogleShorURL($this->container->getParameter('site_url')."/".$locale."/".$study->getStudyCode()."/?utm_campaign=".$siteCampaignLink->getCampaign()->getCampaignName()."&utm_medium-Clinic&utm_source=".$site[0]['siteName']."&pid=".$participant->getParticipantId());
-                $intervention['reffferalFacebookStudyUrl'] = $this->container->getParameter('site_url')."/".$locale."/".$study->getStudyCode()."/?utm_campaign=".$siteCampaignLink->getCampaign()->getCampaignName()."&utm_medium-Clinic&utm_source=".$site[0]['siteName']."&pid=".$participant->getParticipantId();
-                $intervention['studyName'] = $studyContent->getStudyName();
-                $intervention['studyContent'] = str_replace(array("\r\n", "\r", "\n"), "", strip_tags(substr($studyContent->getStudyAbout(), 0,250)));
-                $intervention["graphic"] = $this->container->getParameter('study_image_url') . '/' .$study->getStudyId(). '/' .$studyContent->getStudyGraphic();
-            }
+
+
             $parameters["studyCode"] = $study->getStudyCode();
           
             $parameters['shortstudyUrl'] = $cc::generateGoogleShorURL($this->container->getParameter('site_url')."/".$locale."/".$study->getStudyCode());
@@ -212,6 +239,8 @@ class DashboardController extends Controller
             $session->remove('dismiss_error_message');
         }
         $parameters['participant_email'] = $participant->getParticipantEmail();
+        $parameters['participant'] = $participant;
+        
 
       return $this->render('CyclogramFrontendBundle:Dashboard:main.html.twig', $parameters);
     
