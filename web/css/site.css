@@ -882,7 +882,7 @@ header .header_menu span.text  , .footer_col_right span.text  {
 	float: left;
 	margin: 12px 0px 0px 30px;
 	width: 100%;
-	/* max-width: 683px; */
+	max-width: 683px;
 }
 .dashboard_panel .contact_current_data  {
 	margin-bottom: 30px;
