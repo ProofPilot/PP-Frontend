@@ -292,33 +292,6 @@
                                 </div>
                                 
                             {% endfor %}
-                                <form id="email_list" style="display: none; " action="{{path('_email_to_friend')}}">
-                                    <h1>{%  trans from "email" %}email_to_friends_title{% endtrans %}</h1>
-                                    <div class="sender_info">
-                                        <label for="tmp_who">{%  trans from "email" %}email_to_friends_who_sending{% endtrans %}</label>
-                                        <input id="tmp_who" type="text" name="send_from" class="text" placeholder="Type your e-mail" /><br />
-                                        <label for="tmp_to">{%  trans from "email" %}email_to_friends_who_are_you_sending{% endtrans %}</label>
-                                        <input id="tmp_to" type="text" name="send_to[0]" class="text" placeholder="Type recipient email" /><br />
-                                        <p class="others">
-                                            <a href="#">+ {%  trans from "email" %}email_to_friends_add_email{% endtrans %}</a>
-                                            <span>(up to 5 e-mails)</span>
-                                        </p>
-                                    </div>
-                                    <div class="msg_details">
-                                        <label for="tmp_subject">{%  trans from "email" %}email_to_friends_subject{% endtrans %}</label>
-                                        <input id="tmp_subject" type="text" name="subject" class="text" value=" " />
-                                        <label for="tmp_msg">{%  trans from "email" %}email_to_friends_message{% endtrans %}</label>
-                                        <textarea rows="3" cols="28.5" name="description" class="text"></textarea>
-                                        {% if app.user %}
-                                            <input type="hidden" value="{{ participant_email }}"  name="participant"/>
-                                        {% endif %}
-                                        {% if studyCode is defined %}
-                                            <input type="hidden" value="{{ studyCode }}"  name="studyCode"/>
-                                        {% endif %}
-                                        <a href="#" class="btn_cancel">{%  trans from "email" %}email_to_friends_cancle{% endtrans %}</a>
-                                        <a href="#" class="btn_send_mail" id="email_submit">{%  trans from "email" %}email_to_friends_send_button{% endtrans %}</a>
-                                    </div>
-                                </form>
                         {% else %}
                             <div class="featured_box">
                                 <h2>
@@ -333,6 +306,33 @@
                             </div>
                         {% endif %}
                     </div>
+                    <form id="email_list" style="display: none; " action="{{path('_email_to_friend')}}">
+                        <h1>{%  trans from "email" %}email_to_friends_title{% endtrans %}</h1>
+                        <div class="sender_info">
+                            <label for="tmp_who">{%  trans from "email" %}email_to_friends_who_sending{% endtrans %}</label>
+                            <input id="tmp_who" type="text" name="send_from" class="text" placeholder="Type your e-mail" /><br />
+                            <label for="tmp_to">{%  trans from "email" %}email_to_friends_who_are_you_sending{% endtrans %}</label>
+                            <input id="tmp_to" type="text" name="send_to[0]" class="text" placeholder="Type recipient email" /><br />
+                            <p class="others">
+                                <a href="#">+ {%  trans from "email" %}email_to_friends_add_email{% endtrans %}</a>
+                                <span>(up to 5 e-mails)</span>
+                            </p>
+                        </div>
+                        <div class="msg_details">
+                            <label for="tmp_subject">{%  trans from "email" %}email_to_friends_subject{% endtrans %}</label>
+                            <input id="tmp_subject" type="text" name="subject" class="text" value=" " />
+                            <label for="tmp_msg">{%  trans from "email" %}email_to_friends_message{% endtrans %}</label>
+                            <textarea rows="3" cols="28.5" name="description" class="text"></textarea>
+                            {% if app.user %}
+                                <input type="hidden" value="{{ participant_email }}"  name="participant"/>
+                            {% endif %}
+                            {% if studyCode is defined %}
+                                <input type="hidden" value="{{ studyCode }}"  name="studyCode"/>
+                            {% endif %}
+                            <a href="#" class="btn_cancel">{%  trans from "email" %}email_to_friends_cancle{% endtrans %}</a>
+                            <a href="#" class="btn_send_mail" id="email_submit">{%  trans from "email" %}email_to_friends_send_button{% endtrans %}</a>
+                        </div>
+                    </form>
                     <div class="box_more_studies">
 {#                         <a href="#" class="more"><span>More studies</span></a>#}
                         {% if studies is not empty  %}
