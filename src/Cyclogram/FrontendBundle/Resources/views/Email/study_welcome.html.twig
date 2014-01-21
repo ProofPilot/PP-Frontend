@@ -8,7 +8,7 @@
                 <td>
                     <h2 style="color: #353535; font-size: 20px; font-weight: bold; margin: 0 0 20px; padding: 0;">{% trans from "email" %}study_welcome_welcome_to{% endtrans %} {{ studyName }}</h2>
                     <p style="font-size: 13px; line-height: 18px; margin-bottom: 25px; color: #555555;">{% trans from "email" %}study_welcome_excited{% endtrans %} {{ studyName }}:</p>
-                    <p style="font-size: 13px; line-height: 18px; margin-bottom: 25px; color: #555555;">{{ studyInvolved | raw }}</p>
+                    <div style="color: #555555; font-size: 13px; line-height: 18px; margin-bottom: 25px;">{{ studyInvolved | raw }}</div>
                 </td>
             </tr>
         </tbody>
@@ -37,7 +37,6 @@
             <tr>
                 <td><br>
                     <h2>{% trans from "email" %}study_welcome_hold_on{% endtrans %} ... </h2>
-                    <br>
                     {% for intervention in interventions %}
                     <table style="border-spacing: 0px; margin-bottom: 0px; color: rgb(0, 0, 0); font-family: Arial; font-size: 12px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px;" width="100%">
                         <tbody>
