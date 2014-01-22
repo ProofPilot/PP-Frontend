@@ -1,32 +1,32 @@
-about_me_subtitle: about_me_subtitle
-about_me_title: about_me_title
-birthdate_change: birthdate_change
-btn_confirm: btn_confirm
-country_change: country_change
-interest_change: interest_change
-label_birthdate: label_birthdate
-label_country: label_country
-label_country_select: label_country_select
-label_female: label_female
-label_inresested_main: label_inresested_main
-label_interested: label_interested
-label_male: label_male
-label_man: label_man
-label_race: label_race
-label_race_main: label_race_main
-label_sex: label_sex
-label_sex_main: label_sex_main
-label_transgendered: label_transgendered
-label_woman: label_woman
-label_zipcode: label_zipcode
-label_zipcode_new: label_zipcode_new
-race_change: race_change
-sex_change: sex_change
-txt_birthdate: txt_birthdate
-txt_change: txt_change
-txt_country: txt_country
-txt_interested: txt_interested
-txt_race: txt_race
-txt_sex: txt_sex
-txt_zip_code: txt_zip_code
-zipcode_change: zipcode_change
+about_me_subtitle: 'Acerca de mí'
+about_me_title: 'Acerca de mí'
+birthdate_change: 'Cambiar de Nacimiento'
+btn_confirm: Confirmar
+country_change: 'Cambiar el país'
+interest_change: 'Cambie interés'
+label_birthdate: 'Fecha de Nacimiento'
+label_country: 'Seleccione el país'
+label_country_select: 'Seleccione el país'
+label_female: Femenino
+label_inresested_main: 'Seleccionar interés'
+label_interested: Interesado
+label_male: Masculino
+label_man: Hombres
+label_race: Estirpe
+label_race_main: 'Seleccione su raza'
+label_sex: Sexo
+label_sex_main: 'Seleccione su sexo'
+label_transgendered: Transgéneros
+label_woman: Mujeres
+label_zipcode: 'Código postal'
+label_zipcode_new: 'Nuevo código postal'
+race_change: 'Cambio de carrera'
+sex_change: 'Cambie el sexo'
+txt_birthdate: 'Fecha de Nacimiento'
+txt_change: Cambio
+txt_country: País
+txt_interested: Interesado
+txt_race: Raza
+txt_sex: Sexo
+txt_zip_code: 'Código postal'
+zipcode_change: 'Cambie el código postal'

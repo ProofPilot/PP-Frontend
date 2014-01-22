@@ -5,23 +5,23 @@ bottom_left_menu:
 
 bottom_right_menu:
     help: Ayuda
-    logout: bottom_right_menu.logout
-    my_settings: bottom_right_menu.my_settings
+    logout: Salir
+    my_settings: 'Mi configuración'
 
 bottom_study_right_menu:
-    contact_us: bottom_study_right_menu.contact_us
-    help: bottom_study_right_menu.help
-    privacy_and_security: bottom_study_right_menu.privacy_and_security
+    contact_us: Contáctenos
+    help: Ayudar
+    privacy_and_security: 'Privacidad y Seguridad'
 
 top_left_menu:
-    browse: top_left_menu.browse
-    launch: top_left_menu.launch
-    what_proofpilot: top_left_menu.what_proofpilot
+    browse: Navegar
+    launch: Lanzamiento
+    what_proofpilot: '¿Qué es ProofPilot?'
 
 top_menu:
-    about_me: top_menu.about_me
+    about_me: 'Acerca de mí'
     contact_preferences: 'Preferencias de contacto'
-    dashboard: top_menu.dashboard   # FIXME
+    dashboard: 'Mi panel'
     general_settings: 'Preferencias Generales'
     help: Ayuda
     logout: Salir

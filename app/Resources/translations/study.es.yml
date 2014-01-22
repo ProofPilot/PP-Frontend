@@ -1,29 +1,29 @@
-button_join_the_study_goal: button_join_the_study_goal
-button_leave_study: button_leave_study
-button_personalized_insight: button_personalized_insight
-button_study_findings: button_study_findings
-button_view_consent: button_view_consent
-inivted_to_study: inivted_to_study
-msg_not_eligible: 'You are not eligible for ''%studyname%'' at this time.'
-social_at_proofpilot: social_at_proofpilot
-social_join_study: social_join_study
+button_join_the_study_goal: 'Únete al Estudio'
+button_leave_study: 'Deje este Estudio'
+button_personalized_insight: 'Ver Insights personalizados'
+button_study_findings: 'Ver Resultados del Estudio'
+button_view_consent: 'Lo que usted necesita saber'
+inivted_to_study: 'Usted está invitado al estudio,'
+msg_not_eligible: 'Usted no es elegible para ''%studyname%'' en este momento.'
+social_at_proofpilot: 'en ProofPilot'
+social_join_study: 'Únete al estudio,'
 txt_about: 'Acerca de este estudio'
 txt_accept_btn: 'YO ACEPTO - Unase al estudio'
-txt_affiliated_organizations: txt_affiliated_organizations
-txt_conducted_by: txt_conducted_by
+txt_affiliated_organizations: 'Las organizaciones afiliadas'
+txt_conducted_by: 'Llevada a cabo por'
 txt_decline_btn: 'DECLINAR - TALVEZ LUEGO'
 txt_eligible_dsc: 'EL resumen de su participación: Lo que necesita hacer ahora y lo que viene despúes.'
-txt_email_to_friend: txt_email_to_friend
-txt_goal: txt_goal
-txt_join_before_goal: txt_join_before_goal
-txt_like_proofpilot: txt_like_proofpilot
-txt_on_twitter: txt_on_twitter
-txt_participants: txt_participants
-txt_share: txt_share
-txt_sponsored_by: txt_sponsored_by
-txt_staff: txt_staff
-txt_tweet: txt_tweet
-txt_you_are_eligible: 'Eres elegible'
-unavailable_functionality: unavailable_functionality   # FIXME
+txt_email_to_friend: 'E-mail a un amigo'
+txt_goal: Meta
+txt_join_before_goal: 'Únete al estudio antes de llegar a la meta y ganar valiosos incentivos.'
+txt_like_proofpilot: 'Como ProofPilot'
+txt_on_twitter: 'en Twitter'
+txt_participants: 'Los participantes'
+txt_share: Cuota
+txt_sponsored_by: 'Este estudio está patrocinado por'
+txt_staff: Personal
+txt_tweet: Tweet
+txt_you_are_eligible: 'Eres Usted es elegible. Acepta el consentimiento para continuar ...'
+unavailable_functionality: 'No hay resultados provisionales de este estudio todavía. Te avisaremos cuando los resultados área disponible para su revisión.'
 warning_message: 'Antes de proceder, porfavor lea esta importante información y acepte al final de la página'
-you_are_participant: you_are_participant
+you_are_participant: 'INSCRITO!<br><small>VAYA A SALPICADERO</small>'
