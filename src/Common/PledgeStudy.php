@@ -155,7 +155,7 @@ class PledgeStudy extends AbstractStudy implements StudyInterface
         $reason = array();
 
         if (isset($surveyResult['399419X758X7914'])
-                && intval($surveyResult['399419X758X7914'] < 16)) {
+                && intval($surveyResult['399419X758X7914'] < 15)) {
             $isElegible = false;
             $reason[] = "Less than 16 years";
         }
