@@ -33,6 +33,14 @@
         $('#iframe1').load(function(){
             window.scrollTo(0,0);
             var frame = $(this);
+            var surveydata = document.getElementById('iframe1').contentWindow.document.getElementById('surveydata');
+            var surveyId = surveydata.getAttribute('surveyid');
+            var saveId = surveydata.getAttribute('saveid');
+	        if(!!surveyId && !!saveId) {
+	            var redirectUrl = {% if app.environment == "prod" %}'/app.php'{% else %}'/app_dev.php'{% endif %} + '/' + '{{ app.request.locale }}' + '/surveyResponse?&studyCode={{ studyCode }}&surveyId=' + surveyId + '&saveId=' + saveId + '&redirectUrl=' + '{{ app.request.get('redirectUrl') }}';
+	            window.location = redirectUrl;
+	        }
+            
             var frameSize = function() {
                 var frameHeight = frame.contents().find("#content-wrapper").height();
                 frame.contents().find("html").css('overflow', 'hidden');
@@ -40,19 +48,11 @@
             };
 
             frameSize();
-            
             $(window).resize(frameSize);
             frame.contents().click(frameSize);
             frame.contents().find('.checkbox').click(frameSize);
-            var surveydata = frame.contents().find('#surveydata');
-            var surveyId = surveydata.attr('surveyid');
-            var saveId = surveydata.attr('saveid');
 
-            if(surveyId !== undefined && saveId !== undefined) {
-                var redirectUrl = {% if app.environment == "prod" %}'/app.php'{% else %}'/app_dev.php'{% endif %} + '/' + '{{ app.request.locale }}' + '/surveyResponse?&studyCode={{ studyCode }}&surveyId=' + surveyId + '&saveId=' + saveId + '&redirectUrl=' + '{{ app.request.get('redirectUrl') }}';
-                window.location = redirectUrl;
-            }
-
+            
         });
     </script>
     <style>
