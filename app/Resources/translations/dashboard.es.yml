@@ -1,9 +1,9 @@
-dashboard_dismiss_confirmation: dashboard_dismiss_confirmation
-dashboard_subtitle: dashboard_subtitle
-do_it: 'DO IT'
+dashboard_dismiss_confirmation: '¿Está seguro que desea despedir? Esto puede afectar a su capacidad de continuar con el estudio'
+dashboard_subtitle: 'Todas las tareas de estudio en un solo lugar. Gestione toda su experiencia con ProofPilot aquí.'
+do_it: HACERLO
 do_it_now: 'Hazlo Ahora'
-join_a_study: join_a_study
-no_do_it: no_do_it
+join_a_study: 'Únase a un estudio'
+no_do_it: 'No tiene tareas de estudio en este momento'
 
 past_activity:
     emai_confirmation_status: 'Su Email ha sido confirmado'
@@ -11,10 +11,10 @@ past_activity:
     mobile_status: 'Su número de telefóno móbil ha sido confirmado'
     welcome_study: 'Bienvenido al studio Know@Home: Poniendo a prueba la prueba'
 
-send_again: send_again
+send_again: 'No conseguirlo? Revise su correo no deseado y/o volver a enviar.'
 txt_dashboard: Escritorio
-txt_dismiss: txt_dismiss
-txt_dismiss_all: txt_dismiss_all
+txt_dismiss: 'Tarea %interventionName% descartado'
+txt_dismiss_all: 'Todas las tareas despedidos'
 txt_please_verify_email: "Porfavor verifique su dirección de e-mail.<br>\nPara participar en los estudios necesitamos un e-mail válido - Porfavor vaya al e-mail y haga click en el enlace."
 
 what_next_list:

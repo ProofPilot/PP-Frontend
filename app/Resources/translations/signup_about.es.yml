@@ -1,49 +1,49 @@
-annual_income_text: annual_income_text
-btn_confirm: btn_confirm
-head_tailot_expirience: head_tailot_expirience
-head_tell_a_bit: head_tell_a_bit
-label_annual_income: label_annual_income
-label_children_main: label_children_main
-label_country_select: label_country_select
-label_day_main: label_day_main
-label_do_not_have: label_do_not_have
-label_grade_level_main: label_grade_level_main
-label_have: label_have
-label_industry_main: label_industry_main
-label_inresested_main: label_inresested_main
-label_man: label_man
-label_man_woman: label_man_woman
-label_marital_status_main: label_marital_status_main
-label_monthmain: label_monthmain
-label_race_main: label_race_main
-label_sex_main: label_sex_main
-label_woman: label_woman
-label_year_main: label_year_main
-label_zipcode: label_zipcode
-month_apr: month_apr   # FIXME
-month_aug: month_aug   # FIXME
-month_dec: month_dec   # FIXME
-month_feb: month_feb   # FIXME
-month_jan: month_jan   # FIXME
-month_jul: month_jul   # FIXME
-month_jun: month_jun   # FIXME
-month_mar: month_mar   # FIXME
-month_may: month_may   # FIXME
-month_nov: month_nov   # FIXME
-month_oct: month_oct   # FIXME
-month_sep: month_sep   # FIXME
-postcode_text: postcode_text
-secutiry_and_privacy: secutiry_and_privacy
-text_and: text_and
-text_and_make_approximately: text_and_make_approximately
-text_any_information: text_any_information
-text_have_children: text_have_children
-text_i_am: text_i_am
-text_i_am_a: text_i_am_a
-text_i_finished: text_i_finished
-text_i_was_born_on_the: text_i_was_born_on_the
-text_interested_in: text_interested_in
-text_of: text_of
-text_per_year: text_per_year
-text_who_lives_in: text_who_lives_in
-text_work_in: text_work_in
+annual_income_text: 'renta anual'
+btn_confirm: guardar
+head_tailot_expirience: 'Adapte su experiencia con ProofPilot. Pre-calificación de Estudios.'
+head_tell_a_bit: 'Cuéntanos un poco sobre ti'
+label_annual_income: 'renta anual'
+label_children_main: 'no tienen'
+label_country_select: país
+label_day_main: dia
+label_do_not_have: 'no tienen'
+label_grade_level_main: 'nivel de grado'
+label_have: tener
+label_industry_main: industria
+label_inresested_main: 'preferencia sexual'
+label_man: hombres
+label_man_woman: 'los hombres y las mujeres'
+label_marital_status_main: 'estado civil'
+label_monthmain: mes
+label_race_main: carrera
+label_sex_main: sexo
+label_woman: mujeres
+label_year_main: año
+label_zipcode: 'código postal'
+month_apr: Abril
+month_aug: Agosto
+month_dec: Diciembre
+month_feb: Febrero
+month_jan: Enero
+month_jul: Julio
+month_jun: Junio
+month_mar: Marzo
+month_may: Mayo
+month_nov: Noviembre
+month_oct: Octubre
+month_sep: Septiembre
+postcode_text: 'código postal'
+secutiry_and_privacy: 'Seguridad y Política de Privacidad'
+text_and: y
+text_and_make_approximately: 'y hacer aproximadamente'
+text_any_information: 'Cualquier información que usted comparte con nosotros es totalmente confidencial y segura. vea nuestra'
+text_have_children: niños
+text_i_am: estoy
+text_i_am_a: 'Soy un'
+text_i_finished: terminé
+text_i_was_born_on_the: 'Yo nací en el'
+text_interested_in: 'interesado en'
+text_of: de
+text_per_year: 'por año'
+text_who_lives_in: 'que vive en'
+text_work_in: 'trabajar en'

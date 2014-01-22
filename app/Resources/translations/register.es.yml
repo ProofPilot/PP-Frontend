@@ -1,40 +1,40 @@
 btn_next: Siguiente
-btn_save_mailing_address: btn_save_mailing_address
+btn_save_mailing_address: 'Guardar y sesión'
 btn_send_confirmation_email: btn_send_confirmation_email
 confirm_password: 'Confirme contraseña'
-consent_accept_join: consent_accept_join
-consent_any_information: consent_any_information
-consent_close_window: consent_close_window
-consent_good_to_go: consent_good_to_go
-consent_security_privacy: consent_security_privacy
-consent_what_to_know: consent_what_to_know
-create_password: 'Crear una contraseña'
+consent_accept_join: 'ACEPTO. Únete al estudio'
+consent_any_information: 'Cualquier información que usted comparte con nosotros es totalmente confidencial y segura.'
+consent_close_window: 'Cerrar ventana a declinar'
+consent_good_to_go: 'Bueno para ir? Aceptar y participar en el estudio'
+consent_security_privacy: 'Vea nuestra política de seguridad y privacidad'
+consent_what_to_know: 'Esto es lo que necesita saber para participar'
+create_password: 'Crear una Contraseña'
 enter_email: 'Ingrese su e-mail'
-header_new_user_register: header_new_user_register
-header_register: header_register
-label_address1: label_address1
-label_address2: label_address2
-label_city: label_city
-label_email: label_email
-label_firstname: label_firstname
-label_lastname: label_lastname
-label_not_sign: label_not_sign
-label_password: label_password
-label_repeat_password: label_repeat_password
-label_sign: label_sign
-label_sign_main: label_sign_main
-label_state: label_state
-label_username: label_username
-label_zipcode: label_zipcode
-mail_confirmation_fail: mail_confirmation_fail
-mail_confirmation_success: mail_confirmation_success   # FIXME
+header_new_user_register: 'Usuarios nuevos ProofPilot'
+header_register: Registrar
+label_address1: Dirección
+label_address2: 'Dirección 2'
+label_city: Ciudad
+label_email: E-mail
+label_firstname: Nombre
+label_lastname: Apellido
+label_not_sign: 'El paquete puede ser dejado sin mi firma'
+label_password: Contraseña
+label_repeat_password: 'Repita la contraseña'
+label_sign: 'Yo prefiero a firmar para recibir mi paquete'
+label_sign_main: '¿Cómo quiere que lo entregan?:'
+label_state: Estado
+label_username: 'Nombre de usuario'
+label_zipcode: 'Código Postal'
+mail_confirmation_fail: 'No se pudo confirmar el correo electrónico. Este usuario no existe!'
+mail_confirmation_success: '¡Felicitaciones!!! Su dirección de e-mail se confirma!'
 min_charachters: '(8 caractéres mínimo)'
 pick_user: 'Escoja su usuario'
-study_register_error: study_register_error
-txt_check_email: txt_check_email
-txt_check_zipcode: txt_check_zipcode
+study_register_error: 'Hubo un problema - tratar todo el proceso de inscripción de nuevo'
+txt_check_email: 'Por favor revise su correo electrónico'
+txt_check_zipcode: 'Compruebe por favor su código postal'
 txt_join: Unase
 txt_join_with: 'Unase con'
-txt_subtitle_check_email: txt_subtitle_check_email
-txt_year_to_old: txt_year_to_old
-txt_year_to_young: txt_year_to_young
+txt_subtitle_check_email: 'Por favor, comprueba que tu dirección de correo electrónico'
+txt_year_to_old: '¿Está seguro?'
+txt_year_to_young: 'Por favor, pregunte a sus padres a participar.'

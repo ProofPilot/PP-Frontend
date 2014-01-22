@@ -1,5 +1,5 @@
-email_sms_message: email_sms_message
-pass_reset_code: pass_reset_code
-sms_notice_title: sms_notice_title
-sms_title: sms_title
-user_name_sms_message: user_name_sms_message
+email_sms_message: 'Su correo electrónico es'
+pass_reset_code: 'Su código de restablecimiento de contraseña es'
+sms_notice_title: 'Oye, esto es ProofPilot. Hemos notado que no has confirmado tu dirección de correo electrónico. Para enviar a otro:'
+sms_title: 'Usted tiene una tarea activa'
+user_name_sms_message: 'Su nombre de usuario es'

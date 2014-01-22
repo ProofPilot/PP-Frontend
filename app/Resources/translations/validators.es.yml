@@ -1,26 +1,26 @@
 email_already_registered: 'Dirección de correo electrónico registrada'
-username_already_registered: 'Username is already registered'
-error_password_short: 'Password must be 8 characters min'
-error_not_valid_email: 'Email is not valid'
-error_passwords_do_not_match: 'Passwords do not match'
-error_not_blank: 'No blank values'
-error_min_area_code_length: 'Area code must be at least 1 digit'
-error_max_area_code_length: 'Area code must be max 3 digits'
-error_min_phone_code_length: 'Phone must be at least 8 digits'
-error_max_phone_code_length: 'Phone must be max 11 digits'
-error_mobile_phone_already_registered: 'Mobile phone is already registered'
-please_fill_this_field: 'Please fill this field'
-wrong_pass: 'You wrote a wrong password'
-wrong_code: 'You wrote a wrong code'
-error_state_length: error_state_length #TODO
-error_not_blank_name: error_not_blank_name
-error_not_blank_lastname: error_not_blank_lastname
-error_not_blank_street1: error_not_blank_street1
-error_not_blank_city: error_not_blank_city
-error_not_blank_state: error_not_blank_state
-error_not_blank_voice: error_not_blank_voice
-error_not_blank_choice: error_not_blank_choice
-error_not_blank_zipcode: error_not_blank_zipcode
-incorrect_city: incorrect_city
-email_not_valid: email_not_valid
-email_not_send_try_later: email_not_send_try_later
+email_not_send_try_later: 'No se puede enviar correo electrónico. Por favor, inténtelo de nuevo más tarde'
+email_not_valid: 'No es un e-mail válida'
+error_max_area_code_length: 'El código de área debe ser máximo 3 dígitos'
+error_max_phone_code_length: 'Teléfono debe ser máximo 11 dígitos'
+error_min_area_code_length: 'El código de área debe ser de al menos 1 dígito'
+error_min_phone_code_length: 'Teléfono debe ser al menos 8 dígitos'
+error_mobile_phone_already_registered: 'Teléfono móvil ya está registrado'
+error_not_blank: 'No hay valores en blanco'
+error_not_blank_choice: 'Por favor, hacer una elección'
+error_not_blank_city: 'Por favor introduzca una ciudad'
+error_not_blank_lastname: 'Por favor, introduzca un apellido'
+error_not_blank_name: 'Por favor, introduzca un nombre'
+error_not_blank_state: 'Por favor, introduzca un estado válido'
+error_not_blank_street1: 'Por favor, introduce una dirección de calle'
+error_not_blank_voice: 'Error no se puede dejar en blanco'
+error_not_blank_zipcode: 'Compruebe por favor su código postal'
+error_not_valid_email: 'E-mail é não válido'
+error_password_short: 'La contraseña debe tener 8 caracteres min'
+error_passwords_do_not_match: 'Las contraseñas no coinciden'
+error_state_length: 'Estado - debe ser de 2 caracteres'
+incorrect_city: 'Por favor introduzca una ciudad válida'
+please_fill_this_field: 'Por favor llene este campo'
+username_already_registered: 'Nombre de usuario ya está registrado'
+wrong_code: 'Usted escribió un código incorrecto'
+wrong_pass: 'Usted escribió una contraseña incorrecta'

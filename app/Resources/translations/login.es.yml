@@ -1,20 +1,20 @@
-alert_msg: alert_msg
-btn_confrimcoe_login: btn_confrimcoe_login
+alert_msg: 'Por favor seleccione una opción válida'
+btn_confrimcoe_login: 'Confirme el código y nombre de usuario'
 cant_remember_username: '¿No puede recordad su usuario?'
 doesnt_match_records: 'Lo sentimos, su entrada no concuerda con nuestros registros'
 email_sent_containing_password: 'Se ha enviado un e-mail que contiene un enlace para reiniciar su contraseña'
-enter_email_address: enter_email_address
+enter_email_address: 'Introduzca la dirección de correo electrónico'
 forgot_password: '¿Olvidó su contraseña?'
 forgot_password_message: 'Nos sucede a todos nosotros mas veces de las que nos gusta adminir. No hay problema, nosotros te guiaremos a crear una nueva contraseña mientras protegemos su privacidad y seguridad.'
 forgot_username: '¿Olvidó su usuario?'
-forgot_username_email_send: forgot_username_email_send
+forgot_username_email_send: 'Enviar olvidado nombre de usuario de correo electrónico'
 forgot_username_message: 'No hay problema. Ingrese su número de teléfono móbil que usó durante el registro and le envíaremos su usuario por mensajes de texto.'
-header_exisiting_login: header_exisiting_login
-header_login: header_login
-label_sms_code: label_sms_code
+header_exisiting_login: 'Usuario Existente Entrar'
+header_login: 'Iniciar la sesión'
+label_sms_code: 'Código de SMS'
 new_password_selection: "<p>Haga click en el enlace del e-mail y será guiado atravez de la selección de una nueva contraseña. Necesitará su teléfono móbil para completar este proceso. </p>\n<p>Si no ha arrivado en pocos minutos revise la carpeta de correo basura.</p>"
-sign_up_header: sign_up_header
-specimen_msg: specimen_msg
+sign_up_header: '¡Consiga sus incentivos. Únete a importantes estudios. Ingresa o Únete ahora!'
+specimen_msg: 'Por favor seleccione una opción de la muestra válida'
 txt_forgot_your_password: '¿Olvidó su contraseña?'
 txt_form_password: Contraseña
 txt_form_username: Usuario
@@ -23,6 +23,6 @@ txt_login_error_message: 'Su entrada no concuerda con nuestros registros'
 txt_login_securely: 'Accese de manera sgura con sus cuentas.'
 txt_login_with: 'Accese con'
 txt_stay_logged_in: 'Permanezca conectado'
-txt_why_popup: txt_why_popup
+txt_why_popup: 'Use sus credenciales de Facebook o Google para unirse de forma segura y log-in. Usted no tiene que recordar otra contraseña - y no va a compartir cualquier cosa con cualquiera de los servicios.'
 username_sent: 'Su usuario ha sido enviado al teléfono móbil'
-why_popup_title: why_popup_title
+why_popup_title: '¿Por qué registrarse y acceder con sus cuentas existentes?'

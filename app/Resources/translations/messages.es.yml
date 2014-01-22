@@ -1,16 +1,16 @@
-'SMS Code:': 'SMS Code:'
-'Your email:': 'Your email:'
-'Your message:': 'Your message:'
-'Your name:': 'Your name:'
-browser_msg: browser_msg
-btn_save_pass: btn_save_pass
-btn_send_pass: btn_send_pass
-label_new_pass: label_new_pass
-label_repeat_pass: label_repeat_pass
-label_username: label_username
+'SMS Code:': 'Código SMS:'
+'Your email:': 'Su correo electrónico:'
+'Your message:': 'Su mensaje:'
+'Your name:': 'Su nombre:'
+browser_msg: 'Para una mejor experiencia, actualice su explorador. Se recomienda Chrome, Firefox, Safari o Internet Explorer 9 y superiores. Para obtener más información, visite: http://j.mp/17eUb5W'
+btn_save_pass: 'Guardar contraseña'
+btn_send_pass: 'Enviar contraseña'
+label_new_pass: 'Nueva contraseña'
+label_repeat_pass: 'Repita la contraseña'
+label_username: 'Nombre de usuario'
 txt_footer_top: ARRIBA
 txt_header_login: Iniciar
-txt_header_or: txt_header_or   # FIXME
+txt_header_or: o
 txt_header_register: Registro
-txt_header_register_here: txt_header_register_here   # FIXME
-txt_reminders_confirm: txt_reminders_confirm
+txt_header_register_here: 'Regístrese aquí'
+txt_reminders_confirm: 'Para formar parte de los estudios de investigación, debe estar dispuesto a recibir recordatorios por mensaje de texto o un mensaje de correo electrónico y debe seleccionar casi un día de la semana y el período de tiempo. ¿Está seguro de que desea darse de baja?'
