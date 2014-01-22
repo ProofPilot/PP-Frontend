@@ -1,5 +1,17 @@
           
           {% form_theme formShippingInformation '::fields_theme1.html.twig' %}
+          
+    <div class="panel_right">
+        <div class="dashboard_title shipping_information"> 
+          <span class="align_to_middle">
+            <h1>{% trans from "shipping_information" %}shipping_title{% endtrans %}</h1>
+            <p>{% trans from "shipping_information" %}shipping_subtitle{% endtrans %}</p>
+          </span> 
+        </div>
+        <div class="dashboard_panel">
+          {% if update_data is defined %}
+          <p class="notice green"><span>{% trans from "shipping_information" %}shipping_update {% endtrans %}</span></p>
+          {% endif %}
           <div class="mobile_reg login_form" style="margin-top: 20px;">
             <form novalidate method="post" action="{{ path('_shipping') }}" name="mailing_address">
               <div class="loginform_left mailing_adress" style="padding-top: 0px; width: auto; float: none;">
@@ -47,9 +59,93 @@
               </div>
               <div class="center_align">
               <button type="submit" class="submit ">{% trans from "shipping_information" %}shipping_update_button{% endtrans %}</button>
-{# {{ form_widget(form.saveMailingAddress, {'attr':{'class':'submit'}}) }}#}
                 {{ form_widget(formShippingInformation.cityId) }}
                 {{ form_widget(formShippingInformation.stateId) }}
               </div>
             </form>
           </div>
+      </div>
+  </div>
+    <script type="text/javascript">
+    $(document).ready(function(){
+
+        var chosenCities = [];
+        var cityIds = [];
+
+        $('#mailing_address_participantZipcode').on('blur', function(){
+        if(!$(this).val())
+            return;
+
+            $.getJSON(
+                Routing.generate('_get_city_state_by_zip', {
+                    'zipcode': $(this).val(), 
+                    '_locale':'{{ app.request.locale }}'
+                }),
+                null,
+                function(data, textStatus, jqXHR) {
+                    if($.isEmptyObject(data)) {
+                        $('#mailing_address_city').val('');
+                        $('#mailing_address_cityId').val('');
+                        $('#mailing_address_state').val('');
+                        $('#mailing_address_stateId').val('');
+                    };
+                    if (!(data instanceof Array)) return;
+                    $('#mailing_address_city').val(data[0]['cityName']);
+                    $('#mailing_address_cityId').val(data[0]['cityId']);
+                    $('#mailing_address_state').val(data[0]['stateCode']);
+                    $('#mailing_address_stateId').val(data[0]['stateId']);
+
+                    chosenCities = []; cityIds = [];
+
+                    var len = data.length;
+                    for(var i=0;i<len;i++) {
+                        chosenCities[i] = {'data': data[i]["cityId"], 'value': data[i]["cityName"]};
+                        cityIds[i] = data[i]["cityId"];
+                    }
+
+                    var cityoptions = {
+                        lookup: chosenCities,
+                        minChars: 0,
+                        maxHeight: 150,
+                        onSelect: function(suggestion) {
+                            $("#mailing_address_city").val(suggestion.value);
+                            $("#mailing_address_cityId").val(suggestion.data);
+                        }
+                    };
+
+                    $('#mailing_address_city').autocomplete('disable');
+                    $('#mailing_address_city').autocomplete('setOptions', cityoptions);
+                    $('#mailing_address_city').autocomplete('enable');
+
+                });
+            });
+            
+            $("#mailing_address_city").autocomplete({
+                serviceUrl: Routing.generate('searchCityWithAjax', {'_locale':'{{ app.request.locale }}'}),
+                minChars: 3,
+                maxHeight: 150,
+                onSelect: function(suggestion) {
+                    $("#mailing_address_city").val(suggestion.value);
+                    $("#mailing_address_cityId").val(suggestion.data);
+            	}
+                });
+            
+            $("#mailing_address_state" ).autocomplete({
+            	serviceUrl: Routing.generate('searchStateWithAjax', {'_locale':'{{ app.request.locale }}'}),
+                minChars: 1,
+                maxHeight: 150,
+            	onSelect: function(suggestion) {
+            		 $("#mailing_address_state").val(suggestion.value);
+                     $("#mailing_address_stateId").val(suggestion.data);
+            	}
+            });
+
+            $("#mailing_address_participantZipcode").on('blur', function() {
+            	$('#error').remove(); 
+            	var inputVal = $(this).val();
+                var zipReg = /^[0-9]\d{4}-\d{4}|[0-9]{5}$/;
+                if(!zipReg.test(inputVal)) {
+                    $(this).after('<p class="error" id="error">{% trans from "register" %}txt_check_zipcode{% endtrans %}</p>');
+            }});
+      });
+  </script> 

@@ -203,7 +203,7 @@ class AboutMeForm extends AbstractType
     public function isRaceValid($data, ExecutionContextInterface $context){
         if ($data['validationCheck'] == 'race'){
             if (empty($data['raceSelect'])) {
-                $context->addViolationAt('[newzipcode]', $this->container->get('translator')->trans('please_fill_this_field', array(), 'validators'));
+                $context->addViolationAt('[raceSelect]', $this->container->get('translator')->trans('please_fill_this_field', array(), 'validators'));
             }
         }
     }

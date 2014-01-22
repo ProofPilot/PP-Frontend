@@ -23,65 +23,10 @@
               {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createSideSettingsMenu',{'template': 'CyclogramFrontendBundle:Knp:knp_side_menu.html.twig','currentClass': 'active'}) }}
           </div>
         </div>
-        <div class="panel_right">
-          <div class="dashboard_title about_me"> 
-              <span class="align_to_middle">
-                  <h1>{% trans from "about_me" %}about_me_title{% endtrans %}</h1>
-                  <p>{% trans from "about_me" %}about_me_subtitle{% endtrans %}</p>
-              </span> 
-          </div>
-
-          <div class="dashboard_panel">
-          {% if message is defined %}
-            <p class="notice green nomargin margin_top"><span>{{ message }}</span></p>
-          {%  endif %}
           
           {# country #}
               {% include 'CyclogramFrontendBundle:GeneralSettings:about_me_form.html.twig' %}
-          </div>
-        </div>
       </div>
     </div>
 {% include '::footer.html.twig' %}
-        <script src= {{ asset ('js/jquery.numeric.js') }}></script>
-        <script type="text/javascript">
-        $(document).ready(function(){
-           $('#about_me_birthdateSelect').datepicker( {
-                   yearRange: "-100:+1",
-                   minDate: "-100Y",
-                    maxDate: "+1Y",
-                   changeMonth: true,
-                   changeYear: true
-                   });
-           $('#about_me_countryConfirm').click(function()
-                {
-                         $('#about_me_validationCheck').val("country");
-                });
-
-           $('#about_me_zipcodeConfirm').click(function()
-                   {
-                            $('#about_me_validationCheck').val("zipcode");
-                   });
-
-           $('#about_me_birthdateConfirm').click(function()
-                   {
-                            $('#about_me_validationCheck').val("birthdate");
-                   });
-
-           $('#about_me_sexConfirm').click(function()
-                   {
-                            $('#about_me_validationCheck').val("sex");
-                   });
-
-           $('#about_me_interestedConfirm').click(function()
-                   {
-                            $('#about_me_validationCheck').val("interested");
-                   });
-
-           $('#about_me_raceConfirm').click(function()
-                   {
-                            $('#about_me_validationCheck').val("race");
-                   });
-           });
-        </script>
     {% endblock content %}

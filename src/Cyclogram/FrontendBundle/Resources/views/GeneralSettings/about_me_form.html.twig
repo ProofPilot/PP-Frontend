@@ -2,12 +2,25 @@
 
 {% from '::macro.html.twig' import showonerror,hideonerror %}
            
-            <form action="{{ path('_about_me') }}" method="POST", name="about_me">
+  <div class="panel_right">
+      <div class="dashboard_title about_me"> 
+          <span class="align_to_middle">
+              <h1>{% trans from "about_me" %}about_me_title{% endtrans %}</h1>
+              <p>{% trans from "about_me" %}about_me_subtitle{% endtrans %}</p>
+          </span> 
+      </div>
+
+      <div class="dashboard_panel" id="about_me_div">
+          {% if message is defined %}
+            <p class="notice green nomargin margin_top"><span>{{ message }}</span></p>
+          {%  endif %}
+          
+            <form action="{{ path('_about_me') }}" method="POST", name="about_me" id="about_me_form">
               <ul class="settings_form">
                 <li class="left_text form-country">{% trans from "about_me" %}txt_country{% endtrans %}</li>
                 <li class="form_expanded form-country" {{ showonerror('country',expandedFormClass) }}>
-                  <div class="wrapper">
-                    <div class="current_text">{{ participant.country}}</div>
+                  <div class="wrapper about_me_expanded">
+                    <div class="current_text" id="current_text_country">{{ participant.country}}</div>
                     <div class="close_cont"><a href="#" data-form-cont=".form-country">Cancel</a></div>
                     <div class="new_inputs_cont">
                       <div class="for_label">{{ form_label(formAboutMe.countrySelect) }}</div>
@@ -18,6 +31,7 @@
                     <div class="confirm_cont">
                         {{ form_widget(formAboutMe.countryConfirm, {'attr':{'class' : 'btn_confirm'}}) }}
                     </div>
+                  </div>
                   </div>
                 </li>
                 <li class="middle_input form-country" {{ hideonerror('country',expandedFormClass) }}>
@@ -30,8 +44,8 @@
                 {# zipcode #}
                 <li class="left_text form-zipCode">{% trans from "about_me" %}txt_zip_code{% endtrans %}</li>
                 <li class="form_expanded form-zipCode"  {{ showonerror('zipCode',expandedFormClass) }}>
-                  <div class="wrapper">
-                   <div class="current_text">{{ participant.participantZipcode}}</div>
+                  <div class="wrapper about_me_expanded">
+                   <div class="current_text" id="current_text_zipcode">{{ participant.participantZipcode}}</div>
                     <div class="close_cont"><a href="#" data-form-cont=".form-zipCode">Cancel</a></div>
 
                         <div class="new_inputs_cont with_margin">
@@ -41,6 +55,7 @@
                         </div>
                     <div class="confirm_cont">
                         {{ form_widget(formAboutMe.zipcodeConfirm, {'attr':{'class' : 'btn_confirm'}}) }}
+                    </div>
                     </div>
                 </li>
                 <li class="middle_input form-zipCode" {{ hideonerror('zipCode',expandedFormClass) }}>
@@ -52,9 +67,9 @@
                 {# birthdate #}                
                 <li class="left_text form-birthdate">{% trans from "about_me" %}txt_birthdate{% endtrans %}</li>
                 <li class="form_expanded form-birthdate"  {{ showonerror('birthdate',expandedFormClass) }}>
-                  <div class="wrapper">
+                  <div class="wrapper about_me_expanded">
                   {% if  participant.participantBirthdate is not null %}
-                    <div class="current_text">{{ participant.participantBirthdate|date('d F Y') }}</div>
+                    <div class="current_text" id="current_text_birthdate">{{ participant.participantBirthdate|date('d F Y') }}</div>
                     {% endif %}
                     <div class="close_cont"><a href="#" data-form-cont=".form-birthdate">Cancel</a></div>
                     <div class="new_inputs_cont">
@@ -66,6 +81,7 @@
                     </div>
                     <div class="confirm_cont">
                         {{ form_widget(formAboutMe.birthdateConfirm, {'attr':{'class' : 'btn_confirm'}}) }}
+                  </div>
                   </div>
                 </li>
                 <li class="middle_input form-birthdate" {{ hideonerror('birthdate',expandedFormClass) }}>
@@ -80,9 +96,9 @@
                 {# sex #}      
                 <li class="left_text form-sex">{% trans from "about_me" %}txt_sex{% endtrans %}</li>
                 <li class="form_expanded form-sex"  {{ showonerror('sex',expandedFormClass) }}>
-                  <div class="wrapper">
+                  <div class="wrapper about_me_expanded">
                   {% if  participant.sex is not null %}
-                    <div class="current_text">{{ participant.sex.sexName }}</div>
+                    <div class="current_text" id="current_text_sex">{{ participant.sex.sexName }}</div>
                   {% endif %}
                     <div class="close_cont"><a href="#" data-form-cont=".form-sex">Cancel</a></div>
                     <div class="new_inputs_cont">
@@ -94,6 +110,7 @@
                     </div>
                     <div class="confirm_cont">
                         {{ form_widget(formAboutMe.sexConfirm, {'attr':{'class' : 'btn_confirm'}}) }}
+                  </div>
                   </div>
                 </li>
                 <li class="middle_input form-sex" {{ hideonerror('sex',expandedFormClass) }}>
@@ -109,8 +126,8 @@
                 <li class="left_text form-interested">{% trans from "about_me" %}txt_interested{% endtrans %}</li>
                   
                 <li class="form_expanded form-interested"  {{ showonerror('interested',expandedFormClass) }}>
-                  <div class="wrapper">
-                    <div class="current_text"> {{ interest }} </div>
+                  <div class="wrapper about_me_expanded">
+                    <div class="current_text" id="current_text_interested"> {{ interest }} </div>
                     <div class="close_cont"><a href="#" data-form-cont=".form-interested">Cancel</a></div>
                     <div class="new_inputs_cont">
                       <div class="for_label">{{ form_label(formAboutMe.interestedSelect) }}</div>
@@ -121,6 +138,8 @@
                     </div>
                     <div class="confirm_cont">
                         {{ form_widget(formAboutMe.interestedConfirm, {'attr':{'class' : 'btn_confirm'}}) }}
+                        </div>
+                        </div>
                   
                 </li>
                 <li class="middle_input form-interested" {{ hideonerror('interested',expandedFormClass) }}>
@@ -133,9 +152,9 @@
                     {# race #}
                 <li class="left_text form-race">{% trans from "about_me" %}txt_race{% endtrans %}</li>
                 <li class="form_expanded form-race"  {{ showonerror('race',expandedFormClass) }}>
-                  <div class="wrapper">
+                  <div class="wrapper about_me_expanded">
                   {% if  participant.race is not null %}
-                    <div class="current_text">{{ participant.race.raceName }}</div>
+                    <div class="current_text" id="current_text_race">{{ participant.race.raceName }}</div>
                   {% endif %}
                     <div class="close_cont"><a href="#" data-form-cont=".form-race">Cancel</a></div>
                     <div class="new_inputs_cont">
@@ -149,6 +168,7 @@
                       </div>
                     <div class="confirm_cont">
                         {{ form_widget(formAboutMe.raceConfirm, {'attr':{'class' : 'btn_confirm'}}) }}
+                     </div>
                      </div>
                   
                 </li>
@@ -166,3 +186,46 @@
 {#               {{ form_rest(form) }}#}
               {{ form_errors(formAboutMe) }}
             </form>
+        </div>
+    </div>
+            <script src= {{ asset ('js/jquery.numeric.js') }}></script>
+        <script type="text/javascript">
+        $(document).ready(function(){
+           $('#about_me_birthdateSelect').datepicker( {
+                   yearRange: "-100:+1",
+                   minDate: "-100Y",
+                   maxDate: "+1Y",
+                   changeMonth: true,
+                   changeYear: true
+                   });
+           $('#about_me_countryConfirm').click(function()
+                {
+                         $('#about_me_validationCheck').val("country");
+                });
+
+           $('#about_me_zipcodeConfirm').click(function()
+                   {
+                            $('#about_me_validationCheck').val("zipcode");
+                   });
+
+           $('#about_me_birthdateConfirm').click(function()
+                   {
+                            $('#about_me_validationCheck').val("birthdate");
+                   });
+
+           $('#about_me_sexConfirm').click(function()
+                   {
+                            $('#about_me_validationCheck').val("sex");
+                   });
+
+           $('#about_me_interestedConfirm').click(function()
+                   {
+                            $('#about_me_validationCheck').val("interested");
+                   });
+
+           $('#about_me_raceConfirm').click(function()
+                   {
+                            $('#about_me_validationCheck').val("race");
+                   });
+           });
+        </script>

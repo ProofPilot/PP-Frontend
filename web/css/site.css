@@ -1134,6 +1134,9 @@ dashboard_panel .prefs_wrapper .form_container .form_header ul li.select_all a:h
 	min-height: 30px;
 	padding-left: 3px;
 }
+.dashboard_panel ul.settings_form li.form_expanded .close_cont {
+	overflow:hidden;
+}
 .dashboard_panel ul.settings_form li.form_expanded .close_cont a {
 	position: absolute;
 	top: 15px;

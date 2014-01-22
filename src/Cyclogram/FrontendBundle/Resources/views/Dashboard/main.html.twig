@@ -58,6 +58,35 @@
                 });
             });
 
+            $('#about_me_form').submit(function(e){
+            	$('.about_me_notice').remove();
+            	$('.error_msg').remove();
+                $(this).ajaxSubmit({
+                    dataType: "json",
+                    success: function(json) {
+                        if(json.error) {
+                            var messages = json.messages;
+                            for (var i = 0; i < messages .length; i++){
+                            	$('#about_me_'+messages[i].property).parent('span').after('<p class="error_msg">'+messages[i].message+'</p>');
+                            }
+                        } else {
+                            $('.form_expanded').hide();
+                            $('.middle_input').show();
+                            $('#about_me_'+json.name).val(json.data);
+                            $('#current_text_'+json.name).html(json.data);
+                            $('.edit_btn').show();
+                            $('#about_me_div').prepend('<p class="notice green nomargin margin_top about_me_notice"><span>'+json.message+'</span></p>'); 
+                        }
+                    }
+                });
+                return false;
+            });
+
+            $('.close_cont a').click(function(e) {
+                $(this).parent('div').siblings('.new_inputs_cont').find('input[type="text"]').val('');
+          //      alert('fsf');
+            });
+            
             var count = 1;
             $('#email_list .others').on('click', 'a', function(e) {
                 if (count < 5 ){

@@ -344,31 +344,43 @@ class GeneralSettingsController  extends Controller
         
             if ($form->isValid()) {
                 $data = $form->getData();
-        
-                if($form->get('countryConfirm')->isClicked()) {
+                $form->get('countryConfirm');
+                if($form->get('countryConfirm')->isClicked() || ($data['validationCheck'] == 'country')) {
                     $participant->setCountry($data['countrySelect']);
                     $em->persist($participant);
                     $em->flush();
-                    $parameters['message'] = $this->get('translator')->trans("country_change", array(), "about_me", $locale);
-                } elseif ($form->get('zipcodeConfirm')->isClicked()) {
+                    if ($request->isXmlHttpRequest())
+                        return new Response(json_encode(array('error' => false, 'message' => $this->get('translator')->trans("country_change", array(), "about_me", $locale), 'data' => $data['countrySelect']->getCountryName(), 'name' => 'country')));
+                    else
+                        $parameters['message'] = $this->get('translator')->trans("country_change", array(), "about_me", $locale);
+                } elseif ($form->get('zipcodeConfirm')->isClicked() || ($data['validationCheck'] == 'zipcode')) {
                     $participant->setParticipantZipCode($data['newzipcode']);
                     $em->persist($participant);
                     $em->flush();
-                    $parameters['message'] = $this->get('translator')->trans("zipcode_change", array(), "about_me", $locale);
-                } elseif ($form->get('birthdateConfirm')->isClicked()) {
+                    if ($request->isXmlHttpRequest())
+                        return new Response(json_encode(array('error' => false, 'message' => $this->get('translator')->trans("zipcode_change", array(), "about_me", $locale), 'data' => $data['newzipcode'], 'name' => 'zipcode')));
+                    else
+                        $parameters['message'] = $this->get('translator')->trans("zipcode_change", array(), "about_me", $locale);
+                } elseif ($form->get('birthdateConfirm')->isClicked() || ($data['validationCheck'] == 'birthdate')) {
                     $datePices = explode("/", $data['birthdateSelect']);
                     $date = new \DateTime($datePices[2].'-'.$datePices[0].'-'.$datePices[1]);
                     $participant->setParticipantBirthdate($date );
                     $em->persist($participant);
                     $em->flush();
-                    $parameters['message'] = $this->get('translator')->trans("birthdate_change", array(), "about_me", $locale);
-                } elseif ($form->get('sexConfirm')->isClicked()) {
+                    if ($request->isXmlHttpRequest())
+                        return new Response(json_encode(array('error' => false, 'message' => $this->get('translator')->trans("birthdate_change", array(), "about_me", $locale), 'data' => $data['birthdateSelect'], 'name' => 'birthdate')));
+                    else
+                        $parameters['message'] = $this->get('translator')->trans("birthdate_change", array(), "about_me", $locale);
+                } elseif ($form->get('sexConfirm')->isClicked() || ($data['validationCheck'] == 'sex')) {
                     $sex =  $em->getRepository('CyclogramProofPilotBundle:Sex')->findOneBySexName($data['sexSelect']);
                     $participant->setSex($sex);
                     $em->persist($participant);
                     $em->flush();
-                    $parameters['message'] = $this->get('translator')->trans("sex_change", array(), "about_me", $locale);
-                } elseif ($form->get('interestedConfirm')->isClicked()) {
+                    if ($request->isXmlHttpRequest())
+                        return new Response(json_encode(array('error' => false, 'message' => $this->get('translator')->trans("sex_change", array(), "about_me", $locale), 'data' => $sex->getSexName(), 'name' => 'sex')));
+                    else
+                        $parameters['message'] = $this->get('translator')->trans("sex_change", array(), "about_me", $locale);
+                } elseif ($form->get('interestedConfirm')->isClicked() || ($data['validationCheck'] == 'interested')) {
                     $interested= "";
                     foreach ($data['interestedSelect'] as $interest){
                         $interested.= $interest;
@@ -376,16 +388,46 @@ class GeneralSettingsController  extends Controller
                     $participant->setParticipantInterested($interested);
                     $em->persist($participant);
                     $em->flush();
-                    $parameters['message'] = $this->get('translator')->trans("interest_change", array(), "about_me", $locale);
-                } elseif ($form->get('raceConfirm')->isClicked()) {
+                    if (isset($interested) && $interested == 'w') {
+                        $interest = 'Woman';
+                    } elseif (isset($interested) && $interested == 'm') {
+                        $interest= 'Man';
+                    } elseif (isset($interested) && $interested == 'mw') {
+                        $interest = 'Man&Woman';
+                    }else {
+                        $interest = "";
+                    }
+                    if ($request->isXmlHttpRequest())
+                        return new Response(json_encode(array('error' => false, 'message' => $this->get('translator')->trans("interest_change", array(), "about_me", $locale), 'data' => $interest, 'name' => 'interested')));
+                    else
+                        $parameters['message'] = $this->get('translator')->trans("interest_change", array(), "about_me", $locale);
+                } elseif ($form->get('raceConfirm')->isClicked() || ($data['validationCheck'] == 'race')) {
                     $race = $em->getRepository('CyclogramProofPilotBundle:Race')->findOneByRaceName($data['raceSelect']);
                     $participant->setRace($race);
                     $em->persist($participant);
                     $em->flush();
-                    $parameters['message'] = $this->get('translator')->trans("race_change", array(), "about_me", $locale);
+                    if ($request->isXmlHttpRequest())
+                        return new Response(json_encode(array('error' => false, 'message' => $this->get('translator')->trans("race_change", array(), "about_me", $locale), 'data' => $data['raceSelect'], 'name' => 'race')));
+                    else
+                        $parameters['message'] = $this->get('translator')->trans("race_change", array(), "about_me", $locale);
                 } 
             }
             else {
+                if ($request->isXmlHttpRequest()) {
+                    $messages = array();
+                    $validator = $this->container->get('validator');
+                    $errors = $validator->validate($form);
+                    foreach ($errors as $err) {
+                        if(strpos($err->getPropertyPath(),'[')) {
+                            $property = substr($err->getPropertyPath(),strpos($err->getPropertyPath(),'[')+1,strlen($err->getPropertyPath()));
+                            $len = strpos($property,']');
+                            $property = substr($property,0,$len);
+                        }
+                        $messages[]= array('property' => $property ,
+                                'message' => $err->getMessage());
+                    }
+                    return new Response(json_encode(array('error' => true,'messages' => $messages)));
+                }
                 if($form->get('countryConfirm')->isClicked()) {
                     $parameters["expandedFormClass"] = 'country';
                 } elseif ($form->get('zipcodeConfirm')->isClicked()) {
