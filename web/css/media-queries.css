@@ -1221,7 +1221,9 @@
     	display: none;
     }
     .sign_up_header {
-    	display: none;
+    	height: auto;
+    	line-height: 30px;
+    	padding: 10px 0px;
     }
     .mobile_login_switcher a {
         display: block;
