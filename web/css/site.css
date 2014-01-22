@@ -877,7 +877,7 @@ header .header_menu span.text  , .footer_col_right span.text  {
 .panel .panel_right .dashboard_title.white p {
 	color: #6c6c6c;
 }
-.dashboard_panel {
+.panel .panel_right .dashboard_panel, #about_me_popup.dashboard_panel {
 	width: 683px;
 	float: left;
 	margin: 12px 0px 0px 30px;
