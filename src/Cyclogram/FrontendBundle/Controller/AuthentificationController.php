@@ -321,7 +321,7 @@ class AuthentificationController extends Controller
                 if (isset($data['signup_about']['zipcode']))
                     $participant->setParticipantZipcode($data['signup_about']['zipcode']);
                 
-                if (isset($data['signup_about']['yearsSelect']) || isset($data['monthsSelect']) || isset($data['daysSelect'])) {
+                if (!empty($data['signup_about']['yearsSelect']) || !empty($data['monthsSelect']) || !empty($data['daysSelect'])) {
                     $date = new \DateTime();
                     if($date = $date->setDate((int)$data['signup_about']['yearsSelect'], (int)$data['monthsSelect'], (int)$data['daysSelect']))
                         $participant->setParticipantBirthdate($date);

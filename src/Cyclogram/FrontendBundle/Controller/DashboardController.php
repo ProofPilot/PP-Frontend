@@ -156,6 +156,39 @@ class DashboardController extends Controller
                     break;
                 case "Shipping Info" :
                     $formShippingInformation = $this->createForm(new MailingAddressForm($this->container));
+                    if ($participant->getParticipantFirstname()){
+                        $formShippingInformation->get('participantFirstname')->setData($participant->getParticipantFirstname());
+                    }
+                    if ($participant->getParticipantLastname()){
+                        $formShippingInformation->get('participantLastname')->setData($participant->getParticipantLastname());
+                    }
+                    if ($participant->getParticipantAddress1()){
+                        $formShippingInformation->get('participantAddress1')->setData($participant->getParticipantAddress1());
+                    }
+                    if ($participant->getParticipantAddress2()){
+                        $formShippingInformation->get('participantAddress2')->setData($participant->getParticipantAddress2());
+                    }
+                    if ($participant->getParticipantZipcode()){
+                        $formShippingInformation->get('participantZipcode')->setData($participant->getParticipantZipcode());
+                    }
+                    if ($participant->getCity()){
+                        $city = $participant->getCity();
+                        $formShippingInformation->get('city')->setData($city->getCityName());
+                        $formShippingInformation->get('cityId')->setData($city->getCityId());
+                    }
+                    if ($participant->getState()){
+                        $state = $participant->getState();
+                        $formShippingInformation->get('state')->setData($state->getStateCode());
+                        $formShippingInformation->get('stateId')->setData($state->getstateId());
+                    }
+                    $sign = $participant->getParticipantDeliverySign();
+                    if (isset($sign)){
+                        if ($sign == true) {
+                            $formShippingInformation['sign']->setData('sign');
+                        }else{
+                            $formShippingInformation['sign']->setData('notSign');
+                        }
+                    }
                     $parameters['formShippingInformation'] =  $formShippingInformation->createView();
                     break;
                 case "About Me Info" :

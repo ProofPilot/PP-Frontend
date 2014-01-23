@@ -2,3 +2,4 @@ shipping_subtitle: 'Please enter your mailing address, so we can send your test 
 shipping_title: 'Shipping information'
 'shipping_update ': 'Shipping update '
 shipping_update_button: Update
+to_complete_intervention: 'To completeintervention fill all fields'

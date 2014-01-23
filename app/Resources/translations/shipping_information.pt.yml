@@ -2,3 +2,4 @@ shipping_subtitle: 'Por favor, digite seu endereço de correspondência, para qu
 shipping_title: 'Informação do transporte'
 'shipping_update ': 'Atualização do transporte '
 shipping_update_button: Atualizar
+to_complete_intervention: to_complete_intervention   # FIXME

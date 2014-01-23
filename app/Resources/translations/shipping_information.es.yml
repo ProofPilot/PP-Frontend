@@ -2,3 +2,4 @@ shipping_subtitle: 'Introduzca su dirección de correo, por lo que podemos envia
 shipping_title: 'Información sobre el transporte'
 'shipping_update ': 'Actualización del envío '
 shipping_update_button: Actualización
+to_complete_intervention: to_complete_intervention   # FIXME

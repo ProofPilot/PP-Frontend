@@ -13,7 +13,7 @@
           <p class="notice green"><span>{% trans from "shipping_information" %}shipping_update {% endtrans %}</span></p>
           {% endif %}
           <div class="mobile_reg login_form" style="margin-top: 20px;">
-            <form novalidate method="post" action="{{ path('_shipping') }}" name="mailing_address">
+            <form novalidate method="post" action="{{ path('_shipping') }}" name="mailing_address" id="mailing_address_form">
               <div class="loginform_left mailing_adress" style="padding-top: 0px; width: auto; float: none;">
                 <div class="input_container" style="width: 44%">
                   <label>{% trans from "register" %}label_firstname{% endtrans %}</label>
@@ -61,6 +61,8 @@
               <button type="submit" class="submit ">{% trans from "shipping_information" %}shipping_update_button{% endtrans %}</button>
                 {{ form_widget(formShippingInformation.cityId) }}
                 {{ form_widget(formShippingInformation.stateId) }}
+                {{ form_widget(formShippingInformation.interventionCode) }}
+                {{ form_widget(formShippingInformation.interventionType) }}
               </div>
             </form>
           </div>
@@ -71,7 +73,12 @@
 
         var chosenCities = [];
         var cityIds = [];
-
+        {% if intervention is defined and intervention.type == 'Shipping Info'  %}
+        var interventionCode = '{{ intervention.code }}';
+        var interventionType = '{{ intervention.type }}';
+                $('#mailing_address_interventionCode').val(interventionCode);
+                $('#mailing_address_interventionType').val(interventionType);
+        {% endif %}
         $('#mailing_address_participantZipcode').on('blur', function(){
         if(!$(this).val())
             return;

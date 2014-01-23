@@ -218,6 +218,7 @@ class GeneralSettingsController  extends Controller
     public function generalShippingAction($update)
     {
         $participant = $this->get('security.context')->getToken()->getUser();
+        $locale =$participant->getLocale() ? $participant->getLocale() : $request->getLocale();
         $request = $this->getRequest();
         $em = $this->getDoctrine()->getManager();
         $surveyscount = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')->getActiveParticipantInterventionsCount($participant);
@@ -310,9 +311,31 @@ class GeneralSettingsController  extends Controller
                 $em->persist($participant);
                 $em->persist($participant);
                 $em->flush($participant);
-                 return $this->redirect($this->generateUrl("_shipping",
+                if ($request->isXmlHttpRequest()) {
+                    $result = $this->get('study_logic')->potentialInterventionLogic($form['interventionCode'], $participant, $form['interventionType']);
+                    if ($result)
+                        return new Response(json_encode(array('error' => false,'url' => $this->generateUrl("_main"))));
+                    else 
+                        return new Response(json_encode(array('error' => false, 'message' =>  $this->get('translator')->trans("to_complete_intervention", array(), "shipping_information", $locale))));
+                } else {
+                     return $this->redirect($this->generateUrl("_shipping",
                                 array('update' => true)));
+                }
  
+            } elseif ($request->isXmlHttpRequest()) {
+                $messages = array();
+                $validator = $this->container->get('validator');
+                $errors = $validator->validate($form);
+                foreach ($errors as $err) {
+                    if(strpos($err->getPropertyPath(),'[')) {
+                        $property = substr($err->getPropertyPath(),strpos($err->getPropertyPath(),'[')+1,strlen($err->getPropertyPath()));
+                        $len = strpos($property,']');
+                        $property = substr($property,0,$len);
+                    }
+                    $messages[]= array('property' => $property ,
+                            'message' => $err->getMessage());
+                }
+                return new Response(json_encode(array('error' => true,'messages' => $messages)));
             }
         }
         
@@ -410,7 +433,15 @@ class GeneralSettingsController  extends Controller
                         return new Response(json_encode(array('error' => false, 'message' => $this->get('translator')->trans("race_change", array(), "about_me", $locale), 'data' => $data['raceSelect'], 'name' => 'race')));
                     else
                         $parameters['message'] = $this->get('translator')->trans("race_change", array(), "about_me", $locale);
-                } 
+                } elseif ($data['validationCheck'] == 'formConfirm') {
+                    if ($request->isXmlHttpRequest()) {
+                        $result = $this->get('study_logic')->potentialInterventionLogic($data['interventionCode'], $participant, $data['interventionType']);
+                        if ($result)
+                            return new Response(json_encode(array('error' => false,'url' => $this->generateUrl("_main"), 'completed' => true)));
+                        else
+                            return new Response(json_encode(array('error' => false, 'message' =>  $this->get('translator')->trans("to_complete_intervention", array(), "shipping_information", $locale),'completed' => true)));
+                    }
+                }
             }
             else {
                 if ($request->isXmlHttpRequest()) {

@@ -183,14 +183,27 @@
                    <li class="edit_btn form-race" {{ hideonerror('race',expandedFormClass) }}><a href="#" data-form-cont=".form-race">{% trans from "about_me" %}txt_change{% endtrans %}</a></li>
               </ul>
               {{ form_widget(formAboutMe.validationCheck) }}
+              {{ form_widget(formAboutMe.interventionCode) }}
+              {{ form_widget(formAboutMe.interventionType) }}
+              {% if intervention is defined and intervention.type == 'About Me Info'  %}
+                  {{ form_widget(formAboutMe.formConfirm, {'attr':{'class' : 'btn_confirm'}}) }}
+              {% endif %}
 {#               {{ form_rest(form) }}#}
               {{ form_errors(formAboutMe) }}
+            
             </form>
+            
         </div>
     </div>
             <script src= {{ asset ('js/jquery.numeric.js') }}></script>
         <script type="text/javascript">
         $(document).ready(function(){
+            {% if intervention is defined and intervention.type == 'About Me Info'  %}
+            var interventionCode = '{{ intervention.code }}';
+            var interventionType = '{{ intervention.type }}';
+                    $('#about_me_interventionCode').val(interventionCode);
+                    $('#about_me_interventionType').val(interventionType);
+            {% endif %}
            $('#about_me_birthdateSelect').datepicker( {
                    yearRange: "-100:+1",
                    minDate: "-100Y",
@@ -226,6 +239,10 @@
            $('#about_me_raceConfirm').click(function()
                    {
                             $('#about_me_validationCheck').val("race");
+                   });
+           $('#about_me_formConfirm').click(function()
+                   {
+                            $('#about_me_validationCheck').val("formConfirm");
                    });
            });
         </script>

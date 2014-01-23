@@ -114,6 +114,10 @@ class MailingAddressForm extends AbstractType
                         'message'=>"error_not_blank_choice"
                 ))
         ));
+        
+        $builder->add('interventionCode', 'hidden');
+        $builder->add('interventionType', 'hidden');
+        
         $builder->add('saveMailingAddress', 'submit', array(
                 'label' => 'btn_save_mailing_address'
                 ));

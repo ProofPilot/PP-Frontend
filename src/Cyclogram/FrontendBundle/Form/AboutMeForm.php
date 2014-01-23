@@ -157,8 +157,13 @@ class AboutMeForm extends AbstractType
         $builder->add('raceConfirm', 'submit', array(
                 'label' => 'btn_confirm'
         ));
-
         
+        $builder->add('formConfirm', 'submit', array(
+                'label' => 'btn_complete'
+        ));
+        
+        $builder->add('interventionCode', 'hidden');
+        $builder->add('interventionType', 'hidden');
         $builder->add('validationCheck' , 'hidden');
     }
     

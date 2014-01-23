@@ -247,6 +247,47 @@ class StudyLogic
                 $parameters);
     }
     
+    public function potentialInterventionLogic($interventionCode, $participant, $interventionType) {
+        $data = array();
+        switch ($interventionType) {
+            case 'Shipping Info' :
+                $data[] = $participant->getParticipantFirstName();
+                $data[] = $participant->getParticipantLastName();
+                $data[] = $participant->getParticipantAddress1();
+                $data[] = $participant->getParticipantZipcode();
+                $data[] = $participant->getCity();
+                $data[] = $participant->getState();
+                if (array_search("", $data) !== false)
+                    return false;
+                break;
+            case 'About Me Info' :
+                $data[] = $participant->getCountry();
+                $data[] = $participant->getParticipantZipcode();
+                $data[] = $participant->getParticipantBirthdate();
+                $data[] = $participant->getSex();
+                $data[] = $participant->getParticipantInterested();
+                $data[] = $participant->getRace();
+                
+                if (array_search("", $data) !== false)
+                    return false;
+                break;
+            case 'Confirm Mobile Phone' :
+                break;
+        }
+        $em = $this->container->get('doctrine')->getManager();
+
+        $intervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')->findOneByInterventionCode($interventionCode);
+        
+        $participantInterventioLink = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')->findOneBy(array(
+                                                                                                                               'participant' => $participant,
+                                                                                                                               'intervention' => $intervention
+                                                                                                                        ));
+        $participantInterventioLink->setStatus(ParticipantInterventionLink::STATUS_CLOSED);
+        $em->persist($participantInterventioLink);
+        $em->flush();
+        return true;
+    }
+    
     private function getInterventionUrl($interventionLink, $locale) {
         $intervention = $interventionLink->getIntervention();
     

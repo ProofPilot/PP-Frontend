@@ -1,14 +1,7 @@
-'African descent': 'ascendência Africano'
-'Arab/Middle Eastern': 'Árabe / Oriente Médio'
-'East Asian': 'Leste Asiático'
-'Hispanic and/or Latino': 'Hispânicos e/ou Latino'
-'Native American or Aboriginal': 'Nativo Americano ou Aborígene'
-Other: Outro
-'South Asian': 'Sul da Ásia'
-'White and/or Eurpoean descent': 'Ascendência Branca e/ou Eurpoean'
 about_me_subtitle: 'Sobre mim'
 about_me_title: 'Sobre mim'
 birthdate_change: 'alterar Data de nascimento'
+btn_complete: btn_complete   # FIXME
 btn_confirm: Confirmar
 country_change: 'Alterar país'
 interest_change: 'Mude juros'

@@ -3,12 +3,11 @@
 {% use '::facebook_blocks.html.twig' %}
 {% use '::google_blocks.html.twig' %}
 
-
-
 {% block javascripts %}
  <script src="{{ asset('js/jquery-ui-1.10.3/jquery-ui.min.js') }}"></script>
  <script src="{{ asset('js/jquery-ui-1.10.3/jquery.ui.datepicker.min.js') }}"></script>
  <script src="{{ asset('/js/jquery.form.js') }}"></script>
+ <script src="{{ asset('js/jquery.autocomplete.min.js') }}"></script>
     <script type="text/javascript" > 
         $(document).ready(function(){
             function funcCustom() {
@@ -70,12 +69,22 @@
                             	$('#about_me_'+messages[i].property).parent('span').after('<p class="error_msg">'+messages[i].message+'</p>');
                             }
                         } else {
-                            $('.form_expanded').hide();
-                            $('.middle_input').show();
-                            $('#about_me_'+json.name).val(json.data);
-                            $('#current_text_'+json.name).html(json.data);
-                            $('.edit_btn').show();
-                            $('#about_me_div').prepend('<p class="notice green nomargin margin_top about_me_notice"><span>'+json.message+'</span></p>'); 
+                            if (json.completed) {
+                                if (json.url) {
+                            	    $('#about_me_popup').dialog('close');
+                            	    window.location.replace(json.url);
+                                } else {
+                                	alert(json.message);
+                            		$('#about_me_popup').dialog('close');
+                                }
+                            } else {
+                                $('.form_expanded').hide();
+                                $('.middle_input').show();
+                                $('#about_me_'+json.name).val(json.data);
+                                $('#current_text_'+json.name).html(json.data);
+                                $('.edit_btn').show();
+                                $('#about_me_div').prepend('<p class="notice green nomargin margin_top about_me_notice"><span>'+json.message+'</span></p>'); 
+                            }
                         }
                     }
                 });
@@ -84,8 +93,32 @@
 
             $('.close_cont a').click(function(e) {
                 $(this).parent('div').siblings('.new_inputs_cont').find('input[type="text"]').val('');
-          //      alert('fsf');
             });
+
+            $('#mailing_address_form').submit(function(e){
+            	$('.error').remove();
+            	$(this).ajaxSubmit({
+            		dataType: "json",
+                    success: function(json) {
+                    	if(json.error) {
+                    		var messages = json.messages;
+                            for (var i = 0; i < messages .length; i++){
+                            	$('#mailing_address_'+messages[i].property).parent('span').after('<p class="error">'+messages[i].message+'</p>');
+                            }
+                    	} else {
+                        	if (json.url) {
+                        	    $('#shipping_information_popup').dialog('close');
+                        	    window.location.replace(json.url);
+                        	} else {
+                            	alert(json.message);
+                        		$('#shipping_information_popup').dialog('close');
+                            }
+                        }
+                    }
+            	});
+                return false;	
+            });
+
             
             var count = 1;
             $('#email_list .others').on('click', 'a', function(e) {
