@@ -1,9 +1,9 @@
 button_join_the_study_goal: 'Junte-se ao estudo'
-button_leave_study: button_leave_study
-button_personalized_insight: button_personalized_insight
-button_study_findings: button_study_findings
-button_view_consent: button_view_consent
-inivted_to_study: inivted_to_study
+button_leave_study: 'Deixe este estudo'
+button_personalized_insight: 'Ver Insights personalizados'
+button_study_findings: 'Visualização de Resultados do Estudo'
+button_view_consent: 'O Que Você Precisa Saber'
+inivted_to_study: 'Você está convidado para o estudo,'
 msg_not_eligible: 'Não são elegíveis para ''%studyname%'' neste momento.'
 social_at_proofpilot: 'em ProofPilot'
 social_join_study: 'Junte-se ao estudo,'
@@ -24,6 +24,6 @@ txt_sponsored_by: 'Este estudo é patrocinado pela'
 txt_staff: Pessoal
 txt_tweet: Chilrear
 txt_you_are_eligible: 'Você é elegível'
-unavailable_functionality: unavailable_functionality   # FIXME
+unavailable_functionality: 'Não há resultados provisórios deste estudo ainda. Vamos notificá-lo quando a área disponível resultados para você rever.'
 warning_message: 'Antes de prosseguir, por favor leia esta informação importante e clique em "recuso" ou "aceito" na parte inferior da página.'
-you_are_participant: you_are_participant
+you_are_participant: 'INSCRITOS!<br><small>IR PARA PAINEL</small>'
