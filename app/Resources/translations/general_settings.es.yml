@@ -18,7 +18,7 @@ label_new_phone_number_sms: 'Introduzca el código móvil para confirmar'
 label_new_phone_number_wide: 'Un nuevo número de teléfono de ancho'
 label_new_user_name: 'Nuevo nombre de usuario'
 label_new_user_name_pass: 'Introduce el contraseña'
-label_old_password: 'vieja contraseña'
+label_old_password: 'Vieja contraseña'
 label_password: Contraseña
 label_password_mobile_confirm: 'Introduzca el código móvil para confirmar'
 label_phone_number: 'Número de teléfono'
