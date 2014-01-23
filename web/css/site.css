@@ -4048,6 +4048,11 @@ footer .row_2 p {
 #about_me_popup.dashboard_panel ul.settings_form li.middle_input input.middle_input {
 	width: 360px;
 }
+.ui-datepicker {
+	background: #fff;
+	border: 1px solid #555;
+	border-radius: 5px;
+}
 #about_me_div.dashboard_panel ul.settings_form {
 	margin-top: 15px;
 }
