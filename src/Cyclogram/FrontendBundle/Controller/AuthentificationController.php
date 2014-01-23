@@ -79,7 +79,7 @@ class AuthentificationController extends Controller
         $form->handleRequest($request);
         if ($form->isValid()) {
             $registration = $form->getData();
-            $this->createParticipant($registration);
+            $this->createParticipant($registration , $studyCode);
             if ($request->isXmlHttpRequest()) {
                 $study = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
                 if ($study->getStudySkipAboutMe() && $study->getStudySkipConsent()) {
@@ -102,6 +102,9 @@ class AuthentificationController extends Controller
                         $participant = $securityContext->getToken()->getUser();
                 
                         $ls->studyRegistration($participant, $studyCode, $surveyId, $saveId);
+                        if ($participant->getParticipantEmailConfirmed() == false)
+                            $this->confirmParticipantEmail($participant);
+                        $this->confirmParticipantEmail($participant);
                         $study = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
                         if ($study->getStudySkipAboutMe()) {
                             return $this->redirect( $this->generateUrl("_main"));
@@ -220,7 +223,7 @@ class AuthentificationController extends Controller
         }
         
         $participant = $this->get('security.context')->getToken()->getUser();
-        if ($session->has('confirmation')) {
+        if ($session->has('confirmation') && !isset($studyCode)) {
             $this->confirmParticipantEmail($participant);
             $session->remove('confirmation');
         }
@@ -662,7 +665,7 @@ class AuthentificationController extends Controller
      * Create new participant
      * @param Participant $formData
      */
-    private function createParticipant($formData) {
+    private function createParticipant($formData, $studyCode = null) {
         $session = $this->getRequest()->getSession();
         $request = $this->getRequest();
         $em = $this->getDoctrine()->getManager();
@@ -699,9 +702,9 @@ class AuthentificationController extends Controller
         $roles = array("ROLE_USER", "ROLE_PARTICIPANT");
         $participant->setRoles($roles);
         $participant->setParticipantEmailCode($mailCode);
-        if ($participant->getParticipantEmailConfirmed() == false)
+        if ($participant->getParticipantEmailConfirmed() == false && (is_null($studyCode) && !$session->has('SurveyInfo'))) {
             $this->confirmParticipantEmail($participant);
-
+        }
         $em->persist($participant);
         $em->flush($participant);
         

@@ -154,6 +154,10 @@ class SurveyController extends Controller
                 if ($session->has('referralSite') && $session->has('referralCampaign')){
                     if($isEligible)
                         $logic->studyRegistration($participant, $studyCode, $surveyId, $saveId);
+                    $isFirstStudy = $em->getRepository('CyclogramProofPilotBundle:ParticipantArmLink')->findByParticipant($participant);
+                    if ($participant->getParticipantEmailConfirmed() == false && count($isFirstStudy) <= 1) {
+                        $this->confirmParticipantEmail($participant);
+                    }
                 } else {
                     $study = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
                     $studyContent = $em->getRepository('CyclogramProofPilotBundle:StudyContent')->findOneByStudy($study);
@@ -213,6 +217,39 @@ class SurveyController extends Controller
     
         return $surveyData;
          
+    }
+    
+    public  function confirmParticipantEmail(Participant $participant, $studyCode = null)
+    {
+        $locale = $this->getRequest()->getLocale();
+        $em = $this->getDoctrine()->getManager();
+        if($participant->getParticipantEmailConfirmed() == false) {
+            $cc = $this->get('cyclogram.common');
+    
+            $embedded = array();
+            $embedded = $cc->getEmbeddedImages();
+    
+            $parameters['code'] = $participant->getParticipantEmailCode();
+            $participant->setParticipantEmailCode($parameters['code']);
+            $em->persist($participant);
+            $em->flush($participant);
+            if (!empty($studyCodey))
+                $parameters['studyCode'] = $studyCode;
+            $parameters['email'] = $participant->getParticipantEmail();
+    
+            $parameters['locale'] = $participant->getLocale() ? $participant->getLocale() : $request->getLocale();
+            $parameters['host'] = $this->container->getParameter('site_url');
+            $parameters["studies"] = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:Study')->getRandomStudyInfo($locale, $participant);
+    
+            $cc->sendMail(null,
+                    $participant->getParticipantEmail(),
+                    $this->get('translator')->trans("email_title_verify", array(), "email", $parameters['locale']),
+                    'CyclogramFrontendBundle:Email:email_confirmation.html.twig',
+                    null,
+                    $embedded,
+                    true,
+                    $parameters);
+        }
     }
 
 }
