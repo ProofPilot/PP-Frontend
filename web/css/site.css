@@ -4056,8 +4056,15 @@ footer .row_2 p {
 #about_me_div.dashboard_panel ul.settings_form {
 	margin-top: 15px;
 }
+#shipping_information_popup  {
+	padding: 20px 0px;
+	background: #fff;
+	border-radius: 5px; 
+}
 #shipping_information_popup .mobile_reg {
-	overflow: hidden;
-	padding: 20px 0px; 
+	margin-bottom: 0px;
+}
+#shipping_information_popup .dashboard_title {
+	padding: 0px 45px;
 }
  

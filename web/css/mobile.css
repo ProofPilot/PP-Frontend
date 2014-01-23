@@ -988,7 +988,7 @@ div.checker input {
 .mobile_reg div.center_align.bottom_margin {
 	margin-bottom: 15px;
 }
-.mobile_reg button.submit, .mobile_reg .align_center a {
+.mobile_reg button.submit, .mobile_reg .align_center a, #about_me_formConfirm {
 	clear: both;
 	display: inline-block;
 	color: white;
@@ -1222,9 +1222,9 @@ div.checker input {
 .mobile_reg .confirm_list em {
 	font-style: normal;
 }
-.mobile_reg.login_form {
+/* .mobile_reg.login_form {
 	overflow: auto;
-}
+} */
 .mobile_reg.login_form .wrapper {
 	overflow: hidden;
 	background-color: #F7F7F7;
