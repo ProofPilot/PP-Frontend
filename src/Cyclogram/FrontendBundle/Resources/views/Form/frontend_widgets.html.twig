@@ -73,7 +73,7 @@
     	// for_multiple checkboxes
        
 
-        $("#open_choice_{{ name }}").bind('click', function(e) {
+        $("#open_choice_{{ name }}").bind('click touchstart', function(e) {
         	$("[id^='multiple_choice']").hide();
         	$("[id^='single_choice']").hide();
             if ({{ (expanded and multiple)|default(0) }} ) {
