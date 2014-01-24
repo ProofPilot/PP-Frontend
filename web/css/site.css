@@ -4067,4 +4067,14 @@ footer .row_2 p {
 #shipping_information_popup .dashboard_title {
 	padding: 0px 45px;
 }
- 
+#mobile_phone_popup, #mobile_phone_confirm_popup {
+	padding: 25px 40px;
+	background: #fff;
+	border-radius: 5px;
+}
+#mobile_phone_popup .mobile_reg, #mobile_phone_confirm_popup .mobile_reg {
+	margin: 0px;
+}
+#mobile_phone_confirm_popup .mobile_reg h1 {
+	text-align: center;
+}
