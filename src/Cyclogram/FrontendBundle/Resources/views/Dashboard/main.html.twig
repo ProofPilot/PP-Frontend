@@ -6,8 +6,8 @@
 {% block javascripts %}
  <script src="{{ asset('js/jquery-ui-1.10.3/jquery-ui.min.js') }}"></script>
  <script src="{{ asset('js/jquery-ui-1.10.3/jquery.ui.datepicker.min.js') }}"></script>
- <script src="{{ asset('/js/jquery.form.js') }}"></script>
  <script src="{{ asset('js/jquery.autocomplete.min.js') }}"></script>
+  <script src="{{ asset('/js/jquery.form.js') }}"></script>
     <script type="text/javascript" > 
         $(document).ready(function(){
             function funcCustom() {
@@ -57,6 +57,81 @@
                 });
             });
 
+            $('#mobile_phone').bind('click', function(e) {
+            	e.preventDefault();
+                $('#mobile_phone_popup').dialog({
+                    modal: true,
+                    width: '700',
+                    fluid: true,
+                    resizable: false,
+                    position: ['top',100],
+                    open: funcCustom
+                });
+            });
+
+            $('#phone_confirm').submit(function(e){
+            	$('.error_msg').remove();
+                $(this).ajaxSubmit({
+                    dataType: "json",
+                    success: function(json) {
+                        if(json.error) {
+                        	 var messages = json.messages;
+                             for (var i = 0; i < messages .length; i++){
+                             	$('#phone_'+messages[i].property).parent('li').after('<p class="error_msg">'+messages[i].message+'</p>');
+                             }
+                        } else {
+                        	$('#mobile_phone_popup').dialog('close');
+                            $('#mobile_phone_confirm_popup').dialog({
+                                modal: true,
+                                width: '700',
+                                fluid: true,
+                                resizable: false,
+                                position: ['top',100],
+                                open: funcCustom
+                            });
+                        }
+                    }
+                });
+                return false;
+            });
+
+            $('#sms_confirm').submit(function(e) {
+            	$('.error_msg').remove();
+                $(this).ajaxSubmit({
+                        dataType: "json",
+                        success: function(json) {
+                            if (json.error) {
+                                var messages = json.messages;
+                                for (var i = 0; i < messages .length; i++){
+                                    $('#sms_confirm_'+messages[i].property).parent('li').after('<p class="error_msg">'+messages[i].message+'</p>');
+                                }
+                            } else {
+                                if (json.message) {
+                                    $('#sms_confirm_sms_code').parent('li').after('<p class="error_msg">'+json.message+'</p>');
+                                } else if(json.send) {
+                                }else {
+                                    $('#mobile_phone_confirm_popup').dialog('close');
+                                    window.location.replace(json.url);
+                                }
+                            }
+                    }
+                });
+                return false;
+            });
+
+            $('#send_sms_again').bind('click', function(e){
+                $.ajax({
+                    dataType: "json",
+                    type: "POST",
+                    data: {'send' : true},
+                    url: "{{ path('_mobile_phone_confirm', {'send' : true})}}",
+                })
+                    .done (function(response) {
+                        return;
+                    });
+                return false;
+            });
+            
             $('#about_me_form').submit(function(e){
             	$('.about_me_notice').remove();
             	$('.error_msg').remove();
@@ -393,6 +468,15 @@
                                      <div class="button_box"> <a href="#" id="shipping_information"><span>{% trans from "dashboard" %}do_it{% endtrans %}</span></a> </div>
                                          <div id="shipping_information_popup" style="display: none;">
                                              {% include 'CyclogramFrontendBundle:GeneralSettings:shipping_information_form.html.twig' %}
+                                         </div>
+                                     {% endif %}
+                                     {% if intervention.type == 'Confirm Mobile Phone'%}
+                                     <div class="button_box"> <a href="#" id="mobile_phone"><span>{% trans from "dashboard" %}do_it{% endtrans %}</span></a> </div>
+                                         <div id="mobile_phone_popup" style="display: none;">
+                                             {% include 'CyclogramFrontendBundle:GeneralSettings:mobile_phone_form.html.twig' %}
+                                         </div>
+                                         <div id="mobile_phone_confirm_popup" style="display: none;">
+                                             {% include 'CyclogramFrontendBundle:GeneralSettings:mobile_phone_confirm_form.html.twig' %}
                                          </div>
                                      {% endif %}
                                 </div>

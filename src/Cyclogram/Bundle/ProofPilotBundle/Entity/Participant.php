@@ -1114,12 +1114,13 @@ class Participant implements AdvancedUserInterface
     }
     public function isEnabled()
     {
-        if (empty($this->participantMobileNumber))
-            return "You have no mobile number set - please try to register again";
-        if ($this->level->getParticipantLevelName() == 'Customer')
-            return true;
-        elseif ($this->level->getParticipantLevelName() == 'Lead')
-            return false;
+//         if (empty($this->participantMobileNumber))
+//             return "You have no mobile number set - please try to register again";
+//         if ($this->level->getParticipantLevelName() == 'Customer')
+//             return true;
+//         elseif ($this->level->getParticipantLevelName() == 'Lead')
+//             return false;
+        return true;
     }
 
     /**

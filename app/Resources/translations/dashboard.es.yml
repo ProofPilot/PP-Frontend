@@ -2,7 +2,10 @@ dashboard_dismiss_confirmation: '¿Está seguro que desea despedir? Esto puede a
 dashboard_subtitle: 'Todas las tareas de estudio en un solo lugar. Gestione toda su experiencia con ProofPilot aquí.'
 do_it: HACERLO
 do_it_now: 'Hazlo Ahora'
+enter_mobile_phone: enter_mobile_phone   # FIXME
+enter_sms_code: enter_sms_code   # FIXME
 join_a_study: 'Únase a un estudio'
+no_code: no_code   # FIXME
 no_do_it: 'No tiene tareas de estudio en este momento'
 
 past_activity:
@@ -12,10 +15,14 @@ past_activity:
     welcome_study: 'Bienvenido al studio Know@Home: Poniendo a prueba la prueba'
 
 send_again: 'No conseguirlo? Revise su correo no deseado y/o volver a enviar.'
+sms_verification_message: sms_verification_message   # FIXME
 txt_dashboard: Escritorio
 txt_dismiss: 'Tarea %interventionName% descartado'
 txt_dismiss_all: 'Todas las tareas despedidos'
 txt_please_verify_email: "Porfavor verifique su dirección de e-mail.<br>\nPara participar en los estudios necesitamos un e-mail válido - Porfavor vaya al e-mail y haga click en el enlace."
+txt_popup_header: txt_popup_header   # FIXME
+txt_popup_link: txt_popup_link   # FIXME
+txt_popup_text: txt_popup_text   # FIXME
 
 what_next_list:
     collect_speciment: 'Colectar espécimen'
@@ -23,3 +30,5 @@ what_next_list:
     how_activate_tests: 'Cómo activar sus pruebas'
     other_info: 'Alguna otra información'
     reade_instruction: 'Lea las instrucciónes para realizar las pruebas'
+
+wrong_sms: wrong_sms   # FIXME

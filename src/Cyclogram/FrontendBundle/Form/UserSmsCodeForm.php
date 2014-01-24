@@ -50,12 +50,13 @@ class UserSmsCodeForm extends AbstractType
                         'min' => 4
                         ))
                 ));
-        $builder->add('timeZone' , 'hidden', array(
-                "mapped" => false
-        ));
+
         $builder->add('confirmCode', 'submit', array(
                 'label' => 'btn_confrimcoe_login'
         ));
+        
+        $builder->add('interventionCode', 'hidden');
+        $builder->add('interventionType', 'hidden');
     }
     
     public function getName()

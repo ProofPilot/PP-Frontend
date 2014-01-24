@@ -1,0 +1,33 @@
+
+    <div class="mobile_reg">
+          <h1><span>{% trans from "dashboard" %}enter_mobile_phone{% endtrans %}</span></h1>
+          <p>{% trans from "dashboard" %}enter_mobile_phone{% endtrans %}</p>
+          <form method="post" action="{{ path('_mobile_phone') }}" name="phone" id="phone_confirm">
+              <ul class="form_fields">
+                  <li class="small_input">
+                      {{ form_widget(formMobile.phone_small, {'attr' : {'class' : 'default_input tac small' , 'id' : 'numeric'}}) }}
+                  </li>
+                  <li class="wide_input">
+                      {{ form_widget(formMobile.phone_wide, {'attr' : {'class' : 'default_input wide', 'id' : 'numeric'}}) }}
+                  </li>
+                  {{ form_errors(formMobile.phone_small) }}
+                  {{ form_errors(formMobile.phone_wide) }}
+              </ul>
+              <div class="center_align">
+                  {{ form_widget(formMobile.sendCode, {'attr':{'class':'submit'}}) }}
+                  {{ form_errors(formMobile) }}
+                  
+              </div>
+          </form>
+    </div>
+    <script src= {{ asset ('js/jquery.numeric.js') }}></script>
+    <script>
+       $(document).ready(function(){
+            $("#phone_phone_small").numeric();
+            $('#phone_phone_wide').numeric();
+            var check = $("#phone_phone_small").val();
+            if (check != '') { 
+                $('#phone_phone_wide').focus();
+            }
+       });
+    </script>

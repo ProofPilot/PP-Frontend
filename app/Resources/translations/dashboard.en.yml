@@ -2,7 +2,10 @@ dashboard_dismiss_confirmation: 'Are you sure you want to dismiss? It may affect
 dashboard_subtitle: 'All your study tasks in one place. Manage your entire experience with ProofPilot here. '
 do_it: 'DO IT'
 do_it_now: 'Do It Now'
+enter_mobile_phone: ' Enter your mobile phone number'
+enter_sms_code: 'Enter verification code you received on your phone'
 join_a_study: 'Join a study'
+no_code: 'No Code? Send Another'
 no_do_it: 'You have no study tasks right now'
 
 past_activity:
@@ -12,10 +15,12 @@ past_activity:
     welcome_study: 'Welcome to the study Know@Home: Putting the test to the test'
 
 send_again: 'Didn''t get it? Check your Junk mail and/or send again.'
+sms_verification_message: 'Your ProofPilot SMS code is:'
 txt_dashboard: Dashboard
 txt_dismiss: 'Task %interventionName% dismissed'
 txt_dismiss_all: 'All tasks dismissed'
 txt_please_verify_email: 'We just sent you an e-mail to verify your e-mail address. Please click the link.'
+
 
 what_next_list:
     collect_speciment: 'Collect specimen'
@@ -23,3 +28,5 @@ what_next_list:
     how_activate_tests: 'How to activate your tests'
     other_info: 'Some other info'
     reade_instruction: 'Read instructions to Perform the Tests'
+
+wrong_sms: 'Wrong SMS'

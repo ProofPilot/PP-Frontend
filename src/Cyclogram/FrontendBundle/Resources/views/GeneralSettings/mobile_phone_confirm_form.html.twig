@@ -1,0 +1,32 @@
+<div class="mobile_reg">
+      <h1><span>{% trans from "dashboard" %}enter_sms_code{% endtrans %}</span></h1>
+      <br>
+      <form method="post" action="{{ path('_mobile_phone_confirm') }}" name="sms_confirm" id="sms_confirm">
+        <ul class="form_fields">
+          <li>
+
+              {{ form_widget(formMobileConfirm.sms_code, {'attr' : {'class' : 'default_input full', 'autocomplete': 'off'}}) }}
+              {{ form_errors(formMobileConfirm.sms_code) }}
+          </li>
+        </ul>
+        <div class="center_align">
+              {{ form_widget(formMobileConfirm.confirmCode,{'attr':{'class':'submit'}}) }}
+              {{ form_widget(formMobileConfirm.interventionCode) }}
+              {{ form_widget(formMobileConfirm.interventionType) }}
+              {{ form_errors(formMobileConfirm) }}
+              {{ form_rest(formMobileConfirm) }}
+              
+            </div>
+        <div class="center_align"><a href="#"  id="send_sms_again" class="repeat">{% trans from "dashboard" %}no_code{% endtrans %}</a></div>
+      </form>
+    </div>
+     <script type="text/javascript">
+        $(document).ready(function(){
+            {% if intervention is defined and intervention.type == 'Confirm Mobile Phone'  %}
+            var interventionCode = '{{ intervention.code }}';
+            var interventionType = '{{ intervention.type }}';
+                    $('#sms_confirm_interventionCode').val(interventionCode);
+                    $('#sms_confirm_interventionType').val(interventionType);
+            {% endif %}
+           });
+        </script>

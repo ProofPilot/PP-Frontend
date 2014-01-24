@@ -186,7 +186,9 @@
               {{ form_widget(formAboutMe.interventionCode) }}
               {{ form_widget(formAboutMe.interventionType) }}
               {% if intervention is defined and intervention.type == 'About Me Info'  %}
-                  {{ form_widget(formAboutMe.formConfirm, {'attr':{'class' : 'btn_confirm'}}) }}
+                  <div style="center_align">
+                      {{ form_widget(formAboutMe.formConfirm, {'attr':{'class' : 'btn_confirm'}}) }}
+                  </div>
               {% endif %}
 {#               {{ form_rest(form) }}#}
               {{ form_errors(formAboutMe) }}

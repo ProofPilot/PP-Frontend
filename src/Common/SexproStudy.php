@@ -246,6 +246,23 @@ class SexproStudy extends AbstractStudy implements StudyInterface
             $em->persist($participantInterventionLink);
             
             $em->flush();
+            
+            $participantInterventionLink = new ParticipantInterventionLink();
+            $intervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')
+            ->findOneByInterventionCode('Sexprophone');
+            $this->setInterventionLinkExpiration($intervention, $participantInterventionLink);
+            $participantInterventionLink->setIntervention($intervention);
+            $participantInterventionLink->setParticipant($participant);
+            $participantInterventionLink
+            ->setParticipantInterventionLinkDatetimeStart(
+                    new \DateTime("now"));
+            if ($em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionlink')->checkIfIntervetionExpire($intervention))
+                $participantInterventionLink->setStatus(ParticipantInterventionLink::STATUS_EXPIRED);
+            else
+                $participantInterventionLink->setStatus(ParticipantInterventionLink::STATUS_ACTIVE);
+            $em->persist($participantInterventionLink);
+            
+            $em->flush();
         }
     }
 

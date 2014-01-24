@@ -267,11 +267,14 @@ class StudyLogic
                 $data[] = $participant->getSex();
                 $data[] = $participant->getParticipantInterested();
                 $data[] = $participant->getRace();
-                
                 if (array_search("", $data) !== false)
                     return false;
                 break;
             case 'Confirm Mobile Phone' :
+                $data[] = $participant->getParticipantMobileNumber();
+                $confirmed = $participant->getParticipantMobileSmsCodeConfirmed();
+                if (array_search("", $data) !== false || !$confirmed)
+                    return false;
                 break;
         }
         $em = $this->container->get('doctrine')->getManager();

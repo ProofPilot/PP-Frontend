@@ -21,6 +21,10 @@ namespace Cyclogram\FrontendBundle\Controller;
 
 
 
+use Cyclogram\FrontendBundle\Form\UserSmsCodeForm;
+
+use Cyclogram\FrontendBundle\Form\MobilePhoneForm;
+
 use Cyclogram\FrontendBundle\Form\AboutMeForm;
 
 use Cyclogram\FrontendBundle\Form\MailingAddressForm;
@@ -29,6 +33,7 @@ use Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantArmLink;
 
 use Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantInterventionLink;
 
+use Cyclogram\CyclogramCommon;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -206,7 +211,32 @@ class DashboardController extends Controller
                         $parameters['interest'] = "";
                     }
                     break;
+                case "Confirm Mobile Phone":
+                    $formMobile = $this->createForm(new MobilePhoneForm($this->container));
+                    $phone = CyclogramCommon::parsePhoneNumber($participant->getParticipantMobileNumber());
+                    if (!empty($phone)) {
+                        $formMobile->get('phone_small')->setData($phone['country_code']);
+                        $formMobile->get('phone_wide')->setData($phone['phone']);
+                    }
                     
+                    $clientIp = $request->getClientIp();
+                    if ($clientIp == '127.0.0.1') {
+                        $formMobile->get('phone_small')->setData(380);
+                    }
+                    $geoip = $this->get('maxmind.geoip')->lookup($clientIp);
+                    if ($geoip != false) {
+                        $countryCode = $geoip->getCountryCode();
+                        $country = $em->getRepository('CyclogramProofPilotBundle:Country')->findOneByCountryCode($countryCode);
+                        if (isset($country)){
+                            $formMobile->get('phone_small')->setData($country->getDailingCode());
+                        }
+                    }
+                    
+                    $formMobileConfirm = $this->createForm(new UserSmsCodeForm($this->container));
+                    $parameters['formMobileConfirm'] =  $formMobileConfirm->createView();
+                    $parameters['formMobile'] =  $formMobile->createView();
+                    break;
+
             }
 
 

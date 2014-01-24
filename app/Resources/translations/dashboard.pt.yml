@@ -2,7 +2,10 @@ dashboard_dismiss_confirmation: 'Tem certeza de que quer demitir? Ela pode afeta
 dashboard_subtitle: 'Sua participação em um piscar de olhos. O que você precisa fazer agora e os próximos passos.'
 do_it: 'FACA ISSO'
 do_it_now: 'Faça-o agora'
+enter_mobile_phone: enter_mobile_phone   # FIXME
+enter_sms_code: enter_sms_code   # FIXME
 join_a_study: 'Junte-se um estudo'
+no_code: no_code   # FIXME
 no_do_it: 'Você não tem tarefas de estudo agora'
 
 past_activity:
@@ -12,10 +15,14 @@ past_activity:
     welcome_study: 'Bem-vindo ao estudo Know@Home: Colocando à prova o teste'
 
 send_again: 'Não entendeu? Verificar o correio de sucata e/ou enviar novamente.'
+sms_verification_message: sms_verification_message   # FIXME
 txt_dashboard: 'Painel de controle'
 txt_dismiss: 'Tarefa %interventionName% demitido'
 txt_dismiss_all: 'Todas as tarefas de demitidos'
 txt_please_verify_email: "Por favor, verifique o seu endereço de e-mail. <br/>\nPara participar de estudos necessitamos de um endereço de e-mail válido - por favor, vá para o seu e-mail e clique no link"
+txt_popup_header: txt_popup_header   # FIXME
+txt_popup_link: txt_popup_link   # FIXME
+txt_popup_text: txt_popup_text   # FIXME
 
 what_next_list:
     collect_speciment: 'Colectar espécimen'
@@ -23,3 +30,5 @@ what_next_list:
     how_activate_tests: 'Como ativar os seus testes'
     other_info: 'Algumas outras informações'
     reade_instruction: 'Leia as instruções para realizar o teste'
+
+wrong_sms: wrong_sms   # FIXME
