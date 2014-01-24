@@ -4078,3 +4078,12 @@ footer .row_2 p {
 #mobile_phone_confirm_popup .mobile_reg h1 {
 	text-align: center;
 }
+#mobile_phone_popup .mobile_reg .error_msg {
+	color: red;
+	margin-left: 70px;
+	margin-top: 50px;
+}
+#mobile_phone_confirm_popup .mobile_reg .error_msg {
+	color: red;
+	margin-top: 50px;
+}
