@@ -1,15 +1,16 @@
-btn_confrimcoe_login: btn_confrimcoe_login   # FIXME
-btn_send_confirmation: btn_send_confirmation   # FIXME
+btn_confrimcoe_login: btn_confrimcoe_login
+btn_send_confirmation: btn_send_confirmation
 dashboard_dismiss_confirmation: 'Tem certeza de que quer demitir? Ela pode afetar sua capacidade de continuar com o estudo'
 dashboard_subtitle: 'Sua participação em um piscar de olhos. O que você precisa fazer agora e os próximos passos.'
+dismiss_all: dismiss_all   # FIXME
 do_it: 'FACA ISSO'
 do_it_now: 'Faça-o agora'
 enter_mobile_phone: enter_mobile_phone
 enter_sms_code: enter_sms_code
 join_a_study: 'Junte-se um estudo'
-label_phone_small: label_phone_small   # FIXME
-label_phone_wide: label_phone_wide   # FIXME
-label_sms_code: label_sms_code   # FIXME
+label_phone_small: label_phone_small
+label_phone_wide: label_phone_wide
+label_sms_code: label_sms_code
 no_code: no_code
 no_do_it: 'Você não tem tarefas de estudo agora'
 

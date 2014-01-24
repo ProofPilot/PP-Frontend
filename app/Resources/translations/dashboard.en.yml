@@ -1,15 +1,16 @@
-btn_confrimcoe_login: 'Confirm'
+btn_confrimcoe_login: Confirm
 btn_send_confirmation: 'Send confirmation SMS'
 dashboard_dismiss_confirmation: 'Are you sure you want to dismiss? It may affect your ability to continue with the study'
 dashboard_subtitle: 'All your study tasks in one place. Manage your entire experience with ProofPilot here. '
+dismiss_all: dismiss_all   # FIXME
 do_it: 'DO IT'
 do_it_now: 'Do It Now'
 enter_mobile_phone: ' Enter your mobile phone number'
 enter_sms_code: 'Enter verification code you received on your phone'
 join_a_study: 'Join a study'
-label_phone_small: label_phone_small   # FIXME
-label_phone_wide: label_phone_wide   # FIXME
-label_sms_code: label_sms_code   # FIXME
+label_phone_small: label_phone_small
+label_phone_wide: label_phone_wide
+label_sms_code: label_sms_code
 no_code: 'No Code? Send Another'
 no_do_it: 'You have no study tasks right now'
 

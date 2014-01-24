@@ -1,15 +1,16 @@
-btn_confrimcoe_login: btn_confrimcoe_login   # FIXME
-btn_send_confirmation: btn_send_confirmation   # FIXME
+btn_confrimcoe_login: btn_confrimcoe_login
+btn_send_confirmation: btn_send_confirmation
 dashboard_dismiss_confirmation: '¿Está seguro que desea despedir? Esto puede afectar a su capacidad de continuar con el estudio'
 dashboard_subtitle: 'Todas las tareas de estudio en un solo lugar. Gestione toda su experiencia con ProofPilot aquí.'
+dismiss_all: dismiss_all   # FIXME
 do_it: HACERLO
 do_it_now: 'Hazlo Ahora'
 enter_mobile_phone: enter_mobile_phone
 enter_sms_code: enter_sms_code
 join_a_study: 'Únase a un estudio'
-label_phone_small: label_phone_small   # FIXME
-label_phone_wide: label_phone_wide   # FIXME
-label_sms_code: label_sms_code   # FIXME
+label_phone_small: label_phone_small
+label_phone_wide: label_phone_wide
+label_sms_code: label_sms_code
 no_code: no_code
 no_do_it: 'No tiene tareas de estudio en este momento'
 

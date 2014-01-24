@@ -61,7 +61,7 @@
             	e.preventDefault();
                 $('#mobile_phone_popup').dialog({
                     modal: true,
-                    width: '465',
+                    width: '700',
                     fluid: true,
                     resizable: false,
                     position: ['top',100],
@@ -83,7 +83,7 @@
                         	$('#mobile_phone_popup').dialog('close');
                             $('#mobile_phone_confirm_popup').dialog({
                                 modal: true,
-                                width: '465',
+                                width: '700',
                                 fluid: true,
                                 resizable: false,
                                 position: ['top',100],
@@ -403,8 +403,8 @@
                     {% endif %}
                     <div class="choices_box">
                         <h2>{% trans from "dashboard" %}do_it_now{% endtrans %}<span> ({{ interventioncount }})</span></h2>
-                        <a class="close_all dismiss" href="#" onClick = "return  dismissAll()"><span>Dismiss all</span></a>
                         {% if interventioncount > 0 %}
+                        <a class="close_all dismiss" href="#" onClick = "return  dismissAll()"><span>{% trans from "dashboard" %}dismiss_all{% endtrans %}Dismiss all</span></a>
                             {% for intervention in interventions %}
                                 <div class="featured_box">
                                     <a class="close dismiss" href="#" onClick = "return dismiss('{{ intervention.code}}')"></a>
