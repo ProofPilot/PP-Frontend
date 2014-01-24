@@ -59,9 +59,9 @@ class DashboardController extends Controller
         $participant = $this->get('security.context')->getToken()->getUser();
         $cc = $this->container->get('cyclogram.common');
         $locale = $this->getRequest()->getLocale();
+        $request = $this->getRequest();
         
-        
-        if (!is_null($sendMail)){
+        if (!is_null($sendMail) && $request->isXmlHttpRequest()){
             $cc = $this->get('cyclogram.common');
             $embedded = array();
             $embedded = $cc->getEmbeddedImages();
@@ -79,11 +79,12 @@ class DashboardController extends Controller
                     $embedded,
                     true,
                     $parameters);
+            return new Response(json_encode(array('error' => true,'message' => $this->get('translator')->trans("another_verification_sent", array(), "dashboard", $locale))));
         }
         
         $session = $this->getRequest()->getSession();
         
-        $request = $this->getRequest();
+        
         
         $this->get('study_logic')->interventionLogic($participant);
         $this->get('study_logic')->participantDefaultInterventionLogic($participant);

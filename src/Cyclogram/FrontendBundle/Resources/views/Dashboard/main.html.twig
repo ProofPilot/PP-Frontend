@@ -131,6 +131,18 @@
                     });
                 return false;
             });
+
+            $('#send_email_again').bind('click', function(e){
+                $.ajax({
+                    dataType: "json",
+                    type: "POST",
+                    url: "{{ path('_main', {'sendMail' : true})}}",
+                })
+                    .done (function(response) {
+                    	alert(response.message);
+                    });
+                return false;
+            });
             
             $('#about_me_form').submit(function(e){
             	$('.about_me_notice').remove();
@@ -390,7 +402,7 @@
                     <div id="dismiss_message"> </div>
                     
                     {% if confirm_email == false%}
-                        <p class="notice green"><span>{{ email_alert| raw }}</span> <a href="{{path('_main',{'sendMail' :  true})}}">{% trans from "dashboard" %}send_again{% endtrans %}</a></p>
+                        <p class="notice green"><span>{{ email_alert| raw }}</span> <a href="#" id="send_email_again">{% trans from "dashboard" %}send_again{% endtrans %}</a></p>
                         {% endif %}
                     {% if dismiss_message is defined %}
                         <p class="notice green"><span>{{ dismiss_message }}</span></p>

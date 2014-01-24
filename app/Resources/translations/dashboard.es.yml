@@ -1,8 +1,9 @@
+another_verification_sent: another_verification_sent   # FIXME
 btn_confrimcoe_login: btn_confrimcoe_login
 btn_send_confirmation: btn_send_confirmation
 dashboard_dismiss_confirmation: '¿Está seguro que desea despedir? Esto puede afectar a su capacidad de continuar con el estudio'
 dashboard_subtitle: 'Todas las tareas de estudio en un solo lugar. Gestione toda su experiencia con ProofPilot aquí.'
-dismiss_all: dismiss_all   # FIXME
+dismiss_all: dismiss_all
 do_it: HACERLO
 do_it_now: 'Hazlo Ahora'
 enter_mobile_phone: enter_mobile_phone

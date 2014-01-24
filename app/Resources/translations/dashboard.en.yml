@@ -1,8 +1,9 @@
+another_verification_sent: 'Another verification e-mail has been sent'
 btn_confrimcoe_login: Confirm
 btn_send_confirmation: 'Send confirmation SMS'
 dashboard_dismiss_confirmation: 'Are you sure you want to dismiss? It may affect your ability to continue with the study'
 dashboard_subtitle: 'All your study tasks in one place. Manage your entire experience with ProofPilot here. '
-dismiss_all: dismiss_all   # FIXME
+dismiss_all: dismiss_all
 do_it: 'DO IT'
 do_it_now: 'Do It Now'
 enter_mobile_phone: ' Enter your mobile phone number'

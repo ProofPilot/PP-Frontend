@@ -1,8 +1,9 @@
+another_verification_sent: another_verification_sent   # FIXME
 btn_confrimcoe_login: btn_confrimcoe_login
 btn_send_confirmation: btn_send_confirmation
 dashboard_dismiss_confirmation: 'Tem certeza de que quer demitir? Ela pode afetar sua capacidade de continuar com o estudo'
 dashboard_subtitle: 'Sua participação em um piscar de olhos. O que você precisa fazer agora e os próximos passos.'
-dismiss_all: dismiss_all   # FIXME
+dismiss_all: dismiss_all
 do_it: 'FACA ISSO'
 do_it_now: 'Faça-o agora'
 enter_mobile_phone: enter_mobile_phone
