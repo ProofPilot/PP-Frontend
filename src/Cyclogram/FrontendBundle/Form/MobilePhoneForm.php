@@ -88,7 +88,7 @@ class MobilePhoneForm extends AbstractType
                 ->setDefaults(
                         array('csrf_protection' => false,
                               'cascade_validation' => true,
-                              'translation_domain' => 'register',
+                              'translation_domain' => 'dashboard',
                               'constraints' => array(
                                         new Callback(array(
                                                 'methods' => array(

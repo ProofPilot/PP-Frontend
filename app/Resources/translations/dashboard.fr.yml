@@ -1,11 +1,16 @@
+btn_confrimcoe_login: btn_confrimcoe_login   # FIXME
+btn_send_confirmation: btn_send_confirmation   # FIXME
 dashboard_dismiss_confirmation: dashboard_dismiss_confirmation
 dashboard_subtitle: dashboard_subtitle
 do_it: FAIRE
 do_it_now: 'Faites-le maintenant'
-enter_mobile_phone: enter_mobile_phone   # FIXME
-enter_sms_code: enter_sms_code   # FIXME
+enter_mobile_phone: enter_mobile_phone
+enter_sms_code: enter_sms_code
 join_a_study: join_a_study
-no_code: no_code   # FIXME
+label_phone_small: label_phone_small   # FIXME
+label_phone_wide: label_phone_wide   # FIXME
+label_sms_code: label_sms_code   # FIXME
+no_code: no_code
 no_do_it: no_do_it
 
 past_activity:
@@ -15,14 +20,11 @@ past_activity:
     welcome_study: 'welcome_to_the_study_know@home:_putting_the_test_to_the_test'
 
 send_again: send_again
-sms_verification_message: sms_verification_message   # FIXME
+sms_verification_message: sms_verification_message
 txt_dashboard: 'Tableau de bord'
 txt_dismiss: txt_dismiss
 txt_dismiss_all: txt_dismiss_all
 txt_please_verify_email: txt_please_verify_email
-txt_popup_header: txt_popup_header   # FIXME
-txt_popup_link: txt_popup_link   # FIXME
-txt_popup_text: txt_popup_text   # FIXME
 
 what_next_list:
     collect_speciment: collect_specimen
@@ -31,4 +33,4 @@ what_next_list:
     other_info: some_other_info
     reade_instruction: read_instructions_to_perform_the_tests
 
-wrong_sms: wrong_sms   # FIXME
+wrong_sms: wrong_sms

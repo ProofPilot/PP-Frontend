@@ -72,7 +72,7 @@ class UserSmsCodeForm extends AbstractType
     {
         $resolver->setDefaults(array(
                 'csrf_protection' => false,
-                'translation_domain' => 'login'
+                'translation_domain' => 'dashboard'
         ));
     
     }
