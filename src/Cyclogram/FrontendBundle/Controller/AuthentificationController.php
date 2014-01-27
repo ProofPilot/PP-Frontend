@@ -43,6 +43,7 @@ use Symfony\Component\HttpKernel\EventListener\ResponseListener;
 
 use Symfony\Component\Config\Definition\Exception\DuplicateKeyException;
 
+use Symfony\Component\HttpFoundation\Session\Attribute\AttributeBag;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -164,19 +165,33 @@ class AuthentificationController extends Controller
                         'error'         => $error
                 ));
         }
+        if (isset($studyCode)&&isset($surveyId)) {
+            $bag = new AttributeBag();
+            $bag->setName("ProtectedSurvey");
+            $array = array();
+            $bag->initialize($array);
+            $bag->set('surveyId', $surveyId);
+            $bag->set('studyCode', $studyCode);
+            $session->registerBag($bag);
+            $session->set('ProtectedSurvey', $bag);
+        }
+            
         //render forms
         return $this->render('CyclogramFrontendBundle:Authentification:signup.html.twig', array(
                     'last_username' => $session->get(SecurityContext::LAST_USERNAME),
-                    'form' => $form->createView()
+                    'form' => $form->createView(),
+                    'studyCode' => $studyCode,
+                    'surveyId' => $surveyId
         ));
     }
     
     /**
-     * @Route("/login_check", name="login_check")
+     * @Route("/login_check", name="login_check", defaults={"studyCode"= null, "surveyId" = null})
      */
-    public function securityCheckAction()
+    public function securityCheckAction($studyCode=null, $surveyId=null)
     {
         // The security layer will intercept this request
+        $session = $request->getSession();
     }
     
     
@@ -195,6 +210,7 @@ class AuthentificationController extends Controller
     public function doLoginAction(Request $request, $studyCode, $surveyId){
         $language = $this->getRequest()->getLocale();
         $em = $this->getDoctrine()->getManager();
+        $session = $request->getSession();
         if ($request->isXmlHttpRequest()) {
             if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
                 return new Response(json_encode(array('error' => true)));
@@ -203,6 +219,23 @@ class AuthentificationController extends Controller
         }
         if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
             return $this->redirect($this->generateUrl("_signup", array('error' => true)));
+        }
+        if ($session->has('ProtectedSurvey')) {
+            $bag = $session->get('ProtectedSurvey');
+            $surveyId = $bag->get('surveyId');
+            $studyCode = $bag->get('studyCode');
+            $session->remove('ProtectedSurvey');
+            $participant = $this->get('security.context')->getToken()->getUser();
+            $enrolled = $em->getRepository('CyclogramProofPilotBundle:Participant')->isEnrolledInStudy($participant, $studyCode);
+            $closed = $em->getRepository('CyclogramProofPilotBundle:ParticipantSurveyLink')->checkIfSurveyClosed($participant, $surveyId);
+            if ($enrolled && !$closed) {
+                $redirectPath = $this->get('router')->generate('_main');
+                return $this->redirect($this->get('router')->generate('_survey_protected', array(
+                        'studyCode'=>$studyCode,
+                        'surveyId'=>$surveyId,
+                        'redirectUrl'=>urlencode($redirectPath
+                        ))));
+            }
         }
         return $this->redirect($this->generateUrl("_main"));
     }

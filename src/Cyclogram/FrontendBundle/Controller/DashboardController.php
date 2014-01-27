@@ -60,7 +60,7 @@ class DashboardController extends Controller
         $cc = $this->container->get('cyclogram.common');
         $locale = $this->getRequest()->getLocale();
         $request = $this->getRequest();
-        
+        $session = $this->getRequest()->getSession();
         if (!is_null($sendMail) && $request->isXmlHttpRequest()){
             $cc = $this->get('cyclogram.common');
             $embedded = array();
@@ -82,7 +82,7 @@ class DashboardController extends Controller
             return new Response(json_encode(array('error' => true,'message' => $this->get('translator')->trans("another_verification_sent", array(), "dashboard", $locale))));
         }
         
-        $session = $this->getRequest()->getSession();
+        
         
         
         
