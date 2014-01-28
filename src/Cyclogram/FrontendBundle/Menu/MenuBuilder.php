@@ -344,7 +344,7 @@ class MenuBuilder extends ContainerAware implements TranslationContainerInterfac
                         ->setAttribute('class', 'icon_contact_prefs')->setExtra('translation_domain', 'sidemenu');
         $menu->addChild('side_settings_menu.about_me',
                 array(
-                        'route' => '_about_me',
+                        'route' => '_about_me_new',
                         'routeParameters' => array(
                                 'studyCode' => $studyCode
                         )))

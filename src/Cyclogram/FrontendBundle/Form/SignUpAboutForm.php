@@ -170,6 +170,9 @@ class SignUpAboutForm extends AbstractType
 //                 'choice_empty_name' => 'race'
                 ));
 
+        $builder->add('interventionCode', 'hidden');
+        $builder->add('interventionType', 'hidden');
+        
         $builder->add('confirm', 'submit', array(
                 'label' => $this->container->get('translator')->trans('btn_confirm', array(), 'signup_about'),
                 

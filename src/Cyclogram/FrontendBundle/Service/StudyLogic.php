@@ -267,6 +267,11 @@ class StudyLogic
                 $data[] = $participant->getSex();
                 $data[] = $participant->getParticipantInterested();
                 $data[] = $participant->getRace();
+                $data[] = $participant->getGradeLevel();
+                $data[] = $participant->getIndustry();
+                $data[] = $participant->getIncome();
+                $data[] = $participant->getMaritalStatus();
+                $data[] = $participant->getChildren();
                 if (array_search("", $data) !== false)
                     return false;
                 break;

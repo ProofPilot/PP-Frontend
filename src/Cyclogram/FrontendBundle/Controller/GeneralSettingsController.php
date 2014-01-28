@@ -689,7 +689,7 @@ class GeneralSettingsController  extends Controller
             if (isset($data['signup_about']['zipcode']))
                 $participant->setParticipantZipcode($data['signup_about']['zipcode']);
         
-            if (!empty($data['signup_about']['yearsSelect']) || !empty($data['monthsSelect']) || !empty($data['daysSelect'])) {
+            if (!empty($data['signup_about']['yearsSelect']) && !empty($data['monthsSelect']) && !empty($data['daysSelect'])) {
                 $date = new \DateTime();
                 if($date = $date->setDate((int)$data['signup_about']['yearsSelect'], (int)$data['monthsSelect'], (int)$data['daysSelect']))
                     $participant->setParticipantBirthdate($date);
@@ -737,35 +737,15 @@ class GeneralSettingsController  extends Controller
             $em->flush();
         
             if ($request->isXmlHttpRequest()) {
-                if ($message == null) {
-                    $study = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
-                    if ($study->getStudySkipConsent()) {
-                        $participant = $this->get('security.context')->getToken()->getUser();
-                        if ($participant != 'anon.') {
-                            $redirectUrl = $this->generateUrl("_main");
-                        } else {
-                            $redirectUrl = $this->generateUrl("_signup");
-                        }
-                        return new Response(json_encode(array('error' => false, 'url' => $this->generateUrl("_eligibility_survey", array('studyCode' => $studyCode,'surveyId' => $surveyId, 'redirectUrl' => $redirectUrl)))));
-                    } else {
-                        return new Response(json_encode(array('error' => false)));
-                    }
-                } else {
+                if (!is_null($message))
                     return new Response(json_encode(array('error' => true, 'message' => 'Invalid : '.implode(',', $message) )));
-                }
+                $result = $this->get('study_logic')->potentialInterventionLogic($data['signup_about']['interventionCode'], $participant, $data['signup_about']['interventionType']);
+                if ($result)
+                    return new Response(json_encode(array('error' => false,'url' => $this->generateUrl("_main"))));
+                else
+                    return new Response(json_encode(array('error' => false, 'message' =>  $this->get('translator')->trans("to_complete_intervention", array(), "shipping_information", $locale))));
             }
-            if ($message == null) {
-                if (isset($studyCode)) {
-                    $study = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
-                    $studyContent =  $this->getDoctrine()->getRepository("CyclogramProofPilotBundle:StudyContent")->getStudyContent($study->getStudyCode(), $locale);
-                    if ($study->getStudySkipConsent())
-                        return $this->OauthRedirect($studyCode);
-                    else
-                        return $this->render('CyclogramFrontendBundle:Authentification:consent_main.html.twig', array('studyCode' => $studyCode, 'surveyId' => $studyContent->getStudyElegibilitySurvey(), 'studycontent' => $studyContent));
-                } else {
-                    return $this->OauthRedirect($studyCode);
-                }
-            } else {
+            if(!is_null($message))
                 return $this->render('CyclogramFrontendBundle:GeneralSettings:about_me_new.html.twig',
                         array (
                                 'formAbout' => $form->createView(),
@@ -774,7 +754,15 @@ class GeneralSettingsController  extends Controller
                                 'currencySymbol' => $country->getCurrency()->getCurrencySymbol(),
                                 'error' =>'Invalid : '.implode(',', $message)
                         ));
-            }
+            else 
+                return $this->render('CyclogramFrontendBundle:GeneralSettings:about_me_new.html.twig',
+                        array (
+                                'formAbout' => $form->createView(),
+                                'countryName' => $country->getCountryName(),
+                                'countryId' => $country->getCountryId(),
+                                'currencySymbol' => $country->getCurrency()->getCurrencySymbol(),
+                                'update' =>true
+                        ));
         }
         
         return $this->render('CyclogramFrontendBundle:GeneralSettings:about_me_new.html.twig',

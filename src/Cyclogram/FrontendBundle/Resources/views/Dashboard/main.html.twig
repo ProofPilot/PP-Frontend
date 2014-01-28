@@ -144,36 +144,24 @@
                 return false;
             });
             
-            $('#about_me_form').submit(function(e){
+            $('#signup_about_form').submit(function(e){
             	$('.about_me_notice').remove();
             	$('.error_msg').remove();
                 $(this).ajaxSubmit({
                     dataType: "json",
                     success: function(json) {
                         if(json.error) {
-                            var messages = json.messages;
-                            for (var i = 0; i < messages .length; i++){
-                            	$('#about_me_'+messages[i].property).parent('span').after('<p class="error_msg">'+messages[i].message+'</p>');
-                            }
+                        	$('#signup_about_form_error').html('<p class="error">'+json.message+'</p>');
                         } else {
-                            if (json.completed) {
-                                if (json.url) {
-                            	    $('#about_me_popup').dialog('close');
-                            	    window.location.replace(json.url);
-                                } else {
-                                	alert(json.message);
-                            		$('#about_me_popup').dialog('close');
-                                }
+                            if (json.url) {
+                                $('#about_me_popup').dialog('close');
+                            	window.location.replace(json.url);
                             } else {
-                                $('.form_expanded').hide();
-                                $('.middle_input').show();
-                                $('#about_me_'+json.name).val(json.data);
-                                $('#current_text_'+json.name).html(json.data);
-                                $('.edit_btn').show();
-                                $('#about_me_div').prepend('<p class="notice green nomargin margin_top about_me_notice"><span>'+json.message+'</span></p>'); 
+                                alert(json.message);
+                            	$('#about_me_popup').dialog('close');
                             }
                         }
-                    }
+                }
                 });
                 return false;
             });
@@ -397,10 +385,6 @@
                     <p>{% trans from "dashboard" %}dashboard_subtitle{% endtrans %}</p>
                 </div>
                 <div class="dashboard_panel">
-{#                                                          <div class="button_box"> <a href="#" id="about_me"><span>{% trans from "dashboard" %}do_it{% endtrans %}</span></a> </div>#}
-{#                                          <div id="about_me_popup"style="dispaly:none">#}
-{#                                              {% include 'CyclogramFrontendBundle:GeneralSettings:about_me_form.html.twig' %}#}
-{#                                          </div>#}
                     <div id="dismiss_message"> </div>
                     
                     {% if confirm_email == false%}
@@ -418,7 +402,7 @@
                     <div class="choices_box">
                         <h2>{% trans from "dashboard" %}do_it_now{% endtrans %}<span> ({{ interventioncount }})</span></h2>
                         {% if interventioncount > 0 %}
-                        <a class="close_all dismiss" href="#" onClick = "return  dismissAll()"><span>{% trans from "dashboard" %}dismiss_all{% endtrans %}Dismiss all</span></a>
+                        <a class="close_all dismiss" href="#" onClick = "return  dismissAll()"><span>{% trans from "dashboard" %}dismiss_all{% endtrans %}</span></a>
                             {% for intervention in interventions %}
                                 <div class="featured_box">
                                     <a class="close dismiss" href="#" onClick = "return dismiss('{{ intervention.code}}')"></a>
