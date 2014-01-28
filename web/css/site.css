@@ -1472,7 +1472,7 @@ dashboard_panel .prefs_wrapper .form_container .form_header ul li.select_all a:h
 .panel .panel_right .dashboard_panel .choices_box .featured_box  .text_box {
 	float: left;
 	width: 360px;
-	width: 330px;
+	width: 275px;
 	padding-right: 30px;
 	margin-top: 40px;
 }
@@ -3898,10 +3898,10 @@ footer .row_2 p {
 /*Social icons*/
 .social_icons_block {
 	float: right;
-	margin-right: 30px;
+	margin-right: 10px;
 	margin-top: 50px;
 }
-.twitter_icon, .facebook_icon {
+.twitter_icon, .facebook_icon, .linkedin_icon, .pinterest_icon {
 	width: 25px;
 	height: 25px;
 	display: inline-block;
@@ -3913,6 +3913,12 @@ footer .row_2 p {
 .facebook_icon {
 	background: url(../images/facebook_social_icon.png) no-repeat;
 }
+.linkedin_icon {
+	background: url(../images/linkedin_social_icon.png) no-repeat;
+}
+.pinterest_icon {
+	background: url(../images/pinterest_social_icon.png) no-repeat;
+}
 .google_plus_icon {
 	background: url("../images/icon_share_email.png") no-repeat scroll 0 50% rgba(0, 0, 0, 0);
 	background-size: 20px 14px;
@@ -3920,7 +3926,7 @@ footer .row_2 p {
 /*Referral social*/
 .referal_social {
 	float: right;
-	margin-right: 30px;
+	margin-right: 10px;
 	margin-top: 50px;
 }
 .referal_social .tw, .referal_social .fb, .email {
