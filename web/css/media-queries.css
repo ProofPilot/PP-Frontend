@@ -422,7 +422,9 @@
 		-moz-box-sizing:border-box;
 		-webkit-box-sizing:border-box; 	
 	}
-	
+	.intro_page .text_wrapper .home_text .v_toolbar .social_share li a {
+		margin-right: 25px;
+	}
 }
 
 /* @media screen and (max-width: 980px) */ 
@@ -455,7 +457,6 @@
 	.intro_page .text_wrapper .video_wrapper .video_text ul.participants_num {
     	margin-bottom: 15px;
 	}
-
 }
 
 /* @media screen and (max-width: 960px) */ 
@@ -607,6 +608,9 @@
 	}
 	.intro_page .text_wrapper .home_text .v_toolbar .social_share li a {
     	margin-right: 28px;
+	}
+	.intro_page .text_wrapper .home_text .v_toolbar .social_share li a {
+		margin-right: 8px;
 	}
 
 }

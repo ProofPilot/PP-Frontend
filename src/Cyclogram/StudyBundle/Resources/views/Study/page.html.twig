@@ -7,7 +7,7 @@
     {% include '::google_analytics.html.twig' %}
     <script src="{{ asset('/js/jquery.form.js') }}"></script>
     <script src="https://platform.twitter.com/widgets.js"></script>
-    <script type="text/javascript" async src="//assets.pinterest.com/js/pinit.js"></script>
+    {#<script type="text/javascript" async src="//assets.pinterest.com/js/pinit.js"></script>#}
     <script>
         $(document).ready(function(){
 
@@ -421,7 +421,7 @@
                 {% if studyAllowSharing %}
                     <ul class="social_share">
                         <li><span>Share:</span></li>
-                        <li><a href='' class="fb" onClick="return postFeed('{{ reffferalFacebookStudyUrl }}','{{ studycontent.studyName }}','{{ facebookcontent }}','{{ graphic }}')"> {% trans from "study" %}txt_share{% endtrans %}</a></li>
+                        <li><a href='' class="fb" onClick="return postFeed('{{ reffferalFacebookStudyUrl }}','{{ studycontent.studyName }}','{{ facebookcontent }}','{{ graphic }}')"></a></li>
                         {% if reffferalShortStudyUrl is defined %}
                         <li><a href="#" onclick="popUp=window.open('https://twitter.com/share?url={{ reffferalShortStudyUrl }}&text={%  trans from "study" %}social_join_study{% endtrans %} {{ studycontent.studyName }} {%  trans from "study" %}social_at_proofpilot{% endtrans %}', 'popupwindow', 'scrollbars=yes,width=800,height=400');popUp.focus();return false" class="tw"></a></li>
                         {% else %}
@@ -485,18 +485,18 @@
                     <div class="v_toolbar">
                     {% if studyAllowSharing %}
                         <ul class="social_share">
-                        <li><a href='' class="fb" onClick="return postFeed('{{ reffferalFacebookStudyUrl }}','{{ studycontent.studyName }}','{{ facebookcontent }}','{{ graphic }}')"> {% trans from "study" %}txt_share{% endtrans %}</a></li>
+                            <li><a href='' class="fb" onClick="return postFeed('{{ reffferalFacebookStudyUrl }}','{{ studycontent.studyName }}','{{ facebookcontent }}','{{ graphic }}')"> {% trans from "study" %}txt_share{% endtrans %}</a></li>
                         {% if reffferalShortStudyUrl is defined %}
                             <li><a href="#" onclick="popUp=window.open('https://twitter.com/share?url={{ reffferalShortStudyUrl }}&text={%  trans from "study" %}social_join_study{% endtrans %} {{ studycontent.studyName }} {%  trans from "study" %}social_at_proofpilot{% endtrans %}', 'popupwindow', 'scrollbars=yes,width=800,height=400');popUp.focus();return false" class="tw">{% trans from "study" %}txt_tweet{% endtrans %}</a></li>
-                            <li><a href="#" onclick="popUp=window.open('http://www.linkedin.com/shareArticle?mini=true&amp;url={{ reffferalFacebookStudyUrl }}&amp;title={{ studycontent.studyName }}&amp;summary={{ facebookcontent |raw }}', 'popupwindow', 'scrollbars=yes,width=600,height=450');popUp.focus();return false" >{% trans from "study" %}txt_share{% endtrans %}</a></li>
+                            <li><a class="ln" href="#" onclick="popUp=window.open('http://www.linkedin.com/shareArticle?mini=true&amp;url={{ reffferalFacebookStudyUrl }}&amp;title={{ studycontent.studyName }}&amp;summary={{ facebookcontent |raw }}', 'popupwindow', 'scrollbars=yes,width=600,height=450');popUp.focus();return false" >{% trans from "study" %}txt_share{% endtrans %}</a></li>
                         {% else %}
                             <li><a href="#" onclick="popUp=window.open('https://twitter.com/share?url={{ shortstudyUrl }}&text={%  trans from "study" %}social_join_study{% endtrans %} {{ studycontent.studyName }} {%  trans from "study" %}social_at_proofpilot{% endtrans %}', 'popupwindow', 'scrollbars=yes,width=800,height=400');popUp.focus();return false" class="tw">{% trans from "study" %}txt_tweet{% endtrans %}</a></li>
-                            <li><a href="#" onclick="popUp=window.open('http://www.linkedin.com/shareArticle?mini=true&amp;url={{ shortstudyUrl }}&amp;title={{ studycontent.studyName }}&amp;summary={{ facebookcontent |raw }}', 'popupwindow', 'scrollbars=yes,width=600,height=450');popUp.focus();return false" >{% trans from "study" %}txt_share{% endtrans %}</a></li>
+                            <li><a class="ln" href="#" onclick="popUp=window.open('http://www.linkedin.com/shareArticle?mini=true&amp;url={{ shortstudyUrl }}&amp;title={{ studycontent.studyName }}&amp;summary={{ facebookcontent |raw }}', 'popupwindow', 'scrollbars=yes,width=600,height=450');popUp.focus();return false" >{% trans from "study" %}txt_share{% endtrans %}</a></li>
                         {% endif %}
-                            <li><a href="//www.pinterest.com/pin/create/button/?url={{ reffferalFacebookStudyUrl }}&media={{ graphic }}&description={{ facebookcontent |raw }}" data-pin-do="buttonPin" data-pin-shape="round"><img src="//assets.pinterest.com/images/pidgets/pinit_fg_en_round_red_16.png" />{% trans from "study" %}txt_pin{% endtrans %}</a></li>
+                            <li><a class="pn" href="#" onclick="popUp=window.open('//www.pinterest.com/pin/create/button/?url={{ reffferalFacebookStudyUrl }}&media={{ graphic }}&description={{ facebookcontent |raw }}', 'popupwindow', 'scrollbars=yes,width=600,height=450');popUp.focus();return false">{% trans from "study" %}txt_pin{% endtrans %}</a></li>
                             <li><a class="email" href="#">{% trans from "study" %}txt_email_to_friend{% endtrans %}</a></li>
                         </ul>
-                        {% endif %}
+                    {% endif %}
                     </div>
                     {{ studycontent.studyAbout |raw }}
                     {{ studycontent.studyWhatsInvolved | raw }}

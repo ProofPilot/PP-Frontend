@@ -3219,6 +3219,14 @@ footer a.icon_update span {
     background: url("../images/icon_share_fb.png") no-repeat scroll 0 50% / 15px 24px rgba(0, 0, 0, 0);
     padding-left: 24px;
 }
+.intro_page .text_wrapper .home_text .v_toolbar .social_share li a.ln {
+	background: url("../images/icon_share_ln.png") no-repeat scroll 0 50% / 24px 24px rgba(0, 0, 0, 0);
+    padding-left: 32px;
+}
+.intro_page .text_wrapper .home_text .v_toolbar .social_share li a.pn {
+	background: url("../images/icon_share_pn.png") no-repeat scroll 0 50% / 24px 24px rgba(0, 0, 0, 0);
+    padding-left: 32px;
+}
 .intro_page .text_wrapper .home_text .v_toolbar .social_share li a.tw {
     background: url("../images/icon_share_tw.png") no-repeat scroll 0 50% / 23px 18px rgba(0, 0, 0, 0);
     padding-left: 30px;
