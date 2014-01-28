@@ -84,6 +84,7 @@
         });
         if ({{ (expanded and multiple)|default(0)}} ) {
             $("#close_choice_{{ name }}").bind('click', function(e) {
+            	e.preventDefault();
                 e.stopPropagation();
                 var checked;
                 $("#multiple_choice_{{ name }} div.checker span").each(function(){
@@ -98,6 +99,7 @@
         } else {
             $("#single_choice_{{ name }} a[class='selected_choice']").bind('click', function(e) {
                 e.stopPropagation();
+                e.preventDefault();
                 $("#open_choice_{{ name }} span[class='text']").html($(this).html());
                 $("#single_choice_{{ name }}").hide();
                 $("#single_hidden_{{ name }}").val($(this).attr('name'));
