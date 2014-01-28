@@ -261,7 +261,7 @@
 	.panel .panel_left .menu_cont ul.left_menu li {
 	   background: url("../images/bg_left_menu.png") repeat-y scroll 100% 0 transparent;	
 	} 
-	.panel .panel_left .menu_cont ul.left_menu li a  {
+	.panel .panel_left .menu_cont ul.left_menu li > a  {
 		width: 100% !important;
 		-webkit-box-sizing:border-box;
 		   -moz-box-sizing:border-box;
