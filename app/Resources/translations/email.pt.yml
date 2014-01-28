@@ -1,42 +1,42 @@
-_email_to_friends_join: _email_to_friends_join   # FIXME
+_email_to_friends_join: Juntar
 bottom_no_reply: 'Por favor, não responda a este e-mail como a caixa de entrada não é monitorada'
-bottom_text: bottom_text
-confirm_join_study: confirm_join_study
+bottom_text: 'Esta mensagem foi enviada para <span style="color:  #BBC2CB;">% mail_to% </ span> <br /> Se você quiser atualizar o seu endereço de e-mail, por favor, <a href = "% general_settings_link%" style = "color: # BBC2CB; text-decoration: none;"> clique aqui </ a> <br /> Visite Preferências de Contato para gerir o seu e-mail e alertas móveis <br /> Por favor, adicione <span style = "color : #. BBC2CB; "> crew@proofpilot.com </ span> para o seu livro de endereços para garantir a entrega de nossos e-mails para sua caixa de entrada <br /> Nota: Nós nunca partilhar o seu ProofPilot.com senhas com qualquer pessoa via e-mail, inclusive nós.'
+confirm_join_study: 'Junte-se um estudo'
 confirm_verify_text: 'Sim, é parte de qualquer registro do site e ProofPilot não é diferente. Por favor, clique no link abaixo para verificar o seu endereço de e-mail e ir andando'
 confirm_verify_title: 'Por favor, verifique seu e-mail'
-do_it: do_it
+do_it: 'FAÇA AGORA'
 do_it_task_email_title: 'O que você tem a fazer no ProofPilot'
-doit_email_what_you_got: doit_email_what_you_got
-email_login: email_login
-email_not_send_try_later: email_not_send_try_later
+doit_email_what_you_got: 'Aqui está o que você tem que fazer no ProofPilot'
+email_login: 'Entre para ProofPilot'
+email_not_send_try_later: 'E-mail não enviado tente mais tarde'
 email_reset_password: 'Redefinir sua senha'
-email_title_notice: 'Título do aviso Email'
+email_title_notice: 'Título do aviso E-mail'
 email_title_verify: 'Por favor, verifique seu e-mail'
-email_to_friends_add_email: email_to_friends_add_email
-email_to_friends_cancle: email_to_friends_cancle
-email_to_friends_message: email_to_friends_message
-email_to_friends_send_button: email_to_friends_send_button
-email_to_friends_subject: email_to_friends_subject
-email_to_friends_title: email_to_friends_title
-email_to_friends_who_are_you_sending: email_to_friends_who_are_you_sending
-email_to_friends_who_sending: email_to_friends_who_sending
-forgot_username: forgot_username
-forgot_username_text: forgot_username_text
-forgot_username_title: forgot_username_title
-insert_receiver_email: insert_receiver_email
-insert_sender_email: insert_sender_email
-join: join
-link_below_to_confirm: link_below_to_confirm
-message_from: message_from
-notice_verification: 'Verificação Notificação'
-notice_verification_text: 'Ei, isso é ProofPilot. Notamos que você ainda não confirmou seu endereço de e-mail.'
+email_to_friends_add_email: 'Adicionar outro e-mail'
+email_to_friends_cancle: Cancelar
+email_to_friends_message: Mensagem
+email_to_friends_send_button: 'Enviar e-mail'
+email_to_friends_subject: Assunto
+email_to_friends_title: 'Enviar e-mail a um amigo'
+email_to_friends_who_are_you_sending: 'Com quem você está enviando para?'
+email_to_friends_who_sending: 'Quem está enviando?'
+forgot_username: 'Esqueceu nome de usuário'
+forgot_username_text: 'Esqueceu nome de usuário'
+forgot_username_title: 'Esqueceu nome de usuário'
+insert_receiver_email: 'Insira pelo menos um e-mail receptor'
+insert_sender_email: 'Inserir e-mail do remetente'
+join: CADASTRE-ESTUDO
+link_below_to_confirm: 'Se por algum motivo, você não pode clicar no botão, usar o link abaixo para confirmar o registo'
+message_from: 'Mensagem do'
+notice_verification: 'Verificando o seu e-mail começa sua jornada como um participante em estudos de investigação.'
+notice_verification_text: "Ei, isso é ProofPilot. Notamos que você ainda não confirmou seu endereço de e-mail. Por confirmar seu endereço de e-mail? Alguns estudos necessitam dele para a participação. Outros exigem que, a fim de obter incentivos valiosos. \n<p> \nComece sua viagem com ProofPilot verificando seu endereço de e-mail hoje."
 reset_pass_link: 'Clique aqui para redefinir sua senha'
 reset_pass_text: 'Sim, isso acontece com todos nós: você não lembra da sua senha. Isso é OK. Clique neste link para redefinir sua senha'
 reset_pass_title: 'Redefinir sua senha'
-send_verification_email: 'Enviar e-mail de verificação'
-sent_email_to_friends: sent_email_to_friends
-study_welcome_excited: study_welcome_excited
-study_welcome_hold_on: study_welcome_hold_on
-study_welcome_joint_other_studies: study_welcome_joint_other_studies
-study_welcome_welcome_to: study_welcome_welcome_to
-welcome_to_study: welcome_to_study
+send_verification_email: Faça-o
+sent_email_to_friends: 'Obrigado por convidar um amigo para este estudo ..'
+study_welcome_excited: 'Estamos realmente animados em tê-lo a bordo. Aqui está o que esperar em sua viagem com'
+study_welcome_hold_on: 'Hold On! Aqui é o seu primeiro Estudo Task'
+study_welcome_joint_other_studies: 'Junte-se outros estudos em ProofPilot'
+study_welcome_welcome_to: 'Bem-vindo ao'
+welcome_to_study: 'Bem-vindo ao'
