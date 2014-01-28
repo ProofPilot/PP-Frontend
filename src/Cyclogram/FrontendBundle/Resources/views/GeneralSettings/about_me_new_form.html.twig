@@ -1,115 +1,114 @@
 {% form_theme formAbout 'CyclogramFrontendBundle:Form:frontend_widgets.html.twig' %}
-<div class="mobile_reg">
-    <a class="close" href="#"></a>
-    <p class="exlp">{% trans from "signup_about" %}head_tailot_expirience{% endtrans %}</p>
-    <h1>{% trans from "signup_about" %}head_tell_a_bit{% endtrans %}</h1>
-    <div class="form_wrapper">
-        {% if studyCode and surveyId is defined  %}
+<div id="div_register_step2">
+    <div class="mobile_reg">
+        <a class="close" href="#"></a>
+        <p class="exlp">{% trans from "signup_about" %}head_tailot_expirience{% endtrans %}</p>
+        <h1>{% trans from "signup_about" %}head_tell_a_bit{% endtrans %}</h1>
+        <div class="form_wrapper">
+            {% if studyCode and surveyId is defined  %}
             <form  action="{{ path('_signup_about', {'studyCode' : studyCode, 'surveyId' : surveyId }) }}" method="post" name="signup_about" id="signup_about_form" novalidate> 
-        {% elseif  studyCode is defined %}
+            {% elseif  studyCode is defined %}
             <form  action="{{ path('_signup_about', {'studyCode' : studyCode }) }}" method="post" name="signup_about" id="signup_about_form" novalidate> 
-        {% else %}
+            {% else %}
             <form  action="{{ path('_signup_about') }}" method="post" name="signup_about" id="signup_about_form" novalidate>
-        {% endif %}   
-            <div class="form_content">
-                <span class="text_wrapper">{% trans from "signup_about" %}text_i_am_a{% endtrans %}</span> 
-                {{ form_widget(formAbout.sexSelect) }}
-                <span class="text_wrapper">{% trans from "signup_about" %}text_of{% endtrans %}</span>
+            {% endif %}   
+                <div class="form_content">
+                    <span class="text_wrapper">{% trans from "signup_about" %}text_i_am_a{% endtrans %}</span> 
+                    {{ form_widget(formAbout.sexSelect) }}
+                    <span class="text_wrapper">{% trans from "signup_about" %}text_of{% endtrans %}</span>
                     {{ form_widget(formAbout.raceSelect) }}
-                <span class="text_wrapper">{% trans from "signup_about" %}text_who_lives_in{% endtrans %}</span> 
+                    <span class="text_wrapper">{% trans from "signup_about" %}text_who_lives_in{% endtrans %}</span> 
                     {{ form_widget(formAbout.countrySelect) }}
-                {{ form_widget(formAbout.zipcode,{'attr': {'placeholder' : 'postcode_text'|trans({}, 'signup_about')}}) }} .
-                <span class="text_wrapper">{% trans from "signup_about" %}text_i_was_born_on_the{% endtrans %}</span>     
-                     {{ form_widget(formAbout.daysSelect) }}
-                <span class="text_wrapper">{% trans from "signup_about" %}text_of{% endtrans %}</span>
+                    {{ form_widget(formAbout.zipcode,{'attr': {'placeholder' : 'postcode_text'|trans({}, 'signup_about')}}) }} .
+                    <span class="text_wrapper">{% trans from "signup_about" %}text_i_was_born_on_the{% endtrans %}</span>     
+                    {{ form_widget(formAbout.daysSelect) }}
+                    <span class="text_wrapper">{% trans from "signup_about" %}text_of{% endtrans %}</span>
                     {{ form_widget(formAbout.monthsSelect) }}
                     {{ form_widget(formAbout.yearsSelect,{'attr': {'placeholder' : 'YYYY'}}) }}
-                <span class="text_wrapper">.</span>
-                <span class="text_wrapper">{% trans from "signup_about" %}text_i_finished{% endtrans %}</span>
-                {{ form_widget(formAbout.gradeSelect) }}
-                <span class="text_wrapper">,</span>
-                <span class="text_wrapper">{% trans from "signup_about" %}text_work_in{% endtrans %}</span>
-                {{ form_widget(formAbout.industrySelect) }}
-                <span class="text_wrapper">{% trans from "signup_about" %}text_and_make_approximately{% endtrans %} </span>
-                <div class="cusotm_input">
-                    <span class="text_wrapper" id="currency_symbol"></span>
-                    {{ form_widget(formAbout.anunalIncome,{'attr': {'placeholder' : 'annual_income_text'|trans({}, 'signup_about')}}) }}
-                </div>
-                <span class="text_wrapper">{% trans from "signup_about" %}text_per_year{% endtrans %}.</span>
-                <span class="text_wrapper">{% trans from "signup_about" %}text_i_am{% endtrans %}</span>
-                {{ form_widget(formAbout.maritalStatusSelect) }}
-                <span class="text_wrapper">,</span>
-                <span class="text_wrapper">{% trans from "signup_about" %}text_interested_in{% endtrans %}</span> 
-                {{ form_widget(formAbout.interestedSelect) }}
-                <span class="text_wrapper">{% trans from "signup_about" %}text_and{% endtrans %}</span>
-                {{ form_widget(formAbout.childrenSelect) }}
-                <span class="text_wrapper last">{% trans from "signup_about" %}text_have_children{% endtrans %}.</span>
-                <div class="dropmenu for_single dropmenu-interested" data-update-text=".dropmenu-interedsted">
-                    {{ form_widget(formAbout.interestedSelect) }}
-                </div>
-                            <div id="signup_about_form_error"> {% if error is defined  %}<p class="error">{{ error }} </p>{% endif %}</div>
+                    <span class="text_wrapper">.</span>
+                    <span class="text_wrapper">{% trans from "signup_about" %}text_i_finished{% endtrans %}</span>
+                    {{ form_widget(formAbout.gradeSelect) }}
+                    <span class="text_wrapper">,</span>
+                    <span class="text_wrapper">{% trans from "signup_about" %}text_work_in{% endtrans %}</span>
+                    {{ form_widget(formAbout.industrySelect) }}
+                    <span class="text_wrapper">{% trans from "signup_about" %}text_and_make_approximately{% endtrans %} </span>
+                    <div class="cusotm_input">
+                        <span class="text_wrapper" id="currency_symbol"></span>
+                        {{ form_widget(formAbout.anunalIncome,{'attr': {'placeholder' : 'annual_income_text'|trans({}, 'signup_about')}}) }}
                     </div>
-                    
-                    <p class="note">{% trans from "signup_about" %}text_any_information{% endtrans %} <a href="#">{% trans from "signup_about" %}secutiry_and_privacy{% endtrans %}</a></p>
-                    	
-    	           <div class="align_center">
-                        {{form_widget(formAbout.confirm, {'attr':{'class':'submit with_min_width btn_login'}}) }}
-                   </div>
-                    </form>
-                
-    			</div>
-    			<script src="{{ asset('js/jquery.uniform.min.js') }}"></script>
-    			<script src= {{ asset ('js/jquery.numeric.js') }}></script>
-    			  <script type="text/javascript">
-    			    $(document).ready(function(){
-    		            $('#single_choice_countrySelect a').bind('click', function(e){
-    		                $.ajax({
-    		                    dataType: "json",
-    		                    type: "POST",
-    		                    url: "{{ path('searchCurrencyWithAjax')}}",
-    		                    data: {country : $(this).html()}
-    		                })
-    		                    .done (function(response) {
-    		                        if(response.success) {
-    		                        	$('#currency_symbol').html(response.currencySymbol);
-    		                        }
-    		                    });
-    		                });
-    	                if ({{ countryName and countryId}}) {
-    	                    $('#open_choice_countrySelect span').html('{{ countryName }}');
-    	                    $('#single_hidden_countrySelect').val({{ countryId }});
-    	                    }
-	                    if ({{ currencySymbol is defined }}) {
-	                    	$('#currency_symbol').html('{{ currencySymbol }}');
-		                    }
-    			    	$("input[type=checkbox]").uniform();
-    		            $("#signup_about_confirm").on('click', function(e) {
-        		            var status = true
-    		            	$('#error').remove(); 
-    		            	var inputVal = $('#signup_about_zipcode').val();
-    		                var zipReg = /^[0-9]\d{4}-\d{4}|[0-9]{5}$/;
-    		                if ($('#signup_about_zipcode').val() !== "") {
-        		                if(!zipReg.test(inputVal)) {
-        		                    $('#signup_about_zipcode').after('<p class="error" id="error">{% trans from "register" %}txt_check_zipcode{% endtrans %}</p>');
-        		                    status = false
-        		                    }
-        		                }
-    		                if ($('#signup_about_yearsSelect').val() !== "") {
-        		                var year = $('#signup_about_yearsSelect').val();
-    		                    if (year < 1910) {
-    		                    	$('#signup_about_yearsSelect').after('<p class="error" id="error">{% trans from "register" %}txt_year_to_old{% endtrans %}</p>');
-    		                    	status = false
-        		                    }
-    		                    if (year > 1999) {
-    		                    	$('#signup_about_yearsSelect').after('<p class="error" id="error">{% trans from "register" %}txt_year_to_young{% endtrans %}</p>');
-    		                    	status = false
-        		                    }
-    		                } 
-    		                return status;
-        		        });
-    		            $("#signup_about_anunalIncome").numeric();
-    		            $("#signup_about_yearsSelect").numeric();
-    			        });
-    			    
-                  </script>
+                    <span class="text_wrapper">{% trans from "signup_about" %}text_per_year{% endtrans %}.</span>
+                    <span class="text_wrapper">{% trans from "signup_about" %}text_i_am{% endtrans %}</span>
+                    {{ form_widget(formAbout.maritalStatusSelect) }}
+                    <span class="text_wrapper">,</span>
+                    <span class="text_wrapper">{% trans from "signup_about" %}text_interested_in{% endtrans %}</span> 
+                    {{ form_widget(formAbout.interestedSelect) }}
+                    <span class="text_wrapper">{% trans from "signup_about" %}text_and{% endtrans %}</span>
+                    {{ form_widget(formAbout.childrenSelect) }}
+                    <span class="text_wrapper last">{% trans from "signup_about" %}text_have_children{% endtrans %}.</span>
+                    <div class="dropmenu for_single dropmenu-interested" data-update-text=".dropmenu-interedsted">
+                        {{ form_widget(formAbout.interestedSelect) }}
+                    </div>
+                    <div id="signup_about_form_error"> {% if error is defined  %}<p class="error">{{ error }} </p>{% endif %}</div>
+                </div>
+                <p class="note">{% trans from "signup_about" %}text_any_information{% endtrans %} <a href="#">{% trans from "signup_about" %}secutiry_and_privacy{% endtrans %}</a></p>
+                <div class="align_center">
+                    {{form_widget(formAbout.confirm, {'attr':{'class':'submit with_min_width btn_login'}}) }}
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="{{ asset('js/jquery.uniform.min.js') }}"></script>
+<script src= {{ asset ('js/jquery.numeric.js') }}></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#single_choice_countrySelect a').bind('click', function(e){
+            $.ajax({
+                dataType: "json",
+                type: "POST",
+                url: "{{ path('searchCurrencyWithAjax')}}",
+                data: {country : $(this).html()}
+            })
+            .done (function(response) {
+                if(response.success) {
+                    $('#currency_symbol').html(response.currencySymbol);
+                }
+            });
+        });
+        if ({{ countryName and countryId}}) {
+            $('#open_choice_countrySelect span').html('{{ countryName }}');
+            $('#single_hidden_countrySelect').val({{ countryId }});
+        }
+        if ({{ currencySymbol is defined }}) {
+            $('#currency_symbol').html('{{ currencySymbol }}');
+        }
+        $("input[type=checkbox]").uniform();
+        $("#signup_about_confirm").on('click', function(e) {
+            var status = true
+            $('#error').remove(); 
+            var inputVal = $('#signup_about_zipcode').val();
+            var zipReg = /^[0-9]\d{4}-\d{4}|[0-9]{5}$/;
+            if ($('#signup_about_zipcode').val() !== "") {
+                if(!zipReg.test(inputVal)) {
+                    $('#signup_about_zipcode').after('<p class="error" id="error">{% trans from "register" %}txt_check_zipcode{% endtrans %}</p>');
+                    status = false
+                }
+            }
+            if ($('#signup_about_yearsSelect').val() !== "") {
+                var year = $('#signup_about_yearsSelect').val();
+                if (year < 1910) {
+                    $('#signup_about_yearsSelect').after('<p class="error" id="error">{% trans from "register" %}txt_year_to_old{% endtrans %}</p>');
+                    status = false
+                }
+                if (year > 1999) {
+                    $('#signup_about_yearsSelect').after('<p class="error" id="error">{% trans from "register" %}txt_year_to_young{% endtrans %}</p>');
+                    status = false
+                }
+            } 
+            return status;
+        });
+        $("#signup_about_anunalIncome").numeric();
+        $("#signup_about_yearsSelect").numeric();
+    });
+</script>
 
