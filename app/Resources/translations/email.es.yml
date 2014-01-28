@@ -1,42 +1,42 @@
-_email_to_friends_join: _email_to_friends_join   # FIXME
-bottom_no_reply: bottom_no_reply
-bottom_text: bottom_text
-confirm_join_study: confirm_join_study
-confirm_verify_text: confirm_verify_text
-confirm_verify_title: confirm_verify_title
-do_it: do_it
-do_it_task_email_title: do_it_task_email_title
-doit_email_what_you_got: doit_email_what_you_got
-email_login: email_login
-email_not_send_try_later: email_not_send_try_later
-email_reset_password: email_reset_password
-email_title_notice: email_title_notice
-email_title_verify: email_title_verify
-email_to_friends_add_email: email_to_friends_add_email
-email_to_friends_cancle: email_to_friends_cancle
-email_to_friends_message: email_to_friends_message
-email_to_friends_send_button: email_to_friends_send_button
-email_to_friends_subject: email_to_friends_subject
-email_to_friends_title: email_to_friends_title
-email_to_friends_who_are_you_sending: email_to_friends_who_are_you_sending
-email_to_friends_who_sending: email_to_friends_who_sending
-forgot_username: forgot_username
-forgot_username_text: forgot_username_text
-forgot_username_title: forgot_username_title
-insert_receiver_email: insert_receiver_email
-insert_sender_email: insert_sender_email
-join: join
-link_below_to_confirm: link_below_to_confirm
-message_from: message_from
-notice_verification: notice_verification
-notice_verification_text: notice_verification_text
-reset_pass_link: reset_pass_link
-reset_pass_text: reset_pass_text
-reset_pass_title: reset_pass_title
-send_verification_email: send_verification_email
-sent_email_to_friends: sent_email_to_friends
-study_welcome_excited: study_welcome_excited
-study_welcome_hold_on: study_welcome_hold_on
-study_welcome_joint_other_studies: study_welcome_joint_other_studies
-study_welcome_welcome_to: study_welcome_welcome_to
-welcome_to_study: welcome_to_study
+_email_to_friends_join: Unirse
+bottom_no_reply: 'Por favor, no responda a este correo electrónico como la bandeja de entrada no está controlado'
+bottom_text: 'Este mensaje fue enviado a <span style="color: #BBC2CB;">% mail_to% </ span> <br /> Si a usted le gustaría actualizar su dirección de correo electrónico, por favor, <a href = "%% general_settings_link" style = "color: # BBC2CB; text-decoration: none;"> haga clic aquí </ a> <br /> Visita Preferencias de contacto para la gestión de su correo electrónico y alertas móviles <br /> Por favor, añada <span style = "color de : #. BBC2CB; "> crew@proofpilot.com </ span> a su libreta de direcciones para asegurar la entrega de nuestros e-mails en tu buzón /> <br Nota: nunca compartimos tu ProofPilot.com contraseñas con cualquier persona a través de e-electrónico, incluidos nosotros.'
+confirm_join_study: 'Únase a un estudio'
+confirm_verify_text: 'Sí, es parte de cualquier página web y registro ProofPilot no es diferente. Por favor, haz clic en el enlace de abajo para verificar que su dirección de correo electrónico y ponerse en marcha'
+confirm_verify_title: 'Verifique por favor su dirección de correo electrónico'
+do_it: '¡HAZLO AHORA!'
+do_it_task_email_title: 'Lo que tienes que hacer en ProofPilot'
+doit_email_what_you_got: 'Esto es lo que tienes que hacer en ProofPilot'
+email_login: 'Ingresa para ProofPilot'
+email_not_send_try_later: 'El correo electrónico no enviado intentarlo más tarde'
+email_reset_password: 'Restablecer la contraseña'
+email_title_notice: 'Olvídese de verificar su dirección de correo electrónico con ProofPilot?'
+email_title_verify: 'Verifique por favor su dirección de correo electrónico'
+email_to_friends_add_email: 'Añadir otra dirección de correo'
+email_to_friends_cancle: Cancelar
+email_to_friends_message: Mensaje
+email_to_friends_send_button: 'Enviar e-mai'
+email_to_friends_subject: Sujeto
+email_to_friends_title: 'Enviar e-mail a un amigo'
+email_to_friends_who_are_you_sending: 'A quién estás enviando a?'
+email_to_friends_who_sending: '¿Quién está enviando?'
+forgot_username: 'Olvidó usuario'
+forgot_username_text: 'Olvidó usuario'
+forgot_username_title: 'Olvidó usuario'
+insert_receiver_email: 'Introduzca al menos un receptor de correo electrónico'
+insert_sender_email: 'Introduzca el correo electrónico del remitente'
+join: 'ÚNETE ESTUDIO'
+link_below_to_confirm: 'Si por alguna razón, no se puede hacer clic el botón, el enlace de abajo para confirmar el registro'
+message_from: Mensaje
+notice_verification: 'Verificación de su dirección de e-mail comienza su viaje como un participante en los estudios de investigación.'
+notice_verification_text: "Oye, esto es ProofPilot. Hemos notado que no has confirmado tu dirección de correo electrónico. ¿Por confirmar su dirección de correo electrónico? Algunos estudios lo requieran para la participación. Otros requieren que el fin de obtener incentivos valiosos. \n<p> \nComience su viaje con ProofPilot verificando su dirección de correo electrónico hoy en día."
+reset_pass_link: 'Haga clic aquí para restablecer su contraseña'
+reset_pass_text: 'Sí, le sucede a todos nosotros: que no puede recordar su contraseña. Eso está bien. Haga clic en este enlace para restablecer tu contraseña'
+reset_pass_title: 'Restablecer la contraseña'
+send_verification_email: Hacerlo
+sent_email_to_friends: 'Gracias por invitar a un amigo a este estudio que ..'
+study_welcome_excited: 'Estamos muy contentos de tenerlo a bordo. Esto es lo que puede esperar en su viaje con'
+study_welcome_hold_on: 'Hold On! Aquí está su Primer Estudio de tareas'
+study_welcome_joint_other_studies: 'Únete Otros estudios en ProofPilot'
+study_welcome_welcome_to: 'Bienvenido a'
+welcome_to_study: 'Welcome to'
