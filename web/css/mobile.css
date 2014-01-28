@@ -1115,6 +1115,28 @@ div.checker input {
 .mobile_reg p.notice {
 	font-size: 12px;
 	color: #cb4937;
+	border-radius: 5px;
+    clear: both;
+    color: #4A4A4A;
+    font-family: 'Roboto';
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 30px;
+    margin-bottom: 12px;
+    min-height: 37px;
+    text-align: center;
+}
+.mobile_reg p.notice.green {
+	background-color: #E4EECC;
+    border-color: #B5CD7E;
+    padding: 0 5px;
+}
+.mobile_reg p.notice.green span {
+    background: url("../images/ok_green.png") no-repeat scroll 0 50% / 15px 12px rgba(0, 0, 0, 0);
+    display: inline-block;
+    line-height: 35px;
+    padding-left: 25px;
 }
 .mobile_reg input.default_input , .mobile_reg.login_form .loginform_right input.text, .loginform_left input.text, .mobile_reg .form_fields li.input_right input {
 	height: 38px;
