@@ -63,8 +63,10 @@ class StudyController extends Controller
             $siteCampaignLink = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:CampaignSiteLink')->findOneBySite($siteId);
             $this->parameters['reffferalFacebookStudyUrl'] = $this->container->getParameter('site_url')."/".$locale."/".$study->getStudyCode()."/?utm_campaign=".$siteCampaignLink->getCampaign()->getCampaignName()."&utm_medium-Clinic&utm_source=".$site[0]['siteName']."&pid=".$participant->getParticipantId();
             $this->parameters['reffferalShortStudyUrl'] = $cc::generateGoogleShorURL($this->container->getParameter('site_url')."/".$locale."/".$study->getStudyCode()."/?utm_campaign=".$siteCampaignLink->getCampaign()->getCampaignName()."&utm_medium-Clinic&utm_source=".$site[0]['siteName']."&pid=".$participant->getParticipantId());
+            $this->parameters['reffferalPinterestStudyUrl'] = urlencode($this->container->getParameter('site_url')."/".$locale."/".$study->getStudyCode()."/?utm_campaign=".$siteCampaignLink->getCampaign()->getCampaignName()."&utm_medium-Clinic&utm_source=".$site[0]['siteName']."&pid=".$participant->getParticipantId());
         }else {
             $this->parameters['reffferalFacebookStudyUrl'] = $this->container->getParameter('site_url')."/".$locale."/".$studyUrl;
+            $this->parameters['reffferalPinterestStudyUrl'] = urlencode($this->container->getParameter('site_url')."/".$locale."/".$studyUrl);
             $this->parameters['shortstudyUrl'] = $cc::generateGoogleShorURL($this->container->getParameter('site_url')."/".$locale."/".$studyUrl);
             
         }
