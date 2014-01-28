@@ -44,6 +44,7 @@ twig:
         branding: %branding%
         random_themes: %random_themes%
         study_image_url: %study_image_url%
+        site_url: %site_url%
     form:
         resources:
             - 'CyclogramFrontendBundle:Form:fields.html.twig'

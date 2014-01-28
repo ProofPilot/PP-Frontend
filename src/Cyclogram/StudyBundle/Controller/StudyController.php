@@ -69,6 +69,7 @@ class StudyController extends Controller
             
         }
         $this->parameters["facebookcontent"] = str_replace(array("\r\n", "\r", "\n"), "", strip_tags($studyContent->getStudyAbout()));
+        $this->parameters["linkedincontent"] = str_replace(array("\r\n", "\r", "\n"), "", $studyContent->getStudyAbout());
         $this->parameters["studycontent"] = $studyContent;
         $this->parameters['studyUrl'] = $studyUrl;
         $this->parameters['studyId'] = $studyId;

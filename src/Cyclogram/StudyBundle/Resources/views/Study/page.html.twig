@@ -488,26 +488,18 @@
                         <li><a href='' class="fb" onClick="return postFeed('{{ reffferalFacebookStudyUrl }}','{{ studycontent.studyName }}','{{ facebookcontent }}','{{ graphic }}')"> {% trans from "study" %}txt_share{% endtrans %}</a></li>
                         {% if reffferalShortStudyUrl is defined %}
                             <li><a href="#" onclick="popUp=window.open('https://twitter.com/share?url={{ reffferalShortStudyUrl }}&text={%  trans from "study" %}social_join_study{% endtrans %} {{ studycontent.studyName }} {%  trans from "study" %}social_at_proofpilot{% endtrans %}', 'popupwindow', 'scrollbars=yes,width=800,height=400');popUp.focus();return false" class="tw">{% trans from "study" %}txt_tweet{% endtrans %}</a></li>
+                            <li><a href="#" onclick="popUp=window.open('http://www.linkedin.com/shareArticle?mini=true&amp;url={{ reffferalFacebookStudyUrl }}&amp;title={{ studycontent.studyName }}&amp;summary={{ facebookcontent |raw }}', 'popupwindow', 'scrollbars=yes,width=600,height=450');popUp.focus();return false" >{% trans from "study" %}txt_share{% endtrans %}</a></li>
                         {% else %}
                             <li><a href="#" onclick="popUp=window.open('https://twitter.com/share?url={{ shortstudyUrl }}&text={%  trans from "study" %}social_join_study{% endtrans %} {{ studycontent.studyName }} {%  trans from "study" %}social_at_proofpilot{% endtrans %}', 'popupwindow', 'scrollbars=yes,width=800,height=400');popUp.focus();return false" class="tw">{% trans from "study" %}txt_tweet{% endtrans %}</a></li>
+                            <li><a href="#" onclick="popUp=window.open('http://www.linkedin.com/shareArticle?mini=true&amp;url={{ shortstudyUrl }}&amp;title={{ studycontent.studyName }}&amp;summary={{ facebookcontent |raw }}', 'popupwindow', 'scrollbars=yes,width=600,height=450');popUp.focus();return false" >{% trans from "study" %}txt_share{% endtrans %}</a></li>
                         {% endif %}
+                            <li><a href="//www.pinterest.com/pin/create/button/?url={{ reffferalFacebookStudyUrl }}&media={{ graphic }}&description={{ facebookcontent |raw }}" data-pin-do="buttonPin" data-pin-shape="round"><img src="//assets.pinterest.com/images/pidgets/pinit_fg_en_round_red_16.png" />{% trans from "study" %}txt_pin{% endtrans %}</a></li>
                             <li><a class="email" href="#">{% trans from "study" %}txt_email_to_friend{% endtrans %}</a></li>
-                            <li><a href="//www.pinterest.com/pin/create/button/?url=http%3A%2F%2Fnew-frontend-bogdand.proofpilot.dyndns.org&media=%2F%2Fcdn.proofpilot.com%2F2cd1c6ecec2c6d908b3ed66d4ea7b902%2F7%2Flogo-7-en.png&description=%26lt%3Bh2%26gt%3BAbout%26lt%3B%2Fh2%26gt%3B%20%20%26lt%3Bp%26gt%3BThe%20purpose%20of%20this%20study%20is%20to%20learn%20what%20men%20and%20transwomen%20like%20and%20don%26rsquo%3Bt%20like%20about%20Sex%20Pro%20and%20how%20it%20affects%20their%20understanding%20of%20sexual%20protection%20behaviors.%20We%20will%20also%20see%20whether%20Sex%20Pro%20helps%20men%20and%20transwomen%20to%20change%20their%20sexual%20health%20practices%2C%20and%20how%20using%20this%20tool%20affects%20counseling%20sessions%20between%20our%20study%20participants%20and%20their%20HIV%20counselors.%26lt%3B%2Fp%26gt%3B" data-pin-do="buttonPin" data-pin-shape="round"><img src="//assets.pinterest.com/images/pidgets/pinit_fg_en_round_red_16.png" /></a></li>
                         </ul>
                         {% endif %}
                     </div>
                     {{ studycontent.studyAbout |raw }}
                     {{ studycontent.studyWhatsInvolved | raw }}
-{#                     <div class="see_more">#}
-{#                         <div class="col1">#}
-{#                             <h3 class="about">{% trans from "study" %}txt_more_studies_about{% endtrans %}</h3>#}
-{#                             <p>Social Studies, Behaviourism, Clinical depression</p>#}
-{#                         </div>#}
-{#                         <div class="col2">#}
-{#                             <h3 class="location">{% trans from "study" %}txt_more_studies_in{% endtrans %}</h3>#}
-{#                             <p>Los Angeles, San Diego, Los Angeles, San Diego, Los Angeles</p>#}
-{#                         </div> #}
-{#                     </div>#}
                 </div>
                 <aside>
                     {% if studyOrganizations is not empty %}

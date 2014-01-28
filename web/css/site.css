@@ -3011,9 +3011,10 @@ footer a.icon_update span {
 	background: url(../images/100_icon_update.png) no-repeat 0px 50%;
 }
 .intro_page .text_wrapper .video_wrapper .video_text ul.participants_num {
-    float: left;
     margin-bottom: 25px;
     width: 100%;
+    overflow:hidden;
+    margin-top:20px;
 }
 .intro_page .text_wrapper .video_wrapper .video_text ul.participants_num li {
     float: left;
