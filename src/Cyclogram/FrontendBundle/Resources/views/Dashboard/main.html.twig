@@ -439,9 +439,9 @@
                                      {% if intervention.type == 'Pledge' %}
                                     <div class="social_icons_block">
                                         <a href="" class="twitter_icon" onclick="popUp=window.open('https://twitter.com/share?url={{ intervention.reffferalShortStudyUrl }}&text={%  trans from "study" %}social_join_study{% endtrans %} {{ intervention.studyName }} {%  trans from "study" %}social_at_proofpilot{% endtrans %}', 'popupwindow', 'scrollbars=yes,width=800,height=400');popUp.focus();return false"></a>
-                                        <a href="" class="facebook_icon" onClick="return postFeed('{{ intervention.reffferalFacebookStudyUrl }}','{{ intervention.name }}','{{ intervention.content }}','{{ intervention.logo }}')"></a>
+                                        <a href="" class="facebook_icon" onClick="return postFeed('{{ intervention.reffferalFacebookStudyUrl }}','{{ intervention.name }}','{{ intervention.content }}','{{ intervention.graphic }}')"></a>
 							            <a class="linkedin_icon" href="#" onclick="popUp=window.open('http://www.linkedin.com/shareArticle?mini=true&amp;url={{ intervention.reffferalShortStudyUrl }}&amp;title={{ intervention.name }}&amp;summary={{ intervention.content |raw }}', 'popupwindow', 'scrollbars=yes,width=600,height=450');popUp.focus();return false" ></a>
-							            <a class="pinterest_icon" href="#" onclick="popUp=window.open('//www.pinterest.com/pin/create/button/?url={{ intervention.reffferalPinterestStudyUrl }}&media={{ intervention.logo }}&description={{ intervention.content }}', 'popupwindow', 'scrollbars=yes,width=600,height=450');popUp.focus();return false"></a>
+							            <a class="pinterest_icon" href="#" onclick="popUp=window.open('//www.pinterest.com/pin/create/button/?url={{ intervention.reffferalPinterestStudyUrl }}&media={{ intervention.graphic }}&description={{ intervention.content }}', 'popupwindow', 'scrollbars=yes,width=600,height=450');popUp.focus();return false"></a>
                                         <a href="" class="email"><input type="hidden" class="email_to_friends_study" value="{{ intervention.studyName }}"></a>
                                     </div>
                                      {% endif %}

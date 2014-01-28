@@ -248,6 +248,7 @@ class StudyLogic
     }
     
     public function potentialInterventionLogic($interventionCode, $participant, $interventionType) {
+        $em = $this->container->get('doctrine')->getManager();
         $data = array();
         switch ($interventionType) {
             case 'Shipping Info' :
@@ -266,13 +267,13 @@ class StudyLogic
                 $data[] = $participant->getParticipantBirthdate();
                 $data[] = $participant->getSex();
                 $data[] = $participant->getParticipantInterested();
-                $data[] = $participant->getRace();
                 $data[] = $participant->getGradeLevel();
                 $data[] = $participant->getIndustry();
-                $data[] = $participant->getIncome();
+                $data[] = $participant->getAnnualIncome();
                 $data[] = $participant->getMaritalStatus();
                 $data[] = $participant->getChildren();
-                if (array_search("", $data) !== false)
+                $participantRace = $em->getRepository('CyclogramProofPilotBundle:ParticipantRaceLink')->findOneByParticipant($participant);
+                if (array_search("", $data) !== false &&!isset($participantRace))
                     return false;
                 break;
             case 'Confirm Mobile Phone' :
@@ -282,7 +283,6 @@ class StudyLogic
                     return false;
                 break;
         }
-        $em = $this->container->get('doctrine')->getManager();
 
         $intervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')->findOneByInterventionCode($interventionCode);
         

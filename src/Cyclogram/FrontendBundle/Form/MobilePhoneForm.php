@@ -22,6 +22,7 @@ namespace Cyclogram\FrontendBundle\Form;
 use Symfony\Component\Validator\Constraints\Length;
 
 use Symfony\Component\Validator\Constraints\Callback;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Form\AbstractType;
@@ -58,14 +59,18 @@ class MobilePhoneForm extends AbstractType
         $builder->add('phone_wide' , 'text', array(
                 'label'=>'label_phone_wide',
                 'attr'=>array(
-                        'maxlength'=>11
+                        'maxlength'=>11,
+                        'minlenght' =>8
                         ),
-                'constraints' => new Length(array(
-                        'min'=>8,
-                        'minMessage'=>'error_min_phone_code_length',
-                        'max'=>11,
-                        'maxMessage'=>'error_max_phone_code_length'
-                        )),
+                'constraints' => array(
+                                       new Length(array(
+                                                  'min'=>8,
+                                                  'minMessage'=>'error_min_phone_code_length',
+                                                  'max'=>11,
+                                                  'maxMessage'=>'error_max_phone_code_length'
+                                                    )),new NotBlank(array(
+                          'message'=>"error_not_blank_wide_phone"
+                           ))),
                 'required'=>false
                 ));
 

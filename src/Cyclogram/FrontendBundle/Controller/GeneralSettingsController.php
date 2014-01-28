@@ -19,6 +19,8 @@
 
 namespace Cyclogram\FrontendBundle\Controller;
 
+use Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantRaceLink;
+
 use Cyclogram\FrontendBundle\Form\UserSmsCodeForm;
 
 use Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantStudyReminderLink;
