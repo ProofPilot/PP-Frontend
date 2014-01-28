@@ -27,6 +27,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 use Cyclogram\FrontendBundle\Form\MobilePhoneForm;
 
+use Cyclogram\FrontendBundle\Form\SignUpAboutForm;
+
 
 use Cyclogram\FrontendBundle\Form\MailingAddressForm;
 use Cyclogram\FrontendBundle\Form\AboutMeForm;
@@ -628,5 +630,159 @@ class GeneralSettingsController  extends Controller
             }
             return new Response(json_encode(array('error' => true,'messages' => $messages)));
         }
+    }
+    
+    /**
+     * @Route("/about_me_new", name="_about_me_new")
+     * @Secure(roles="ROLE_PARTICIPANT, IS_AUTHENTICATED_REMEMBERED")
+     * @Template()
+     */
+    public function aboutMeNewAction() {
+        $locale = $this->getRequest()->getLocale();
+        $request = $this->getRequest();
+        $em = $this->getDoctrine()->getManager();
+        $session = $request->getSession();
+        $participant = $this->get('security.context')->getToken()->getUser();
+        
+        $form = $this->createForm(new SignUpAboutForm($this->container));
+        $clientIp = $request->getClientIp();
+        if ($clientIp == '127.0.0.1'|| strpos($clientIp, '192.168.244.')!== false) {
+            $country = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Country')->findOneByCountryCode('UA');
+        }
+        $geoip = $this->container->get('maxmind.geoip')->lookup($clientIp);
+        if ($geoip != false) {
+            $countryCode = $geoip->getCountryCode();
+            $country = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Country')->findOneByCountryCode($countryCode);
+        }
+        
+        if ($request->getMethod() == 'POST') {
+            $data = $request->request->all();
+            $message = null;
+            if (isset($data['signup_about']['raceSelect'])) {
+                foreach ($data['signup_about']['raceSelect'] as $race) {
+                    if ($race = $em->getRepository('CyclogramProofPilotBundle:Race')->find($race)) {
+                        $raceLink = new ParticipantRaceLink();
+                        $raceLink->setParticipant($participant);
+                        $raceLink->setRace($race);
+                        $em->persist($raceLink);
+                        $em->flush();
+                    } else {
+                        $message[] = " race ";
+                    }
+                }
+            }
+             
+            if (!empty($data['sexSelect'])) {
+                if($sex = $em->getRepository('CyclogramProofPilotBundle:Sex')->find($data['sexSelect']))
+                    $participant->setSex($sex);
+                else
+                    $message[] =" sex ";
+            }
+        
+            if (!empty($data['countrySelect'])) {
+                if($participantcountry = $em->getRepository('CyclogramProofPilotBundle:Country')->find($data['countrySelect']))
+                    $participant->setCountry($participantcountry);
+                else
+                    $message[] =" country ";
+            }
+        
+            if (isset($data['signup_about']['zipcode']))
+                $participant->setParticipantZipcode($data['signup_about']['zipcode']);
+        
+            if (!empty($data['signup_about']['yearsSelect']) || !empty($data['monthsSelect']) || !empty($data['daysSelect'])) {
+                $date = new \DateTime();
+                if($date = $date->setDate((int)$data['signup_about']['yearsSelect'], (int)$data['monthsSelect'], (int)$data['daysSelect']))
+                    $participant->setParticipantBirthdate($date);
+                else
+                    $message[] = " birthdate ";
+            }
+            if (!empty($data['gradeSelect'])) {
+                if ($gradeLevel = $em->getRepository('CyclogramProofPilotBundle:GradeLevel')->find($data['gradeSelect']))
+                    $participant->setGradeLevel($gradeLevel);
+                else
+                    $message[] = ' grade level ';
+            }
+        
+            if (!empty($data['industrySelect'])) {
+                if ($industry = $em->getRepository('CyclogramProofPilotBundle:Industry')->find($data['industrySelect']))
+                    $participant->setIndustry($industry);
+                else
+                    $message[] = ' industry ';
+            }
+        
+            if (isset($data['signup_about']['anunalIncome']))
+                $participant->setAnnualIncome($data['signup_about']['anunalIncome']);
+        
+            if (!empty($data['maritalStatusSelect'])) {
+                if ($maritalStatus = $em->getRepository('CyclogramProofPilotBundle:MaritalStatus')->find($data['maritalStatusSelect']))
+                    $participant->setMaritalStatus($maritalStatus);
+                else
+                    $message[] = ' marital status ';
+            }
+        
+            $participant->setParticipantInterested($data['interestedSelect']);
+        
+            if (isset($data['childrenSelect']) ){
+                if ($data['childrenSelect'] == 'have')
+                    $participant->setChildren(1);
+                if ($data['childrenSelect'] == 'nothave')
+                    $participant->setChildren(0);
+                if (empty($data['childrenSelect']))
+                    $participant->setChildren(0);
+            }
+        
+            $participant->setParticipantBasicInformation(true);
+        
+            $em->persist($participant);
+            $em->flush();
+        
+            if ($request->isXmlHttpRequest()) {
+                if ($message == null) {
+                    $study = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
+                    if ($study->getStudySkipConsent()) {
+                        $participant = $this->get('security.context')->getToken()->getUser();
+                        if ($participant != 'anon.') {
+                            $redirectUrl = $this->generateUrl("_main");
+                        } else {
+                            $redirectUrl = $this->generateUrl("_signup");
+                        }
+                        return new Response(json_encode(array('error' => false, 'url' => $this->generateUrl("_eligibility_survey", array('studyCode' => $studyCode,'surveyId' => $surveyId, 'redirectUrl' => $redirectUrl)))));
+                    } else {
+                        return new Response(json_encode(array('error' => false)));
+                    }
+                } else {
+                    return new Response(json_encode(array('error' => true, 'message' => 'Invalid : '.implode(',', $message) )));
+                }
+            }
+            if ($message == null) {
+                if (isset($studyCode)) {
+                    $study = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
+                    $studyContent =  $this->getDoctrine()->getRepository("CyclogramProofPilotBundle:StudyContent")->getStudyContent($study->getStudyCode(), $locale);
+                    if ($study->getStudySkipConsent())
+                        return $this->OauthRedirect($studyCode);
+                    else
+                        return $this->render('CyclogramFrontendBundle:Authentification:consent_main.html.twig', array('studyCode' => $studyCode, 'surveyId' => $studyContent->getStudyElegibilitySurvey(), 'studycontent' => $studyContent));
+                } else {
+                    return $this->OauthRedirect($studyCode);
+                }
+            } else {
+                return $this->render('CyclogramFrontendBundle:GeneralSettings:about_me_new.html.twig',
+                        array (
+                                'formAbout' => $form->createView(),
+                                'countryName' => $country->getCountryName(),
+                                'countryId' => $country->getCountryId(),
+                                'currencySymbol' => $country->getCurrency()->getCurrencySymbol(),
+                                'error' =>'Invalid : '.implode(',', $message)
+                        ));
+            }
+        }
+        
+        return $this->render('CyclogramFrontendBundle:GeneralSettings:about_me_new.html.twig',
+                array (
+                        'formAbout' => $form->createView(),
+                        'countryName' => $country->getCountryName(),
+                        'countryId' => $country->getCountryId(),
+                        'currencySymbol' => $country->getCurrency()->getCurrencySymbol()
+                ));
     }
 }

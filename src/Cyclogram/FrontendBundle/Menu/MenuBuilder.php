@@ -191,7 +191,7 @@ class MenuBuilder extends ContainerAware implements TranslationContainerInterfac
         $menu['top_menu.settings']
         ->addChild('top_menu.about_me',
                 array(
-                        'route' => '_about_me',
+                        'route' => '_about_me_new',
                         'routeParameters' => array(
                                 'studyCode' => $studyCode
                         )))

@@ -314,7 +314,7 @@ class AuthentificationController extends Controller
         }
         $form = $this->createForm(new SignUpAboutForm($this->container));
         $clientIp = $request->getClientIp();
-        if ($clientIp == '127.0.0.1') {
+        if ($clientIp == '127.0.0.1'|| strpos($clientIp, '192.168.244.')!== false) {
             $country = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Country')->findOneByCountryCode('UA');
         }
         $geoip = $this->container->get('maxmind.geoip')->lookup($clientIp);

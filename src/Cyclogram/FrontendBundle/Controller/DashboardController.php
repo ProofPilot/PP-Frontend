@@ -21,6 +21,8 @@ namespace Cyclogram\FrontendBundle\Controller;
 
 
 
+use Cyclogram\FrontendBundle\Form\SignUpAboutForm;
+
 use Cyclogram\FrontendBundle\Form\UserSmsCodeForm;
 
 use Cyclogram\FrontendBundle\Form\MobilePhoneForm;
@@ -81,10 +83,6 @@ class DashboardController extends Controller
                     $parameters);
             return new Response(json_encode(array('error' => true,'message' => $this->get('translator')->trans("another_verification_sent", array(), "dashboard", $locale))));
         }
-        
-        
-        
-        
         
         $this->get('study_logic')->interventionLogic($participant);
         $this->get('study_logic')->participantDefaultInterventionLogic($participant);
@@ -198,19 +196,22 @@ class DashboardController extends Controller
                     $parameters['formShippingInformation'] =  $formShippingInformation->createView();
                     break;
                 case "About Me Info" :
-                    $formAboutMe = $this->createForm(new AboutMeForm($this->container));
-                    $parameters['formAboutMe'] =  $formAboutMe->createView();
-                    $parameters["expandedFormClass"] = '';
-                    $interested = $participant->getParticipantInterested();
-                    if (isset($interested) && $interested == 'w') {
-                        $parameters['interest'] = 'Woman';
-                    } elseif (isset($interested) && $interested == 'm') {
-                        $parameters['interest'] = 'Man';
-                    } elseif (isset($interested) && $interested == 'mw') {
-                        $parameters['interest'] = 'Man&Woman';
-                    }else {
-                        $parameters['interest'] = "";
+                    $formAbout = $this->createForm(new SignUpAboutForm($this->container));
+                    $parameters['formAbout'] =  $formAbout->createView();
+                    $clientIp = $request->getClientIp();
+                    $geoip = $this->container->get('maxmind.geoip')->lookup($clientIp);
+                    if ($geoip != false) {
+                        $countryCode = $geoip->getCountryCode();
+                        $country = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Country')->findOneByCountryCode($countryCode);
+                    } elseif ($clientIp == '127.0.0.1' || strpos($clientIp, '192.168.244.')!== false) {
+                        $country = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Country')->findOneByCountryCode('UA');
+                    } else {
+                        $country = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Country')->findOneByCountryCode('US');
                     }
+                    
+                    $parameters['countryName'] = $country->getCountryName();
+                    $parameters['countryId'] = $country->getCountryId();
+                    $parameters['currencySymbol'] = $country->getCurrency()->getCurrencySymbol();
                     break;
                 case "Confirm Mobile Phone":
                     $formMobile = $this->createForm(new MobilePhoneForm($this->container));

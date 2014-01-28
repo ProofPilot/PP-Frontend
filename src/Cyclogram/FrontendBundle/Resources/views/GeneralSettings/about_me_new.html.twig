@@ -1,0 +1,32 @@
+{%  extends '::dashboard.html.twig' %}
+    {% block stylesheets %}
+        <link rel="stylesheet" href={{ asset('css/jquery-ui-1.10.3/base/jquery-ui.min.css') }}>
+        <link rel="stylesheet" href={{ asset('css/jquery-ui-1.10.3/base/jquery.ui.datepicker.min.css') }}>
+    {%  endblock stylesheets %}
+    {% block javascripts %}
+        <script src="{{ asset('js/jquery-ui-1.10.3/jquery-ui.min.js') }}"></script>
+        <script src="{{ asset('js/jquery-ui-1.10.3/jquery.ui.datepicker.min.js') }}"></script>
+    {% endblock javascripts %}
+    
+{# {% form_theme form '::fields_theme2.html.twig' %}#}
+
+{# {% from '::macro.html.twig' import showonerror,hideonerror %}#}
+    {% block content %}
+    <div class="site_container">
+    {% include '::header.html.twig' %}
+
+
+      <div class="panel">
+        <div class="panel_left">
+{#           {% include '::profile_info.html.twig' %}#}
+          <div class="menu_cont">
+              {{ knp_menu_render('CyclogramFrontendBundle:MenuBuilder:createSideSettingsMenu',{'template': 'CyclogramFrontendBundle:Knp:knp_side_menu.html.twig','currentClass': 'active'}) }}
+          </div>
+        </div>
+          
+          {# country #}
+              {% include 'CyclogramFrontendBundle:GeneralSettings:about_me_new_form.html.twig' %}
+      </div>
+    </div>
+{% include '::footer.html.twig' %}
+    {% endblock content %}
