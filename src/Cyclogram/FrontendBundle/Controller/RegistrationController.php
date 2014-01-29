@@ -449,7 +449,16 @@ class RegistrationController extends Controller
                                 'eligible' => false
                         )));
                     }
-                    $error = "Wrong SMS!";
+                    
+                    switch($request->getLocale()) {
+                    	case 'pt':  
+                        	$error = "C—digo de acesso recebido por SMS incorreto";
+							break;
+						default:
+							$error = "Wrong SMS!";
+							break;
+					}
+                    
                 }
             }
         }
