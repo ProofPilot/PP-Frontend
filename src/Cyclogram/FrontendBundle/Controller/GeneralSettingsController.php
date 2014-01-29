@@ -647,6 +647,7 @@ class GeneralSettingsController  extends Controller
         $participant = $this->get('security.context')->getToken()->getUser();
         
         $form = $this->createForm(new SignUpAboutForm($this->container));
+        $participantData = $this->aboutMeParticipantData($participant, $form);
         $clientIp = $request->getClientIp();
         if ($clientIp == '127.0.0.1'|| strpos($clientIp, '192.168.244.')!== false) {
             $country = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Country')->findOneByCountryCode('UA');
@@ -697,6 +698,8 @@ class GeneralSettingsController  extends Controller
                     $participant->setParticipantBirthdate($date);
                 else
                     $message[] = " birthdate ";
+            }elseif(empty($data['signup_about']['yearsSelect']) || empty($data['monthsSelect']) || empty($data['daysSelect'])){
+                $message[] = " birthdate ";
             }
             if (!empty($data['gradeSelect'])) {
                 if ($gradeLevel = $em->getRepository('CyclogramProofPilotBundle:GradeLevel')->find($data['gradeSelect']))
@@ -721,15 +724,13 @@ class GeneralSettingsController  extends Controller
                 else
                     $message[] = ' marital status ';
             }
+            if (!empty($data['interestedSelect']))
+                $participant->setParticipantInterested($data['interestedSelect']);
         
-            $participant->setParticipantInterested($data['interestedSelect']);
-        
-            if (isset($data['childrenSelect']) ){
+            if (!empty($data['childrenSelect']) ){
                 if ($data['childrenSelect'] == 'have')
                     $participant->setChildren(1);
                 if ($data['childrenSelect'] == 'nothave')
-                    $participant->setChildren(0);
-                if (empty($data['childrenSelect']))
                     $participant->setChildren(0);
             }
         
@@ -747,6 +748,7 @@ class GeneralSettingsController  extends Controller
                 else
                     return new Response(json_encode(array('error' => false, 'message' =>  $this->get('translator')->trans("to_complete_intervention", array(), "shipping_information", $locale))));
             }
+            $participantData = $this->aboutMeParticipantData($participant, $form);
             if(!is_null($message))
                 return $this->render('CyclogramFrontendBundle:GeneralSettings:about_me_new.html.twig',
                         array (
@@ -754,7 +756,8 @@ class GeneralSettingsController  extends Controller
                                 'countryName' => $country->getCountryName(),
                                 'countryId' => $country->getCountryId(),
                                 'currencySymbol' => $country->getCurrency()->getCurrencySymbol(),
-                                'error' =>'Invalid : '.implode(',', $message)
+                                'error' =>'Invalid : '.implode(',', $message),
+                                'data' => $participantData
                         ));
             else 
                 return $this->render('CyclogramFrontendBundle:GeneralSettings:about_me_new.html.twig',
@@ -763,16 +766,79 @@ class GeneralSettingsController  extends Controller
                                 'countryName' => $country->getCountryName(),
                                 'countryId' => $country->getCountryId(),
                                 'currencySymbol' => $country->getCurrency()->getCurrencySymbol(),
-                                'update' =>true
+                                'update' =>true,
+                                'data' => $participantData
                         ));
         }
-        
+
         return $this->render('CyclogramFrontendBundle:GeneralSettings:about_me_new.html.twig',
                 array (
                         'formAbout' => $form->createView(),
                         'countryName' => $country->getCountryName(),
                         'countryId' => $country->getCountryId(),
-                        'currencySymbol' => $country->getCurrency()->getCurrencySymbol()
+                        'currencySymbol' => $country->getCurrency()->getCurrencySymbol(),
+                        'data' =>$participantData
                 ));
+    }
+    
+    private function aboutMeParticipantData($participant,$form) {
+        $participantData=null;
+        $em = $this->getDoctrine()->getManager();
+        if ($participant->getCountry()){
+            $participantData['country'] = $participant->getCountry();
+        }
+        if ($participant->getParticipantZipcode()){
+            $form->get('zipcode')->setData($participant->getParticipantZipcode());
+        }
+        if($participant->getParticipantBirthdate()) {
+            $date = $participant->getParticipantBirthdate();
+            $participantData['monthsLabel'] = date_format($date, 'M');
+            $participantData['months'] = date_format($date, 'm');
+            $form->get('daysSelect')->setData(date_format($date, 'd'));
+            $form->get('yearsSelect')->setData(date_format($date, 'Y'));
+        }
+        if($participant->getSex()) {
+            $participantData['sex'] = $participant->getSex();
+        }
+        if($participant->getParticipantInterested()){
+            if ($participant->getParticipantInterested() == 'w') {
+                $participantData['interested'] = 'w';
+                $participantData['interestedLabel'] = 'women';
+            } elseif ($participant->getParticipantInterested() == 'm') {
+                $participantData['interested'] = 'm';
+                $participantData['interestedLabel'] = 'men';
+            } elseif ($participant->getParticipantInterested() == 'mw') {
+                $participantData['interested']= 'mw';
+                $participantData['interestedLabel'] = 'men & women';
+            }
+        }
+        if($participant->getGradeLevel()) {
+            $participantData['grade'] = $participant->getGradeLevel();
+        }
+        if($participant->getIndustry()) {
+            $participantData['industry'] = $participant->getIndustry();
+        }
+        if($participant->getAnnualIncome()) {
+            $form->get('anunalIncome')->setData($participant->getAnnualIncome());
+        }
+        if($participant->getMaritalStatus()){
+            $participantData['marital'] = $participant->getMaritalStatus();
+        }
+        if($participant->getChildren()){
+            if ($participant->getChildren()== 1) {
+                $participantData['children'] = 'have';
+                $participantData['childrenLabel'] = 'have';
+            }
+            if ($participant->getChildren()== 0){
+                $participantData['children'] = 'nothave';
+                $participantData['childrenLabel'] = 'do not have';
+            }
+        }
+        $participantRaces = $em->getRepository('CyclogramProofPilotBundle:ParticipantRaceLink')->findByParticipant($participant);
+        if (isset($participantRaces) && !empty($participantRaces)){
+            $race = $participantRaces[0]->getRace();
+            $participantData['race']= $race;
+        }
+        return $participantData;
     }
 }

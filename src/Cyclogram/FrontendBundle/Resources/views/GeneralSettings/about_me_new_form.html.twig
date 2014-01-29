@@ -18,7 +18,7 @@
                     {{ form_widget(formAbout.countrySelect) }}
                 {{ form_widget(formAbout.zipcode,{'attr': {'placeholder' : 'postcode_text'|trans({}, 'signup_about')}}) }} .
                 <span class="text_wrapper">{% trans from "signup_about" %}text_i_was_born_on_the{% endtrans %}</span>     
-                     {{ form_widget(formAbout.daysSelect) }}
+                     {{ form_widget(formAbout.daysSelect,{'attr': {'placeholder' : 'day'}}) }}
                 <span class="text_wrapper">{% trans from "signup_about" %}text_of{% endtrans %}</span>
                     {{ form_widget(formAbout.monthsSelect) }}
                     {{ form_widget(formAbout.yearsSelect,{'attr': {'placeholder' : 'YYYY'}}) }}
@@ -112,10 +112,55 @@
     		                    	status = false
         		                    }
     		                } 
+    		                if ($('#signup_about_daysSelect').val() !== "") {
+        		                var day = $('#signup_about_daysSelect').val();
+    		                    if (day < 1 || day > 31) {
+    		                    	$('#signup_about_daysSelect').after('<p class="error" id="error">{% trans from "register" %}txt_incorect_day{% endtrans %}</p>');
+    		                    	status = false
+        		                 }
+    		                } 
     		                return status;
         		        });
     		            $("#signup_about_anunalIncome").numeric();
     		            $("#signup_about_yearsSelect").numeric();
+    			    	{% if data is not empty %} 
+    			    	    {% if data.country is defined %}
+    			    	        $('#open_choice_countrySelect span').html('{{ data.country.countryName }}');
+	                            $('#single_hidden_countrySelect').val({{ data.country.countryId }});
+    			    	    {% endif %}
+    			    	    {% if data.grade is defined %}
+			    	            $('#open_choice_gradeSelect span').html('{{ data.grade.gradeLevelName }}');
+                                $('#single_hidden_gradeSelect').val({{ data.grade.gradeLevelId }});
+			    	        {% endif %}
+    			    	    {% if data.industry is defined %}
+    			    	        $('#open_choice_industrySelect span').html('{{ data.industry.industryName }}');
+                                $('#single_hidden_industrySelect').val({{ data.industry.industryId }});
+		    	            {% endif %}
+    			    	    {% if data.interested is defined and data.interestedLabel is defined %}
+			    	            $('#open_choice_interestedSelect span').html('{{ data.interestedLabel }}');
+			    	            $('#single_choice_interestedSelect').val('{{ data.interested }}');
+	    	                {% endif %}
+    			    	    {% if data.marital is defined %}
+    			    	        $('#open_choice_maritalStatusSelect span').html('{{ data.marital.maritalStatusName }}');
+                                $('#single_hidden_maritalStatusSelect').val({{ data.marital.maritalStatusId }});
+	    	                {% endif %}
+    			    	    {% if data.children is defined and data.childrenLabel is defined %}
+    			    	        $('#open_choice_childrenSelect span').html('{{ data.childrenLabel }}');
+    			    	        $('#single_hidden_childrenSelect').html('{{ data.children }}');
+    	                    {% endif %}
+     			    	    {% if data.race is defined %}
+     			    	        $('#open_choice_raceSelect span').html('{{ data.race.raceName }}');
+                                $('#single_hidden_raceSelect').val({{ data.race.raceId }});
+		    	            {% endif %}
+     			    	    {% if data.sex is defined %}
+     			    	        $('#open_choice_sexSelect span').html('{{ data.sex.sexName }}');
+                                $('#single_choice_sexSelect').val({{ data.sex.sexId }});
+	    	                {% endif %}
+     			    	    {% if data.months is defined and data.monthsLabel is defined%}
+ 			    	            $('#open_choice_monthsSelect span').html('{{ data.monthsLabel }}');
+                                $('#single_choice_monthsSelect').val({{ data.months }});
+    	                    {% endif %}
+    			    	{% endif %}
     			        });
     			    
                   </script>

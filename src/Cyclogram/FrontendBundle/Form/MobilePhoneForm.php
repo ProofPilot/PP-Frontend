@@ -69,8 +69,9 @@ class MobilePhoneForm extends AbstractType
                                                   'max'=>11,
                                                   'maxMessage'=>'error_max_phone_code_length'
                                                     )),new NotBlank(array(
-                          'message'=>"error_not_blank_wide_phone"
-                           ))),
+                                                      'message'=>"error_not_blank_wide_phone"
+                                                    ))
+                        ),
                 'required'=>false
                 ));
 

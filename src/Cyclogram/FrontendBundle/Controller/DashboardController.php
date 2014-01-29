@@ -201,6 +201,64 @@ class DashboardController extends Controller
                     break;
                 case "About Me Info" :
                     $formAbout = $this->createForm(new SignUpAboutForm($this->container));
+                    
+                    $participantData=null;
+                    if ($participant->getCountry()){
+                        $participantData['country'] = $participant->getCountry();
+                    }
+                    if ($participant->getParticipantZipcode()){
+                        $form->get('zipcode')->setData($participant->getParticipantZipcode());
+                    }
+                    if($participant->getParticipantBirthdate()) {
+                        $date = $participant->getParticipantBirthdate();
+                        $participantData['monthsLabel'] = date_format($date, 'M');
+                        $participantData['months'] = date_format($date, 'm');
+                        $form->get('daysSelect')->setData(date_format($date, 'd'));
+                        $form->get('yearsSelect')->setData(date_format($date, 'Y'));
+                    }
+                    if($participant->getSex()) {
+                        $participantData['sex'] = $participant->getSex();
+                    }
+                    if($participant->getParticipantInterested()){
+                        if ($participant->getParticipantInterested() == 'w') {
+                            $participantData['interested'] = 'w';
+                            $participantData['interestedLabel'] = 'women';
+                        } elseif ($participant->getParticipantInterested() == 'm') {
+                            $participantData['interested'] = 'm';
+                            $participantData['interestedLabel'] = 'men';
+                        } elseif ($participant->getParticipantInterested() == 'mw') {
+                            $participantData['interested']= 'mw';
+                            $participantData['interestedLabel'] = 'men & women';
+                        }
+                    }
+                    if($participant->getGradeLevel()) {
+                        $participantData['grade'] = $participant->getGradeLevel();
+                    }
+                    if($participant->getIndustry()) {
+                        $participantData['industry'] = $participant->getIndustry();
+                    }
+                    if($participant->getAnnualIncome()) {
+                        $form->get('anunalIncome')->setData($participant->getAnnualIncome());
+                    }
+                    if($participant->getMaritalStatus()){
+                        $participantData['marital'] = $participant->getMaritalStatus();
+                    }
+                    if($participant->getChildren()){
+                        if ($participant->getChildren()== 1) {
+                            $participantData['children'] = 'have';
+                            $participantData['childrenLabel'] = 'have';
+                        }
+                        if ($participant->getChildren()== 0){
+                            $participantData['children'] = 'nothave';
+                            $participantData['childrenLabel'] = 'do not have';
+                        }
+                    }
+                    $participantRaces = $em->getRepository('CyclogramProofPilotBundle:ParticipantRaceLink')->findByParticipant($participant);
+                    if (isset($participantRaces) && !empty($participantRaces)){
+                        $race = $participantRaces[0]->getRace();
+                        $participantData['race']= $race;
+                    }
+                    $parameters['data'] = $participantData;
                     $parameters['formAbout'] =  $formAbout->createView();
                     $clientIp = $request->getClientIp();
                     $geoip = $this->container->get('maxmind.geoip')->lookup($clientIp);

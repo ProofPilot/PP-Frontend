@@ -56,14 +56,8 @@ class SignUpAboutForm extends AbstractType
                 'label'=> $this->container->get('translator')->trans('label_zipcode', array(), 'signup_about'),
         ));
         
-        $builder->add('daysSelect', new Type\FrontendChoiceType( $this->container->get('doctrine')), array(
+        $builder->add('daysSelect', 'text', array(
                 'label'=> $this->container->get('translator')->trans('label_day_main', array(), 'signup_about'),
-                'choices' => array(
-                        'days' => array_combine(range(1,31),range(1,31)),
-                ),
-                'required'=>false,
-                'expanded' =>true,
-                'multiple' => false
         ));
         
         $months = array(
