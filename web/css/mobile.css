@@ -900,10 +900,10 @@ div.selector, div.checker, div.button, div.radio, div.uploader {
     display: inline-block;
 }
 div.checker span {
-    background: url("../images/checker.gif") no-repeat scroll 0 100% rgba(0, 0, 0, 0) !important;
+    background: url("../images/checker.gif") no-repeat scroll 0 100% rgba(0, 0, 0, 0);
 }
 div.checker span.checked {
-    background: url("../images/checker.gif") no-repeat scroll 0 -9% rgba(0, 0, 0, 0) !important;
+    background: url("../images/checker.gif") no-repeat scroll 0 -9% rgba(0, 0, 0, 0);
 }
 div.checker input {
     background: none repeat scroll 0 0 rgba(0, 0, 0, 0);

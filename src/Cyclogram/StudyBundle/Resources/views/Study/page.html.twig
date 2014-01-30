@@ -449,9 +449,7 @@
                 <div class="video_text">
                     {% if studyStatus  == 'Pre-Launch'%}
                         {% if (queryParams["preLaunch"] is defined) %}
-                            <div>
-                                    <h1><span class="text">{{ queryParams["preLaunch"] }}</span></h1>
-                            </div>
+                            <span class="prelaunch_msg">{{ queryParams["preLaunch"] }}</span></h1>
                         {% else %}
                             {% if not is_granted('ROLE_PARTICIPANT') or not is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                                 <div>
@@ -470,7 +468,7 @@
                                 </a> 
                             {% endif %}
                             {% if is_granted('ROLE_PARTICIPANT') or is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                                <div>
+                                <div id="logged_in_input_box">
                                     <input type="checkbox" id="recruiter_loggedin"></input><span> I can help recruit people for this study</span>
                                 </div>
                                 <a href="#" class="join" id="send_prelaunch_loggedin" ><span>Let me know</span></a>

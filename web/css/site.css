@@ -2753,6 +2753,7 @@ div.panel div.panel_right div.prev_next ul li a.next span {
     line-height: 47px;
     text-align: center;
     width: 100%;
+    margin-bottom: 10px;
 }
 .intro_page .text_wrapper .video_wrapper .video_text a.gp span {
     background: url("../images/icon_btn_reg_google.png") no-repeat scroll 15px 50% rgba(0, 0, 0, 0);
@@ -4101,4 +4102,27 @@ footer .row_2 p {
 #mobile_phone_confirm_popup .mobile_reg .error_msg {
 	color: red;
 	margin-top: 50px;
+}
+#prelaunch_email {
+	width: 265px;
+	height: 40px;
+	text-align: center;
+	margin-bottom: 10px;
+}
+#uniform-recruiter, #uniform-recruiter_loggedin {
+	margin-right: 5px;
+}
+#prelaunch_input_box > span, #logged_in_input_box > span {
+	font-weight: 400;
+}
+#prelaunch_input_box #uniform-recruiter, #logged_in_input_box #uniform-recruiter_loggedin {
+	position: relative;
+	top: 2px;
+}
+#prelaunch_input_box div.checker span.checked, #logged_in_input_box div.checker span.checked {
+	background: url("../images/checker.gif") no-repeat scroll 0 0 rgba(0, 0, 0, 0) !important;
+}
+.prelaunch_msg {
+	color: #BE3C2C;
+	font-size: 22px;
 }
