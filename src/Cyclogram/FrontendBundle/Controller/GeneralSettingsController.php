@@ -692,13 +692,13 @@ class GeneralSettingsController  extends Controller
             if (isset($data['signup_about']['zipcode']))
                 $participant->setParticipantZipcode($data['signup_about']['zipcode']);
         
-            if (!empty($data['signup_about']['yearsSelect']) && !empty($data['monthsSelect']) && !empty($data['daysSelect'])) {
+            if (!empty($data['signup_about']['yearsSelect']) && !empty($data['monthsSelect']) && !empty($data['signup_about']['daysSelect'])) {
                 $date = new \DateTime();
-                if($date = $date->setDate((int)$data['signup_about']['yearsSelect'], (int)$data['monthsSelect'], (int)$data['daysSelect']))
+                if($date = $date->setDate((int)$data['signup_about']['yearsSelect'], (int)$data['monthsSelect'], (int)$data['signup_about']['daysSelect']))
                     $participant->setParticipantBirthdate($date);
                 else
                     $message[] = " birthdate ";
-            }elseif(empty($data['signup_about']['yearsSelect']) || empty($data['monthsSelect']) || empty($data['daysSelect'])){
+            }elseif(empty($data['signup_about']['yearsSelect']) || empty($data['monthsSelect']) || empty($data['signup_about']['daysSelect'])){
                 $message[] = " birthdate ";
             }
             if (!empty($data['gradeSelect'])) {
@@ -838,6 +838,9 @@ class GeneralSettingsController  extends Controller
         if (isset($participantRaces) && !empty($participantRaces)){
             $race = $participantRaces[0]->getRace();
             $participantData['race']= $race;
+            foreach ($participantRaces as $participantRace) {
+                $participantData['raceIds'][] = $participantRace->getRace()->getRaceId();
+            }
         }
         return $participantData;
     }

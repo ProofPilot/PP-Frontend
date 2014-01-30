@@ -20,7 +20,7 @@
                     {{ form_widget(formAbout.countrySelect) }}
                 {{ form_widget(formAbout.zipcode,{'attr': {'placeholder' : 'postcode_text'|trans({}, 'signup_about')}}) }} .
                 <span class="text_wrapper">{% trans from "signup_about" %}text_i_was_born_on_the{% endtrans %}</span>     
-                     {{ form_widget(formAbout.daysSelect) }}
+                    {{ form_widget(formAbout.daysSelect,{'attr': {'placeholder' : 'day'}}) }}
                 <span class="text_wrapper">{% trans from "signup_about" %}text_of{% endtrans %}</span>
                     {{ form_widget(formAbout.monthsSelect) }}
                     {{ form_widget(formAbout.yearsSelect,{'attr': {'placeholder' : 'YYYY'}}) }}
@@ -104,6 +104,13 @@
     		                    	$('#signup_about_yearsSelect').after('<p class="error" id="error">{% trans from "register" %}txt_year_to_young{% endtrans %}</p>');
     		                    	status = false
         		                    }
+        		                if ($('#signup_about_daysSelect').val() !== "") {
+            		                var day = $('#signup_about_daysSelect').val();
+        		                    if (day < 1 || day > 31) {
+        		                    	$('#signup_about_daysSelect').after('<p class="error" id="error">{% trans from "register" %}txt_incorect_day{% endtrans %}</p>');
+        		                    	status = false
+            		                 }
+        		                } 
     		                } 
     		                return status;
         		        });
