@@ -251,6 +251,11 @@ class AuthentificationController extends Controller
         $locale = $this->getRequest()->getLocale()?$this->getRequest()->getLocale():'en';
         $language = $em->getRepository('CyclogramProofPilotBundle:Language')->findOneByLocale($locale);
         
+        if($session->has('preLaunch')) {
+            $message = $session->get('preLaunch');
+            $this->prelauncCmpaignRegistration($participant, $studyCode, $recruiter);
+        }
+        
         if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
             return $this->redirect($this->generateUrl("_signup", array('error' => true)));
         }
@@ -869,6 +874,14 @@ class AuthentificationController extends Controller
         }
         $participant = $em->getRepository('CyclogramProofPilotBundle:Participant')->findOneByParticipantEmail($email);
         if (isset($participant)) {
+            $participantLevel = $participant->getLevel()->getParticipantLevelName();
+            if ($participantLevel == 'Pre-Launch') {
+                $this->prelauncCmpaignRegistration($participant, $studyCode, $recruiter);
+                return $this->redirect($this->generateUrl('_page', array(
+                        'studyUrl' => $studyCode,
+                        'preLaunch' => $this->get('translator')->trans("we_will_notify_prelaunch", array(), "study")
+                )));
+            }
             return $this->redirect($this->generateUrl('_page', array(
                     'studyUrl' => $studyCode,
                     'preLaunch' => $this->get('translator')->trans("login_to_prelaunch", array(), "study")
