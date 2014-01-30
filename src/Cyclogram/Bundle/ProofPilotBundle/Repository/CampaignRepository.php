@@ -83,4 +83,39 @@ class CampaignRepository extends EntityRepository
             return $results[0];
     
     }
+    
+    public function checkIfIssetParticipanCampaigLink($studyCode,$campaignId, $siteId, $participant) {
+        $email = $participant->getParticipantEmail();
+        $query = $this->getEntityManager()
+        ->createQuery("
+                SELECT pcl
+                FROM CyclogramProofPilotBundle:ParticipantCampaignLink pcl
+                INNER JOIN pcl.campaignSiteLink csl
+                INNER JOIN pcl.participant p
+                INNER JOIN csl.campaign campaign
+                INNER JOIN csl.site site
+                INNER JOIN campaign.placement placement 
+                INNER JOIN placement.study s
+                WHERE
+                s.studyCode = :studyCode
+                AND p.participantEmail = :email
+                AND site.status = :sitestatus
+                AND site.siteId = :siteId
+                AND campaign.status = :campaignstatus
+                AND campaign.campaignId = :campaignId
+                AND placement.status = :placementstatus
+                ")
+                ->setParameters(array(
+                        'studyCode'=> $studyCode,
+                        'email' => $email,
+                        'sitestatus' => Site::STATUS_ACTIVE,
+                        'siteId' => $siteId,
+                        'campaignId' => $campaignId,
+                        'campaignstatus' => Campaign::STATUS_ACTIVE,
+                        'placementstatus' => Placement::STATUS_ACTIVE,
+                ));
+        
+        $results = $query->getOneOrNullResult();
+        return $results;
+    }
 }

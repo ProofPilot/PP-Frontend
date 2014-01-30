@@ -76,6 +76,8 @@ class StudyController extends Controller
         $this->parameters['studyUrl'] = $studyUrl;
         $this->parameters['studyId'] = $studyId;
         $this->parameters['studyCode'] = $study->getStudyCode();
+        $status = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:Status')->find($study->getStatus());
+        $this->parameters['studyStatus'] = $status->getStatusName();
         $this->parameters['studyAllowSharing'] = $study->getStudyAllowSharing();
         $this->parameters['studyParticipants'] = $study->getStudyNumberOfCurrentParticipants();
         $this->parameters['studyGoal'] = $study->getStudyParticipantsGoal();
@@ -284,12 +286,4 @@ class StudyController extends Controller
         return $this->render('CyclogramStudyBundle:Email:_newsletter.html.twig', $parameters);
     }
     
-
-    
-
-
-
-
-
-
 }

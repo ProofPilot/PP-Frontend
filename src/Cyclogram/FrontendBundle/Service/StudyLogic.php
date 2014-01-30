@@ -141,6 +141,9 @@ class StudyLogic
         $campaignLink->setParticipantCampaignLinkParticipantEmail( $participant->getParticipantEmail() );
         $campaignLink->setParticipantCampaignLinkIpAddress( $_SERVER['REMOTE_ADDR'] );
         $campaignLink->setParticipantCampaignLinkDatetime( new \DateTime("now") );
+        $campaignSiteLink = $em->getRepository('CyclogramProofPilotBundle:CampaignSiteLink')->findOneBy(array('campaignId' => $campaignId,'siteId' => $siteId));
+        $campaignLink->setCampaignSiteLink($campaignSiteLink);
+        $campaignLink->setIsParticipantRecruiter(false);
         if($site)
             $campaignLink->setSite( $site );
 

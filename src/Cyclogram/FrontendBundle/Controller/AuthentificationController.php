@@ -858,67 +858,112 @@ class AuthentificationController extends Controller
     public function preLaunchRegistrationAction($studyCode,$recruiter, $email = null)
     {
         $request = $this->getRequest();
-        $session = $this->getRequest()->getSession();
         $em = $this->getDoctrine()->getManager();
         if ($this->get('security.context')->isGranted("ROLE_USER")){
             $participant = $this->get('security.context')->getToken()->getUser();
-            $siteId = $session->get('referralSite');
-            $campaignId = $session->get('referralCampaign');
-            $session->remove('referralSite');
-            $session->remove('referralCampaign');
-            if(!$siteId || !$campaignId )
-                throw new \Exception("Could not reliably determine campaign and site from session. Cancelling registration");
-
-            $campaign = $em->getRepository('CyclogramProofPilotBundle:Campaign')->find($campaignId);
-            $site = $em->getRepository('CyclogramProofPilotBundle:Site')->find($siteId);
-            
-            $participantLevelRepo = $em->getRepository('CyclogramProofPilotBundle:ParticipantLevel');
-            $participantLevel = $participantLevelRepo->find( 1 );
-            
-            //Campaign
-            $ParticipantCampaignLinkCountData =  $em->getRepository('CyclogramProofPilotBundle:ParticipantCampaignLink')
-            ->findBy( array("participantCampaignLinkParticipantEmail"=>$participant->getParticipantEmail()) );
-            
-            $ParticipantCampaignLinkCount = ( is_array($ParticipantCampaignLinkCountData) ) ? count($ParticipantCampaignLinkCountData) : 0;
-            
-            $participantCampaignLinkId = CyclogramCommon::generateParticipantCampaignLinkID(
-                    $participantLevel->getParticipantLevelId(),
-                    $participant->getParticipantId(),
-                    $campaign->getCampaignId(),
-                    $ParticipantCampaignLinkCount
-            );
-            
-            //ParticipantCampaignLink
-            $campaignLink = new \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantCampaignLink();
-            $campaignLink->setParticipant( $participant );
-            $campaignLink->setCampaign( $campaign );
-            $campaignLink->setParticipantLevel( $participantLevel );
-            $campaignLink->setParticipantSurveyLinkUniqid( $uniqId );
-            $campaignLink->setParticipantCampaignLinkId( $participantCampaignLinkId );
-            $campaignLink->setParticipantCampaignLinkParticipantEmail( $participant->getParticipantEmail() );
-            $campaignLink->setParticipantCampaignLinkIpAddress( $_SERVER['REMOTE_ADDR'] );
-            $campaignLink->setParticipantCampaignLinkDatetime( new \DateTime("now") );
-            $campaignSiteLink = $em->getRepository('CyclogramProofPilotBundle:CampaignSiteLink')->findOneBy(array('campaignId' => $campaignId,'siteId' => $siteId));
-            $campaignLink->setCampaignSiteLink($campaignSiteLink);
-            if($recruiter)
-                $campaignLink->setIsParticipantRecruiter(true);
-            else 
-                $campaignLink->setIsParticipantRecruiter(false);
-            if($site)
-                $campaignLink->setSite( $site );
-            
-            $em->persist( $campaignLink );
-            $em->flush();
-            
-            return $campaignLink;
+            $this->prelauncCmpaignRegistration($participant,$studyCode, $recruiter);
+            return $this->redirect($this->generateUrl('_page', array(
+                    'studyUrl' => $studyCode,
+                    'preLaunch' => $this->get('translator')->trans("we_will_notify_prelaunch", array(), "study")
+            )));
         }
         $participant = $em->getRepository('CyclogramProofPilotBundle:Participant')->findOneByParticipantEmail($email);
         if (isset($participant)) {
-            $session->set('preLaunchMessage', $this->get('translator')->trans("doesnt_match_records", array(), "study"));
+            return $this->redirect($this->generateUrl('_page', array(
+                    'studyUrl' => $studyCode,
+                    'preLaunch' => $this->get('translator')->trans("login_to_prelaunch", array(), "study")
+            )));
         }else {
+            $participant = new Participant();
+            $participant->setParticipantEmail($email);
+            $factory = $this->get('security.encoder_factory');
+            $encoder = $factory->getEncoder($participant);
+            $participant->setParticipantPassword($encoder->encodePassword(md5(uniqid($email, true)), $participant->getSalt()));
+            $question = $em->getRepository('CyclogramProofPilotBundle:RecoveryQuestion')->find(1);
+            $participant->setRecoveryQuestion($question);
+            $participant->setRecoveryPasswordCode('Default');
+            $participnat_level = $em->getRepository('CyclogramProofPilotBundle:ParticipantLevel')->findOneByParticipantLevelName('Pre-Launch');
+            $participant->setLevel($participnat_level);
+            $participant->setParticipantEmailConfirmed(false);
+            $participant->setParticipantMobileSmsCodeConfirmed(false);
+            $participant->setParticipantIncentiveBalance(0);
+            $timezone = $em->getRepository('CyclogramProofPilotBundle:ParticipantTimeZone')->find(1);
+            $participant->setParticipantTimezone($timezone);
+            $participant->setParticipantLastTouchDatetime(new \DateTime(null, new \DateTimeZone($participant->getParticipantTimezone()->getParticipantTimezoneName())));
+            $participant->setParticipantZipcode(' ');
+            $role = $em->getRepository('CyclogramProofPilotBundle:ParticipantRole')->find(1);
+            $participant->setParticipantRole($role);
+            $participant->setStatus(Participant::STATUS_ACTIVE);
+            $participant->setLocale($request->getLocale());
+            $language = $em->getRepository('CyclogramProofPilotBundle:Language')->findOneByLocale($request->getLocale());
+            $participant->setParticipantLanguage($language);
+            $participant->setParticipantBasicInformation(false);
+            $em->persist( $participant);
             
+            $this->prelauncCmpaignRegistration($participant,$studyCode, $recruiter);
+            
+            return $this->redirect($this->generateUrl('_page', array(
+                    'studyUrl' => $studyCode,
+                    'preLaunch' => $this->get('translator')->trans("we_will_notify_prelaunch", array(), "study")
+            )));
         }
         
         return $this->redirect($this->generateUrl("_page", array('studyUrl' => $studyCode)));
+    }
+    
+    private function prelauncCmpaignRegistration($participant, $studyCode, $recruiter) {
+        $request = $this->getRequest();
+        $session = $request->getSession();
+        $em = $this->getDoctrine()->getManager();
+        $siteId = $session->get('referralSite');
+        $campaignId = $session->get('referralCampaign');
+        $session->remove('referralSite');
+        $session->remove('referralCampaign');
+        if(!$siteId || !$campaignId )
+            throw new \Exception("Could not reliably determine campaign and site from session. Cancelling registration");
+        
+        $campaign = $em->getRepository('CyclogramProofPilotBundle:Campaign')->find($campaignId);
+        $site = $em->getRepository('CyclogramProofPilotBundle:Site')->find($siteId);
+        
+        $participantLevelRepo = $em->getRepository('CyclogramProofPilotBundle:ParticipantLevel');
+        $participantLevel = $participantLevelRepo->findOneByParticipantLevelName('Pre-Launch');
+        
+        //Campaign
+        $ParticipantCampaignLinkCountData =  $em->getRepository('CyclogramProofPilotBundle:ParticipantCampaignLink')
+        ->findBy( array("participantCampaignLinkParticipantEmail"=>$participant->getParticipantEmail()) );
+        
+        $ParticipantCampaignLinkCount = ( is_array($ParticipantCampaignLinkCountData) ) ? count($ParticipantCampaignLinkCountData) : 0;
+        
+        $participantCampaignLinkId = CyclogramCommon::generateParticipantCampaignLinkID(
+                $participantLevel->getParticipantLevelId(),
+                $participant->getParticipantId(),
+                $campaign->getCampaignId(),
+                $ParticipantCampaignLinkCount
+        );
+        
+        //ParticipantCampaignLink
+        $uniqId = uniqid();
+        $campaignLinkCheck =$em->getRepository('CyclogramProofPilotBundle:Campaign')->checkIfIssetParticipanCampaigLink($studyCode,$campaignId, $siteId, $participant);
+        
+        $campaignLink = isset($campaignLinkCheck) ? $campaignLinkCheck : new \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantCampaignLink();
+        $campaignLink->setParticipant( $participant );
+        $campaignLink->setCampaign( $campaign );
+        $campaignLink->setParticipantLevel( $participantLevel );
+        $campaignLink->setParticipantSurveyLinkUniqid( $uniqId );
+        $campaignLink->setParticipantCampaignLinkId( $participantCampaignLinkId );
+        $campaignLink->setParticipantCampaignLinkParticipantEmail( $participant->getParticipantEmail() );
+        $campaignLink->setParticipantCampaignLinkIpAddress( $_SERVER['REMOTE_ADDR'] );
+        $campaignLink->setParticipantCampaignLinkDatetime( new \DateTime("now") );
+        $campaignSiteLink = $em->getRepository('CyclogramProofPilotBundle:CampaignSiteLink')->findOneBy(array('campaign' => $campaign,'site' => $site));
+        $campaignLink->setCampaignSiteLink($campaignSiteLink);
+        if($recruiter)
+            $campaignLink->setIsParticipantRecruiter(true);
+        else
+            $campaignLink->setIsParticipantRecruiter(false);
+        if($site)
+            $campaignLink->setSite( $site );
+        
+        $em->persist( $campaignLink );
+        $em->flush();
     }
 }
