@@ -453,7 +453,7 @@
                         {% else %}
                             {% if not is_granted('ROLE_PARTICIPANT') or not is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                                 <div>
-                                    <h1><span class="text">Let me know when this study launches</span></h1>
+                                    <h1><span class="text red">Let me know when this study launches</span></h1>
                                 </div>
                                 <div id="prelaunch_input_box">
                                     <input type="text" placeholder="enter e-mail address" id="prelaunch_email"></input><br>
