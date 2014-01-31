@@ -10,14 +10,46 @@ function g_login() {
     	    };
     gapi.auth.authorize(parameters, function(token) {
 
-        if(token)
+        if(token) {
+        	if ($("#recruiter").length > 0 || $("#recruiter_loggedin").length > 0){
+        		if ($("#recruiter").length > 0) {
+                	if ($('#recruiter').is(':checked')){
+                	    var recruiter =  1 ;
+                	} else {
+                		var recruiter =  0 ;
+                    }
+                }
+        		if ($("#recruiter_loggedin").length > 0){
+                	if ($('#recruiter').is(':checked')){
+                	    var recruiter =  1 ;
+                	} else {
+                		var recruiter =  0 ;
+                    }
+            	}
+        		if (typeof recruiter !== 'undefined') {
+        		    var path = '/{{ app.request.get('_locale') }}/doOauth/{{ studyCode }}/'+recruiter;
+        		    
+            	} else {
+            		var path = '{{ path("_do_oauth", {'studyCode' : studyCode}) }}';
+                }   
+        		var url = '{{ url("frontend_oauth_service_redirect", {
+                    service: "google", 
+                    studyCode: studyCode, 
+                    _destination: 'path'
+                    }) | raw
+                }}'
+                url = url.replace("isRecruiter", recruiter );
+                url = url.replace("path", path );
+                document.location = url;
+        	} else {
             document.location = "{{ url("frontend_oauth_service_redirect", {
                 service: "google", 
                 studyCode: studyCode, 
                 _destination: path("_do_oauth", {'studyCode' : studyCode}) 
                 }) | raw
             }}";
-
+        	}
+        }
 
         });
 }

@@ -4,23 +4,56 @@
                 FB.getLoginStatus(function(response) {
                     if (response.status === 'connected') {
                         // connected
-                        document.location = "{{ url("frontend_oauth_service_redirect", {
-                            service: "facebook", 
-                            studyCode: studyCode, 
-                            _destination: path("_do_oauth", {'studyCode' : studyCode}) 
-                            }) | raw
-                        }}";
+                    	if ($("#recruiter").length > 0 || $("#recruiter_loggedin").length > 0){
+                    		if ($("#recruiter").length > 0) {
+                            	if ($('#recruiter').is(':checked')){
+                            	    var recruiter =  1 ;
+                            	} else {
+                            		var recruiter =  0 ;
+                                }
+                            }
+                    		if ($("#recruiter_loggedin").length > 0){
+                            	if ($('#recruiter').is(':checked')){
+                            	    var recruiter =  1 ;
+                            	} else {
+                            		var recruiter =  0 ;
+                                }
+                        	}
+                    		if (typeof recruiter !== 'undefined') {
+                    		    var path = '/{{ app.request.get('_locale') }}/doOauth/{{ studyCode }}/'+recruiter;
+                    		    
+                        	} else {
+                        		var path = '{{ path("_do_oauth", {'studyCode' : studyCode}) }}';
+                            }   
+                    		var url = '{{ url("frontend_oauth_service_redirect", {
+                                service: "facebook", 
+                                studyCode: studyCode, 
+                                _destination: 'path'
+                                }) | raw
+                            }}'
+                            url = url.replace("isRecruiter", recruiter );
+                            url = url.replace("path", path );
+                            document.location = url;
+                    	} else {
+                            document.location = "{{ url("frontend_oauth_service_redirect", {
+                                service: "facebook", 
+                                studyCode: studyCode, 
+                                _destination: path("_do_oauth", {'studyCode' : studyCode}) 
+                                }) | raw
+                            }}";
+                    	}
                     } else {
                         // not_authorized
                         FB.login(
                                 function(response) {
                                     if (response.authResponse) {
-                                        document.location = document.location = "{{ url("frontend_oauth_service_redirect", {
-                                                service: "facebook", 
-                                                studyCode: studyCode, 
-                                                _destination: path("_do_oauth", {'studyCode' : studyCode}) 
-                                                }) | raw
-                                            }}";
+
+                                            document.location = "{{ url("frontend_oauth_service_redirect", {
+                                                    service: "facebook", 
+                                                    studyCode: studyCode, 
+                                                    _destination: path("_do_oauth", {'studyCode' : studyCode}) 
+                                                    }) | raw
+                                                }}";
                                     }
                                 },
                                 {scope: 'email, user_hometown, user_location'} 

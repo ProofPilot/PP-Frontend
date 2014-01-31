@@ -212,7 +212,16 @@ class StudyController extends Controller
         ->add('sendPass', 'submit', array(
                 'label' => 'btn_send_pass'))
                 ->getForm();
-
+        $studyContent = $this->getDoctrine()->getRepository("CyclogramProofPilotBundle:StudyContent")->getStudyContent($studyUrl, $locale);
+        $study = $studyContent->getStudy();
+        $status = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:Status')->find($study->getStatus());
+        $securityContext = $this->container->get('security.context');
+        if ($this->get('security.context')->isGranted("ROLE_USER") && $status == "Pre-Launch"){
+            $participant = $this->get('security.context')->getToken()->getUser();
+            $campaignLinkCheck = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:Campaign')->checkIfIssetParticipanCampaigLink($studyUrl,$campaignId, $siteId, $participant);
+            if(isset($campaignLinkCheck))
+                $this->parameters['preLaunchNotified'] = true;
+        }
         $this->parameters['form'] =  $form->createView();
         $this->parameters['formAbout'] =  $formAbout->createView();
         $this->parameters['formForgorUsername'] = $formForgorUsername->createView();

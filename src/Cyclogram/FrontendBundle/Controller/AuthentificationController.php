@@ -242,25 +242,31 @@ class AuthentificationController extends Controller
     
     
     /**
-     * @Route("/doOauth/{studyCode}/{surveyId}", name="_do_oauth", defaults={"studyCode"= null, "surveyId"=null})
+     * @Route("/doOauth/{studyCode}/{recruiter}", name="_do_oauth", defaults={"studyCode"= null, "recruiter" = null})
      * @Template()
      */
-    public function doOauthAction(Request $request, $studyCode, $surveyId){
+    public function doOauthAction(Request $request, $studyCode= null,$recruiter = null){
         $em = $this->getDoctrine()->getManager();
         $session = $request->getSession();
         $locale = $this->getRequest()->getLocale()?$this->getRequest()->getLocale():'en';
         $language = $em->getRepository('CyclogramProofPilotBundle:Language')->findOneByLocale($locale);
         
-        if($session->has('preLaunch')) {
-            $message = $session->get('preLaunch');
-            $this->prelauncCmpaignRegistration($participant, $studyCode, $recruiter);
-        }
+       
         
         if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
             return $this->redirect($this->generateUrl("_signup", array('error' => true)));
         }
         
         $participant = $this->get('security.context')->getToken()->getUser();
+        if($session->has('preLaunch')) {
+            $message = $session->get('preLaunch');
+            $session->remove('preLaunch');
+            $this->prelauncCmpaignRegistration($participant, $studyCode, $recruiter);
+            return $this->redirect($this->generateUrl('_page', array(
+                    'studyUrl' => $studyCode,
+                    'preLaunch' => $message
+            )));
+        }
         if ($session->has('confirmation') && !isset($studyCode)) {
             $this->confirmParticipantEmail($participant);
             $session->remove('confirmation');
@@ -836,6 +842,7 @@ class AuthentificationController extends Controller
         $param = $this->container->getParameter('hwi_oauth.target_path_parameter');
     
         $studyCode = $request->get('studyCode');
+        $recruiter = $request->get('recruiter');
         $extraParameters = array();
         if($studyCode)
             $extraParameters["state"] = $studyCode;
@@ -897,7 +904,11 @@ class AuthentificationController extends Controller
             $participant->setRecoveryPasswordCode('Default');
             $participnat_level = $em->getRepository('CyclogramProofPilotBundle:ParticipantLevel')->findOneByParticipantLevelName('Pre-Launch');
             $participant->setLevel($participnat_level);
+            $mailCode = substr(md5( md5( $participant->getParticipantEmail() . md5(microtime()))), 0, 4);
+            $participant->setParticipantEmailCode($mailCode);
             $participant->setParticipantEmailConfirmed(false);
+            $roles = array("ROLE_USER", "ROLE_PARTICIPANT");
+            $participant->setRoles($roles);
             $participant->setParticipantMobileSmsCodeConfirmed(false);
             $participant->setParticipantIncentiveBalance(0);
             $timezone = $em->getRepository('CyclogramProofPilotBundle:ParticipantTimeZone')->find(1);

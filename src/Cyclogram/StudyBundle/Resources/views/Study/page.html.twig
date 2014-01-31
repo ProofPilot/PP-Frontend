@@ -362,6 +362,7 @@
                 }
             	window.location.replace(url);
             });
+
         });
 </script>
 {% endblock javascripts %}
@@ -447,9 +448,11 @@
                   {% endif %}
                 </div>
                 <div class="video_text">
-                    {% if studyStatus  == 'Pre-Launch'%}
+                    {% if preLaunchNotified is defined  and  preLaunchNotified == true%}
+                        <span class="prelaunch_msg">we_will_notify_prelaunch</span>
+                    {% elseif studyStatus  == 'Pre-Launch'%}
                         {% if (queryParams["preLaunch"] is defined) %}
-                            <span class="prelaunch_msg">{{ queryParams["preLaunch"] }}</span></h1>
+                            <span class="prelaunch_msg">{{ queryParams["preLaunch"] }}</span>
                         {% else %}
                             {% if not is_granted('ROLE_PARTICIPANT') or not is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                                 <div>

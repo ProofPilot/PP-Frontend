@@ -54,9 +54,53 @@ class OAuth2UserProvider implements OAuthAwareUserProviderInterface
         
         //find user in database using email
         $participant = $this->userManager->getRepository("CyclogramProofPilotBundle:Participant")->findOneBy(array('participantEmail' => $email));
-        
+        $request = $this->container->get('request');
         //if participant does not existr and it was registration
         if (empty($participant)) {
+            $studyCode = $request->query->get('state');
+            if (!empty($studyCode)) {
+                $study = $this->userManager->getRepository("CyclogramProofPilotBundle:Study")->findOneByStudyCode($studyCode);
+                $studyStatus = $this->userManager->getRepository('CyclogramProofPilotBundle:Status')->find($study->getStatus());
+
+                if($studyStatus->getStatusName() == 'Pre-Launch') {
+                    $participant = new Participant();
+                    $participant->setParticipantEmail($email);
+                    $participant->setParticipantPassword(' ');
+                    $question = $this->userManager->getRepository('CyclogramProofPilotBundle:RecoveryQuestion')->find(1);
+                    $participant->setRecoveryQuestion($question);
+                    $participant->setRecoveryPasswordCode('Default');
+                    $participnat_level = $this->userManager->getRepository('CyclogramProofPilotBundle:ParticipantLevel')->findOneByParticipantLevelName('Lead');
+                    $participant->setLevel($participnat_level);
+                    $mailCode = substr(md5( md5( $participant->getParticipantEmail() . md5(microtime()))), 0, 4);
+                    $participant->setParticipantEmailCode($mailCode);
+                    $participant->setParticipantEmailConfirmed(false);
+                    $participant->setParticipantMobileSmsCodeConfirmed(false);
+                    $participant->setParticipantIncentiveBalance(0);
+                    $timezone = $this->userManager->getRepository('CyclogramProofPilotBundle:ParticipantTimeZone')->find(1);
+                    $participant->setParticipantTimezone($timezone);
+                    $participant->setParticipantLastTouchDatetime(new \DateTime(null, new \DateTimeZone($participant->getParticipantTimezone()->getParticipantTimezoneName())));
+                    $participant->setParticipantZipcode(' ');
+                    $role = $this->userManager->getRepository('CyclogramProofPilotBundle:ParticipantRole')->find(1);
+                    $participant->setParticipantRole($role);
+                    $participant->setStatus(Participant::STATUS_ACTIVE);
+                    $participant->setLocale($request->getLocale());
+                    $language = $this->userManager->getRepository('CyclogramProofPilotBundle:Language')->findOneByLocale($request->getLocale());
+                    $participant->setParticipantLanguage($language);
+                    switch($resourceOwnerName) {
+                        case "facebook":
+                            $participant->setRoles(array("ROLE_FACEBOOK_USER","ROLE_PARTICIPANT" ));
+                            break;
+                        case "google":
+                            $participant->setRoles(array("ROLE_GOOGLE_USER","ROLE_PARTICIPANT"));
+                            break;
+                    }
+                    $participant->setParticipantBasicInformation(false);
+                    $this->userManager->persist( $participant);
+                    $this->userManager->flush();
+                    $session->set('preLaunch', $this->container->get('translator')->trans("we_will_notify_prelaunch", array(), "study"));
+                    return $participant;
+                }
+            }
             $participant = new Participant();
             $participnat_level = $this->userManager->getRepository('CyclogramProofPilotBundle:ParticipantLevel')->findOneByParticipantLevelName('Lead');
             $participant->setLevel($participnat_level);
@@ -139,17 +183,22 @@ class OAuth2UserProvider implements OAuthAwareUserProviderInterface
             $participant->setParticipantLastTouchDatetime($date);
             $this->userManager->persist($participant);
             $this->userManager->flush();
-            $request = $this->container->get('request');
             $studyCode = $request->query->get('state');
             if (!empty($studyCode)) {
-                $logic = $this->container->get('study_logic');
-                
-                if ($session->has('SurveyInfo')){
-                    $bag = $session->get('SurveyInfo');
-                    $surveyId = $bag->get('surveyId');
-                    $saveId = $bag->get('saveId');
-                    if($studyCode != $bag->get('studyCode'))
-                        $logic->studyRegistration($participant, $studyCode, $surveyId, $saveId);
+                $study = $this->userManager->getRepository("CyclogramProofPilotBundle:Study")->findOneByStudyCode($studyCode);
+                $studyStatus = $this->userManager->getRepository('CyclogramProofPilotBundle:Status')->find($study->getStatus());
+                if($studyStatus->getStatusName() == 'Pre-Launch') {
+                    $session->set('preLaunch', $this->container->get('translator')->trans("login_to_prelaunch", array(), "study"));
+                } else {
+                    $logic = $this->container->get('study_logic');
+                    
+                    if ($session->has('SurveyInfo')){
+                        $bag = $session->get('SurveyInfo');
+                        $surveyId = $bag->get('surveyId');
+                        $saveId = $bag->get('saveId');
+                        if($studyCode != $bag->get('studyCode'))
+                            $logic->studyRegistration($participant, $studyCode, $surveyId, $saveId);
+                    }
                 }
             }
             return $participant;

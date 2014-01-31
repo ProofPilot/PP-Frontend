@@ -105,11 +105,11 @@ class SearchController extends Controller
             $termUpper = strtoupper($term);
             $em = $this->getDoctrine()->getEntityManager();
     
-            $repository = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:State');
+            $repository = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:Site');
     
             $qb = $repository->createQueryBuilder('s');
             $query = $qb
-            ->select('s.stateCode, s.stateId')
+            ->select('s.siteID, s.')
             ->where("UPPER(s.stateCode) like '%$termUpper%'")
             ->getQuery();
     
@@ -141,6 +141,24 @@ class SearchController extends Controller
         if ($request->isXmlHttpRequest()) {
             $data = $request->request->all();
             $country = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Country')->findOneByCountryName($data['country']);
+            
+            return new Response(json_encode(array('success' => true, 'currencySymbol' => $country->getCurrency()->getCurrencySymbol())));
+        }
+    }
+    
+    /**
+     * @Route("/search_organization_locations", name="searchOrganizationLocations", options={"expose"=true})
+     */
+    public function searchOrganizationLocationsAjaxAction(Request $request)
+    {
+        if ($request->isXmlHttpRequest()) {
+            $data = $request->request->all();
+            $em = $this->getDoctrine()->getEntityManager();
+            $organization = $em->getRepository('CyclogramProofPilotBundle:Organization')->findOneByOrganizationName($data['organization']);
+            $conn = $this->container->get('database_connection');
+            $rows = $conn->fetchAll('SELECT site_name,lat, lng, ( 3959 * acos( cos( radians(40) ) * cos( radians( lat ) ) * cos( radians( lng ) - radians(-80) ) + sin( radians(40) ) * sin( radians( lat ) ) ) ) AS distance  FROM site HAVING distance < 500 ORDER BY distance LIMIT 0 , 20;');
+            
+
             
             return new Response(json_encode(array('success' => true, 'currencySymbol' => $country->getCurrency()->getCurrencySymbol())));
         }
