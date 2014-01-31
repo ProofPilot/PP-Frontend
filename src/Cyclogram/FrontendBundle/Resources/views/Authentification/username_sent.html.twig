@@ -1,16 +1,10 @@
 {%  extends '::base.html.twig' %}
 
 {% block content %}
-		
-		
-		<div class="mobile_reg align_center log_in_now">
-			
-			<h1 class="stronger"><span>{% trans from "login" %}username_sent{% endtrans %}</span></h1>
-			
-			<div class="center_align">
-			 <button onclick=location.href='{{ path('_signup') }}' class="submit min_width">{% trans from "login" %}txt_login_button{% endtrans %}</button>
-			</div>
-			
-		</div>
-
+    <div class="mobile_reg align_center log_in_now username_sent_msg">
+        <h1 class="stronger"><span>{% trans from "login" %}username_sent{% endtrans %}</span></h1>
+        <div class="center_align">
+            <button onclick=location.href='{{ path('_signup') }}' class="submit min_width">{% trans from "login" %}txt_login_button{% endtrans %}</button>
+        </div>
+    </div>
 {% endblock content %}

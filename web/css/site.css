@@ -4038,7 +4038,7 @@ footer .row_2 p {
 	width: 25px !important;
 	height: 25px !important;
 }
-.mobile_reg.forgot_password, .mobile_reg.forgot_username {
+.mobile_reg.forgot_password, .mobile_reg.forgot_username, .mobile_reg.reset_link_msg, .mobile_reg.username_sent_msg, .mobile_reg.create_new_pass {
 	width: 400px;
 }
 #div_temporaty_unavailable {
