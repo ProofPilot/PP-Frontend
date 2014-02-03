@@ -752,6 +752,21 @@ class AuthentificationController extends Controller
         $em->persist($participant);
         $em->flush($participant);
         
+        //default contact time to SAT morning
+	        $contactTime = $em->getRepository('CyclogramProofPilotBundle:ParticipantContactTime')
+	        										->findOneByparticipantContactTimesName("time_morning");
+	        $em->getRepository('CyclogramProofPilotBundle:ParticipantContactTimeLink')
+	        						->updateParticipantContactTimeLink($participant, $contactTime, '6', true, true);
+	        $psr = $em->getRepository('CyclogramProofPilotBundle:ParticipantStudyReminder')
+	        						->findOneByparticipantStudyReminderName("reminder_study_task");
+	        $psrl = new ParticipantStudyReminderLink();
+	        $psrl->setParticipantStudyReminder($psr);
+	        $psrl->setParticipant($participant);
+	        $psrl->setByEmail(true);
+	        $em->persist($psrl);
+        //END
+        $em->flush();
+        
         $token = new UsernamePasswordToken($participant, null, 'main', $roles);
         $this->get('security.context')->setToken($token);
     }

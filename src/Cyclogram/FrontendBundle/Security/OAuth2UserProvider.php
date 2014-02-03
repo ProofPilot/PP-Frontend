@@ -28,6 +28,8 @@ use HWI\Bundle\OAuthBundle\OAuth\Response\UserResponseInterface;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Cyclogram\Bundle\ProofPilotBundle\Entity\Participant;
+use Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantContactTimeLink;
+use Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantStudyReminderLink;
 
 
 class OAuth2UserProvider implements OAuthAwareUserProviderInterface
@@ -166,7 +168,23 @@ class OAuth2UserProvider implements OAuthAwareUserProviderInterface
             }
             
             $this->userManager->persist($participant);
-            $this->userManager->flush();
+            $this->userManager->flush($participant);
+            
+            //default contact time to SAT morning
+            	$em = $this->userManager;
+		        $contactTime = $em->getRepository('CyclogramProofPilotBundle:ParticipantContactTime')
+		        										->findOneByparticipantContactTimesName("time_morning");
+		        $em->getRepository('CyclogramProofPilotBundle:ParticipantContactTimeLink')
+		        						->updateParticipantContactTimeLink($participant, $contactTime, '6', true, true);
+		        $psr = $em->getRepository('CyclogramProofPilotBundle:ParticipantStudyReminder')
+		        						->findOneByparticipantStudyReminderName("reminder_study_task");
+		        $psrl = new ParticipantStudyReminderLink();
+		        $psrl->setParticipantStudyReminder($psr);
+		        $psrl->setParticipant($participant);
+		        $psrl->setByEmail(true);
+		        $em->persist($psrl);
+		        $em->flush($psrl);
+	        //END
             
             return $participant;
         } else {
