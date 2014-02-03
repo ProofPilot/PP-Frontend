@@ -434,7 +434,7 @@
                 {% if studyAllowSharing %}
                     <ul class="social_share">
                         <li><span>Share:</span></li>
-                        <li><a href='' class="fb" onClick="return postFeed('{{ reffferalFacebookStudyUrl }}','{{ studycontent.studyName }}','{{ facebookcontent }}','{{ graphic }}')"></a></li>
+                        <li><a href='' class="fb" onClick="return postFeed('{{ reffferalFacebookStudyUrl }}','{{ studycontent.getStudyTagline }}','{{ facebookcontent }}','{{ graphic }}','{{ studycontent.getStudyName }}')"></a></li>
                         {% if reffferalShortStudyUrl is defined %}
                         <li><a href="#" onclick="popUp=window.open('https://twitter.com/share?url={{ reffferalShortStudyUrl }}&text={%  trans from "study" %}social_join_study{% endtrans %} {{ studycontent.studyName }} {%  trans from "study" %}social_at_proofpilot{% endtrans %}', 'popupwindow', 'scrollbars=yes,width=800,height=400');popUp.focus();return false" class="tw"></a></li>
                         <li><a class="ln" href="#" onclick="popUp=window.open('http://www.linkedin.com/shareArticle?mini=true&amp;url={{ reffferalShortStudyUrl }}&amp;title={{ studycontent.studyName }}&amp;summary={{ facebookcontent |raw }}', 'popupwindow', 'scrollbars=yes,width=600,height=450');popUp.focus();return false" ></a></li>
@@ -532,7 +532,7 @@
                     <div class="v_toolbar">
                     {% if studyAllowSharing %}
                         <ul class="social_share">
-                            <li><a href='' class="fb" onClick="return postFeed('{{ reffferalFacebookStudyUrl }}','{{ studycontent.studyName }}','{{ facebookcontent }}','{{ graphic }}')"> {% trans from "study" %}txt_share{% endtrans %}</a></li>
+                            <li><a href='' class="fb" onClick="return postFeed('{{ reffferalFacebookStudyUrl }}','{{ studycontent.getStudyTagline }}','{{ facebookcontent }}','{{ graphic }}','{{ studycontent.getStudyName }}')"> {% trans from "study" %}txt_share{% endtrans %}</a></li>
                         {% if reffferalShortStudyUrl is defined %}
                             <li><a href="#" onclick="popUp=window.open('https://twitter.com/share?url={{ reffferalShortStudyUrl }}&text={%  trans from "study" %}social_join_study{% endtrans %} {{ studycontent.studyName }} {%  trans from "study" %}social_at_proofpilot{% endtrans %}', 'popupwindow', 'scrollbars=yes,width=800,height=400');popUp.focus();return false" class="tw">{% trans from "study" %}txt_tweet{% endtrans %}</a></li>
                             <li><a class="ln" href="#" onclick="popUp=window.open('http://www.linkedin.com/shareArticle?mini=true&amp;url={{ reffferalShortStudyUrl }}&amp;title={{ studycontent.studyName }}&amp;summary={{ facebookcontent |raw }}', 'popupwindow', 'scrollbars=yes,width=600,height=450');popUp.focus();return false" >{% trans from "study" %}txt_share{% endtrans %}</a></li>

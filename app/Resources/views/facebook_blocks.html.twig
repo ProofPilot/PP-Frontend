@@ -74,10 +74,11 @@
             }
 
 
-            function postFeed(link, title,description, image ){
+            function postFeed(link, title,description, image, name ){
 
                     FB.ui({method: 'feed',
                 picture: image ,
+                name: name,
                 link: link,
                 caption: title,
                 description: description,
