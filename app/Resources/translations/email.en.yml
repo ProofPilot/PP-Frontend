@@ -11,6 +11,7 @@ email_login: 'Login to ProofPilot'
 email_not_send_try_later: 'E-mail not sent try later'
 email_reset_password: 'Reset Your Password'
 email_title_notice: 'Did you forget to verify your e-mail address? '
+email_title_prelaunch: email_title_prelaunch   # FIXME
 email_title_verify: 'Please Verify Your E-mail Address'
 email_to_friends_add_email: 'Add another e-mail'
 email_to_friends_cancle: Cancel
@@ -30,6 +31,7 @@ link_below_to_confirm: 'If for some reason, you can''t click button, use link be
 message_from: 'Message from'
 notice_verification: 'Verifying your e-mail starts your journey as a participant in research studies.'
 notice_verification_text: "Hey, this is ProofPilot. We noticed you haven’t confirmed your e-mail address. Why confirm your e-mail address? Some studies require it for participation. Others require it in order to get valuable incentives. \n<p>\nStart your journey with ProofPilot by verifying your e-mail address today."
+prelaunch_let_know: prelaunch_let_know
 reset_pass_link: 'Click here to reset your password'
 reset_pass_text: 'Yes, it happens to all of us: you can''t remember your password. That''s OK. Click this link to reset your password'
 reset_pass_title: 'Reset Your Password'

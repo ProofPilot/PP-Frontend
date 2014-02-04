@@ -11,6 +11,7 @@ email_login: 'Ingresa para ProofPilot'
 email_not_send_try_later: 'El correo electrónico no enviado intentarlo más tarde'
 email_reset_password: 'Restablecer la contraseña'
 email_title_notice: 'Olvídese de verificar su dirección de correo electrónico con ProofPilot?'
+email_title_prelaunch: email_title_prelaunch   # FIXME
 email_title_verify: 'Verifique por favor su dirección de correo electrónico'
 email_to_friends_add_email: 'Añadir otra dirección de correo'
 email_to_friends_cancle: Cancelar
@@ -30,6 +31,7 @@ link_below_to_confirm: 'Si por alguna razón, no se puede hacer clic el botón, 
 message_from: Mensaje
 notice_verification: 'Verificación de su dirección de e-mail comienza su viaje como un participante en los estudios de investigación.'
 notice_verification_text: "Oye, esto es ProofPilot. Hemos notado que no has confirmado tu dirección de correo electrónico. ¿Por confirmar su dirección de correo electrónico? Algunos estudios lo requieran para la participación. Otros requieren que el fin de obtener incentivos valiosos. \n<p> \nComience su viaje con ProofPilot verificando su dirección de correo electrónico hoy en día."
+prelaunch_let_know: prelaunch_let_know
 reset_pass_link: 'Haga clic aquí para restablecer su contraseña'
 reset_pass_text: 'Sí, le sucede a todos nosotros: que no puede recordar su contraseña. Eso está bien. Haga clic en este enlace para restablecer tu contraseña'
 reset_pass_title: 'Restablecer la contraseña'

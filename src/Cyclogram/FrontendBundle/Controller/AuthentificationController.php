@@ -789,7 +789,7 @@ class AuthentificationController extends Controller
             $participant->setParticipantEmailCode($parameters['code']);
             $em->persist($participant);
             $em->flush($participant);
-            if (!empty($studyCodey))
+            if (!empty($studyCode))
                 $parameters['studyCode'] = $studyCode;
             $parameters['email'] = $participant->getParticipantEmail();
     
@@ -1004,5 +1004,32 @@ class AuthentificationController extends Controller
         
         $em->persist( $campaignLink );
         $em->flush();
+        
+        $cc = $this->get('cyclogram.common');
+        $embedded = array();
+        $embedded = $cc->getEmbeddedImages();
+            if (!empty($studyCode))
+                $parameters['studyCode'] = $studyCode;
+            $parameters['email'] = $participant->getParticipantEmail();
+            $parameters['studyName'] = $studyCode;
+            $studyContent = $em->getRepository('CyclogramProofPilotBundle:StudyContent')->findOneBy(
+            		array("studyId" => $campaignLink->getCampaign()->getPlacement()->getStudy()->getStudyId(),
+            			  "language" => $participant->getParticipantLanguage()->getLanguageId()));
+            $parameters['study_logo'] = $this->container->getParameter('study_image_url') . '/' .
+             $campaignLink->getCampaign()->getPlacement()->getStudy()->getStudyId() . '/' .$studyContent->getStudyGraphic();
+    
+            $parameters['locale'] = $locale = $participant->getLocale() ? $participant->getLocale() : $request->getLocale();
+            $parameters['host'] = $this->container->getParameter('site_url');
+            $parameters["studies"] = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:Study')->getRandomStudyInfo($locale, $participant);
+    
+            $cc->sendMail(null,
+                    $participant->getParticipantEmail(),
+                    $this->get('translator')->trans("email_title_prelaunch", array(), "email", $parameters['locale']),
+                    'CyclogramFrontendBundle:Email:email_prelaunch_confirmation.html.twig',
+                    null,
+                    $embedded,
+                    true,
+                    $parameters);
+        
     }
 }

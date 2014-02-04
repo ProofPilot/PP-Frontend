@@ -11,6 +11,7 @@ email_login: 'Entre para ProofPilot'
 email_not_send_try_later: 'E-mail não enviado tente mais tarde'
 email_reset_password: 'Redefinir sua senha'
 email_title_notice: 'Título do aviso E-mail'
+email_title_prelaunch: email_title_prelaunch   # FIXME
 email_title_verify: 'Por favor, verifique seu e-mail'
 email_to_friends_add_email: 'Adicionar outro e-mail'
 email_to_friends_cancle: Cancelar
@@ -30,6 +31,7 @@ link_below_to_confirm: 'Se por algum motivo, você não pode clicar no botão, u
 message_from: 'Mensagem do'
 notice_verification: 'Verificando o seu e-mail começa sua jornada como um participante em estudos de investigação.'
 notice_verification_text: "Ei, isso é ProofPilot. Notamos que você ainda não confirmou seu endereço de e-mail. Por confirmar seu endereço de e-mail? Alguns estudos necessitam dele para a participação. Outros exigem que, a fim de obter incentivos valiosos. \n<p> \nComece sua viagem com ProofPilot verificando seu endereço de e-mail hoje."
+prelaunch_let_know: prelaunch_let_know
 reset_pass_link: 'Clique aqui para redefinir sua senha'
 reset_pass_text: 'Sim, isso acontece com todos nós: você não lembra da sua senha. Isso é OK. Clique neste link para redefinir sua senha'
 reset_pass_title: 'Redefinir sua senha'
