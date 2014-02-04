@@ -28,8 +28,7 @@ class Version20140204111050 extends AbstractMigration
 									`study_id`,
 									`intervention_incentive_amount`,
 									`intervention_expiration_period`,
-									`intervention_expiration_date`,
-    								`intervention_parameters`)
+									`intervention_expiration_date`)
 									VALUES
 									((SELECT language_id FROM `new-proofpilot`.language where language_name = 'English'),
 									'Video intervention',
