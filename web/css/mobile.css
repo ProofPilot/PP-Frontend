@@ -1547,7 +1547,7 @@ div.checker input {
     clear: both;
     float: left;
     position: relative;
-    width: 350px;
+    width: 40%;
     z-index: 15;
 }
 #div_location .mobile_reg .popup_sidebar .maps_search {
@@ -1678,11 +1678,9 @@ div.checker input {
     box-sizing: border-box;
     float: right;
     height: 563px;
-    margin-top: -553px;
     overflow: hidden;
-    padding-left: 350px;
     position: relative;
-    width: 100%;
+    width: 60%;
 }
 #div_location .modal_close_btn {
 	right: 15px;
