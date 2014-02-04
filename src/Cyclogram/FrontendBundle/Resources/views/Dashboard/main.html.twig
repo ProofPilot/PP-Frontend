@@ -295,6 +295,17 @@
                     open: funcCustom
                 });
             });
+            $('a.video').bind('click', function(e) {
+                e.preventDefault();
+                $('div.div_video').dialog({
+                    modal: true,
+                    width: 'auto',
+                    fluid: true,
+                    resizable: false,
+                    position: ['top',100],
+                    open: funcCustom
+                });
+            });
             $('.left_menu .first').hover(function() {
                 $(this).find('.share_slide').slideDown('slow');
             }, function() {
@@ -434,7 +445,7 @@
                                     <div class="mobile featured_box_s_desc">
                                         <p>{{ intervention.content | raw }}</p>
                                     </div>
-                                    {% if intervention.url is defined and intervention.url is not empty%}
+                                    {% if intervention.url is defined and intervention.url is not empty and intervention.type != 'Video'%}
                                         <div class="button_box"> <a href="{{ intervention.url }}"><span>{% trans from "dashboard" %}do_it{% endtrans %}</span></a> </div> 
                                     {% endif %}
                                     {% if intervention.type == 'Pledge' %}
@@ -480,6 +491,14 @@
                                     </div>
                                     <div id="mobile_phone_confirm_popup" style="display: none;">
                                         {% include 'CyclogramFrontendBundle:GeneralSettings:mobile_phone_confirm_form.html.twig' %}
+                                    </div>
+                                    {% endif %}
+                                    {% if intervention.type == 'Video' %}
+                                    <div class="button_box"> <a href="#" class="video"><span>{% trans from "dashboard" %}do_it{% endtrans %}</span></a> </div>
+                                    <div class="div_video" style="display:none;">
+                                        <iframe width="670" height="393" 
+					                        src="{{ intervention.url }}" frameborder="0" allowfullscreen>
+					                    </iframe>
                                     </div>
                                     {% endif %}
                                 </div>

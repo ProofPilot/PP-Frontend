@@ -398,6 +398,7 @@ class DashboardController extends Controller
         $typeName = $interventionLink->getIntervention()->getInterventionType()->getInterventionTypeName(); 
         switch($typeName) {
             case 'Activity':
+            case 'Video':
                 return $intervention->getInterventionUrl();
             case 'Survey & Observation':
                 $surveyId = $intervention->getSidId();

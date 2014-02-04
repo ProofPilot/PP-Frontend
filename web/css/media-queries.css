@@ -526,6 +526,12 @@
 	#div_location .mobile_reg {
 		width: 100%;
 	}
+	#div_location .mobile_reg .popup_sidebar {
+		width: 50%;
+	}
+	#div_location .mobile_reg .popup_map {
+		width: 50%;
+	}
 }
 
 /* @media screen and (max-width: 900px) */ 
@@ -565,7 +571,6 @@
 	.panel .panel_left .menu_cont h2, .panel .panel_left .menu_cont ul.left_menu li a.icon_dashboard {
 		font-size: 16px !important;
 	}
-
 }
 
 /* @media screen and (max-width: 880px) */ 
@@ -577,7 +582,6 @@
 	footer .footer_col_right ul li {
 		margin-left: 15px;
 	}
-	
 }
 
 /* @media screen and (max-width: 860px) */ 
@@ -926,7 +930,12 @@
     	height: 40px;
     	line-height: 40px;
 	}
-	
+	#div_location .mobile_reg .popup_sidebar {
+		width: 55%;
+	}
+	#div_location .mobile_reg .popup_map {
+		width: 45%;
+	}
 }
 
 /* @media screen and (max-width: 780px) */ 
@@ -1189,7 +1198,6 @@
 		font-size: 13px;
 		margin-left: 15px;
 	}
-	
 }
 
 /* @media screen and (max-width: 730px) */ 
@@ -1573,7 +1581,7 @@
 	}
 	#div_location .mobile_reg .popup_map {
 		margin-top: 0px;
-		height: auto;
+		width: 100%;
 		padding-left: 15px;
 	}
 	#div_location .mobile_reg .popup_sidebar .results ul li .info_box {
@@ -1593,6 +1601,9 @@
 	}
 	#div_location .mobile_reg .info_box .text_cont a.close, #div_location .mobile_reg .info_box .text_cont h1 {
 		display: none;
+	}
+	#div_location {
+		width: 500px !important;
 	}
 }
 
@@ -2291,7 +2302,6 @@
 	.popup_content #popup_text .content_text textarea {
 		height: 90px;
 	}
-	
 }
 
 /* @media screen and (max-width: 620px) */ 
@@ -2514,7 +2524,9 @@
 		padding: 0px;
 		margin-bottom: 10px;
 	}
-	
+	#div_location {
+		width: 400px !important;
+	}
 }
 
 /* @media screen and (max-width: 535px) */ 
@@ -2604,7 +2616,9 @@
     .intro_page .text_wrapper .home_text .see_more .col2 {
         width: 100%;
     }
-	
+	#div_location {
+		width: 320px !important;
+	}
 }
 
 /* @media screen and (max-width: 460px) */
@@ -2724,7 +2738,6 @@
 		margin: 0px;
 		margin-bottom: 20px;
 	}
-
 }
 
 /* @media screen and (max-width: 400px) */ 
@@ -2781,5 +2794,8 @@
 	.panel .panel_right .dashboard_panel.wider ul.study_info li.text h1  {
 		font-size: 20px;
 	}
-	
+	#div_location {
+		width: 275px !important;
+		margin: 0px 15px;
+	}
 }
