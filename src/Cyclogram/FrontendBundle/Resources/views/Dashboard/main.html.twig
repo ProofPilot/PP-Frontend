@@ -269,18 +269,21 @@
                     }
                 });
             });
+
             $('.close').bind('click', function(e) {
                 $('#pledge_popup').dialog('close');
                 $('#div_location').dialog('close');
             });
+            
             $('.icon_logout').click(function() {
                 {% if is_granted('ROLE_FACEBOOK_USER') %}
                     fbLogout();
                 {% elseif is_granted('ROLE_GOOGLE_USER') %}
                     gLogout();
                 {% endif %}
-                    window.location=Routing.generate('_logout');
+                window.location=Routing.generate('_logout');
             });
+            
             $('#location').bind('click', function(e) {
                 e.preventDefault();
                 $('#div_location').dialog({
