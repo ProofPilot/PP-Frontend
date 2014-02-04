@@ -11,8 +11,8 @@
             <div class="maps_search">
                 <form>
                     <p class="input_note">Input your locations to search</p>
-                    <input type="text" name="" placeholder="Zip code or city & state, etc." class="text"/>
-                    <a href="#" class="submit_form">SEARCH</a>
+                    <input id="search_map_string" type="text" name="" placeholder="Zip code or city & state, etc." class="text"/>
+                    <a href="#" id="zip_search" class="submit_form">SEARCH</a>
                 </form>
             </div>
             <div class="mobile_switcher">
@@ -81,6 +81,7 @@
               mapTypeId: 'roadmap',
               mapTypeControlOptions: {style: google.maps.MapTypeControlStyle.DROPDOWN_MENU}
             });
+            google.maps.event.trigger( map, 'resize' );
 //            infoWindow = new google.maps.InfoWindow();
 
 //            locationSelect = document.getElementById("locationSelect");
@@ -102,6 +103,20 @@
 //            	$(this).parents('.text_left').siblings('.info_box').hide();
 //            }
 //        });
+
+        $('#location').on('click', function(e) {
+                e.preventDefault();
+                $('#div_location').dialog({
+                    modal: true,
+                    width: 'auto',
+                    fluid: true,
+                    resizable: false,
+                    position: ['top',100],
+                    open: funcCustom
+                });
+                load();
+        });
+
         $('.location_details').bind('click', function(e){
         	e.preventDefault();
             $.ajax({
@@ -121,10 +136,12 @@
         	e.preventDefault();
             $('.info_box').hide();
         });
+        
         $('.text_right a').bind('click', function(e) {
         	e.preventDefault();
             $(this).toggleClass('select_btn');
         });
+        
         $('.mobile_switcher a').bind('click', function(e) {
         	e.preventDefault();
         	if($(this).hasClass('contacts')) {
@@ -137,7 +154,14 @@
             $(this).addClass('active');
             $(this).siblings().removeClass('active');
         });
-        load();
+
+        $('#zip_search').on('click', function(e) {
+            e.preventDefault();
+            alert($('#search_map_string').val());
+
+
+        });
+
     });
 
 </script>

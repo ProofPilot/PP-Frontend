@@ -8,16 +8,18 @@
     <script src="{{ asset('js/jquery-ui-1.10.3/jquery.ui.datepicker.min.js') }}"></script>
     <script src="{{ asset('js/jquery.autocomplete.min.js') }}"></script>
     <script src="{{ asset('/js/jquery.form.js') }}"></script>
-    <script type="text/javascript" > 
+    <script type="text/javascript" >
+        function funcCustom() {
+            $(this).dialog("widget").find(".ui-dialog-titlebar").hide();
+            $('<div class="modal_close_btn">×</div>').appendTo($(this));
+            $('.modal_close_btn, .cancel a, .btn_cancel').on('click', function(e) {
+                e.preventDefault();
+                $(this).closest('.ui-dialog-content').dialog("close");
+            });
+        } 
+        
         $(document).ready(function(){
-            function funcCustom() {
-                $(this).dialog("widget").find(".ui-dialog-titlebar").hide();
-                $('<div class="modal_close_btn">×</div>').appendTo($(this));
-                $('.modal_close_btn, .cancel a, .btn_cancel').on('click', function(e) {
-                    e.preventDefault();
-                    $(this).closest('.ui-dialog-content').dialog("close");
-                });
-            }
+
             //mail to friends
             $('.email').bind('click', function(e) {
                 e.preventDefault();
@@ -284,17 +286,7 @@
                 window.location=Routing.generate('_logout');
             });
             
-            $('#location').bind('click', function(e) {
-                e.preventDefault();
-                $('#div_location').dialog({
-                    modal: true,
-                    width: 'auto',
-                    fluid: true,
-                    resizable: false,
-                    position: ['top',100],
-                    open: funcCustom
-                });
-            });
+
             $('a.video').bind('click', function(e) {
                 e.preventDefault();
                 $('div.div_video').dialog({
