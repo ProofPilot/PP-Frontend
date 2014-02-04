@@ -78,7 +78,7 @@ class DefaultParticipantStudy extends AbstractStudy
         $shippingInformationintervention = $em
         ->getRepository('CyclogramProofPilotBundle:Intervention')->findOneByInterventionCode('DefaultParticipantShippingInformation');
         $existshippingInformation = $studies = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')
-            ->checkIfExistParticipantInterventionLink($shippingInformationintervention-> getInterventionCode(), $participant->getParticipantId());
+            ->checkIfExistParticipantInterventionLink($shippingInformationintervention->getInterventionCode(), $participant->getParticipantId());
         $studies = $em->getRepository('CyclogramProofPilotBundle:Participant')
         ->getEnrolledStudies($participant);
         foreach ($studies as $st) {
