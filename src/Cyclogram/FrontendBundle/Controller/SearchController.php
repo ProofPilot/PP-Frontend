@@ -147,20 +147,43 @@ class SearchController extends Controller
     }
     
     /**
-     * @Route("/search_organization_locations", name="searchOrganizationLocations", options={"expose"=true})
+     * @Route("/search_organization_locations", name="searchOrganizationLocations", options={"expose"=true}, defaults={"_format" = "xml"})
      */
     public function searchOrganizationLocationsAjaxAction(Request $request)
     {
-        if ($request->isXmlHttpRequest()) {
+//         if ($request->isXmlHttpRequest()) {
             $data = $request->request->all();
             $em = $this->getDoctrine()->getEntityManager();
-            $organization = $em->getRepository('CyclogramProofPilotBundle:Organization')->findOneByOrganizationName($data['organization']);
-            $conn = $this->container->get('database_connection');
-            $rows = $conn->fetchAll('SELECT site_name,lat, lng, ( 3959 * acos( cos( radians(40) ) * cos( radians( lat ) ) * cos( radians( lng ) - radians(-80) ) + sin( radians(40) ) * sin( radians( lat ) ) ) ) AS distance  FROM site HAVING distance < 500 ORDER BY distance LIMIT 0 , 20;');
+            //$organization = $em->getRepository('CyclogramProofPilotBundle:Organization')->findOneByOrganizationName($data['organization']);
             
+            $lng = $request->get("lng");
+            $lat = $request->get("lat");
+            $radius = $request->get('radius');
+
+            $conn = $this->container->get('database_connection');
+            
+            $sql = 'SELECT location_name, location_address1, location_address2, location_latitude, location_longitude, ( 3959 * acos( cos( radians('.$lat.') ) * cos( radians( location_latitude ) ) * cos( radians( location_longitude ) - radians('.$lng.') ) + sin( radians(location_latitude) ) * sin( radians( '.$lat.' ) ) ) ) AS distance  FROM location HAVING distance < '.$radius.' ORDER BY distance LIMIT 0 , 10;';
+            $rows = $conn->fetchAll($sql);
+            
+            // Start XML file, create parent node
+            $dom = new \DOMDocument("1.0");
+            $node = $dom->createElement("markers");
+            $parnode = $dom->appendChild($node);
+            foreach($rows as $row) {
+                $node = $dom->createElement("marker");
+                $newnode = $parnode->appendChild($node);
+                $newnode->setAttribute("name", $row['location_name']);
+                $newnode->setAttribute("address", $row['location_address1']);
+                $newnode->setAttribute("lat", $row['location_latitude']);
+                $newnode->setAttribute("lng", $row['location_longitude']);
+                $newnode->setAttribute("distance", $row['distance']);
+            }
+            
+            $xml = $dom->saveXML();
+             
 
             
-            return new Response(json_encode(array('success' => true, 'currencySymbol' => $country->getCurrency()->getCurrencySymbol())));
-        }
+            return new Response($xml);
+//         }
     }
 }

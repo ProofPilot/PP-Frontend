@@ -1,19 +1,23 @@
 <style type="text/css">
   #map { height: 100% }
 </style>
+<!--  insert some handlebars -->
+{% javascripts output='js/hbs/my-handlebars-templates.js'
+    '@CyclogramFrontendBundle/Resources/public/hbs/*.hbs'
+%}
+<script type="text/javascript" src="{{ asset_url }}"></script>
+{% endjavascripts %}
 <div class="mobile_reg login_form ontop wide_popup with_map">
     <div class="wrapper">
         <div class="popup_header">
             <h1>LOCATIONS</h1>
-            <span>near New York, NY</span>
+            <span>near <span id="current_location">New York, NY</span></span>
         </div>
         <div class="popup_sidebar">
             <div class="maps_search">
-                <form>
                     <p class="input_note">Input your locations to search</p>
                     <input id="search_map_string" type="text" name="" placeholder="Zip code or city & state, etc." class="text"/>
-                    <a href="#" id="zip_search" class="submit_form">SEARCH</a>
-                </form>
+                    <a href="#" id="search_button" class="submit_form">SEARCH</a>
             </div>
             <div class="mobile_switcher">
                 <a href="#" class="contacts active">CONTACTS</a>
@@ -67,6 +71,19 @@
 </div>        
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAgFoz3VYlZpWVsuIKfplU6c0yr8VaaoMc&sensor=false"></script>
 <script type="text/javascript">
+
+/* Register handlebars templates */
+ 
+    var row = Handlebars.templates['row.hbs'];
+    Handlebars.registerPartial("row", row); 
+
+    var clinicsTable = Handlebars.templates['clinicsTable.hbs'];
+
+
+
+
+
+                    
     $(document).ready(function(){
         
         var map;
@@ -76,13 +93,12 @@
             
         function load() {
             map = new google.maps.Map(document.getElementById("map"), {
-              center: new google.maps.LatLng(40, -100),
-              zoom: 4,
+              center: new google.maps.LatLng(34.0931, -118.3783),
+              zoom: 10,
               mapTypeId: 'roadmap',
               mapTypeControlOptions: {style: google.maps.MapTypeControlStyle.DROPDOWN_MENU}
             });
-            google.maps.event.trigger( map, 'resize' );
-//            infoWindow = new google.maps.InfoWindow();
+            infoWindow = new google.maps.InfoWindow();
 
 //            locationSelect = document.getElementById("locationSelect");
 //            locationSelect.onchange = function() {
@@ -155,13 +171,141 @@
             $(this).siblings().removeClass('active');
         });
 
-        $('#zip_search').on('click', function(e) {
+        function searchLocations() {
+            var address = $("#search_map_string").val();
+            var geocoder = new google.maps.Geocoder();
+            geocoder.geocode({address: address}, function(results, status) {
+              if (status == google.maps.GeocoderStatus.OK) {
+            	  $('#current_location').html(results[0].formatted_address);
+                  var center = results[0].geometry.location;
+                  searchLocationsNear(center);
+              } else {
+                alert(address + ' not found');
+              }
+            });
+        }
+        
+        $('#search_map_string').keyup(function(e){
+            if(e.keyCode == 13)
+            {
+                searchLocations();
+            }
+        });
+        
+        $('#search_button').on('click', function(e){
             e.preventDefault();
-            alert($('#search_map_string').val());
-
-
+            searchLocations();
         });
 
+
+
+        function searchLocationsNear(center) {
+        	  //clearLocations();
+
+        	  $.ajax({
+                  dataType: "text",
+                  type: "POST",
+                  url: Routing.generate('searchOrganizationLocations', {lat: center.lat(), lng: center.lng(), radius: 0.2, _locale: '{{ app.request.locale }}'}),
+              })
+              .done (function(data) {
+            	  var xml = parseXml(data);
+            	  var markerNodes = xml.documentElement.getElementsByTagName("marker");
+            	  var bounds = new google.maps.LatLngBounds();
+
+                  var data = new Array();
+                  data.rows = new Array();
+
+                  
+ 
+            	  
+            	  for (var i = 0; i < markerNodes.length; i++) {
+              	    var name = markerNodes[i].getAttribute("name");
+              	    var address = markerNodes[i].getAttribute("address");
+              	    var distance = parseFloat(markerNodes[i].getAttribute("distance"));
+              	    var latlng = new google.maps.LatLng(
+              	        parseFloat(markerNodes[i].getAttribute("lat")),
+              	        parseFloat(markerNodes[i].getAttribute("lng")));
+
+              	    //createOption(name, distance, i);
+              	    createMarker(latlng, name, address);
+              	    bounds.extend(latlng);
+
+                    data.rows.push(
+                            { 
+                              organization: {
+                            	    organizationName: name,
+                            	    organizationAddress1: address,
+                            	    organizationAddress2: ''
+                                  }
+                            }
+                    );
+              	  }
+            	  bounds.extend(new google.maps.LatLng(
+                	        parseFloat(center.lat()),
+                  	        parseFloat(center.lng())));
+              	  
+            	  map.fitBounds(bounds);
+            	  if(markerNodes.length == 0)
+            		    map.setZoom(10);
+
+            	  //replace organizations table
+            	  var html = clinicsTable(data);
+                  $('div.results ul').html(html);
+            	  
+              });
+
+        }
+
+        //create Marker function
+        function createMarker(latlng, name, address) {
+        	  var html = "<b>" + name + "</b> <br/>" + address;
+        	  var marker = new google.maps.Marker({
+        	    map: map,
+        	    position: latlng
+        	  });
+        	  google.maps.event.addListener(marker, 'click', function() {
+        	    infoWindow.setContent(html);
+        	    infoWindow.open(map, marker);
+        	  });
+        	  markers.push(marker);
+        }
+
+/*        function createOption(name, distance, num) {
+        	  var option = document.createElement("option");
+        	  option.value = num;
+        	  option.innerHTML = name + "(" + distance.toFixed(1) + ")";
+        	  locationSelect.appendChild(option);
+        }
+*/
+        function clearLocations() {
+        	  infoWindow.close();
+        	  for (var i = 0; i < markers.length; i++) {
+        	    markers[i].setMap(null);
+        	  }
+        	  markers.length = 0;
+
+        	  //locationSelect.innerHTML = "";
+        	  //var option = document.createElement("option");
+        	  //option.value = "none";
+        	  //option.innerHTML = "See all results:";
+        	  //locationSelect.appendChild(option);
+        	  //locationSelect.style.visibility = "visible";
+        }
+
+        function parseXml(str) {
+            if (window.ActiveXObject) {
+              var doc = new ActiveXObject('Microsoft.XMLDOM');
+              doc.loadXML(str);
+              return doc;
+            } else if (window.DOMParser) {
+              return (new DOMParser).parseFromString(str, 'text/xml');
+            }
+          }
+
+          function doNothing() {}
+
+        
+        
     });
 
 </script>

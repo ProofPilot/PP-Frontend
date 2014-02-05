@@ -52,3 +52,7 @@ parameters:
     email_verifier_url: http://api.verify-email.org/api.php?
     email_verifier_username: ProofPilot
     email_verifier_password: CycloPP13
+    
+    #handlebars configuration
+    handlebars.extension: "\.hbs$"
+    handlebars.bin: /usr/bin/handlebars
