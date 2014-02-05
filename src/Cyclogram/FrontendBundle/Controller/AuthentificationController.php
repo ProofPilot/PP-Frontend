@@ -1011,7 +1011,7 @@ class AuthentificationController extends Controller
             if (!empty($studyCode))
                 $parameters['studyCode'] = $studyCode;
             $parameters['email'] = $participant->getParticipantEmail();
-            $parameters['studyName'] = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneBystudyCode($studyCode)->getStudyName();
+            $parameters['studyName'] = $studyCode; //$em->getRepository('CyclogramProofPilotBundle:Study')->findOneBystudyCode($studyCode)->getStudyName();
             $studyContent = $em->getRepository('CyclogramProofPilotBundle:StudyContent')->findOneBy(
             		array("studyId" => $campaignLink->getCampaign()->getPlacement()->getStudy()->getStudyId(),
             			  "language" => $participant->getParticipantLanguage()->getLanguageId()));
