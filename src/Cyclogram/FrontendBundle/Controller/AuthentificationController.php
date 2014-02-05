@@ -1011,7 +1011,7 @@ class AuthentificationController extends Controller
             if (!empty($studyCode))
                 $parameters['studyCode'] = $studyCode;
             $parameters['email'] = $participant->getParticipantEmail();
-            $parameters['studyName'] = $studyCode;
+            $parameters['studyName'] = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneBystudyCode($studyCode)->getStudyName();
             $studyContent = $em->getRepository('CyclogramProofPilotBundle:StudyContent')->findOneBy(
             		array("studyId" => $campaignLink->getCampaign()->getPlacement()->getStudy()->getStudyId(),
             			  "language" => $participant->getParticipantLanguage()->getLanguageId()));
@@ -1024,7 +1024,7 @@ class AuthentificationController extends Controller
     
             $cc->sendMail(null,
                     $participant->getParticipantEmail(),
-                    $this->get('translator')->trans("email_title_prelaunch", array(), "email", $parameters['locale']),
+                    $this->get('translator')->trans("email_title_prelaunch", array('%studyName%' => $parameters['studyName']), "email", $parameters['locale']),
                     'CyclogramFrontendBundle:Email:email_prelaunch_confirmation.html.twig',
                     null,
                     $embedded,
