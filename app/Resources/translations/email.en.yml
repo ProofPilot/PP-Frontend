@@ -11,7 +11,7 @@ email_login: 'Login to ProofPilot'
 email_not_send_try_later: 'E-mail not sent try later'
 email_reset_password: 'Reset Your Password'
 email_title_notice: 'Did you forget to verify your e-mail address? '
-email_title_prelaunch: email_title_prelaunch   # FIXME
+email_title_prelaunch: 'Prelaunch %studyName% notice mail'
 email_title_verify: 'Please Verify Your E-mail Address'
 email_to_friends_add_email: 'Add another e-mail'
 email_to_friends_cancle: Cancel
