@@ -207,29 +207,6 @@ class Study
     }
 
     /**
-     * Set studyName
-     *
-     * @param string $studyName
-     * @return Study
-     */
-    public function setStudyName($studyName)
-    {
-        $this->studyName = $studyName;
-
-        return $this;
-    }
-
-    /**
-     * Get studyName
-     *
-     * @return string 
-     */
-    public function getStudyName()
-    {
-        return $this->studyName;
-    }
-
-    /**
      * Set studyRecruitmentStart
      *
      * @param \DateTime $studyRecruitmentStart

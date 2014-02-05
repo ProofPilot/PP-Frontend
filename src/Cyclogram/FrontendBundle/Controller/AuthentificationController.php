@@ -1005,20 +1005,24 @@ class AuthentificationController extends Controller
         $em->persist( $campaignLink );
         $em->flush();
         
+        $parameters['locale'] = $locale = $participant->getLocale() ? $participant->getLocale() : $request->getLocale();
+        
         $cc = $this->get('cyclogram.common');
         $embedded = array();
         $embedded = $cc->getEmbeddedImages();
             if (!empty($studyCode))
                 $parameters['studyCode'] = $studyCode;
             $parameters['email'] = $participant->getParticipantEmail();
-            $parameters['studyName'] = $studyCode; //$em->getRepository('CyclogramProofPilotBundle:Study')->findOneBystudyCode($studyCode)->getStudyName();
+            $studyEntity = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneBystudyCode($studyCode);
             $studyContent = $em->getRepository('CyclogramProofPilotBundle:StudyContent')->findOneBy(
-            		array("studyId" => $campaignLink->getCampaign()->getPlacement()->getStudy()->getStudyId(),
-            			  "language" => $participant->getParticipantLanguage()->getLanguageId()));
+            													array(
+            															'studyId' => $studyEntity->getStudyId(), 
+            															'language' => $em->getRepository('CyclogramProofPilotBundle:Language')->findOneBylocale($locale))
+            														 );
+            $parameters['studyName'] = $studyContent->getStudyName();
             $parameters['study_logo'] = $this->container->getParameter('study_image_url') . '/' .
              $campaignLink->getCampaign()->getPlacement()->getStudy()->getStudyId() . '/' .$studyContent->getStudyGraphic();
     
-            $parameters['locale'] = $locale = $participant->getLocale() ? $participant->getLocale() : $request->getLocale();
             $parameters['host'] = $this->container->getParameter('site_url');
             $parameters["studies"] = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:Study')->getRandomStudyInfo($locale, $participant);
     
