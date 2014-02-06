@@ -36,6 +36,7 @@ class LimeSurveysLanguagesettingsRepository extends EntityRepository
                 'es'=> array('es', 'es-MX', 'en'),
                 'pt'=> array('pt', 'pt-BR', 'en'),
                 'fr'=> array('fr', 'en'),
+        		'chn'=> array('chn', 'en'),
                 'pt_BR'=> array('pt-BR', 'pt', 'en'),
                 'es_MX'=> array('es-MX', 'es', 'en')
         );

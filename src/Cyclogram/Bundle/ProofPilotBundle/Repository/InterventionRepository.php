@@ -31,6 +31,7 @@ class InterventionRepository extends EntityRepository {
                 'es'=> array('es', 'en'),
                 'pt'=> array('pt', 'en'),
                 'fr'=> array('fr', 'en'),
+        		'chn'=> array('chn', 'en'),
                 'pt_BR'=> array('pt_BR', 'pt', 'en'),
                 'es_MX'=> array('es_MX', 'es', 'en')
         );
