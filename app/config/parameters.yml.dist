@@ -24,7 +24,7 @@ parameters:
     mailer_from: crew@proofpilot.com
     mailer_envelope_from: 'Proofpilot Crew'
     locale: en
-    locales: [en, es, pt, fr]
+    locales: [en, es, pt, fr, chn]
     secret: 10da697491608e381e7f81207a304c43f
     database_path: null
     url_survey: "http://limesurvey.dev1.proofpilot.net"
