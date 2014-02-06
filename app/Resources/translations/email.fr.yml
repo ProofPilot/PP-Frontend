@@ -31,7 +31,7 @@ link_below_to_confirm: link_below_to_confirm
 message_from: message_from
 notice_verification: 'Thanks for verifying?'
 notice_verification_text: notice_verification_text
-prelaunch_body: prelaunch_body   # FIXME
+prelaunch_body: prelaunch_body
 prelaunch_let_know: prelaunch_let_know
 reset_pass_link: reset_pass_link
 reset_pass_text: reset_pass_text

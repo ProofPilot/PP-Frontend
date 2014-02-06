@@ -4,7 +4,7 @@ button_personalized_insight: button_personalized_insight
 button_study_findings: button_study_findings
 button_view_consent: button_view_consent
 inivted_to_study: inivted_to_study
-login_to_prelaunch: login_to_prelaunch   # FIXME
+login_to_prelaunch: login_to_prelaunch
 msg_not_eligible: 'You are not eligible for ''%studyname%'' at this time.'
 social_at_proofpilot: social_at_proofpilot
 social_join_study: social_join_study
@@ -20,7 +20,7 @@ txt_join_before_goal: txt_join_before_goal
 txt_like_proofpilot: txt_like_proofpilot
 txt_on_twitter: txt_on_twitter
 txt_participants: txt_participants
-txt_pin: txt_pin   # FIXME
+txt_pin: txt_pin
 txt_share: txt_share
 txt_sponsored_by: txt_sponsored_by
 txt_staff: txt_staff
@@ -28,5 +28,5 @@ txt_tweet: txt_tweet
 txt_you_are_eligible: 'Vous êtes admissible'
 unavailable_functionality: unavailable_functionality
 warning_message: 'Avant de continuer, s''il vous plaît lire cette information importante et à accepter au bas de la page'
-we_will_notify_prelaunch: we_will_notify_prelaunch   # FIXME
+we_will_notify_prelaunch: we_will_notify_prelaunch
 you_are_participant: you_are_participant

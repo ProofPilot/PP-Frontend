@@ -1,0 +1,38 @@
+another_verification_sent: another_verification_sent
+btn_confrimcoe_login: btn_confrimcoe_login
+btn_send_confirmation: btn_send_confirmation
+dashboard_dismiss_confirmation: dashboard_dismiss_confirmation
+dashboard_subtitle: dashboard_subtitle
+dismiss_all: dismiss_all
+do_it: do_it
+do_it_now: do_it_now
+enter_mobile_phone: enter_mobile_phone
+enter_sms_code: enter_sms_code
+join_a_study: join_a_study
+label_phone_small: label_phone_small
+label_phone_wide: label_phone_wide
+label_sms_code: label_sms_code
+no_code: no_code
+no_do_it: 汉语;
+
+past_activity:
+    emai_confirmation_status: past_activity.emai_confirmation_status
+    mobile_confirmation_status: past_activity.mobile_confirmation_status
+    mobile_status: past_activity.mobile_status
+    welcome_study: past_activity.welcome_study
+
+send_again: send_again
+sms_verification_message: sms_verification_message
+txt_dashboard: txt_dashboard
+txt_dismiss: txt_dismiss
+txt_dismiss_all: txt_dismiss_all
+txt_please_verify_email: txt_please_verify_email
+
+what_next_list:
+    collect_speciment: what_next_list.collect_speciment
+    help: what_next_list.help
+    how_activate_tests: what_next_list.how_activate_tests
+    other_info: what_next_list.other_info
+    reade_instruction: what_next_list.reade_instruction
+
+wrong_sms: wrong_sms

@@ -36,7 +36,7 @@ class StaticBlocksRepository extends EntityRepository
                 'es'=> array('es', 'en'),
                 'pt'=> array('pt', 'en'),
                 'fr'=> array('fr', 'en'),
-        		'chn'=> array('chn', 'en'),
+        		'zh_cn'=> array('zh_cn', 'en'),
                 'pt_BR'=> array('pt_BR', 'pt', 'en'),
                 'es_MX'=> array('es_MX', 'es', 'en')
         );

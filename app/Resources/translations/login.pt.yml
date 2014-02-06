@@ -13,7 +13,7 @@ header_exisiting_login: 'Usuário Existente Sessão'
 header_login: Entrar
 label_sms_code: 'Código SMS'
 new_password_selection: 'Clique no link em seu e-mail e você será guiado para criar uma nova senha. Você vai precisar do seu telefone celular para completar este processo. Se a mensagem não chegar em poucos minutos, verifique sua caixa de spam ou lixeira.'
-sign_up_header: sign_up_header   # FIXME
+sign_up_header: sign_up_header
 specimen_msg: 'Por favor, selecione uma opção de espécime válido'
 txt_forgot_your_password: "Esqueceu seu nome de senha?\n"
 txt_form_password: Senha

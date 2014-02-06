@@ -33,7 +33,7 @@ pick_user: pick_user
 study_register_error: study_register_error
 txt_check_email: txt_check_email
 txt_check_zipcode: txt_check_zipcode
-txt_incorect_day: txt_incorect_day   # FIXME
+txt_incorect_day: txt_incorect_day
 txt_join: txt_join
 txt_join_with: txt_join_with
 txt_subtitle_check_email: txt_subtitle_check_email

@@ -13,7 +13,7 @@ header_exisiting_login: header_exisiting_login
 header_login: header_login
 label_sms_code: 'code SMS'
 new_password_selection: "<p> Cliquez sur le lien dans l'e-mail et vous serez guidé à travers la sélection d'un nouveau mot de passe. Vous aurez besoin de votre téléphone mobile pour compléter ce processus. </ P>\n<p> Si cela n'est pas arrivé au bout de quelques minutes, vérifiez votre Spam ou dossiers junkmail </ p>"
-sign_up_header: sign_up_header   # FIXME
+sign_up_header: sign_up_header
 specimen_msg: specimen_msg
 txt_forgot_your_password: 'Vous avez oublié votre mot de passe?'
 txt_form_password: 'Mot de passe'

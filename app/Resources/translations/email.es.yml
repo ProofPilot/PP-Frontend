@@ -31,7 +31,7 @@ link_below_to_confirm: 'Si por alguna razón, no se puede hacer clic el botón, 
 message_from: Mensaje
 notice_verification: 'Verificación de su dirección de e-mail comienza su viaje como un participante en los estudios de investigación.'
 notice_verification_text: "Oye, esto es ProofPilot. Hemos notado que no has confirmado tu dirección de correo electrónico. ¿Por confirmar su dirección de correo electrónico? Algunos estudios lo requieran para la participación. Otros requieren que el fin de obtener incentivos valiosos. \n<p> \nComience su viaje con ProofPilot verificando su dirección de correo electrónico hoy en día."
-prelaunch_body: prelaunch_body   # FIXME
+prelaunch_body: prelaunch_body
 prelaunch_let_know: prelaunch_let_know
 reset_pass_link: 'Haga clic aquí para restablecer su contraseña'
 reset_pass_text: 'Sí, le sucede a todos nosotros: que no puede recordar su contraseña. Eso está bien. Haga clic en este enlace para restablecer tu contraseña'
