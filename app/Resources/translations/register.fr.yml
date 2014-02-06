@@ -27,12 +27,13 @@ label_state: label_state
 label_username: label_username
 label_zipcode: label_zipcode
 mail_confirmation_fail: mail_confirmation_fail
-mail_confirmation_success: mail_confirmation_success   # FIXME
+mail_confirmation_success: mail_confirmation_success
 min_charachters: min_charachters
 pick_user: pick_user
 study_register_error: study_register_error
 txt_check_email: txt_check_email
 txt_check_zipcode: txt_check_zipcode
+txt_incorect_day: txt_incorect_day   # FIXME
 txt_join: txt_join
 txt_join_with: txt_join_with
 txt_subtitle_check_email: txt_subtitle_check_email

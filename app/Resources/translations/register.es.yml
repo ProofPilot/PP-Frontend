@@ -33,6 +33,7 @@ pick_user: 'Escoja su usuario'
 study_register_error: 'Hubo un problema - tratar todo el proceso de inscripción de nuevo'
 txt_check_email: 'Por favor revise su correo electrónico'
 txt_check_zipcode: 'Compruebe por favor su código postal'
+txt_incorect_day: txt_incorect_day   # FIXME
 txt_join: Unase
 txt_join_with: 'Unase con'
 txt_subtitle_check_email: 'Por favor, comprueba que tu dirección de correo electrónico'

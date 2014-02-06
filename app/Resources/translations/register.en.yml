@@ -33,6 +33,7 @@ pick_user: 'Pick Username'
 study_register_error: 'There was a problem - try the entire registration process again'
 txt_check_email: 'Please check your email'
 txt_check_zipcode: 'Please check your zip code'
+txt_incorect_day: txt_incorect_day   # FIXME
 txt_join: JOIN
 txt_join_with: 'Join with'
 txt_subtitle_check_email: 'Please check your email address'

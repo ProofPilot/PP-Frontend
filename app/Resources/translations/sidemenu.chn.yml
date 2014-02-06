@@ -1,0 +1,12 @@
+side_dasboard_menu:
+    activities: side_dasboard_menu.activities   # FIXME
+    dashboard: side_dasboard_menu.dashboard   # FIXME
+    measurements: side_dasboard_menu.measurements   # FIXME
+    survey: side_dasboard_menu.survey   # FIXME
+    treatment: side_dasboard_menu.treatment   # FIXME
+
+side_settings_menu:
+    about_me: side_settings_menu.about_me   # FIXME
+    contact_preferences: side_settings_menu.contact_preferences   # FIXME
+    general_settings: side_settings_menu.general_settings   # FIXME
+    shipping_information: side_settings_menu.shipping_information   # FIXME

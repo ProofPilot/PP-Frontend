@@ -33,6 +33,7 @@ pick_user: 'Escolha o seu nome de usuário'
 study_register_error: 'Houve um problema - tente todo o processo de registro de novo'
 txt_check_email: 'Por favor, verifique o seu endereço de e-mail'
 txt_check_zipcode: 'Por favor, verifique o seu cep'
+txt_incorect_day: txt_incorect_day   # FIXME
 txt_join: Junte-se
 txt_join_with: Junte-se
 txt_subtitle_check_email: 'Por favor, verifique o seu endereço de e-mail'

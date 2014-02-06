@@ -1,7 +1,7 @@
 about_me_subtitle: 'Acerca de mí'
 about_me_title: 'Acerca de mí'
 birthdate_change: 'Cambiar de Nacimiento'
-btn_complete: btn_complete   # FIXME
+btn_complete: btn_complete
 btn_confirm: Confirmar
 country_change: 'Cambiar el país'
 interest_change: 'Cambie interés'

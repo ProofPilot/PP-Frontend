@@ -1,0 +1,38 @@
+another_verification_sent: another_verification_sent   # FIXME
+btn_confrimcoe_login: btn_confrimcoe_login   # FIXME
+btn_send_confirmation: btn_send_confirmation   # FIXME
+dashboard_dismiss_confirmation: dashboard_dismiss_confirmation   # FIXME
+dashboard_subtitle: dashboard_subtitle   # FIXME
+dismiss_all: dismiss_all   # FIXME
+do_it: do_it   # FIXME
+do_it_now: do_it_now   # FIXME
+enter_mobile_phone: enter_mobile_phone   # FIXME
+enter_sms_code: enter_sms_code   # FIXME
+join_a_study: join_a_study   # FIXME
+label_phone_small: label_phone_small   # FIXME
+label_phone_wide: label_phone_wide   # FIXME
+label_sms_code: label_sms_code   # FIXME
+no_code: no_code   # FIXME
+no_do_it: no_do_it   # FIXME
+
+past_activity:
+    emai_confirmation_status: past_activity.emai_confirmation_status   # FIXME
+    mobile_confirmation_status: past_activity.mobile_confirmation_status   # FIXME
+    mobile_status: past_activity.mobile_status   # FIXME
+    welcome_study: past_activity.welcome_study   # FIXME
+
+send_again: send_again   # FIXME
+sms_verification_message: sms_verification_message   # FIXME
+txt_dashboard: txt_dashboard   # FIXME
+txt_dismiss: txt_dismiss   # FIXME
+txt_dismiss_all: txt_dismiss_all   # FIXME
+txt_please_verify_email: txt_please_verify_email   # FIXME
+
+what_next_list:
+    collect_speciment: what_next_list.collect_speciment   # FIXME
+    help: what_next_list.help   # FIXME
+    how_activate_tests: what_next_list.how_activate_tests   # FIXME
+    other_info: what_next_list.other_info   # FIXME
+    reade_instruction: what_next_list.reade_instruction   # FIXME
+
+wrong_sms: wrong_sms   # FIXME

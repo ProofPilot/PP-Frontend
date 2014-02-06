@@ -4,6 +4,7 @@ button_personalized_insight: 'Ver Insights personalizados'
 button_study_findings: 'Visualização de Resultados do Estudo'
 button_view_consent: 'O Que Você Precisa Saber'
 inivted_to_study: 'Você está convidado para o estudo,'
+login_to_prelaunch: login_to_prelaunch   # FIXME
 msg_not_eligible: 'Não são elegíveis para ''%studyname%'' neste momento.'
 social_at_proofpilot: 'em ProofPilot'
 social_join_study: 'Junte-se ao estudo,'
@@ -19,6 +20,7 @@ txt_join_before_goal: 'Junte-se ao estudo antes de atingir a meta e ganhar ponto
 txt_like_proofpilot: 'Como ProofPilot'
 txt_on_twitter: 'no Twitter'
 txt_participants: Participantes
+txt_pin: txt_pin   # FIXME
 txt_share: Ação
 txt_sponsored_by: 'Este estudo é patrocinado pela'
 txt_staff: Pessoal
@@ -26,4 +28,5 @@ txt_tweet: Chilrear
 txt_you_are_eligible: 'Você é elegível'
 unavailable_functionality: 'Não há resultados provisórios deste estudo ainda. Vamos notificá-lo quando a área disponível resultados para você rever.'
 warning_message: 'Antes de prosseguir, por favor leia esta informação importante e clique em "recuso" ou "aceito" na parte inferior da página.'
+we_will_notify_prelaunch: we_will_notify_prelaunch   # FIXME
 you_are_participant: 'INSCRITOS!<br><small>IR PARA PAINEL</small>'

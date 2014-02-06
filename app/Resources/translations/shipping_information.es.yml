@@ -1,5 +1,6 @@
+'about_me_update ': 'about_me_update '   # FIXME
 shipping_subtitle: 'Introduzca su dirección de correo, por lo que podemos enviar el kit de la prueba:'
 shipping_title: 'Información sobre el transporte'
 'shipping_update ': 'Actualización del envío '
 shipping_update_button: Actualización
-to_complete_intervention: to_complete_intervention   # FIXME
+to_complete_intervention: to_complete_intervention

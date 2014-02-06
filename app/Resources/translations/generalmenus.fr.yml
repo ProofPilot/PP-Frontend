@@ -5,13 +5,13 @@ bottom_left_menu:
 
 bottom_right_menu:
     help: bottom_right_menu.help
-    logout: bottom_right_menu.logout   # FIXME
-    my_settings: bottom_right_menu.my_settings   # FIXME
+    logout: bottom_right_menu.logout
+    my_settings: bottom_right_menu.my_settings
 
 bottom_study_right_menu:
-    contact_us: bottom_study_right_menu.contact_us   # FIXME
-    help: bottom_study_right_menu.help   # FIXME
-    privacy_and_security: bottom_study_right_menu.privacy_and_security   # FIXME
+    contact_us: bottom_study_right_menu.contact_us
+    help: bottom_study_right_menu.help
+    privacy_and_security: bottom_study_right_menu.privacy_and_security
 
 top_left_menu:
     browse: top_left_menu.browse
@@ -21,7 +21,7 @@ top_left_menu:
 top_menu:
     about_me: top_menu.about_me
     contact_preferences: top_menu.contact_preferences
-    dashboard: top_menu.dashboard   # FIXME
+    dashboard: top_menu.dashboard
     general_settings: top_menu.general_settings
     help: top_menu.help
     logout: top_menu.logout

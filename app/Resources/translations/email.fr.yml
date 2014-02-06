@@ -11,7 +11,7 @@ email_login: email_login
 email_not_send_try_later: email_not_send_try_later
 email_reset_password: email_reset_password
 email_title_notice: 'Forget to Verify Your E-mail Address with ProofPilot?'
-email_title_prelaunch: email_title_prelaunch   # FIXME
+email_title_prelaunch: email_title_prelaunch
 email_title_verify: 'Forget to Verify Your E-mail Address with ProofPilot?'
 email_to_friends_add_email: email_to_friends_add_email
 email_to_friends_cancle: email_to_friends_cancle
@@ -31,6 +31,7 @@ link_below_to_confirm: link_below_to_confirm
 message_from: message_from
 notice_verification: 'Thanks for verifying?'
 notice_verification_text: notice_verification_text
+prelaunch_body: prelaunch_body   # FIXME
 prelaunch_let_know: prelaunch_let_know
 reset_pass_link: reset_pass_link
 reset_pass_text: reset_pass_text

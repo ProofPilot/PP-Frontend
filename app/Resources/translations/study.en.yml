@@ -4,6 +4,7 @@ button_personalized_insight: 'View Personalized Insights'
 button_study_findings: 'View Study Findings'
 button_view_consent: 'What You Need to Know'
 inivted_to_study: 'You are invited to the study,'
+login_to_prelaunch: login_to_prelaunch   # FIXME
 msg_not_eligible: 'You are not eligible for ''%studyname%'' at this time.'
 social_at_proofpilot: 'at ProofPilot'
 social_join_study: 'Join the study,'
@@ -27,4 +28,5 @@ txt_tweet: Tweet
 txt_you_are_eligible: 'You are eligible. Accept consent to continue ...'
 unavailable_functionality: 'There are no interim results for this study yet. We will notify you when results area available for you to review.'
 warning_message: 'Before proceeding, please read this important information and accept at the bottom of the page'
+we_will_notify_prelaunch: we_will_notify_prelaunch   # FIXME
 you_are_participant: 'ENROLLED!<br><small>GO TO DASHBOARD</small>'
