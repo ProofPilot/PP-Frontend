@@ -85,8 +85,14 @@ class AuthentificationController extends Controller
                 $study = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
                 if ($study->getStudySkipAboutMe() && $study->getStudySkipConsent()) {
                     $redirectUrl = $this->generateUrl("_main");
-                    return new Response(json_encode(array('error' => false, 'url' => $this->generateUrl("_eligibility_survey", array('studyCode' => $studyCode,'surveyId' => $surveyId, 'redirectUrl' => $redirectUrl)))));
-                    
+                    if (!empty($surveyId)) {
+                    	return new Response(json_encode(array('error' => false, 'url' => $this->generateUrl("_eligibility_survey", array('studyCode' => $studyCode,'surveyId' => $surveyId, 'redirectUrl' => $redirectUrl)))));
+                    } else {
+                    	$logic = $this->get('study_logic');
+                    	$participant = $this->get('security.context')->getToken()->getUser();
+                    	$logic->studyRegistration($participant, $studyCode, null, null);
+                    	return new Response(json_encode(array('error' => false, 'url' => $redirectUrl)));
+                    }
                 }
                 return new Response(json_encode(array('error' => false)));
             } elseif ($request->getMethod() == 'POST') {

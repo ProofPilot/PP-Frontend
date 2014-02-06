@@ -77,7 +77,9 @@ class StudyLogic
         if(!$isEnrolled) {
             $uniqId = uniqid();
             $campaignLink = $this->campaignRegistration($participant, $uniqId);
-            $this->participantSurveyLinkRegistration($surveyId, $saveId, $participant, $uniqId);
+            if (!empty($saveId) || !empty($surveyId)) {
+            	$this->participantSurveyLinkRegistration($surveyId, $saveId, $participant, $uniqId);
+            }
             $this->studies[$studyCode]->studyRegistration($participant,$surveyId, $saveId, $campaignLink);
             $this->studyWelcomeEmail($participant, $studyCode);
             $study = $em->getRepository("CyclogramProofPilotBundle:Study")->findOneByStudyCode($studyCode);

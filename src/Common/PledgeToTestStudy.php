@@ -40,12 +40,12 @@ class PledgeToTestStudy extends AbstractStudy implements StudyInterface
             $campaignLink)
     {
         $session = $this->container->get('session');
-        	
-        $participantLanguage = $em->getRepository('CyclogramProofPilotBundle:Language')->findOneBylocale($participant->getLocale());
+        $em = $this->container->get('doctrine')->getManager();
+        $participantLanguage = $participant->getParticipantLanguage();
         
             $participantInterventionLink = new ParticipantInterventionLink();
             
-            $intervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')->findOneByInterventionCode('Pledge');
+            $intervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')->findOneBy(array('interventionCode' => 'Pledge', 'language' => $participantLanguage));
             $participantInterventionLink->setIntervention($intervention);
             $participantInterventionLink->setParticipant($participant);
             $participantInterventionLink->setParticipantInterventionLinkDatetimeStart(new \DateTime("now"));
@@ -66,7 +66,7 @@ class PledgeToTestStudy extends AbstractStudy implements StudyInterface
             $em->flush();
         
             $ArmParticipantLink = null;
-            $armData = $em->getRepository('CyclogramProofPilotBundle:Arm')->findOneByArmCode('pledgetotest');
+            $armData = $em->getRepository('CyclogramProofPilotBundle:Arm')->findOneByArmCode('Apledge');
             if ($armData) {
                 $ArmParticipantLink = new \Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantArmLink();
                 $ArmParticipantLink->setArm($armData);
