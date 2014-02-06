@@ -33,14 +33,14 @@ cyclogram_frontend:
     type:     annotation
     prefix:   /{_locale}
     requirements:
-        _locale: en|es|pt|fr|es_MX|pt_BR
+        _locale: en|es|pt|fr|es_MX|pt_BR|chn
 
 cyclogram_study:
     resource: "@CyclogramStudyBundle/Controller/"
     type:     annotation
     prefix: /{_locale}
     requirements:
-        _locale: en|es|pt|fr|es_MX|pt_BR
+        _locale: en|es|pt|fr|es_MX|pt_BR|chn
 
 _study_switch:
     path: /{study}/
