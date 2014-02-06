@@ -1502,11 +1502,13 @@ div.checker input {
 #div_location .mobile_reg {
 	margin: 0px;
 	width: 880px;
-	border-radius: 5px;
 	box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
 }
 #div_location .mobile_reg .wrapper {
 	background-color: #fff;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
 }
 #div_location .mobile_reg .popup_sidebar .maps_search input.text, #div_location .mobile_reg input.text, #div_location .mobile_reg .loginform_right input.text, #div_location .mobile_reg li.input_right input {
     border: 1px solid #C9C9C9;
@@ -1529,6 +1531,20 @@ div.checker input {
     position: relative;
     width: 100%;
     z-index: 100;
+}
+#div_location .mobile_reg .popup_apply {
+    -moz-box-sizing: border-box;
+    background: #fff;
+    float: left;
+    height: 70px;
+    line-height: 70px;
+    padding: 0 21px;
+    position: relative;
+    width: 100%;
+    z-index: 100;
+}
+#div_location .mobile_reg .popup_apply button {
+	padding: 0px 40px;
 }
 #div_location .mobile_reg .popup_header h1 {
     color: #C54432;
@@ -1588,7 +1604,7 @@ div.checker input {
 #div_location .mobile_reg .popup_sidebar .results {
     background: url("../images/bg_popup_sidebar.jpg") repeat-x scroll 0 0 rgba(0, 0, 0, 0);
     float: left;
-    height: 464px;
+    height: 400px;
     min-height: 52px;
     overflow: auto;
     padding-top: 10px;
@@ -1677,7 +1693,7 @@ div.checker input {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     float: right;
-    height: 563px;
+    height: 489px;
     overflow: hidden;
     position: relative;
     width: 60%;
