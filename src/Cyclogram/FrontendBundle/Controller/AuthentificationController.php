@@ -289,7 +289,15 @@ class AuthentificationController extends Controller
                 $redirectUrl = $this->generateUrl("_main");
                 $study = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
                 $language = $em->getRepository('CyclogramProofPilotBundle:Language')->findOneByLocale($request->getLocale());
-                return $this->redirect($this->generateUrl("_eligibility_survey", array('studyCode'=> $studyCode, 'surveyId' => $studyContent->getStudyElegibilitySurvey(), 'redirectUrl' => $redirectUrl)));
+                $eligibilitySurvey = $studyContent->getStudyElegibilitySurvey();
+                if (!empty($eligibilitySurvey)) {
+                	return $this->redirect($this->generateUrl("_eligibility_survey", array('studyCode'=> $studyCode, 'surveyId' => $eligibilitySurvey, 'redirectUrl' => $redirectUrl)));
+                } else {
+                	$logic = $this->get('study_logic');
+                	$participant = $this->get('security.context')->getToken()->getUser();
+                	$logic->studyRegistration($participant, $studyCode, null, null);
+                	return $this->redirect($redirectUrl);
+                }
             }elseif ($study->getStudySkipAboutMe()) {
                 return $this->render('CyclogramFrontendBundle:Authentification:consent_main.html.twig', array('studyCode' => $studyCode, 'surveyId' => $studyContent->getStudyElegibilitySurvey(),'studycontent' => $studyContent));
             } else {
