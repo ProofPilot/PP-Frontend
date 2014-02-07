@@ -1,41 +1,41 @@
-btn_next: btn_next   # FIXME
-btn_save_mailing_address: btn_save_mailing_address   # FIXME
-btn_send_confirmation_email: btn_send_confirmation_email   # FIXME
-confirm_password: confirm_password   # FIXME
-consent_accept_join: consent_accept_join   # FIXME
-consent_any_information: consent_any_information   # FIXME
-consent_close_window: consent_close_window   # FIXME
-consent_good_to_go: consent_good_to_go   # FIXME
-consent_security_privacy: consent_security_privacy   # FIXME
-consent_what_to_know: consent_what_to_know   # FIXME
-create_password: create_password   # FIXME
-enter_email: enter_email   # FIXME
-header_new_user_register: header_new_user_register   # FIXME
-header_register: header_register   # FIXME
-label_address1: label_address1   # FIXME
-label_address2: label_address2   # FIXME
-label_city: label_city   # FIXME
-label_email: label_email   # FIXME
-label_firstname: label_firstname   # FIXME
-label_lastname: label_lastname   # FIXME
-label_not_sign: label_not_sign   # FIXME
-label_password: label_password   # FIXME
-label_repeat_password: label_repeat_password   # FIXME
-label_sign: label_sign   # FIXME
-label_sign_main: label_sign_main   # FIXME
-label_state: label_state   # FIXME
-label_username: label_username   # FIXME
-label_zipcode: label_zipcode   # FIXME
-mail_confirmation_fail: mail_confirmation_fail   # FIXME
-mail_confirmation_success: mail_confirmation_success   # FIXME
-min_charachters: min_charachters   # FIXME
-pick_user: pick_user   # FIXME
-study_register_error: study_register_error   # FIXME
-txt_check_email: txt_check_email   # FIXME
-txt_check_zipcode: txt_check_zipcode   # FIXME
-txt_incorect_day: txt_incorect_day   # FIXME
-txt_join: txt_join   # FIXME
-txt_join_with: txt_join_with   # FIXME
-txt_subtitle_check_email: txt_subtitle_check_email   # FIXME
-txt_year_to_old: txt_year_to_old   # FIXME
-txt_year_to_young: txt_year_to_young   # FIXME
+btn_next: 加入
+btn_save_mailing_address: 保存和登录
+btn_send_confirmation_email: btn_send_confirmation_email
+confirm_password: 确认密码
+consent_accept_join: 我接受。加入该研究
+consent_any_information: 您与我们分享的任何信息是完全保密的，安全的。
+consent_close_window: 关闭窗口下滑
+consent_good_to_go: 好走？接受和加入研究
+consent_security_privacy: consent_security_privacy
+consent_what_to_know: 以下是你需要知道的参与
+create_password: 创建密码
+enter_email: 输入您的电子邮件
+header_new_user_register: 新ProofPilot用户
+header_register: 加入
+label_address1: label_address1
+label_address2: label_address2
+label_city: label_city
+label_email: label_email
+label_firstname: label_firstname
+label_lastname: label_lastname
+label_not_sign: label_not_sign
+label_password: 密码
+label_repeat_password: 重复密码
+label_sign: label_sign
+label_sign_main: label_sign_main
+label_state: label_state
+label_username: 用户名
+label_zipcode: label_zipcode
+mail_confirmation_fail: mail_confirmation_fail
+mail_confirmation_success: mail_confirmation_success
+min_charachters: （8个字符分钟）
+pick_user: 挑选用户名
+study_register_error: study_register_error
+txt_check_email: txt_check_email
+txt_check_zipcode: txt_check_zipcode
+txt_incorect_day: txt_incorect_day
+txt_join: 加入
+txt_join_with: 与加入
+txt_subtitle_check_email: txt_subtitle_check_email
+txt_year_to_old: txt_year_to_old
+txt_year_to_young: txt_year_to_young
