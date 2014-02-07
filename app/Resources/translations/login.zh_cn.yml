@@ -1,26 +1,26 @@
-alert_msg: alert_msg   # FIXME
-cant_remember_username: cant_remember_username   # FIXME
-doesnt_match_records: doesnt_match_records   # FIXME
-email_sent_containing_password: email_sent_containing_password   # FIXME
-enter_email_address: enter_email_address   # FIXME
-forgot_password: forgot_password   # FIXME
-forgot_password_message: forgot_password_message   # FIXME
-forgot_username: forgot_username   # FIXME
-forgot_username_email_send: forgot_username_email_send   # FIXME
-forgot_username_message: forgot_username_message   # FIXME
-header_exisiting_login: header_exisiting_login   # FIXME
-header_login: header_login   # FIXME
-new_password_selection: new_password_selection   # FIXME
-sign_up_header: sign_up_header   # FIXME
-specimen_msg: specimen_msg   # FIXME
-txt_forgot_your_password: txt_forgot_your_password   # FIXME
-txt_form_password: txt_form_password   # FIXME
-txt_form_username: txt_form_username   # FIXME
-txt_login_button: txt_login_button   # FIXME
-txt_login_error_message: txt_login_error_message   # FIXME
-txt_login_securely: txt_login_securely   # FIXME
-txt_login_with: txt_login_with   # FIXME
-txt_stay_logged_in: txt_stay_logged_in   # FIXME
-txt_why_popup: txt_why_popup   # FIXME
-username_sent: username_sent   # FIXME
-why_popup_title: why_popup_title   # FIXME
+alert_msg: alert_msg
+cant_remember_username: cant_remember_username
+doesnt_match_records: doesnt_match_records
+email_sent_containing_password: email_sent_containing_password
+enter_email_address: enter_email_address
+forgot_password: forgot_password
+forgot_password_message: forgot_password_message
+forgot_username: forgot_username
+forgot_username_email_send: forgot_username_email_send
+forgot_username_message: forgot_username_message
+header_exisiting_login: 现有用户登录
+header_login: header_login
+new_password_selection: new_password_selection
+sign_up_header: 让您的奖励。加入重要的研究。登录或注册！
+specimen_msg: specimen_msg
+txt_forgot_your_password: 忘记了吗？
+txt_form_password: 忘记了吗？
+txt_form_username: 输入用户名
+txt_login_button: 登录
+txt_login_error_message: txt_login_error_message
+txt_login_securely: 安全地与您的帐户登录。
+txt_login_with: 与登录
+txt_stay_logged_in: 保持登录状态
+txt_why_popup: txt_why_popup
+username_sent: username_sent
+why_popup_title: why_popup_title

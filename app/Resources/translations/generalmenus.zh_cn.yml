@@ -1,29 +1,29 @@
 bottom_left_menu:
-    fullscreen: bottom_left_menu.fullscreen   # FIXME
-    home: bottom_left_menu.home   # FIXME
-    update: bottom_left_menu.update   # FIXME
+    fullscreen: bottom_left_menu.fullscreen
+    home: bottom_left_menu.home
+    update: bottom_left_menu.update
 
 bottom_right_menu:
-    help: bottom_right_menu.help   # FIXME
-    logout: bottom_right_menu.logout   # FIXME
-    my_settings: bottom_right_menu.my_settings   # FIXME
+    help: 帮助
+    logout: bottom_right_menu.logout
+    my_settings: bottom_right_menu.my_settings
 
 bottom_study_right_menu:
-    contact_us: bottom_study_right_menu.contact_us   # FIXME
-    help: bottom_study_right_menu.help   # FIXME
-    privacy_and_security: bottom_study_right_menu.privacy_and_security   # FIXME
+    contact_us: 联系我们
+    help: 帮助
+    privacy_and_security: 隐私和安全
 
 top_left_menu:
-    browse: top_left_menu.browse   # FIXME
-    launch: top_left_menu.launch   # FIXME
-    what_proofpilot: top_left_menu.what_proofpilot   # FIXME
+    browse: top_left_menu.browse
+    launch: top_left_menu.launch
+    what_proofpilot: 什么是ProofPilot？
 
 top_menu:
-    about_me: top_menu.about_me   # FIXME
-    contact_preferences: top_menu.contact_preferences   # FIXME
-    dashboard: top_menu.dashboard   # FIXME
-    general_settings: top_menu.general_settings   # FIXME
-    help: top_menu.help   # FIXME
-    logout: top_menu.logout   # FIXME
-    settings: top_menu.settings   # FIXME
-    shipping_information: top_menu.shipping_information   # FIXME
+    about_me: top_menu.about_me
+    contact_preferences: top_menu.contact_preferences
+    dashboard: top_menu.dashboard
+    general_settings: top_menu.general_settings
+    help: top_menu.help
+    logout: top_menu.logout
+    settings: top_menu.settings
+    shipping_information: top_menu.shipping_information

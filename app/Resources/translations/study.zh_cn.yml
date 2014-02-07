@@ -1,32 +1,32 @@
-button_join_the_study_goal: button_join_the_study_goal   # FIXME
-button_leave_study: button_leave_study   # FIXME
-button_personalized_insight: button_personalized_insight   # FIXME
-button_study_findings: button_study_findings   # FIXME
-button_view_consent: button_view_consent   # FIXME
-inivted_to_study: inivted_to_study   # FIXME
-login_to_prelaunch: login_to_prelaunch   # FIXME
-msg_not_eligible: msg_not_eligible   # FIXME
-social_at_proofpilot: social_at_proofpilot   # FIXME
-social_join_study: social_join_study   # FIXME
-txt_about: txt_about   # FIXME
-txt_accept_btn: txt_accept_btn   # FIXME
-txt_affiliated_organizations: txt_affiliated_organizations   # FIXME
-txt_conducted_by: txt_conducted_by   # FIXME
-txt_decline_btn: txt_decline_btn   # FIXME
-txt_eligible_dsc: txt_eligible_dsc   # FIXME
-txt_email_to_friend: txt_email_to_friend   # FIXME
-txt_goal: txt_goal   # FIXME
-txt_join_before_goal: txt_join_before_goal   # FIXME
-txt_like_proofpilot: txt_like_proofpilot   # FIXME
-txt_on_twitter: txt_on_twitter   # FIXME
-txt_participants: txt_participants   # FIXME
-txt_pin: txt_pin   # FIXME
-txt_share: txt_share   # FIXME
-txt_sponsored_by: txt_sponsored_by   # FIXME
-txt_staff: txt_staff   # FIXME
-txt_tweet: txt_tweet   # FIXME
-txt_you_are_eligible: txt_you_are_eligible   # FIXME
-unavailable_functionality: unavailable_functionality   # FIXME
-warning_message: warning_message   # FIXME
-we_will_notify_prelaunch: we_will_notify_prelaunch   # FIXME
-you_are_participant: you_are_participant   # FIXME
+button_join_the_study_goal: 加入研究
+button_leave_study: 离开这个研究
+button_personalized_insight: 查看个性化的见解
+button_study_findings: 查看研究结果
+button_view_consent: 你需要知道的
+inivted_to_study: 你被邀请参加这项研究，
+login_to_prelaunch: login_to_prelaunch
+msg_not_eligible: '你没有资格对''％studyname％''在这个时候。'
+social_at_proofpilot: 在ProofPilot
+social_join_study: 加入该研究
+txt_about: 关于本研究
+txt_accept_btn: '接受 - 加入研究'
+txt_affiliated_organizations: 附属机构
+txt_conducted_by: 通过进行
+txt_decline_btn: '衰落 - 也许以后'
+txt_eligible_dsc: 您的参与一眼：你现在需要做什么以及接下来会发生什么。
+txt_email_to_friend: 推荐给朋友
+txt_goal: 目标
+txt_join_before_goal: 参加这项研究才达到的目标，赚取宝贵的奖励。
+txt_like_proofpilot: 跟随
+txt_on_twitter: 在Twitter
+txt_participants: 参与者
+txt_pin: 共享
+txt_share: 共享
+txt_sponsored_by: 这项研究是由主办
+txt_staff: 员工
+txt_tweet: Tweet
+txt_you_are_eligible: 你有资格。接受同意继续...
+unavailable_functionality: 这里有没有中期业绩本研究还。我们会通知您何时可结果区域供您查看。
+warning_message: 在继续之前，请仔细阅读这些重要的信息，并接受在页面底部
+we_will_notify_prelaunch: 谢谢！我们将让你知道什么时候该研究启动。
+you_are_participant: 你是一个参与者

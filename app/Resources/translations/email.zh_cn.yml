@@ -1,45 +1,45 @@
-_email_to_friends_join: _email_to_friends_join   # FIXME
-bottom_no_reply: bottom_no_reply   # FIXME
-bottom_text: bottom_text   # FIXME
-confirm_join_study: confirm_join_study   # FIXME
-confirm_verify_text: confirm_verify_text   # FIXME
-confirm_verify_title: confirm_verify_title   # FIXME
-do_it: do_it   # FIXME
-do_it_task_email_title: do_it_task_email_title   # FIXME
-doit_email_what_you_got: doit_email_what_you_got   # FIXME
-email_login: email_login   # FIXME
-email_not_send_try_later: email_not_send_try_later   # FIXME
-email_reset_password: email_reset_password   # FIXME
-email_title_notice: email_title_notice   # FIXME
-email_title_prelaunch: email_title_prelaunch   # FIXME
-email_title_verify: email_title_verify   # FIXME
-email_to_friends_add_email: email_to_friends_add_email   # FIXME
-email_to_friends_cancle: email_to_friends_cancle   # FIXME
-email_to_friends_message: email_to_friends_message   # FIXME
-email_to_friends_send_button: email_to_friends_send_button   # FIXME
-email_to_friends_subject: email_to_friends_subject   # FIXME
-email_to_friends_title: email_to_friends_title   # FIXME
-email_to_friends_who_are_you_sending: email_to_friends_who_are_you_sending   # FIXME
-email_to_friends_who_sending: email_to_friends_who_sending   # FIXME
-forgot_username: forgot_username   # FIXME
-forgot_username_text: forgot_username_text   # FIXME
-forgot_username_title: forgot_username_title   # FIXME
-insert_receiver_email: insert_receiver_email   # FIXME
-insert_sender_email: insert_sender_email   # FIXME
-join: join   # FIXME
-link_below_to_confirm: link_below_to_confirm   # FIXME
-message_from: message_from   # FIXME
-notice_verification: notice_verification   # FIXME
-notice_verification_text: notice_verification_text   # FIXME
-prelaunch_body: prelaunch_body   # FIXME
-prelaunch_let_know: prelaunch_let_know   # FIXME
-reset_pass_link: reset_pass_link   # FIXME
-reset_pass_text: reset_pass_text   # FIXME
-reset_pass_title: reset_pass_title   # FIXME
-send_verification_email: send_verification_email   # FIXME
-sent_email_to_friends: sent_email_to_friends   # FIXME
-study_welcome_excited: study_welcome_excited   # FIXME
-study_welcome_hold_on: study_welcome_hold_on   # FIXME
-study_welcome_joint_other_studies: study_welcome_joint_other_studies   # FIXME
-study_welcome_welcome_to: study_welcome_welcome_to   # FIXME
-welcome_to_study: welcome_to_study   # FIXME
+_email_to_friends_join: 加入
+bottom_no_reply: 如收件箱没有被监控，请不要回复此电子邮件
+bottom_text: '此消息被发送到<span style="color:#BBC2CB;">％mail_to％</ SPAN><br />如果您想更新您的电子邮件地址，请<a href=“％general_settings_link％”样式=“颜色：＃BBC2CB;文本装饰：无;”>点击这里</ a><br/>访问联系人首选项来管理您的电子邮件和移动警报<br/>请加<跨度风格=“颜色：＃BBC2CB;“> crew@proofpilot.com</ span>以你的地址簿，以确保交付我们的电子邮件到您的收件箱<br/>注：我们从来没有通过与其他人分享你的ProofPilot.com密码的电子邮件，包括我们。'
+confirm_join_study: 加入一个研究
+confirm_verify_text: 是的，这是任何网站的注册部分和ProofPilot是没有什么不同。请点击下面的链接以验证您的E-mail地址，出发吧
+confirm_verify_title: 请确认您的电子邮件地址
+do_it: 做
+do_it_task_email_title: 有什么要做的ProofPilot
+doit_email_what_you_got: 这里就是你必须做的ProofPilot
+email_login: 登录ProofPilot
+email_not_send_try_later: 电子邮件不是以后发送的尝试
+email_reset_password: 重设密码
+email_title_notice: 忘记确认您的电子邮件地址与ProofPilot？
+email_title_prelaunch: email_title_prelaunch
+email_title_verify: email_title_verify
+email_to_friends_add_email: email_to_friends_add_email
+email_to_friends_cancle: email_to_friends_cancle
+email_to_friends_message: email_to_friends_message
+email_to_friends_send_button: email_to_friends_send_button
+email_to_friends_subject: email_to_friends_subject
+email_to_friends_title: email_to_friends_title
+email_to_friends_who_are_you_sending: email_to_friends_who_are_you_sending
+email_to_friends_who_sending: email_to_friends_who_sending
+forgot_username: forgot_username
+forgot_username_text: forgot_username_text
+forgot_username_title: forgot_username_title
+insert_receiver_email: insert_receiver_email
+insert_sender_email: insert_sender_email
+join: join
+link_below_to_confirm: link_below_to_confirm
+message_from: message_from
+notice_verification: notice_verification
+notice_verification_text: notice_verification_text
+prelaunch_body: prelaunch_body
+prelaunch_let_know: prelaunch_let_know
+reset_pass_link: reset_pass_link
+reset_pass_text: reset_pass_text
+reset_pass_title: reset_pass_title
+send_verification_email: send_verification_email
+sent_email_to_friends: sent_email_to_friends
+study_welcome_excited: study_welcome_excited
+study_welcome_hold_on: study_welcome_hold_on
+study_welcome_joint_other_studies: study_welcome_joint_other_studies
+study_welcome_welcome_to: study_welcome_welcome_to
+welcome_to_study: welcome_to_study
