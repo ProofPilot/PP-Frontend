@@ -105,11 +105,11 @@ class SearchController extends Controller
             $termUpper = strtoupper($term);
             $em = $this->getDoctrine()->getEntityManager();
     
-            $repository = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:Site');
+            $repository = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:State');
     
             $qb = $repository->createQueryBuilder('s');
             $query = $qb
-            ->select('s.siteID, s.')
+            ->select('s.stateId, s.stateCode')
             ->where("UPPER(s.stateCode) like '%$termUpper%'")
             ->getQuery();
     
