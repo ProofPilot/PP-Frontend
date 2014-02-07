@@ -9,7 +9,7 @@
                 <h2>{% trans from "login" %}header_exisiting_login{% endtrans %}</h2>
                     <form action="{{ path('login_check') }}" method="post" id="login_form">
                     <label for="reg_field_1">{% trans from "login" %}txt_form_username{% endtrans %}</label>
-                    <a class="forgot" href="{{ path('_forgot_username') }}" id="forgot_username">Trouble logging in?</a>
+                    <a class="forgot" href="{{ path('_forgot_username') }}" id="forgot_username">{% trans from "login" %}trouble_log_in{% endtrans %}</a>
                     <span class="input_placeholder ">
                         <input type="text" class="text " value="{{ last_username }}" id="reg_field_1" name="_username" >
                         <span class="mark"></span>

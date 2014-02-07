@@ -1,5 +1,4 @@
 alert_msg: alert_msg
-btn_confrimcoe_login: 'confirmer le code et login'
 cant_remember_username: 'Vous avez oublié votre nom d''utilisateur?'
 doesnt_match_records: 'Nous sommes désolés, votre entrée ne correspond pas à nos dossiers'
 email_sent_containing_password: 'Un e-mail a été envoyé contenant un lien pour réinitialiser votre mot de passe'
@@ -11,10 +10,10 @@ forgot_username_email_send: forgot_username_email_send
 forgot_username_message: 'Pas de problème. Entrez le numéro de téléphone portable que vous avez utilisé pour vous inscrire et nous vous enverrons votre nom d''utilisateur par message texte.'
 header_exisiting_login: header_exisiting_login
 header_login: header_login
-label_sms_code: 'code SMS'
 new_password_selection: "<p> Cliquez sur le lien dans l'e-mail et vous serez guidé à travers la sélection d'un nouveau mot de passe. Vous aurez besoin de votre téléphone mobile pour compléter ce processus. </ P>\n<p> Si cela n'est pas arrivé au bout de quelques minutes, vérifiez votre Spam ou dossiers junkmail </ p>"
 sign_up_header: sign_up_header
 specimen_msg: specimen_msg
+trouble_log_in: trouble_log_in   # FIXME
 txt_forgot_your_password: 'Vous avez oublié votre mot de passe?'
 txt_form_password: 'Mot de passe'
 txt_form_username: 'Nom d''utilisateur'

@@ -1,5 +1,4 @@
 alert_msg: 'Por favor seleccione una opción válida'
-btn_confrimcoe_login: 'Confirme el código y nombre de usuario'
 cant_remember_username: '¿No puede recordad su usuario?'
 doesnt_match_records: 'Lo sentimos, su entrada no concuerda con nuestros registros'
 email_sent_containing_password: 'Se ha enviado un e-mail que contiene un enlace para reiniciar su contraseña'
@@ -11,10 +10,10 @@ forgot_username_email_send: 'Enviar olvidado nombre de usuario de correo electr�
 forgot_username_message: 'No hay problema. Ingrese su número de teléfono móbil que usó durante el registro and le envíaremos su usuario por mensajes de texto.'
 header_exisiting_login: 'Usuario Existente Entrar'
 header_login: 'Iniciar la sesión'
-label_sms_code: 'Código de SMS'
 new_password_selection: "<p>Haga click en el enlace del e-mail y será guiado atravez de la selección de una nueva contraseña. Necesitará su teléfono móbil para completar este proceso. </p>\n<p>Si no ha arrivado en pocos minutos revise la carpeta de correo basura.</p>"
 sign_up_header: '¡Consiga sus incentivos. Únete a importantes estudios. Ingresa o Únete ahora!'
 specimen_msg: 'Por favor seleccione una opción de la muestra válida'
+trouble_log_in: trouble_log_in   # FIXME
 txt_forgot_your_password: '¿Olvidó su contraseña?'
 txt_form_password: Contraseña
 txt_form_username: Usuario

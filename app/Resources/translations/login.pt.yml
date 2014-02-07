@@ -1,5 +1,4 @@
 alert_msg: 'Por favor escolha uma opção válida'
-btn_confrimcoe_login: 'Confirmar o código e entrar'
 cant_remember_username: 'Não consegue lembrar seu nome de usuário?'
 doesnt_match_records: 'Desculpe, seu nome de usuário não coincide com os nossos registros'
 email_sent_containing_password: 'Um código foi enviado para o número de celular associado a esta conta. Por favor, verifique o seu telefone e digite o código aqui para completar o processo de seleção de uma nova senha e continue.'
@@ -11,10 +10,10 @@ forgot_username_email_send: 'Enviar e-mail nome de usuário esquecida'
 forgot_username_message: 'Não tem problema. Digite o número do telefone celular que você usou para se inscrever e vamos enviar seu nome de usuário via mensagem de texto.'
 header_exisiting_login: 'Usuário Existente Sessão'
 header_login: Entrar
-label_sms_code: 'Código SMS'
 new_password_selection: 'Clique no link em seu e-mail e você será guiado para criar uma nova senha. Você vai precisar do seu telefone celular para completar este processo. Se a mensagem não chegar em poucos minutos, verifique sua caixa de spam ou lixeira.'
 sign_up_header: sign_up_header
 specimen_msg: 'Por favor, selecione uma opção de espécime válido'
+trouble_log_in: trouble_log_in   # FIXME
 txt_forgot_your_password: "Esqueceu seu nome de senha?\n"
 txt_form_password: Senha
 txt_form_username: Usuário

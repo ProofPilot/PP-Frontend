@@ -11,8 +11,9 @@ forgot_username_message: forgot_username_message
 header_exisiting_login: 现有用户登录
 header_login: header_login
 new_password_selection: new_password_selection
-sign_up_header: 让您的奖励。加入重要的研究。登录或注册！
+sign_up_header: '让您的奖励。加入重要的研究。登录或注册！'
 specimen_msg: specimen_msg
+trouble_log_in: trouble_log_in   # FIXME
 txt_forgot_your_password: 忘记了吗？
 txt_form_password: 忘记了吗？
 txt_form_username: 输入用户名
