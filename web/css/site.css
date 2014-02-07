@@ -4129,6 +4129,9 @@ footer .row_2 p {
 .text.red {
 	color: #BE3C2C;
 }
+.div_video {
+	width: 670px !important;
+}
 .div_video h2 {
 	height: 50px;
 	line-height: 50px;

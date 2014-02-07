@@ -1121,7 +1121,9 @@
 	.intro_page .join.for_mobile {
 		display: block;
 	}
-	
+	.div_video, .div_video iframe {
+		width: 500px !important;
+	}
 }
 
 /* @media screen and (max-width: 740px) */ 
@@ -1545,7 +1547,7 @@
 	.modal_close_btn {
 		display: none;
 	}
-	#div_location .modal_close_btn {
+	#div_location .modal_close_btn, .div_video .modal_close_btn {
 		display: block;
 	}
 	#div_consent .modal_close_btn, #email_list .modal_close_btn, #pledge_popup .modal_close_btn {
@@ -2527,6 +2529,13 @@
 	#div_location {
 		width: 400px !important;
 	}
+	.div_video, .div_video iframe {
+		width: 300px !important;
+	}
+	.div_video iframe {
+		height: 200px;
+	}
+	
 }
 
 /* @media screen and (max-width: 535px) */ 
