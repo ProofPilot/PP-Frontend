@@ -68,4 +68,19 @@ class AbstractStudy
             $interventionLink->setParticipantInterventionLinkExpiarationDate($date);
         }
     }
+    
+    protected function findIntervention($interventionCode, $language){
+    	$em = $this->container->get('doctrine')->getManager();
+    	$intervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')
+    			->findOneBy(array("interventionCode" => $interventionCode, "language" => $language));
+    	if (empty($intervention)) {
+    		$language = $em->getRepository('CyclogramProofPilotBundle:Language')->findOneBylocale('en');
+    		$intervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')
+    		->findOneBy(array("interventionCode" => $interventionCode, "language" => $language));
+    		if(empty($intervention)) {
+    			throw new \Exception("No intervention found with code \"" . $interventionCode . "\"");
+    		}
+    	} 
+    	return $intervention;   	
+    }
 }

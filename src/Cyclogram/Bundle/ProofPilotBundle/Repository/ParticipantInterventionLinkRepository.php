@@ -64,6 +64,17 @@ class ParticipantInterventionLinkRepository extends EntityRepository
         }
         if(!$hasInterventionLink) {
             $interventionLink = new ParticipantInterventionLink();
+            
+            $interventionExpiredDate = $intervention->getInterventionExpirationDate();
+            $interventionExpiredPeriod = $intervention->getInterventionExpirationPeriod();
+            if (isset($interventionExpiredDate)) {
+            	$interventionLink->setParticipantInterventionLinkExpiarationDate($interventionExpiredDate);
+            } elseif (isset($interventionExpiredPeriod)) {
+            	$date = new \DateTime("now");
+            	$date->add(new \DateInterval('P'.$interventionExpiredPeriod.'D'));
+            	$interventionLink->setParticipantInterventionLinkExpiarationDate($date);
+            }
+            
             $interventionLink->setParticipant($participant);
             $interventionLink->setIntervention($intervention);
             if ($intervention->getInterventionType()->getInterventionTypeName() == 'Test')
