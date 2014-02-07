@@ -19,9 +19,53 @@
                 $(this).closest('.ui-dialog-content').dialog("close");
             });
         } 
-        
+        var player;
+	      function onYouTubeIframeAPIReady() {
+	        player = new YT.Player('player', {
+	          height: '393',
+	          width: '670',
+	          videoId: $('div.videoUrlclass').html(),
+	          events: {
+	            'onReady': onPlayerReady,
+	            'onStateChange': onPlayerStateChange
+	          }
+	        });
+	      }
+	
+	      // 4. The API will call this function when the video player is ready.
+	      function onPlayerReady(event) {
+	      }
+	
+	      // 5. The API calls this function when the player's state changes.
+	      //    The function indicates that when playing a video (state=1),
+	      //    the player should play for six seconds and then stop.
+	      function onPlayerStateChange(event) {
+	          if(event.data == YT.PlayerState.ENDED) {
+	        	  $.ajax({
+	                    dataType: "json",
+	                    type: "POST",
+	                    data: {'interventionCode' : $('div.videoCodeclass').html()},
+	                    url: "{{ path('_video_completed_ajax')}}",
+	                })
+	                .done (function(response) {
+	                	location.reload(); 
+	                });
+	                return false;
+		      }
+	      }
         $(document).ready(function(){
 
+        	function youtubeEvents() {
+            	// 2. This code loads the IFrame Player API code asynchronously.
+    		      var tag = document.createElement('script');
+    		      tag.src = "https://www.youtube.com/iframe_api";
+    		      var firstScriptTag = document.getElementsByTagName('script')[0];
+    		      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    		
+    		      // 3. This function creates an <iframe> (and YouTube player)
+    		      //    after the API code downloads.
+    		      
+            }
             //mail to friends
             $('.email').bind('click', function(e) {
                 e.preventDefault();
@@ -299,14 +343,16 @@
                     position: ['top',100],
                     open: funcCustom
                 });
+                youtubeEvents();
             });
             $('.left_menu .first').hover(function() {
                 $(this).find('.share_slide').slideDown('slow');
             }, function() {
                 $(this).find('.share_slide').slideUp('slow');
             });
-        });
 
+            
+        });
         function dismiss(interventionCode) {
             if (confirm('{% trans from "dashboard" %}dashboard_dismiss_confirmation{% endtrans %}')) {
                 $.ajax({
@@ -489,11 +535,14 @@
                                     {% endif %}
                                     {% if intervention.type == 'Video' %}
                                     <div class="button_box"> <a href="#" class="video"><span>{% trans from "dashboard" %}do_it{% endtrans %}</span></a> </div>
-                                    <div class="div_video" style="display:none;">
+                                    <div class="div_video" style="display:none">
                                         <h2>{{ intervention.title }}</h2>
-                                        <iframe width="670" height="393" 
-					                        src="{{ intervention.url }}" frameborder="0" allowfullscreen>
-					                    </iframe>
+                                        <div class="videoUrlclass" style="display:none;">{{ intervention.url }}</div>
+                                        <div class="videoCodeclass" style="display:none;">{{ intervention.code }}</div>
+{#                                         <iframe id="videoFrame" width="670" height="393" #}
+{# 					                        src="{{ intervention.url }}?enablejsapi=1&origin=http://new-frontend-dm.proofpilot.dyndns.org&playerapiid=videoFrame" frameborder="0" allowfullscreen>#}
+{# 					                    </iframe>#}
+					                    <div id="player"></div>
                                     </div>
                                     {% endif %}
                                 </div>

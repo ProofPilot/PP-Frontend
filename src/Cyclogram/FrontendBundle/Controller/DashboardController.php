@@ -467,4 +467,37 @@ class DashboardController extends Controller
         }
     }
     
+    /**
+     * @Route("/video_completed_ajax/", name="_video_completed_ajax")
+     * @Secure(roles="ROLE_PARTICIPANT, IS_AUTHENTICATED_REMEMBERED")
+     * @Template()
+     */
+    public function videoCompletedAjaxAction(Request $request)
+    {
+    	$em = $this->getDoctrine()->getManager();
+    	$session = $this->getRequest()->getSession();
+    	$participant = $this->get('security.context')->getToken()->getUser();
+    	$participantEmail = $participant->getParticipantEmail();
+    	if($request->isXmlHttpRequest()) {
+    		$data = $request->request->all();
+    		if (isset($data['interventionCode'])) {
+    			$intervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')
+    			->findOneBy(array("interventionCode" => $data['interventionCode'], "language" => $participant->getParticipantLanguage()));
+    			if (empty($intervention)) {
+    				$language = $em->getRepository('CyclogramProofPilotBundle:Language')->findOneBylocale('en');
+    				$intervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')
+    				->findOneBy(array("interventionCode" => $interventionCode, "language" => $language));
+    				if(empty($intervention)) {
+    					throw new \Exception("No intervention found with code \"" . $interventionCode . "\"");
+    				}
+    			}    
+    			$participantInterventionLink = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')->findOneBy(array('participant' => $participant, 'intervention' => $intervention));
+    			$participantInterventionLink->setStatus(ParticipantInterventionLink::STATUS_CLOSED);
+    			$em->persist($participantInterventionLink);
+    			$em->flush();
+    			return new Response(json_encode(array('url' => $this->generateUrl("_main"))));
+    		}
+    	}
+    }
+    
 }

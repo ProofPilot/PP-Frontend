@@ -363,6 +363,15 @@
             	window.location.replace(url);
             });
 
+            function onYouTubePlayerReady(playerId) {
+            	  ytplayer = document.getElementById("myytplayer");
+            	  ytplayer.addEventListener("onStateChange", function(state){
+						if(state == YT.PlayerState.PAUSED)
+                  	   alert("Player's new state: " + state);
+                	  });
+            	}
+            	            
+
         });
 </script>
 {% endblock javascripts %}
