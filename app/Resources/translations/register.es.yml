@@ -12,6 +12,9 @@ create_password: 'Crear una Contraseña'
 enter_email: 'Ingrese su e-mail'
 header_new_user_register: 'Usuarios nuevos ProofPilot'
 header_register: Registrar
+help_recruit_people: help_recruit_people
+join_with_facebook: join_with_facebook   # FIXME
+join_with_google: join_with_google
 label_address1: Dirección
 label_address2: 'Dirección 2'
 label_city: Ciudad
@@ -26,6 +29,8 @@ label_sign_main: '¿Cómo quiere que lo entregan?:'
 label_state: Estado
 label_username: 'Nombre de usuario'
 label_zipcode: 'Código Postal'
+let_know_launch: let_know_launch
+let_me_know: let_me_know
 mail_confirmation_fail: 'No se pudo confirmar el correo electrónico. Este usuario no existe!'
 mail_confirmation_success: '¡Felicitaciones!!! Su dirección de e-mail se confirma!'
 min_charachters: '(8 caractéres mínimo)'
@@ -39,3 +44,5 @@ txt_join_with: 'Unase con'
 txt_subtitle_check_email: 'Por favor, comprueba que tu dirección de correo electrónico'
 txt_year_to_old: '¿Está seguro?'
 txt_year_to_young: 'Por favor, pregunte a sus padres a participar.'
+waitlist_with_facebook: waitlist_with_facebook
+waitlist_with_google: waitlist_with_google

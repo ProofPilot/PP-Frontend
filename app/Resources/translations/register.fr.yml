@@ -1,4 +1,4 @@
-btn_next: 加入
+btn_next: '加入'
 btn_save_mailing_address: btn_save_mailing_address
 btn_send_confirmation_email: btn_send_confirmation_email
 confirm_password: confirm_password
@@ -12,6 +12,9 @@ create_password: create_password
 enter_email: enter_email
 header_new_user_register: header_new_user_register
 header_register: header_register
+help_recruit_people: help_recruit_people
+join_with_facebook: join_with_facebook   # FIXME
+join_with_google: join_with_google
 label_address1: label_address1
 label_address2: label_address2
 label_city: label_city
@@ -26,6 +29,8 @@ label_sign_main: label_sign_main
 label_state: label_state
 label_username: label_username
 label_zipcode: label_zipcode
+let_know_launch: let_know_launch
+let_me_know: let_me_know
 mail_confirmation_fail: mail_confirmation_fail
 mail_confirmation_success: mail_confirmation_success
 min_charachters: min_charachters
@@ -39,3 +44,5 @@ txt_join_with: txt_join_with
 txt_subtitle_check_email: txt_subtitle_check_email
 txt_year_to_old: txt_year_to_old
 txt_year_to_young: txt_year_to_young
+waitlist_with_facebook: waitlist_with_facebook
+waitlist_with_google: waitlist_with_google
