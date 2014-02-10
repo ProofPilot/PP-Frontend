@@ -29,6 +29,8 @@ use Cyclogram\Bundle\ProofPilotBundle\Entity\Site;
 
 use Cyclogram\Bundle\ProofPilotBundle\Entity\Organization;
 
+use Cyclogram\Bundle\ProofPilotBundle\Entity\Location;
+
 use Cyclogram\Bundle\ProofPilotBundle\Entity\StudyOrganizationLink;
 
 use Doctrine\ORM\EntityRepository;
@@ -37,6 +39,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Lunetics\LocaleBundle\Tests\Validator\BaseMetaValidator;
 
 class StudyRepository extends EntityRepository 
 {
@@ -249,6 +252,31 @@ class StudyRepository extends EntityRepository
                         'organizationstatus' => Organization::STATUS_ACTIVE,
                 ))
                 ->getResult();
+    }
+    
+
+    public function getStudyLocations($studyCode)
+    {
+        return $this->getEntityManager()
+        ->createQuery("
+                SELECT l.locationId, l.locationName, l.locationLatitude, l.locationLongitude, l.locationAddress1, l.locationAddress2
+                FROM CyclogramProofPilotBundle:LocationOrganizationLink lol
+                INNER JOIN lol.location l
+                INNER JOIN lol.organization o
+                INNER JOIN o.studyOrganizationLinks sol
+                INNER JOIN sol.study s
+                WHERE l.status = :locationstatus
+                AND s.studyCode = :code
+                AND sol.status = :solstatus
+                AND o.status = :organizationstatus
+                ")
+                    ->setParameters(array(
+                            'code' => $studyCode,
+                            'solstatus' => StudyOrganizationLink::STATUS_ACTIVE,
+                            'locationstatus' => Location::STATUS_ACTIVE,
+                            'organizationstatus' => Organization::STATUS_ACTIVE
+                    ))
+                    ->getResult();
     }
     
     public function getStudyStaff($studyCode) {

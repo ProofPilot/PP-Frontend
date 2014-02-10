@@ -147,9 +147,9 @@ class SearchController extends Controller
     }
     
     /**
-     * @Route("/search_organization_locations", name="searchOrganizationLocations", options={"expose"=true}, defaults={"_format" = "xml"})
+     * @Route("/search_study_locations", name="searchStudyLocations", options={"expose"=true}, defaults={"_format" = "xml"})
      */
-    public function searchOrganizationLocationsAjaxAction(Request $request)
+    public function searchStudyLocationsAjaxAction(Request $request)
     {
 //         if ($request->isXmlHttpRequest()) {
             $data = $request->request->all();
@@ -159,10 +159,19 @@ class SearchController extends Controller
             $lng = $request->get("lng");
             $lat = $request->get("lat");
             $radius = $request->get('radius');
+            $studyCode = $request->get('studyCode');
 
             $conn = $this->container->get('database_connection');
             
-            $sql = 'SELECT location_name, location_address1, location_address2, location_latitude, location_longitude, ( 3959 * acos( cos( radians('.$lat.') ) * cos( radians( location_latitude ) ) * cos( radians( location_longitude ) - radians('.$lng.') ) + sin( radians(location_latitude) ) * sin( radians( '.$lat.' ) ) ) ) AS distance  FROM location HAVING distance < '.$radius.' ORDER BY distance LIMIT 0 , 10;';
+            $studyLocations = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:Study')->getStudyLocations($studyCode);
+            $locationIds = array();
+            foreach($studyLocations as $location) {
+                array_push($locationIds, $location["locationId"]);
+            }
+            
+            $sql = 'SELECT location_name, location_address1, location_address2, location_latitude, location_longitude, 
+                    ( 3959 * acos( cos( radians('.$lat.') ) * cos( radians( location_latitude ) ) * cos( radians( location_longitude ) - radians('.$lng.') ) + sin( radians(location_latitude) ) * sin( radians( '.$lat.' ) ) ) ) AS distance  
+                    FROM location WHERE location_id IN ('.implode (", ", $locationIds).') HAVING distance < '.$radius.' ORDER BY distance LIMIT 0 , 10;';
             $rows = $conn->fetchAll($sql);
             
             // Start XML file, create parent node

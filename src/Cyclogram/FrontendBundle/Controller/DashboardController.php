@@ -315,6 +315,12 @@ class DashboardController extends Controller
                     $parameters['formMobileConfirm'] =  $formMobileConfirm->createView();
                     $parameters['formMobile'] =  $formMobile->createView();
                     break;
+                case "Choose Location":
+                    $studyCode = $study->getStudyCode();
+                    $studyLocations = $this->getDoctrine()->getRepository("CyclogramProofPilotBundle:Study")->getStudyLocations($studyCode);
+                    $parameters['locations'] = $studyLocations;
+                    $parameters['studyCode'] = $studyCode;
+                    break;
 
             }
 
@@ -327,7 +333,8 @@ class DashboardController extends Controller
             
         }
         
-        $parameters['organizations'] = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:Organization')->findAll();
+        //$parameters['organizations'] = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:Organization')->findAll();
+        
         $parameters["actions"] = array(
                 array('activity' => $this->get('translator')->trans('past_activity.emai_confirmation_status', array(), 'dashboard'),
                         'class' => 'icon1 first'
