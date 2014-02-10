@@ -19,21 +19,21 @@ class Version20140210162821 extends AbstractMigration
 						`organization_id`)
 						VALUES
 						((SELECT location_id FROM `new-proofpilot`.location where location_name LIKE 'Sunset Plaza Dental%'),
-						(SELECT organization_id FROM `new-proofpilot`.organization where organization_name LIKE 'ProofPilot%')),
+						(SELECT organization_id FROM `new-proofpilot`.organization where organization_name LIKE 'A Research Institution%')),
 						((SELECT location_id FROM `new-proofpilot`.location where location_name LIKE 'Drug Rehabilitation Center in West Hollywood%'),
-						(SELECT organization_id FROM `new-proofpilot`.organization where organization_name LIKE 'Pace University%')),
+						(SELECT organization_id FROM `new-proofpilot`.organization where organization_name LIKE 'A Research Institution%')),
 						((SELECT location_id FROM `new-proofpilot`.location where location_name LIKE 'Stone Skin Care%'),
-						(SELECT organization_id FROM `new-proofpilot`.organization where organization_name LIKE 'Georgia State University%')),
+						(SELECT organization_id FROM `new-proofpilot`.organization where organization_name LIKE 'A Research Institution%')),
 						((SELECT location_id FROM `new-proofpilot`.location where location_name LIKE 'Jessica Nail Clinic%'),
-						(SELECT organization_id FROM `new-proofpilot`.organization where organization_name LIKE 'University of Kentucky%')),
+						(SELECT organization_id FROM `new-proofpilot`.organization where organization_name LIKE 'A Research Institution%')),
 						((SELECT location_id FROM `new-proofpilot`.location where location_name LIKE 'Back to Total Health%'),
 						(SELECT organization_id FROM `new-proofpilot`.organization where organization_name LIKE 'A Research Institution%')),
 						((SELECT location_id FROM `new-proofpilot`.location where location_name LIKE 'Sunset Acupuncture - META CLINIC%'),
-						(SELECT organization_id FROM `new-proofpilot`.organization where organization_name LIKE 'Abt Associates%')),
+						(SELECT organization_id FROM `new-proofpilot`.organization where organization_name LIKE 'A Research Institution%')),
 						((SELECT location_id FROM `new-proofpilot`.location where location_name LIKE 'Saban Community Clinic - Beverly Health Cente%'),
-						(SELECT organization_id FROM `new-proofpilot`.organization where organization_name LIKE 'Test%')),
+						(SELECT organization_id FROM `new-proofpilot`.organization where organization_name LIKE 'A Research Institution%')),
 						((SELECT location_id FROM `new-proofpilot`.location where location_name LIKE 'James Guay%'),
-						(SELECT organization_id FROM `new-proofpilot`.organization where organization_name LIKE 'New York Blood Center%'));
+						(SELECT organization_id FROM `new-proofpilot`.organization where organization_name LIKE 'A Research Institution%'));
     			");
 
     }
