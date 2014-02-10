@@ -2,7 +2,7 @@
   #map { height: 100% }
 </style>
 <!--  insert some handlebars -->
-{% javascripts output='generated/hbs/my-handlebars-templates.js'
+{% javascripts output='js/hbs/my-handlebars-templates.js'
     '@CyclogramFrontendBundle/Resources/public/hbs/*.hbs'
 %}
 <script type="text/javascript" src="{{ asset_url }}"></script>
@@ -185,6 +185,7 @@
             google.maps.event.trigger(markers[markerNum], 'click');
           }
             
+            $(this).parents('li').siblings().find('.text_right a').removeClass('select_btn');
         });
         
         $('.mobile_switcher a').bind('click', function(e) {
