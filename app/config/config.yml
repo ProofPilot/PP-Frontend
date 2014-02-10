@@ -65,6 +65,7 @@ assetic:
         handlebars:
             apply_to: %handlebars.extension%
             bin: %handlebars.bin%
+            node: %handlebars.node%
 
 # Doctrine Configuration
 doctrine:

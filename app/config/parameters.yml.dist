@@ -56,3 +56,4 @@ parameters:
     #handlebars configuration
     handlebars.extension: "\.hbs$"
     handlebars.bin: /usr/bin/handlebars
+	handlebars.node: /usr/bin/node
