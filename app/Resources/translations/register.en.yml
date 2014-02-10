@@ -12,9 +12,9 @@ create_password: 'Create a Password'
 enter_email: 'Enter your e-mail'
 header_new_user_register: 'New ProofPilot Users'
 header_register: Register
-help_recruit_people: help_recruit_people
-join_with_facebook: join_with_facebook   # FIXME
-join_with_google: join_with_google
+help_recruit_people: 'I can help recruit others to this study'
+join_with_facebook: 'Join with Facebook'
+join_with_google: 'Join with Google'
 label_address1: 'Street Address'
 label_address2: 'Street Address #2'
 label_city: City
@@ -29,8 +29,8 @@ label_sign_main: 'How do you want things delivered:'
 label_state: State
 label_username: Username
 label_zipcode: 'Zip Code'
-let_know_launch: let_know_launch
-let_me_know: let_me_know
+let_know_launch: 'Let me know when this study launches!'
+let_me_know: 'Join the Wait list'
 mail_confirmation_fail: 'Failed to confirm the email. No such user!'
 mail_confirmation_success: 'Congratulations!!! Your e-mail is confirmed!'
 min_charachters: '(8 characters min)'
@@ -44,5 +44,5 @@ txt_join_with: 'Join with'
 txt_subtitle_check_email: 'Please check your email address'
 txt_year_to_old: 'Are you sure?'
 txt_year_to_young: 'Please ask your parents to participate.'
-waitlist_with_facebook: waitlist_with_facebook
-waitlist_with_google: waitlist_with_google
+waitlist_with_facebook: 'Join the wait list with Facebook'
+waitlist_with_google: 'Join the wait list with Google'

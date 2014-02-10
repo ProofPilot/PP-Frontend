@@ -1,7 +1,7 @@
-btn_next: '加入'
+btn_next: Suivant
 btn_save_mailing_address: btn_save_mailing_address
 btn_send_confirmation_email: btn_send_confirmation_email
-confirm_password: confirm_password
+confirm_password: 'Mot de passe'
 consent_accept_join: consent_accept_join
 consent_any_information: consent_any_information
 consent_close_window: consent_close_window
@@ -13,7 +13,7 @@ enter_email: enter_email
 header_new_user_register: header_new_user_register
 header_register: header_register
 help_recruit_people: help_recruit_people
-join_with_facebook: join_with_facebook   # FIXME
+join_with_facebook: join_with_facebook
 join_with_google: join_with_google
 label_address1: label_address1
 label_address2: label_address2

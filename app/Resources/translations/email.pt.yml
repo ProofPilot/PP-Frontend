@@ -11,7 +11,7 @@ email_login: 'Entre para ProofPilot'
 email_not_send_try_later: 'E-mail não enviado tente mais tarde'
 email_reset_password: 'Redefinir sua senha'
 email_title_notice: 'Título do aviso E-mail'
-email_title_prelaunch: email_title_prelaunch
+email_title_prelaunch: 'Prelaunch %studyName% aviso correio'
 email_title_verify: 'Por favor, verifique seu e-mail'
 email_to_friends_add_email: 'Adicionar outro e-mail'
 email_to_friends_cancle: Cancelar
