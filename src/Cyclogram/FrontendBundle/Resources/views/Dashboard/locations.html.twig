@@ -129,14 +129,14 @@
 //            };
          }
               
-        $('.location_details').bind('click', function(e){
+        $('.results li').bind('click', function(e){
         	e.preventDefault();
-        	var info = $(this).parents('.text_left').siblings('.info_box');
+        	var info = $(this).find('.info_box');
         	if(!info.is(":visible")) {
-        		$(this).parents('.text_left').siblings('.info_box').show();
-        		$(this).closest('li').siblings().find('.info_box').hide();
+        		info.show();
+        		$(this).siblings().find('.info_box').hide();
             } else {
-            	$(this).parents('.text_left').siblings('.info_box').hide();
+            	info.hide();
             }
         });
 
@@ -177,6 +177,7 @@
         
         $('.text_right a').bind('click', function(e) {
         	e.preventDefault();
+        	e.stopPropagation();
             $(this).toggleClass('select_btn');
 
 

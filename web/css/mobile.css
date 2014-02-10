@@ -1626,6 +1626,7 @@ div.checker input {
     margin-bottom: 4px;
     padding-bottom: 4px;
     width: 100%;
+    cursor: pointer;
 }
 #div_location .mobile_reg .popup_sidebar .results ul li:hover {
 	background-color: #F3F3F3;
