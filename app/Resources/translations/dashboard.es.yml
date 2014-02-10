@@ -1,18 +1,18 @@
-another_verification_sent: another_verification_sent
-btn_confrimcoe_login: btn_confrimcoe_login
-btn_send_confirmation: btn_send_confirmation
+another_verification_sent: 'Otra comprobación e-mail ha sido enviado'
+btn_confrimcoe_login: Confirmar
+btn_send_confirmation: 'Enviar SMS de confirmación'
 dashboard_dismiss_confirmation: '¿Está seguro que desea despedir? Esto puede afectar a su capacidad de continuar con el estudio'
 dashboard_subtitle: 'Todas las tareas de estudio en un solo lugar. Gestione toda su experiencia con ProofPilot aquí.'
-dismiss_all: dismiss_all
+dismiss_all: 'Descartar todo'
 do_it: HACERLO
 do_it_now: 'Hazlo Ahora'
-enter_mobile_phone: enter_mobile_phone
-enter_sms_code: enter_sms_code
+enter_mobile_phone: 'Introduzca su número de teléfono móvil'
+enter_sms_code: 'Introduce el código de verificación que recibió en su teléfono'
 join_a_study: 'Únase a un estudio'
 label_phone_small: label_phone_small
 label_phone_wide: label_phone_wide
 label_sms_code: label_sms_code
-no_code: no_code
+no_code: 'No Code? Enviar otro'
 no_do_it: 'No tiene tareas de estudio en este momento'
 
 past_activity:
@@ -22,7 +22,7 @@ past_activity:
     welcome_study: 'Bienvenido al studio Know@Home: Poniendo a prueba la prueba'
 
 send_again: 'No conseguirlo? Revise su correo no deseado y/o volver a enviar.'
-sms_verification_message: sms_verification_message
+sms_verification_message: 'Su código SMS ProofPilot es:'
 txt_dashboard: Escritorio
 txt_dismiss: 'Tarea %interventionName% descartado'
 txt_dismiss_all: 'Todas las tareas despedidos'
@@ -35,4 +35,4 @@ what_next_list:
     other_info: 'Alguna otra información'
     reade_instruction: 'Lea las instrucciónes para realizar las pruebas'
 
-wrong_sms: wrong_sms
+wrong_sms: 'SMS equivocado'

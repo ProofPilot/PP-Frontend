@@ -7,13 +7,13 @@ forgot_password: 'Forgot your password'
 forgot_password_message: "It happens to all of us more times that we'd like to admit. \nNo problem, we'll walk you through creating a new password while protecting your privacy and security.\n"
 forgot_username: 'Forgot your Username'
 forgot_username_email_send: 'Send forgotten username email'
-forgot_username_message: 'No problem. Enter the email address you used to sign up and we will send your Username.'
+forgot_username_message: 'No problem. Enter the email address you used to sign up and we will send your username.'
 header_exisiting_login: 'Existing User Log In'
 header_login: 'Log in'
 new_password_selection: "<p>Click on the link in the e-mail and you will be guided through the selection of a new password. You will need your mobile phone to complete this process.</p>\n<p>If it hasn't arrived within a few minutes, check your SPAM or junkmail folders</p>\n"
 sign_up_header: 'Get your incentives. Join important studies. Login or Join Now!'
 specimen_msg: 'Please select a valid specimen option'
-trouble_log_in: trouble_log_in   # FIXME
+trouble_log_in: 'Trouble logging in'
 txt_forgot_your_password: 'Forgot it?'
 txt_form_password: 'Enter password'
 txt_form_username: 'Enter username'

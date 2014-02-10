@@ -13,7 +13,7 @@ header_login: 'Iniciar la sesión'
 new_password_selection: "<p>Haga click en el enlace del e-mail y será guiado atravez de la selección de una nueva contraseña. Necesitará su teléfono móbil para completar este proceso. </p>\n<p>Si no ha arrivado en pocos minutos revise la carpeta de correo basura.</p>"
 sign_up_header: '¡Consiga sus incentivos. Únete a importantes estudios. Ingresa o Únete ahora!'
 specimen_msg: 'Por favor seleccione una opción de la muestra válida'
-trouble_log_in: trouble_log_in   # FIXME
+trouble_log_in: 'Problemas para iniciar sesión'
 txt_forgot_your_password: '¿Olvidó su contraseña?'
 txt_form_password: Contraseña
 txt_form_username: Usuario

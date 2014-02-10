@@ -11,9 +11,9 @@ forgot_username_message: 'Não tem problema. Digite o número do telefone celula
 header_exisiting_login: 'Usuário Existente Sessão'
 header_login: Entrar
 new_password_selection: 'Clique no link em seu e-mail e você será guiado para criar uma nova senha. Você vai precisar do seu telefone celular para completar este processo. Se a mensagem não chegar em poucos minutos, verifique sua caixa de spam ou lixeira.'
-sign_up_header: sign_up_header
+sign_up_header: 'Receba seus incentivos. Junte-se importantes estudos. Entre ou Inscreva-se agora!'
 specimen_msg: 'Por favor, selecione uma opção de espécime válido'
-trouble_log_in: trouble_log_in   # FIXME
+trouble_log_in: 'Problemas para acessar'
 txt_forgot_your_password: "Esqueceu seu nome de senha?\n"
 txt_form_password: Senha
 txt_form_username: Usuário

@@ -4,7 +4,7 @@ button_personalized_insight: 'View Personalized Insights'
 button_study_findings: 'View Study Findings'
 button_view_consent: 'What You Need to Know'
 inivted_to_study: 'You are invited to the study,'
-login_to_prelaunch: login_to_prelaunch
+login_to_prelaunch: '?????'
 msg_not_eligible: 'You are not eligible for ''%studyname%'' at this time.'
 social_at_proofpilot: 'at ProofPilot'
 social_join_study: 'Join the study,'
@@ -14,7 +14,7 @@ txt_affiliated_organizations: 'Affiliated organizations'
 txt_conducted_by: 'Conducted by'
 txt_decline_btn: 'DECLINE - MAYBE LATER'
 txt_eligible_dsc: 'Your participation at a glance: What you need to do now and what’s next.'
-txt_email_to_friend: 'E-mail to friend'
+txt_email_to_friend: 'E-mail to a friend'
 txt_goal: Goal
 txt_join_before_goal: 'Join the study before it reaches the goal and earn valuable incentives.'
 txt_like_proofpilot: Follow
@@ -26,7 +26,7 @@ txt_sponsored_by: 'This study is sponsored by'
 txt_staff: Staff
 txt_tweet: Tweet
 txt_you_are_eligible: 'You are eligible. Accept consent to continue ...'
-unavailable_functionality: 'There are no interim results for this study yet. We will notify you when results area available for you to review.'
+unavailable_functionality: 'There are no interim results for this study yet. We will notify you when results are available for you to review.'
 warning_message: 'Before proceeding, please read this important information and accept at the bottom of the page'
-we_will_notify_prelaunch: we_will_notify_prelaunch
+we_will_notify_prelaunch: 'Thanks for your interest! We''ll let you know when it launches.'
 you_are_participant: 'ENROLLED!<br><small>GO TO DASHBOARD</small>'
