@@ -169,7 +169,7 @@ class ParticipantRepository extends EntityRepository implements
                 ))
                 ->getSingleScalarResult();
     }
-    
+
     
     public function isEnrolledInStudy($participant, $studyCode) {
         $result = $this->getEntityManager()

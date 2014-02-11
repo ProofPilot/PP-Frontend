@@ -22,21 +22,21 @@ namespace Cyclogram\Bundle\ProofPilotBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * LocationOrganizationLink
+ * LocationSiteLink
  *
- * @ORM\Table(name="location_organization_link")
+ * @ORM\Table(name="location_site_link")
  * @ORM\Entity
  */
-class LocationOrganizationLink
+class LocationSiteLink
 {
     /**
      * @var integer
      *
-     * @ORM\Column(name="location_organization_link_id", type="integer", nullable=false)
+     * @ORM\Column(name="location_site_link_id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $locationOrganizationLinkId;
+    private $locationSiteLinkId;
 
     /**
      * @var \Location
@@ -51,30 +51,30 @@ class LocationOrganizationLink
     /**
      * @var \Organization
      *
-     * @ORM\ManyToOne(targetEntity="Organization")
+     * @ORM\ManyToOne(targetEntity="Site")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="organization_id", referencedColumnName="organization_id")
+     *   @ORM\JoinColumn(name="site_id", referencedColumnName="site_id")
      * })
      */
-    private $organization;
+    private $site;
 
 
 
     /**
-     * Get locationOrganizationLinkId
+     * Get locationSiteLinkId
      *
      * @return integer 
      */
-    public function getLocationOrganizationLinkId()
+    public function getLocationSiteLinkId()
     {
-        return $this->locationOrganizationLinkId;
+        return $this->locationSiteLinkId;
     }
 
     /**
      * Set location
      *
      * @param \Cyclogram\Bundle\ProofPilotBundle\Entity\Location $location
-     * @return LocationOrganizationLink
+     * @return LocationSiteLink
      */
     public function setLocation(\Cyclogram\Bundle\ProofPilotBundle\Entity\Location $location = null)
     {
@@ -94,14 +94,14 @@ class LocationOrganizationLink
     }
 
     /**
-     * Set organization
+     * Set site
      *
-     * @param \Cyclogram\Bundle\ProofPilotBundle\Entity\Organization $organization
-     * @return LocationOrganizationLink
+     * @param \Cyclogram\Bundle\ProofPilotBundle\Entity\Site $site
+     * @return LocationSiteLink
      */
-    public function setOrganization(\Cyclogram\Bundle\ProofPilotBundle\Entity\Organization $organization = null)
+    public function setSite(\Cyclogram\Bundle\ProofPilotBundle\Entity\Site $site = null)
     {
-        $this->organization = $organization;
+        $this->site = $site;
     
         return $this;
     }
@@ -109,10 +109,10 @@ class LocationOrganizationLink
     /**
      * Get organization
      *
-     * @return \Cyclogram\Bundle\ProofPilotBundle\Entity\Organization 
+     * @return \Cyclogram\Bundle\ProofPilotBundle\Entity\Site 
      */
-    public function getOrganization()
+    public function getSite()
     {
-        return $this->organization;
+        return $this->site;
     }
 }

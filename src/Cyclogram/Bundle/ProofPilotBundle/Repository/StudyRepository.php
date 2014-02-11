@@ -259,13 +259,15 @@ class StudyRepository extends EntityRepository
     {
         return $this->getEntityManager()
         ->createQuery("
-                SELECT l.locationId, l.locationName, l.locationLatitude, l.locationLongitude, l.locationAddress1, l.locationAddress2
-                FROM CyclogramProofPilotBundle:LocationOrganizationLink lol
-                INNER JOIN lol.location l
-                INNER JOIN lol.organization o
+                SELECT site.siteId, site.siteName, l.locationId, l.locationName, l.locationLatitude, l.locationLongitude, l.locationAddress1, l.locationAddress2
+                FROM CyclogramProofPilotBundle:LocationSiteLink lsl
+                INNER JOIN lsl.location l
+                INNER JOIN lsl.site site
+                INNER JOIN site.organization o
                 INNER JOIN o.studyOrganizationLinks sol
                 INNER JOIN sol.study s
                 WHERE l.status = :locationstatus
+                AND site.status = :sitestatus
                 AND s.studyCode = :code
                 AND sol.status = :solstatus
                 AND o.status = :organizationstatus
@@ -274,7 +276,8 @@ class StudyRepository extends EntityRepository
                             'code' => $studyCode,
                             'solstatus' => StudyOrganizationLink::STATUS_ACTIVE,
                             'locationstatus' => Location::STATUS_ACTIVE,
-                            'organizationstatus' => Organization::STATUS_ACTIVE
+                            'organizationstatus' => Organization::STATUS_ACTIVE,
+                            'sitestatus' => Site::STATUS_ACTIVE
                     ))
                     ->getResult();
     }

@@ -169,9 +169,13 @@ class SearchController extends Controller
                 array_push($locationIds, $location["locationId"]);
             }
             
-            $sql = 'SELECT location_name, location_address1, location_address2, location_latitude, location_longitude, 
+            $sql = 'SELECT site.site_id as site_id, site.site_name as site_name, location_name, location_address1, location_address2, location_latitude, location_longitude, 
                     ( 3959 * acos( cos( radians('.$lat.') ) * cos( radians( location_latitude ) ) * cos( radians( location_longitude ) - radians('.$lng.') ) + sin( radians(location_latitude) ) * sin( radians( '.$lat.' ) ) ) ) AS distance  
-                    FROM location WHERE location_id IN ('.implode (", ", $locationIds).') HAVING distance < '.$radius.' ORDER BY distance LIMIT 0 , 10;';
+                    FROM 
+                    location 
+                    INNER JOIN location_site_link ON location.location_id = location_site_link.location_id
+                    INNER JOIN site ON location_site_link.site_id = site.site_id
+                    WHERE location.location_id IN ('.implode (", ", $locationIds).') HAVING distance < '.$radius.' ORDER BY distance LIMIT 0 , 10;';
             $rows = $conn->fetchAll($sql);
             
             // Start XML file, create parent node
@@ -186,6 +190,8 @@ class SearchController extends Controller
                 $newnode->setAttribute("lat", $row['location_latitude']);
                 $newnode->setAttribute("lng", $row['location_longitude']);
                 $newnode->setAttribute("distance", $row['distance']);
+                $newnode->setAttribute("siteId", $row['site_id']);
+                $newnode->setAttribute("siteName", $row['site_name']);
             }
             
             $xml = $dom->saveXML();

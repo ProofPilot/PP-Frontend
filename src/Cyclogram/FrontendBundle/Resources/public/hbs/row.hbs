@@ -1,18 +1,19 @@
 <li>
     <div class="text_wrapper">
         <div class="text_left">
-            <h2><a href="" class="location_details">{{ organization.organizationName }}</a></h2>
-            <p>{{ organization.organizationAddress1 }}<br>{{ organization.organizationAddress2 }}</p>
+            <h2><a href="" class="location_details">{{ location.locationName }}</a></h2>
+            <p>{{ location.locationAddress1 }}<br>{{ location.locationAddress2 }}</p>
+            <p>{{ location.siteName }}</p>
         </div>
         <div class="text_right">
-            <a href="#" data-marker={{ organization.markerid }}>Select</a>
+            <a href="#" data-marker={{ location.markerid }} data-site={{ location.siteId }}>Select</a>
         </div>   
         <div class="info_box" style="display: none;">
             <div class="box_bg">
                 <div class="text_cont">
                     <a href="#" class="close"></a>
-                    <h1>{{ organization.organizationName }}</h1>
-                    <p>{{ organization.organizationAddress1 }}<br>{{ organization.organizationAddress2 }}</p>
+                    <h1>{{ location.locationName }}</h1>
+                    <p>{{ location.locationAddress1 }}<br>{{ location.locationAddress2 }}</p>
                     <hr/>
                     <div class="wrapper">
                         <p><strong>Organization Type:</strong><br/>Clinic</p>

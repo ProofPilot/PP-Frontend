@@ -31,9 +31,10 @@
                             <div class="text_left">
                                 <h2><a href="" class="location_details">{{ location.locationName }}</a></h2>
                                 <p>{{ location.locationAddress1 }}<br>{{ location.locationAddress2 }}</p>
+                                <p>{{ location.siteName }}</p>
                             </div>
                             <div class="text_right">
-                                <a href="#" data-marker={{ loop.index0 }}>Select</a>
+                                <a href="#" data-marker={{ loop.index0 }} data-site={{ location.siteId }}>Select</a>
                             </div>   
                             <div class="info_box" style="display: none;">
                                 <div class="box_bg">
@@ -68,7 +69,7 @@
         </div>
         <div class="popup_map" id="map"></div>
         <div class="popup_apply center_align">
-            <button class="submit" type="submit">APPLY</button>
+            <button class="submit" id="apply_site_btn">APPLY</button>
         </div>
     </div>
 </div>        
@@ -129,14 +130,14 @@
 //            };
          }
               
-        $('.results li').bind('click', function(e){
-        	e.preventDefault();
-        	var info = $(this).find('.info_box');
-        	if(!info.is(":visible")) {
-        		info.show();
-        		$(this).siblings().find('.info_box').hide();
+        $('.results').on('click', 'li',  function(e){
+            e.preventDefault();
+            var info = $(this).find('.info_box');
+            if(!info.is(":visible")) {
+                info.show();
+                $(this).siblings().find('.info_box').hide();
             } else {
-            	info.hide();
+                info.hide();
             }
         });
 
@@ -154,7 +155,7 @@
         });
 
         $('.location_details').bind('click', function(e){
-        	e.preventDefault();
+            e.preventDefault();
 
 
      /*       $.ajax({
@@ -170,24 +171,48 @@
                 });*/
         });
         
-        $('.text_wrapper .info_box').bind('click', '.close', function(e) {
-        	e.preventDefault();
+        $('.text_wrapper .info_box').on('click', '.close', function(e) {
+            e.preventDefault();
             $('.info_box').hide();
         });
         
-        $('.text_right a').bind('click', function(e) {
-        	e.preventDefault();
-        	e.stopPropagation();
+        $('.results').on('click', '.text_right a', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            $('.info_box').hide();
             $(this).toggleClass('select_btn');
-
-
             var markerNum = $(this).data('marker');
           if (markerNum != undefined){
             google.maps.event.trigger(markers[markerNum], 'click');
           }
-            
             $(this).parents('li').siblings().find('.text_right a').removeClass('select_btn');
         });
+
+        $('#apply_site_btn').on('click', function(e) {
+            e.preventDefault();
+            var siteId = $('a.select_btn').data('site');
+            var jqXHR = $.ajax({
+                dataType: "json",
+                type: "POST",
+                url: Routing.generate('_locationselect_completed_ajax', {
+                    siteId: siteId,
+                    _locale: '{{ app.request.locale }}' 
+                    }
+                )
+            });
+            jqXHR.done(function( data, textStatus, jqXHR ) {
+                if(data.site != null) {
+                    alert("Thank you for your choice");
+                } else {
+                    alert("Error joining campaign. Did you make a selection?");
+                }
+
+                window.location.replace(data.url);
+
+            });
+
+        });
+        
         
         $('.mobile_switcher a').bind('click', function(e) {
         	e.preventDefault();
@@ -262,6 +287,8 @@
               	    var latlng = new google.maps.LatLng(
               	        parseFloat(markerNodes[i].getAttribute("lat")),
               	        parseFloat(markerNodes[i].getAttribute("lng")));
+          	        var siteId = markerNodes[i].getAttribute("siteId");
+          	        var siteName = markerNodes[i].getAttribute("siteName");
 
               	    //createOption(name, distance, i);
               	    createMarker(latlng, name, address);
@@ -269,11 +296,13 @@
 
                     content.rows.push(
                             { 
-                              organization: {
-                            	    organizationName: name,
-                            	    organizationAddress1: address,
-                            	    organizationAddress2: '',
-                            	    markerid: i
+                              location: {
+                            	    locationName: name,
+                            	    locationAddress1: address,
+                            	    locationAddress2: '',
+                            	    markerid: i,
+                            	    siteId: siteId,
+                            	    siteName: siteName
                                   }
                             }
                     );

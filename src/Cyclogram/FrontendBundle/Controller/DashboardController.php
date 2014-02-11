@@ -507,4 +507,58 @@ class DashboardController extends Controller
     	}
     }
     
+    /**
+     * @Route("/locationselect_completed_ajax/", name="_locationselect_completed_ajax", options={"expose"=true})
+     * @Secure(roles="ROLE_PARTICIPANT, IS_AUTHENTICATED_REMEMBERED")
+     * @Template()
+     */
+    public function locationSelectCompletedAjaxAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $session = $this->getRequest()->getSession();
+        $participant = $this->get('security.context')->getToken()->getUser();
+        $participantEmail = $participant->getParticipantEmail();
+        
+
+        if($request->isXmlHttpRequest()) {
+            
+
+            //participant_site_link
+            $result = $em->getRepository('CyclogramProofPilotBundle:ParticipantCampaignLink')
+                        ->setParticipantCampaignLink($participant, $request->get("siteId"));
+            
+            if($result) {
+                $intervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')
+                ->findOneBy(array("interventionCode" => "SexproLocation", "language" => $participant->getParticipantLanguage()));
+                if (empty($intervention)) {
+                    $language = $em->getRepository('CyclogramProofPilotBundle:Language')->findOneBylocale('en');
+                    $intervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')
+                    ->findOneBy(array("interventionCode" => $interventionCode, "language" => $language));
+                    if(empty($intervention)) {
+                        throw new \Exception("No intervention found with code \"" . $interventionCode . "\"");
+                    }
+                }
+                $participantInterventionLink = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')->findOneBy(array('participant' => $participant, 'intervention' => $intervention));
+                $participantInterventionLink->setStatus(ParticipantInterventionLink::STATUS_CLOSED);
+                $em->persist($participantInterventionLink);
+                $em->flush();
+                return new Response(json_encode(
+                        array(
+                                'url' => $this->generateUrl("_main"),
+                                'site' => $request->get("siteId")
+                
+                        )));
+            } else {
+                return new Response(json_encode(
+                        array(
+                                'url' => $this->generateUrl("_main"),
+                                'site' => null
+                
+                        )));
+            }
+
+
+        }
+    }
+    
 }
