@@ -1,6 +1,3 @@
-<style type="text/css">
-  #map { height: 100% }
-</style>
 <!--  insert some handlebars -->
 {% javascripts output='generated/hbs/my-handlebars-templates.js'
     '@CyclogramFrontendBundle/Resources/public/hbs/*.hbs'
@@ -76,15 +73,14 @@
 <script type="text/javascript">
 
 /* Register handlebars templates */
- 
+
     var row = Handlebars.templates['row.hbs'];
     Handlebars.registerPartial("row", row); 
 
     var clinicsTable = Handlebars.templates['clinicsTable.hbs'];
 
-
     $(document).ready(function(){
-        
+
         var map;
         var markers = [];
         var infoWindow;
@@ -92,7 +88,6 @@
         var bounds;
         var content = new Array();
 
-            
         function load() {
             map = new google.maps.Map(document.getElementById("map"), {
               center: new google.maps.LatLng(34.0931, -118.3783),
@@ -103,22 +98,18 @@
             infoWindow = new google.maps.InfoWindow();
             bounds = new google.maps.LatLngBounds();
 
-
             //just add all locations on first load
             {% for location in locations %}
             var latlng = new google.maps.LatLng(
-                   parseFloat({{ location.locationLatitude }}),
-                   parseFloat({{ location.locationLongitude }}));
+               parseFloat({{ location.locationLatitude }}),
+               parseFloat({{ location.locationLongitude }}));
             createMarker(latlng, '{{ location.locationName }}', '{{ location.locationAddress1 }}');
             bounds.extend(latlng);
-
-
             {% endfor %}
             
             map.fitBounds(bounds);
             if({{ locations|length}} == 0)
                 map.setZoom(10);
-            
 
 //            locationSelect = document.getElementById("locationSelect");
 //            locationSelect.onchange = function() {
@@ -128,72 +119,52 @@
 //              }
 //            };
          }
-              
+
         $('.results li').bind('click', function(e){
-        	e.preventDefault();
-        	var info = $(this).find('.info_box');
-        	if(!info.is(":visible")) {
-        		info.show();
-        		$(this).siblings().find('.info_box').hide();
+            e.preventDefault();
+            var info = $(this).find('.info_box');
+            if(!info.is(":visible")) {
+                info.show();
+                $(this).siblings().find('.info_box').hide();
             } else {
-            	info.hide();
+                info.hide();
             }
         });
 
         $('#location').on('click', function(e) {
-                e.preventDefault();
-                $('#div_location').dialog({
-                    modal: true,
-                    width: 'auto',
-                    fluid: true,
-                    resizable: false,
-                    position: ['top',100],
-                    open: funcCustom
-                });
-                load();
+            e.preventDefault();
+            $('#div_location').dialog({
+                modal: true,
+                width: 'auto',
+                fluid: true,
+                resizable: false,
+                position: ['top',100],
+                open: funcCustom
+            });
+            load();
         });
 
-        $('.location_details').bind('click', function(e){
-        	e.preventDefault();
-
-
-     /*       $.ajax({
-                dataType: "json",
-                type: "POST",
-                url: "{{ path('searchStudyLocations')}}",
-                data: {organization : $(this).html()}
-            })
-                .done (function(response) {
-                    if(response.success) {
-                    	$('#currency_symbol').html(response.currencySymbol);
-                    }
-                });*/
-        });
-        
         $('.text_wrapper .info_box').bind('click', '.close', function(e) {
-        	e.stopPropagation();
-        	e.preventDefault();
+            e.stopPropagation();
+            e.preventDefault();
             $('.info_box').hide();
         });
         
         $('.text_right a').bind('click', function(e) {
-        	e.preventDefault();
-        	e.stopPropagation();
+            e.preventDefault();
+            e.stopPropagation();
             $(this).toggleClass('select_btn');
-
-
             var markerNum = $(this).data('marker');
-          if (markerNum != undefined){
-            google.maps.event.trigger(markers[markerNum], 'click');
-          }
-            
+            if (markerNum != undefined){
+                google.maps.event.trigger(markers[markerNum], 'click');
+            }
             $(this).parents('li').siblings().find('.text_right a').removeClass('select_btn');
         });
         
         $('.mobile_switcher a').bind('click', function(e) {
-        	e.preventDefault();
-        	if($(this).hasClass('contacts')) {
-        		$('.results').show();
+            e.preventDefault();
+            if($(this).hasClass('contacts')) {
+                $('.results').show();
                 $('.popup_map').hide();
             } else {
                 $('.results').hide();
@@ -229,10 +200,8 @@
             searchLocations();
         });
 
-
-
         function searchLocationsNear(center) {
-        	  //clearLocations();
+            //clearLocations();
 
             $.ajax({
                   dataType: "text",
@@ -246,67 +215,58 @@
                   ),
               })
               .done (function(data) {
-            	  var xml = parseXml(data);
-            	  var markerNodes = xml.documentElement.getElementsByTagName("marker");
-            	  var bounds = new google.maps.LatLngBounds();
-
-                  
+                  var json = jQuery.parseJSON(data);
+                  var markerNodes = json.length;
                   content.rows = new Array();
+                  for (var i = 0; i < json.length; i++) {
+                      var obj = json[i];
+                      var name = obj.name;
+                      var address = obj.address;
+                      var distance = obj.distance;
+                      var latlng = new google.maps.LatLng(
+                          parseFloat(obj.lat),
+                          parseFloat(obj.lng));
 
-                  
- 
-            	  
-            	  for (var i = 0; i < markerNodes.length; i++) {
-              	    var name = markerNodes[i].getAttribute("name");
-              	    var address = markerNodes[i].getAttribute("address");
-              	    var distance = parseFloat(markerNodes[i].getAttribute("distance"));
-              	    var latlng = new google.maps.LatLng(
-              	        parseFloat(markerNodes[i].getAttribute("lat")),
-              	        parseFloat(markerNodes[i].getAttribute("lng")));
+                      //createOption(name, distance, i);
+                      createMarker(latlng, name, address);
+                      bounds.extend(latlng);
 
-              	    //createOption(name, distance, i);
-              	    createMarker(latlng, name, address);
-              	    bounds.extend(latlng);
+                      content.rows.push({ 
+                          location: {
+                              locationName: name,
+                              locationAddress1: address,
+                              locationAddress2: '',
+                              markerid: i
+                          }
+                      });
+                  }
+                  bounds.extend(new google.maps.LatLng(
+                      parseFloat(center.lat()),
+                      parseFloat(center.lng())));
 
-                    content.rows.push(
-                            { 
-                              organization: {
-                            	    organizationName: name,
-                            	    organizationAddress1: address,
-                            	    organizationAddress2: '',
-                            	    markerid: i
-                                  }
-                            }
-                    );
-              	  }
-            	  bounds.extend(new google.maps.LatLng(
-                	        parseFloat(center.lat()),
-                  	        parseFloat(center.lng())));
-              	  
-            	  map.fitBounds(bounds);
-            	  if(markerNodes.length == 0)
-            		    map.setZoom(10);
+                  map.fitBounds(bounds);
+                  if(markerNodes.length == 0)
+                      map.setZoom(10);
 
-            	  //replace organizations table
-            	  var html = clinicsTable(content);
+                  //replace organizations table
+                  var html = clinicsTable(content);
                   $('div.results ul').html(html);
-            	  
-              });
 
+            });
         }
 
         //create Marker function
         function createMarker(latlng, name, address) {
-        	  var html = "<b>" + name + "</b> <br/>" + address;
-        	  var marker = new google.maps.Marker({
-        	    map: map,
-        	    position: latlng
-        	  });
-        	  google.maps.event.addListener(marker, 'click', function() {
-        	    infoWindow.setContent(html);
-        	    infoWindow.open(map, marker);
-        	  });
-        	  markers.push(marker);
+            var html = "<b>" + name + "</b> <br/>" + address;
+            var marker = new google.maps.Marker({
+                 map: map,
+                 position: latlng
+            });
+            google.maps.event.addListener(marker, 'click', function() {
+                infoWindow.setContent(html);
+                infoWindow.open(map, marker);
+            });
+            markers.push(marker);
         }
 
 /*        function createOption(name, distance, num) {
@@ -317,11 +277,11 @@
         }
 */
         function clearLocations() {
-        	  infoWindow.close();
-        	  for (var i = 0; i < markers.length; i++) {
-        	    markers[i].setMap(null);
-        	  }
-        	  markers.length = 0;
+            infoWindow.close();
+            for (var i = 0; i < markers.length; i++) {
+                markers[i].setMap(null);
+            }
+            markers.length = 0;
 
         	  //locationSelect.innerHTML = "";
         	  //var option = document.createElement("option");
@@ -333,18 +293,16 @@
 
         function parseXml(str) {
             if (window.ActiveXObject) {
-              var doc = new ActiveXObject('Microsoft.XMLDOM');
-              doc.loadXML(str);
-              return doc;
+                var doc = new ActiveXObject('Microsoft.XMLDOM');
+                doc.loadXML(str);
+                return doc;
             } else if (window.DOMParser) {
-              return (new DOMParser).parseFromString(str, 'text/xml');
+                return (new DOMParser).parseFromString(str, 'text/xml');
             }
-          }
+        }
 
-          function doNothing() {}
+        function doNothing() {}
 
-        
-        
     });
 
 </script>
