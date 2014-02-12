@@ -26,356 +26,346 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="study_content")
  * @ORM\Entity(repositoryClass="Cyclogram\Bundle\ProofPilotBundle\Repository\StudyContentRepository")
  */
-class StudyContent
-{
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="study_id", type="integer", nullable=false)
-     */
-    private $studyId;
+class StudyContent {
+	/**
+	 * @var integer
+	 *
+	 * @ORM\Column(name="study_id", type="integer", nullable=false)
+	 */
+	private $studyId;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="study_name", type="string", length=255, nullable=true)
-     */
-    private $studyName;
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="study_name", type="string", length=255, nullable=true)
+	 */
+	private $studyName;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="study_sponsor_by", type="string", length=2000, nullable=true)
-     */
-    private $studySponsorBy;
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="study_sponsor_by", type="string", length=2000, nullable=true)
+	 */
+	private $studySponsorBy;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="study_logo", type="string", length=255, nullable=true)
-     */
-    private $studyLogo;
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="study_logo", type="string", length=255, nullable=true)
+	 */
+	private $studyLogo;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="study_video", type="string", length=255, nullable=true)
-     */
-    private $studyVideo;
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="study_video", type="string", length=255, nullable=true)
+	 */
+	private $studyVideo;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="study_graphic", type="string", length=255, nullable=true)
-     */
-    private $studyGraphic;
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="study_graphic", type="string", length=255, nullable=true)
+	 */
+	private $studyGraphic;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="study_about", type="string", length=2000, nullable=true)
-     */
-    private $studyAbout;
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="study_about", type="string", length=2000, nullable=true)
+	 */
+	private $studyAbout;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="study_whats_involved", type="string", length=2000, nullable=true)
-     */
-    private $studyWhatsInvolved;
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="study_whats_involved", type="string", length=2000, nullable=true)
+	 */
+	private $studyWhatsInvolved;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="study_requirements", type="string", length=2000, nullable=true)
-     */
-    private $studyRequirements;
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="study_requirements", type="string", length=2000, nullable=true)
+	 */
+	private $studyRequirements;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="study_privacy", type="string", length=2000, nullable=true)
-     */
-    private $studyPrivacy;
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="study_privacy", type="string", length=2000, nullable=true)
+	 */
+	private $studyPrivacy;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="study_elegibility_survey", type="integer", nullable=true)
-     */
-    private $studyElegibilitySurvey;
+	/**
+	 * @var integer
+	 *
+	 * @ORM\Column(name="study_elegibility_survey", type="integer", nullable=true)
+	 */
+	private $studyElegibilitySurvey;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="study_video_addition", type="string", length=255, nullable=true)
-     */
-    private $studyVideoAddition;
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="study_video_addition", type="string", length=255, nullable=true)
+	 */
+	private $studyVideoAddition;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="study_consent_image", type="string", length=255, nullable=true)
-     */
-    private $studyConsentImage;
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="study_consent_image", type="string", length=255, nullable=true)
+	 */
+	private $studyConsentImage;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="study_consent_introduction", type="string", length=2000, nullable=true)
-     */
-    private $studyConsentIntroduction;
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="study_consent_introduction", type="string", length=2000, nullable=true)
+	 */
+	private $studyConsentIntroduction;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="study_consent", type="string", length=2000, nullable=true)
-     */
-    private $studyConsent;
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="study_consent", type="string", length=2000, nullable=true)
+	 */
+	private $studyConsent;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="study_tagline", type="string", length=250, nullable=true)
-     */
-    private $studyTagline;
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="study_tagline", type="string", length=250, nullable=true)
+	 */
+	private $studyTagline;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="study_description", type="string", length=2000, nullable=true)
-     */
-    private $studyDescription;
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="study_description", type="string", length=2000, nullable=true)
+	 */
+	private $studyDescription;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="study_url", type="string", length=200, nullable=true)
-     */
-    private $studyUrl;
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="study_url", type="string", length=200, nullable=true)
+	 */
+	private $studyUrl;
 
-    /**
-     * @var \Language
-     * 
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\ManyToOne(targetEntity="Language")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="language_id", referencedColumnName="language_id")
-     * })
-     */
-    private $language;
+	/**
+	 * @var \Language
+	 * 
+	 * @ORM\Id
+	 * @ORM\GeneratedValue(strategy="NONE")
+	 * @ORM\ManyToOne(targetEntity="Language")
+	 * @ORM\JoinColumns({
+	 *   @ORM\JoinColumn(name="language_id", referencedColumnName="language_id")
+	 * })
+	 */
+	private $language;
 
-    /**
-     * @var \Study
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="Study")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="study_id", referencedColumnName="study_id")
-     * })
-     */
-    private $study;
+	/**
+	 * @var \Study
+	 *
+	 * @ORM\Id
+	 * @ORM\GeneratedValue(strategy="NONE")
+	 * @ORM\OneToOne(targetEntity="Study")
+	 * @ORM\JoinColumns({
+	 *   @ORM\JoinColumn(name="study_id", referencedColumnName="study_id")
+	 * })
+	 */
+	private $study;
 
-    public function getStudyLogo()
-    {
-        return $this->studyLogo;
-    }
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="study_specific_login_header", type="string", length=255, nullable=true)
+	 */
+	private $studySpecificLoginHeader;
 
-    public function setStudyLogo($studyLogo)
-    {
-        $this->studyLogo = $studyLogo;
-    }
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="study_join_button_name", type="string", length=255, nullable=true)
+	 */
+	private $studyJoinButtonName;
 
-    public function getStudyVideo()
-    {
-        return $this->studyVideo;
-    }
+	public function getStudyLogo() {
+		return $this->studyLogo;
+	}
 
-    public function setStudyVideo($studyVideo)
-    {
-        $this->studyVideo = $studyVideo;
-    }
+	public function setStudyLogo($studyLogo) {
+		$this->studyLogo = $studyLogo;
+	}
 
-    public function getStudyGraphic()
-    {
-        return $this->studyGraphic;
-    }
+	public function getStudyVideo() {
+		return $this->studyVideo;
+	}
 
-    public function setStudyGraphic($studyGraphic)
-    {
-        $this->studyGraphic = $studyGraphic;
-    }
+	public function setStudyVideo($studyVideo) {
+		$this->studyVideo = $studyVideo;
+	}
 
-    public function getStudyAbout()
-    {
-        return $this->studyAbout;
-    }
+	public function getStudyGraphic() {
+		return $this->studyGraphic;
+	}
 
-    public function setStudyAbout($studyAbout)
-    {
-        $this->studyAbout = $studyAbout;
-    }
+	public function setStudyGraphic($studyGraphic) {
+		$this->studyGraphic = $studyGraphic;
+	}
 
-    public function getStudyWhatsInvolved()
-    {
-        return $this->studyWhatsInvolved;
-    }
+	public function getStudyAbout() {
+		return $this->studyAbout;
+	}
 
-    public function setStudyWhatsInvolved($studyWhatsInvolved)
-    {
-        $this->studyWhatsInvolved = $studyWhatsInvolved;
-    }
+	public function setStudyAbout($studyAbout) {
+		$this->studyAbout = $studyAbout;
+	}
 
-    public function getStudyRequirements()
-    {
-        return $this->studyRequirements;
-    }
+	public function getStudyWhatsInvolved() {
+		return $this->studyWhatsInvolved;
+	}
 
-    public function setStudyRequirements($studyRequirements)
-    {
-        $this->studyRequirements = $studyRequirements;
-    }
+	public function setStudyWhatsInvolved($studyWhatsInvolved) {
+		$this->studyWhatsInvolved = $studyWhatsInvolved;
+	}
 
-    public function getStudyPrivacy()
-    {
-        return $this->studyPrivacy;
-    }
+	public function getStudyRequirements() {
+		return $this->studyRequirements;
+	}
 
-    public function setStudyPrivacy($studyPrivacy)
-    {
-        $this->studyPrivacy = $studyPrivacy;
-    }
+	public function setStudyRequirements($studyRequirements) {
+		$this->studyRequirements = $studyRequirements;
+	}
 
-    public function getStudyElegibilitySurvey()
-    {
-        return $this->studyElegibilitySurvey;
-    }
+	public function getStudyPrivacy() {
+		return $this->studyPrivacy;
+	}
 
-    public function setStudyElegibilitySurvey($studyElegibilitySurvey)
-    {
-        $this->studyElegibilitySurvey = $studyElegibilitySurvey;
-    }
+	public function setStudyPrivacy($studyPrivacy) {
+		$this->studyPrivacy = $studyPrivacy;
+	}
 
-    public function getStudyVideoAddition()
-    {
-        return $this->studyVideoAddition;
-    }
+	public function getStudyElegibilitySurvey() {
+		return $this->studyElegibilitySurvey;
+	}
 
-    public function setStudyVideoAddition($studyVideoAddition)
-    {
-        $this->studyVideoAddition = $studyVideoAddition;
-    }
+	public function setStudyElegibilitySurvey($studyElegibilitySurvey) {
+		$this->studyElegibilitySurvey = $studyElegibilitySurvey;
+	}
 
-    public function getStudyConsentImage()
-    {
-        return $this->studyConsentImage;
-    }
+	public function getStudyVideoAddition() {
+		return $this->studyVideoAddition;
+	}
 
-    public function setStudyConsentImage($studyConsentImage)
-    {
-        $this->studyConsentImage = $studyConsentImage;
-    }
+	public function setStudyVideoAddition($studyVideoAddition) {
+		$this->studyVideoAddition = $studyVideoAddition;
+	}
 
-    public function getStudyConsentIntroduction()
-    {
-        return $this->studyConsentIntroduction;
-    }
+	public function getStudyConsentImage() {
+		return $this->studyConsentImage;
+	}
 
-    public function setStudyConsentIntroduction($studyConsentIntroduction)
-    {
-        $this->studyConsentIntroduction = $studyConsentIntroduction;
-    }
+	public function setStudyConsentImage($studyConsentImage) {
+		$this->studyConsentImage = $studyConsentImage;
+	}
 
-    public function getStudyConsent()
-    {
-        return $this->studyConsent;
-    }
+	public function getStudyConsentIntroduction() {
+		return $this->studyConsentIntroduction;
+	}
 
-    public function setStudyConsent($studyConsent)
-    {
-        $this->studyConsent = $studyConsent;
-    }
+	public function setStudyConsentIntroduction($studyConsentIntroduction) {
+		$this->studyConsentIntroduction = $studyConsentIntroduction;
+	}
 
-    public function getLanguage()
-    {
-        return $this->language;
-    }
+	public function getStudyConsent() {
+		return $this->studyConsent;
+	}
 
-    public function setLanguage($language)
-    {
-        $this->language = $language;
-    }
+	public function setStudyConsent($studyConsent) {
+		$this->studyConsent = $studyConsent;
+	}
 
-    public function getStudy()
-    {
-        return $this->study;
-    }
+	public function getLanguage() {
+		return $this->language;
+	}
 
-    public function setStudy($study)
-    {
-        $this->study = $study;
-    }
+	public function setLanguage($language) {
+		$this->language = $language;
+	}
 
-    public function getStudyName()
-    {
-        return $this->studyName;
-    }
+	public function getStudy() {
+		return $this->study;
+	}
 
-    public function setStudyName($studyName)
-    {
-        $this->studyName = $studyName;
-    }
+	public function setStudy($study) {
+		$this->study = $study;
+	}
 
-    public function getStudyTagline()
-    {
-        return $this->studyTagline;
-    }
+	public function getStudyName() {
+		return $this->studyName;
+	}
 
-    public function setStudyTagline($studyTagline)
-    {
-        $this->studyTagline = $studyTagline;
-    }
+	public function setStudyName($studyName) {
+		$this->studyName = $studyName;
+	}
 
-    public function getStudyDescription()
-    {
-        return $this->studyDescription;
-    }
+	public function getStudyTagline() {
+		return $this->studyTagline;
+	}
 
-    public function setStudyDescription($studyDescription)
-    {
-        $this->studyDescription = $studyDescription;
-    }
+	public function setStudyTagline($studyTagline) {
+		$this->studyTagline = $studyTagline;
+	}
 
-    public function getStudyUrl()
-    {
-        return $this->studyUrl;
-    }
+	public function getStudyDescription() {
+		return $this->studyDescription;
+	}
 
-    public function setStudyUrl($studyUrl)
-    {
-        $this->studyUrl = $studyUrl;
-    }
+	public function setStudyDescription($studyDescription) {
+		$this->studyDescription = $studyDescription;
+	}
 
-    public function getStudyId()
-    {
-        return $this->studyId;
-    }
+	public function getStudyUrl() {
+		return $this->studyUrl;
+	}
 
-    public function setStudyId($studyId)
-    {
-        $this->studyId = $studyId;
-    }
+	public function setStudyUrl($studyUrl) {
+		$this->studyUrl = $studyUrl;
+	}
 
-    public function getStudySponsorBy()
-    {
-        return $this->studySponsorBy;
-    }
+	public function getStudyId() {
+		return $this->studyId;
+	}
 
-    public function setStudySponsorBy($studySponsorBy)
-    {
-        $this->studySponsorBy = $studySponsorBy;
-    }
+	public function setStudyId($studyId) {
+		$this->studyId = $studyId;
+	}
+
+	public function getStudySponsorBy() {
+		return $this->studySponsorBy;
+	}
+
+	public function setStudySponsorBy($studySponsorBy) {
+		$this->studySponsorBy = $studySponsorBy;
+	}
+
+	public function getStudySpecificLoginHeader() {
+		return $this->studySpecificLoginHeader;
+	}
+
+	public function setStudySpecificLoginHeader(
+			string $studySpecificLoginHeader) {
+		$this->studySpecificLoginHeader = $studySpecificLoginHeader;
+	}
+
+	public function getStudyJoinButtonName() {
+		return $this->studyJoinButtonName;
+	}
+
+	public function setStudyJoinButtonName(string $studyJoinButtonName) {
+		$this->studyJoinButtonName = $studyJoinButtonName;
+	}
 
 }

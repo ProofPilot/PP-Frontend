@@ -78,11 +78,22 @@ class AuthentificationController extends Controller
         // registration check
         $form = $this->createForm(new RegistrationForm($this->container));
         $form->handleRequest($request);
+        $studyJoinButtonName = "";
+        $studySpecificLoginHeader = "";
+        $locale = $this->getRequest()->getLocale();
+        $language = $em->getRepository('CyclogramProofPilotBundle:Language')->findOneBylocale($locale);
+        if(!empty($studyCode)) {
+	        $study = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
+	        $studyContent = $em->getRepository('CyclogramProofPilotBundle:StudyContent')->findOneBy(array('study' => $study, 'language' => $language));
+	        $studyJoinButtonName = $studyContent->getStudyJoinButtonName();
+	        $studySpecificLoginHeader = $studyContent->getStudySpecificLoginHeader();
+	        
+    	}
+        
         if ($form->isValid()) {
             $registration = $form->getData();
             $this->createParticipant($registration , $studyCode);
             if ($request->isXmlHttpRequest()) {
-                $study = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
                 if ($study->getStudySkipAboutMe() && $study->getStudySkipConsent()) {
                     $redirectUrl = $this->generateUrl("_main");
                     if (!empty($surveyId)) {
@@ -112,13 +123,12 @@ class AuthentificationController extends Controller
                         if ($participant->getParticipantEmailConfirmed() == false)
                             $this->confirmParticipantEmail($participant);
                         $this->confirmParticipantEmail($participant);
-                        $study = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
+                        //$study = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
                         if ($study->getStudySkipAboutMe()) {
                             return $this->redirect( $this->generateUrl("_main"));
                         }
                     } else {
-                        $study = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
-                        $studyContent = $em->getRepository('CyclogramProofPilotBundle:StudyContent')->findOneByStudy($study);
+                        //$study = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
                         $session->set("message", $this->get('translator')->trans('study_register_error', array(), 'register'));
                         return $this->redirect($this->generateUrl("_page", array("studyUrl" => $studyContent->getStudyUrl())));
                     }
@@ -167,6 +177,8 @@ class AuthentificationController extends Controller
             else
                 return $this->render('CyclogramFrontendBundle:Authentification:signup.html.twig', array(
                         'last_username' => $session->get(SecurityContext::LAST_USERNAME),
+                		'studyJoinButtonName' => $studyJoinButtonName,
+                		'studySpecificLoginHeader' => $studySpecificLoginHeader,
                         'form' => $form->createView(),
                         'error'         => $error
                 ));
@@ -185,6 +197,8 @@ class AuthentificationController extends Controller
         //render forms
         return $this->render('CyclogramFrontendBundle:Authentification:signup.html.twig', array(
                     'last_username' => $session->get(SecurityContext::LAST_USERNAME),
+	        		'studyJoinButtonName' => $studyJoinButtonName,
+	        		'studySpecificLoginHeader' => $studySpecificLoginHeader,
                     'form' => $form->createView(),
                     'studyCode' => $studyCode,
                     'surveyId' => $surveyId

@@ -213,6 +213,8 @@ class StudyController extends Controller
                 'label' => 'btn_send_pass'))
                 ->getForm();
         $studyContent = $this->getDoctrine()->getRepository("CyclogramProofPilotBundle:StudyContent")->getStudyContent($studyUrl, $locale);
+        $studyJoinButtonName = $studyContent->getStudyJoinButtonName();
+        $studySpecificLoginHeader = $studyContent->getStudySpecificLoginHeader();
         $study = $studyContent->getStudy();
         $status = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:Status')->find($study->getStatus());
         $securityContext = $this->container->get('security.context');
@@ -229,6 +231,8 @@ class StudyController extends Controller
         $this->parameters['host'] = $this->container->getParameter('site_url');
         $this->parameters['studyUrl'] = $studyUrl;
         $this->parameters['last_username'] = $session->get(SecurityContext::LAST_USERNAME);
+        $this->parameters['studySpecificLoginHeader'] =  $studySpecificLoginHeader;
+        $this->parameters['studyJoinButtonName'] =  $studyJoinButtonName;
         $participant = $this->get('security.context')->getToken()->getUser();
         if ($participant != 'anon.')
             $this->parameters['participant_email'] = $participant->getParticipantEmail();
