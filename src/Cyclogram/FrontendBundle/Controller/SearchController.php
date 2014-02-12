@@ -147,7 +147,7 @@ class SearchController extends Controller
     }
     
     /**
-     * @Route("/search_study_locations", name="searchStudyLocations", options={"expose"=true}, defaults={"_format" = "xml"})
+     * @Route("/search_study_locations", name="searchStudyLocations", options={"expose"=true})
      */
     public function searchStudyLocationsAjaxAction(Request $request)
     {
@@ -178,27 +178,21 @@ class SearchController extends Controller
                     WHERE location.location_id IN ('.implode (", ", $locationIds).') HAVING distance < '.$radius.' ORDER BY distance LIMIT 0 , 10;';
             $rows = $conn->fetchAll($sql);
             
-            // Start XML file, create parent node
-            $dom = new \DOMDocument("1.0");
-            $node = $dom->createElement("markers");
-            $parnode = $dom->appendChild($node);
-            foreach($rows as $row) {
-                $node = $dom->createElement("marker");
-                $newnode = $parnode->appendChild($node);
-                $newnode->setAttribute("name", $row['location_name']);
-                $newnode->setAttribute("address", $row['location_address1']);
-                $newnode->setAttribute("lat", $row['location_latitude']);
-                $newnode->setAttribute("lng", $row['location_longitude']);
-                $newnode->setAttribute("distance", $row['distance']);
-                $newnode->setAttribute("siteId", $row['site_id']);
-                $newnode->setAttribute("siteName", $row['site_name']);
-            }
-            
-            $xml = $dom->saveXML();
-             
+            $markers = array();
 
-            
-            return new Response($xml);
+            foreach($rows as $row) {
+                $markers[] = array(
+                            'name' => $row['location_name'],
+                            'address' => $row['location_address1'],
+                            'lat' => $row['location_latitude'],
+                            'lng' => $row['location_longitude'],
+                            'distance' => $row['distance'],
+                            'siteid' => $row["site_id"],
+                            'siteName' => $row['site_name']
+                        );
+            }
+
+            return new Response(json_encode($markers));
 //         }
     }
 }
