@@ -118,8 +118,6 @@
             if(!info.is(":visible")) {
                 info.show();
                 $(this).siblings().find('.info_box').hide();
-            } else {
-                info.hide();
             }
         });
 
@@ -136,7 +134,7 @@
             load();
         });
 
-        $('.text_wrapper .info_box').bind('click', '.close', function(e) {
+        $('.text_wrapper .info_box').on('click', '.close', function(e) {
             e.stopPropagation();
             e.preventDefault();
             $('.info_box').hide();
