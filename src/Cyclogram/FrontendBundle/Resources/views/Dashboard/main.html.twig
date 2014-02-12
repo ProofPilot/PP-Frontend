@@ -318,11 +318,6 @@
                 });
             });
 
-            $('.close').bind('click', function(e) {
-                $('#pledge_popup').dialog('close');
-                $('#div_location').dialog('close');
-            });
-            
             $('.icon_logout').click(function() {
                 {% if is_granted('ROLE_FACEBOOK_USER') %}
                     fbLogout();
@@ -331,7 +326,6 @@
                 {% endif %}
                 window.location=Routing.generate('_logout');
             });
-            
 
             $('a.video').bind('click', function(e) {
                 e.preventDefault();

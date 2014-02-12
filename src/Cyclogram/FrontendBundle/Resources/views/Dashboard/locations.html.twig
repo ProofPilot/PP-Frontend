@@ -111,17 +111,9 @@
             if({{ locations|length}} == 0)
                 map.setZoom(10);
 
-//            locationSelect = document.getElementById("locationSelect");
-//            locationSelect.onchange = function() {
-//              var markerNum = locationSelect.options[locationSelect.selectedIndex].value;
-//              if (markerNum != "none"){
-//                google.maps.event.trigger(markers[markerNum], 'click');
-//              }
-//            };
          }
 
-        $('.results li').bind('click', function(e){
-            e.preventDefault();
+        $('.results').on('click', 'li', function() {
             var info = $(this).find('.info_box');
             if(!info.is(":visible")) {
                 info.show();
@@ -150,8 +142,7 @@
             $('.info_box').hide();
         });
         
-        $('.text_right a').bind('click', function(e) {
-            e.preventDefault();
+        $('.results').on('click', '.text_right a', function(e) {
             e.stopPropagation();
             $(this).toggleClass('select_btn');
             var markerNum = $(this).data('marker');
@@ -269,39 +260,13 @@
             markers.push(marker);
         }
 
-/*        function createOption(name, distance, num) {
-        	  var option = document.createElement("option");
-        	  option.value = num;
-        	  option.innerHTML = name + "(" + distance.toFixed(1) + ")";
-        	  locationSelect.appendChild(option);
-        }
-*/
         function clearLocations() {
             infoWindow.close();
             for (var i = 0; i < markers.length; i++) {
                 markers[i].setMap(null);
             }
             markers.length = 0;
-
-        	  //locationSelect.innerHTML = "";
-        	  //var option = document.createElement("option");
-        	  //option.value = "none";
-        	  //option.innerHTML = "See all results:";
-        	  //locationSelect.appendChild(option);
-        	  //locationSelect.style.visibility = "visible";
         }
-
-        function parseXml(str) {
-            if (window.ActiveXObject) {
-                var doc = new ActiveXObject('Microsoft.XMLDOM');
-                doc.loadXML(str);
-                return doc;
-            } else if (window.DOMParser) {
-                return (new DOMParser).parseFromString(str, 'text/xml');
-            }
-        }
-
-        function doNothing() {}
 
     });
 
