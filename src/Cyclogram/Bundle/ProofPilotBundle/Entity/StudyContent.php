@@ -355,8 +355,7 @@ class StudyContent {
 		return $this->studySpecificLoginHeader;
 	}
 
-	public function setStudySpecificLoginHeader(
-			string $studySpecificLoginHeader) {
+	public function setStudySpecificLoginHeader($studySpecificLoginHeader) {
 		$this->studySpecificLoginHeader = $studySpecificLoginHeader;
 	}
 
@@ -364,7 +363,7 @@ class StudyContent {
 		return $this->studyJoinButtonName;
 	}
 
-	public function setStudyJoinButtonName(string $studyJoinButtonName) {
+	public function setStudyJoinButtonName($studyJoinButtonName) {
 		$this->studyJoinButtonName = $studyJoinButtonName;
 	}
 
