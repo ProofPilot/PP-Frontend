@@ -112,7 +112,15 @@
             if({{ locations|length}} == 0)
                 map.setZoom(10);
 
-         }
+        }
+
+        function applyAppearances() {
+            if($('.text_right a').hasClass('select_btn')) {
+                $('#apply_site_btn').show();
+            } else {
+            	$('#apply_site_btn').hide();
+            }
+        }
 
         $('.results').on('click', 'li', function() {
             var info = $(this).find('.info_box');
@@ -149,12 +157,7 @@
                 google.maps.event.trigger(markers[markerNum], 'click');
             }
             $(this).parents('li').siblings().find('.text_right a').removeClass('select_btn');
-
-            if($('.text_right a').hasClass('select_btn')) {
-                $('#apply_site_btn').show();
-            } else {
-            	$('#apply_site_btn').hide();
-            }
+            applyAppearances();
         });
 
         $('#apply_site_btn').on('click', function(e) {
@@ -274,7 +277,7 @@
                   //replace organizations table
                   var html = clinicsTable(content);
                   $('div.results ul').html(html);
-
+                  applyAppearances();
             });
         }
 
