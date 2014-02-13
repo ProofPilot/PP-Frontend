@@ -1,5 +1,6 @@
 btn_log_in: INICIAR
 btn_start_enrollment: 'INICIO INSCRIPCIÓN DE ESTUDIO'
+msg_not_eligible: 'Usted no es elegible para ''%studyname%'' en este momento.'
 txt_about: 'Acerca de este estudio'
 txt_about_proofpilot_text: "<p>Proofpilot es una plataforma para crear, manejar y participar en estudios de investigación en línea. Ayudamos a los investigadores a crear fácilmente estudios que, usted, el participante, puede unirse para contestar así importantes preguntas sobre salúd, comportamiento humano, políticas sociales y públicas. Conozca más sobre ProofPilot en el enlace que sigue. </p>\n<p><a href=\"/\">www.proofpilot.com</a></p>"
 txt_about_proofpilot_title: 'Acerca de ProofPilot'
@@ -8,8 +9,7 @@ txt_decline_btn: 'DECLINAR - TALVEZ LUEGO'
 txt_eligible_dsc: 'EL resumen de su participación: Lo que necesita hacer ahora y lo que viene despúes.'
 txt_secure_text: '<p>ProofPilot usa una estrategia de la "seguridad primero". Entendemos que usted está compartiendo datos sensibles con nosotros y nuestros asociados. Mantenemos sus datos en servidodes seguros en un formato altamente encriptado. Nos tomamos su seguridad y privacidad muy seriamente. Conozca más en el enlace siguiente.</p>'
 txt_secure_title: '¿Es seguro?'
-txt_security_privacy: 'Seguridad &amp; Privacidad en ProofPilot'
+txt_security_privacy: 'Seguridad & Privacidad en ProofPilot'
 txt_to_do: '¿Qué es lo que desea hacer?'
 txt_you_are_eligible: 'Eres elegible'
-msg_not_eligible: 'You are not eligible for ''%studyname%'' at this time.'
 warning_message: 'Antes de proceder, porfavor lea esta importante información y acepte al final de la página'

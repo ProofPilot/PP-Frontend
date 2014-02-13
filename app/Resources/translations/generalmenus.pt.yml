@@ -5,13 +5,13 @@ bottom_left_menu:
 
 bottom_right_menu:
     help: Ajuda
-    logout: Logout
+    logout: Sair
     my_settings: 'Minhas Preferências'
 
 top_menu:
-    about_me: top_menu.about_me   # FIXME
+    about_me: 'Sobre mim'
     contact_preferences: 'Preferencias de contacto'
-    general_settings: 'General settings'
+    general_settings: 'Definições Gerais'
     help: Ajuda
     logout: Sair
     settings: Configurações

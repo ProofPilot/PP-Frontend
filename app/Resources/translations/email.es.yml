@@ -1,16 +1,16 @@
-bottom_no_reply: bottom_no_reply
-bottom_street: bottom_street
-bottom_text: bottom_text
-communictaion_preferences: communictaion_preferences
-confirm_verify_text: confirm_verify_text
-confirm_verify_title: confirm_verify_title
-do_it_task_email_title: do_it_task_email_title
-email_reset_password: email_reset_password
-email_title_notice: email_title_notice   # FIXME
-email_title_verify: email_title_verify
-notice_verification: notice_verification   # FIXME
-notice_verification_text: notice_verification_text   # FIXME
-reset_pass_link: reset_pass_link
-reset_pass_text: reset_pass_text
-reset_pass_title: reset_pass_title
-send_verification_email: send_verification_email   # FIXME
+bottom_no_reply: 'Por favor, no responda a este correo electrónico como la bandeja de entrada no está controlado'
+bottom_street: '"c" 2010-2014 ProofPilot. / All Rights Reserved<br /> Cyclogram: 8605 Santa Monica Blvd #75475 West Hollywood, CA 90069<br'
+bottom_text: 'Este mensaje fue enviado a% mail_to% <br /> Si a usted le gustaría actualizar su dirección de correo electrónico, <a href = "%general_settings_link%"> por favor haga clic aquí </ a> <br /> Visita Preferencias de contacto para la gestión de . su correo electrónico y alertas móviles <br /> favor agregar crew@proofpilot.com a tu libreta de direcciones para asegurar la entrega de nuestros mensajes de correo electrónico a tu bandeja de entrada <br /> Nota: Nosotros nunca compartimos su ProofPilot.com contraseñas con nadie a través de correo electrónico, incluidos nosotros.'
+communictaion_preferences: 'Preferencias de Comunicación'
+confirm_verify_text: 'Sí, es parte de cualquier página web y registro ProofPilot no es diferente. Por favor, haz clic en el enlace de abajo para verificar que su dirección de correo electrónico y ponerse en marcha'
+confirm_verify_title: 'Verifique por favor su dirección de correo electrónico'
+do_it_task_email_title: 'Lo que tienes que hacer en ProofPilot'
+email_reset_password: 'Restablecer la contraseña'
+email_title_notice: 'Verifique por favor su E-mail'
+email_title_verify: 'Verifique por favor su E-mail'
+notice_verification: 'Recordatorio rápido para verificar que su dirección de correo electrónico'
+notice_verification_text: 'Oye, esto es ProofPilot. Hemos notado que no has confirmado tu dirección de correo electrónico. Es importante que su dirección de correo electrónico está en nuestros archivos para que podamos comunicarnos con usted acerca de los estudios está participando pulg.'
+reset_pass_link: 'Haga clic aquí para restablecer su contraseña'
+reset_pass_text: 'Sí, le sucede a todos nosotros: que no puede recordar su contraseña. Eso está bien. Haga clic en este enlace para restablecer tu contraseña'
+reset_pass_title: 'Restablecer la contraseña'
+send_verification_email: 'enviar correo electrónico de verificación'

@@ -1,43 +1,43 @@
-appreciation_email_change: appreciation_email_change
-btn_confirm: btn_confirm
-btn_send_mobile_code: btn_send_mobile_code
-confirm_sms_send: confirm_sms_send
-email_change: email_change
-general_subtitle: general_subtitle
-general_title: general_title
-label_email: label_email
+appreciation_email_change: 'Su aprecio por e-mail se ha cambiado'
+btn_confirm: Confirmar
+btn_send_mobile_code: 'Enviar código móvil'
+confirm_sms_send: 'SMS de confirmación ha sido enviado a usted'
+email_change: 'Tu email ha sido cambiado. Por favor confirme su dirección de e-mail'
+general_subtitle: 'Haga clic aquí para cambiar los fundamentos, a continuación, explorar otras opciones para personalizar tu experiencia.'
+general_title: 'Configuración general'
+label_email: E-mail
 label_incentive_email: label_incentive_email
-label_language: label_language   # FIXME
-label_language_select: label_language_select   # FIXME
-label_new_email: label_new_email
-label_new_incentive_email: label_new_incentive_email
-label_new_pass: label_new_pass
-label_new_phone_number_pass: label_new_phone_number_pass
-label_new_phone_number_small: label_new_phone_number_small
-label_new_phone_number_sms: label_new_phone_number_sms
+label_language: Idioma
+label_language_select: 'Seleccionar idioma'
+label_new_email: 'Nuevo correo electrónico'
+label_new_incentive_email: 'Nueva apreciación e-mail'
+label_new_pass: 'Escriba la nueva contraseña'
+label_new_phone_number_pass: 'Introduce el password para confirmar el cambio'
+label_new_phone_number_small: 'Introduzca el nuevo número de móvil'
+label_new_phone_number_sms: 'Introduzca el código móvil para confirmar'
 label_new_phone_number_wide: label_new_phone_number_wide
-label_new_user_name: label_new_user_name
-label_new_user_name_pass: label_new_user_name_pass
-label_old_password: label_old_password
-label_password: label_password
-label_password_mobile_confirm: label_password_mobile_confirm
-label_phone_number: label_phone_number
-label_repeat_email: label_repeat_email
-label_repeat_incentive_email: label_repeat_incentive_email
-label_repeat_pass: label_repeat_pass
-label_username: label_username
+label_new_user_name: 'Nuevo nombre de usuario'
+label_new_user_name_pass: 'Introduce el password'
+label_old_password: 'Vieja contraseña'
+label_password: Contraseña
+label_password_mobile_confirm: 'Introduzca el código móvil para confirmar'
+label_phone_number: 'Número de teléfono'
+label_repeat_email: 'Confirmar correo electrónico nuevo'
+label_repeat_incentive_email: 'Confirmar aprecio e-mail'
+label_repeat_pass: 'Confirmar nueva contraseña'
+label_username: 'Nombre de usuario'
 last_access: 'Ultimo acceso:'
-mobile_number_change: mobile_number_change
-password_change: password_change
-sms_password_text: sms_password_text
-sms_phone_text: sms_phone_text
-txt_change: txt_change
-txt_edit: txt_edit
-txt_email: txt_email
-txt_forgot_it: txt_forgot_it
-txt_incentive_email: txt_incentive_email
-txt_language: txt_language   # FIXME
-txt_mobile_number: txt_mobile_number
-txt_password: txt_password
-txt_username: txt_username
-username_change: username_change
+mobile_number_change: 'Su numder móvil se ha cambiado'
+password_change: 'Su contraseña ha sido cambiada'
+sms_password_text: 'Su código de restablecimiento de contraseña es'
+sms_phone_text: 'Su código de cambio de teléfono móvil es'
+txt_change: Cambio
+txt_edit: Editar
+txt_email: E-mail
+txt_forgot_it: '¿Ha olvidado eso?'
+txt_incentive_email: 'Muestra de agradecimiento por e-mail'
+txt_language: Idioma
+txt_mobile_number: 'Número de móvil'
+txt_password: Contraseña
+txt_username: 'Nombre de usuario'
+username_change: 'Su nombre de usuario se ha cambiado'

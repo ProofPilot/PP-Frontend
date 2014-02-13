@@ -17,7 +17,7 @@ time_early_evening: 'Início da noite (17:00hs-21:00hs)'
 time_late_night: 'Tarde da noite (0:00hs - 05:00hs)'
 time_morning: 'Manhã (08:00hs-12:00hs)'
 time_night: 'Noite (21:00hs-0:00hs)'
-txt_check_here: 'Noite (21:00hs 0:00hs)'
+txt_check_here: 'Verifique Aquí'
 txt_close: Fechar
 txt_expand: Aumentar
 txt_how_to_receive_study_reminders: 'Como você gostaria de receber LEMBRETES DE ESTUDOS'

@@ -9,7 +9,7 @@ bottom_right_menu:
     my_settings: 'Mis preferencias'
 
 top_menu:
-    about_me: top_menu.about_me   # FIXME
+    about_me: 'Acerca de mí'
     contact_preferences: 'Preferencias de contacto'
     general_settings: 'Preferencias Generales'
     help: Ayuda

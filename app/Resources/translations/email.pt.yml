@@ -1,16 +1,16 @@
-bottom_no_reply: bottom_no_reply
-bottom_street: bottom_street
-bottom_text: bottom_text
-communictaion_preferences: communictaion_preferences
-confirm_verify_text: confirm_verify_text
-confirm_verify_title: confirm_verify_title
-do_it_task_email_title: do_it_task_email_title
-email_reset_password: email_reset_password
-email_title_notice: email_title_notice   # FIXME
-email_title_verify: email_title_verify
-notice_verification: notice_verification   # FIXME
-notice_verification_text: notice_verification_text   # FIXME
-reset_pass_link: reset_pass_link
-reset_pass_text: reset_pass_text
-reset_pass_title: reset_pass_title
-send_verification_email: send_verification_email   # FIXME
+bottom_no_reply: 'Por favor, não responda a este e-mail como a caixa de entrada não é monitorada'
+bottom_street: '"c" 2010-2014 ProofPilot. / All Rights Reserved<br /> Cyclogram: 8605 Santa Monica Blvd #75475 West Hollywood, CA 90069<br'
+bottom_text: 'Esta mensagem foi enviada para% mail_to% <br /> Se você quiser atualizar o seu endereço de e-mail, <a href = "%general_settings_link%"> clique aqui </ a> <br /> Visita Preferências de Contato para gerenciar . seu e-mail e alertas móveis <br /> por favor, adicione crew@proofpilot.com ao seu livro de endereços para garantir a entrega de nossos e-mails para sua caixa de entrada <br /> Nota: Nós nunca compartilhar suas senhas com ninguém ProofPilot.com via e-mail, inclusive nós.'
+communictaion_preferences: 'Preferências de comunicação'
+confirm_verify_text: 'Sim, é parte de qualquer registro do site e ProofPilot não é diferente. Por favor, clique no link abaixo para verificar o seu endereço de e-mail e ir andando'
+confirm_verify_title: 'Por favor, verifique seu e-mail'
+do_it_task_email_title: 'O que você tem a fazer no ProofPilot'
+email_reset_password: 'Redefinir sua senha'
+email_title_notice: 'Por favor, verifique seu e-mail'
+email_title_verify: 'Por favor, verifique seu e-mail'
+notice_verification: 'Lembrete rápido para verificar o seu endereço de e-mail'
+notice_verification_text: 'Ei, isso é ProofPilot. Notamos que você ainda não confirmou seu endereço de e-mail. É importante o seu endereço de e-mail está em nossos arquivos para que possamos comunicar com você sobre os estudos que você está participando polegadas.'
+reset_pass_link: 'Clique aqui para redefinir sua senha'
+reset_pass_text: 'Sim, isso acontece com todos nós: você não lembra da sua senha. Isso é OK. Clique neste link para redefinir sua senha'
+reset_pass_title: 'Redefinir sua senha'
+send_verification_email: 'enviar e-mail de verificação'

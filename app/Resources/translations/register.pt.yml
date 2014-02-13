@@ -1,29 +1,29 @@
 already_joined: 'Já aderiu'
-btn_next: Próximo>
+btn_next: Próximo
 btn_save_mailing_address: 'guardar e entrar'
 btn_send_confirmation: 'enviar código de confirmação para o celular'
 confirm_password: 'confirme a senha'
 create_password: 'Crie uma senha (minímo de 8 caracteres com pelo menos 2 números)'
 double_check: 'Verifique novamente a sua entrada'
 enter_address: 'Por favor, insira seu endereço, para que possamos enviar seu kit de teste:'
-enter_aditional_mobile_phone: enter_aditional_mobile_phone
+enter_aditional_mobile_phone: 'Digite o seu número de telefone de voz preferido'
 enter_email: 'Por favor insira um endereço de e-mail válido'
 enter_mobile_phone: 'Digite o número do seu telefone celular'
 enter_sms_code: "Digite o código de verificação que você recebeu em seu telefone\n"
 label_address1: Rua
 label_address2: Complemento
-label_aditional_phone: label_aditional_phone
+label_aditional_phone: 'Eu prefiro receber chamadas de voz para outro número'
 label_city: Cidade
 label_email: Email
 label_firstname: 'Primeiro Nome'
 label_lastname: 'Último Nome'
-label_not_sign: label_not_sign
+label_not_sign: 'O pacote pode ficar sem a minha assinatura'
 label_password: Senha
 label_phone_small: Fone
 label_phone_wide: telefone
 label_repeat_password: 'Repita a senha'
-label_sign: label_sign
-label_sign_main: label_sign_main
+label_sign: 'Eu prefiro assinar para receber o meu pacote'
+label_sign_main: 'Texto de introdução à escolha de como queremos que as coisas entregues'
 label_state: Estado
 label_username: Usuário
 label_zipcode: CEP
@@ -34,16 +34,16 @@ no_code: 'Sem código? Enviar outro'
 ok_verify: 'OK, Verifique!'
 pick_user: 'Escolha o seu nome de usuário'
 sms_verification_message: 'Seu ProofPilot SMS logar código é:'
-study_register_error: study_register_error   # FIXME
+study_register_error: 'Houve um problema - tente todo o processo de registro de novo'''
 txt_aditional_number_save: 'Salvar e próxima'
 txt_basics: 'Os princípios'
 txt_check_email: 'Por favor, verifique o seu endereço de e-mail'
 txt_check_zipcode: 'Por favor, verifique o seu cep'
 txt_join: Junte-se
 txt_join_with: Junte-se
-txt_popup_header: txt_popup_header
-txt_popup_link: 'Eu prefiro recive chamadas de voz para outro número'
-txt_popup_text: txt_popup_text
+txt_popup_header: 'Por telefone?'
+txt_popup_link: 'Eu prefiro receber mensagem de SMS em outro númer'
+txt_popup_text: 'Ocasionalmente, pode precisar chamar-lhe sobre a sua participação em estudos. Se você preferir não receber chamadas de voz em outro número, marque a caixa.'
 txt_subtitle_check_email: 'Por favor, verifique o seu endereço de e-mail'
 txt_why: 'Por que?'
 wrong_back: 'Incorreto, voltar'

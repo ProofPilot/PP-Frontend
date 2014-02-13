@@ -1,49 +1,49 @@
 already_joined: '¿Ya es parte?'
 btn_next: Siguiente
-btn_save_mailing_address: btn_save_mailing_address
+btn_save_mailing_address: 'guardar e iniciar sesión'
 btn_send_confirmation: 'enviar el código de confirmación al móvil'
 confirm_password: 'Confirme contraseña'
 create_password: 'Crear una contraseña'
 double_check: 'Revise dos veces su entrada'
-enter_address: enter_address
-enter_aditional_mobile_phone: enter_aditional_mobile_phone
+enter_address: 'Introduzca su dirección de correo, por lo que podemos enviar el kit de la prueba:'
+enter_aditional_mobile_phone: 'Ingrese su número de teléfono preferido'
 enter_email: 'Ingrese su e-mail'
 enter_mobile_phone: 'Ingrese su teléfono móbil'
 enter_sms_code: 'Ingrese el código de verificación que recibió en su teléfono móbil'
-label_address1: label_address1
-label_address2: label_address2
-label_aditional_phone: label_aditional_phone
-label_city: label_city
-label_email: label_email
-label_firstname: label_firstname
-label_lastname: label_lastname
-label_not_sign: label_not_sign
-label_password: label_password
-label_phone_small: label_phone_small
-label_phone_wide: label_phone_wide
-label_repeat_password: label_repeat_password
-label_sign: label_sign
-label_sign_main: label_sign_main
-label_state: label_state
-label_username: label_username
-label_zipcode: label_zipcode
-mail_confirmation_fail: mail_confirmation_fail
-mailing_header: mailing_header
+label_address1: Dirección
+label_address2: 'Dirección 2'
+label_aditional_phone: 'Prefiero recibir llamadas de voz a otro número'
+label_city: Ciudad
+label_email: E-mail
+label_firstname: Nombre
+label_lastname: Apellido
+label_not_sign: 'El paquete puede ser dejado sin mi firma'
+label_password: Contraseña
+label_phone_small: Teléfono
+label_phone_wide: Teléfono
+label_repeat_password: 'Repita la contraseña'
+label_sign: 'Yo prefiero a firmar para recibir mi paquete'
+label_sign_main: 'Texto de introducción a la elección de cómo queremos que las cosas entregadas'
+label_state: Estado
+label_username: 'Ombre de usuario'
+label_zipcode: 'Código Postal'
+mail_confirmation_fail: 'No se pudo confirmar el correo electrónico. Este usuario no existe!'
+mailing_header: 'Dirección postal'
 min_charachters: '(8 caractéres mínimo)'
 no_code: '¿Sin código? Enviar otro'
 ok_verify: 'Ok, ¡verifique!'
 pick_user: 'Escoja su usuario'
-sms_verification_message: sms_verification_message
-study_register_error: study_register_error   # FIXME
-txt_aditional_number_save: txt_aditional_number_save
-txt_basics: txt_basics
-txt_check_email: txt_check_email
-txt_check_zipcode: txt_check_zipcode
+sms_verification_message: 'Su SMS ProofPilot identificado en el código es:'
+study_register_error: 'Hubo un problema - tratar todo el proceso de inscripción de nuevo'
+txt_aditional_number_save: 'Guardar y próximo'
+txt_basics: 'Los fundamentos'
+txt_check_email: 'Por favor revise su correo electrónico'
+txt_check_zipcode: 'Compruebe por favor su código postal'
 txt_join: Unase
 txt_join_with: 'Unase con'
-txt_popup_header: txt_popup_header
-txt_popup_link: txt_popup_link
-txt_popup_text: txt_popup_text
-txt_subtitle_check_email: txt_subtitle_check_email
+txt_popup_header: '¿Por qué voz?'
+txt_popup_link: 'Prefiero recibir llamadas de voz a otro número'
+txt_popup_text: 'En ocasiones es posible que necesitemos llamar acerca de su participación en los estudios. Si usted prefiere no recibir llamadas de voz a otro número, marque la casilla.'
+txt_subtitle_check_email: 'Por favor, comprueba que tu dirección de correo electrónico'
 txt_why: '¿Por qué?'
 wrong_back: 'erroneo devuelvase'
