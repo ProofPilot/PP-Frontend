@@ -135,7 +135,7 @@
             load();
         });
 
-        $('.text_wrapper .info_box').on('click', '.close', function(e) {
+        $('.results').on('click', '.text_wrapper .info_box .close', function(e) {
             e.stopPropagation();
             e.preventDefault();
             $('.info_box').hide();
@@ -149,6 +149,12 @@
                 google.maps.event.trigger(markers[markerNum], 'click');
             }
             $(this).parents('li').siblings().find('.text_right a').removeClass('select_btn');
+
+            if($('.text_right a').hasClass('select_btn')) {
+                $('#apply_site_btn').show();
+            } else {
+            	$('#apply_site_btn').hide();
+            }
         });
 
         $('#apply_site_btn').on('click', function(e) {

@@ -1536,12 +1536,14 @@ div.checker input {
     -moz-box-sizing: border-box;
     background: #fff;
     float: left;
-    height: 70px;
     line-height: 70px;
     padding: 0 21px;
     position: relative;
     width: 100%;
     z-index: 100;
+}
+#apply_site_btn {
+	display: none;
 }
 #div_location .mobile_reg .popup_apply button {
 	padding: 0px 40px;
