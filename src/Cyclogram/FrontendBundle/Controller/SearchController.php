@@ -187,7 +187,7 @@ class SearchController extends Controller
                             'lat' => $row['location_latitude'],
                             'lng' => $row['location_longitude'],
                             'distance' => $row['distance'],
-                            'siteid' => $row["site_id"],
+                            'siteId' => $row["site_id"],
                             'siteName' => $row['site_name']
                         );
             }
