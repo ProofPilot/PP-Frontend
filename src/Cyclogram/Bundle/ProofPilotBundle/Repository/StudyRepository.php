@@ -271,6 +271,8 @@ class StudyRepository extends EntityRepository
                 AND s.studyCode = :code
                 AND sol.status = :solstatus
                 AND o.status = :organizationstatus
+                AND l.locationLatitude IS NOT NULL
+                AND l.locationLongitude IS NOT NULL
                 ")
                     ->setParameters(array(
                             'code' => $studyCode,
