@@ -83,4 +83,97 @@ class AbstractStudy
     	} 
     	return $intervention;   	
     }
+    
+    protected function sendNotification($interventionLink, $participant) {
+        $cc = $this->container->get('cyclogram.common');
+        $em = $this->container->get('doctrine')->getManager();
+        $embedded = array();
+        $embedded = $cc->getEmbeddedImages();
+        $locale =$participant->getLocale();
+        $sendTime = $interventionLink->getParticipantInterventionLinkSendEmailTime();
+        if (!is_null($sendTime))
+            $sendTime = date('W') - $interventionLink->getParticipantInterventionLinkSendEmailTime()->format('W');
+        if (is_null($sendTime) || $sendTime == 1 || $sendTime == -51){
+            $interventionId = $interventionLink->getIntervention()->getInterventionId();
+            $interventionContent = $em->getRepository("CyclogramProofPilotBundle:Intervention")->getInterventionContent($interventionId, $locale);
+            
+            $study = $interventionLink->getIntervention()->getStudy();
+            $studyId = $study->getStudyId();
+            $studyContent = $em->getRepository('CyclogramProofPilotBundle:StudyContent')->getStudyContentById($studyId, $locale);
+            
+            $intervention = array();
+            $intervention["title"] = $interventionContent->getInterventionTitle();
+            $intervention["content"] = $interventionContent->getInterventionDescripton();
+            $interventionUrl = $this->getInterventionUrl($interventionLink, $locale);
+            if (!empty($interventionUrl))
+                $intervention["url"] =  $interventionUrl;
+            else
+                $intervention["url"] = $this->container->getParameter('site_url').$this->container->get('router')->generate('_signup', array('_locale' => $locale));
+            $intervention["logo"] = $this->container->getParameter('study_image_url') . "/" . $studyId . "/" . $studyContent->getStudyLogo();
+    
+            $parameters["interventions"][] = $intervention;
+            $parameters['email'] = $participant->getParticipantEmail();
+            $parameters['locale'] = $participant->getLocale();
+            $parameters['host'] = $this->container->getParameter('site_url');
+            $parameters['siteurl'] = $this->container->getParameter('site_url').$this->getInterventionUrl($interventionLink, $locale);
+            $parameters["studies"] = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Study')->getRandomStudyInfo($locale, $participant);
+            
+            $send = $cc->sendMail(null,
+                        $participant->getParticipantEmail(),
+                        $this->container->get('translator')->trans("do_it_task_email_title", array(), "email", $parameters['locale']),
+                        'CyclogramFrontendBundle:Email:doitemail.html.twig',
+                        null,
+                        $embedded,
+                        true,
+                        $parameters);
+            $interventionLink->setParticipantInterventionLinkSendEmailTime(new \DateTime());
+            $em->persist($interventionLink);
+        }
+            $participantMobileNumber = $participant->getParticipantMobileNUmber();
+            if (!is_null($participantMobileNumber)){ 
+                if (!is_null($sendTime))
+                    $sendTime = date('W') - $interventionLink->getParticipantInterventionLinkSendSmsTime()->format('W');
+                if (is_null($sendTime) || $sendTime == 1 || $sendTime == -51){
+                    $interventionId = $interventionLink->getIntervention()->getInterventionId();
+                    $interventionContent = $em->getRepository("CyclogramProofPilotBundle:Intervention")->getInterventionContent($interventionId, $locale);
+                    $interventionUrl = $this->getInterventionUrl($interventionLink, $participant->getLocale());
+                    $interventionTitle = strip_tags($interventionContent->getInterventionName());
+                    if (!empty($interventionUrl))
+                        $url = $cc::generateGoogleShorURL($interventionUrl);
+                    else
+                        $url = $cc::generateGoogleShorURL($this->container->getParameter('site_url').$this->container->get('router')->generate('_signup', array('_locale' => $locale)));
+                    $sms = $this->container->get('sms');
+                    $message = $this->container->get('translator')->trans('sms_title', array(), 'security', $locale);
+                    $sentSms = $sms->sendSmsAction( array('message' => $message .': '. $interventionTitle.' '.$url, 'phoneNumber'=> $participant->getParticipantMobileNumber()) );
+                    $interventionLink->setParticipantInterventionLinkSendSmsTime(new \DateTime());
+                    $em->persist($interventionLink);
+                }
+            }
+         $em->flush();
+    }
+
+    private function getInterventionUrl($interventionLink, $locale) {
+        $intervention = $interventionLink->getIntervention();
+    
+        $studyCode = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Intervention')
+        ->getInterventionStudyCode($intervention->getInterventionId());
+    
+        $typeName = $interventionLink->getIntervention()->getInterventionType()->getInterventionTypeName();
+        switch($typeName) {
+            case 'Activity':
+                return $intervention->getInterventionUrl();
+            case 'Survey & Observation':
+                $surveyId = $intervention->getSidId();
+                $redirectPath = $this->container->get('router')->generate('_main', array('_locale' => $locale));
+                $path = $this->container->getParameter('site_url').$this->container->get('router')->generate('_survey_protected', array(
+                        '_locale' => $locale,
+                        'studyCode' => $studyCode,
+                        'surveyId' => $surveyId,
+                        'redirectUrl' => urlencode($redirectPath)
+    
+                ));
+                return $path;
+    
+        }
+    }
 }

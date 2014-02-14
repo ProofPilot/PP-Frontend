@@ -780,17 +780,24 @@ class AuthentificationController extends Controller
         $em->flush($participant);
         
         //default contact time to SAT morning
-	        $contactTime = $em->getRepository('CyclogramProofPilotBundle:ParticipantContactTime')
-	        										->findOneByparticipantContactTimesName("time_morning");
-	        $em->getRepository('CyclogramProofPilotBundle:ParticipantContactTimeLink')
-	        						->updateParticipantContactTimeLink($participant, $contactTime, '6', true, true);
-	        $psr = $em->getRepository('CyclogramProofPilotBundle:ParticipantStudyReminder')
-	        						->findOneByparticipantStudyReminderName("reminder_study_task");
-	        $psrl = new ParticipantStudyReminderLink();
-	        $psrl->setParticipantStudyReminder($psr);
-	        $psrl->setParticipant($participant);
-	        $psrl->setByEmail(true);
-	        $em->persist($psrl);
+	        $contactTimes = $em->getRepository('CyclogramProofPilotBundle:ParticipantContactTime')
+	        										->findAll();
+	        foreach ($contactTimes as $contactTime) {
+    	        for ($i=0; $i<7; $i++){
+    	            $em->getRepository('CyclogramProofPilotBundle:ParticipantContactTimeLink')
+    	            ->updateParticipantContactTimeLink($participant, $contactTime, $i, true, true);
+    	        }
+	        }
+	        $psrs = $em->getRepository('CyclogramProofPilotBundle:ParticipantStudyReminder')
+	        						->findAll();
+	        foreach ($psrs as $psr) {
+    	        $psrl = new ParticipantStudyReminderLink();
+    	        $psrl->setParticipantStudyReminder($psr);
+    	        $psrl->setParticipant($participant);
+    	        $psrl->setByEmail(true);
+    	        $psrl->setBySms(true);
+    	        $em->persist($psrl);
+	        }
         //END
         $em->flush();
         

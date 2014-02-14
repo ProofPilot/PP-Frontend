@@ -160,6 +160,7 @@ class SexproStudy extends AbstractStudy implements StudyInterface
             $em->persist($participantInterventionLink);
             
             $em->flush();
+            $this->sendNotification($participantInterventionLink, $participant);
             //END About Me intervention
         }
     }
@@ -193,6 +194,8 @@ class SexproStudy extends AbstractStudy implements StudyInterface
                 		$intervention = $this->findIntervention('SexproPhone', $participant->getParticipantLanguage());
                 		$em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')
                 		->addParticipantInterventionLink($participant, $intervention);
+                		$newInterventionLink = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')->findOneBy(array('intervention' => $intervention, 'participant' =>$participant));
+                		$this->sendNotification($newInterventionLink, $participant);
                 	}
                 	break;
                 case "Confirm Mobile Phone":
@@ -202,6 +205,8 @@ class SexproStudy extends AbstractStudy implements StudyInterface
                 		$intervention = $this->findIntervention('Sexproshipping', $participant->getParticipantLanguage());
                 		$em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')
                 		->addParticipantInterventionLink($participant, $intervention);
+                		$newInterventionLink = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')->findOneBy(array('intervention' => $intervention, 'participant' =>$participant));
+                		$this->sendNotification($newInterventionLink, $participant);
                 	}
                 	break;
                 case "Shipping Info":
@@ -211,6 +216,8 @@ class SexproStudy extends AbstractStudy implements StudyInterface
                 		$intervention = $this->findIntervention('SexProBaselineSurvey', $participant->getParticipantLanguage());
                 		$em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')
                 		->addParticipantInterventionLink($participant, $intervention);
+                		$newInterventionLink = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')->findOneBy(array('intervention' => $intervention, 'participant' =>$participant));
+                		$this->sendNotification($newInterventionLink, $participant);
                 	}
                 	break;
                 case "Survey & Observation":
@@ -232,6 +239,8 @@ class SexproStudy extends AbstractStudy implements StudyInterface
                         $intervention = $this->findIntervention('VideoIntervention', $participant->getParticipantLanguage());
                         $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')
                                     ->addParticipantInterventionLink($participant,$intervention);
+                        $newInterventionLink = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')->findOneBy(array('intervention' => $intervention, 'participant' =>$participant));
+                        $this->sendNotification($newInterventionLink, $participant);
                         }
                     break;
                 case "Video":
@@ -241,17 +250,24 @@ class SexproStudy extends AbstractStudy implements StudyInterface
                    		$intervention = $this->findIntervention('TEST1', $participant->getParticipantLanguage());
                    		$em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')
                    		->addParticipantInterventionLink($participant, $intervention);
+                   		$newInterventionLink = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')->findOneBy(array('intervention' => $intervention, 'participant' =>$participant));
+                   		$this->sendNotification($newInterventionLink, $participant);
                    		$intervention = $this->findIntervention('SexProActivity', $participant->getParticipantLanguage());
                    		$em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')
                    		->addParticipantInterventionLink($participant, $intervention);
+                   		$newInterventionLink = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')->findOneBy(array('intervention' => $intervention, 'participant' =>$participant));
+                   		$this->sendNotification($newInterventionLink, $participant);
                    		$intervention = $this->findIntervention('SexproLocation', $participant->getParticipantLanguage());
                    		$em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')
                    		->addParticipantInterventionLink($participant, $intervention);
+                   		$newInterventionLink = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')->findOneBy(array('intervention' => $intervention, 'participant' =>$participant));
+                   		$this->sendNotification($newInterventionLink, $participant);
                    	}
                    	break;
-//                 case "Test":
-//                 	if ($status == ParticipantInterventionLink::STATUS_ACTIVE) {
-//                 		break;
+                case "Test":
+                	if ($status == ParticipantInterventionLink::STATUS_ACTIVE) {
+                	break;
+                	}
 //                 	} elseif (($status == ParticipantInterventionLink::STATUS_CLOSED)) {
 //                 		$intervention = $this->findIntervention('SexProActivity', $participant->getParticipantLanguage());
 //                 		$em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')
@@ -262,6 +278,9 @@ class SexproStudy extends AbstractStudy implements StudyInterface
 //                    	}
 //                    	break;
                 case "Activity":
+                    if ($status == ParticipantInterventionLink::STATUS_ACTIVE) {
+                        break;
+                    }
 //                     if ($participantArmName == 'SexPro3Month') {
 //                         if ($intervention->getInterventionCode()
 //                                 == "SexProActivity") {
@@ -271,13 +290,18 @@ class SexproStudy extends AbstractStudy implements StudyInterface
 //                     }
 //                     break;
                 	if (($status == ParticipantInterventionLink::STATUS_CLOSED)) {
+                    $this->sendNotification($interventionLink, $participant);
                 		$intervention = $this->findIntervention('SexproLocation', $participant->getParticipantLanguage());
                 		$em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')
                 		->addParticipantInterventionLink($participant, $intervention);
+                		$newInterventionLink = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')->findOneBy(array('intervention' => $intervention, 'participant' =>$participant));
+                		$this->sendNotification($newInterventionLink, $participant);
                 	}
                 	break;
-//                 case "Pledge":
-                    
+                case "Pledge":
+                    if ($status == ParticipantInterventionLink::STATUS_ACTIVE) {
+                        break;
+                    }
 //                     if ($participantArmName == 'SexProBaseLine') {
 //                         if (($status == ParticipantInterventionLink::STATUS_CLOSED)
 //                                 && ($intervention->getInterventionCode()
@@ -291,6 +315,10 @@ class SexproStudy extends AbstractStudy implements StudyInterface
 //                         }
 //                     }
 //                     break;
+                case "Choose Location":
+                    if ($status == ParticipantInterventionLink::STATUS_ACTIVE) {
+                        break;
+                    }
                 }
             }
         }
