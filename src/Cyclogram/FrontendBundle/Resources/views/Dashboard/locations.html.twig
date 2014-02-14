@@ -42,17 +42,11 @@
                                         <hr/>
                                         <div class="wrapper">
                                             <p><strong>Organization Type:</strong><br/>Clinic</p>
-                                            <p><strong>On the Web:</strong><br /><a href="#">www.cbwchc.org</a></p>
-                                            <p><strong>Hours of Operation:</strong><br />Mon, Tues, Thurs, Wed, 9:30am-7pm; Sat, Sun, 8:30am-6pm.</p>
+                                            <p><strong>On the Web:</strong><br /><a href="#">{{ location.locationUrl }}</a></p>
+                                            <p><strong>Hours of Operation:</strong><br />{{ location.operationHours }}</p>
                                             <p>
                                                 <strong>Services:</strong><br />
-                                                - Maecenas in mi vitae ligula suscipit hendrerit nec et eros.<br />
-                                                - Donec luctus quam at ipsum malesuada sodales.<br />
-                                                - Sed pulvinar enim non iaculis tempor.<br />
-                                                - Sed pulvinar enim non iaculis tempor.<br />
-                                                - Sed pulvinar enim non iaculis tempor.<br />
-                                                - Sed pulvinar enim non iaculis tempor.<br />
-                                                - Aenean at felis nec ligula congue pharetra.
+                                                {{ location.locationService }}
                                             </p>
                                         </div>                            
                                     </div>

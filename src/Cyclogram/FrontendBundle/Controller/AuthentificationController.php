@@ -108,11 +108,12 @@ class AuthentificationController extends Controller
                 return new Response(json_encode(array('error' => false)));
             } elseif ($request->getMethod() == 'POST') {
                 
-                if ($session->has('SurveyInfo')) {
+                if ( $session->has('SurveyInfo')) {
+                    $study = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
                     if ($session->has('referralSite') && $session->has('referralCampaign')){
                         $ls = $this->get('study_logic');
                         $bag = $session->get('SurveyInfo');
-                        $surveyId = $bag->get('surveyId');
+                        $surveyId = $bag->get('surveyId');  
                         $saveId = $bag->get('saveId');
                         $studyCode = $bag->get('studyCode');
                         $session->remove('SurveyInfo');
@@ -123,12 +124,10 @@ class AuthentificationController extends Controller
                         if ($participant->getParticipantEmailConfirmed() == false)
                             $this->confirmParticipantEmail($participant);
                         $this->confirmParticipantEmail($participant);
-                        //$study = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
                         if ($study->getStudySkipAboutMe()) {
                             return $this->redirect( $this->generateUrl("_main"));
                         }
                     } else {
-                        //$study = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
                         $session->set("message", $this->get('translator')->trans('study_register_error', array(), 'register'));
                         return $this->redirect($this->generateUrl("_page", array("studyUrl" => $studyContent->getStudyUrl())));
                     }

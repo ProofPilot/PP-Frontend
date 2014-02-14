@@ -1,24 +1,23 @@
 <?php
 /*
-* This is part of the ProofPilot package.
-*
-* (c)2012-2013 Cyclogram, Inc, West Hollywood, CA <crew@proofpilot.com>
-* ALL RIGHTS RESERVED
-*
-* This software is provided by the copyright holders to Manila Consulting for use on the
-* Center for Disease Control's Evaluation of Rapid HIV Self-Testing among MSM in High
-* Prevalence Cities until 2016 or the project is completed.
-*
-* Any unauthorized use, modification or resale is not permitted without expressed permission
-* from the copyright holders.
-*
-* KnowatHome branding, URL, study logic, survey instruments, and resulting data are not part
-* of this copyright and remain the property of the prime contractor.
-*
-*/
+ * This is part of the ProofPilot package.
+ *
+ * (c)2012-2013 Cyclogram, Inc, West Hollywood, CA <crew@proofpilot.com>
+ * ALL RIGHTS RESERVED
+ *
+ * This software is provided by the copyright holders to Manila Consulting for use on the
+ * Center for Disease Control's Evaluation of Rapid HIV Self-Testing among MSM in High
+ * Prevalence Cities until 2016 or the project is completed.
+ *
+ * Any unauthorized use, modification or resale is not permitted without expressed permission
+ * from the copyright holders.
+ *
+ * KnowatHome branding, URL, study logic, survey instruments, and resulting data are not part
+ * of this copyright and remain the property of the prime contractor.
+ *
+ */
 
 namespace Cyclogram\Bundle\ProofPilotBundle\Entity;
-
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -29,7 +28,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Location
 {
-    const STATUS_ACTIVE =1;
+    const STATUS_ACTIVE = 1;
     /**
      * @var integer
      *
@@ -82,6 +81,26 @@ class Location
     private $locationAddress2;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="url", type="string", length=255, nullable=true)
+     */
+    private $locationUrl;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="operation_hours", type="string", length=255, nullable=true)
+     */
+    private $operationHours;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="service", type="text",nullable=true)
+     */
+    private $locationService;
+    /**
      * @var \Country
      *
      * @ORM\ManyToOne(targetEntity="Country")
@@ -108,8 +127,6 @@ class Location
      */
     private $status;
 
-
-
     /**
      * Get locationId
      *
@@ -129,7 +146,7 @@ class Location
     public function setLocationName($locationName)
     {
         $this->locationName = $locationName;
-    
+
         return $this;
     }
 
@@ -152,7 +169,7 @@ class Location
     public function setLocationLatitude($locationLatitude)
     {
         $this->locationLatitude = $locationLatitude;
-    
+
         return $this;
     }
 
@@ -175,7 +192,7 @@ class Location
     public function setLocationLongitude($locationLongitude)
     {
         $this->locationLongitude = $locationLongitude;
-    
+
         return $this;
     }
 
@@ -198,7 +215,7 @@ class Location
     public function setLocationZipcode($locationZipcode)
     {
         $this->locationZipcode = $locationZipcode;
-    
+
         return $this;
     }
 
@@ -221,7 +238,7 @@ class Location
     public function setLocationAddress1($locationAddress1)
     {
         $this->locationAddress1 = $locationAddress1;
-    
+
         return $this;
     }
 
@@ -244,7 +261,7 @@ class Location
     public function setLocationAddress2($locationAddress2)
     {
         $this->locationAddress2 = $locationAddress2;
-    
+
         return $this;
     }
 
@@ -264,10 +281,11 @@ class Location
      * @param \Cyclogram\Bundle\ProofPilotBundle\Entity\Country $country
      * @return Location
      */
-    public function setCountry(\Cyclogram\Bundle\ProofPilotBundle\Entity\Country $country = null)
+    public function setCountry(
+            \Cyclogram\Bundle\ProofPilotBundle\Entity\Country $country = null)
     {
         $this->country = $country;
-    
+
         return $this;
     }
 
@@ -287,10 +305,11 @@ class Location
      * @param \Cyclogram\Bundle\ProofPilotBundle\Entity\LocationType $locationType
      * @return Location
      */
-    public function setLocationType(\Cyclogram\Bundle\ProofPilotBundle\Entity\LocationType $locationType = null)
+    public function setLocationType(
+            \Cyclogram\Bundle\ProofPilotBundle\Entity\LocationType $locationType = null)
     {
         $this->locationType = $locationType;
-    
+
         return $this;
     }
 
@@ -313,7 +332,7 @@ class Location
     public function setStatus($status)
     {
         $this->status = $status;
-    
+
         return $this;
     }
 
@@ -326,9 +345,40 @@ class Location
     {
         return $this->status;
     }
-    
+
     public function __toString()
     {
-    	return $this->locationName;
+        return $this->locationName;
     }
+
+    public function getLocationUrl()
+    {
+        return $this->locationUrl;
+    }
+
+    public function setLocationUrl($locationUrl)
+    {
+        $this->locationUrl = $locationUrl;
+    }
+
+    public function getOperationHours()
+    {
+        return $this->operationHours;
+    }
+
+    public function setOperationHours($operationHours)
+    {
+        $this->operationHours = $operationHours;
+    }
+
+    public function getLocationService()
+    {
+        return $this->locationService;
+    }
+
+    public function setLocationService($locationService)
+    {
+        $this->locationService = $locationService;
+    }
+
 }
