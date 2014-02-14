@@ -48,7 +48,9 @@
 	                    url: "{{ path('_video_completed_ajax')}}",
 	                })
 	                .done (function(response) {
-	                	window.location.href = response.url;
+	                	$('div.div_video').dialog('close');
+	                	window.location.replace(response.url);
+	                	//window.location.href = response.url;
 	                });
 	                return false;
 		      }

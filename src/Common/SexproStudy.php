@@ -241,20 +241,26 @@ class SexproStudy extends AbstractStudy implements StudyInterface
                    		$intervention = $this->findIntervention('TEST1', $participant->getParticipantLanguage());
                    		$em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')
                    		->addParticipantInterventionLink($participant, $intervention);
+                   		$intervention = $this->findIntervention('SexProActivity', $participant->getParticipantLanguage());
+                   		$em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')
+                   		->addParticipantInterventionLink($participant, $intervention);
+                   		$intervention = $this->findIntervention('SexproLocation', $participant->getParticipantLanguage());
+                   		$em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')
+                   		->addParticipantInterventionLink($participant, $intervention);
                    	}
                    	break;
-                case "Test":
-                	if ($status == ParticipantInterventionLink::STATUS_ACTIVE) {
-                		break;
-                	} elseif (($status == ParticipantInterventionLink::STATUS_CLOSED)) {
-                		$intervention = $this->findIntervention('SexProActivity', $participant->getParticipantLanguage());
-                		$em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')
-                		->addParticipantInterventionLink($participant, $intervention);
-                		$intervention = $this->findIntervention('SexproLocation', $participant->getParticipantLanguage());
-                		$em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')
-                		->addParticipantInterventionLink($participant, $intervention);
-                   	}
-                   	break;
+//                 case "Test":
+//                 	if ($status == ParticipantInterventionLink::STATUS_ACTIVE) {
+//                 		break;
+//                 	} elseif (($status == ParticipantInterventionLink::STATUS_CLOSED)) {
+//                 		$intervention = $this->findIntervention('SexProActivity', $participant->getParticipantLanguage());
+//                 		$em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')
+//                 		->addParticipantInterventionLink($participant, $intervention);
+//                 		$intervention = $this->findIntervention('SexproLocation', $participant->getParticipantLanguage());
+//                 		$em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')
+//                 		->addParticipantInterventionLink($participant, $intervention);
+//                    	}
+//                    	break;
                 case "Activity":
 //                     if ($participantArmName == 'SexPro3Month') {
 //                         if ($intervention->getInterventionCode()
