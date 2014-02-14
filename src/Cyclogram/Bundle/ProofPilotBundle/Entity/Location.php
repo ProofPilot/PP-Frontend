@@ -97,7 +97,7 @@ class Location
     /**
      * @var string
      *
-     * @ORM\Column(name="service", type="text",nullable=true)
+     * @ORM\Column(name="services", type="text",nullable=true)
      */
     private $locationService;
     /**
