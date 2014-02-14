@@ -1711,7 +1711,6 @@ div.checker input {
     height: 265px;
     padding: 25px 25px 0px 25px;
     position: relative;
-    width: 100%;
 }
 #div_location .mobile_reg .info_box .text_cont a.close {
     background: url("../images/close_big.png") no-repeat scroll 0 0 / 16px 16px rgba(0, 0, 0, 0);

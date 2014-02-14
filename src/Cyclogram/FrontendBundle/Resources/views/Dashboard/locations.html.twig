@@ -153,7 +153,10 @@
             $(this).parents('li').siblings().find('.text_right a').removeClass('select_btn');
             applyAppearances();
         });
-
+        
+        $('.results').on('click', '.text_left a', function(e) {
+            e.preventDefault();
+        });
         $('#apply_site_btn').on('click', function(e) {
             e.preventDefault();
             var siteId = $('a.select_btn').data('site');
