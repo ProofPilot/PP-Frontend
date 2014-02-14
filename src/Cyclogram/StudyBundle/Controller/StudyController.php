@@ -70,7 +70,7 @@ class StudyController extends Controller
             $this->parameters['shortstudyUrl'] = $cc::generateGoogleShorURL($this->container->getParameter('site_url')."/".$locale."/".$studyUrl);
             
         }
-        $this->parameters["facebookcontent"] = str_replace(array("\r\n", "\r", "\n"), "", strip_tags($studyContent->getStudyAbout()));
+        $this->parameters["facebookcontent"] = addslashes(str_replace(array("\r\n", "\r", "\n"), "", strip_tags($studyContent->getStudyAbout())));
         $this->parameters["linkedincontent"] = str_replace(array("\r\n", "\r", "\n"), "", $studyContent->getStudyAbout());
         $this->parameters["studycontent"] = $studyContent;
         $this->parameters['studyUrl'] = $studyUrl;
