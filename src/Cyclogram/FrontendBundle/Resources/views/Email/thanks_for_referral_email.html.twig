@@ -1,0 +1,18 @@
+{%  extends 'CyclogramFrontendBundle:Email:email.html.twig' %}
+{% block email_content %}
+                <tr>
+                  <td colspan="2" class="content" align="center">
+                    <h1>Thanks for referring a friend to %%study name%%</h1>
+                    <p>We just wanted to write a quick note to thank you.
+                      Someone just joined because you referred them (though for
+                      privacy reasons we can not tell you who). The success of
+                      this effort is because of you. We couldn't do it without
+                      you.</p>
+                    <p>As a token of our appreciation, please watch your e-mail
+                      for a special incentive thank you. It will arrive soon if
+                      it hasn't already.</p>
+                        {% include 'CyclogramFrontendBundle:Email:email_studies_list.html.twig' %}
+                  </td>
+                </tr>
+
+{% endblock email_content %}
