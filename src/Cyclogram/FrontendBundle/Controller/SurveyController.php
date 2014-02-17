@@ -170,7 +170,6 @@ class SurveyController extends Controller
             }
         } elseif($isEligible) {
             //store surveyid and saveid in session
-            $session = $this->getRequest()->getSession();
             $bag = new AttributeBag();
             $bag->setName("SurveyInfo");
             $array = array();
@@ -197,10 +196,16 @@ class SurveyController extends Controller
                 $em->persist($participantArmLink);
                 $em->flush($participantArmLink);
             }
-            return $this->redirect($this->generateUrl('_page', array(
-                        'studyUrl' => $studyContent->getStudyUrl(),
-                        'eligible' => false
-                    )));
+            $study = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
+            if ($study->getParticipantRegisterLast()){
+                $session->set('nonEligible', $studyContent->getStudyName());
+                return $this->redirect($redirectUrl);
+            } else {
+                return $this->redirect($this->generateUrl('_page', array(
+                            'studyUrl' => $studyContent->getStudyUrl(),
+                            'eligible' => false
+                        )));
+            }
         }
     }
     

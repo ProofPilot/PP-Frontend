@@ -435,6 +435,9 @@
                 </div>
                 <div class="dashboard_panel">
                     <div id="dismiss_message"> </div>
+                    {% if eligibility is defined %}
+                        <p class="notice green"><span>{% trans with {'%studyname%': eligibility } from "study" %}msg_not_eligible{% endtrans %}</span></p>
+                    {% endif %}
                     {% if confirm_email == false%}
                         <p class="notice green"><span>{{ email_alert| raw }}</span> <a href="#" id="send_email_again">{% trans from "dashboard" %}send_again{% endtrans %}</a></p>
                     {% endif %}

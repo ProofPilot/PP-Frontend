@@ -31,6 +31,7 @@ class Study
     const STATUS_ACTIVE = 1;
     const STATUS_INACTIVE = 2;
     const STATUS_NEW = 6;
+    CONST STATUS_PRELAUNCH = 31;
     /**
      * @var integer
      *

@@ -369,7 +369,8 @@ class DashboardController extends Controller
         $parameters["username"] = $participant->getParticipantUsername();
         $parameters["user"]["last_access"] = $participant->getParticipantLastTouchDatetime();
 
-        
+        if($session->has('nonEligible'))
+            $parameters["eligibility"] = $session->get('nonEligible');
         
         if ($participant->getParticipantEmailConfirmed()){
             if ($session->get('confirmed'))
