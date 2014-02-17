@@ -131,6 +131,7 @@ class AbstractStudy
         }
             $participantMobileNumber = $participant->getParticipantMobileNUmber();
             if (!is_null($participantMobileNumber)){ 
+                $sendTime = $interventionLink->getParticipantInterventionLinkSendSmsTime();
                 if (!is_null($sendTime))
                     $sendTime = date('W') - $interventionLink->getParticipantInterventionLinkSendSmsTime()->format('W');
                 if (is_null($sendTime) || $sendTime == 1 || $sendTime == -51){
@@ -175,5 +176,28 @@ class AbstractStudy
                 return $path;
     
         }
+    }
+    
+    protected function sendThankYouRefferalEmail($participant, $studyCode) {
+        $locale = $participant->getLocale();
+        $cc = $this->container->get('cyclogram.common');
+        $embedded = array();
+        $embedded = $cc->getEmbeddedImages();
+        $studyContent =  $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:StudyContent')->findOneByStudyUrl($studyCode);
+        $parameters = array();
+        $parameters['email'] = $participant->getParticipantEmail();
+        $parameters['host'] = $this->container->getParameter('site_url');
+        $parameters['locale'] = $participant->getLocale();
+        $parameters['studyName'] =  $studyContent->getStudyName();
+        $parameters["studies"] = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Study')->getRandomStudyInfo($locale, $participant);
+        
+        $cc->sendMail(null,
+                    $participant->getParticipantEmail(),
+                    'Test Email from Cyclogram',
+                    'CyclogramFrontendBundle:Email:thanks_for_referral_email.html.twig',
+                    null,
+                    $embedded,
+                    true,
+                    $parameters);
     }
 }
