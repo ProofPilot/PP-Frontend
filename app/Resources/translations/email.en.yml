@@ -42,4 +42,7 @@ study_welcome_excited: 'We''re really excited to have you on board. Here''s what
 study_welcome_hold_on: 'Hold On! Here''s Your First Study Task'
 study_welcome_joint_other_studies: 'Join Other Studies at ProofPilot'
 study_welcome_welcome_to: 'Welcome to'
+txt_thanks_for_reffering: Thanks for referring a friend to %studyName%
+txt_thanks_for_reffering_tatx_part_two: As a token of our appreciation, please watch your e-mail for a special incentive thank you. It will arrive soon if it hasn't already.
+txt_thanks_for_reffering_text: We just wanted to write a quick note to thank you. Someone just joined because you referred them (though for privacy reasons we can not tell you who). The success of this effort is because of you. We couldn't do it without you.
 welcome_to_study: 'Welcome to'
