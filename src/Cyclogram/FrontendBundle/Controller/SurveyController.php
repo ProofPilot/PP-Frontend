@@ -198,7 +198,7 @@ class SurveyController extends Controller
             }
             $study = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
             if ($study->getParticipantRegisterLast()){
-                $session->set('nonEligible', $studyContent->getStudyName());
+                $session->set('nonEligible', $studyCode);
                 return $this->redirect($redirectUrl);
             } else {
                 return $this->redirect($this->generateUrl('_page', array(

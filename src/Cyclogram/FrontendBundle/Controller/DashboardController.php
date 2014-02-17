@@ -369,8 +369,19 @@ class DashboardController extends Controller
         $parameters["username"] = $participant->getParticipantUsername();
         $parameters["user"]["last_access"] = $participant->getParticipantLastTouchDatetime();
 
-        if($session->has('nonEligible'))
-            $parameters["eligibility"] = $session->get('nonEligible');
+        if($session->has('nonEligible')) {
+            $studyContent = $em->getRepository('CyclogramProofPilotBundle:StudyContent')->findOneByStudyUrl($session->get('nonEligible'));
+            $studyArms = $em->getRepository('CyclogramProofPilotBundle:Study')->getStudyArms($session->get('nonEligible'));
+            $participantArmLink = new ParticipantArmLink();
+            $participantArmLink->setArm($studyArms[0]);
+            $participantArmLink->setParticipant($participant);
+            $participantArmLink->setStatus(ParticipantArmLink::STATUS_NOT_ELIGIBLE);
+            $participantArmLink->setParticipantArmLinkDatetime(new \DateTime());
+            $em->persist($participantArmLink);
+            $em->flush($participantArmLink);
+            $parameters["eligibility"] = $studyContent->getStudyName();
+            $session->remove('nonEligible');
+        }
         
         if ($participant->getParticipantEmailConfirmed()){
             if ($session->get('confirmed'))

@@ -64,13 +64,14 @@ class EmailController extends Controller
         $parameters['confirmed'] = 1;
         $parameters['host'] = $this->container->getParameter('site_url');
         $parameters['locale'] = $request->getLocale();
+        $participant = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:Participant')->find(540);
         $parameters["studies"] = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:Study')->getRandomStudyInfo($locale, $participant);
 
         try{
             $cc->sendMail(null,
                     $email,
                     'Test Email from Cyclogram',
-                    'CyclogramFrontendBundle:Email:email_confirmation.html.twig',
+                    'CyclogramFrontendBundle:Email:thanks_for_referral_email.html.twig',
                     null,
                     $embedded,
                     true,
