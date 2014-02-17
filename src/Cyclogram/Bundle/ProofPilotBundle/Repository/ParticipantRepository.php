@@ -219,8 +219,10 @@ class ParticipantRepository extends EntityRepository implements
                 INNER JOIN pal.arm a
                 INNER JOIN a.study s
                 WHERE pal.participant = :participant
+                AND pal.status <> :status
                 ')
                 ->setParameter('participant', $participant)
+                ->setParameter('status', ParticipantArmLink::STATUS_NOT_ELIGIBLE)
                 ->getResult();
         $studies = array();
         foreach($results as $result) {

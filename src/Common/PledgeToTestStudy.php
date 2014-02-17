@@ -64,7 +64,7 @@ class PledgeToTestStudy extends AbstractStudy implements StudyInterface
             $this->createIncentive($participant, $intervention);
 
             $em->flush();
-            $this->sendNotification($participantInterventionLink, $referralParticipant);
+//             $this->sendNotification($participantInterventionLink, $referralParticipant);
         
             $ArmParticipantLink = null;
             $armData = $em->getRepository('CyclogramProofPilotBundle:Arm')->findOneByArmCode('Apledge');
@@ -85,6 +85,7 @@ class PledgeToTestStudy extends AbstractStudy implements StudyInterface
                 $intervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')->findOneByInterventionCode('Pledgereferral');
                 $countReferrals = $em->getRepository('CyclogramProofPilotBundle:Participant')->countParticipantRefferals($intervention->getInterventionCode(), $referralParticipant);
                 if ($countReferrals <2) {
+                    $this->sendThankYouRefferalEmail($referralParticipant, $this->getStudyCode());
                     $participantInterventionLink = new ParticipantInterventionLink();
                     
                     $intervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')->findOneByInterventionCode('Pledgereferral');
@@ -94,7 +95,7 @@ class PledgeToTestStudy extends AbstractStudy implements StudyInterface
                     $participantInterventionLink->setStatus(ParticipantInterventionLink::STATUS_REFERRAL);
                     $em->persist($participantInterventionLink);
                     $em->flush($participantInterventionLink);
-                    $this->sendNotification($participantInterventionLink, $referralParticipant);
+//                     $this->sendNotification($participantInterventionLink, $referralParticipant);
                     
                     $this->createIncentive($referralParticipant, $intervention);
                 }

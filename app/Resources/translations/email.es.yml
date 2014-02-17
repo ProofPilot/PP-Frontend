@@ -42,4 +42,7 @@ study_welcome_excited: 'Estamos muy contentos de tenerlo a bordo. Esto es lo que
 study_welcome_hold_on: 'Hold On! Aquí está su Primer Estudio de tareas'
 study_welcome_joint_other_studies: 'Únete Otros estudios en ProofPilot'
 study_welcome_welcome_to: 'Bienvenido a'
+txt_thanks_for_reffering: txt_thanks_for_reffering   # FIXME
+txt_thanks_for_reffering_tatx_part_two: txt_thanks_for_reffering_tatx_part_two   # FIXME
+txt_thanks_for_reffering_text: txt_thanks_for_reffering_text   # FIXME
 welcome_to_study: 'Welcome to'
