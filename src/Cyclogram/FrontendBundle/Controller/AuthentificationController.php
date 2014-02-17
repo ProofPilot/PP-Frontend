@@ -80,6 +80,8 @@ class AuthentificationController extends Controller
         $form->handleRequest($request);
         $studyJoinButtonName = "";
         $studySpecificLoginHeader = "";
+        $studyJoinGoogleButton = "";
+        $studyJoinFacebookButton = "";
         $locale = $this->getRequest()->getLocale();
         $language = $em->getRepository('CyclogramProofPilotBundle:Language')->findOneBylocale($locale);
         if(!empty($studyCode)) {
@@ -87,6 +89,8 @@ class AuthentificationController extends Controller
 	        $studyContent = $em->getRepository('CyclogramProofPilotBundle:StudyContent')->findOneBy(array('study' => $study, 'language' => $language));
 	        $studyJoinButtonName = $studyContent->getStudyJoinButtonName();
 	        $studySpecificLoginHeader = $studyContent->getStudySpecificLoginHeader();
+	        $studyJoinGoogleButton = $studyContent->getStudyJoinGoogleButton();
+	        $studyJoinFacebookButton = $studyContent->getStudyJoinFacebookButton();
 	        
     	}
         
@@ -198,6 +202,8 @@ class AuthentificationController extends Controller
                     'last_username' => $session->get(SecurityContext::LAST_USERNAME),
 	        		'studyJoinButtonName' => $studyJoinButtonName,
 	        		'studySpecificLoginHeader' => $studySpecificLoginHeader,
+        			'studyJoinGoogleButton' =>  $studyJoinGoogleButton,
+        			'studyJoinFacebookButton' =>  $studyJoinFacebookButton,
                     'form' => $form->createView(),
                     'studyCode' => $studyCode,
                     'surveyId' => $surveyId
