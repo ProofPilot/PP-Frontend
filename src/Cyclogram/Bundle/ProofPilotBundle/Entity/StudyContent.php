@@ -191,6 +191,27 @@ class StudyContent {
 	 */
 	private $studyJoinButtonName;
 
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="study_prelaunch_message", type="string", length=45, nullable=true)
+	 */
+	private $studyPrelaunchMessage;
+
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="study_join_google_button", type="string", length=45, nullable=true)
+	 */
+	private $studyJoinGoogleButton;
+
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="study_join_facebook_button", type="string", length=45, nullable=true)
+	 */
+	private $studyJoinFacebookButton;
+
 	public function getStudyLogo() {
 		return $this->studyLogo;
 	}
@@ -365,6 +386,30 @@ class StudyContent {
 
 	public function setStudyJoinButtonName($studyJoinButtonName) {
 		$this->studyJoinButtonName = $studyJoinButtonName;
+	}
+
+	public function getStudyPrelaunchMessage() {
+		return $this->studyPrelaunchMessage;
+	}
+
+	public function setStudyPrelaunchMessage($studyPrelaunchMessage) {
+		$this->studyPrelaunchMessage = $studyPrelaunchMessage;
+	}
+
+	public function getStudyJoinGoogleButton() {
+		return $this->studyJoinGoogleButton;
+	}
+
+	public function setStudyJoinGoogleButton($studyJoinGoogleButton) {
+		$this->studyJoinGoogleButton = $studyJoinGoogleButton;
+	}
+
+	public function getStudyJoinFacebookButton() {
+		return $this->studyJoinFacebookButton;
+	}
+
+	public function setStudyJoinFacebookButton($studyJoinFacebookButton) {
+		$this->studyJoinFacebookButton = $studyJoinFacebookButton;
 	}
 
 }

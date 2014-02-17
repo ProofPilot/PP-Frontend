@@ -215,6 +215,9 @@ class StudyController extends Controller
         $studyContent = $this->getDoctrine()->getRepository("CyclogramProofPilotBundle:StudyContent")->getStudyContent($studyUrl, $locale);
         $studyJoinButtonName = $studyContent->getStudyJoinButtonName();
         $studySpecificLoginHeader = $studyContent->getStudySpecificLoginHeader();
+        $studyPrelaunchMessage = $studyContent->getStudyPrelaunchMessage();
+        $studyJoinGoogleButton = $studyContent->getStudyJoinGoogleButton();
+        $studyJoinFacebookButton = $studyContent->getStudyJoinFacebookButton();
         $study = $studyContent->getStudy();
         $status = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:Status')->find($study->getStatus());
         $securityContext = $this->container->get('security.context');
@@ -232,6 +235,11 @@ class StudyController extends Controller
         $this->parameters['studyUrl'] = $studyUrl;
         $this->parameters['last_username'] = $session->get(SecurityContext::LAST_USERNAME);
         $this->parameters['studySpecificLoginHeader'] =  $studySpecificLoginHeader;
+        
+        $this->parameters['studyPrelaunchMessage'] =  $studyPrelaunchMessage;
+        $this->parameters['studyJoinGoogleButton'] =  $studyJoinGoogleButton;
+        $this->parameters['studyJoinFacebookButton'] =  $studyJoinFacebookButton;
+        
         $this->parameters['studyJoinButtonName'] =  $studyJoinButtonName;
         $participant = $this->get('security.context')->getToken()->getUser();
         if ($participant != 'anon.')

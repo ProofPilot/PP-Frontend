@@ -3,7 +3,7 @@
         <div class="wrapper">
             <div class="sign_up_header">
             	{% if studySpecificLoginHeader is not empty %}
-            		{{ studySpecificLoginHeader }}
+            		{{ studySpecificLoginHeader | raw }}
             	{% else %}
             		{% trans from "login" %}sign_up_header{% endtrans %}
             	{% endif %}
