@@ -468,7 +468,7 @@
                                     {% if studyPrelaunchMessage is empty %}
                                     	<h1><span class="text red">{% trans from "register" %}let_know_launch{% endtrans %}</span></h1>
                                     {% else %}
-                                    	<h1><span class="text red">{{ studyPrelaunchMessage }}</span></h1>
+                                    	<h1><span class="text red">{{ studyPrelaunchMessage|striptags }}</span></h1>
                                     {% endif %}
                                     
                                 </div>
@@ -477,7 +477,7 @@
                                     <input type="checkbox" id="recruiter"></input><span>{% trans from "register" %}help_recruit_people{% endtrans %}</span>
                                 </div>
                                 {% if studyJoinButtonName is not empty%}
-                                	<a href="#" class="join" id="send_prelaunch"><span>{{ studyJoinButtonName | raw }}</span></a>
+                                	<a href="#" class="join" id="send_prelaunch"><span>{{ studyJoinButtonName|striptags }}</span></a>
                                 {% else %}
                                 	<a href="#" class="join" id="send_prelaunch"><span>{% trans from "register" %}let_me_know{% endtrans %}</span></a>
                                 {% endif %}
@@ -487,7 +487,7 @@
 	                                </a>
                                 {% else %}
                                 	<a class="fb" id="facebook_button_landing_page" href="">
-                                		<span>{{ studyJoinFacebookButton }}</span>
+                                		<span>{{ studyJoinFacebookButton|striptags }}</span>
                                 	</a>
                                 {% endif %}
                                 {% if studyJoinGoogleButton is empty %}
@@ -496,7 +496,7 @@
                                 	</a> 
                                 {% else %}
                                 	<a class="gp" id="google_button_landing_page" href="">
-                                		<span>{{ studyJoinGoogleButton }}</span>
+                                		<span>{{ studyJoinGoogleButton|striptags }}</span>
                                 	</a>
                                 {% endif %}
                             {% endif %}
@@ -507,7 +507,7 @@
                                 {% if studyJoinButtonName is empty %}
 	                                <a href="#" class="join" id="send_prelaunch_loggedin" >{% trans from "register" %}let_me_know{% endtrans %}</a>
                                 {% else %}
-                                	<a href="#" class="join" id="send_prelaunch_loggedin" >{{ studyJoinButtonName }}</a>
+                                	<a href="#" class="join" id="send_prelaunch_loggedin" >{{ studyJoinButtonName|striptags }}</a>
                                 {% endif %}
                             {% endif %}
                         {% endif %}
@@ -530,7 +530,7 @@
                                		</a>
                                 {% else %}
                                 	<a class="fb" id="facebook_button_landing_page" href="">
-                                		<span>{{ studyJoinFacebookButton }}</span>
+                                		<span>{{ studyJoinFacebookButton|striptags }}</span>
                                 	</a>
                                 {% endif %}
                                {% if is_participant_register_last(studyCode) %}
@@ -547,7 +547,7 @@
                                    		{% if studyJoinButtonName is empty %}
                                    			{% trans from "study" %}button_join_the_study_goal{% endtrans %}
                                    		{% else %}
-                                   			{{ studyJoinButtonName }}
+                                   			{{ studyJoinButtonName|striptags }}
                                    		{% endif %}
                                    </span></a>
                                {% endif %}
@@ -557,7 +557,7 @@
                                 	</a> 
                                 {% else %}
                                 	<a class="gp" id="google_button_landing_page" href="">
-                                		<span>{{ studyJoinGoogleButton }}</span>
+                                		<span>{{ studyJoinGoogleButton|striptags }}</span>
                                 	</a>
                                 {% endif %}
                              {% endif %}

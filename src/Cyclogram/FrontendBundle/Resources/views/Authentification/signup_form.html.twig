@@ -3,7 +3,7 @@
         <div class="wrapper">
             <div class="sign_up_header">
             	{% if studySpecificLoginHeader is not empty %}
-            		{{ studySpecificLoginHeader | raw }}
+            		{{ studySpecificLoginHeader|striptags }}
             	{% else %}
             		{% trans from "login" %}sign_up_header{% endtrans %}
             	{% endif %}
@@ -38,12 +38,24 @@
                 </form>
                 <div class="row_or_text">OR</div>
                 <div class="btns_wapper">
-                    <a class="btn_reg fb facebook_button" href="">
-                        <span>{% trans from "register" %}join_with_facebook{% endtrans %}</span>
-                    </a>
-                    <a class="btn_reg google google_button" href="">
-                        <span>{% trans from "register" %}join_with_google{% endtrans %}</span>
-                    </a> 
+					{% if studyJoinFacebookButton is empty %}
+						<a class="btn_reg fb facebook_button" href="">
+							<span>{% trans from "register" %}join_with_facebook{% endtrans %}</span>
+						</a>
+					{% else %}
+						<a class="btn_reg fb facebook_button" href="">
+							<span>{{ studyJoinFacebookButton|striptags }}</span>
+						</a>
+					{% endif %}
+					{% if studyJoinGoogleButton is empty %}
+						<a class="btn_reg google google_button" href="">
+							<span>{% trans from "register" %}join_with_google{% endtrans %}</span>
+						</a>
+					{% else %}
+						<a class="btn_reg google google_button" href="">
+							<span>{{ studyJoinGoogleButton|striptags }}</span>
+						</a>
+					{% endif %}
                 </div>
                 <div class="notice2">
                     <a id="open_why_popup">
