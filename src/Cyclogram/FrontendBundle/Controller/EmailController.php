@@ -64,7 +64,7 @@ class EmailController extends Controller
         $parameters['confirmed'] = 1;
         $parameters['host'] = $this->container->getParameter('site_url');
         $parameters['locale'] = $request->getLocale();
-        $participant = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:Participant')->find(540);
+        $participant = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:Participant')->find(511);
         $parameters["studies"] = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:Study')->getRandomStudyInfo($locale, $participant);
 
         try{
