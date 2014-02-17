@@ -118,7 +118,7 @@ class DashboardController extends Controller
             $enroledStudy['reffferalPinterestStudyUrl'] =urlencode($this->container->getParameter('site_url')."/".$locale."/".$study->getStudyCode()."/?utm_campaign=".$siteCampaignLink->getCampaign()->getCampaignName()."&utm_medium-Clinic&utm_source=".$site[0]['siteName']."&pid=".$participant->getParticipantId());
             $enroledStudy['studyAllowSharing'] = $study->getStudyAllowSharing();
             $enroledStudy["graphic"] = $this->container->getParameter('study_image_url') . '/' .$study->getStudyId(). '/' .$studyContent->getStudyGraphic();
-            $enroledStudy['studyContent'] = str_replace(array("\r\n", "\r", "\n"), "", strip_tags($studyContent->getStudyAbout()));
+            $enroledStudy['studyContent'] = addslashes(str_replace(array("\r\n", "\r", "\n"), "", strip_tags($studyContent->getStudyAbout())));
             $enroledStudy['tagline'] = $studyContent->getStudyTagline();
             $parameters["enrolledStudies"][] = $enroledStudy;
         }
@@ -164,7 +164,7 @@ class DashboardController extends Controller
                     $intervention['refferalStudyUrl'] = $this->container->getParameter('site_url')."/".$locale."/".$study->getStudyCode()."/?utm_campaign=".$siteCampaignLink->getCampaign()->getCampaignName()."&utm_medium-Clinic&utm_source=".$site[0]['siteName']."&pid=".$participant->getParticipantId();
                     $intervention['reffferalShortStudyUrl'] = $cc::generateGoogleShorURL($this->container->getParameter('site_url')."/".$locale."/".$study->getStudyCode()."/?utm_campaign=".$siteCampaignLink->getCampaign()->getCampaignName()."&utm_medium-Clinic&utm_source=".$site[0]['siteName']."&pid=".$participant->getParticipantId());
                     $intervention['studyName'] = $studyContent->getStudyName();
-                    $intervention['tagline'] = $studyContent->getStudyTagline();
+                    $intervention['tagline'] = addslashes($studyContent->getStudyTagline());
                     $intervention["graphic"] = $this->container->getParameter('study_image_url') . '/' .$study->getStudyId(). '/' .$studyContent->getStudyGraphic();
                     break;
                 case "Referral" :
@@ -173,8 +173,8 @@ class DashboardController extends Controller
                     $intervention['reffferalFacebookStudyUrl'] = $this->container->getParameter('site_url')."/".$locale."/".$study->getStudyCode()."/?utm_campaign=".$siteCampaignLink->getCampaign()->getCampaignName()."&utm_medium-Clinic&utm_source=".$site[0]['siteName']."&pid=".$participant->getParticipantId();
                     $intervention['reffferalPinterestStudyUrl'] = urlencode($this->container->getParameter('site_url')."/".$locale."/".$study->getStudyCode()."/?utm_campaign=".$siteCampaignLink->getCampaign()->getCampaignName()."&utm_medium-Clinic&utm_source=".$site[0]['siteName']."&pid=".$participant->getParticipantId());
                     $intervention['studyName'] = $studyContent->getStudyName();
-                    $intervention['tagline'] = $studyContent->getStudyTagline();
-                    $intervention['studyContent'] = str_replace(array("\r\n", "\r", "\n"), "", strip_tags(substr($studyContent->getStudyAbout(), 0,250)));
+                    $intervention['tagline'] = addslashes($studyContent->getStudyTagline());
+                    $intervention['studyContent'] = addslashes(str_replace(array("\r\n", "\r", "\n"), "", strip_tags(substr($studyContent->getStudyAbout(), 0,250))));
                     $intervention["graphic"] = $this->container->getParameter('study_image_url') . '/' .$study->getStudyId(). '/' .$studyContent->getStudyGraphic();
                     break;
                 case "Shipping Info" :

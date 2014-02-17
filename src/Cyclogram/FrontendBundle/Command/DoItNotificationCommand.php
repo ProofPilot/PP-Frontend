@@ -42,27 +42,27 @@ class DoItNotificationCommand extends ContainerAwareCommand
 
         $em = $this->getContainer()->get('doctrine')->getManager();
         
-        $contactPeriod = $em->getRepository('CyclogramProofPilotBundle:ParticipantContactTime')->getCurrentContactPeriod();
-        $periodId = $contactPeriod->getParticipantContactTimesId();
-        $periodStart = $contactPeriod->getParticipantContactTimesRangeStart();
-        $periodEnd = $contactPeriod->getParticipantContactTimesRangeEnd();
+//         $contactPeriod = $em->getRepository('CyclogramProofPilotBundle:ParticipantContactTime')->getCurrentContactPeriod();
+//         $periodId = $contactPeriod->getParticipantContactTimesId();
+//         $periodStart = $contactPeriod->getParticipantContactTimesRangeStart();
+//         $periodEnd = $contactPeriod->getParticipantContactTimesRangeEnd();
         
-        $output->writeln("Server is in contact period #".$periodId."[".$periodStart->format("H:i:s")."-".$periodEnd->format("H:i:s")."]");
-        $output->writeln("Server weekday is ".date("l")." #".date("w")."\n");
+//         $output->writeln("Server is in contact period #".$periodId."[".$periodStart->format("H:i:s")."-".$periodEnd->format("H:i:s")."]");
+//         $output->writeln("Server weekday is ".date("l")." #".date("w")."\n");
         
-        //get all participant timezones and process them one by one
-        $timezones = $em->getRepository('CyclogramProofPilotBundle:ParticipantTimezone')->findAll();
-        foreach($timezones as $timezone)
-        {
-            $output->writeln("Processing timezone " . $timezone->getParticipantTimezoneName() . "");
-            $currentInTz = new \DateTime(null, new \DateTimeZone($timezone->getParticipantTimezoneName()));
-            $weekDayInTz = (int)$currentInTz->format("w");
-            $periodInTz = $em->getRepository('CyclogramProofPilotBundle:ParticipantContactTime')->getCurrentContactPeriod($currentInTz);
-            $periodId = $periodInTz->getParticipantContactTimesId();
-            $periodStart = $periodInTz->getParticipantContactTimesRangeStart();
-            $periodEnd = $periodInTz->getParticipantContactTimesRangeEnd();
-            $output->writeln("Timezone in contact period #".$periodId."[".$periodStart->format("H:i:s")."-".$periodEnd->format("H:i:s")."]");
-            $output->writeln("Timezone weekday is ".$weekDayInTz);
+//         //get all participant timezones and process them one by one
+//         $timezones = $em->getRepository('CyclogramProofPilotBundle:ParticipantTimezone')->findAll();
+//         foreach($timezones as $timezone)
+//         {
+//             $output->writeln("Processing timezone " . $timezone->getParticipantTimezoneName() . "");
+//             $currentInTz = new \DateTime(null, new \DateTimeZone($timezone->getParticipantTimezoneName()));
+//             $weekDayInTz = (int)$currentInTz->format("w");
+//             $periodInTz = $em->getRepository('CyclogramProofPilotBundle:ParticipantContactTime')->getCurrentContactPeriod($currentInTz);
+//             $periodId = $periodInTz->getParticipantContactTimesId();
+//             $periodStart = $periodInTz->getParticipantContactTimesRangeStart();
+//             $periodEnd = $periodInTz->getParticipantContactTimesRangeEnd();
+//             $output->writeln("Timezone in contact period #".$periodId."[".$periodStart->format("H:i:s")."-".$periodEnd->format("H:i:s")."]");
+//             $output->writeln("Timezone weekday is ".$weekDayInTz);
             
             $output->writeln("Looking for participants with email notification... ");
             $studyCode = $input->getArgument('study');
@@ -71,19 +71,19 @@ class DoItNotificationCommand extends ContainerAwareCommand
             $participants = $em->getRepository('CyclogramProofPilotBundle:Participant')
                 ->getParticipantsForEmailNotifications(
                         1, //reminder type
-                        $timezone->getParticipantTimezoneId(),  //timezone   
-                        $periodId, //id of period in timezone
-                        $weekDayInTz, //weekday in timezone
+//                         $timezone->getParticipantTimezoneId(),  //timezone   
+//                         $periodId, //id of period in timezone
+//                         $weekDayInTz, //weekday in timezone
                         $studyCode,
                         $interventionCode
                     );
             else
                 $participants = $em->getRepository('CyclogramProofPilotBundle:Participant')
                 ->getParticipantsForEmailNotifications(
-                        1, //reminder type
-                        $timezone->getParticipantTimezoneId(),  //timezone   
-                        $periodId, //id of period in timezone
-                        $weekDayInTz //weekday in timezone
+                        1 //reminder type
+//                         $timezone->getParticipantTimezoneId(),  //timezone   
+//                         $periodId, //id of period in timezone
+//                         $weekDayInTz //weekday in timezone
                     );
             foreach($participants as $participant) {
             	if (isset($studyCode) && isset($interventionCode))
@@ -110,19 +110,19 @@ class DoItNotificationCommand extends ContainerAwareCommand
                 $participants = $em->getRepository('CyclogramProofPilotBundle:Participant')
                 ->getParticipantsForSmsNotifications(
                         1, //reminder type
-                        $timezone->getParticipantTimezoneId(),  //timezone
-                        $periodId, //id of period in timezone
-                        $weekDayInTz, //weekday in timezone
+//                         $timezone->getParticipantTimezoneId(),  //timezone
+//                         $periodId, //id of period in timezone
+//                         $weekDayInTz, //weekday in timezone
                         $studyCode,
                         $interventionCode
                 );
             else 
                 $participants = $em->getRepository('CyclogramProofPilotBundle:Participant')
                 ->getParticipantsForSmsNotifications(
-                        1, //reminder type
-                        $timezone->getParticipantTimezoneId(),  //timezone
-                        $periodId, //id of period in timezone
-                        $weekDayInTz //weekday in timezone
+                        1 //reminder type
+//                         $timezone->getParticipantTimezoneId(),  //timezone
+//                         $periodId, //id of period in timezone
+//                         $weekDayInTz //weekday in timezone
                 );
             foreach($participants as $participant) {
                 if (isset($studyCode) && isset($interventionCode))
@@ -142,7 +142,7 @@ class DoItNotificationCommand extends ContainerAwareCommand
                     }
                 }
             }
-        }
+//         }
     }
     
     private function sendDoItNowEmail($participant, $interventionCode = null) 
