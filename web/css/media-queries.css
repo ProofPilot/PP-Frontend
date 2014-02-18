@@ -1,5 +1,140 @@
 /* ---------------- RESPONSIVE STYLES -------------------*/
 
+/* @media screen and (max-width: 1050px) */ 
+@media screen and (max-width: 1050px) {
+
+	.loginform_center {
+    	display: none;
+    }
+    .mobile_reg.login_form {
+        width: 290px;
+        margin-top: 30px;
+        background: white;
+        padding-top: 20px;
+        width: 250px;
+    } 
+    .mobile_login_switcher {
+        display: block;   
+        background: white;
+        float: left;
+        width: 100%;
+        border-radius: 5px;
+    }
+        .loginform_left .btns_wapper {
+    	display: none;
+    }
+    .sign_up_header {
+    	height: auto;
+    	line-height: 30px;
+    	padding: 10px 0px;
+    }
+    .mobile_login_switcher a {
+        display: block;
+        color: #383838;
+        font-size: 20px; 
+        height: 68px;
+        line-height: 68px;
+        width: 100%;
+        float: left;
+        -webkit-box-sizing:border-box;
+           -moz-box-sizing:border-box;
+                box-sizing:border-box;
+        border-bottom: 1px solid #d7d7d7;
+        padding-left: 22px;
+    	background:  url(../images/2x_login.png) no-repeat 260px 50%;
+    	background-size: 12px 21px;  
+        outline: 0px;
+    }
+    
+    .lt-ie9 .mobile_login_switcher a {
+        background:  url(../images/100_login.png) no-repeat 260px 50%;
+    }    
+    .mobile_login_switcher a.expanded {
+    	background:  url(../images/2x_login_down.png) no-repeat 255px 50%;
+    	background-size:  21px 12px;  
+    }
+    .lt-ie9 .mobile_login_switcher a {
+        background:  url(../images/100_login_down.png) no-repeat 255px 50%;
+    }
+    .mobile_reg.login_form .loginform_left.expanded  ,
+    .mobile_reg.login_form .loginform_right.expanded  {
+        border-bottom: 1px solid #d7d7d7 !important;
+    } 
+    .mobile_login_switcher a.expanded {
+        border: 0px;
+    }
+    .mobile_login_switcher.cancel a {
+        border-bottom: 0px;
+        background: #f2f2f2;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+        text-align: center;
+        color: #858585;
+    	background:#f2f2f2  url(../images/2x_cancel.png) no-repeat 80px 50%;
+    	background-size: 16px 16px;  
+    }
+     .mobile_login_switcher.cancel a:hover {
+        color: #575757;  
+     }
+    .lt-ie9 .mobile_login_switcher.cancel a {
+        background: #f2f2f2  url(../images/100_cancel.png) no-repeat 100px 50%;
+    }
+    .mobile_reg.login_form .loginform_right ,
+    .mobile_reg.login_form .loginform_left.register {
+        padding: 0px;
+        border: 0px;
+        width: 255px;
+        padding-right: 16px;
+        padding-left: 18px;
+        height: auto;
+        padding-bottom: 20px;
+        display: none;
+    }
+    .mobile_reg.login_form h2 {
+        display: none;
+    }
+        .mobile_reg.login_form .loginform_left .actions_row {
+        padding: 0px;
+        font-size: 13px;
+    }
+    .mobile_reg.login_form .loginform_left .actions_row a.submit {
+        width: 100%;
+        height: 41px;
+        line-height: 41px;
+        font-size: 16px;
+        margin-top: 10px;
+    }
+    .mobile_reg .loginform_left input.text, 
+    .mobile_reg .loginform_right input.text {
+        width: 234px;
+    }
+    .mobile_reg .btns_wapper {
+        float: left;
+        width: 100%;
+        margin-top: 30px;
+    }
+    .mobile_reg.login_form .loginform_left .notice2 {
+        clear: both;
+        font-size: 13px;
+    }
+    .mobile_reg.login_form .mobile_text {
+        display: none;
+    }
+    .mobile_reg.login_form .loginform_right {
+        background: white;
+    }
+    .mobile_reg.login_form .loginform_right a.close {
+        display: none;
+    }
+    .mobile_reg.login_form {
+        padding: 0px;
+    }
+    .mobile_reg.login_form,
+    .mobile_reg.login_form.wide_popup.with_map  {
+        width: 290px;
+    }
+}
+
 /* @media screen and (max-width: 1022px) */ 
 @media screen and (max-width: 1022px) {
 	
@@ -8,6 +143,9 @@
 		margin-left: 0px;
 	
 	}
+	.loginform_center {
+    	display: none;
+    } 
 }
 
 /* @media screen and (max-width: 1015px) */ 
@@ -1210,98 +1348,11 @@
         clear: both;
         display: inline-block;
     }
-    .mobile_reg.login_form {
-        width: 290px;
-/*         margin-left: -145px; */
-        margin-top: 30px;
-        background: white;
-        padding-top: 20px;
-        width: 250px;
-    }
     #div_consent .mobile_reg.login_form {
     	width: auto;
     }
-    .mobile_login_switcher {
-        display: block;   
-        background: white;
-        float: left;
-        width: 100%;
-        border-radius: 5px;
-    }
     .loginform_left .row_or_text {
     	display: none;
-    }
-    .loginform_left .btns_wapper {
-    	display: none;
-    }
-    .sign_up_header {
-    	height: auto;
-    	line-height: 30px;
-    	padding: 10px 0px;
-    }
-    .mobile_login_switcher a {
-        display: block;
-        color: #383838;
-        font-size: 20px; 
-        height: 68px;
-        line-height: 68px;
-        width: 100%;
-        float: left;
-        -webkit-box-sizing:border-box;
-           -moz-box-sizing:border-box;
-                box-sizing:border-box;
-        border-bottom: 1px solid #d7d7d7;
-        padding-left: 22px;
-    	background:  url(../images/2x_login.png) no-repeat 260px 50%;
-    	background-size: 12px 21px;  
-        outline: 0px;
-    } 
-    .lt-ie9 .mobile_login_switcher a {
-        background:  url(../images/100_login.png) no-repeat 260px 50%;
-    }    
-    .mobile_login_switcher a.expanded {
-    	background:  url(../images/2x_login_down.png) no-repeat 255px 50%;
-    	background-size:  21px 12px;  
-    }
-    .lt-ie9 .mobile_login_switcher a {
-        background:  url(../images/100_login_down.png) no-repeat 255px 50%;
-    }
-    .mobile_reg.login_form .loginform_left.expanded  ,
-    .mobile_reg.login_form .loginform_right.expanded  {
-        border-bottom: 1px solid #d7d7d7 !important;
-    } 
-    .mobile_login_switcher a.expanded {
-        border: 0px;
-    }
-    .mobile_login_switcher.cancel a {
-        border-bottom: 0px;
-        background: #f2f2f2;
-        border-bottom-left-radius: 5px;
-        border-bottom-right-radius: 5px;
-        text-align: center;
-        color: #858585;
-    	background:#f2f2f2  url(../images/2x_cancel.png) no-repeat 100px 50%;
-    	background-size: 16px 16px;  
-    }
-     .mobile_login_switcher.cancel a:hover {
-        color: #575757;  
-     }
-    .lt-ie9 .mobile_login_switcher.cancel a {
-        background: #f2f2f2  url(../images/100_cancel.png) no-repeat 100px 50%;
-    }
-    .mobile_reg.login_form .loginform_right ,
-    .mobile_reg.login_form .loginform_left.register {
-        padding: 0px;
-        border: 0px;
-        width: 255px;
-        padding-right: 16px;
-        padding-left: 18px;
-        height: auto;
-        padding-bottom: 20px;
-        display: none;
-    }
-    .mobile_reg.login_form h2 {
-        display: none;
     }
     #div_consent {
     	width: 100%;
@@ -1312,33 +1363,6 @@
     }
     #div_consent .mobile_reg.login_form h2 {
     	display: block;
-    }
-    .mobile_reg.login_form .loginform_left .actions_row {
-        padding: 0px;
-        font-size: 13px;
-    }
-    .mobile_reg.login_form .loginform_left .actions_row a.submit {
-        width: 100%;
-        height: 41px;
-        line-height: 41px;
-        font-size: 16px;
-        margin-top: 10px;
-    }
-    .mobile_reg .loginform_left input.text, 
-    .mobile_reg .loginform_right input.text {
-        width: 234px;
-    }
-    .mobile_reg .btns_wapper {
-        float: left;
-        width: 100%;
-        margin-top: 30px;
-    }
-    .mobile_reg.login_form .loginform_left .notice2 {
-        clear: both;
-        font-size: 13px;
-    }
-    .mobile_reg.login_form .mobile_text {
-        display: none;
     }
     .row_or_text {
         display: block;
@@ -1351,19 +1375,6 @@
         font-size: 14px;
         margin-top: 30px;
         background: url(../images/sep_or_text.gif) no-repeat 50% 50%;
-    }
-    .mobile_reg.login_form .loginform_right {
-        background: white;
-    }
-    .mobile_reg.login_form .loginform_right a.close {
-        display: none;
-    }
-    .mobile_reg.login_form {
-        padding: 0px;
-    }
-    .mobile_reg.login_form,
-    .mobile_reg.login_form.wide_popup.with_map  {
-        width: 290px;
     }
     #div_consent .mobile_reg.login_form, #div_consent
     .mobile_reg.login_form.wide_popup.with_map  {

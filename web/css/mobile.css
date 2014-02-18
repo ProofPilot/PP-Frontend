@@ -946,7 +946,7 @@ div.checker input {
 	font-size: 14px;
 }
 .mobile_reg.login_form {
-	width: 700px;
+	width: 1050px;
 }
 .mobile_reg h1 {
 	color: #373130;
@@ -960,8 +960,8 @@ div.checker input {
     color: #383838;
     font-size: 26px;
     font-weight: 400;
-    line-height: 26px;
-    margin-bottom: 30px;
+    line-height: 35px;
+    margin-bottom: 25px;
 }
 .mobile_reg.log_in_now h1 {
 	margin-bottom: 35px;
@@ -1263,12 +1263,22 @@ div.checker input {
 	font-size: 28px;
 	padding-right: 45px;
 }
-.mobile_reg.login_form .loginform_left {
+.mobile_reg.login_form .loginform_left, .mobile_reg.login_form .loginform_center {
 	float: left;
 	width: 252px;
 	padding: 30px 48px;
 	position: relative;
 	background: #fff;
+	height: 450px;
+}
+.mobile_reg.login_form .loginform_center {
+	border-left: 1px solid #eee;
+}
+.mobile_reg.login_form .loginform_center h2 {
+	text-align: center;
+}
+.mobile_reg.login_form .loginform_center .btns_wapper {
+	margin-top: 60px;
 }
 .why_register_mobile {
 	top: 70px !important;
@@ -1283,10 +1293,10 @@ div.checker input {
     margin-top: -5px;
     text-align: center;
 }
-.mobile_reg.login_form .loginform_left .notice2 span {
+.mobile_reg.login_form .loginform_center .notice2 span {
 	color: #7E7E7E;
 }
-.mobile_reg.login_form .loginform_left a.btn_reg {
+.mobile_reg.login_form .loginform_center a.btn_reg {
 	display: inline-block;
 	color: white;
 	font-family: 'Roboto';
@@ -1299,12 +1309,12 @@ div.checker input {
 	width: 100%;
 	border-radius: 3px;
 }
-.mobile_reg.login_form .loginform_left a.btn_reg span {
+.mobile_reg.login_form .loginform_center a.btn_reg span {
 	display: inline-block;
 	padding-left: 60px;
 	line-height: 39px;
 }
-.mobile_reg.login_form .loginform_left a.btn_reg.fb {
+.mobile_reg.login_form .loginform_center a.btn_reg.fb {
 	border: 1px solid #314f8d;
 	margin-bottom: 20px;
 	background: #4268a0; /* Old browsers */
@@ -1363,14 +1373,14 @@ div.checker input {
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e3624b', endColorstr='#bc3a2a',GradientType=0 ); /* IE6-9 */
 	color: #fff;
 }
-.mobile_reg.login_form .loginform_left a.btn_reg.fb span {
+.mobile_reg.login_form .loginform_center a.btn_reg.fb span {
 	background: url(../images/icon_btn_reg_fb.png) no-repeat 20px 50%;
 	background-size: 13px 25px;
 }
-.lt-ie9 .mobile_reg.login_form .loginform_left a.btn_reg.fb span  {
+.lt-ie9 .mobile_reg.login_form .loginform_center a.btn_reg.fb span  {
 	background: url(../images/100_icon_btn_reg_fb.png) no-repeat 0px 50%;
 }
-.mobile_reg.login_form  .loginform_left a.btn_reg.google {
+.mobile_reg.login_form  .loginform_center a.btn_reg.google {
 	border: 1px solid #b9503e;
 	margin-bottom: 20px;
 	background: #e3624b; /* Old browsers */
@@ -1382,7 +1392,7 @@ div.checker input {
 	background: linear-gradient(to bottom, #e3624b 0%,#bc3a2a 100%); /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e3624b', endColorstr='#bc3a2a',GradientType=0 ); /* IE6-9 */
 }
-.mobile_reg.login_form  .loginform_left a.btn_reg.google:hover {
+.mobile_reg.login_form  .loginform_center a.btn_reg.google:hover {
 	border-color: #872f20;
 	background: #a24636; /* Old browsers */
 	background: -moz-linear-gradient(top, #a24636 0%, #85291d 100%); /* FF3.6+ */
@@ -1393,12 +1403,12 @@ div.checker input {
 	background: linear-gradient(to bottom, #a24636 0%,#85291d 100%); /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a24636', endColorstr='#85291d',GradientType=0 ); /* IE6-9 */
 }
-.mobile_reg.login_form .loginform_left a.btn_reg.google span {
+.mobile_reg.login_form .loginform_center a.btn_reg.google span {
 	background: url(../images/icon_btn_reg_google.png) no-repeat 20px 50%;
 	background-size: 23px 22px;
 	padding-left: 73px;
 }
-.lt-ie9 .mobile_reg.login_form .loginform_left a.btn_reg.google span {
+.lt-ie9 .mobile_reg.login_form .loginform_center a.btn_reg.google span {
 	background: url(../images/100_icon_btn_reg_google.png) no-repeat 0px 50%;
 }
 

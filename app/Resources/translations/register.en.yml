@@ -31,6 +31,7 @@ label_username: Username
 label_zipcode: 'Zip Code'
 let_know_launch: 'Let me know when this study launches!'
 let_me_know: 'Join the Wait list'
+login_join_existing: 'Login or Join with Existing Account'
 mail_confirmation_fail: 'Failed to confirm the email. No such user!'
 mail_confirmation_success: 'Congratulations!!! Your e-mail is confirmed!'
 min_charachters: '(8 characters min)'
