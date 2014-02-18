@@ -948,6 +948,9 @@ div.checker input {
 .mobile_reg.login_form {
 	width: 1050px;
 }
+.dashboard_panel .mobile_reg.login_form {
+	width: 700px;
+}
 .mobile_reg h1 {
 	color: #373130;
 	font-size: 20px;
@@ -1262,6 +1265,9 @@ div.checker input {
 	font-weight: 700;
 	font-size: 28px;
 	padding-right: 45px;
+}
+#mailing_address_form .loginform_left {
+	height: auto;
 }
 .mobile_reg.login_form .loginform_left, .mobile_reg.login_form .loginform_center {
 	float: left;
