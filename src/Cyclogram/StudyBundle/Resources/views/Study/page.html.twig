@@ -463,15 +463,14 @@
                         {% if (queryParams["preLaunch"] is defined) %}
                             <span class="prelaunch_msg">{{ queryParams["preLaunch"] }}</span>
                         {% else %}
+                            <div>
+                                {% if studyPrelaunchMessage is empty %}
+                                	<h1><span class="text red">{% trans from "register" %}let_know_launch{% endtrans %}</span></h1>
+                                {% else %}
+                                    <h1><span class="text red">{{ studyPrelaunchMessage|striptags }}</span></h1>
+                                {% endif %}
+                            </div>
                             {% if not is_granted('ROLE_PARTICIPANT') or not is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                                <div>
-                                    {% if studyPrelaunchMessage is empty %}
-                                    	<h1><span class="text red">{% trans from "register" %}let_know_launch{% endtrans %}</span></h1>
-                                    {% else %}
-                                    	<h1><span class="text red">{{ studyPrelaunchMessage|striptags }}</span></h1>
-                                    {% endif %}
-                                    
-                                </div>
                                 <div id="prelaunch_input_box">
                                     <input type="text" placeholder="enter e-mail address" id="prelaunch_email"></input><br>
                                     <input type="checkbox" id="recruiter"></input><span>{% trans from "register" %}help_recruit_people{% endtrans %}</span>

@@ -19,6 +19,8 @@
 
 namespace Cyclogram\FrontendBundle\Controller;
 
+use Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantArmLink;
+
 use Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantRaceLink;
 
 use Cyclogram\FrontendBundle\Form\SignUpAboutForm;
@@ -97,6 +99,17 @@ class AuthentificationController extends Controller
         if ($form->isValid()) {
             $registration = $form->getData();
             $this->createParticipant($registration , $studyCode);
+            if($session->has('nonEligible')) {
+                $participant = $this->get('security.context')->getToken()->getUser();
+                $studyArms = $em->getRepository('CyclogramProofPilotBundle:Study')->getStudyArms($session->get('nonEligible'));
+                $participantArmLink = new ParticipantArmLink();
+                $participantArmLink->setArm($studyArms[0]);
+                $participantArmLink->setParticipant($participant);
+                $participantArmLink->setStatus(ParticipantArmLink::STATUS_NOT_ELIGIBLE);
+                $participantArmLink->setParticipantArmLinkDatetime(new \DateTime());
+                $em->persist($participantArmLink);
+                $em->flush($participantArmLink);
+            }
             if ($request->isXmlHttpRequest()) {
                 if ($study->getStudySkipAboutMe() && $study->getStudySkipConsent()) {
                     $redirectUrl = $this->generateUrl("_main");
