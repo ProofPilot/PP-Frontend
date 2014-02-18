@@ -1135,20 +1135,19 @@ dashboard_panel .prefs_wrapper .form_container .form_header ul li.select_all a:h
 	font-size: 13px;
 	min-height: 30px;
 	padding-left: 3px;
+	float: left;
 }
 .dashboard_panel ul.settings_form li.form_expanded .close_cont {
 	overflow:hidden;
 }
 .dashboard_panel ul.settings_form li.form_expanded .close_cont a {
-	position: absolute;
-	top: 15px;
-	right: 15px;
+	float: right;
 	color: #727271; 
 	font-size: 13px;
 	padding-right: 20px;
-	background: url(../images/b_close.png) no-repeat 100% 50%;
+	background: url(../images/b_close.png) no-repeat 100% 20%;
 	background-size: 12px 12px;
-	min-height: 11px;
+	min-height: 30px;
 }
 .dashboard_panel ul.settings_form li.form_expanded .close_cont a:hover {
 	text-decoration: underline;
