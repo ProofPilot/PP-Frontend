@@ -96,7 +96,6 @@ class ParticipantRepository extends EntityRepository implements
         ->createQuery('SELECT COUNT(p.participantMobileNumber) FROM CyclogramProofPilotBundle:Participant p
                 INNER JOIN p.level l
                 WHERE p.participantMobileNumber = :phone
-                AND l.participantLevelName = \'Customer\'
                 ')
                 ->setParameter('phone', $phone)
                 ->getSingleScalarResult();

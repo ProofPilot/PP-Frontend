@@ -308,7 +308,7 @@ class StudyRepository extends EntityRepository
         return $results;
     }
     
-    public function getRandomStudyInfo($locale, $participant = null) {
+    public function getRandomStudyInfo($locale, $participant = null, $studyCode = null) {
         
         $language =  $this->getEntityManager()->getRepository('CyclogramProofPilotBundle:Language')->findOneByLocale($locale);
         $studyies = $this->getEntityManager()
@@ -350,6 +350,8 @@ class StudyRepository extends EntityRepository
                $results[] = $study;
             }
         }
+        if (isset($studyCode))
+            return $results;
         if (count($results) >= 3) {
             $resultsKeys = array_rand($results, 3);
             foreach ($resultsKeys as $key=>$val) {

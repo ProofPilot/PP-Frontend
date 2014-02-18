@@ -1,34 +1,63 @@
 {%  extends 'CyclogramFrontendBundle:Email:email.html.twig' %}
 {% block email_content %}
 <td style="padding-left: 30px; padding-right: 30px;">
-    <table style="margin-bottom: 30px; width: 580px;">
-        <tbody>
-            <tr>
-                <td style="border-bottom: 1px dotted #999D93;">
-                    <h3 style="color: #B9433A; font-size: 25px; font-weight: bold; margin: 0 0 22px; padding: 0;">{% trans from "email" %}doit_email_what_you_got{% endtrans %}</h3>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    {% for intervention in interventions %}
-        <table style="width: 580px; margin-bottom: 30px;">
+    {% if intervention is not empty %}
+        <table style="margin-bottom: 30px; width: 580px;">
             <tbody>
                 <tr>
-                    <td style="width: 79px; border-bottom: 1px dotted #999D93; padding-bottom: 30px; vertical-align: middle;">
-                        <img width="75" height="75" src="{{ intervention.logo }}" style="border: 2px solid #96BD30;">
-                    </td>
-                    <td style="padding-left: 25px; border-bottom: 1px dotted #999D93; padding-bottom: 30px; vertical-align: middle;">
-                        <h3 style="font-size: 20px; margin: 0 0 10px; padding: 0;">{{ intervention.title|raw}}</h3>
-                        <p style="font-size: 13px; margin: 0; color: #555;">{{ intervention.content|raw }}</p>
-                    </td>
-                    <td style="text-align: right; width: 150px; border-bottom: 1px dotted #999D93; padding-bottom: 30px; vertical-align: middle;">
-                        <a href="{{ intervention.url }}" style="background: none repeat scroll 0 0 #8AB524; border: 1px solid #7EA61F; border-radius: 4px 4px 4px 4px; color: #FFFFFF;
-                                                       display: inline-block; font-size: 18px; font-weight: bold; padding: 12px 18px; text-decoration: none;">{{ 'do_it' | trans({}, "email", locale) }}</a>
+                    <td style="border-bottom: 1px dotted #999D93;">
+                        <h3 style="color: #B9433A; font-size: 25px; font-weight: bold; margin: 0 0 22px; padding: 0;">{% trans from "email" %}you_have_new_study_task{% endtrans %}</h3>
                     </td>
                 </tr>
             </tbody>
         </table>
-    {% endfor %}
+            <table style="width: 580px; margin-bottom: 30px;">
+                <tbody>
+                    <tr>
+                        <td style="width: 79px; border-bottom: 1px dotted #999D93; padding-bottom: 30px; vertical-align: middle;">
+                            <img width="75" height="75" src="{{ intervention.logo }}" style="border: 2px solid #96BD30;">
+                        </td>
+                        <td style="padding-left: 25px; border-bottom: 1px dotted #999D93; padding-bottom: 30px; vertical-align: middle;">
+                            <h3 style="font-size: 20px; margin: 0 0 10px; padding: 0;">{{ intervention.title|raw}}</h3>
+                            <p style="font-size: 13px; margin: 0; color: #555;">{{ intervention.content|raw }}</p>
+                        </td>
+                        <td style="text-align: right; width: 150px; border-bottom: 1px dotted #999D93; padding-bottom: 30px; vertical-align: middle;">
+                            <a href="{{ intervention.url }}" style="background: none repeat scroll 0 0 #8AB524; border: 1px solid #7EA61F; border-radius: 4px 4px 4px 4px; color: #FFFFFF;
+                                                           display: inline-block; font-size: 18px; font-weight: bold; padding: 12px 18px; text-decoration: none;">{{ 'do_it' | trans({}, "email", locale) }}</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+    {% elseif weeklyInterventions is not empty %}
+                <table style="margin-bottom: 30px; width: 580px;">
+            <tbody>
+                <tr>
+                    <td style="border-bottom: 1px dotted #999D93;">
+                        <h3 style="color: #B9433A; font-size: 25px; font-weight: bold; margin: 0 0 22px; padding: 0;">{% trans from "email" %}doit_email_what_you_got{% endtrans %}</h3>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        {% for weeklyInterventions in interventions %}
+            <table style="width: 580px; margin-bottom: 30px;">
+                <tbody>
+                    <tr>
+                        <td style="width: 79px; border-bottom: 1px dotted #999D93; padding-bottom: 30px; vertical-align: middle;">
+                            <img width="75" height="75" src="{{ intervention.logo }}" style="border: 2px solid #96BD30;">
+                        </td>
+                        <td style="padding-left: 25px; border-bottom: 1px dotted #999D93; padding-bottom: 30px; vertical-align: middle;">
+                            <h3 style="font-size: 20px; margin: 0 0 10px; padding: 0;">{{ intervention.title|raw}}</h3>
+                            <p style="font-size: 13px; margin: 0; color: #555;">{{ intervention.content|raw }}</p>
+                        </td>
+                        <td style="text-align: right; width: 150px; border-bottom: 1px dotted #999D93; padding-bottom: 30px; vertical-align: middle;">
+                            <a href="{{ intervention.url }}" style="background: none repeat scroll 0 0 #8AB524; border: 1px solid #7EA61F; border-radius: 4px 4px 4px 4px; color: #FFFFFF;
+                                                           display: inline-block; font-size: 18px; font-weight: bold; padding: 12px 18px; text-decoration: none;">{{ 'do_it' | trans({}, "email", locale) }}</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            {% endfor %}
+    {% endif %}
 {% include 'CyclogramFrontendBundle:Email:email_studies_list.html.twig' %}
 </td>
 {% endblock email_content %}

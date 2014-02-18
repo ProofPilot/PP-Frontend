@@ -1024,7 +1024,7 @@ class AuthentificationController extends Controller
         
         //Campaign
         $ParticipantCampaignLinkCountData =  $em->getRepository('CyclogramProofPilotBundle:ParticipantCampaignLink')
-        ->findBy( array("participantCampaignLinkParticipantEmail"=>$participant->getParticipantEmail()) );
+            ->findBy( array("participantCampaignLinkParticipantEmail"=>$participant->getParticipantEmail()) );
         
         $ParticipantCampaignLinkCount = ( is_array($ParticipantCampaignLinkCountData) ) ? count($ParticipantCampaignLinkCountData) : 0;
         
@@ -1076,10 +1076,25 @@ class AuthentificationController extends Controller
             														 );
             $parameters['studyName'] = $studyContent->getStudyName();
             $parameters['study_logo'] = $this->container->getParameter('study_image_url') . '/' .
-             $campaignLink->getCampaign()->getPlacement()->getStudy()->getStudyId() . '/' .$studyContent->getStudyGraphic();
+            $campaignLink->getCampaign()->getPlacement()->getStudy()->getStudyId() . '/' .$studyContent->getStudyGraphic();
     
             $parameters['host'] = $this->container->getParameter('site_url');
-            $parameters["studies"] = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:Study')->getRandomStudyInfo($locale, $participant);
+            $randomStudies = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:Study')->getRandomStudyInfo($locale, $participant, $studyCode);
+            
+            $study = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
+            $preLaunchStudy[$studyEntity->getStudyId()] = $studyCode;
+            foreach ($randomStudies as $study) {
+                if (!array_key_exists($study['studyId'],$preLaunchStudy))
+                    $studies[] = $study;
+            }
+            if (count($studies) >= 3) {
+                $resultsKeys = array_rand($studies, 3);
+                foreach ($resultsKeys as $key=>$val) {
+                    $parameters['studies'][] = $studies[$val];
+                }
+            } else {
+                $parameters['studies'] = $studies;
+            }
     
             $cc->sendMail(null,
                     $participant->getParticipantEmail(),

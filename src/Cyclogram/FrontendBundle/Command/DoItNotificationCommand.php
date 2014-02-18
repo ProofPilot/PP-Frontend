@@ -161,63 +161,98 @@ class DoItNotificationCommand extends ContainerAwareCommand
 	    else
 	        $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')->getNotSendParticipantInterventionLinks($participant);
         
-        $parameters["interventions"] = array();
+        $parameters["weeklyInterventions"] = array();
         if (!empty($interventionLinks)){
-            foreach($interventionLinks as $interventionLink) {
-                $sendTime = $interventionLink->getParticipantInterventionLinkSendEmailTime();
-                if (!is_null($sendTime))
-                    $sendTime = date('W') - $interventionLink->getParticipantInterventionLinkSendEmailTime()->format('W');
-                if (is_null($sendTime) || $sendTime == 1 || $sendTime == -51){ 
-                
-                    $interventionId = $interventionLink->getIntervention()->getInterventionId();
-                    $interventionContent = $this->getContainer()->get('doctrine')->getRepository("CyclogramProofPilotBundle:Intervention")->getInterventionContent($interventionId, $locale);
-            
-                    $study = $interventionLink->getIntervention()->getStudy();
-                    $studyId = $study->getStudyId();
-                    $studyContent = $this->getContainer()->get('doctrine')->getRepository('CyclogramProofPilotBundle:StudyContent')->getStudyContentById($studyId, $locale);
-            
-                    $intervention = array();
-                    $intervention["title"] = $interventionContent->getInterventionTitle();
-                    $intervention["content"] = $interventionContent->getInterventionDescripton();
-                    $interventionUrl = $this->getInterventionUrl($interventionLink, $locale);
-                    if (!empty($interventionUrl))
-                        $intervention["url"] =  $interventionUrl;
-                    else 
-                        $intervention["url"] = $this->getContainer()->getParameter('site_url').$this->getContainer()->get('router')->generate('_signup', array('_locale' => $locale));
-                    $intervention["logo"] = $this->getContainer()->getParameter('study_image_url') . "/" . $studyId . "/" . $studyContent->getStudyLogo();
-                    
-                    $parameters["interventions"][] = $intervention;
-                    if (!isset($interventionCode))
-                        $interventionLink->setParticipantInterventionLinkSendEmailTime(new \DateTime());
-                    $em->persist($interventionLink);
-                    $em->flush();
-                }
-            }
-        
             $parameters['email'] = $participant->getParticipantEmail();
             $parameters['locale'] = $participant->getLocale();
             $parameters['host'] = $this->getContainer()->getParameter('site_url');
-            $parameters['siteurl'] = $this->getContainer()->getParameter('site_url').$this->getInterventionUrl($interventionLink, $locale);
             $parameters["studies"] = $this->getContainer()->get('doctrine')->getRepository('CyclogramProofPilotBundle:Study')->getRandomStudyInfo($locale, $participant);
-            
-            if (!empty($parameters["interventions"])){
-                $send = $cc->sendMail(null,
-                        $participant->getParticipantEmail(),
-                        $this->getContainer()->get('translator')->trans("do_it_task_email_title", array(), "email", $parameters['locale']),
-                        'CyclogramFrontendBundle:Email:doitemail.html.twig',
-                        null,
-                        $embedded,
-                        true,
-                        $parameters);
+            foreach($interventionLinks as $interventionLink) {
+                $sendTime = $interventionLink->getParticipantInterventionLinkSendEmailTime();
+                if (is_null($sendTime)) {
+                        $interventionId = $interventionLink->getIntervention()->getInterventionId();
+                        $interventionContent = $this->getContainer()->get('doctrine')->getRepository("CyclogramProofPilotBundle:Intervention")->getInterventionContent($interventionId, $locale);
+                
+                        $study = $interventionLink->getIntervention()->getStudy();
+                        $studyId = $study->getStudyId();
+                        $studyContent = $this->getContainer()->get('doctrine')->getRepository('CyclogramProofPilotBundle:StudyContent')->getStudyContentById($studyId, $locale);
+                
+                        $intervention = array();
+                        $intervention["title"] = $interventionContent->getInterventionTitle();
+                        $intervention["content"] = $interventionContent->getInterventionDescripton();
+                        $parameters['siteurl'] = $this->getContainer()->getParameter('site_url').$this->getInterventionUrl($interventionLink, $locale);
+                        $interventionUrl = $this->getInterventionUrl($interventionLink, $locale);
+                        if (!empty($interventionUrl))
+                            $intervention["url"] =  $interventionUrl;
+                        else 
+                            $intervention["url"] = $this->getContainer()->getParameter('site_url').$this->getContainer()->get('router')->generate('_signup', array('_locale' => $locale));
+                        $intervention["logo"] = $this->getContainer()->getParameter('study_image_url') . "/" . $studyId . "/" . $studyContent->getStudyLogo();
+                        
+                        $parameters["intervention"] = $intervention;
+                        if (!isset($interventionCode))
+                            $interventionLink->setParticipantInterventionLinkSendEmailTime(new \DateTime());
+                        $em->persist($interventionLink);
+                        $em->flush();
+                        if (!empty($parameters["intervention"])){
+                            $send = $cc->sendMail(null,
+                                    $participant->getParticipantEmail(),
+                                    $intervention["title"],
+                                    'CyclogramFrontendBundle:Email:doitemail.html.twig',
+                                    null,
+                                    $embedded,
+                                    true,
+                                    $parameters);
+                        }
+                } else {
+                    $sendTime = date('W') - $interventionLink->getParticipantInterventionLinkSendEmailTime()->format('W');
+                    if ($sendTime == 1 || $sendTime == -51){
+                        $interventionId = $interventionLink->getIntervention()->getInterventionId();
+                        $interventionContent = $this->getContainer()->get('doctrine')->getRepository("CyclogramProofPilotBundle:Intervention")->getInterventionContent($interventionId, $locale);
+                        
+                        $study = $interventionLink->getIntervention()->getStudy();
+                        $studyId = $study->getStudyId();
+                        $studyContent = $this->getContainer()->get('doctrine')->getRepository('CyclogramProofPilotBundle:StudyContent')->getStudyContentById($studyId, $locale);
+                        
+                        $intervention = array();
+                        $intervention["title"] = $interventionContent->getInterventionTitle();
+                        $intervention["content"] = $interventionContent->getInterventionDescripton();
+                        $interventionUrl = $this->getInterventionUrl($interventionLink, $locale);
+                        if (!empty($interventionUrl))
+                            $intervention["url"] =  $interventionUrl;
+                        else
+                            $intervention["url"] = $this->getContainer()->getParameter('site_url').$this->getContainer()->get('router')->generate('_signup', array('_locale' => $locale));
+                        $intervention["logo"] = $this->getContainer()->getParameter('study_image_url') . "/" . $studyId . "/" . $studyContent->getStudyLogo();
+                        
+                        $parameters["weeklyInterventions"][] = $intervention;
+                        if (!isset($interventionCode))
+                            $interventionLink->setParticipantInterventionLinkSendEmailTime(new \DateTime());
+                        $em->persist($interventionLink);
+                        $em->flush();
+                    }
+                    $parameters['siteurl'] = $this->getContainer()->getParameter('site_url').$this->getInterventionUrl($interventionLink, $locale);
+                    if (!empty($parameters["weeklyInterventions"])){
+                        $send = $cc->sendMail(null,
+                                $participant->getParticipantEmail(),
+                                $this->getContainer()->get('translator')->trans("do_it_task_email_title", array(), "email", $parameters['locale']),
+                                'CyclogramFrontendBundle:Email:doitemail.html.twig',
+                                null,
+                                $embedded,
+                                true,
+                                $parameters);
+                    }
+                }
+            }
+            if(isset($send)) {
                 if ($send['status'] == true){
-                    
+                    $status = true;
                     return array('send' => true, 'message' => 'sent email');
                 } else {
                     return array('send' => false, 'message' => 'email not send');
                 }
-            } else {
+            }else {
                 return array('send' => false, 'message' => 'No intervenion');
             }
+
         }
     }
     

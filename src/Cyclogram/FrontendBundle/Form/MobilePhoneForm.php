@@ -97,12 +97,7 @@ class MobilePhoneForm extends AbstractType
                               'translation_domain' => 'dashboard',
                               'constraints' => array(
                                         new Callback(array(
-                                                'methods' => array(
                                                         array($this, 'validatePhone')
-                                                        ),
-                                                'groups' => array(
-                                                        'registration'
-                                                        )
                                                 )
                                        ))
                         ));

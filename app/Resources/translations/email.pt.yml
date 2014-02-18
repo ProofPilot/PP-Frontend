@@ -10,6 +10,7 @@ doit_email_what_you_got: 'Aqui está o que você tem que fazer no ProofPilot'
 email_login: 'Entre para ProofPilot'
 email_not_send_try_later: 'E-mail não enviado tente mais tarde'
 email_reset_password: 'Redefinir sua senha'
+email_title_change_password: email_title_change_password   # FIXME
 email_title_notice: 'Título do aviso E-mail'
 email_title_prelaunch: 'Prelaunch %studyName% aviso correio'
 email_title_verify: 'Por favor, verifique seu e-mail'
@@ -42,7 +43,10 @@ study_welcome_excited: 'Estamos realmente animados em tê-lo a bordo. Aqui está
 study_welcome_hold_on: 'Hold On! Aqui é o seu primeiro Estudo Task'
 study_welcome_joint_other_studies: 'Junte-se outros estudos em ProofPilot'
 study_welcome_welcome_to: 'Bem-vindo ao'
-txt_thanks_for_reffering: txt_thanks_for_reffering   # FIXME
-txt_thanks_for_reffering_tatx_part_two: txt_thanks_for_reffering_tatx_part_two   # FIXME
-txt_thanks_for_reffering_text: txt_thanks_for_reffering_text   # FIXME
+txt_change_password_description: txt_change_password_description   # FIXME
+txt_change_password_title: txt_change_password_title   # FIXME
+txt_thanks_for_reffering: txt_thanks_for_reffering
+txt_thanks_for_reffering_tatx_part_two: txt_thanks_for_reffering_tatx_part_two
+txt_thanks_for_reffering_text: txt_thanks_for_reffering_text
 welcome_to_study: 'Bem-vindo ao'
+you_have_new_study_task: you_have_new_study_task
