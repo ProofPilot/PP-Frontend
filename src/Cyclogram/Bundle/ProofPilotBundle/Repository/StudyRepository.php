@@ -311,40 +311,49 @@ class StudyRepository extends EntityRepository
     public function getRandomStudyInfo($locale, $participant = null) {
         
         $language =  $this->getEntityManager()->getRepository('CyclogramProofPilotBundle:Language')->findOneByLocale($locale);
-        
         $studyies = $this->getEntityManager()
         ->createQuery("
                 SELECT sc.studyId, sc.studyLogo, sc.studyName, sc.studyTagline, sc.studyGraphic, s.studyCode
                 FROM CyclogramProofPilotBundle:StudyContent sc
                 INNER JOIN sc.study s
-                 WHERE sc.language = :lang
+                WHERE sc.language = :lang
                 AND s.studyAllowSharing = 1
                 AND (s.status =:activestatus OR s.status =:prelaunchstatus)
                 ")->setParameters(array(
-                                'lang' => $language,
-                                'activestatus' => Study::STATUS_ACTIVE,
-                                'prelaunchstatus' => Study::STATUS_PRELAUNCH))
-                                ->getResult();
+                        'lang' => $language,
+                        'activestatus' => Study::STATUS_ACTIVE,
+                        'prelaunchstatus' => Study::STATUS_PRELAUNCH))
+                        ->getResult();
         $results = array();
         if (isset($participant)) {
-            $enrolledStudies = $this->getEntityManager()->getRepository('CyclogramProofPilotBundle:Participant')->getEnrolledStudies($participant);
-            $enroledStudyName = array();
-            foreach ($enrolledStudies as $study) {
-                $enroledStudyName[$study->getStudyId()] = $study->getStudyCode();
+            $NotEligibleStudies = $this->getEntityManager()
+            ->createQuery('SELECT s.studyCode, s.studyId
+                    FROM CyclogramProofPilotBundle:ParticipantArmLink pal
+                    INNER JOIN pal.arm a
+                    INNER JOIN a.study s
+                    WHERE pal.participant = :participant
+                    AND pal.status = :palstatus
+                    ')
+                    ->setParameter('participant', $participant)
+                    ->setParameter('palstatus', ParticipantArmLink::STATUS_NOT_ELIGIBLE)
+                    ->getResult();
+            $NotEligibleStudyName = array();
+            foreach ($NotEligibleStudies as $study){
+                $NotEligibleStudyName[$study['studyId']] = $study['studyCode'];
             }
             foreach ($studyies as $study) {
-                if (!array_key_exists($study['studyId'],$enroledStudyName))
+                if (!array_key_exists($study['studyId'],$NotEligibleStudyName))
                     $results[] = $study;
             }
         } else {
             foreach ($studyies as $study) {
-                $results[] = $study;
+               $results[] = $study;
             }
         }
         if (count($results) >= 3) {
             $resultsKeys = array_rand($results, 3);
             foreach ($resultsKeys as $key=>$val) {
-                $studyResults[] = $results[$val]; 
+                $studyResults[] = $results[$val];
             }
             return $studyResults;
         } else {
