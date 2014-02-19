@@ -290,7 +290,7 @@ class SexproStudy extends AbstractStudy implements StudyInterface
 //                     }
 //                     break;
                 	if (($status == ParticipantInterventionLink::STATUS_CLOSED)) {
-                    $this->sendNotification($interventionLink, $participant);
+//                     $this->sendNotification($interventionLink, $participant);
                 		$intervention = $this->findIntervention('SexproLocation', $participant->getParticipantLanguage());
                 		$em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')
                 		->addParticipantInterventionLink($participant, $intervention);

@@ -149,6 +149,8 @@
             var markerNum = $(this).data('marker');
             if (markerNum != undefined){
                 google.maps.event.trigger(markers[markerNum], 'click');
+                map.setZoom(17);
+                map.panTo(markers[markerNum].position);
             }
             $(this).parents('li').siblings().find('.text_right a').removeClass('select_btn');
             applyAppearances();
