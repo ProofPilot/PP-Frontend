@@ -113,9 +113,10 @@ class AuthentificationController extends Controller
             if ($request->isXmlHttpRequest()) {
                 if ($study->getStudySkipAboutMe() && $study->getStudySkipConsent()) {
                     $redirectUrl = $this->generateUrl("_main");
+                   $eligibilitySurvey = $studyContent->getStudyElegibilitySurvey();
                     if (!empty($surveyId)) {
                     	return new Response(json_encode(array('error' => false, 'url' => $this->generateUrl("_eligibility_survey", array('studyCode' => $studyCode,'surveyId' => $surveyId, 'redirectUrl' => $redirectUrl)))));
-                    } else {
+                    } else if (is_null($eligibilitySurvey)){
                     	$logic = $this->get('study_logic');
                     	$participant = $this->get('security.context')->getToken()->getUser();
                     	$logic->studyRegistration($participant, $studyCode, null, null);
@@ -198,6 +199,8 @@ class AuthentificationController extends Controller
                 		'studyJoinButtonName' => $studyJoinButtonName,
                 		'studySpecificLoginHeader' => $studySpecificLoginHeader,
                         'form' => $form->createView(),
+                        'studyJoinGoogleButton' =>  $studyJoinGoogleButton,
+                        'studyJoinFacebookButton' =>  $studyJoinFacebookButton,
                         'error'         => $error
                 ));
         }
@@ -473,6 +476,13 @@ class AuthentificationController extends Controller
                             } else {
                                 $redirectUrl = $this->generateUrl("_signup");
                             }
+                            $studyContent = $em->getRepository('CyclogramProofPilotBundle:StudyContent')->findOneByStudyUrl($studyCode);
+                            $eligibilitySurvey = $studyContent->getStudyElegibilitySurvey();
+                            if(is_null($eligibilitySurvey)) {
+                                $logic = $this->get('study_logic');
+                                $logic->studyRegistration($participant, $studyCode, null, null);
+                                return new Response(json_encode(array('error' => false, 'url' => $redirectUrl)));
+                            }
                              return new Response(json_encode(array('error' => false, 'url' => $this->generateUrl("_eligibility_survey", array('studyCode' => $studyCode,'surveyId' => $surveyId, 'redirectUrl' => $redirectUrl)))));
                         } else {
                             return new Response(json_encode(array('error' => false)));
@@ -514,17 +524,40 @@ class AuthentificationController extends Controller
     }
     
     /**
-     * @Route("/consent/{studyCode}/{surveyId}", name="_consent")
+     * @Route("/consent/{studyCode}/{surveyId}", name="_consent", defaults={"surveyId" = null})
      * @Template()
      */
-    public function signupConsentAction($studyCode, $surveyId) {
+    public function signupConsentAction($studyCode, $surveyId =null) {
+            $em = $this->getDoctrine()->getManager();
+            $session = $this->getRequest()->getSession();
             $participant = $this->get('security.context')->getToken()->getUser();
+            $studyContent = $em->getRepository('CyclogramProofPilotBundle:StudyContent')->findOneByStudyUrl($studyCode);
+            $eligibilitySurvey = $studyContent->getStudyElegibilitySurvey();
+            if(is_null($eligibilitySurvey)) {
+                if ($participant == 'anon.') {
+                    $bag = new AttributeBag();
+                    $bag->setName("SurveyInfo");
+                    $array = array();
+                    $bag->initialize($array);
+                    $bag->set('surveyId', null);
+                    $bag->set('saveId', null);
+                    $bag->set('studyCode', $studyCode);
+                    $session->registerBag($bag);
+                    $session->set('SurveyInfo', $bag);
+                    return $this->redirect( $this->generateUrl("_signup"));
+                } else {
+                    $logic = $this->get('study_logic');
+                    $logic->studyRegistration($participant, $studyCode, null, null);
+                    return $this->redirect( $this->generateUrl("_main"));
+                }
+            }
             if ($participant != 'anon.') {
                 $redirectUrl = $this->generateUrl("_main");
             } else {
                 $redirectUrl = $this->generateUrl("_signup");
             }
-            
+
+                
             return $this->redirect( $this->generateUrl("_eligibility_survey", array('studyCode' => $studyCode,'surveyId' => $surveyId, 'redirectUrl' => $redirectUrl)));
     }
     
@@ -894,6 +927,13 @@ class AuthentificationController extends Controller
             $study = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
             $language = $em->getRepository('CyclogramProofPilotBundle:Language')->findOneByLocale($request->getLocale());
             $studyContent =  $this->getDoctrine()->getRepository("CyclogramProofPilotBundle:StudyContent")->findOneBy(array('study' => $study->getStudyId(),'language' => $language));
+            $eligibilitySurvey = $studyContent->getStudyElegibilitySurvey();
+            if(is_null($eligibilitySurvey)) {
+                $participant = $this->get('security.context')->getToken()->getUser();
+                $logic = $this->get('study_logic');
+                $logic->studyRegistration($participant, $studyCode, null, null);
+                return $this->redirect($this->generateUrl("_main"));
+            }
             return $this->redirect($this->generateUrl("_eligibility_survey", array('studyCode'=> $studyCode, 'surveyId' => $studyContent->getStudyElegibilitySurvey(), 'redirectUrl' => $redirectUrl)));
         } else {
             return $this->redirect($this->generateUrl("_main"));

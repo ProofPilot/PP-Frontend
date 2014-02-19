@@ -3,7 +3,7 @@
         <div class="popup_text join">
             <a href="#" class="close"></a>
                 <h2>{% trans from "register" %}consent_what_to_know{% endtrans %}</h2>
-                {% if not is_enrolled_in_study(studyCode) and surveyId is not empty%}
+                {% if not is_enrolled_in_study(studyCode) %}
                 <div class="for_mobile_center">
                     <a href="{{ path('_consent', {'studyCode': studyCode, 'surveyId': surveyId}) }}" class="btn"><span>{% trans from "register" %}consent_accept_join{% endtrans %}</span></a>
                 </div>
@@ -15,7 +15,7 @@
                     <h3>{% trans from "register" %}consent_good_to_go{% endtrans %}</h3>
                 {% endif %}
                 <p>{% trans from "register" %}consent_any_information{% endtrans %} <a href="{{ path('_secure') }}" target="_blank">{% trans from "register" %}consent_security_privacy{% endtrans %}</a></p>
-                {% if  not is_enrolled_in_study(studyCode) and surveyId is not empty%}
+                {% if  not is_enrolled_in_study(studyCode) %}
                 <div class="align_center">
                     <a href="{{ path('_consent', {'studyCode': studyCode, 'surveyId': surveyId}) }}" class="btn"><span>{% trans from "register" %}consent_accept_join{% endtrans %}</span>
                     </a>
