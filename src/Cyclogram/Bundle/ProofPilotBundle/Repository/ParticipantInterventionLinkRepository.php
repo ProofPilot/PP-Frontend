@@ -215,17 +215,20 @@ class ParticipantInterventionLinkRepository extends EntityRepository
             return false;
     }
     
-    public function checkIfIntervetionLinkExpire($intervention, $participant){
+    public function checkIfIntervetionLinkExpire($intervention, $participant, $language='en'){
         $result = $this->getEntityManager()
         ->createQuery('SELECT pil.participantInterventionLinkId FROM CyclogramProofPilotBundle:ParticipantInterventionLink pil
                 INNER JOIN pil.participant p
                 INNER JOIN pil.intervention i
+                INNER JOIN i.language l
                 WHERE i.interventionCode = :code
                 AND p.participantId = :participant
+                AND l.locale = :language
                 AND DATEDIFF(pil.participantInterventionLinkExpiarationDate, CURRENT_DATE()) <= 0
                 ')
                 ->setParameter('code', $intervention->getInterventionCode())
                 ->setParameter('participant', $participant->getParticipantId())
+                ->setParameter('language', $language)
                 ->getOneOrNullResult();
         if($result)
             return true;
