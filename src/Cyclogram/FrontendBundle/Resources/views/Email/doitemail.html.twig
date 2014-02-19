@@ -1,7 +1,7 @@
 {%  extends 'CyclogramFrontendBundle:Email:email.html.twig' %}
 {% block email_content %}
 <td style="padding-left: 30px; padding-right: 30px;">
-    {% if intervention is not empty %}
+    {% if intervention is defined %}
         <table style="margin-bottom: 30px; width: 580px;">
             <tbody>
                 <tr>
@@ -38,7 +38,7 @@
                 </tr>
             </tbody>
         </table>
-        {% for weeklyInterventions in interventions %}
+        {% for intervention in weeklyInterventions %}
             <table style="width: 580px; margin-bottom: 30px;">
                 <tbody>
                     <tr>
