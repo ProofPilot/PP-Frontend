@@ -43,8 +43,9 @@ class InterventionExpirationCheckCommand extends ContainerAwareCommand
         $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')->getAllActiveInterventionLinks();
         foreach ($interventionLinks as $interventionLink) {
             $participant = $interventionLink->getParticipant();
+            $locale = $participant->getLocale();
             $intervention = $interventionLink->getIntervention();
-            if ($em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')->checkIfIntervetionLinkExpire($intervention, $participant)) {
+            if ($em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')->checkIfIntervetionLinkExpire($intervention, $participant, $locale)) {
                 $interventionLink->setStatus(ParticipantInterventionLink::STATUS_EXPIRED);
                 $em->persist($interventionLink);
                 $em->flush();
