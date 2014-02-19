@@ -332,10 +332,8 @@ class StudyRepository extends EntityRepository
                     INNER JOIN pal.arm a
                     INNER JOIN a.study s
                     WHERE pal.participant = :participant
-                    AND pal.status = :palstatus
                     ')
                     ->setParameter('participant', $participant)
-                    ->setParameter('palstatus', ParticipantArmLink::STATUS_NOT_ELIGIBLE)
                     ->getResult();
             $NotEligibleStudyName = array();
             foreach ($NotEligibleStudies as $study){
