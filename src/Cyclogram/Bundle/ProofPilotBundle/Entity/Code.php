@@ -155,7 +155,7 @@ class Code
      * @param \Cyclogram\Bundle\ProofPilotBundle\Entity\Status $status
      * @return Code
      */
-    public function setStatus(\Cyclogram\Bundle\ProofPilotBundle\Entity\Status $status = null)
+    public function setStatus($status)
     {
         $this->status = $status;
     
