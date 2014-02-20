@@ -318,6 +318,14 @@ class SexproStudy extends AbstractStudy implements StudyInterface
                 case "Choose Location":
                     if ($status == ParticipantInterventionLink::STATUS_ACTIVE) {
                         break;
+                    } elseif ($status == ParticipantInterventionLink::STATUS_CLOSED ) {
+                        $isPromocodeUsed = $interventionLink->getPromoCodeUsed();
+                        if(!$isPromocodeUsed) {
+                            $promoCodes = $em->getRepository('CyclogramProofPilotBundle:PromoCodeInterventionLink')->findByIntervention($interventionLink->getIntervention());
+                            foreach ($promoCodes as $promoCode) {
+                                $this->updatePromoCode($promoCode->getPromoCode()->getPromoCodeId(), $participant, $interventionLink->getIntervention());
+                            }
+                        }
                     }
                 }
             }

@@ -18,6 +18,8 @@
 */
 namespace Common;
 
+use Cyclogram\Bundle\ProofPilotBundle\Entity\Code;
+
 use Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantInterventionLink;
 
 use Cyclogram\Bundle\ProofPilotBundle\Entity\Participant;
@@ -199,5 +201,22 @@ class AbstractStudy
                     $embedded,
                     true,
                     $parameters);
+    }
+    
+    protected function updatePromoCode($promoCodeId, $participant, $intervention) {
+        
+         $codeId = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Code')->getEmptyCode($promoCodeId, $intervention, $participant->getLocale());
+         if (!empty($codeId)) {
+             $em = $this->container->get('doctrine')->getManager();
+             $code = $em->getRepository('CyclogramProofPilotBundle:Code')->find($codeId);
+             $code->setCodeRedeemedByParticipant($participant);
+             $code->setCodeRedeemedDatetime(new \DateTime());
+             $code->setStatus(Code::STATUS_USED);
+             $em->persist($code);
+             $interventionLink = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')->findOneBY(array('intervention' => $intervention, 'participant' => $participant));
+             $interventionLink->setPromoCodeUsed(true);
+             $em->persist($interventionLink);
+             $em->flush();
+         }
     }
 }

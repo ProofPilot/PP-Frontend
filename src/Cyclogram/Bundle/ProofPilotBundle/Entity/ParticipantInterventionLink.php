@@ -112,6 +112,13 @@ class ParticipantInterventionLink
     private $status;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="promo_code_used", type="boolean", nullable=false)
+     */
+    protected $promoCodeUsed;
+
+    /**
      * Get participantInterventionLinkId
      *
      * @return integer 
@@ -295,6 +302,16 @@ class ParticipantInterventionLink
             \DateTime $participantInterventionLinkExpiarationDate)
     {
         $this->participantInterventionLinkExpiarationDate = $participantInterventionLinkExpiarationDate;
+    }
+
+    public function getPromoCodeUsed()
+    {
+        return $this->promoCodeUsed;
+    }
+
+    public function setPromoCodeUsed($promoCodeUsed)
+    {
+        $this->promoCodeUsed = $promoCodeUsed;
     }
 
 }

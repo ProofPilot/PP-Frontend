@@ -37,13 +37,12 @@ class ParticipantInterventionLinkRepository extends EntityRepository
                 INNER JOIN i.language l
                 INNER JOIN i.study study
                 WHERE pil.participant = :participant
-
                 AND study.studyCode = :studycode
                 AND l.locale = 'en'
                 ")
                 ->setParameters(array(
                         'participant' => $participant,
-                        'studycode' => $studyCode))
+                        'studycode' => $studyCode,))
                         ->getResult();
     }
     

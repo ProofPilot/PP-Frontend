@@ -68,7 +68,6 @@ class DashboardController extends Controller
      */
     public function indexAction($sendMail)
     {
-
         $em = $this->getDoctrine()->getManager();
         $participant = $this->get('security.context')->getToken()->getUser();
         $cc = $this->container->get('cyclogram.common');
@@ -332,6 +331,13 @@ class DashboardController extends Controller
             $parameters["studycontent"] = $this->getDoctrine()->getRepository("CyclogramProofPilotBundle:StudyContent")->getStudyContent($study->getStudyCode(), $locale);
             $parameters["interventions"][] = $intervention;
             
+        }
+        
+        $promoCodes = $em->getRepository('CyclogramProofPilotBundle:Code')-> getCodesByParticipant($participant);
+        
+        $parameters['promocodes'] = array();
+        foreach ($promoCodes as $promocode) {
+            $parameters['promocodes'][] = $promocode;
         }
         
         //$parameters['organizations'] = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:Organization')->findAll();
