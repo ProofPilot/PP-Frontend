@@ -41,22 +41,44 @@ class AbstractStudy
     
     public function createIncentive(Participant $participant, Intervention $intervention, $incentiveTypeName = 'None') {
         $em = $this->container->get('doctrine')->getManager();
-        $incentiveType = $em->getRepository('CyclogramProofPilotBundle:IncentiveType')->findOneByIncentiveTypeName($incentiveTypeName);
-        $incentive = new Incentive();
-        $incentive->setParticipant($participant);
-        $incentive->setIncentiveDatetime(new \DateTime());
-        $incentive->setIncentiveAmount($intervention->getInterventionIncentiveAmount());
-        $incentive->setIncentiveType($incentiveType);
-        $incentive->setStatus(Incentive::STATUS_PENDING_APPROVAL);
-        $incentive->setIntervention($intervention);
-        $incentive->setInterventionLanguageid($intervention->getLanguage()->getLanguageId());
-        $em->persist($incentive);
-        $em->flush();
-        $participantIncentiveBalance = $participant->getParticipantIncentiveBalance();
-        $sum = $intervention->getInterventionIncentiveAmount() + $participantIncentiveBalance;
-        $participant->setParticipantIncentiveBalance($sum);
-        $em->persist($participant);
-        $em->flush();
+        $incentive = $em->getRepository('CyclogramProofPilotBundle:Incentive')->findOneBy(array('participant' => $participant, 'intervention' =>$intervention));
+        if (empty($incentive)) {
+            $incentiveType = $em->getRepository('CyclogramProofPilotBundle:IncentiveType')->findOneByIncentiveTypeName($incentiveTypeName);
+            $incentive = new Incentive();
+            $incentive->setParticipant($participant);
+            $incentive->setIncentiveDatetime(new \DateTime());
+            $incentive->setIncentiveAmount($intervention->getInterventionIncentiveAmount());
+            $incentive->setIncentiveType($incentiveType);
+            $incentive->setStatus(Incentive::STATUS_PENDING_APPROVAL);
+            $incentive->setIntervention($intervention);
+            $incentive->setInterventionLanguageid($intervention->getLanguage()->getLanguageId());
+            $em->persist($incentive);
+            $em->flush();
+            $participantIncentiveBalance = $participant->getParticipantIncentiveBalance();
+            $sum = $intervention->getInterventionIncentiveAmount() + $participantIncentiveBalance;
+            $participant->setParticipantIncentiveBalance($sum);
+            $em->persist($participant);
+            $em->flush();
+            
+            $cc = $this->container->get('cyclogram.common');
+            $embedded = array();
+            $embedded = $cc->getEmbeddedImages();
+            $parameters = array();
+            $parameters['email'] = $participant->getParticipantEmail();
+            $parameters['host'] = $this->container->getParameter('site_url');
+            $parameters['locale'] = $participant->getLocale();
+            $parameters["studies"] = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Study')->getRandomStudyInfo($participant->getLocale(), $participant);
+            $parameters["incentiveAmount"] = $incentive->getIncentiveAmount();
+             
+            $cc->sendMail(null,
+                    $participant->getParticipantEmail(),
+                    $this->container->get('translator')->trans("email_incentive_title", array(), "email", $parameters['locale']),
+                    'CyclogramFrontendBundle:Email:incentive_email.html.twig',
+                    null,
+                    $embedded,
+                    true,
+                    $parameters);
+        }
     }
    
     public function setInterventionLinkExpiration(Intervention $intervention, ParticipantInterventionLink $interventionLink) {
@@ -195,7 +217,7 @@ class AbstractStudy
         
         $cc->sendMail(null,
                     $participant->getParticipantEmail(),
-                    'Test Email from Cyclogram',
+                    $this->container->get('translator')->trans("email_title_thank_you_refferal", array(), "email", $parameters['locale']),
                     'CyclogramFrontendBundle:Email:thanks_for_referral_email.html.twig',
                     null,
                     $embedded,
@@ -211,12 +233,30 @@ class AbstractStudy
              $code = $em->getRepository('CyclogramProofPilotBundle:Code')->find($codeId);
              $code->setCodeRedeemedByParticipant($participant);
              $code->setCodeRedeemedDatetime(new \DateTime());
-             $code->setStatus(Code::STATUS_USED);
              $em->persist($code);
              $interventionLink = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')->findOneBY(array('intervention' => $intervention, 'participant' => $participant));
              $interventionLink->setPromoCodeUsed(true);
              $em->persist($interventionLink);
              $em->flush();
+             
+             $cc = $this->container->get('cyclogram.common');
+             $embedded = array();
+             $embedded = $cc->getEmbeddedImages();
+             $parameters = array();
+             $parameters['email'] = $participant->getParticipantEmail();
+             $parameters['host'] = $this->container->getParameter('site_url');
+             $parameters['locale'] = $participant->getLocale();
+             $parameters["studies"] = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Study')->getRandomStudyInfo($participant->getLocale(), $participant);
+             $parameters["codeContent"] = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Code')->getCodeContentByCode($code->getCodeValue(), $participant, $promoCodeId);
+             
+             $cc->sendMail(null,
+                     $participant->getParticipantEmail(),
+                     $this->container->get('translator')->trans("email_promo_code_title", array(), "email", $parameters['locale']),
+                     'CyclogramFrontendBundle:Email:promo_code_email.html.twig',
+                     null,
+                     $embedded,
+                     true,
+                     $parameters);
          }
     }
 }

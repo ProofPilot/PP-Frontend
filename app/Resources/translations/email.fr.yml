@@ -9,10 +9,12 @@ do_it_task_email_title: do_it_task_email_title
 doit_email_what_you_got: doit_email_what_you_got
 email_login: email_login
 email_not_send_try_later: email_not_send_try_later
+email_promo_code_title: email_promo_code_title   # FIXME
 email_reset_password: email_reset_password
-email_title_change_password: email_title_change_password   # FIXME
+email_title_change_password: email_title_change_password
 email_title_notice: 'Forget to Verify Your E-mail Address with ProofPilot?'
 email_title_prelaunch: email_title_prelaunch
+email_title_thank_you_refferal: email_title_thank_you_refferal   # FIXME
 email_title_verify: 'Forget to Verify Your E-mail Address with ProofPilot?'
 email_to_friends_add_email: email_to_friends_add_email
 email_to_friends_cancle: email_to_friends_cancle
@@ -43,8 +45,9 @@ study_welcome_excited: study_welcome_excited
 study_welcome_hold_on: study_welcome_hold_on
 study_welcome_joint_other_studies: study_welcome_joint_other_studies
 study_welcome_welcome_to: study_welcome_welcome_to
-txt_change_password_description: txt_change_password_description   # FIXME
-txt_change_password_title: txt_change_password_title   # FIXME
+txt_change_password_description: txt_change_password_description
+txt_change_password_title: txt_change_password_title
+txt_promo_code: txt_promo_code   # FIXME
 txt_thanks_for_reffering: txt_thanks_for_reffering
 txt_thanks_for_reffering_tatx_part_two: txt_thanks_for_reffering_tatx_part_two
 txt_thanks_for_reffering_text: txt_thanks_for_reffering_text

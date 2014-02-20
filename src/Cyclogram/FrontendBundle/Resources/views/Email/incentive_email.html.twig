@@ -1,0 +1,10 @@
+{%  extends 'CyclogramFrontendBundle:Email:email.html.twig' %}
+{% block email_content %}
+    <td align="center" style="padding-left: 30px; padding-right: 30px;">
+        <h1 style="color: #B9433A; font-size: 30px; font-weight: bold; margin: 0 0 25px; padding: 0;">{% trans from "email" %}txt_incentive{% endtrans %} </h1>
+        <p style="color: #555555; font-size: 15px; margin-bottom: 40px;">
+            {{ incentiveAmount | raw }}
+        </p>
+        {% include 'CyclogramFrontendBundle:Email:email_studies_list.html.twig' %}
+    </td>
+{% endblock email_content %}

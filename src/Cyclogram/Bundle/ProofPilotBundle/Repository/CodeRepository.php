@@ -41,8 +41,28 @@ class CodeRepository extends EntityRepository
                 WHERE c.codeRedeemedByParticipant = :participant
                 AND c.status = :cstatus
                 AND pcc.languageId = :language")
-        ->setParameter('cstatus', Code::STATUS_USED)
+        ->setParameter('cstatus', Code::STATUS_UNUSED)
         ->setParameter('language', $language)
         ->setParameter('participant', $participant)->getResult();
+    }
+    
+    public function getCodeContentByCode($codeValue, $participant, $promoCodeId) {
+    
+        $promoCode = $this->getEntityManager()->getRepository('CyclogramProofPilotBundle:PromoCode')->find($promoCodeId);
+        $language =  $this->getEntityManager()->getRepository('CyclogramProofPilotBundle:Language')->findOneByLocale($participant->getLocale());
+        return $this->getEntityManager()->createQuery("
+                SELECT pcc.promoCodeContentTitle, pcc.promoCodeContentUnlockMessage, pcc.promoCodeContentUrlForUnlock,
+                pcc.promoCodeContentUnlockShareMsg ,c.codeValue ,pc.promoCodeLogo
+                FROM CyclogramProofPilotBundle:PromoCode pc
+                INNER JOIN pc.code c
+                INNER JOIN pc.promoCodeContent pcc
+                WHERE c.codeValue = :code
+                AND c.promoCode = :promocode
+                AND c.status = :cstatus
+                AND pcc.languageId = :language")
+                ->setParameter('cstatus', Code::STATUS_UNUSED)
+                ->setParameter('code', $codeValue)
+                ->setParameter('language', $language)
+                ->setParameter('promocode', $promoCode)->getOneOrNullResult();
     }
 }

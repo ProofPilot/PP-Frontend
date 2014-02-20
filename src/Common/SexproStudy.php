@@ -319,6 +319,7 @@ class SexproStudy extends AbstractStudy implements StudyInterface
                     if ($status == ParticipantInterventionLink::STATUS_ACTIVE) {
                         break;
                     } elseif ($status == ParticipantInterventionLink::STATUS_CLOSED ) {
+                        $this->createIncentive($participant, $intervention);
                         $isPromocodeUsed = $interventionLink->getPromoCodeUsed();
                         if(!$isPromocodeUsed) {
                             $promoCodes = $em->getRepository('CyclogramProofPilotBundle:PromoCodeInterventionLink')->findByIntervention($interventionLink->getIntervention());

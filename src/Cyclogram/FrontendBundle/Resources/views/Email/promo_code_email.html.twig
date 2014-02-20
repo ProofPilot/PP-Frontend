@@ -1,12 +1,12 @@
 {%  extends 'CyclogramFrontendBundle:Email:email.html.twig' %}
 {% block email_content %}
     <td align="center" style="padding-left: 30px; padding-right: 30px;">
-        <h1 style="color: #B9433A; font-size: 30px; font-weight: bold; margin: 0 0 25px; padding: 0;">{% trans with {'%studyname%': studyName } from "email" %}txt_thanks_for_reffering{% endtrans %}</h1>
+        <h1 style="color: #B9433A; font-size: 30px; font-weight: bold; margin: 0 0 25px; padding: 0;">{% trans from "email" %}txt_promo_code{% endtrans %}</h1>
         <p style="color: #555555; font-size: 15px; margin-bottom: 40px;">
-        {% trans from "email" %}txt_thanks_for_reffering_text{% endtrans %}
+            {{ codeContent.promoCodeContentTitle  | raw }}
         </p>
         <p style="color: #555555; font-size: 15px; margin-bottom: 40px;">
-        {% trans from "email" %}txt_thanks_for_reffering_tatx_part_two{% endtrans %}
+            {{ codeContent.promoCodeContentUnlockMessage | raw }} {{ codeContent.codeValue }}
         </p>
         {% include 'CyclogramFrontendBundle:Email:email_studies_list.html.twig' %}
     </td>

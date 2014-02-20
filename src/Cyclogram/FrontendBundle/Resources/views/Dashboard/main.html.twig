@@ -346,7 +346,6 @@
             }, function() {
                 $(this).find('.share_slide').slideUp('slow');
             });
-
             
         });
         function dismiss(interventionCode) {
@@ -365,6 +364,18 @@
             }
         }
 
+        function closePromo(codeValue, url) {
+            $.ajax({
+                dataType: "json",
+                type: "POST",
+                url: "{{ path('_close_prpmpcode_ajax')}}",
+                data: {promoCode : codeValue, promoUrl : url}
+            })
+            .done (function(response) {
+            	window.location.replace(response.promoUrl);
+            });
+        }
+        
         function dismissAll() {
             if (confirm('{% trans from "dashboard" %}dashboard_dismiss_confirmation{% endtrans %}')) {
                 $.ajax({
@@ -373,7 +384,7 @@
                     url: "{{ path('_dismiss_ajax')}}"
                 })
                 .done (function(response) {
-                    window.location.replace(response.url);
+                    window.location.replace(response.url,'_blank');
                 });
             } else {
                  return;
@@ -459,9 +470,9 @@
                                     {% endif %}
                                     <div class="text_box"> 
                                         <h4>{{ promocode.promoCodeContentTitle  | raw }}</h4>
-                                        <p>{{ promocode.promoCodeContentUnlockMessage | raw }}</p>
+                                        <p>{{ promocode.promoCodeContentUnlockMessage | raw }} {{ promocode.codeValue }}</p>
                                     </div>
-                                    <div class="button_box"> <a href="http://{{ promocode.promoCodeContentUrlForUnlock }}"><span>{% trans from "dashboard" %}do_it{% endtrans %}</span></a> </div>
+                                    <div class="button_box"> <a href="#" onClick = "return closePromo('{{ promocode.codeValue }}', '{{ promocode.promoCodeContentUrlForUnlock }}')" class="promoCodeSubmit"><span>{% trans from "dashboard" %}do_it{% endtrans %}</span></a> </div>
                                     
                                 </div>
                             {% endfor %}

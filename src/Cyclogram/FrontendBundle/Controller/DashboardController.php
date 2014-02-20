@@ -21,6 +21,8 @@ namespace Cyclogram\FrontendBundle\Controller;
 
 
 
+use Cyclogram\Bundle\ProofPilotBundle\Entity\Code;
+
 use Cyclogram\FrontendBundle\Form\SignUpAboutForm;
 
 use Cyclogram\FrontendBundle\Form\UserSmsCodeForm;
@@ -483,6 +485,29 @@ class DashboardController extends Controller
             $session->set('dismiss_error_message', $this->get('translator')->trans('txt_dismiss', array('%interventionName%' => $intervention->getInterventionName()), 'dashboard'));
             return new Response(json_encode(array('url' => $this->generateUrl("_main"))));
         }
+    }
+    
+    /**
+     * @Route("/close_poromocode_ajax/", name="_close_prpmpcode_ajax")
+     * @Secure(roles="ROLE_PARTICIPANT, IS_AUTHENTICATED_REMEMBERED")
+     * @Template()
+     */
+    public function closePromoCodeAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $participant = $this->get('security.context')->getToken()->getUser();
+        if($request->isXmlHttpRequest()) {
+            $data = $request->request->all();
+            if (isset($data['promoCode']) && isset($data['promoUrl'])) {
+                $code = $em->getRepository('CyclogramProofPilotBundle:Code')->findOneBy(
+                        array('codeRedeemedByParticipant' => $participant, 'codeValue' => $data['promoCode'],'status' => Code::STATUS_UNUSED));
+                $code->setStatus(Code::STATUS_USED);
+                $em->persist($code);
+                $em->flush();
+                return new Response(json_encode(array('promoUrl' => 'http://'.$data['promoUrl'])));
+            }
+        }
+        
     }
     
     /**
