@@ -7,14 +7,15 @@ confirm_verify_title: 'Verifique por favor su dirección de correo electrónico'
 do_it: '¡HAZLO AHORA!'
 do_it_task_email_title: 'Lo que tienes que hacer en ProofPilot'
 doit_email_what_you_got: 'Esto es lo que tienes que hacer en ProofPilot'
+email_incentive_title: email_incentive_title   # FIXME
 email_login: 'Ingresa para ProofPilot'
 email_not_send_try_later: 'El correo electrónico no enviado intentarlo más tarde'
-email_promo_code_title: email_promo_code_title   # FIXME
+email_promo_code_title: email_promo_code_title
 email_reset_password: 'Restablecer la contraseña'
 email_title_change_password: email_title_change_password
 email_title_notice: 'Olvídese de verificar su dirección de correo electrónico con ProofPilot?'
 email_title_prelaunch: 'Prelanzamiento %studyName% electrónico previo aviso'
-email_title_thank_you_refferal: email_title_thank_you_refferal   # FIXME
+email_title_thank_you_refferal: email_title_thank_you_refferal
 email_title_verify: 'Verifique por favor su dirección de correo electrónico'
 email_to_friends_add_email: 'Añadir otra dirección de correo'
 email_to_friends_cancle: Cancelar
@@ -47,9 +48,11 @@ study_welcome_joint_other_studies: 'Únete Otros estudios en ProofPilot'
 study_welcome_welcome_to: 'Bienvenido a'
 txt_change_password_description: txt_change_password_description
 txt_change_password_title: txt_change_password_title
-txt_promo_code: txt_promo_code   # FIXME
+txt_incentive: txt_incentive   # FIXME
+txt_promo_code: txt_promo_code
 txt_thanks_for_reffering: txt_thanks_for_reffering
 txt_thanks_for_reffering_tatx_part_two: txt_thanks_for_reffering_tatx_part_two
 txt_thanks_for_reffering_text: txt_thanks_for_reffering_text
+txt_you_got_for_incentive: txt_you_got_for_incentive   # FIXME
 welcome_to_study: 'Welcome to'
 you_have_new_study_task: you_have_new_study_task

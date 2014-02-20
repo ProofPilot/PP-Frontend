@@ -69,6 +69,7 @@ class AbstractStudy
             $parameters['locale'] = $participant->getLocale();
             $parameters["studies"] = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Study')->getRandomStudyInfo($participant->getLocale(), $participant);
             $parameters["incentiveAmount"] = $incentive->getIncentiveAmount();
+            $parameters["interventionName"] = $intervention->getInterventionName();
              
             $cc->sendMail(null,
                     $participant->getParticipantEmail(),
