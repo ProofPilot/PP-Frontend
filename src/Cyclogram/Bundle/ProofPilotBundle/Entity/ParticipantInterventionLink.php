@@ -114,7 +114,7 @@ class ParticipantInterventionLink
     /**
      * @var boolean
      *
-     * @ORM\Column(name="promo_code_used", type="boolean", nullable=false)
+     * @ORM\Column(name="promo_code_assigned", type="boolean", nullable=false)
      */
     protected $promoCodeUsed;
 
