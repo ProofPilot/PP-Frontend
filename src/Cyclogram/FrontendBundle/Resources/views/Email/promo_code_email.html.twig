@@ -1,13 +1,31 @@
 {%  extends 'CyclogramFrontendBundle:Email:email.html.twig' %}
 {% block email_content %}
     <td align="center" style="padding-left: 30px; padding-right: 30px;">
-        <h1 style="color: #B9433A; font-size: 30px; font-weight: bold; margin: 0 0 25px; padding: 0;">{% trans from "email" %}txt_promo_code{% endtrans %}</h1>
-        <p style="color: #555555; font-size: 15px; margin-bottom: 40px;">
-            {{ codeContent.promoCodeContentTitle  | raw }}
-        </p>
-        <p style="color: #555555; font-size: 15px; margin-bottom: 40px;">
-            {{ codeContent.promoCodeContentUnlockMessage | raw }} {{ codeContent.codeValue }}
-        </p>
+    
+            <table style="margin-bottom: 30px; width: 580px;">
+            <tbody>
+                <tr>
+                    <td style="border-bottom: 1px dotted #999D93;">
+                        <h3 style="color: #B9433A; font-size: 25px; font-weight: bold; margin: 0 0 22px; padding: 0;">{% trans from "email" %}txt_promo_code{% endtrans %}</h3>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+            <table style="width: 580px; margin-bottom: 30px;">
+                <tbody>
+                    <tr>
+                        <td style="width: 79px; border-bottom: 1px dotted #999D93; padding-bottom: 30px; vertical-align: middle;">
+                        {% if codeContent.promoCodeLogo is defined %}
+                            <img width="75" height="75" src="{{ codeContent.promoCodeLogo }}" style="border: 2px solid #96BD30;">
+                        {% endif %}
+                        </td>
+                        <td style="padding-left: 25px; border-bottom: 1px dotted #999D93; padding-bottom: 30px; vertical-align: middle;">
+                            <h3 style="font-size: 20px; margin: 0 0 10px; padding: 0;">{{ codeContent.promoCodeContentTitle  | raw }}</h3>
+                            <p style="font-size: 13px; margin: 0; color: #555;">{{ codeContent.promoCodeContentUnlockMessage | raw }} {{ codeContent.codeValue }}</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         {% include 'CyclogramFrontendBundle:Email:email_studies_list.html.twig' %}
     </td>
 {% endblock email_content %}
