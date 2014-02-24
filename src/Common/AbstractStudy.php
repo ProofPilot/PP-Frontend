@@ -226,38 +226,45 @@ class AbstractStudy
                     $parameters);
     }
     
-    protected function updatePromoCode($promoCodeId, $participant, $intervention) {
-        
-         $codeId = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Code')->getEmptyCode($promoCodeId, $intervention, $participant->getLocale());
-         if (!empty($codeId)) {
-             $em = $this->container->get('doctrine')->getManager();
-             $code = $em->getRepository('CyclogramProofPilotBundle:Code')->find($codeId);
-             $code->setCodeRedeemedByParticipant($participant);
-             $code->setCodeRedeemedDatetime(new \DateTime());
-             $em->persist($code);
-             $interventionLink = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')->findOneBY(array('intervention' => $intervention, 'participant' => $participant));
-             $interventionLink->setPromoCodeUsed(true);
-             $em->persist($interventionLink);
-             $em->flush();
-             
-             $cc = $this->container->get('cyclogram.common');
-             $embedded = array();
-             $embedded = $cc->getEmbeddedImages();
-             $parameters = array();
-             $parameters['email'] = $participant->getParticipantEmail();
-             $parameters['host'] = $this->container->getParameter('site_url');
-             $parameters['locale'] = $participant->getLocale();
-             $parameters["studies"] = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Study')->getRandomStudyInfo($participant->getLocale(), $participant);
-             $parameters["codeContent"] = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Code')->getCodeContentByCode($code->getCodeValue(), $participant, $promoCodeId);
-             
-             $cc->sendMail(null,
-                     $participant->getParticipantEmail(),
-                     $this->container->get('translator')->trans("email_promo_code_title", array(), "email", $parameters['locale']),
-                     'CyclogramFrontendBundle:Email:promo_code_email.html.twig',
-                     null,
-                     $embedded,
-                     true,
-                     $parameters);
-         }
+    protected function updatePromoCode($participant,$interventionLink) {
+        $isPromocodeUsed = $interventionLink->getPromoCodeUsed();
+        if(!$isPromocodeUsed) {
+            $intervention = $interventionLink->getIntervention();
+            $promoCodes = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:PromoCodeInterventionLink')->findByIntervention($intervention);
+            
+            foreach ($promoCodes as $promoCode) {
+               $codeId = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Code')->getEmptyCode($promoCode->getPromoCode()->getPromoCodeId(), $intervention, $participant->getLocale());
+               if (!empty($codeId)) {
+                   $em = $this->container->get('doctrine')->getManager();
+                   $code = $em->getRepository('CyclogramProofPilotBundle:Code')->find($codeId);
+                   $code->setCodeRedeemedByParticipant($participant);
+                   $code->setCodeRedeemedDatetime(new \DateTime());
+                   $em->persist($code);
+                   $interventionLink = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')->findOneBY(array('intervention' => $intervention, 'participant' => $participant));
+                   $interventionLink->setPromoCodeUsed(true);
+                   $em->persist($interventionLink);
+                   $em->flush();
+                 
+                   $cc = $this->container->get('cyclogram.common');
+                   $embedded = array();
+                   $embedded = $cc->getEmbeddedImages();
+                   $parameters = array();
+                   $parameters['email'] = $participant->getParticipantEmail();
+                   $parameters['host'] = $this->container->getParameter('site_url');
+                   $parameters['locale'] = $participant->getLocale();
+                   $parameters["studies"] = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Study')->getRandomStudyInfo($participant->getLocale(), $participant);
+                   $parameters["codeContent"] = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Code')->getCodeContentByCode($code->getCodeValue(), $participant, $promoCode->getPromoCode()->getPromoCodeId());
+                 
+                   $cc->sendMail(null,
+                           $participant->getParticipantEmail(),
+                           $this->container->get('translator')->trans("email_promo_code_title", array(), "email", $parameters['locale']),
+                           'CyclogramFrontendBundle:Email:promo_code_email.html.twig',
+                           null,
+                           $embedded,
+                           true,
+                           $parameters);
+               }
+           }
+        }
     }
 }

@@ -191,6 +191,8 @@ class SexproStudy extends AbstractStudy implements StudyInterface
                 	if ($status == ParticipantInterventionLink::STATUS_ACTIVE) {
                 		break;
                 	} elseif (($status == ParticipantInterventionLink::STATUS_CLOSED)) {
+                	    $this->createIncentive($participant, $intervention);
+                	    $this->updatePromoCode($participant, $interventionLink);
                 		$intervention = $this->findIntervention('SexproPhone', $participant->getParticipantLanguage());
                 		$em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')
                 		->addParticipantInterventionLink($participant, $intervention);
@@ -202,6 +204,8 @@ class SexproStudy extends AbstractStudy implements StudyInterface
                 	if ($status == ParticipantInterventionLink::STATUS_ACTIVE) {
                 		break;
                 	} elseif (($status == ParticipantInterventionLink::STATUS_CLOSED)) {
+                	    $this->createIncentive($participant, $intervention);
+                	    $this->updatePromoCode($participant, $interventionLink);
                 		$intervention = $this->findIntervention('Sexproshipping', $participant->getParticipantLanguage());
                 		$em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')
                 		->addParticipantInterventionLink($participant, $intervention);
@@ -213,6 +217,8 @@ class SexproStudy extends AbstractStudy implements StudyInterface
                 	if ($status == ParticipantInterventionLink::STATUS_ACTIVE) {
                 		break;
                 	} elseif (($status == ParticipantInterventionLink::STATUS_CLOSED)) {
+                	    $this->createIncentive($participant, $intervention);
+                	    $this->updatePromoCode($participant, $interventionLink);
                 		$intervention = $this->findIntervention('SexProBaselineSurvey', $participant->getParticipantLanguage());
                 		$em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')
                 		->addParticipantInterventionLink($participant, $intervention);
@@ -236,6 +242,8 @@ class SexproStudy extends AbstractStudy implements StudyInterface
                         }
                     }
                     if (($status == ParticipantInterventionLink::STATUS_CLOSED)) {
+                        $this->createIncentive($participant, $intervention);
+                        $this->updatePromoCode($participant, $interventionLink);
                         $intervention = $this->findIntervention('VideoIntervention', $participant->getParticipantLanguage());
                         $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')
                                     ->addParticipantInterventionLink($participant,$intervention);
@@ -247,6 +255,8 @@ class SexproStudy extends AbstractStudy implements StudyInterface
                    	if ($status == ParticipantInterventionLink::STATUS_ACTIVE) {
                    		break;
                    	} elseif (($status == ParticipantInterventionLink::STATUS_CLOSED)) {
+                   	    $this->createIncentive($participant, $intervention);
+                   	    $this->updatePromoCode($participant, $interventionLink);
                    		$intervention = $this->findIntervention('TEST1', $participant->getParticipantLanguage());
                    		$em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')
                    		->addParticipantInterventionLink($participant, $intervention);
@@ -267,15 +277,16 @@ class SexproStudy extends AbstractStudy implements StudyInterface
                 case "Test":
                 	if ($status == ParticipantInterventionLink::STATUS_ACTIVE) {
                 	break;
-                	}
-//                 	} elseif (($status == ParticipantInterventionLink::STATUS_CLOSED)) {
+                	} elseif (($status == ParticipantInterventionLink::STATUS_CLOSED)) {
+                	    $this->createIncentive($participant, $intervention);
+                	    $this->updatePromoCode($participant, $interventionLink);
 //                 		$intervention = $this->findIntervention('SexProActivity', $participant->getParticipantLanguage());
 //                 		$em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')
 //                 		->addParticipantInterventionLink($participant, $intervention);
 //                 		$intervention = $this->findIntervention('SexproLocation', $participant->getParticipantLanguage());
 //                 		$em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')
 //                 		->addParticipantInterventionLink($participant, $intervention);
-//                    	}
+                   	}
 //                    	break;
                 case "Activity":
                     if ($status == ParticipantInterventionLink::STATUS_ACTIVE) {
@@ -291,6 +302,8 @@ class SexproStudy extends AbstractStudy implements StudyInterface
 //                     break;
                 	if (($status == ParticipantInterventionLink::STATUS_CLOSED)) {
 //                     $this->sendNotification($interventionLink, $participant);
+                	    $this->createIncentive($participant, $intervention);
+                	    $this->updatePromoCode($participant, $interventionLink);
                 		$intervention = $this->findIntervention('SexproLocation', $participant->getParticipantLanguage());
                 		$em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')
                 		->addParticipantInterventionLink($participant, $intervention);
@@ -320,13 +333,7 @@ class SexproStudy extends AbstractStudy implements StudyInterface
                         break;
                     } elseif ($status == ParticipantInterventionLink::STATUS_CLOSED ) {
                         $this->createIncentive($participant, $intervention);
-                        $isPromocodeUsed = $interventionLink->getPromoCodeUsed();
-                        if(!$isPromocodeUsed) {
-                            $promoCodes = $em->getRepository('CyclogramProofPilotBundle:PromoCodeInterventionLink')->findByIntervention($interventionLink->getIntervention());
-                            foreach ($promoCodes as $promoCode) {
-                                $this->updatePromoCode($promoCode->getPromoCode()->getPromoCodeId(), $participant, $interventionLink->getIntervention());
-                            }
-                        }
+                        $this->updatePromoCode($participant, $interventionLink);
                     }
                 }
             }
