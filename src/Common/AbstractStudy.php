@@ -40,45 +40,47 @@ class AbstractStudy
     }
     
     public function createIncentive(Participant $participant, Intervention $intervention, $incentiveTypeName = 'None') {
-        $em = $this->container->get('doctrine')->getManager();
-        $incentive = $em->getRepository('CyclogramProofPilotBundle:Incentive')->findOneBy(array('participant' => $participant, 'intervention' =>$intervention));
-        if (empty($incentive)) {
-            $incentiveType = $em->getRepository('CyclogramProofPilotBundle:IncentiveType')->findOneByIncentiveTypeName($incentiveTypeName);
-            $incentive = new Incentive();
-            $incentive->setParticipant($participant);
-            $incentive->setIncentiveDatetime(new \DateTime());
-            $incentive->setIncentiveAmount($intervention->getInterventionIncentiveAmount());
-            $incentive->setIncentiveType($incentiveType);
-            $incentive->setStatus(Incentive::STATUS_PENDING_APPROVAL);
-            $incentive->setIntervention($intervention);
-            $incentive->setInterventionLanguageid($intervention->getLanguage()->getLanguageId());
-            $em->persist($incentive);
-            $em->flush();
-            $participantIncentiveBalance = $participant->getParticipantIncentiveBalance();
-            $sum = $intervention->getInterventionIncentiveAmount() + $participantIncentiveBalance;
-            $participant->setParticipantIncentiveBalance($sum);
-            $em->persist($participant);
-            $em->flush();
-            
-            $cc = $this->container->get('cyclogram.common');
-            $embedded = array();
-            $embedded = $cc->getEmbeddedImages();
-            $parameters = array();
-            $parameters['email'] = $participant->getParticipantEmail();
-            $parameters['host'] = $this->container->getParameter('site_url');
-            $parameters['locale'] = $participant->getLocale();
-            $parameters["studies"] = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Study')->getRandomStudyInfo($participant->getLocale(), $participant);
-            $parameters["incentiveAmount"] = $incentive->getIncentiveAmount();
-            $parameters["interventionName"] = $intervention->getInterventionName();
-             
-            $cc->sendMail(null,
-                    $participant->getParticipantEmail(),
-                    $this->container->get('translator')->trans("email_incentive_title", array(), "email", $parameters['locale']),
-                    'CyclogramFrontendBundle:Email:incentive_email.html.twig',
-                    null,
-                    $embedded,
-                    true,
-                    $parameters);
+        if ($intervention->getInterventionIncentiveAmount() != 0 && !is_null($intervention->getInterventionIncentiveAmount())){
+            $em = $this->container->get('doctrine')->getManager();
+            $incentive = $em->getRepository('CyclogramProofPilotBundle:Incentive')->findOneBy(array('participant' => $participant, 'intervention' =>$intervention));
+            if (empty($incentive)) {
+                $incentiveType = $em->getRepository('CyclogramProofPilotBundle:IncentiveType')->findOneByIncentiveTypeName($incentiveTypeName);
+                $incentive = new Incentive();
+                $incentive->setParticipant($participant);
+                $incentive->setIncentiveDatetime(new \DateTime());
+                $incentive->setIncentiveAmount($intervention->getInterventionIncentiveAmount());
+                $incentive->setIncentiveType($incentiveType);
+                $incentive->setStatus(Incentive::STATUS_PENDING_APPROVAL);
+                $incentive->setIntervention($intervention);
+                $incentive->setInterventionLanguageid($intervention->getLanguage()->getLanguageId());
+                $em->persist($incentive);
+                $em->flush();
+                $participantIncentiveBalance = $participant->getParticipantIncentiveBalance();
+                $sum = $intervention->getInterventionIncentiveAmount() + $participantIncentiveBalance;
+                $participant->setParticipantIncentiveBalance($sum);
+                $em->persist($participant);
+                $em->flush();
+                
+                $cc = $this->container->get('cyclogram.common');
+                $embedded = array();
+                $embedded = $cc->getEmbeddedImages();
+                $parameters = array();
+                $parameters['email'] = $participant->getParticipantEmail();
+                $parameters['host'] = $this->container->getParameter('site_url');
+                $parameters['locale'] = $participant->getLocale();
+                $parameters["studies"] = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Study')->getRandomStudyInfo($participant->getLocale(), $participant);
+                $parameters["incentiveAmount"] = $incentive->getIncentiveAmount();
+                $parameters["interventionName"] = $intervention->getInterventionName();
+                 
+                $cc->sendMail(null,
+                        $participant->getParticipantEmail(),
+                        $this->container->get('translator')->trans("email_incentive_title", array(), "email", $parameters['locale']),
+                        'CyclogramFrontendBundle:Email:incentive_email.html.twig',
+                        null,
+                        $embedded,
+                        true,
+                        $parameters);
+            }
         }
     }
    

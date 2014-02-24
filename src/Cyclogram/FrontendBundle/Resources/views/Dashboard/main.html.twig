@@ -461,7 +461,7 @@
                     {% if dismiss_error_message is defined %}
                         <p class="notice green"><span>{{ dismiss_error_message }}</span></p>
                     {% endif %}
-                    
+                    {% if promocodes is not empty %}
                     <div class="choices_box">
                             {% for promocode in promocodes %}
                                 <div class="featured_box">
@@ -477,6 +477,7 @@
                                 </div>
                             {% endfor %}
                     </div>
+                    {% endif %}
                     
                     <div class="choices_box">
                         <h2>{% trans from "dashboard" %}do_it_now{% endtrans %}<span> ({{ interventioncount }})</span></h2>
