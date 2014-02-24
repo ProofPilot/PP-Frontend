@@ -45,5 +45,6 @@ text_i_was_born_on_the: text_i_was_born_on_the
 text_interested_in: text_interested_in
 text_of: text_of
 text_per_year: text_per_year
+text_specifically_postal_code: text_specifically_postal_code   # FIXME
 text_who_lives_in: text_who_lives_in
 text_work_in: text_work_in

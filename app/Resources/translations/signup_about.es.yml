@@ -45,5 +45,6 @@ text_i_was_born_on_the: 'Yo nací en el'
 text_interested_in: 'interesado en'
 text_of: de
 text_per_year: 'por año'
+text_specifically_postal_code: text_specifically_postal_code   # FIXME
 text_who_lives_in: 'que vive en'
 text_work_in: 'trabajar en'
