@@ -40,7 +40,7 @@ class AbstractStudy
     }
     
     public function createIncentive(Participant $participant, Intervention $intervention, $incentiveTypeName = 'None') {
-        if ($intervention->getInterventionIncentiveAmount() != 0 && !is_null($intervention->getInterventionIncentiveAmount())){
+        if ($intervention->getInterventionIncentiveAmount() != 0 || !is_null($intervention->getInterventionIncentiveAmount())){
             $em = $this->container->get('doctrine')->getManager();
             $incentive = $em->getRepository('CyclogramProofPilotBundle:Incentive')->findOneBy(array('participant' => $participant, 'intervention' =>$intervention));
             if (empty($incentive)) {
