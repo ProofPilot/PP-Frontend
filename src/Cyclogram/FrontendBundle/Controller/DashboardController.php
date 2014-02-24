@@ -76,6 +76,7 @@ class DashboardController extends Controller
         $locale = $this->getRequest()->getLocale();
         $request = $this->getRequest();
         $session = $this->getRequest()->getSession();
+
         if (!is_null($sendMail) && $request->isXmlHttpRequest()){
             $cc = $this->get('cyclogram.common');
             $embedded = array();
@@ -103,6 +104,10 @@ class DashboardController extends Controller
         $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')->getActiveParticipantInterventionLinks($participant);
 
         $parameters = array();
+        if ($session->has('doitCode')) {
+            $parameters['doitInterventionCode'] = $session->get('doitCode');
+            $session->remove('doitCode');
+        }
         $parameters["studies"] = $em->getRepository('CyclogramProofPilotBundle:Study')->getRandomStudyInfo($locale, $participant);
         $enrolledStudies = $em->getRepository('CyclogramProofPilotBundle:Participant')->getEnrolledStudies($participant);
         $parameters["enrolledStudies"] = array();

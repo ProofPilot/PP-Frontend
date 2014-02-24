@@ -74,6 +74,10 @@ class AuthentificationController extends Controller
 
         $session = $request->getSession();
         $em = $this->getDoctrine()->getManager();
+        $doitInterventionCode = $request->query->get('interventionCode');
+        if (!empty($doitInterventionCode)) {
+            $session->set('doitCode', $doitInterventionCode);
+        }
         if ($this->get('security.context')->isGranted("ROLE_USER")){
             return $this->redirect($this->get('router')->generate("_main"));
         }

@@ -57,6 +57,7 @@
 	      }
         $(document).ready(function(){
 
+
         	function youtubeEvents() {
             	// 2. This code loads the IFrame Player API code asynchronously.
     		      var tag = document.createElement('script');
@@ -346,6 +347,9 @@
             }, function() {
                 $(this).find('.share_slide').slideUp('slow');
             });
+        	{% if doitInterventionCode is defined %}
+                 $('[name="{{ doitInterventionCode }}"]').trigger( "click" );
+            {% endif %}
             
         });
         function dismiss(interventionCode) {
@@ -514,7 +518,7 @@
                                         <p>{{ intervention.content | raw }}</p>
                                     </div>
                                     {% if intervention.url is defined and intervention.url is not empty and intervention.type != 'Video'%}
-                                        <div class="button_box"> <a href="{{ intervention.url }}"><span>{% trans from "dashboard" %}do_it{% endtrans %}</span></a> </div> 
+                                        <div class="button_box"> <a href="{{ intervention.url }}" name="{{ intervention.code }}"><span>{% trans from "dashboard" %}do_it{% endtrans %}</span></a> </div> 
                                     {% endif %}
                                     {% if intervention.type == 'Pledge' %}
                                     <div class="social_icons_block">
@@ -535,25 +539,25 @@
                                     </div>
                                     {% endif %}
                                     {% if intervention.type == 'Choose Location' %}
-                                    <div class="button_box"> <a href="#" id="location"><span>{% trans from "dashboard" %}do_it{% endtrans %}</span></a> </div>
+                                    <div class="button_box"> <a href="#" id="location" name="{{ intervention.code }}"><span>{% trans from "dashboard" %}do_it{% endtrans %}</span></a> </div>
                                     <div id="div_location" style="display:none;">
                                         {% include 'CyclogramFrontendBundle:Dashboard:locations.html.twig' %}
                                     </div>
                                     {% endif %}
                                     {% if intervention.type == 'About Me Info'%}
-                                    <div class="button_box"> <a href="#" id="about_me"><span>{% trans from "dashboard" %}do_it{% endtrans %}</span></a> </div>
+                                    <div class="button_box"> <a href="#" id="about_me" name="{{ intervention.code }}"><span>{% trans from "dashboard" %}do_it{% endtrans %}</span></a> </div>
                                     <div id="about_me_popup" class="dashboard_panel" style="display: none;">
                                         {% include 'CyclogramFrontendBundle:GeneralSettings:about_me_new_form.html.twig' %}
                                     </div>
                                     {% endif %}
                                     {% if intervention.type == 'Shipping Info'%}
-                                    <div class="button_box"> <a href="#" id="shipping_information"><span>{% trans from "dashboard" %}do_it{% endtrans %}</span></a> </div>
+                                    <div class="button_box"> <a href="#" id="shipping_information" name="{{ intervention.code }}"><span>{% trans from "dashboard" %}do_it{% endtrans %}</span></a> </div>
                                     <div id="shipping_information_popup" style="display: none;">
                                          {% include 'CyclogramFrontendBundle:GeneralSettings:shipping_information_form.html.twig' %}
                                     </div>
                                     {% endif %}
                                     {% if intervention.type == 'Confirm Mobile Phone'%}
-                                    <div class="button_box"> <a href="#" id="mobile_phone"><span>{% trans from "dashboard" %}do_it{% endtrans %}</span></a> </div>
+                                    <div class="button_box"> <a href="#" id="mobile_phone" name="{{ intervention.code }}"><span>{% trans from "dashboard" %}do_it{% endtrans %}</span></a> </div>
                                     <div id="mobile_phone_popup" style="display: none;">
                                         {% include 'CyclogramFrontendBundle:GeneralSettings:mobile_phone_form.html.twig' %}
                                     </div>
@@ -562,7 +566,7 @@
                                     </div>
                                     {% endif %}
                                     {% if intervention.type == 'Video' %}
-                                    <div class="button_box"> <a href="#" class="video"><span>{% trans from "dashboard" %}do_it{% endtrans %}</span></a> </div>
+                                    <div class="button_box"> <a href="#" class="video" name="{{ intervention.code }}"><span>{% trans from "dashboard" %}do_it{% endtrans %}</span></a> </div>
                                     <div class="div_video" style="display:none">
                                         <h2>{{ intervention.title }}</h2>
                                         <div class="videoUrlclass" style="display:none;">{{ intervention.url }}</div>

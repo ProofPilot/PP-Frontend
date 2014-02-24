@@ -182,11 +182,12 @@ class DoItNotificationCommand extends ContainerAwareCommand
                         $intervention["content"] = $interventionContent->getInterventionDescripton();
                         $parameters['siteurl'] = $this->getContainer()->getParameter('site_url').$this->getInterventionUrl($interventionLink, $locale);
                         $interventionUrl = $this->getInterventionUrl($interventionLink, $locale);
-                        if (!empty($interventionUrl))
+                        if (!empty($interventionUrl)) {
                             $intervention["url"] =  $interventionUrl;
-                        else 
-                            $intervention["url"] = $this->getContainer()->getParameter('site_url').$this->getContainer()->get('router')->generate('_signup', array('_locale' => $locale));
-                        $intervention["logo"] = $this->getContainer()->getParameter('study_image_url') . "/" . $studyId . "/" . $studyContent->getStudyLogo();
+                        } else { 
+                            $intervention["url"] = $this->getContainer()->getParameter('site_url').$this->getContainer()->get('router')->generate('_signup', array('interventionCode'=> $interventionContent->getInterventionCode(), '_locale' => $locale));
+                        }
+                            $intervention["logo"] = $this->getContainer()->getParameter('study_image_url') . "/" . $studyId . "/" . $studyContent->getStudyLogo();
                         
                         $parameters["intervention"] = $intervention;
                         if (!isset($interventionCode))

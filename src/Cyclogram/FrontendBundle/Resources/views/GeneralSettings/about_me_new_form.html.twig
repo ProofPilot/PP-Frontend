@@ -15,7 +15,7 @@
                 <span class="text_wrapper">{% trans from "signup_about" %}text_of{% endtrans %}</span>
                     {{ form_widget(formAbout.raceSelect) }}
                 <span class="text_wrapper">{% trans from "signup_about" %}text_who_lives_in{% endtrans %}</span> 
-                    {{ form_widget(formAbout.countrySelect) }}
+                    {{ form_widget(formAbout.countrySelect) }} , {% trans from "signup_about" %}text_specifically_postal_code{% endtrans %}
                 {{ form_widget(formAbout.zipcode,{'attr': {'placeholder' : 'postcode_text'|trans({}, 'signup_about')}}) }} .
                 <span class="text_wrapper">{% trans from "signup_about" %}text_i_was_born_on_the{% endtrans %}</span>     
                      {{ form_widget(formAbout.daysSelect,{'attr': {'placeholder' : 'day'}}) }}
