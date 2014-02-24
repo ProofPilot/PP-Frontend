@@ -40,7 +40,7 @@ class AbstractStudy
     }
     
     public function createIncentive(Participant $participant, Intervention $intervention, $incentiveTypeName = 'None') {
-        if ($intervention->getInterventionIncentiveAmount() != 0 || !is_null($intervention->getInterventionIncentiveAmount())){
+        if ($intervention->getInterventionIncentiveAmount() != 0 ){
             $em = $this->container->get('doctrine')->getManager();
             $incentive = $em->getRepository('CyclogramProofPilotBundle:Incentive')->findOneBy(array('participant' => $participant, 'intervention' =>$intervention));
             if (empty($incentive)) {
@@ -267,6 +267,42 @@ class AbstractStudy
                            $parameters);
                }
            }
+        }
+    }
+    
+    protected function setRefferal($participant, $studyCode, $intervenctionCode=null) {
+        $session = $this->container->get('session');
+        if ($session->has('refferal_participant')){
+            $em = $this->container->get('doctrine')->getManager();
+            $participant->setParticipantRefferalId($session->get('refferal_participant'));
+            $em->persist($participant);
+            $em->flush();
+
+            if (!is_null($intervenctionCode)) {
+                $study = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
+               
+                $referralParticipant = $em->getRepository('CyclogramProofPilotBundle:Participant')->find($session->get('refferal_participant'));
+                $countReferrals = $em->getRepository('CyclogramProofPilotBundle:Participant')->countParticipantRefferals($intervenctionCode, $referralParticipant);
+                if ($countReferrals <2) {
+                    $this->sendThankYouRefferalEmail($referralParticipant, $this->getStudyCode());
+                    $intervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')->findOneBy(array('interventionCode' => $intervenctionCode, 'study' => $study));
+                    if(empty($intervention))
+                        return;
+                    $participantInterventionLink = new ParticipantInterventionLink();
+            
+                    
+                    $participantInterventionLink->setIntervention($intervention);
+                    $participantInterventionLink->setParticipant($referralParticipant);
+                    $participantInterventionLink->setParticipantInterventionLinkDatetimeStart(new \DateTime("now"));
+                    $participantInterventionLink->setStatus(ParticipantInterventionLink::STATUS_REFERRAL);
+                    $em->persist($participantInterventionLink);
+                    $em->flush($participantInterventionLink);
+            
+                    $this->createIncentive($referralParticipant, $intervention);
+                }
+                
+            }
+            $session->remove('refferal_participant');
         }
     }
 }

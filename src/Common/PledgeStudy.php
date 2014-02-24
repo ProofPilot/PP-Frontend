@@ -86,31 +86,8 @@ class PledgeStudy extends AbstractStudy implements StudyInterface
                 $participantInterventionLink->setStatus(ParticipantInterventionLink::STATUS_ACTIVE);
             $em->persist($participantInterventionLink);
             $em->flush();
-            $this->sendNotification($participantInterventionLink, $participant);
-            
-            if ($session->has('refferal_participant')){
-                $participant->setParticipantRefferalId($session->get('refferal_participant'));
-                $em->flush();
-                $referralParticipant = $em->getRepository('CyclogramProofPilotBundle:Participant')->find($session->get('refferal_participant'));
-                $intervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')->findOneByInterventionCode('Pledgereferral');
-                $countReferrals = $em->getRepository('CyclogramProofPilotBundle:Participant')->countParticipantRefferals($intervention->getInterventionCode(), $referralParticipant);
-                if ($countReferrals <2) {
-                    $this->sendThankYouRefferalEmail($referralParticipant, $this->getStudyCode());
-                    $participantInterventionLink = new ParticipantInterventionLink();
-                    
-                    $intervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')->findOneByInterventionCode('Pledgereferral');
-                    $participantInterventionLink->setIntervention($intervention);
-                    $participantInterventionLink->setParticipant($referralParticipant);
-                    $participantInterventionLink->setParticipantInterventionLinkDatetimeStart(new \DateTime("now"));
-                    $participantInterventionLink->setStatus(ParticipantInterventionLink::STATUS_REFERRAL);
-                    $em->persist($participantInterventionLink);
-                    $em->flush($participantInterventionLink);
-//                     $this->sendNotification($participantInterventionLink, $referralParticipant);
-                    
-                    $this->createIncentive($referralParticipant, $intervention);
-                }
-                $session->remove('refferal_participant');
-            }
+            $this->sendNotification($participantInterventionLink, $this->getStudyCode(), $participant);
+            $this->setRefferal($participant, 'Pledgereferral');
         }
     }
     public function interventionLogic($participant)

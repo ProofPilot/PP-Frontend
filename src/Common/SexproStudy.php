@@ -160,6 +160,7 @@ class SexproStudy extends AbstractStudy implements StudyInterface
             $em->persist($participantInterventionLink);
             
             $em->flush();
+            $this->setRefferal($participant, $this->getStudyCode(), 'SexproReferral');
 //             $this->sendNotification($participantInterventionLink, $participant);
             //END About Me intervention
         }
