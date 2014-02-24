@@ -24,6 +24,8 @@ txt_pin: txt_pin
 txt_share: txt_share
 txt_sponsored_by: txt_sponsored_by
 txt_staff: txt_staff
+txt_studyabout_title: txt_studyabout_title   # FIXME
+txt_studywhatsinvolved_title: txt_studywhatsinvolved_title   # FIXME
 txt_tweet: txt_tweet
 txt_you_are_eligible: 'Vous êtes admissible'
 unavailable_functionality: unavailable_functionality

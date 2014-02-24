@@ -24,6 +24,8 @@ txt_pin: Share
 txt_share: Share
 txt_sponsored_by: 'This study is sponsored by'
 txt_staff: Staff
+txt_studyabout_title: txt_studyabout_title   # FIXME
+txt_studywhatsinvolved_title: txt_studywhatsinvolved_title   # FIXME
 txt_tweet: Tweet
 txt_you_are_eligible: 'You are eligible. Accept consent to continue ...'
 unavailable_functionality: 'There are no interim results for this study yet. We will notify you when results are available for you to review.'

@@ -24,6 +24,8 @@ txt_pin: Ação
 txt_share: Ação
 txt_sponsored_by: 'Este estudo é patrocinado pela'
 txt_staff: Pessoal
+txt_studyabout_title: txt_studyabout_title   # FIXME
+txt_studywhatsinvolved_title: txt_studywhatsinvolved_title   # FIXME
 txt_tweet: Chilrear
 txt_you_are_eligible: 'Você é elegível'
 unavailable_functionality: 'Não há resultados provisórios deste estudo ainda. Vamos notificá-lo quando a área disponível resultados para você rever.'
