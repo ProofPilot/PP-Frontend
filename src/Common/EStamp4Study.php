@@ -527,7 +527,7 @@ class EStamp4Study extends AbstractStudy implements StudyInterface
         }
     }
 
-    public function checkEligibility($surveyResult)
+    public function checkSurveyEligibility($surveyResult)
     {
      $isElegible = TRUE; //By Default the Participant is Elegible
         $reason = array();
@@ -1401,7 +1401,9 @@ class EStamp4Study extends AbstractStudy implements StudyInterface
         return $isElegible;
     }
 
-
+    public function checkEligibility($studyCode, $participant) {
+        return false;
+    }
     public static function getStudyCode()
     {
         return 'eStamp4';

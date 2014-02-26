@@ -341,8 +341,12 @@ class SexproStudy extends AbstractStudy implements StudyInterface
         }
     }
 
-    public function checkEligibility($surveyResult)
+    public function checkSurveyEligibility($surveyResult)
     {
+        return true;
+    }
+    
+    public function checkEligibility($studyCode, $participant) {
         return true;
     }
     public static function getStudyCode()

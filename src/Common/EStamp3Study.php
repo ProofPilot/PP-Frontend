@@ -50,9 +50,12 @@ class EStamp3Study extends AbstractStudy implements StudyInterface
         return false;
     }
 
-    public function checkEligibility($surveyResult)
+    public function checkSurveyEligibility($surveyResult)
     {
         return true;
+    }
+    public function checkEligibility($studyCode, $participant) {
+        return false;
     }
 
     public static function getStudyCode()

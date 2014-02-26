@@ -45,7 +45,7 @@ class SurveyController extends Controller
      * @Route("/eligibility-survey/{studyCode}/{surveyId}", name="_eligibility_survey")
      * @Template()
      */
-    public function surveyAction($studyCode, $surveyId)
+    public function surveyAction($studyCode, $surveyId= null)
     {
         $em = $this->getDoctrine()->getManager();
         $securityContext = $this->container->get('security.context');
@@ -143,7 +143,7 @@ class SurveyController extends Controller
         
         $sl = $this->get('study_logic');
         
-        $isEligible = $sl->checkEligibility($studyCode, $surveyResult);
+        $isEligible = $sl->checkSurveyEligibility($studyCode, $surveyResult);
 
         
 

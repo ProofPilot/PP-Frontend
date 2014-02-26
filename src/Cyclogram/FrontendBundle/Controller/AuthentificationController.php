@@ -123,8 +123,8 @@ class AuthentificationController extends Controller
                     } else if (is_null($eligibilitySurvey)){
                     	$logic = $this->get('study_logic');
                     	$participant = $this->get('security.context')->getToken()->getUser();
-                    	$logic->studyRegistration($participant, $studyCode, null, null);
-                    	return new Response(json_encode(array('error' => false, 'url' => $redirectUrl)));
+                    	$url = $logic->studyRegistration($participant, $studyCode, null, null);
+                    	return new Response(json_encode(array('error' => false, 'url' => $url)));
                     }
                 }
                 return new Response(json_encode(array('error' => false)));
@@ -142,12 +142,12 @@ class AuthentificationController extends Controller
                         $securityContext = $this->container->get('security.context');
                         $participant = $securityContext->getToken()->getUser();
                         $study = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
-                        $ls->studyRegistration($participant, $studyCode, $surveyId, $saveId);
+                        $url = $ls->studyRegistration($participant, $studyCode, $surveyId, $saveId);
                         if ($participant->getParticipantEmailConfirmed() == false)
                             $this->confirmParticipantEmail($participant);
                         $this->confirmParticipantEmail($participant);
                         if ($study->getStudySkipAboutMe()) {
-                            return $this->redirect( $this->generateUrl("_main"));
+                            return $this->redirect($url);
                         }
                     } else {
                         $study = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
@@ -336,8 +336,8 @@ class AuthentificationController extends Controller
                 } else {
                 	$logic = $this->get('study_logic');
                 	$participant = $this->get('security.context')->getToken()->getUser();
-                	$logic->studyRegistration($participant, $studyCode, null, null);
-                	return $this->redirect($redirectUrl);
+                	$url = $logic->studyRegistration($participant, $studyCode, null, null);
+                	return $this->redirect($url);
                 }
             }elseif ($study->getStudySkipAboutMe()) {
                 return $this->render('CyclogramFrontendBundle:Authentification:consent_main.html.twig', array('studyCode' => $studyCode, 'surveyId' => $studyContent->getStudyElegibilitySurvey(),'studycontent' => $studyContent));
@@ -425,10 +425,14 @@ class AuthentificationController extends Controller
                 
                 if (!empty($data['signup_about']['yearsSelect']) || !empty($data['monthsSelect']) || !empty($data['signup_about']['daysSelect'])) {
                     $date = new \DateTime();
-                    if($date = $date->setDate((int)$data['signup_about']['yearsSelect'], (int)$data['monthsSelect'], (int)$data['signup_about']['daysSelect']))
+                    if($date = $date->setDate((int)$data['signup_about']['yearsSelect'], (int)$data['monthsSelect'], (int)$data['signup_about']['daysSelect'])) {
                         $participant->setParticipantBirthdate($date);
-                    else
+                        $currentDate = new \DateTime();
+                        $diff = $currentDate->diff($date);
+                        $participant->setAge($diff->y);
+                    }else{
                         $message[] = " birthdate ";
+                    }
                 }
                 if (!empty($data['gradeSelect'])) {
                     if ($gradeLevel = $em->getRepository('CyclogramProofPilotBundle:GradeLevel')->find($data['gradeSelect']))
@@ -484,8 +488,8 @@ class AuthentificationController extends Controller
                             $eligibilitySurvey = $studyContent->getStudyElegibilitySurvey();
                             if(is_null($eligibilitySurvey)) {
                                 $logic = $this->get('study_logic');
-                                $logic->studyRegistration($participant, $studyCode, null, null);
-                                return new Response(json_encode(array('error' => false, 'url' => $redirectUrl)));
+                                $url = $logic->studyRegistration($participant, $studyCode, null, null);
+                                return new Response(json_encode(array('error' => false, 'url' => $url)));
                             }
                              return new Response(json_encode(array('error' => false, 'url' => $this->generateUrl("_eligibility_survey", array('studyCode' => $studyCode,'surveyId' => $surveyId, 'redirectUrl' => $redirectUrl)))));
                         } else {
@@ -551,8 +555,8 @@ class AuthentificationController extends Controller
                     return $this->redirect( $this->generateUrl("_signup"));
                 } else {
                     $logic = $this->get('study_logic');
-                    $logic->studyRegistration($participant, $studyCode, null, null);
-                    return $this->redirect( $this->generateUrl("_main"));
+                    $url = $logic->studyRegistration($participant, $studyCode, null, null);
+                    return $this->redirect( $url);
                 }
             }
             if ($participant != 'anon.') {
@@ -935,8 +939,8 @@ class AuthentificationController extends Controller
             if(is_null($eligibilitySurvey)) {
                 $participant = $this->get('security.context')->getToken()->getUser();
                 $logic = $this->get('study_logic');
-                $logic->studyRegistration($participant, $studyCode, null, null);
-                return $this->redirect($this->generateUrl("_main"));
+                $url = $logic->studyRegistration($participant, $studyCode, null, null);
+                return $this->redirect($url);
             }
             return $this->redirect($this->generateUrl("_eligibility_survey", array('studyCode'=> $studyCode, 'surveyId' => $studyContent->getStudyElegibilitySurvey(), 'redirectUrl' => $redirectUrl)));
         } else {

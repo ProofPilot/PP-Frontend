@@ -305,4 +305,25 @@ class AbstractStudy
             $session->remove('refferal_participant');
         }
     }
+    
+    protected function addInterventionbByPeriod($period, $interventionCode, $armCode) {
+        $em = $this->container->get('doctrine')->getManager();
+        $intervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')->findOneByInterventionCode($interventionCode);
+        $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:Study')
+        ->getParticipantsWithArmAndPeriod($armCode, $period);
+        
+        foreach ($interventionLinks as $interventionLink) {
+            if (!$em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')
+                    ->checkIfExistParticipantInterventionLink($interventionCode, $interventionLink['participantId'])) {
+                $participantInterventionLink = new ParticipantInterventionLink();
+                $participantInterventionLink->setIntervention($intervention);
+                $participantInterventionLink->setParticipant($em->getReference('Cyclogram\Bundle\ProofPilotBundle\Entity\Participant', $interventionLink['participantId']));
+                $participantInterventionLink->setParticipantInterventionLinkDatetimeStart(new \DateTime("now"));
+                $participantInterventionLink->setStatus(ParticipantInterventionLink::STATUS_ACTIVE);
+                $em->persist($participantInterventionLink);
+                $em->flush();
+            }
+        }
+        
+    }
 }

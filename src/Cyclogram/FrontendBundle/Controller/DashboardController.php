@@ -113,7 +113,7 @@ class DashboardController extends Controller
         $parameters["enrolledStudies"] = array();
         foreach ($enrolledStudies as $study) {
             $studyContent = $em->getRepository('CyclogramProofPilotBundle:StudyContent')->getStudyContent($study->getStudyCode(), $locale);
-            $enroledStudy['studyName'] = $studyContent->getStudyName();
+            $enroledStudy['studyName'] = addslashes(htmlspecialchars_decode(htmlspecialchars_decode(str_replace(array("\r\n", "\r", "\n"), "", strip_tags($studyContent->getStudyName())),ENT_QUOTES)));
             $enroledStudy['studyUrl'] = $studyContent->getStudyUrl();
             $enroledStudy['studyGraphic'] = $studyContent->getStudyGraphic();
             $site = $em->getRepository('CyclogramProofPilotBundle:Study')->getDefaultSites($study->getStudyId());
@@ -125,7 +125,7 @@ class DashboardController extends Controller
             $enroledStudy['studyAllowSharing'] = $study->getStudyAllowSharing();
             $enroledStudy["graphic"] = $this->container->getParameter('study_image_url') . '/' .$study->getStudyId(). '/' .$studyContent->getStudyGraphic();
             $enroledStudy['studyContent'] = addslashes(htmlspecialchars_decode(htmlspecialchars_decode(str_replace(array("\r\n", "\r", "\n"), "", strip_tags($studyContent->getStudyAbout())), ENT_QUOTES)));
-            $enroledStudy['tagline'] = $studyContent->getStudyTagline();
+            $enroledStudy['tagline'] = addslashes(htmlspecialchars_decode(htmlspecialchars_decode(str_replace(array("\r\n", "\r", "\n"), "", strip_tags($studyContent->getStudyTagline())), ENT_QUOTES)));
             $parameters["enrolledStudies"][] = $enroledStudy;
         }
         $surveyscount = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')->getActiveParticipantInterventionsCount($participant);
@@ -178,10 +178,10 @@ class DashboardController extends Controller
                     $intervention['reffferalShortStudyUrl'] = $cc::generateGoogleShorURL($this->container->getParameter('site_url')."/".$locale."/".$study->getStudyCode()."/?utm_campaign=".$siteCampaignLink->getCampaign()->getCampaignName()."&utm_medium-Clinic&utm_source=".$site[0]['siteName']."&pid=".$participant->getParticipantId());
                     $intervention['reffferalFacebookStudyUrl'] = $this->container->getParameter('site_url')."/".$locale."/".$study->getStudyCode()."/?utm_campaign=".$siteCampaignLink->getCampaign()->getCampaignName()."&utm_medium-Clinic&utm_source=".$site[0]['siteName']."&pid=".$participant->getParticipantId();
                     $intervention['reffferalPinterestStudyUrl'] = urlencode($this->container->getParameter('site_url')."/".$locale."/".$study->getStudyCode()."/?utm_campaign=".$siteCampaignLink->getCampaign()->getCampaignName()."&utm_medium-Clinic&utm_source=".$site[0]['siteName']."&pid=".$participant->getParticipantId());
-                    $intervention['studyName'] = $studyContent->getStudyName();
-                    $intervention['tagline'] = addslashes($studyContent->getStudyTagline());
+                    $intervention['studyName'] = addslashes(htmlspecialchars_decode(htmlspecialchars_decode(str_replace(array("\r\n", "\r", "\n"), "", strip_tags($studyContent->getStudyName())), ENT_QUOTES)));
+                    $intervention['tagline'] = addslashes(htmlspecialchars_decode(htmlspecialchars_decode(str_replace(array("\r\n", "\r", "\n"), "", strip_tags($studyContent->getStudyTagline())), ENT_QUOTES)));
                     
-                    $intervention['studyContent'] = addslashes(htmlspecialchars_decode(htmlspecialchars_decode(str_replace(array("\r\n", "\r", "\n"), "", strip_tags(substr($studyContent->getStudyAbout(), 0,250))), ENT_QUOTES)));;
+                    $intervention['studyContent'] = addslashes(htmlspecialchars_decode(htmlspecialchars_decode(str_replace(array("\r\n", "\r", "\n"), "", strip_tags(substr($studyContent->getStudyAbout(), 0,250))), ENT_QUOTES)));
                     $intervention["graphic"] = $this->container->getParameter('study_image_url') . '/' .$study->getStudyId(). '/' .$studyContent->getStudyGraphic();
                     break;
                 case "Shipping Info" :
@@ -514,6 +514,34 @@ class DashboardController extends Controller
         }
         
     }
+    
+    
+    
+    /**
+     * @Route("/close_referral_intervention/", name="_close_refferal_intervention")
+     * @Secure(roles="ROLE_PARTICIPANT, IS_AUTHENTICATED_REMEMBERED")
+     * @Template()
+     */
+    public function closeRefferalInterventionAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $participant = $this->get('security.context')->getToken()->getUser();
+        if($request->isXmlHttpRequest()) {
+            $data = $request->request->all();
+            if (isset($data['interventionCode'])) {
+                $intervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')->findOneByInterventionCode($data['interventionCode']);
+                $participantInterventionLink = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')->findOneBy(array('participant' => $participant, 'intervention' => $intervention));
+                $participantInterventionLink->setStatus(ParticipantInterventionLink::STATUS_CLOSED);
+                $em->persist($participantInterventionLink);
+                $em->flush();
+                return new Response(json_encode(array('url' => $this->generateUrl("_main"))));
+            }
+        }
+    
+    }
+    
+    
+    
     
     /**
      * @Route("/video_completed_ajax/", name="_video_completed_ajax")

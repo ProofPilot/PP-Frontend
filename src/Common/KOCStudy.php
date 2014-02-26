@@ -200,7 +200,7 @@ class KOCStudy extends AbstractStudy implements StudyInterface
         }
     }
 
-    public function checkEligibility($surveyResult)
+    public function checkSurveyEligibility($surveyResult)
     {
         $isEligible = true;
         $reason = array();
@@ -231,6 +231,9 @@ class KOCStudy extends AbstractStudy implements StudyInterface
         }
 
         return $isEligible;
+    }
+    public function checkEligibility($studyCode, $participant) {
+        return false;
     }
     public static function getStudyCode()
     {
