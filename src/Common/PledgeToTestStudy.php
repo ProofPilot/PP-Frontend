@@ -118,11 +118,15 @@ class PledgeToTestStudy extends AbstractStudy implements StudyInterface
         return true;
     }
     
-    public function checkEligibility($surveyResult)
+    public function checkSurveyEligibility($surveyResult)
     {
         $isEligible = true;
 
         return $isEligible;
+    }
+    
+    public function checkEligibility($studyCode, $participant) {
+        return true;
     }
     public static function getStudyCode()
     {
