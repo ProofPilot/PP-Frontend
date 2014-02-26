@@ -86,7 +86,7 @@ class PledgeStudy extends AbstractStudy implements StudyInterface
                 $participantInterventionLink->setStatus(ParticipantInterventionLink::STATUS_ACTIVE);
             $em->persist($participantInterventionLink);
             $em->flush();
-            $this->sendNotification($participantInterventionLink, $this->getStudyCode(), $participant);
+//             $this->sendNotification($participantInterventionLink, $participant);
             $this->setRefferal($participant, 'Pledgereferral');
         }
     }
@@ -129,7 +129,7 @@ class PledgeStudy extends AbstractStudy implements StudyInterface
         return true;
     }
     
-    public function checkEligibility($surveyResult)
+    public function checkSurveyEligibility($surveyResult)
     {
         $isEligible = true;
         $reason = array();
@@ -152,6 +152,10 @@ class PledgeStudy extends AbstractStudy implements StudyInterface
         }
 
         return $isEligible;
+    }
+    
+    public function checkEligibility($studyCode, $participant) {
+        return true;
     }
     public static function getStudyCode()
     {
