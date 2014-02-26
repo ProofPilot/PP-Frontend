@@ -235,8 +235,8 @@ class DashboardController extends Controller
                         $date = $participant->getParticipantBirthdate();
                         $participantData['monthsLabel'] = date_format($date, 'M');
                         $participantData['months'] = date_format($date, 'm');
-                        $form->get('daysSelect')->setData(date_format($date, 'd'));
-                        $form->get('yearsSelect')->setData(date_format($date, 'Y'));
+                        $formAbout->get('daysSelect')->setData(date_format($date, 'd'));
+                        $formAbout->get('yearsSelect')->setData(date_format($date, 'Y'));
                     }
                     if($participant->getSex()) {
                         $participantData['sex'] = $participant->getSex();
