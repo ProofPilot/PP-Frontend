@@ -392,7 +392,7 @@ class DefaultController extends Controller
         $surveyResult = $this->get('custom_db')->getFactory('ElegibilityCustom')->getSurveyResponseData( $svid, $sid );
         
         $sl = $this->get('study_logic');
-        $isElegible = $sl->checkEligibility($studyCode,$surveyResult);
+        $isElegible = $sl->checkSurveyEligibility($studyCode,$surveyResult);
 
 
         /*echo "<pre>";

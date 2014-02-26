@@ -18,6 +18,8 @@
 */
 namespace Cyclogram\FrontendBundle\Service;
 
+use Symfony\Component\HttpFoundation\RedirectResponse;
+
 use Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantSurveyLink;
 
 use Cyclogram\Bundle\ProofPilotBundle\Entity\Study;
@@ -80,15 +82,27 @@ class StudyLogic
             if (!empty($saveId) || !empty($surveyId)) {
             	$this->participantSurveyLinkRegistration($surveyId, $saveId, $participant, $uniqId);
             }
-            $this->studies[$studyCode]->studyRegistration($participant,$surveyId, $saveId, $campaignLink);
-            $this->studyWelcomeEmail($participant, $studyCode);
-            $study = $em->getRepository("CyclogramProofPilotBundle:Study")->findOneByStudyCode($studyCode);
-            $studyParticipants = $study->getStudyNumberOfCurrentParticipants();
-            $study->setStudyNumberOfCurrentParticipants(++$studyParticipants);
-            $em->persist($study);
-            $em->flush();
+            $eligible = $this->studies[$studyCode]->checkEligibility($studyCode, $participant);
+            if ($eligible) {
+                $this->studies[$studyCode]->studyRegistration($participant,$surveyId, $saveId, $campaignLink);
+                $this->studyWelcomeEmail($participant, $studyCode);
+                $study = $em->getRepository("CyclogramProofPilotBundle:Study")->findOneByStudyCode($studyCode);
+                $studyParticipants = $study->getStudyNumberOfCurrentParticipants();
+                $study->setStudyNumberOfCurrentParticipants(++$studyParticipants);
+                $em->persist($study);
+                $em->flush();
+                $router = $this->container->get('router');
+                $url = $router->generate('_main');
+            } else {
+                $router = $this->container->get('router');
+                $url = $router->generate('_page', array(
+                        'studyUrl' => $studyCode,
+                        'eligible' => false
+                ));
+            }
         }
         $session->remove('participantId');
+        return $url;
         
     }
     
@@ -190,10 +204,20 @@ class StudyLogic
         }
     }
     
-    public function checkEligibility($studyCode, $surveyResult)
+    public function checkEligibility($studyCode, $participant)
     {
         if (in_array($studyCode, $this->getSupportedStudies())) {
             return $this->studies[$studyCode]->checkEligibility($surveyResult);
+        } else {
+            throw new \Exception("Study code" . $studyCode . "does not implement eligibility logic");
+        }
+    
+    }
+    
+    public function checkSurveyEligibility($studyCode, $surveyResult)
+    {
+        if (in_array($studyCode, $this->getSupportedStudies())) {
+            return $this->studies[$studyCode]->checkSurveyEligibility($surveyResult);
         } else {
             throw new \Exception("Study code" . $studyCode . "does not implement eligibility logic");
         }

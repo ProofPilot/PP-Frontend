@@ -108,6 +108,8 @@
                 });
             });
 
+
+            $()
             $('#mobile_phone').bind('click', function(e) {
             	e.preventDefault();
                 $('#mobile_phone_popup').dialog({
@@ -330,6 +332,22 @@
                 window.location=Routing.generate('_logout');
             });
 
+            $('a[name=Refferal]').bind('click', function(e) {
+                $.ajax({
+                    dataType: "json",
+                    type: "POST",
+                    url: "{{ path('_main', {'sendMail' : true})}}",
+                })
+                .done (function(response) {
+                    alert(response.message);
+                });
+                return false;
+            });
+
+            $('input[name=publish]').bind('click', function(e) {
+                windows.location.reload();
+            });
+            
             $('a.video').bind('click', function(e) {
                 e.preventDefault();
                 $('div.div_video').dialog({
@@ -350,8 +368,11 @@
         	{% if doitInterventionCode is defined %}
                  $('[name="{{ doitInterventionCode }}"]').trigger( "click" );
             {% endif %}
+
+            
             
         });
+        
         function dismiss(interventionCode) {
             if (confirm('{% trans from "dashboard" %}dashboard_dismiss_confirmation{% endtrans %}')) {
                 $.ajax({
@@ -367,6 +388,19 @@
                 return;
             }
         }
+
+        function closeRefferalIntervention(interventionCode) {
+                $.ajax({
+                    dataType: "json",
+                    type: "POST",
+                    url: "{{ path('_close_refferal_intervention')}}",
+                    data: {interventionCode : interventionCode,}
+                })
+                .done (function(response) {
+                    return;
+                });
+            }
+                                                              
 
         function closePromo(codeValue, url) {
             $.ajax({
@@ -404,6 +438,16 @@
             u=location.href;
             window.open('http://www.facebook.com/sharer.php?s=100&p[url]='+encodeURIComponent(u)+'&p[title]='+name+'&p[summary]='+content+'&p[images][0]='+logo,'sharer', windowFeatures);
             return false;
+        }
+
+
+        function windowClose(popup) {
+        	var timer = setInterval(function() {   
+        	    if(popup.closed) {  
+        	        clearInterval(timer);  
+        	        window.location.reload();  
+        	    }  
+        	}, 1000); 
         }
     </script>
 {% endblock javascripts %}
@@ -531,11 +575,11 @@
                                     {% endif %}
                                     {% if intervention.type == 'Referral' %}
                                     <div class="referal_social">
-                                        <a href="#" class="tw" onclick="popUp=window.open('https://twitter.com/share?url={{ intervention.reffferalShortStudyUrl }}&text={%  trans from "study" %}social_join_study{% endtrans %} {{ intervention.studyName }} {%  trans from "study" %}social_at_proofpilot{% endtrans %}', 'popupwindow', 'scrollbars=yes,width=800,height=400');popUp.focus();return false"></a>
-                                        <a href="#" class="fb" onClick="return postFeed('{{ intervention.reffferalFacebookStudyUrl }}','{{ intervention.tagline }}','{{ intervention.studyContent }}','{{ intervention.graphic }}','{{ intervention.studyName }}')"></a>
-                                        <a class="linkedin_icon" href="#" onclick="popUp=window.open('http://www.linkedin.com/shareArticle?mini=true&amp;url={{ intervention.reffferalShortStudyUrl }}&amp;title={{ intervention.name }}}&amp;summary={{ intervention.studyContent }}', 'popupwindow', 'scrollbars=yes,width=600,height=450');popUp.focus();return false" ></a>
-                                        <a class="pinterest_icon" href="#" onclick="popUp=window.open('//www.pinterest.com/pin/create/button/?url={{ intervention.reffferalPinterestStudyUrl }}&media={{ intervention.graphic }}&description={{ intervention.content }}', 'popupwindow', 'scrollbars=yes,width=600,height=450');popUp.focus();return false"></a>
-                                        <a href="#" class="email"><input type="hidden" class="email_to_friends_study" value="{{ intervention.studyName }}"></a>
+                                        <a href="#"  class="tw" onclick="closeRefferalIntervention('{{ intervention.code }}');popUp=window.open('https://twitter.com/share?url={{ intervention.reffferalShortStudyUrl }}&text={%  trans from "study" %}social_join_study{% endtrans %} {{ intervention.studyName }} {%  trans from "study" %}social_at_proofpilot{% endtrans %}', 'popupwindow', 'scrollbars=yes,width=800,height=400');windowClose(popUp);popUp.focus();return false;"></a>
+                                        <a href="#"  class="fb" onClick="closeRefferalIntervention('{{ intervention.code }}');return postFeed('{{ intervention.reffferalFacebookStudyUrl }}','{{ intervention.tagline }}','{{ intervention.studyContent }}','{{ intervention.graphic }}','{{ intervention.studyName }}');return false"></a>
+                                        <a class="linkedin_icon" href="#"  onclick="closeRefferalIntervention('{{ intervention.code }}');popUp=window.open('http://www.linkedin.com/shareArticle?mini=true&amp;url={{ intervention.reffferalShortStudyUrl }}&amp;title={{ intervention.name }}}&amp;summary={{ intervention.studyContent }}', 'popupwindow', 'scrollbars=yes,width=600,height=450');windowClose(popUp);popUp.focus();return false" ></a>
+                                        <a class="pinterest_icon" href="#"  onclick="closeRefferalIntervention('{{ intervention.code }}');popUp=window.open('//www.pinterest.com/pin/create/button/?url={{ intervention.reffferalPinterestStudyUrl }}&media={{ intervention.graphic }}&description={{ intervention.content }}', 'popupwindow', 'scrollbars=yes,width=600,height=450');windowClose(popUp);popUp.focus();return false"></a>
+                                        <a href="#" name="{{ intervention.type }}" class="email"><input type="hidden" class="email_to_friends_study" value="{{ intervention.studyName }}"></a>
                                     </div>
                                     {% endif %}
                                     {% if intervention.type == 'Choose Location' %}

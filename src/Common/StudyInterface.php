@@ -25,7 +25,8 @@ interface StudyInterface
     public function getInterventionCodes();
     public function studyRegistration($participant, $surveyId, $saveId, $campaignLink);
     public function interventionLogic($participant);
-    public function checkEligibility( $surveyResult);
+    public function checkSurveyEligibility( $surveyResult);
+    public function checkEligibility($studyCode, $participant);
     public static function getStudyCode();
     public function commandInterventionLogic();
 

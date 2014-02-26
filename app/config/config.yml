@@ -101,6 +101,8 @@ doctrine:
                 dql:
                     datetime_functions:
                         datediff: Cyclogram\FrontendBundle\DQL\DateDiffFunction
+                    string_functions:
+                        cast: Cyclogram\FrontendBundle\DQL\CastFunction
                 connection: default
                 mappings:
                     CyclogramProofPilotBundle : ~   
