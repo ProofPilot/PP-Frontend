@@ -229,7 +229,7 @@ class DashboardController extends Controller
                         $participantData['country'] = $participant->getCountry();
                     }
                     if ($participant->getParticipantZipcode()){
-                        $form->get('zipcode')->setData($participant->getParticipantZipcode());
+                        $formAbout->get('zipcode')->setData($participant->getParticipantZipcode());
                     }
                     if($participant->getParticipantBirthdate()) {
                         $date = $participant->getParticipantBirthdate();
@@ -260,7 +260,7 @@ class DashboardController extends Controller
                         $participantData['industry'] = $participant->getIndustry();
                     }
                     if($participant->getAnnualIncome()) {
-                        $form->get('anunalIncome')->setData($participant->getAnnualIncome());
+                        $formAbout->get('anunalIncome')->setData($participant->getAnnualIncome());
                     }
                     if($participant->getMaritalStatus()){
                         $participantData['marital'] = $participant->getMaritalStatus();
