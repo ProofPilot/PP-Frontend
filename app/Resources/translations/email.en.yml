@@ -15,7 +15,7 @@ email_reset_password: 'Reset Your Password'
 email_title_change_password: 'Change your password'
 email_title_notice: 'Did you forget to verify your e-mail address? '
 email_title_prelaunch: 'Thanks for your interest in %studyName%'
-email_title_thank_you_refferal: 'Thank you for referring a friend to %studyName%'
+email_title_thank_you_refferal: 'Thank you for referring a friend to %StudyName%'
 email_title_verify: 'Please Verify Your E-mail Address'
 email_to_friends_add_email: 'Add another e-mail'
 email_to_friends_cancle: Cancel
