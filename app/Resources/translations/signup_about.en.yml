@@ -19,7 +19,7 @@ label_race_main: race
 label_sex_main: sex
 label_woman: women
 label_year_main: year
-label_zipcode: postcode
+label_zipcode: 'zip code'
 month_apr: Apr
 month_aug: Aug
 month_dec: Dec
@@ -32,7 +32,7 @@ month_may: May
 month_nov: Nov
 month_oct: Oct
 month_sep: Sep
-postcode_text: postcode
+postcode_text: 'zip code'
 secutiry_and_privacy: 'Security and Privacy Policy'
 text_and: and
 text_and_make_approximately: 'and make approximately'
@@ -45,6 +45,6 @@ text_i_was_born_on_the: 'I was born on the'
 text_interested_in: 'interested in'
 text_of: of
 text_per_year: 'per year'
-text_specifically_postal_code: specifically in postal code
+text_specifically_postal_code: 'specifically in postal code'
 text_who_lives_in: 'who lives in'
 text_work_in: 'work in'
