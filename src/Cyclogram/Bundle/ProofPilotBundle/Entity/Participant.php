@@ -478,6 +478,13 @@ class Participant implements AdvancedUserInterface
     protected $race;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="participant_aboutme_data", type="string", length=255, nullable=true)
+     */
+    protected $participantAboutMe;
+
+    /**
      * Get participantId
      *
      * @return integer 
@@ -1114,12 +1121,12 @@ class Participant implements AdvancedUserInterface
     }
     public function isEnabled()
     {
-//         if (empty($this->participantMobileNumber))
-//             return "You have no mobile number set - please try to register again";
-//         if ($this->level->getParticipantLevelName() == 'Customer')
-//             return true;
-//         elseif ($this->level->getParticipantLevelName() == 'Lead')
-//             return false;
+        //         if (empty($this->participantMobileNumber))
+        //             return "You have no mobile number set - please try to register again";
+        //         if ($this->level->getParticipantLevelName() == 'Customer')
+        //             return true;
+        //         elseif ($this->level->getParticipantLevelName() == 'Lead')
+        //             return false;
         return true;
     }
 
@@ -1471,6 +1478,16 @@ class Participant implements AdvancedUserInterface
     public function setParticipantRefferalId($participantRefferalId)
     {
         $this->participantRefferalId = $participantRefferalId;
+    }
+
+    public function getParticipantAboutMe()
+    {
+        return $this->participantAboutMe;
+    }
+
+    public function setParticipantAboutMe($participantAboutMe)
+    {
+        $this->participantAboutMe = $participantAboutMe;
     }
 
 }

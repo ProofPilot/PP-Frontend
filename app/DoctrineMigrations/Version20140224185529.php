@@ -18,8 +18,8 @@ class Version20140224185529 extends AbstractMigration
         
         $this->addSql("UPDATE participant SET participant_aboutme_data = 
                        CONCAT('{\"age\":',COALESCE(participant_age, 'null'),',',
-			                  '\"sex\":',COALESCE(sex_id, 'null'),',',
-			                  '\"race\":',COALESCE(race_id, 'null'),',',
+			                  '\"sex\":', COALESCE(sex_id, 'null'),',',
+			                  '\"race\":', CASE WHEN race_id IS NULL THEN CONCAT('\"race\":','null' ) ELSE CONCAT('\"race\":','[',race_id,']') END,',',
 			                  '\"grade\":',COALESCE(grade_level_id, 'null'),',',
 			                  '\"sex_with\":',COALESCE(participant_interested, 'null'),',',
 			                  '\"industry\":',COALESCE(industry_id, 'null'),',',
@@ -35,6 +35,7 @@ class Version20140224185529 extends AbstractMigration
     public function down(Schema $schema)
     {
         // this down() migration is auto-generated, please modify it to your needs
-
+        $this->abortIf($this->connection->getDatabasePlatform()->getName() != "mysql");
+        $this->addSql("UPDATE participant SET participant_aboutme_data = null");
     }
 }

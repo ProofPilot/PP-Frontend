@@ -391,6 +391,7 @@ class AuthentificationController extends Controller
         
         if ($request->getMethod() == 'POST') {
             $data = $request->request->all();
+            $participantData = array();
             $message = null;
             if (isset($data['signup_about']['raceSelect'])) {
                 foreach ($data['signup_about']['raceSelect'] as $race) {
@@ -400,28 +401,43 @@ class AuthentificationController extends Controller
                             $raceLink->setRace($race);
                             $em->persist($raceLink);
                             $em->flush();
+                            $participantData['RACE'][] = $race->getRaceId();
                         } else {
                             $message[] = " race ";
                         } 
                     }
+                } else {
+                    $participantData['RACE'] = null;
                 }
          
                 if (!empty($data['sexSelect'])) {
-                    if($sex = $em->getRepository('CyclogramProofPilotBundle:Sex')->find($data['sexSelect']))
+                    if($sex = $em->getRepository('CyclogramProofPilotBundle:Sex')->find($data['sexSelect'])){
                         $participant->setSex($sex);
-                    else
+                        $participantData['SEX'] = $sex->getSexId();
+                    } else {
                         $message[] =" sex ";
+                    }
+                } else {
+                    $participantData['SEX'] = null;
                 }
               
                 if (!empty($data['countrySelect'])) {
-                    if($participantcountry = $em->getRepository('CyclogramProofPilotBundle:Country')->find($data['countrySelect']))
+                    if($participantcountry = $em->getRepository('CyclogramProofPilotBundle:Country')->find($data['countrySelect'])) {
                         $participant->setCountry($participantcountry);
-                    else
+                        $participantData['COUNTRY'] = $participantcountry->getCountryId();
+                    } else {
                         $message[] =" country ";
+                    }
+                } else {
+                    $participantData['COUNTRY'] = null;
                 }
                     
-                if (isset($data['signup_about']['zipcode']))
+                if (isset($data['signup_about']['zipcode']) && !empty($data['signup_about']['zipcode'])) {
                     $participant->setParticipantZipcode($data['signup_about']['zipcode']);
+                    $participantData['ZIPCODE'] = $data['signup_about']['zipcode'];
+                } else {
+                    $participantData['ZIPCODE'] = null;
+                }
                 
                 if (!empty($data['signup_about']['yearsSelect']) || !empty($data['monthsSelect']) || !empty($data['signup_about']['daysSelect'])) {
                     $date = new \DateTime();
@@ -430,47 +446,83 @@ class AuthentificationController extends Controller
                         $currentDate = new \DateTime();
                         $diff = $currentDate->diff($date);
                         $participant->setAge($diff->y);
+                        $participantData['AGE'] = $diff->y;
                     }else{
                         $message[] = " birthdate ";
                     }
+                } else {
+                    $participantData['AGE'] = null;
                 }
                 if (!empty($data['gradeSelect'])) {
-                    if ($gradeLevel = $em->getRepository('CyclogramProofPilotBundle:GradeLevel')->find($data['gradeSelect']))
+                    if ($gradeLevel = $em->getRepository('CyclogramProofPilotBundle:GradeLevel')->find($data['gradeSelect'])) {
                         $participant->setGradeLevel($gradeLevel);
-                    else
+                        $participantData['GRADELEVEL'] = $gradeLevel->getGradeLevelId();
+                    } else {
                         $message[] = ' grade level ';
+                    }
+                }else {
+                    $participantData['GRADELEVEL'] = null;
                 }
                     
                 if (!empty($data['industrySelect'])) {
-                    if ($industry = $em->getRepository('CyclogramProofPilotBundle:Industry')->find($data['industrySelect']))
+                    if ($industry = $em->getRepository('CyclogramProofPilotBundle:Industry')->find($data['industrySelect'])) {
                         $participant->setIndustry($industry);
-                    else
+                        $participantData['INDUSTRY'] = $industry->getIndustryId();
+                    } else {
                         $message[] = ' industry ';
+                    }
+                }else {
+                    $participantData['INDUSTRY'] = null;
                 }
                 
-                if (isset($data['signup_about']['anunalIncome']))
+                if (isset($data['signup_about']['anunalIncome'])) {
                     $participant->setAnnualIncome($data['signup_about']['anunalIncome']);
+                    $participantData['INCOME'] = $data['signup_about']['anunalIncome'];
+                } else {
+                    $participantData['INCOME'] = null;
+                }
                 
                 if (!empty($data['maritalStatusSelect'])) {
-                    if ($maritalStatus = $em->getRepository('CyclogramProofPilotBundle:MaritalStatus')->find($data['maritalStatusSelect']))
+                    if ($maritalStatus = $em->getRepository('CyclogramProofPilotBundle:MaritalStatus')->find($data['maritalStatusSelect'])) {
                         $participant->setMaritalStatus($maritalStatus);
-                    else
+                        $participantData['MARITALSTATUS'] = $maritalStatus->getMaritalStatusId();
+                    }else{
                         $message[] = ' marital status ';
+                    }
+                } else {
+                    $participantData['MARITALSTATUS'] = null;
                 }
                 
                 $participant->setParticipantInterested($data['interestedSelect']);
-                
+                if ($data['interestedSelect'] == 'm')
+                    $participantData['SEXWITH'] = 1;
+                if ($data['interestedSelect'] == 'w')
+                    $participantData['SEXWITH'] = 2;
+                if ($data['interestedSelect'] == 'mw'){
+                    $participantData['SEXWITH'][] = 1;
+                    $participantData['SEXWITH'][] = 2;
+                }
                 if (isset($data['childrenSelect']) ){
-                     if ($data['childrenSelect'] == 'have')
+                     if ($data['childrenSelect'] == 'have') {
                          $participant->setChildren(1);
-                     if ($data['childrenSelect'] == 'nothave')
+                         $participantData['CHILDREN'] = 'Y';
+                     }
+                     if ($data['childrenSelect'] == 'nothave') {
                          $participant->setChildren(0);
-                     if (empty($data['childrenSelect']))
+                         $participantData['CHILDREN'] = 'N';
+                     };
+                     if (empty($data['childrenSelect'])) {
                          $participant->setChildren(0);
+                         $participantData['CHILDREN'] = 'N';
+                     }
+                } else {
+                    $participantData['CHILDREN'] = null;
                 }
                 
+                $participantData['PHONE'] = $participant->getParticipantMobileNumber();
+                $participantData['MAILING_ADDRESS'] = $participant->getParticipantAddress1();
                 $participant->setParticipantBasicInformation(true);
-                
+                $participant->setParticipantAboutMe(json_encode($participantData));
                 $em->persist($participant);
                 $em->flush();
                 
