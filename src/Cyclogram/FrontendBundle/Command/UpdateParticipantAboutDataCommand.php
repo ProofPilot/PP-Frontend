@@ -38,9 +38,9 @@ class UpdateParticipantAboutDataCommand extends ContainerAwareCommand
         $participants = $em->getRepository('CyclogramProofPilotBundle:Participant')->findByParticipantAboutMe(null);
         foreach ($participants as $participant) {
             $jsonData = array();
-            $sex = $participant->getSex()->getSexId();
+            $sex = $participant->getSex();
             if(isset($sex))
-                $jsonData['SEX'] = $sex;
+                $jsonData['SEX'] = $sex->getSexId();
             else 
                 $jsonData['SEX'] = null;
             $races = $em->getRepository('CyclogramProofPilotBundle:ParticipantRaceLink')->findByParticipant($participant);
@@ -50,12 +50,12 @@ class UpdateParticipantAboutDataCommand extends ContainerAwareCommand
             } else {
                 $jsonData['RACE'] = null;
             }
-            $gradeLevel = $participant->getGradeLevel()->getGradeLevelId();
+            $gradeLevel = $participant->getGradeLevel();
             if(isset($gradeLevel)) 
-                $jsonData['GRADELEVEL'] =  $participant->getGradeLevel()->getGradeLevelId();
+                $jsonData['GRADELEVEL'] =  $gradeLevel->getGradeLevelId();
             else 
                 $jsonData['GRADELEVEL'] = null;
-            $sexwith = $participant->getGradeLevel()->getGradeLevelId();
+            $sexwith = $participant->getParticipantInterested();
             if ($sexwith == 'm')
                 $jsonData['SEXWITH'] = 1;
             if ($sexwith == 'w')
@@ -64,14 +64,14 @@ class UpdateParticipantAboutDataCommand extends ContainerAwareCommand
                 $jsonData['SEXWITH'][] = 1;
                 $jsonData['SEXWITH'][] = 2;
             }
-            $indusrty = $participant->getIndustry()->getIndustryId();
+            $indusrty = $participant->getIndustry();
             if(isset($industry))
-                $jsonData['INDUSTRY'] = $industry;
+                $jsonData['INDUSTRY'] = $industry->getIndustryId();
             else 
                 $jsonData['INDUSTRY'] = null;
-            $maritalStatus = $participant->getMaritalStatus()->getMaritalStatusId();
+            $maritalStatus = $participant->getMaritalStatus();
             if(isset($maritalStatus))
-                $jsonData['MARITALSTATUS'] = $maritalStatus;
+                $jsonData['MARITALSTATUS'] = $maritalStatus->getMaritalStatusId();
             else 
                 $jsonData['MARITALSTATUS'] = null;
             $children = $participant->getChildren();
