@@ -77,8 +77,7 @@ class PledgeToTestStudy extends AbstractStudy implements StudyInterface
             }
             $em->persist($ArmParticipantLink);
             $em->flush();
-            
-            $this->createIncentive($referralParticipant, $this->getStudyCode());
+            $this->setRefferal($participant, 'Pledgereferral');
     }
     public function interventionLogic($participant)
     {
