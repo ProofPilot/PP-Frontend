@@ -179,7 +179,7 @@ class StudyRepository extends EntityRepository
             return false;
             $interventionInDB = $this->getEntityManager()
             ->createQuery("
-                    SELECT COUNT( DISTINCT i.interventionId )
+                    SELECT COUNT( DISTINCT i.interventionCode )
                     FROM CyclogramProofPilotBundle:Intervention i
                     INNER JOIN i.study s
                     WHERE
