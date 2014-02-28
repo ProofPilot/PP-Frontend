@@ -183,6 +183,10 @@ class StudyLogic
 
         $em->persist($participantLink);
         $em->flush();
+        
+        $conn = $this->container->get('database_connection');
+        $sql = "UPDATE limesurvey.lime_survey_{$surveyId} SET token = {$participant->getParticipantId()} WHERE id = {$saveId}";
+        $conn->query($sql);
     }
 
     public function interventionLogic($participant) {
