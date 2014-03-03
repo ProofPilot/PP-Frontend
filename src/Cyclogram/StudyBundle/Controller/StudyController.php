@@ -219,6 +219,7 @@ class StudyController extends Controller
         $studyPrelaunchMessage = $studyContent->getStudyPrelaunchMessage();
         $studyJoinGoogleButton = $studyContent->getStudyJoinGoogleButton();
         $studyJoinFacebookButton = $studyContent->getStudyJoinFacebookButton();
+        $studyAboutit = $studyContent->getStudyaboutit();
         $study = $studyContent->getStudy();
         $status = $this->getDoctrine()->getRepository('CyclogramProofPilotBundle:Status')->find($study->getStatus());
         $securityContext = $this->container->get('security.context');
@@ -240,6 +241,7 @@ class StudyController extends Controller
         $this->parameters['studyPrelaunchMessage'] =  $studyPrelaunchMessage;
         $this->parameters['studyJoinGoogleButton'] =  $studyJoinGoogleButton;
         $this->parameters['studyJoinFacebookButton'] =  $studyJoinFacebookButton;
+        $this->parameters['studyAboutit'] =  $studyAboutit;
         
         $this->parameters['studyJoinButtonName'] =  $studyJoinButtonName;
         $participant = $this->get('security.context')->getToken()->getUser();

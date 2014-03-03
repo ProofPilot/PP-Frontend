@@ -599,7 +599,12 @@
                         </ul>
                     {% endif %}
                     </div>
-                   <h1>{% trans from "study" %}txt_studyabout_title{% endtrans %}</h1>
+                   <h1>
+                   {% if studyAboutit is defined %}
+                       {% trans from "study" %}txt_studyabout_title{% endtrans %}</h1>
+                   {% else %}
+                       {{ studyAboutit }}
+                   {% endif %}
                     {{ studycontent.studyAbout |raw }}
                     <h1>{% trans from "study" %}txt_studywhatsinvolved_title{% endtrans %}</h1>
                     {{ studycontent.studyWhatsInvolved | raw }}
