@@ -166,6 +166,7 @@
                 dataType: "json",
                 type: "POST",
                 url: Routing.generate('_locationselect_completed_ajax', {
+                    studyCode: {{ studyCode }},
                     siteId: siteId,
                     _locale: '{{ app.request.locale }}' 
                     }
