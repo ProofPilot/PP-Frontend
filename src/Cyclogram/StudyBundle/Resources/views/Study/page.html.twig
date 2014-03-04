@@ -600,7 +600,7 @@
                     {% endif %}
                     </div>
                    <h1>
-                   {% if studyAboutit is defined %}
+                   {% if studyAboutit is not defined %}
                        {% trans from "study" %}txt_studyabout_title{% endtrans %}</h1>
                    {% else %}
                        {{ studyAboutit }}

@@ -15,7 +15,7 @@ class Version20140303181159 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql("
                 ALTER TABLE `new-proofpilot`.`study_content`
-                ADD COLUMN `study_about_it` VARCHAR(45) NULL AFTER `study_join_button_name`,
+                ADD COLUMN `study_about_it` VARCHAR(45) NULL AFTER `study_join_button_name`
                 ");
 
     }
@@ -26,7 +26,7 @@ class Version20140303181159 extends AbstractMigration
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != "mysql");
         $this->addSql("
                 ALTER TABLE `new-proofpilot`.`study_content`
-                DROP COLUMN `study_about_it`,
+                DROP COLUMN `study_about_it`
                 ");
 
     }
