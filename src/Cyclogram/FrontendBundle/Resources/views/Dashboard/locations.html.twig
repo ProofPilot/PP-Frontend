@@ -167,6 +167,7 @@
                 type: "POST",
                 url: Routing.generate('_locationselect_completed_ajax', {
                     studyCode: '{{ studyCode }}',
+                    interventionCode: '{{ intervention.code }}'
                     siteId: siteId,
                     _locale: '{{ app.request.locale }}' 
                     }
