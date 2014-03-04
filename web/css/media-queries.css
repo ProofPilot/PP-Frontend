@@ -1222,7 +1222,8 @@
 	.intro_page .text_wrapper .video_wrapper .video_text {
         display: block;
         width: 100%;
-        padding-bottom: 80px;
+        padding-top: 20px;
+        padding-bottom: 20px;
     }
     .intro_page .text_wrapper .video_wrapper .video_text ul.participants_num li {
     	width: 50%;
@@ -1239,6 +1240,30 @@
 	}
 	.intro_page .text_wrapper .video_wrapper a.fb {
 		display: block;
+	}
+	.intro_page .text_wrapper .video_wrapper .video_text #facebook_button_landing_page {
+		display: block;
+	}
+	.intro_page .text_wrapper .video_wrapper .video_text #prelaunch_input_box {
+		display: none;
+	}
+	.video_text #prelaunch_input_box {
+		display: none;
+	}
+	#prelaunch_input_box {
+		display: block;
+		text-align: center;
+		margin: 15px 0px;
+	}
+	#prelaunch_input_box #uniform-recruiter, #logged_in_input_box #uniform-recruiter_loggedin {
+		top: 0px;
+	}
+	.intro_page .input_msg {
+		display: block;
+		text-align: center;
+	}
+	.intro_page .text_wrapper .video_wrapper .video_text .input_msg {
+		display: none;
 	}
 	.intro_page .text_wrapper .video_wrapper .video_text a.fb {
 		display: none;
@@ -2115,6 +2140,7 @@
 	}
 	.intro_page .home_welcome {
 		overflow: visible;
+		float: left;
 	}
 	.intro_page .home_welcome .welcome_banner img {
 		width: 100%;

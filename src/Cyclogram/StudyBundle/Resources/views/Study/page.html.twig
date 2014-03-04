@@ -45,11 +45,22 @@
             {% if (queryParams["preLaunch"] is defined) %}
                 <span class="prelaunch_msg">{{ queryParams["preLaunch"] }}</span>
             {% else %}
-                {% if not is_granted('ROLE_PARTICIPANT') or not is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                    {% if studyJoinButtonName is not empty%}
-                        <a href="#" class="join" id="send_prelaunch"><span>{{ studyJoinButtonName|striptags }}</span></a>
+                <div class="input_msg">
+                    {% if studyPrelaunchMessage is empty %}
+                        <h1><span class="text red">{% trans from "register" %}let_know_launch{% endtrans %}</span></h1>
                     {% else %}
-                        <a href="#" class="join" id="send_prelaunch"><span>{% trans from "register" %}let_me_know{% endtrans %}</span></a>
+                        <h1><span class="text red">{{ studyPrelaunchMessage|striptags }}</span></h1>
+                    {% endif %}
+                </div>
+                {% if not is_granted('ROLE_PARTICIPANT') or not is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                    <div id="prelaunch_input_box">
+                        <input type="text" placeholder="enter e-mail address" id="prelaunch_email"></input><br>
+                        <input type="checkbox" id="recruiter"></input><span>{% trans from "register" %}help_recruit_people{% endtrans %}</span>
+                    </div>
+                    {% if studyJoinButtonName is not empty%}
+                        <a href="#" class="join for_mobile" id="send_prelaunch"><span>{{ studyJoinButtonName|striptags }}</span></a>
+                    {% else %}
+                        <a href="#" class="join for_mobile" id="send_prelaunch"><span>{% trans from "register" %}let_me_know{% endtrans %}</span></a>
                     {% endif %}
                 {% endif %}
                 {% if is_granted('ROLE_PARTICIPANT') or is_granted('IS_AUTHENTICATED_REMEMBERED') %}
@@ -57,9 +68,9 @@
                         <input type="checkbox" id="recruiter_loggedin"></input><span>{% trans from "register" %}help_recruit_people{% endtrans %}</span>
                     </div>
                     {% if studyJoinButtonName is empty %}
-	                    <a href="#" class="join" id="send_prelaunch_loggedin" >{% trans from "register" %}let_me_know{% endtrans %}</a>
+	                    <a href="#" class="join for_mobile" id="send_prelaunch_loggedin" >{% trans from "register" %}let_me_know{% endtrans %}</a>
                     {% else %}
-                        <a href="#" class="join" id="send_prelaunch_loggedin" >{{ studyJoinButtonName|striptags }}</a>
+                        <a href="#" class="join for_mobile" id="send_prelaunch_loggedin" >{{ studyJoinButtonName|striptags }}</a>
                     {% endif %}
                 {% endif %}
             {% endif %}
@@ -68,10 +79,6 @@
                 <a href="" class="join for_mobile consent"><span>{% trans from "study" %}button_join_the_study_goal{% endtrans %}</span></a>
             {% endif %}
         {% endif %}
-        
-        
-        
-
         <div class="choose_action">
         {% if studycontent.studySponsorBy is not empty %}
                <h3>{% trans from "study" %}txt_sponsored_by{% endtrans %}: {{ studycontent.studySponsorBy }}</h3>
@@ -95,28 +102,8 @@
             </p>
             {% endif %}
         {% endif %}
-        
-        
         <div class="text_wrapper">
             <div class="video_wrapper">
-            {% if not is_granted('ROLE_PARTICIPANT') or not is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                {% if studyStatus  == 'Pre-Launch'%}                    
-                    {% if studyJoinFacebookButton is empty %}
-        	            <a class="fb" id="facebook_button_landing_page" href="">
-        	                <span>{% trans from "register" %}waitlist_with_facebook{% endtrans %}</span>
-        	            </a>
-                    {% else %}
-                        <a class="fb" id="facebook_button_landing_page" href="">
-                            <span>{{ studyJoinFacebookButton|striptags }}</span>
-                        </a>
-                    {% endif %}
-                {% else %}
-                    {% if not is_granted('ROLE_PARTICIPANT') or not is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                        <a class="fb" id="facebook_button_landing_page" href=""><span>{% trans from "register" %}join_with_facebook{% endtrans %}</span></a>
-                    {% endif %}
-                {% endif %}
-            {% endif %}
-                    
                 <div class="video_placeholder">
                     {% if studycontent.studyVideo is not empty %}
                     <iframe width="670" height="393" 
@@ -150,7 +137,7 @@
                         {% if (queryParams["preLaunch"] is defined) %}
                             <span class="prelaunch_msg">{{ queryParams["preLaunch"] }}</span>
                         {% else %}
-                            <div>
+                            <div class="input_msg">
                                 {% if studyPrelaunchMessage is empty %}
                                 	<h1><span class="text red">{% trans from "register" %}let_know_launch{% endtrans %}</span></h1>
                                 {% else %}
