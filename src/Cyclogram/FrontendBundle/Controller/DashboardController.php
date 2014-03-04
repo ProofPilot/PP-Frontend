@@ -594,7 +594,7 @@ class DashboardController extends Controller
 
             //participant_site_link
             $result = $em->getRepository('CyclogramProofPilotBundle:ParticipantCampaignLink')
-                        ->setParticipantCampaignLink($participant, $request->get("siteId"));
+                        ->setParticipantCampaignLink($participant, $request->get("siteId"), $request->get("studyCode"));
             
             if($result) {
                 $intervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')

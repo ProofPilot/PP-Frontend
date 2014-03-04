@@ -31,20 +31,24 @@ use Cyclogram\CyclogramCommon;
 
 class ParticipantCampaignLinkRepository extends EntityRepository
 {
-    public function setParticipantCampaignLink($participant, $siteId)
+    public function setParticipantCampaignLink($participant, $siteId, $studyCode)
     {
         $em = $this->getEntityManager();
         
         $site = $em->getRepository('CyclogramProofPilotBundle:Site')->find($siteId);
+        $study = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
         
         //get campaign site link by site id
         $csl = $em
         ->createQuery('SELECT csl FROM CyclogramProofPilotBundle:CampaignSiteLink csl
                 INNER JOIN csl.site s
                 INNER JOIN csl.campaign c
+                INNER JOIN c.placement p
                 WHERE s.siteId = :siteid
+                AND p.study = :study
                 ')
                 ->setParameter('siteid', $siteId)
+                ->setParameter('study', $study)
                 ->getOneOrNullResult();
         
         if(!$csl) return null;
