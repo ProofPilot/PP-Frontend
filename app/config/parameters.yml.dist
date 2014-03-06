@@ -57,4 +57,5 @@ parameters:
     handlebars.extension: "\.hbs$"
     handlebars.bin: /usr/bin/handlebars
     handlebars.node: /usr/bin/node
+    assetic_output_dir: %kernel.root_dir%/../web/
     
