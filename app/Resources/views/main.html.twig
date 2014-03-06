@@ -945,6 +945,16 @@
                 open: funcCustom
             });
             });
+        $(".leave_study").bind('click', function(){
+            $("#div_leave_study").dialog({
+          	  modal: true,
+                width: '260px',
+                fluid: true,
+                resizable: false,
+                position: ['top',100],
+                open: funcCustom
+            });
+            });
         // mobile_login_switcher
         $(".mobile_login_switcher a").bind('click', function(){
             if( $(this).attr('rel') ){

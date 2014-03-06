@@ -4047,6 +4047,14 @@ footer .row_2 p {
 	padding: 25px;
 	text-align: center;
 }
+
+#div_leave_study {
+	background: #fff;
+	border-radius: 5px;
+	color: #C1402E;
+	padding: 25px;
+	text-align: center;
+}
 .footer_col_middle iframe table {
 	float: right;
 }

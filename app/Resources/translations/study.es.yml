@@ -4,6 +4,7 @@ button_personalized_insight: 'Ver Insights personalizados'
 button_study_findings: 'Ver Resultados del Estudio'
 button_view_consent: 'Lo que usted necesita saber'
 inivted_to_study: 'Usted está invitado al estudio,'
+let_us_know_to_leave_study: let_us_know_to_leave_study   # FIXME
 login_to_prelaunch: '?????'
 msg_not_eligible: 'Usted no es elegible para ''%studyname%'' en este momento.'
 social_at_proofpilot: 'en ProofPilot'
@@ -24,8 +25,8 @@ txt_pin: Cuota
 txt_share: Cuota
 txt_sponsored_by: 'Este estudio está patrocinado por'
 txt_staff: Personal
-txt_studyabout_title: txt_studyabout_title   # FIXME
-txt_studywhatsinvolved_title: txt_studywhatsinvolved_title   # FIXME
+txt_studyabout_title: txt_studyabout_title
+txt_studywhatsinvolved_title: txt_studywhatsinvolved_title
 txt_tweet: Tweet
 txt_you_are_eligible: 'Eres Usted es elegible. Acepta el consentimiento para continuar ...'
 unavailable_functionality: 'No hay resultados provisionales de este estudio todavía. Te avisaremos cuando los resultados área disponible para su revisión.'
