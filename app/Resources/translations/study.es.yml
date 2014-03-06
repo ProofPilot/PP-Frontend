@@ -4,6 +4,7 @@ button_personalized_insight: 'Ver Insights personalizados'
 button_study_findings: 'Ver Resultados del Estudio'
 button_view_consent: 'Lo que usted necesita saber'
 inivted_to_study: 'Usted está invitado al estudio,'
+let_us_know_to_leave_study: let_us_know_to_leave_study   # FIXME
 login_to_prelaunch: '?????'
 msg_not_eligible: 'Usted no es elegible para ''%studyname%'' en este momento.'
 social_at_proofpilot: 'en ProofPilot'

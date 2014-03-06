@@ -46,6 +46,7 @@ twig:
         study_image_url: %study_image_url%
         site_url: %site_url%
         url_assets: %url_assets%
+        mailer_from: %mailer_from%
     form:
         resources:
             - 'CyclogramFrontendBundle:Form:fields.html.twig'

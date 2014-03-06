@@ -226,7 +226,7 @@
                                     <li><a href="#" class="sm_icon_1 consent">{% trans from "study" %}button_view_consent{% endtrans %}</a></li>
                                     <li><a href="#" class="sm_icon_2 temporaty_unavailable">{% trans from "study" %}button_personalized_insight{% endtrans %}</a></li>
                                     <li><a href="#" class="sm_icon_3 temporaty_unavailable">{% trans from "study" %}button_study_findings{% endtrans %}</a></li>
-                                    <li class="last"><a href="#" class="sm_icon_4 temporaty_unavailable">{% trans from "study" %}button_leave_study{% endtrans %}</a></li>
+                                    <li class="last"><a href="#" class="sm_icon_4 leave_study">{% trans from "study" %}button_leave_study{% endtrans %}</a></li>
                                 </ul>
                             {% elseif not is_not_eligible_in_study(studyCode) %}
                                 {% set redirectUrl = path('_main')  %}
@@ -367,6 +367,7 @@
         </div>
     </form>
     <div id="div_temporaty_unavailable" style="display:none;">{%  trans from "study" %}unavailable_functionality{% endtrans %}</div>
+    <div id="div_leave_study" style="display:none;">{%  trans  with { '%mailer_from%': mailer_from } from "study" %}let_us_know_to_leave_study{% endtrans %}</div>
     <div id="embed_list" style="display:none;">
         <code><a href="{{host}}{{path('_page', {'studyUrl' : studyUrl})}}">{{host}}{{path('_page', {'studyUrl' : studyUrl})}}</a></code>
     </div>
