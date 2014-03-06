@@ -39,6 +39,14 @@ use Symfony\Component\HttpFoundation\Request;
 class DefaultController extends Controller
 
 {
+    private $parameters = array();
+    
+    public function preExecute()
+    {
+        $cc = $this->container->get('cyclogram.common');
+        $this->parameters = $cc->defaultJsParameters($this->getRequest());
+    }
+    
     /**
      * @Route("/", name="_index")
      * @Template()
@@ -67,7 +75,7 @@ class DefaultController extends Controller
         $blockContent = $em->getRepository("CyclogramProofPilotBundle:StaticBlocks")->getBlockContent("about_proofpilot", $locale);
         $parameters["about"] = $blockContent;
     
-    
-        return $this->render('CyclogramStudyBundle:Study:is_it_secure.html.twig', $parameters);
+        $this->parameters = array_merge($this->parameters, $parameters);
+        return $this->render('CyclogramStudyBundle:Study:is_it_secure.html.twig', $this->parameters);
     }
 }

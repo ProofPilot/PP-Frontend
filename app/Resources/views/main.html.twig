@@ -1,0 +1,1724 @@
+<script type="text/javascript">
+(function($){
+	
+	// swipe	
+	(function(d){var m="left",l="right",c="up",s="down",b="in",t="out",j="none",o="auto",i="swipe",p="pinch",u="tap",x="horizontal",q="vertical",g="all",e="start",h="move",f="end",n="cancel",a="ontouchstart" in window,v="TouchSwipe";var k={fingers:1,threshold:75,cancelThreshold:25,pinchThreshold:20,maxTimeThreshold:null,fingerReleaseThreshold:250,swipe:null,swipeLeft:null,swipeRight:null,swipeUp:null,swipeDown:null,swipeStatus:null,pinchIn:null,pinchOut:null,pinchStatus:null,click:null,tap:null,triggerOnTouchEnd:true,triggerOnTouchLeave:false,allowPageScroll:"auto",fallbackToMouseEvents:true,excludedElements:"button, input, select, textarea, a, .noSwipe"};d.fn.swipe=function(A){var z=d(this),y=z.data(v);if(y&&typeof A==="string"){if(y[A]){return y[A].apply(this,Array.prototype.slice.call(arguments,1))}else{d.error("Method "+A+" does not exist on jQuery.swipe")}}else{if(!y&&(typeof A==="object"||!A)){return r.apply(this,arguments)}}return z};d.fn.swipe.defaults=k;d.fn.swipe.phases={PHASE_START:e,PHASE_MOVE:h,PHASE_END:f,PHASE_CANCEL:n};d.fn.swipe.directions={LEFT:m,RIGHT:l,UP:c,DOWN:s,IN:b,OUT:t};d.fn.swipe.pageScroll={NONE:j,HORIZONTAL:x,VERTICAL:q,AUTO:o};d.fn.swipe.fingers={ONE:1,TWO:2,THREE:3,ALL:g};function r(y){if(y&&(y.allowPageScroll===undefined&&(y.swipe!==undefined||y.swipeStatus!==undefined))){y.allowPageScroll=j}if(y.click!==undefined&&y.tap===undefined){y.tap=y.click}if(!y){y={}}y=d.extend({},d.fn.swipe.defaults,y);return this.each(function(){var A=d(this);var z=A.data(v);if(!z){z=new w(this,y);A.data(v,z)}})}function w(S,ag){var aJ=(a||!ag.fallbackToMouseEvents),az=aJ?"touchstart":"mousedown",U=aJ?"touchmove":"mousemove",av=aJ?"touchend":"mouseup",D=aJ?null:"mouseleave",R="touchcancel";var ad=0,N=null,ah=0,aF=0,A=0,aj=1,aA=0,aN=0,Z=null;var H=d(S);var O="start";var aI=0;var ai=null;var I=0,Y=0,aD=0,aP=0;try{H.bind(az,at);H.bind(R,L)}catch(aG){d.error("events not supported "+az+","+R+" on jQuery.swipe")}this.enable=function(){H.bind(az,at);H.bind(R,L);return H};this.disable=function(){Q();return H};this.destroy=function(){Q();H.data(v,null);return H};this.option=function(aR,aQ){if(ag[aR]!==undefined){if(aQ===undefined){return ag[aR]}else{ag[aR]=aQ}}else{d.error("Option "+aR+" does not exist on jQuery.swipe.options")}};function at(aS){if(X()){return}if(d(aS.target).closest(ag.excludedElements,H).length>0){return}var aT=aS.originalEvent?aS.originalEvent:aS;var aR,aQ=a?aT.touches[0]:aT;O=e;if(a){aI=aT.touches.length}else{aS.preventDefault()}ad=0;N=null;aN=null;ah=0;aF=0;A=0;aj=1;aA=0;ai=T();Z=aE();z();if(!a||(aI===ag.fingers||ag.fingers===g)||ap()){aO(0,aQ);I=B();if(aI==2){aO(1,aT.touches[1]);aF=A=aa(ai[0].start,ai[1].start)}if(ag.swipeStatus||ag.pinchStatus){aR=aH(aT,O)}}else{aR=false}if(aR===false){O=n;aH(aT,O);return aR}else{ak(true)}}function P(aT){var aW=aT.originalEvent?aT.originalEvent:aT;if(O===f||O===n||af()){return}var aS,aR=a?aW.touches[0]:aW;var aU=V(aR);Y=B();if(a){aI=aW.touches.length}O=h;if(aI==2){if(aF==0){aO(1,aW.touches[1]);aF=A=aa(ai[0].start,ai[1].start)}else{V(aW.touches[1]);A=aa(ai[0].end,ai[1].end);aN=ao(ai[0].end,ai[1].end)}aj=y(aF,A);aA=Math.abs(aF-A)}if((aI===ag.fingers||ag.fingers===g)||!a||ap()){N=ar(aU.start,aU.end);C(aT,N);ad=G(aU.start,aU.end);ah=K();aK(N,ad);if(ag.swipeStatus||ag.pinchStatus){aS=aH(aW,O)}if(!ag.triggerOnTouchEnd||ag.triggerOnTouchLeave){var aQ=true;if(ag.triggerOnTouchLeave){var aV=au(this);aQ=aC(aU.end,aV)}if(!ag.triggerOnTouchEnd&&aQ){O=aM(h)}else{if(ag.triggerOnTouchLeave&&!aQ){O=aM(f)}}if(O==n||O==f){aH(aW,O)}}}else{O=n;aH(aW,O)}if(aS===false){O=n;aH(aW,O)}}function ab(aS){var aU=aS.originalEvent;if(a){if(aU.touches.length>0){aw();return true}}if(af()){aI=aP}aS.preventDefault();Y=B();if(ag.triggerOnTouchEnd||(ag.triggerOnTouchEnd==false&&O===h)){O=f;var aR=((aI===ag.fingers||ag.fingers===g)||!a);var aQ=ai[0].end.x!==0;var aT=aR&&aQ&&(an()||aB());if(aT){aH(aU,O)}else{O=n;aH(aU,O)}}else{if(!ag.triggerOnTouchEnd&&ay()){O=f;am(aU,O,u)}else{if(O===h){O=n;aH(aU,O)}}}ak(false)}function L(){aI=0;Y=0;I=0;aF=0;A=0;aj=1;z();ak(false)}function W(aQ){var aR=aQ.originalEvent;if(ag.triggerOnTouchLeave){O=aM(f);aH(aR,O)}}function Q(){H.unbind(az,at);H.unbind(R,L);H.unbind(U,P);H.unbind(av,ab);if(D){H.unbind(D,W)}ak(false)}function aM(aT){var aS=aT;var aR=aq();var aQ=ae();if(!aR){aS=n}else{if(aQ&&aT==h&&(!ag.triggerOnTouchEnd||ag.triggerOnTouchLeave)){aS=f}else{if(!aQ&&aT==f&&ag.triggerOnTouchLeave){aS=n}}}return aS}function aH(aS,aQ){var aR=undefined;if(ac()){aR=am(aS,aQ,i)}if(ap()&&aR!==false){aR=am(aS,aQ,p)}if(ay()&&aR!==false){aR=am(aS,aQ,u)}if(aQ===n){L(aS)}if(aQ===f){if(a){if(aS.touches.length==0){L(aS)}}else{L(aS)}}return aR}function am(aT,aQ,aS){var aR=undefined;if(aS==i){H.trigger("swipeStatus",[aQ,N||null,ad||0,ah||0,aI]);if(ag.swipeStatus){aR=ag.swipeStatus.call(H,aT,aQ,N||null,ad||0,ah||0,aI);if(aR===false){return false}}if(aQ==f&&aB()){H.trigger("swipe",[N,ad,ah,aI]);if(ag.swipe){aR=ag.swipe.call(H,aT,N,ad,ah,aI);if(aR===false){return false}}switch(N){case m:H.trigger("swipeLeft",[N,ad,ah,aI]);if(ag.swipeLeft){aR=ag.swipeLeft.call(H,aT,N,ad,ah,aI)}break;case l:H.trigger("swipeRight",[N,ad,ah,aI]);if(ag.swipeRight){aR=ag.swipeRight.call(H,aT,N,ad,ah,aI)}break;case c:H.trigger("swipeUp",[N,ad,ah,aI]);if(ag.swipeUp){aR=ag.swipeUp.call(H,aT,N,ad,ah,aI)}break;case s:H.trigger("swipeDown",[N,ad,ah,aI]);if(ag.swipeDown){aR=ag.swipeDown.call(H,aT,N,ad,ah,aI)}break}}}if(aS==p){H.trigger("pinchStatus",[aQ,aN||null,aA||0,ah||0,aI,aj]);if(ag.pinchStatus){aR=ag.pinchStatus.call(H,aT,aQ,aN||null,aA||0,ah||0,aI,aj);if(aR===false){return false}}if(aQ==f&&an()){switch(aN){case b:H.trigger("pinchIn",[aN||null,aA||0,ah||0,aI,aj]);if(ag.pinchIn){aR=ag.pinchIn.call(H,aT,aN||null,aA||0,ah||0,aI,aj)}break;case t:H.trigger("pinchOut",[aN||null,aA||0,ah||0,aI,aj]);if(ag.pinchOut){aR=ag.pinchOut.call(H,aT,aN||null,aA||0,ah||0,aI,aj)}break}}}if(aS==u){if(aQ===n||aQ===f){if((aI===1||!a)&&(isNaN(ad)||ad===0)){H.trigger("tap",[aT.target]);if(ag.tap){aR=ag.tap.call(H,aT,aT.target)}}}}return aR}function ae(){var aQ=true;if(ag.threshold!==null){aQ=ad>=ag.threshold}if(aQ&&ag.cancelThreshold!==null){aQ=(M(N)-ad)<ag.cancelThreshold}return aQ}function al(){if(ag.pinchThreshold!==null){return aA>=ag.pinchThreshold}return true}function aq(){var aQ;if(ag.maxTimeThreshold){if(ah>=ag.maxTimeThreshold){aQ=false}else{aQ=true}}else{aQ=true}return aQ}function C(aQ,aR){if(ag.allowPageScroll===j||ap()){aQ.preventDefault()}else{var aS=ag.allowPageScroll===o;switch(aR){case m:if((ag.swipeLeft&&aS)||(!aS&&ag.allowPageScroll!=x)){aQ.preventDefault()}break;case l:if((ag.swipeRight&&aS)||(!aS&&ag.allowPageScroll!=x)){aQ.preventDefault()}break;case c:if((ag.swipeUp&&aS)||(!aS&&ag.allowPageScroll!=q)){aQ.preventDefault()}break;case s:if((ag.swipeDown&&aS)||(!aS&&ag.allowPageScroll!=q)){aQ.preventDefault()}break}}}function an(){return al()}function ap(){return !!(ag.pinchStatus||ag.pinchIn||ag.pinchOut)}function ax(){return !!(an()&&ap())}function aB(){var aQ=aq();var aS=ae();var aR=aS&&aQ;return aR}function ac(){return !!(ag.swipe||ag.swipeStatus||ag.swipeLeft||ag.swipeRight||ag.swipeUp||ag.swipeDown)}function E(){return !!(aB()&&ac())}function ay(){return !!(ag.tap)}function aw(){aD=B();aP=event.touches.length+1}function z(){aD=0;aP=0}function af(){var aQ=false;if(aD){var aR=B()-aD;if(aR<=ag.fingerReleaseThreshold){aQ=true}}return aQ}function X(){return !!(H.data(v+"_intouch")===true)}function ak(aQ){if(aQ===true){H.bind(U,P);H.bind(av,ab);if(D){H.bind(D,W)}}else{H.unbind(U,P,false);H.unbind(av,ab,false);if(D){H.unbind(D,W,false)}}H.data(v+"_intouch",aQ===true)}function aO(aR,aQ){var aS=aQ.identifier!==undefined?aQ.identifier:0;ai[aR].identifier=aS;ai[aR].start.x=ai[aR].end.x=aQ.pageX||aQ.clientX;ai[aR].start.y=ai[aR].end.y=aQ.pageY||aQ.clientY;return ai[aR]}function V(aQ){var aS=aQ.identifier!==undefined?aQ.identifier:0;var aR=J(aS);aR.end.x=aQ.pageX||aQ.clientX;aR.end.y=aQ.pageY||aQ.clientY;return aR}function J(aR){for(var aQ=0;aQ<ai.length;aQ++){if(ai[aQ].identifier==aR){return ai[aQ]}}}function T(){var aQ=[];for(var aR=0;aR<=5;aR++){aQ.push({start:{x:0,y:0},end:{x:0,y:0},identifier:0})}return aQ}function aK(aQ,aR){aR=Math.max(aR,M(aQ));Z[aQ].distance=aR}function M(aQ){return Z[aQ].distance}function aE(){var aQ={};aQ[m]=aL(m);aQ[l]=aL(l);aQ[c]=aL(c);aQ[s]=aL(s);return aQ}function aL(aQ){return{direction:aQ,distance:0}}function K(){return Y-I}function aa(aT,aS){var aR=Math.abs(aT.x-aS.x);var aQ=Math.abs(aT.y-aS.y);return Math.round(Math.sqrt(aR*aR+aQ*aQ))}function y(aQ,aR){var aS=(aR/aQ)*1;return aS.toFixed(2)}function ao(){if(aj<1){return t}else{return b}}function G(aR,aQ){return Math.round(Math.sqrt(Math.pow(aQ.x-aR.x,2)+Math.pow(aQ.y-aR.y,2)))}function F(aT,aR){var aQ=aT.x-aR.x;var aV=aR.y-aT.y;var aS=Math.atan2(aV,aQ);var aU=Math.round(aS*180/Math.PI);if(aU<0){aU=360-Math.abs(aU)}return aU}function ar(aR,aQ){var aS=F(aR,aQ);if((aS<=45)&&(aS>=0)){return m}else{if((aS<=360)&&(aS>=315)){return m}else{if((aS>=135)&&(aS<=225)){return l}else{if((aS>45)&&(aS<135)){return s}else{return c}}}}}function B(){var aQ=new Date();return aQ.getTime()}function au(aQ){aQ=d(aQ);var aS=aQ.offset();var aR={left:aS.left,right:aS.left+aQ.outerWidth(),top:aS.top,bottom:aS.top+aQ.outerHeight()};return aR}function aC(aQ,aR){return(aQ.x>aR.left&&aQ.x<aR.right&&aQ.y>aR.top&&aQ.y<aR.bottom)}}})(jQuery);
+	
+	
+	function notice_gray_2rows(){
+		var span_h = $(".notice.gray span").outerHeight();
+		if( span_h > 30 ){
+			 $(".notice.gray").addClass('rows_2');
+		}
+		else {
+			$(".notice.gray").removeClass('rows_2');
+		}
+	}
+	window.notice_gray_2rows = notice_gray_2rows;
+	
+	
+//	function resize_text_box(){
+//		
+//		var cont_height = $(".featured_box").height();
+//		
+//		$(".featured_box .text_box").each(function(){
+//			
+//			var text_height = $(this).height();
+//			
+//			var new_margin = (cont_height - text_height) / 2;
+//			
+//			$(this).css('margin-top' , new_margin);
+//			
+//		});
+//		
+//	}
+	
+	function resize_dashboard_title_align_to_middle(){
+		var default_p	= 33;
+		var dh_height 	= $(".dashboard_title").outerHeight();
+		var span_height = $(".dashboard_title span.align_to_middle").outerHeight();
+		//console.log(dh_height, span_height);
+		if( span_height > 70 ){
+			var h_new_diff	= ((dh_height-span_height) / 2) * (-1);
+			//console.log(h_new_diff);
+			$(".dashboard_title span.align_to_middle").css('margin-top', h_new_diff + (default_p/2));
+		}
+		else {
+			$(".dashboard_title span.align_to_middle").css('margin-top', 0);	
+		}
+	}
+	window.resize_dashboard_title_align_to_middle = resize_dashboard_title_align_to_middle;
+	
+	function resize_profile_info(){
+		if( $(window).width() > 800 ){
+			var profile_info_height = $(".profile_info").outerHeight();
+			var aligner_height 		= $(".aligner").height();
+			var h_diff_aligner		= profile_info_height - aligner_height;
+			if( h_diff_aligner > 38 ){
+				$(".aligner").css('padding-top', h_diff_aligner / 2 - 15 );
+			}
+			else {
+				$(".aligner").css('padding-top', 0 );
+			}			
+		}
+		else {
+				$(".aligner").css('padding-top', 0 );
+		}
+	}
+	window.resize_profile_info = resize_profile_info;
+	
+	function footer_stick_to_bottom(){
+		// what page
+		var cont = null;
+		if( $(".intro_page").size() ){ cont = $(".intro_page"); }
+		if( $(".panel").size() ){ cont = $(".panel"); }
+		if( cont ){
+			// init
+			if( !$(cont).attr('data-default-margin-bottom') ){
+				$(cont).attr('data-default-margin-bottom' , $(cont).css('margin-bottom') );
+			}
+			// resize
+			if( $(window).width() > 1000 ){
+				// where is footer
+				var f_offset = $("footer").offset();
+				var f_height = $("footer").outerHeight();
+				var w_height = $(window).height();
+				// diff to bottom
+				var diff_to_bottom = w_height - (f_offset.top + f_height);
+				// add to margin
+				if( diff_to_bottom ){
+					var new_bottom_margin = diff_to_bottom + parseInt($(cont).attr('data-default-margin-bottom'));
+					if( new_bottom_margin > 0 ){
+						$(cont).css('margin-bottom' , new_bottom_margin );	
+					}
+				}
+			}
+			else {
+				
+				$(cont).removeAttr('style');
+			}			
+		}
+	}
+	window.footer_stick_to_bottom = footer_stick_to_bottom;
+	
+	function aside_height(){
+		// > 750
+		if( $(window).width() > 750 ){
+			var left_text_height = $(".intro_page .text_wrapper .home_text").height();
+			$(".intro_page .text_wrapper aside").css('min-height' , left_text_height);
+		}
+		else {
+			// reset
+			$(".intro_page .text_wrapper aside").css('min-height' , 0);			
+		}
+	}
+	window.aside_height = aside_height;
+	
+	function study_leftmenu(){
+			// height			
+			var left_text_height = $(".panel_right").height();
+			$(".panel_left").css('min-height' , left_text_height);
+			// check for win resize from tablet -> desktop with left menu opened
+			if( $(window).width() > 777 ){
+				// is opened?
+				if( $(".opened_left_menu").size() ){
+					
+					
+					$(".opened_left_menu").removeClass('opened_left_menu');
+					$(".panel_right").removeAttr('style');
+					//$(".panel_left").hide();
+					
+				}
+				
+			}
+	}
+	window.study_leftmenu = study_leftmenu;
+	
+	
+	function activity_box_resize(){
+		if( $(window).width() > 560 ){
+			$(".activity_box ul").css('min-height', 'none');
+			var max_height = 0
+			$(".activity_box ul").each( function(){
+				if( $(this).height() > max_height ){
+					max_height = $(this).height();
+				}
+			});
+			
+			$(".activity_box ul").css('min-height', max_height);
+		}
+		else {
+			$(".activity_box ul").css('min-height', 'none');
+		}
+	}
+	window.activity_box_resize = activity_box_resize;
+	
+	function show_hide_leftmenu(){
+		if( !$(".panel").hasClass('opened_left_menu') ){
+			// min height
+			$(".panel, .panel_left").css('min-height' , $(".panel_right").height() );
+			// init
+			$(".panel").addClass('opened_left_menu');
+			// animate left
+			$(".panel_left")
+			.css('left', '-250px')
+			.show()
+			.animate({
+				'left' : '0px'
+			});
+			
+			// animate right
+			$(".panel_right")
+			.css('margin-left', '0px')
+			.animate({
+				'margin-left' : '250px'
+			});
+		}
+		else {
+			// animate left
+			$(".panel_left")
+			.css('left', '0px')
+			.animate({
+				'left' : '-250px'
+			}, function(){ 
+				
+				// hide menu
+				$(this).hide() 
+				
+				// close
+				$(".panel").removeClass('opened_left_menu');
+				
+				// min height
+				$(".panel, .panel_left").css('min-height' , 0);
+			});
+			// animate right
+			$(".panel_right")
+			.css('margin-left', '250px')
+			.animate({
+				'margin-left' : '0px'
+			});
+		}
+	}
+	window.show_hide_leftmenu = show_hide_leftmenu;
+
+	
+    var player;
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player('player', {
+        height: '393',
+        width: '670',
+        videoId: $('div.videoUrlclass').html(),
+        events: {
+          'onReady': onPlayerReady,
+          'onStateChange': onPlayerStateChange
+        }
+      });
+    }
+    window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
+
+    // 4. The API will call this function when the video player is ready.
+    function onPlayerReady(event) {
+    }
+    window.onPlayerReady = onPlayerReady;
+
+    // 5. The API calls this function when the player's state changes.
+    //    The function indicates that when playing a video (state=1),
+    //    the player should play for six seconds and then stop.
+    function onPlayerStateChange(event) {
+        if(event.data == YT.PlayerState.ENDED) {
+      	  $.ajax({
+                  dataType: "json",
+                  type: "POST",
+                  data: {'interventionCode' : $('div.videoCodeclass').html()},
+                  url: "{{ path('_video_completed_ajax')}}",
+              })
+              .done (function(response) {
+              	$('div.div_video').dialog('close');
+              	window.location.replace(response.url);
+              	//window.location.href = response.url;
+              });
+              return false;
+	      }
+    }
+    window.onPlayerStateChange = onPlayerStateChange;
+
+    function dismiss(interventionCode) {
+        if (confirm('{% trans from "dashboard" %}dashboard_dismiss_confirmation{% endtrans %}')) {
+            $.ajax({
+                dataType: "json",
+                type: "POST",
+                url: "{{ path('_dismiss_ajax')}}",
+                data: {interventionCode : interventionCode}
+            })
+                .done (function(response) {
+                        window.location.replace(response.url);
+                });
+        } else {
+            return;
+        }
+    }
+    window.dismiss = dismiss;
+
+    function closeRefferalIntervention(interventionCode) {
+        $.ajax({
+            dataType: "json",
+            type: "POST",
+            url: "{{ path('_close_refferal_intervention')}}",
+            data: {interventionCode : interventionCode,}
+        })
+        .done (function(response) {
+            return;
+        });
+    }
+
+    window.closeRefferalIntervention = closeRefferalIntervention;
+
+    function closePromo(codeValue, url) {
+        $.ajax({
+            dataType: "json",
+            type: "POST",
+            url: "{{ path('_close_prpmpcode_ajax')}}",
+            data: {promoCode : codeValue, promoUrl : url}
+        })
+        .done (function(response) {
+        	window.location.replace(response.promoUrl);
+        });
+    }
+
+    window.closePromo = closePromo;
+
+    function dismissAll() {
+        if (confirm('{% trans from "dashboard" %}dashboard_dismiss_confirmation{% endtrans %}')) {
+            $.ajax({
+                dataType: "json",
+                type: "POST",
+                url: "{{ path('_dismiss_ajax')}}"
+            })
+            .done (function(response) {
+                window.location.replace(response.url,'_blank');
+            });
+        } else {
+             return;
+        }
+    }
+    window.dismissAll = dismissAll;
+
+    function windowClose(popup) {
+    	var timer = setInterval(function() {   
+    	    if(popup.closed) {  
+    	        clearInterval(timer);  
+    	        window.location.reload();  
+    	    }  
+    	}, 1000); 
+    }
+    window.windowClose = windowClose;
+
+	// onload
+	$(document).ready( function() {
+		
+		// scrl
+		setTimeout(function() { window.scrollTo(0, 1) }, 100);
+		
+		// open_why_popup
+		$("#open_why_popup, #why_popup .why_close").on('click', function(){
+			$("#why_popup").toggleClass('active');
+		});
+		
+		// about this box expander
+		$("#about_expander").bind('click', function(){
+		
+			var text_cont = $(".text_desc" , $(this).closest('.mobile.about_box') );
+
+			if( !$( text_cont ).hasClass('expanded') ){
+			
+				var el_height = 0;
+				
+				$(text_cont).show();
+				
+				el_height = $(text_cont).height('auto').height();
+				
+				$(text_cont).height(0);
+				
+				$(text_cont)
+				.animate({
+					'height' : el_height
+				})
+				.addClass('expanded');
+				
+				$("#about_expander").addClass('expanded');				
+			}
+			else {
+				
+				
+				$(text_cont)
+				.animate({
+					'height' : '0px'
+				}, function(){ $(this).hide() })
+				.removeClass('expanded');
+				
+				$("#about_expander").removeClass('expanded');				
+				
+			}
+		
+			return false;
+			
+		});
+		
+		
+		// mobile left menu
+		$(".trigger_left_menu").bind('click', function(){
+		
+			show_hide_leftmenu();
+
+			return false;
+			
+		});
+		
+		
+		$("body").swipe({
+			
+		  
+			
+		  // close
+		  swipeLeft:function(event, direction, distance, duration, fingerCount) {
+		  
+		  	if( $(window).width() < 777 ){
+		  		
+				// if opened
+				if( $(".panel").hasClass('opened_left_menu') ){
+					show_hide_leftmenu();	
+				}		  		
+		  		
+		  	}
+		    
+
+		    
+		  },
+		  
+		  // open
+		  swipeRight:function(event, direction, distance, duration, fingerCount) {
+			
+			
+			if( $(window).width() < 777 ){
+				
+				// if closed
+				if( !$(".panel").hasClass('opened_left_menu') ){
+					show_hide_leftmenu();	
+				}				
+				
+			}
+			
+
+
+			
+
+		  }
+			
+			/*
+		  swipeLeft:function(event, direction, distance, duration, fingerCount) {
+		    // next
+			
+			header_img_bar_next();
+			clearTimeout(img_bar_control);
+		  },
+		  swipeRight:function(event, direction, distance, duration, fingerCount) {
+		  	// prev
+			
+			header_img_bar_goto_prev();
+			next_direction = "right";
+			clearTimeout(img_bar_control);
+		  }
+		  */
+		  
+		  
+		});
+		
+		// show search menu
+		$(".mobile_sitemenu.search a.close").bind('click', function(){
+			
+			$(".mobile_sitemenu.search")
+			.animate({
+				'height' : '0px'
+			}, function(){ $(this).hide(); })
+			.removeClass('expanded');
+			return false;	
+		});
+		$(".trigger_searchmenu").bind('click', function(){
+			
+			if( !$(".mobile_sitemenu.search").hasClass('expanded') ){
+				
+				
+				var menu_height = 0;
+				
+				if( !$(".mobile_sitemenu.search").attr('data-height') ){
+							
+					$(".mobile_sitemenu.search")
+					.show();
+					
+					$(".mobile_sitemenu.search").attr('data-height' , $(".mobile_sitemenu.search").height());
+					
+
+
+				}
+
+				
+				// get height
+				menu_height = $(".mobile_sitemenu.search").attr('data-height');
+				
+				$(".mobile_sitemenu.search")
+				.height(0)
+				.show()
+				.animate({
+					'height' : menu_height
+				});
+				
+	
+				// mark
+				$(".mobile_sitemenu.search").addClass('expanded');
+				
+			}
+			else {
+				
+				// clear
+				$(".mobile_sitemenu.search").removeClass('expanded');
+				
+				
+			}
+		
+			return false;
+			
+		});
+		
+		// show site menu
+		$(".mobile_sitemenu.register a.close").bind('click', function(){
+			
+			$(".mobile_sitemenu.register")
+			.animate({
+				'height' : '0px'
+			}, function(){ $(this).hide(); })
+			.removeClass('expanded');
+			return false;	
+		});
+		$(".trigger_sitemenu").bind('click', function(){
+			
+			if( !$(".mobile_sitemenu.register").hasClass('expanded') ){
+				
+				
+				var menu_height = 0;
+				
+				if( !$(".mobile_sitemenu.register").attr('data-height') ){
+							
+					$(".mobile_sitemenu.register")
+					.show();
+					
+					$(".mobile_sitemenu.register").attr('data-height' , $(".mobile_sitemenu.register").height());
+					
+
+
+				}
+
+				
+				// get height
+				menu_height = $(".mobile_sitemenu.register").attr('data-height');
+				
+				$(".mobile_sitemenu.register")
+				.height(0)
+				.show()
+				.animate({
+					'height' : menu_height
+				});
+				
+	
+				// mark
+				$(".mobile_sitemenu.register").addClass('expanded');
+				
+			}
+			else {
+				
+				// clear
+				$(".mobile_sitemenu.register").removeClass('expanded');
+				
+				
+			}
+		
+			return false;
+			
+		});
+		
+		// mobile_login_switcher
+		$(".mobile_login_switcher a").bind('click', function(){
+
+			if( $(this).attr('rel') ){
+
+				if( !$(this).hasClass('expanded') ){
+
+					$(".mobile_login_switcher a").removeClass('expanded');
+
+					$(".loginform_left , .loginform_right").hide().removeClass('expanded');
+
+					$( $(this).attr('rel') ).addClass('expanded').show();
+
+					$(this).addClass('expanded');
+
+				}
+				else {
+
+					$(".loginform_left , .loginform_right").hide().removeClass('expanded');
+
+					$(this).removeClass('expanded');
+
+				}
+
+			}
+
+			return false;
+
+		});
+		
+		
+		// page_intro - aside
+		if( $(".page_intro").size() ){
+			
+			$(window).bind('resize', function(){ aside_height(); } );
+			aside_height();
+			
+		}
+		
+		// page_study - left menu
+		if( $(".page_study , .page_survey, .page_main").size() ){
+			
+			$(window).bind('resize', function(){ study_leftmenu(); } );
+			study_leftmenu();
+			
+		}
+		
+		// activity_box
+		if( $(".activity_box ul").size() ){
+			
+			$(window).bind('resize', function(){ activity_box_resize(); } );
+			activity_box_resize();
+			
+		}
+		
+		// activity_box
+		if( $(".notice.gray").size() ){
+			
+			$(window).bind('resize', function(){ notice_gray_2rows(); } );
+			notice_gray_2rows();
+			
+		}
+		
+		// featured_box text_box
+//		if( $(".featured_box .text_box").size() ){
+//			
+//			$(window).bind('resize', function(){ resize_text_box(); } );
+//			resize_text_box();
+//			
+//		}
+		
+		if( $(".panel_left .profile_info").size() ){
+			$(window).bind('resize', function(){ resize_profile_info(); } );
+			resize_profile_info();	
+		}
+		
+		if( $(".dashboard_title .align_to_middle").size() ){
+			$(window).bind('resize', function(){ resize_dashboard_title_align_to_middle(); } );
+			resize_dashboard_title_align_to_middle();	
+		}
+				
+		// footer stick to bottom
+		// $(window).bind('resize', function(){ footer_stick_to_bottom(); } );
+		footer_stick_to_bottom();
+		
+		// settings_form
+		$(".settings_form .edit_btn a").bind('click', function(){
+			var target_c = $(this).attr('data-form-cont');
+			$("li.form_expanded" + target_c).show();
+			$("li.middle_input" + target_c).hide();
+			$("li.edit_btn" + target_c).hide();
+			return false;	
+		});
+		$(".form_expanded .close_cont a").bind('click', function(){
+			var target_c = $(this).attr('data-form-cont');
+			console.log(target_c);
+			$('li.form_expanded' + target_c).hide();
+			$('li.middle_input' + target_c).show();
+			$('li.edit_btn' + target_c).show();
+			return false;
+		});
+		
+		// btn_select_all , btn_select_none 
+		$(".form_header a.btn_select_all").bind('click', function(){
+			var p_cont 		= $(this).closest('.prefs_wrapper');
+			$("input[type=checkbox]", p_cont).attr('checked', 'checked');
+			return false;	
+		});
+		$(".form_header a.btn_select_none").bind('click', function(){
+			var p_cont 		= $(this).closest('.prefs_wrapper');
+			$("input[type=checkbox]", p_cont).removeAttr('checked');
+			return false;
+		});
+		
+		// expand
+		$(".prefs_wrapper a.expand").bind('click', function(){
+		
+			if( !$(this).hasClass('opened') ){
+				
+				var this_a 		= $(this);
+				var p_cont 		= $(this).closest('.prefs_wrapper');
+				var new_height 	= 0;
+				
+				$(".form_container",p_cont).height('auto');
+				new_height 		= $(".form_container",p_cont).outerHeight();
+				$(".form_container",p_cont).height(0);
+				
+				$(".form_container",p_cont)
+				.show()
+				.height(0)
+				.animate({'height' : new_height}, function(){
+					$(this).height('auto');
+					$(this_a)
+					.addClass('opened')
+					.html( $(this_a).attr('data-text-expanded') );
+				});
+				
+			}
+			else {
+			
+				var this_a = $(this);
+				var p_cont = $(this).closest('.prefs_wrapper');
+				$(".form_container",p_cont)
+				.animate({'height' : '0px'}, function(){
+					$(this).hide();
+					$(this_a)
+					.removeClass('opened')
+					.html( $(this_a).attr('data-text-closed') );
+				});
+				
+			}
+			
+			return false;
+			
+		});
+		
+				
+		$(document).mouseup(function (e)
+		{
+		    var container = $(".mobile_sitemenu");
+		
+		    if (container.has(e.target).length === 0)
+		    {
+		    	
+				$(".mobile_sitemenu.expanded").removeClass('expanded').animate({'height' : 0}, function(){ $(this).hide(); })
+			}
+		    
+
+		});
+		
+		// has error delete btn
+		var removeError = function() {
+			if($(this).hasClass('text')) {
+				$(this).removeClass('has_error')
+                       .siblings()
+                       .hide()
+			} else {
+				$(this).hide()
+                .siblings()
+                .removeClass('has_error')
+                .removeData()
+			}
+			$(this).parents()
+                   .removeClass('has_error')
+                   .next('.error, .error_msg')
+                   .css('display', 'none');
+		}
+		
+		$('input.has_error').keyup(function() {
+			$(this).next().trigger('click');
+		});
+		$('.mark').click(removeError);
+
+
+		/*-----------------------------------------------------------------------------------------------------------
+		------------------------------------------------------------------------------------------------------------
+		-----------------------------------------page.html.twig------------------------------------------------------
+		-------------------------------------------------------------------------------------------------------------
+		-------------------------------------------------------------------------------------------------------------*/
+		
+        // facebook authentification
+        $('#facebook_button, #facebook_button_landing_page').click(function(e) { 
+            e.preventDefault();
+            e.stopPropagation();
+            fb_login();
+        });
+
+        //google authentification
+        $('#google_button, #google_button_landing_page').click(function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            g_login();
+        });
+
+        //registration ajax
+        $("#register").bind('click', function(e) {
+            e.preventDefault();
+            $("#div_register").dialog({ 
+                modal: true,
+                width: 'auto',
+                fluid: true,
+                resizable: false,
+                position: ['top',100],
+                open: funcCustom
+            });
+        });
+        
+        //consent ajax
+        $(".consent").bind('click', function(e) {
+            e.preventDefault();
+            $("#div_consent").dialog({ 
+                modal: true,
+                width: 'auto',
+                fluid: true,
+                resizable: false,
+                position: ['top',100],
+                open: funcCustom
+            });
+        });
+        $('#registration_form').submit(function(e){
+            $('.error').remove();
+            $(this).ajaxSubmit({
+                dataType: "json",
+                success: function(json) {
+                	{% set skipAboutMe = is_skip_about_me(studyCode) %}
+                    if(json.error){
+                        var messages = json.messages;
+                        for (var i = 0; i < messages .length; i++){
+                            var message = messages[i].message;
+                            if(messages[i].password) {
+                                var property  = "#registration_"+messages[i].property+"_first";
+                                $(property).after('<p class="error">'+message+'</p>');
+                            } else {
+                                var property  = "#registration_"+messages[i].property;
+                                $(property).after('<p class="error">'+message+'</p>');
+                            } 
+                        }
+                    } else if (json.url != null){
+                    	window.location.replace(json.url);
+                    } else if ({{ skipAboutMe|default(0)}}){
+                    	$("#div_register").dialog('close');
+                        $("#div_consent").dialog({
+                            modal: true,
+                            width: 'auto',
+                            fluid: true,
+                            resizable: false,
+                            position: ['top',100],
+                            open: funcCustom
+                        });
+                    } else {
+                        $("#div_register").dialog('close');
+                        if ({{ countryName and countryId }}) {
+                            $('#open_choice_countrySelect span').html('{{ countryName }}');
+                            $('#open_choice_countrySelect div.checker input[type=hidden]').val({{ countryId }});
+                            }
+                        $("#div_register_step2").dialog({
+                            modal: true,
+                            width: 'auto',
+                            fluid: true,
+                            resizable: false,
+                            position: ['top',100],
+                            open: funcCustom
+                        });
+                }}
+            });
+            return false;
+        });
+        
+        //login ajax
+        $("#login_form").submit(function(e){
+            $('.error').remove();
+            $(this).ajaxSubmit({
+                dataType: "json",
+                success: function(json) {
+                    if(json.error) {
+                        $('#reg_field_2').after('<div><p class="error">{%  trans from "login" %}txt_login_error_message{% endtrans %}</p></div>');
+                    } else {
+                        window.location.replace(json.url);
+                    }
+                }
+            });
+            return false;
+        });
+        //forgot username ajax
+        $("#forgot_username").bind('click', function(e){
+     	   e.preventDefault();
+     	   $("#div_register").dialog('close');
+          $("#div_forgot_username").dialog({
+              modal: true,
+              width: 'auto',
+              fluid: true,
+              resizable: false,
+              position: ['top',100],
+              open: funcCustom
+          });
+      });
+        $("#forgot_username_form").submit(function(e){
+       	$('.error').remove();
+       	$('.notice').remove();
+  	        $(this).ajaxSubmit({
+		        dataType: "json",
+	    	    success: function(json) {
+    	    	    if(json.error){
+   	    	    	    $('#mail_address_participantEmail').after('<div><p class="error">'+json.message+'</p></div>');
+
+    	    	       } else {
+    	    	    	  $('#mail_address_participantEmail').after('<div><p class="notice green">'+json.message+'</p></div>');
+        	    	       }}
+	    	});
+ 	        return false;
+             });
+        //forgot password ajax
+        $("#forgot_password").bind('click', function(e){
+     	   e.preventDefault();
+     	   $("#div_register").dialog('close');
+          $("#div_forgot_password").dialog({
+        	  modal: true,
+              width: 'auto',
+              fluid: true,
+              resizable: false,
+              position: ['top',100],
+              open: funcCustom
+          });
+      });
+        $("#forgot_password_form").submit(function(e){
+       	$('.error').remove();
+  	        $(this).ajaxSubmit({
+		        dataType: "json",
+	    	    success: function(json) {
+    	    	    if(json.error){
+   	    	    	    $('#form_participantUsername').after('<div><p class="error">'+json.message+'</p></div>');
+
+    	    	       } else {
+    	             	   $("#div_forgot_password").dialog('close');
+    	                  $("#div_forgot_password_confirmation").dialog();
+        	    	       }}
+	    	});
+ 	        return false;
+             });
+        // signup about ajax
+        $('#signup_about_form').submit(function(e){
+            $(this).ajaxSubmit({
+                dataType: "json",
+                success: function(json) {
+                   if(json.error){
+                        $('#signup_about_form_error').html('<p class="error">'+json.message+'</p>');
+                    } else if (json.url){
+                    	$('#about_me_popup').dialog('close');
+                    	window.location.replace(json.url);
+                    }else if (json.message) {
+                    	$('#about_me_popup').dialog('close');
+                    }else {
+                        $("#div_register_step2").dialog('close');
+                        $("#div_consent").dialog({
+                            modal: true,
+                            width: 'auto',
+                            fluid: true,
+                            resizable: false,
+                            position: ['top',100],
+                            open: funcCustom
+                        });
+                    }
+                }
+            });
+            return false;
+        });
+        $('.embed').on('click', function(e) {
+            e.preventDefault();
+            $('#embed_list').dialog();
+        });
+        $(".temporaty_unavailable").bind('click', function(){
+            $("#div_temporaty_unavailable").dialog({
+          	  modal: true,
+                width: '260px',
+                fluid: true,
+                resizable: false,
+                position: ['top',100],
+                open: funcCustom
+            });
+            });
+        // mobile_login_switcher
+        $(".mobile_login_switcher a").bind('click', function(){
+            if( $(this).attr('rel') ){
+                if( !$(this).hasClass('expanded') ){
+                    $(".mobile_login_switcher a").removeClass('expanded');
+                    $(".loginform_left , .loginform_right").hide().removeClass('expanded');
+                    $( $(this).attr('rel') ).addClass('expanded').show();
+                    $(this).addClass('expanded');
+                } else {
+                    $(".loginform_left , .loginform_right").hide().removeClass('expanded');
+                    $(this).removeClass('expanded');
+                }
+            }
+            return false;
+        });
+        $('#send_prelaunch').on('click', function(e){
+        	$('p.preLaunch').remove();
+            var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        	if ($('#prelaunch_email').val() === ""){
+        		 $('#prelaunch_input_box').after('<p class="error preLaunch">Please input your e-mail</p>');
+        		 return false;
+        	}else if (!regex.test($('#prelaunch_email').val())) {
+       		    $('#prelaunch_input_box').after('<p class="error preLaunch">Invalid e-mail</p>');
+    		    return false;
+        	}
+    	    var url = '{{ path('_pre_launch', { 'studyCode':  studyCode ,'recruiter' : 'isRecruiter', 'email': 'participantEmail' }) }}';
+    	    url = url.replace("participantEmail", $('#prelaunch_email').val());
+        	if ($('#recruiter').is(':checked')){
+        	    url = url.replace("isRecruiter", 1 );
+        	} else {
+        		url = url.replace("isRecruiter", 0 );
+            }
+        	window.location.replace(url);
+        });
+
+        $('#send_prelaunch_loggedin').on('click', function(e){
+        	$('p.preLaunch').remove();
+    	    var url = '{{ path('_pre_launch', { 'studyCode':  studyCode ,'recruiter' : 'isRecruiter'}) }}';
+        	if ($('#recruiter_loggedin').is(':checked')){
+        	    url = url.replace("isRecruiter", 1 );
+        	} else {
+        		url = url.replace("isRecruiter", 0 );
+            }
+        	window.location.replace(url);
+        });
+   		/*-----------------------------------------------------------------------------------------------------------
+   		-------------------------------------------------------------------------------------------------------------
+   		-----------------------------------------main.html.twig(dashboard)-----------------------------------------
+   		-------------------------------------------------------------------------------------------------------------
+   		-------------------------------------------------------------------------------------------------------------*/
+
+    	function youtubeEvents() {
+        	// 2. This code loads the IFrame Player API code asynchronously.
+		      var tag = document.createElement('script');
+		      tag.src = "https://www.youtube.com/iframe_api";
+		      var firstScriptTag = document.getElementsByTagName('script')[0];
+		      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+		
+		      // 3. This function creates an <iframe> (and YouTube player)
+		      //    after the API code downloads.
+		      
+        }
+        
+        $('#about_me').bind('click', function(e) {
+            e.preventDefault();
+            $('#about_me_popup').dialog({
+                modal: true,
+                width: '700',
+                fluid: true,
+                resizable: false,
+                position: ['top',100],
+                open: funcCustom
+            });
+        });
+
+        $('#shipping_information').bind('click', function(e) {
+            e.preventDefault();
+            $('#shipping_information_popup').dialog({
+                modal: true,
+                width: '700',
+                fluid: true,
+                resizable: false,
+                position: ['top',100],
+                open: funcCustom
+            });
+        });
+
+        $('#mobile_phone').bind('click', function(e) {
+        	e.preventDefault();
+            $('#mobile_phone_popup').dialog({
+                modal: true,
+                width: '465',
+                fluid: true,
+                resizable: false,
+                position: ['top',100],
+                open: funcCustom
+            });
+        });
+
+        $('#phone_confirm').submit(function(e){
+            $('.error_msg').remove();
+            $(this).ajaxSubmit({
+                dataType: "json",
+                success: function(json) {
+                    if(json.error) {
+                        var messages = json.messages;
+                        for (var i = 0; i < messages .length; i++){
+                            $('#phone_'+messages[i].property).parent('li').after('<p class="error_msg">'+messages[i].message+'</p>');
+                        }
+                    } else {
+                        $('#mobile_phone_popup').dialog('close');
+                        $('#mobile_phone_confirm_popup').dialog({
+                            modal: true,
+                            width: '465',
+                            fluid: true,
+                            resizable: false,
+                            position: ['top',100],
+                            open: funcCustom
+                        });
+                    }
+                }
+            });
+            return false;
+        });
+
+        $('#sms_confirm').submit(function(e) {
+            $('.error_msg').remove();
+            $(this).ajaxSubmit({
+                dataType: "json",
+                success: function(json) {
+                    if (json.error) {
+                        var messages = json.messages;
+                        for (var i = 0; i < messages .length; i++){
+                            $('#sms_confirm_'+messages[i].property).parent('li').after('<p class="error_msg">'+messages[i].message+'</p>');
+                        }
+                    } else {
+                        if (json.message) {
+                            $('#sms_confirm_sms_code').parent('li').after('<p class="error_msg">'+json.message+'</p>');
+                        } else if(json.send) {
+
+                        } else {
+                            $('#mobile_phone_confirm_popup').dialog('close');
+                            window.location.replace(json.url);
+                        }
+                    }
+                }
+            });
+            return false;
+        });
+
+        $('#send_sms_again').bind('click', function(e){
+            $.ajax({
+                dataType: "json",
+                type: "POST",
+                data: {'send' : true},
+                url: "{{ path('_mobile_phone_confirm', {'send' : true})}}",
+            })
+            .done (function(response) {
+                return;
+            });
+            return false;
+        });
+
+        $('#send_email_again').bind('click', function(e){
+            $.ajax({
+                dataType: "json",
+                type: "POST",
+                url: "{{ path('_main', {'sendMail' : true})}}",
+            })
+            .done (function(response) {
+                alert(response.message);
+            });
+            return false;
+        });
+
+        $('.close_cont a').click(function(e) {
+            $(this).parent('div').siblings('.new_inputs_cont').find('input[type="text"]').val('');
+        });
+        $('#pledge').bind('click', function(e) {
+            $('#pledge_popup').dialog({
+                modal: true,
+                width: 'auto',
+                fluid: true,
+                resizable: false,
+                position: ['top',100],
+                open: function() {
+                    $(this).dialog("widget").find(".ui-dialog-titlebar").hide();
+                    $('<div class="modal_close_btn">×</div>').appendTo($(this));
+                    $('.modal_close_btn, .cancel a').on('click', function() {
+                        $(this).closest('.ui-dialog-content').dialog("close");
+                    });
+                }
+            });
+        });
+
+        $('.icon_logout').click(function() {
+            {% if is_granted('ROLE_FACEBOOK_USER') %}
+                fbLogout();
+            {% elseif is_granted('ROLE_GOOGLE_USER') %}
+                gLogout();
+            {% endif %}
+            window.location=Routing.generate('_logout');
+        });
+
+        $('a[name=Refferal]').bind('click', function(e) {
+            $.ajax({
+                dataType: "json",
+                type: "POST",
+                url: "{{ path('_main', {'sendMail' : true})}}",
+            })
+            .done (function(response) {
+                alert(response.message);
+            });
+            return false;
+        });
+
+        $('input[name=publish]').bind('click', function(e) {
+            windows.location.reload();
+        });
+
+        $('a.video').bind('click', function(e) {
+            e.preventDefault();
+            $('div.div_video').dialog({
+                modal: true,
+                width: 'auto',
+                fluid: true,
+                resizable: false,
+                position: ['top',100],
+                open: funcCustom
+            });
+            youtubeEvents();
+        });
+
+        $('.left_menu .first').hover(function() {
+            $(this).find('.share_slide').slideDown('slow');
+        }, function() {
+            $(this).find('.share_slide').slideUp('slow');
+        });
+   		/*-----------------------------------------------------------------------------------------------------------
+   		-------------------------------------------------------------------------------------------------------------
+   		-----------------------------------------about_me_form.html.twig--------------------------------------------
+   		-------------------------------------------------------------------------------------------------------------
+   		-------------------------------------------------------------------------------------------------------------*/
+    	{% if doitInterventionCode is defined %}
+            $('[name="{{ doitInterventionCode }}"]').trigger( "click" );
+        {% endif %}
+        $('#about_me_birthdateSelect').datepicker( {
+                yearRange: "-100:+1",
+                minDate: "-100Y",
+                maxDate: "+1Y",
+                changeMonth: true,
+                changeYear: true
+                });
+        $('#about_me_countryConfirm').click(function()
+             {
+                      $('#about_me_validationCheck').val("country");
+             });
+
+        $('#about_me_zipcodeConfirm').click(function()
+                {
+                         $('#about_me_validationCheck').val("zipcode");
+                });
+
+        $('#about_me_birthdateConfirm').click(function()
+                {
+                         $('#about_me_validationCheck').val("birthdate");
+                });
+
+        $('#about_me_sexConfirm').click(function()
+                {
+                         $('#about_me_validationCheck').val("sex");
+                });
+
+        $('#about_me_interestedConfirm').click(function()
+                {
+                         $('#about_me_validationCheck').val("interested");
+                });
+
+        $('#about_me_raceConfirm').click(function()
+                {
+                         $('#about_me_validationCheck').val("race");
+                });
+        $('#about_me_formConfirm').click(function()
+                {
+                         $('#about_me_validationCheck').val("formConfirm");
+                });
+	/*-----------------------------------------------------------------------------------------------------------
+	-------------------------------------------------------------------------------------------------------------
+	-----------------------------------------contact_prefs.html.twig------------------------------------------
+	-------------------------------------------------------------------------------------------------------------
+	-------------------------------------------------------------------------------------------------------------*/
+    var reminders_confirm_msg = "{% trans from "messages" %}txt_reminders_confirm{% endtrans %}";
+    $('#save_contact_prefs').click(function()
+         {
+ 	        var count = 0;
+             if(!$('#sms_1').is(':checked') && !$('#email_1').is(':checked'))  {
+                     count++;
+             }   
+             
+             if($('.weekDays:checked').length == 0 )  {
+                 count++;
+             }
+             
+             if($('.contactTime:checked').length == 0 )  {
+                 count++;
+             }
+
+             if (count == 0) {
+                 $('#contact_prefs_form').trigger('submit');
+             } else {
+             	if(confirm(reminders_confirm_msg)) {
+                 	$('#contact_prefs_form').trigger('submit');
+                 } else {
+                     return false;
+                 }
+             }
+         });
+	/*-----------------------------------------------------------------------------------------------------------
+	-------------------------------------------------------------------------------------------------------------
+	-----------------------------------------general_settings.html.twig------------------------------------------
+	-------------------------------------------------------------------------------------------------------------
+	-------------------------------------------------------------------------------------------------------------*/
+            $("#general_settings_newPhoneNumberSmall").numeric();
+            $('#general_settings_newPhoneNumberWide').numeric();
+           $('#general_settings_userNameConfirm').click(function()
+                {
+                         $('#general_settings_validationCheck').val("username");
+                });
+        
+           $('#general_settings_passwordSendSMS').click(function()
+                   {
+                            $('#general_settings_validationCheck').val("password-sms");
+                   });
+        
+           $('#general_settings_passwordConfirm').click(function()
+                   {
+                            $('#general_settings_validationCheck').val("password");
+                   });
+        
+           $('#general_settings_emailConfirm').click(function()
+                   {
+                            $('#general_settings_validationCheck').val("email");
+                   });
+        
+           $('#general_settings_phoneSendSMS').click(function()
+                   {
+                            $('#general_settings_validationCheck').val("mobile-sms");
+                   });
+        
+           $('#general_settings_phoneConfirm').click(function()
+                   {
+                            $('#general_settings_validationCheck').val("mobile");
+                   });
+           $('#general_settings_incentiveEmailConfirm').click(function()
+                   {
+                            $('#general_settings_validationCheck').val("incentive");
+                   });
+          	/*-----------------------------------------------------------------------------------------------------------
+          	-------------------------------------------------------------------------------------------------------------
+          	-----------------------------------------mobile_phone_form.html.twig--------------------------------------
+          	-------------------------------------------------------------------------------------------------------------
+          	-------------------------------------------------------------------------------------------------------------*/
+           $("#phone_phone_small").numeric();
+           $('#phone_phone_wide').numeric();
+           var check = $("#phone_phone_small").val();
+           if (check != '') { 
+               $('#phone_phone_wide').focus();
+           }
+         	/*-----------------------------------------------------------------------------------------------------------
+         	-------------------------------------------------------------------------------------------------------------
+         	-----------------------------------------shipping_information_form.html.twig--------------------------------------
+         	-------------------------------------------------------------------------------------------------------------
+         	-------------------------------------------------------------------------------------------------------------*/
+            var chosenCities = [];
+            var cityIds = [];
+            $('#mailing_address_participantZipcode').on('blur', function(){
+                if(!$(this).val())
+                    return;
+
+                $.getJSON(
+                    Routing.generate('_get_city_state_by_zip', {
+                        'zipcode': $(this).val(), 
+                        '_locale':'{{ app.request.locale }}'
+                    }),
+                    null,
+                    function(data, textStatus, jqXHR) {
+                        if($.isEmptyObject(data)) {
+                            $('#mailing_address_city').val('');
+                            $('#mailing_address_cityId').val('');
+                            $('#mailing_address_state').val('');
+                            $('#mailing_address_stateId').val('');
+                        };
+                        if (!(data instanceof Array)) return;
+                        $('#mailing_address_city').val(data[0]['cityName']);
+                        $('#mailing_address_cityId').val(data[0]['cityId']);
+                        $('#mailing_address_state').val(data[0]['stateCode']);
+                        $('#mailing_address_stateId').val(data[0]['stateId']);
+
+                        chosenCities = []; cityIds = [];
+
+                        var len = data.length;
+                        for(var i=0;i<len;i++) {
+                            chosenCities[i] = {'data': data[i]["cityId"], 'value': data[i]["cityName"]};
+                            cityIds[i] = data[i]["cityId"];
+                        }
+
+                        var cityoptions = {
+                            lookup: chosenCities,
+                            minChars: 0,
+                            maxHeight: 150,
+                            onSelect: function(suggestion) {
+                                $("#mailing_address_city").val(suggestion.value);
+                                $("#mailing_address_cityId").val(suggestion.data);
+                            }
+                        };
+
+                        $('#mailing_address_city').autocomplete('disable');
+                        $('#mailing_address_city').autocomplete('setOptions', cityoptions);
+                        $('#mailing_address_city').autocomplete('enable');
+
+                    });
+                });
+                
+                $("#mailing_address_city").autocomplete({
+                    serviceUrl: Routing.generate('searchCityWithAjax', {'_locale':'{{ app.request.locale }}'}),
+                    minChars: 3,
+                    maxHeight: 150,
+                    width: 278,
+                    onSelect: function(suggestion) {
+                        $("#mailing_address_city").val(suggestion.value);
+                        $("#mailing_address_cityId").val(suggestion.data);
+                	}
+                    });
+                
+                $("#mailing_address_state" ).autocomplete({
+                	serviceUrl: Routing.generate('searchStateWithAjax', {'_locale':'{{ app.request.locale }}'}),
+                    minChars: 1,
+                    maxHeight: 150,
+                	onSelect: function(suggestion) {
+                		 $("#mailing_address_state").val(suggestion.value);
+                         $("#mailing_address_stateId").val(suggestion.data);
+                	}
+                });
+
+                $("#mailing_address_participantZipcode").on('blur', function() {
+                	$('#error').remove(); 
+                	var inputVal = $(this).val();
+                    var zipReg = /^[0-9]\d{4}-\d{4}|[0-9]{5}$/;
+                    if(!zipReg.test(inputVal)) {
+                        $(this).after('<p class="error" id="error">{% trans from "register" %}txt_check_zipcode{% endtrans %}</p>');
+                }});
+
+   		/*-----------------------------------------------------------------------------------------------------------
+   		------------------------------------------------------------------------------------------------------------
+   		-----------------------------------------general code------------------------------------------------------
+   		-------------------------------------------------------------------------------------------------------------
+   		-------------------------------------------------------------------------------------------------------------*/
+           //mail to friends
+           $('.email').bind('click', function(e) {
+               e.preventDefault();
+               $('#tmp_subject').val('{%  trans from "study" %}inivted_to_study{% endtrans %}'+" " +$(this).children('.email_to_friends_study').val());
+               $('#tmp_who').val('{{ participant_email }}')
+               $('#email_list').dialog({
+                   modal: true,
+                   width: '330',
+                   fluid: true,
+                   resizable: false,
+                   position: ['top',100],
+                   open: funcCustom
+               });
+           });
+
+           var count = 1;
+           $('#email_list .others').on('click', 'a', function(e) {
+               if (count < 5 ){
+                   e.preventDefault();
+                   $('<input type="text" name="send_to['+count+']"/>').insertBefore($(this));
+                   count++;
+               } else {
+                   e.preventDefault();
+               }
+           });
+           $('#email_list').on('click', '.modal_close_btn', function() {
+               $(this).parent().find('input[type="text"]').val('');
+               $(this).parent().find('textarea').val('');
+            });
+           $('#email_submit').bind('click' , function(e){
+               $('#email_list').ajaxSubmit({
+                   dataType: "json",
+                   success: function(json) {
+                       if(json.error) {
+                           alert(json.message);
+                       } else {
+                           $('#email_list').dialog('close');
+                           alert(json.message);
+                       }}
+               });
+               return false;
+           });
+           //responsive jQuery UI
+           $(window).resize(function () {
+               fluidDialog();
+           });
+           $(document).on("dialogopen", ".ui-dialog", function (event, ui) {
+               fluidDialog();
+           });
+
+           function fluidDialog() {
+               var $visible = $(".ui-dialog:visible");
+               // each open dialog
+               $visible.each(function () {
+                   var $this = $(this);
+                   var dialog = $this.find(".ui-dialog-content").data("ui-dialog");
+                   // if fluid option == true
+                   if (dialog.options.fluid) {
+                       var wWidth = $(window).width();
+                       // check window width against dialog width
+                       if (wWidth < dialog.options.maxWidth + 50) {
+                           // keep dialog from filling entire screen
+                           $this.css("max-width", "90%");
+                       } else {
+                           // fix maxWidth bug
+                           $this.css("max-width", dialog.options.maxWidth);
+                       }
+                       //reposition dialog
+                       dialog.option("position", dialog.options.position);
+                   }
+               });
+           }
+
+           // custom changes for jQuery UI
+           function funcCustom() {
+           	$(this).dialog("widget").find(".ui-dialog-titlebar").hide();
+               $('<div class="modal_close_btn">×</div>').appendTo($(this));
+               $('.modal_close_btn, .cancel a, .btn_cancel').on('click', function(e) {
+                   e.preventDefault();
+                   $(this).closest('.ui-dialog-content').dialog("close");
+               });
+           }
+           // using in landing page and dashboard
+           $('#mailing_address_form').submit(function(e){
+               
+               $('.error').remove();
+               $(this).ajaxSubmit({
+                   dataType: "json",
+                   success: function(json) {
+                       if(json.error) {
+                           var messages = json.messages;
+                           for (var i = 0; i < messages .length; i++){
+                               $('#mailing_address_'+messages[i].property).parent('span').after('<p class="error">'+messages[i].message+'</p>');
+                           }
+                       } else {
+                           if (json.url) {
+                               $('#shipping_information_popup').dialog('close');
+                               window.location.replace(json.url);
+                           } else {
+                               alert(json.message);
+                               $('#shipping_information_popup').dialog('close');
+                           }
+                       }
+                   }
+           	});
+               return false;	
+           });
+    });
+	
+})(jQuery);
+// FACEBOOK BLOCK
+function fb_login() {
+    FB.getLoginStatus(function(response) {
+        if (response.status === 'connected') {
+            // connected
+        	if ($("#recruiter").length > 0 || $("#recruiter_loggedin").length > 0){
+        		if ($("#recruiter").length > 0) {
+                	if ($('#recruiter').is(':checked')){
+                	    var recruiter =  1 ;
+                	} else {
+                		var recruiter =  0 ;
+                    }
+                }
+        		if ($("#recruiter_loggedin").length > 0){
+                	if ($('#recruiter').is(':checked')){
+                	    var recruiter =  1 ;
+                	} else {
+                		var recruiter =  0 ;
+                    }
+            	}
+        		if (typeof recruiter !== 'undefined') {
+        		    var path = '/{{ app.request.get('_locale') }}/doOauth/{{ studyCode }}/'+recruiter;
+        		    
+            	} else {
+            		var path = '{{ path("_do_oauth", {'studyCode' : studyCode}) }}';
+                }   
+        		var url = '{{ url("frontend_oauth_service_redirect", {
+                    service: "facebook", 
+                    studyCode: studyCode, 
+                    _destination: 'path'
+                    }) | raw
+                }}'
+                url = url.replace("isRecruiter", recruiter );
+                url = url.replace("path", path );
+                document.location = url;
+        	} else {
+                document.location = "{{ url("frontend_oauth_service_redirect", {
+                    service: "facebook", 
+                    studyCode: studyCode, 
+                    _destination: path("_do_oauth", {'studyCode' : studyCode}) 
+                    }) | raw
+                }}";
+        	}
+        } else {
+            // not_authorized
+            FB.login(
+                    function(response) {
+                        if (response.authResponse) {
+
+                                document.location = "{{ url("frontend_oauth_service_redirect", {
+                                        service: "facebook", 
+                                        studyCode: studyCode, 
+                                        _destination: path("_do_oauth", {'studyCode' : studyCode}) 
+                                        }) | raw
+                                    }}";
+                        }
+                    },
+                    {scope: 'email, user_hometown, user_location'} 
+            );
+        }
+    });
+}
+
+function fbLogout() {
+	  FB.getLoginStatus(function(response) {
+		  if (response.status === 'connected') {
+		    var uid = response.authResponse.userID;
+		    var accessToken = response.authResponse.accessToken;
+		    FB.logout(function (response) {
+		    });
+		  } 
+		 });
+}
+
+//GOOGLE BLOCK
+function postFeed(link, title,description, image, name ){
+
+        FB.ui({method: 'feed',
+    picture: image ,
+    name: name,
+    link: link,
+    caption: title,
+    description: description,
+        },function(response) {
+            window.location.reload();
+        });
+    return false;
+}
+
+window.fbAsyncInit = function() {
+    FB.init({
+        "appId":"{{ facebook_appid }}",
+        "xfbml":true,
+        "oauth":true,
+        "status":true,
+        "cookie":true,
+        "logging":true});
+};
+
+// Load the SDK asynchronously
+(function(d, s, id){
+   var js, fjs = d.getElementsByTagName(s)[0];
+   if (d.getElementById(id)) {return;}
+   js = d.createElement(s); js.id = id;
+   js.src = "//connect.facebook.net/en_US/all.js";
+   fjs.parentNode.insertBefore(js, fjs);
+ }(document, 'script', 'facebook-jssdk'));
+
+
+function g_login() {
+    var parameters = {
+    	    client_id: "{{ google_clientid }}",
+    	    immediate: false,
+    	    response_type: "token",
+    	    scope: "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile"
+    	    };
+    gapi.auth.authorize(parameters, function(token) {
+
+        if(token) {
+        	if ($("#recruiter").length > 0 || $("#recruiter_loggedin").length > 0){
+        		if ($("#recruiter").length > 0) {
+                	if ($('#recruiter').is(':checked')){
+                	    var recruiter =  1 ;
+                	} else {
+                		var recruiter =  0 ;
+                    }
+                }
+        		if ($("#recruiter_loggedin").length > 0){
+                	if ($('#recruiter').is(':checked')){
+                	    var recruiter =  1 ;
+                	} else {
+                		var recruiter =  0 ;
+                    }
+            	}
+        		if (typeof recruiter !== 'undefined') {
+        		    var path = '/{{ app.request.get('_locale') }}/doOauth/{{ studyCode }}/'+recruiter;
+        		    
+            	} else {
+            		var path = '{{ path("_do_oauth", {'studyCode' : studyCode}) }}';
+                }   
+        		var url = '{{ url("frontend_oauth_service_redirect", {
+                    service: "google", 
+                    studyCode: studyCode, 
+                    _destination: 'path'
+                    }) | raw
+                }}'
+                url = url.replace("isRecruiter", recruiter );
+                url = url.replace("path", path );
+                document.location = url;
+        	} else {
+            document.location = "{{ url("frontend_oauth_service_redirect", {
+                service: "google", 
+                studyCode: studyCode, 
+                _destination: path("_do_oauth", {'studyCode' : studyCode}) 
+                }) | raw
+            }}";
+        	}
+        }
+
+        });
+}
+
+function gLogout() {
+
+	
+}
+
+//exception.html.twig
+(function() {
+    var po = document.createElement('script');
+    po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://plus.google.com/js/client:plusone.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(po, s);
+  })();
+
+
+
+//<![CDATA[
+function toggle(id, clazz) {
+    var el = document.getElementById(id),
+        current = el.style.display,
+        i;
+
+    if (clazz) {
+        var tags = document.getElementsByTagName('*');
+        for (i = tags.length - 1; i >= 0 ; i--) {
+            if (tags[i].className === clazz) {
+                tags[i].style.display = 'none';
+            }
+        }
+    }
+
+    el.style.display = current === 'none' ? 'block' : 'none';
+}
+
+function switchIcons(id1, id2) {
+    var icon1, icon2, display1, display2;
+
+    icon1 = document.getElementById(id1);
+    icon2 = document.getElementById(id2);
+
+    display1 = icon1.style.display;
+    display2 = icon2.style.display;
+
+    icon1.style.display = display2;
+    icon2.style.display = display1;
+}
+//]]>
+</script>

@@ -51,6 +51,15 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class DashboardController extends Controller
 {
+    
+    private $parameters = array();
+    
+    public function preExecute()
+    {
+        $cc = $this->container->get('cyclogram.common');
+        $this->parameters = $cc->defaultJsParameters($this->getRequest());
+    }
+    
     /**
      * @Route("/mapTest", name="_maptest")
      * @Secure(roles="ROLE_PARTICIPANT, IS_AUTHENTICATED_REMEMBERED")
@@ -372,12 +381,6 @@ class DashboardController extends Controller
         );
     
         $parameters["lastaccess"] = new \DateTime();
-         
-//         if($this->get('security.context')->isGranted("ROLE_FACEBOOK_USER"))
-//             $parameters["user"]["avatar"] = "http://graph.facebook.com/" . $participant->getParticipantUsername() . "/picture?width=80&height=82";
-        
-//         if($this->get('security.context')->isGranted("ROLE_GOOGLE_USER"))
-//             $parameters["user"]["avatar"] = "https://plus.google.com/s2/photos/profile/" . $participant->getGoogleId() . "?sz=80";
         
         $parameters["user"]["name"] = $participant->getParticipantFirstname() . ' ' . $participant->getParticipantLastname();
         $parameters["username"] = $participant->getParticipantUsername();
@@ -408,8 +411,10 @@ class DashboardController extends Controller
         $parameters['participant_email'] = $participant->getParticipantEmail();
         $parameters['participant'] = $participant;
         
+        $this->parameters = array_merge($this->parameters, $parameters);
+        
 
-      return $this->render('CyclogramFrontendBundle:Dashboard:main.html.twig', $parameters);
+      return $this->render('CyclogramFrontendBundle:Dashboard:main.html.twig', $this->parameters);
     
     }
     

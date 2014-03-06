@@ -37,6 +37,13 @@ use Cyclogram\Bundle\ProofPilotBundle\Entity\ParticipantArmLink;
 
 class SurveyController extends Controller
 {
+    private $parameters = array();
+    
+    public function preExecute()
+    {
+        $cc = $this->container->get('cyclogram.common');
+        $this->parameters = $cc->defaultJsParameters($this->getRequest());
+    }
     
     /**
      * Shows a survey. After completion of survey, survey results are saved in session, also
@@ -74,7 +81,8 @@ class SurveyController extends Controller
             $parameters['survey'] = $this->getSurveyData($surveyId, $locale);
             $parameters['logo'] = $this->container->getParameter('study_image_url') . '/' . $studyId. '/' .$studyContent->getStudyLogo();
     
-            return $this->render('CyclogramFrontendBundle:Survey:survey.html.twig', $parameters);
+            $this->parameters = array_merge($this->parameters, $parameters);
+            return $this->render('CyclogramFrontendBundle:Survey:survey.html.twig', $this->parameters);
 
     }
     
@@ -93,9 +101,11 @@ class SurveyController extends Controller
         
         $closed = $em->getRepository('CyclogramProofPilotBundle:ParticipantSurveyLink')->checkIfSurveyClosed($participant, $surveyId);
         $passed = $em->getRepository('CyclogramProofPilotBundle:ParticipantSurveyLink')->checkIfSurveyPassed($participant, $surveyId);
-        if($closed || $passed)
-            return $this->render("::error.html.twig", array(
+        if($closed || $passed) {
+            $this->parameters = array_merge($this->parameters, array(
                     "error" => "You have already passed this survey"));
+            return $this->render("::error.html.twig", $this->parameters);
+        }
         
         
 //         $passed = $em->getRepository('CyclogramProofPilotBundle:ParticipantSurveyLink')->checkIfSurveyPassed($participant, $surveyId);
@@ -113,7 +123,8 @@ class SurveyController extends Controller
         $parameters['survey'] = $this->getSurveyData($surveyId, $locale);
         $parameters['logo'] = $this->container->getParameter('study_image_url') . '/' . $studyId. '/' .$studyContent->getStudyLogo();
     
-        return $this->render('CyclogramFrontendBundle:Survey:survey.html.twig', $parameters);
+        $this->parameters = array_merge($this->parameters, $parameters);
+        return $this->render('CyclogramFrontendBundle:Survey:survey.html.twig', $this->parameters);
     }
     
     

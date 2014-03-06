@@ -705,6 +705,366 @@
 		});
 		$('.mark').click(removeError);
 		
+        // facebook authentification
+        $('#facebook_button, #facebook_button_landing_page').click(function(e) { 
+            e.preventDefault();
+            e.stopPropagation();
+            fb_login();
+        });
+
+        //google authentification
+        $('#google_button, #google_button_landing_page').click(function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            g_login();
+        });
+
+        //responsive jQuery UI
+        $(window).resize(function () {
+            fluidDialog();
+        });
+        $(document).on("dialogopen", ".ui-dialog", function (event, ui) {
+            fluidDialog();
+        });
+
+        function fluidDialog() {
+            var $visible = $(".ui-dialog:visible");
+            // each open dialog
+            $visible.each(function () {
+                var $this = $(this);
+                var dialog = $this.find(".ui-dialog-content").data("ui-dialog");
+                // if fluid option == true
+                if (dialog.options.fluid) {
+                    var wWidth = $(window).width();
+                    // check window width against dialog width
+                    if (wWidth < dialog.options.maxWidth + 50) {
+                        // keep dialog from filling entire screen
+                        $this.css("max-width", "90%");
+                    } else {
+                        // fix maxWidth bug
+                        $this.css("max-width", dialog.options.maxWidth);
+                    }
+                    //reposition dialog
+                    dialog.option("position", dialog.options.position);
+                }
+            });
+        }
+
+        // custom changes for jQuery UI
+        function funcCustom() {
+        	$(this).dialog("widget").find(".ui-dialog-titlebar").hide();
+            $('<div class="modal_close_btn">×</div>').appendTo($(this));
+            $('.modal_close_btn, .cancel a, .btn_cancel').on('click', function(e) {
+                e.preventDefault();
+                $(this).closest('.ui-dialog-content').dialog("close");
+            });
+        }
+        
+        //mail to friends
+        $('.email').bind('click', function(e) {
+            e.preventDefault();
+            $('#email_list').dialog({
+                modal: true,
+                width: '330',
+                fluid: true,
+                resizable: false,
+                position: ['top',100],
+                open: funcCustom
+            });
+        });
+
+        var count = 1;
+        $('#email_list .others').on('click', 'a', function(e) {
+            if (count < 5 ){
+                e.preventDefault();
+                $('<input type="text" name="send_to['+count+']"/>').insertBefore($(this));
+                count++;
+            } else {
+                e.preventDefault();
+            }
+        });
+        $('#email_submit').bind('click' , function(e){
+            $('#email_list').ajaxSubmit({
+                dataType: "json",
+                success: function(json) {
+                    if(json.error) {
+                        alert(json.message);
+                    } else {
+                        $('#email_list').dialog('close');
+                        alert(json.message);
+                    }}
+            });
+            return false;
+        });
+        
+        //registration ajax
+        $("#register").bind('click', function(e) {
+            e.preventDefault();
+            $("#div_register").dialog({ 
+                modal: true,
+                width: 'auto',
+                fluid: true,
+                resizable: false,
+                position: ['top',100],
+                open: funcCustom
+            });
+        });
+        
+        //consent ajax
+        $(".consent").bind('click', function(e) {
+            e.preventDefault();
+            $("#div_consent").dialog({ 
+                modal: true,
+                width: 'auto',
+                fluid: true,
+                resizable: false,
+                position: ['top',100],
+                open: funcCustom
+            });
+
+            $(window).resize(function () {
+                fluidDialog();
+            });
+            $(document).on("dialogopen", ".ui-dialog", function (event, ui) {
+                fluidDialog();
+            });
+            
+            function fluidDialog() {
+                var $visible = $(".ui-dialog:visible");
+                // each open dialog
+                $visible.each(function () {
+                    var $this = $(this);
+                    var dialog = $this.find(".ui-dialog-content").data("ui-dialog");
+                    // if fluid option == true
+                    if (dialog.options.fluid) {
+                        var wWidth = $(window).width();
+                        // check window width against dialog width
+                        if (wWidth < dialog.options.maxWidth + 50) {
+                            // keep dialog from filling entire screen
+                            $this.css("max-width", "90%");
+                        } else {
+                            // fix maxWidth bug
+                            $this.css("max-width", dialog.options.maxWidth);
+                        }
+                        //reposition dialog
+                        dialog.option("position", dialog.options.position);
+                    }
+                });
+            }
+            
+        });
+        $('#registration_form').submit(function(e){
+            $('.error').remove();
+            $(this).ajaxSubmit({
+                dataType: "json",
+                success: function(json) {
+                	{% set skipAboutMe = is_skip_about_me(studyCode) %}
+                    if(json.error){
+                        var messages = json.messages;
+                        for (var i = 0; i < messages .length; i++){
+                            var message = messages[i].message;
+                            if(messages[i].password) {
+                                var property  = "#registration_"+messages[i].property+"_first";
+                                $(property).after('<p class="error">'+message+'</p>');
+                            } else {
+                                var property  = "#registration_"+messages[i].property;
+                                $(property).after('<p class="error">'+message+'</p>');
+                            } 
+                        }
+                    } else if (json.url != null){
+                    	window.location.replace(json.url);
+                    } else if ({{ skipAboutMe|default(0)}}){
+                    	$("#div_register").dialog('close');
+                        $("#div_consent").dialog({
+                            modal: true,
+                            width: 'auto',
+                            fluid: true,
+                            resizable: false,
+                            position: ['top',100],
+                            open: funcCustom
+                        });
+                    } else {
+                        $("#div_register").dialog('close');
+                        if ({{ countryName and countryId }}) {
+                            $('#open_choice_countrySelect span').html('{{ countryName }}');
+                            $('#open_choice_countrySelect div.checker input[type=hidden]').val({{ countryId }});
+                            }
+                        $("#div_register_step2").dialog({
+                            modal: true,
+                            width: 'auto',
+                            fluid: true,
+                            resizable: false,
+                            position: ['top',100],
+                            open: funcCustom
+                        });
+                }}
+            });
+            return false;
+        });
+        
+        //login ajax
+        $("#login_form").submit(function(e){
+            $('.error').remove();
+            $(this).ajaxSubmit({
+                dataType: "json",
+                success: function(json) {
+                    if(json.error) {
+                        $('#reg_field_2').after('<div><p class="error">{%  trans from "login" %}txt_login_error_message{% endtrans %}</p></div>');
+                    } else {
+                        window.location.replace(json.url);
+                    }
+                }
+            });
+            return false;
+        });
+        //forgot username ajax
+        $("#forgot_username").bind('click', function(e){
+     	   e.preventDefault();
+     	   $("#div_register").dialog('close');
+          $("#div_forgot_username").dialog({
+              modal: true,
+              width: 'auto',
+              fluid: true,
+              resizable: false,
+              position: ['top',100],
+              open: funcCustom
+          });
+      });
+        $("#forgot_username_form").submit(function(e){
+       	$('.error').remove();
+       	$('.notice').remove();
+  	        $(this).ajaxSubmit({
+		        dataType: "json",
+	    	    success: function(json) {
+    	    	    if(json.error){
+   	    	    	    $('#mail_address_participantEmail').after('<div><p class="error">'+json.message+'</p></div>');
+
+    	    	       } else {
+    	    	    	  $('#mail_address_participantEmail').after('<div><p class="notice green">'+json.message+'</p></div>');
+        	    	       }}
+	    	});
+ 	        return false;
+             });
+        //forgot password ajax
+        $("#forgot_password").bind('click', function(e){
+     	   e.preventDefault();
+     	   $("#div_register").dialog('close');
+          $("#div_forgot_password").dialog({
+        	  modal: true,
+              width: 'auto',
+              fluid: true,
+              resizable: false,
+              position: ['top',100],
+              open: funcCustom
+          });
+      });
+        $("#forgot_password_form").submit(function(e){
+       	$('.error').remove();
+  	        $(this).ajaxSubmit({
+		        dataType: "json",
+	    	    success: function(json) {
+    	    	    if(json.error){
+   	    	    	    $('#form_participantUsername').after('<div><p class="error">'+json.message+'</p></div>');
+
+    	    	       } else {
+    	             	   $("#div_forgot_password").dialog('close');
+    	                  $("#div_forgot_password_confirmation").dialog();
+        	    	       }}
+	    	});
+ 	        return false;
+             });
+        // signup about ajax
+        $('#signup_about_form').submit(function(e){
+            $(this).ajaxSubmit({
+                dataType: "json",
+                success: function(json) {
+                   if(json.error){
+                        $('#signup_about_form_error').html('<p class="error">'+json.message+'</p>');
+                    } else if (json.url){
+                    	window.location.replace(json.url);
+                    }else {
+                        $("#div_register_step2").dialog('close');
+                        $("#div_consent").dialog({
+                            modal: true,
+                            width: 'auto',
+                            fluid: true,
+                            resizable: false,
+                            position: ['top',100],
+                            open: funcCustom
+                        });
+                    }
+                }
+            });
+            return false;
+        });
+        $('.embed').on('click', function(e) {
+            e.preventDefault();
+            $('#embed_list').dialog();
+        });
+        $(".temporaty_unavailable").bind('click', function(){
+            $("#div_temporaty_unavailable").dialog({
+          	  modal: true,
+                width: '260px',
+                fluid: true,
+                resizable: false,
+                position: ['top',100],
+                open: funcCustom
+            });
+            });
+        // mobile_login_switcher
+        $(".mobile_login_switcher a").bind('click', function(){
+            if( $(this).attr('rel') ){
+                if( !$(this).hasClass('expanded') ){
+                    $(".mobile_login_switcher a").removeClass('expanded');
+                    $(".loginform_left , .loginform_right").hide().removeClass('expanded');
+                    $( $(this).attr('rel') ).addClass('expanded').show();
+                    $(this).addClass('expanded');
+                } else {
+                    $(".loginform_left , .loginform_right").hide().removeClass('expanded');
+                    $(this).removeClass('expanded');
+                }
+            }
+            return false;
+        });
+        $('#send_prelaunch').on('click', function(e){
+        	$('p.preLaunch').remove();
+            var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        	if ($('#prelaunch_email').val() === ""){
+        		 $('#prelaunch_input_box').after('<p class="error preLaunch">Please input your e-mail</p>');
+        		 return false;
+        	}else if (!regex.test($('#prelaunch_email').val())) {
+       		    $('#prelaunch_input_box').after('<p class="error preLaunch">Invalid e-mail</p>');
+    		    return false;
+        	}
+    	    var url = '{{ path('_pre_launch', { 'studyCode':  studyCode ,'recruiter' : 'isRecruiter', 'email': 'participantEmail' }) }}';
+    	    url = url.replace("participantEmail", $('#prelaunch_email').val());
+        	if ($('#recruiter').is(':checked')){
+        	    url = url.replace("isRecruiter", 1 );
+        	} else {
+        		url = url.replace("isRecruiter", 0 );
+            }
+        	window.location.replace(url);
+        });
+
+        $('#send_prelaunch_loggedin').on('click', function(e){
+        	$('p.preLaunch').remove();
+    	    var url = '{{ path('_pre_launch', { 'studyCode':  studyCode ,'recruiter' : 'isRecruiter'}) }}';
+        	if ($('#recruiter_loggedin').is(':checked')){
+        	    url = url.replace("isRecruiter", 1 );
+        	} else {
+        		url = url.replace("isRecruiter", 0 );
+            }
+        	window.location.replace(url);
+        });
+
+        function onYouTubePlayerReady(playerId) {
+        	  ytplayer = document.getElementById("myytplayer");
+        	  ytplayer.addEventListener("onStateChange", function(state){
+					if(state == YT.PlayerState.PAUSED)
+              	   alert("Player's new state: " + state);
+            	  });
+        	}
+		
     });
 	
 })(jQuery);

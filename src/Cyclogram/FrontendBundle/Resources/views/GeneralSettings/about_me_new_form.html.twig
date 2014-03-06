@@ -151,11 +151,11 @@
      			    	    {% if data.race is defined %}
      			    	        $('#open_choice_raceSelect span').html('{{ data.race.raceName }}');
                                 $('#single_hidden_raceSelect').val({{ data.race.raceId }});
-                                {% for raceId in data.raceIds %}
+                                {% for race in data.race %}
                                    
-                                    $('#uniform-signup_about_raceSelect_{{ raceId }}').addClass('focus');
-                                    $('#uniform-signup_about_raceSelect_{{ raceId }}').children('span').addClass('checked');
-                                    $('#signup_about_raceSelect__{{ raceId }}').prop('checked', true);
+                                    $('#uniform-signup_about_raceSelect_{{ race.raceId }}').addClass('focus');
+                                    $('#uniform-signup_about_raceSelect_{{ race.raceId }}').children('span').addClass('checked');
+                                    $('#signup_about_raceSelect__{{ race.raceId }}').prop('checked', true);
                                 {% endfor %}
 		    	            {% endif %}
      			    	    {% if data.sex is defined %}

@@ -316,6 +316,28 @@ class CyclogramCommon {
         
         return $embedded;
     }
+    public function defaultJsParameters($request) {
+        $parameters = array();
+        $clientIp = $request->getClientIp();
+        if ($clientIp == '127.0.0.1'|| strpos($clientIp, '192.168.244.')!== false) {
+            $country = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Country')->findOneByCountryCode('UA');
+        }
+        $geoip = $this->container->get('maxmind.geoip')->lookup($clientIp);
+        if ($geoip != false) {
+            $countryCode = $geoip->getCountryCode();
+            $country = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Country')->findOneByCountryCode($countryCode);
+        }
+        $parameters['countryId'] = $country->getCountryId();
+        $parameters['countryName'] = $country->getCountryName();
+        $parameters['currencySymbol'] = $country->getCurrency()->getCurrencySymbol();
+        $parameters['participant_email'] = 'email';
+        if($request->get('studyCode')) 
+            $parameters['studyCode'] = $request->get('studyCode');
+        else
+            $parameters['studyCode'] = 'jsCode';
+        
+        return $parameters;
+    }
     
     public function verifyEmail($email) {
         

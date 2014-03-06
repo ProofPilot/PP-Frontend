@@ -206,45 +206,5 @@
                     $('#about_me_interventionCode').val(interventionCode);
                     $('#about_me_interventionType').val(interventionType);
             {% endif %}
-           $('#about_me_birthdateSelect').datepicker( {
-                   yearRange: "-100:+1",
-                   minDate: "-100Y",
-                   maxDate: "+1Y",
-                   changeMonth: true,
-                   changeYear: true
-                   });
-           $('#about_me_countryConfirm').click(function()
-                {
-                         $('#about_me_validationCheck').val("country");
-                });
-
-           $('#about_me_zipcodeConfirm').click(function()
-                   {
-                            $('#about_me_validationCheck').val("zipcode");
-                   });
-
-           $('#about_me_birthdateConfirm').click(function()
-                   {
-                            $('#about_me_validationCheck').val("birthdate");
-                   });
-
-           $('#about_me_sexConfirm').click(function()
-                   {
-                            $('#about_me_validationCheck').val("sex");
-                   });
-
-           $('#about_me_interestedConfirm').click(function()
-                   {
-                            $('#about_me_validationCheck').val("interested");
-                   });
-
-           $('#about_me_raceConfirm').click(function()
-                   {
-                            $('#about_me_validationCheck').val("race");
-                   });
-           $('#about_me_formConfirm').click(function()
-                   {
-                            $('#about_me_validationCheck').val("formConfirm");
-                   });
            });
         </script>

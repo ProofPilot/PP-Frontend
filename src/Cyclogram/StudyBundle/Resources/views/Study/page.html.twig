@@ -1,23 +1,5 @@
 {% extends '::general.html.twig' %}
 
-{% use '::facebook_blocks.html.twig' %}
-{% use '::google_blocks.html.twig' %}
-
-{% block javascripts %}
-    {% include '::google_analytics.html.twig' %}
-    <script src="{{ asset('/js/jquery.form.js') }}"></script>
-    <script src="https://platform.twitter.com/widgets.js"></script>
-    {#<script type="text/javascript" async src="//assets.pinterest.com/js/pinit.js"></script>#}
-    <script>
-        $(document).ready(function(){
-
-
-            	            
-
-        });
-</script>
-{% endblock javascripts %}
-
 {% block header %}
     {% include '::header.html.twig' %}
 {% endblock header %}
@@ -286,10 +268,11 @@
                         </ul>
                     {% endif %}
                     </div>
-                   {% if studyAboutit is empty %}
-                       <h1>{% trans from "study" %}txt_studyabout_title{% endtrans %}</h1>
+                   <h1>
+                   {% if studyAboutit is not defined %}
+                       {% trans from "study" %}txt_studyabout_title{% endtrans %}</h1>
                    {% else %}
-                       <h1>{{ studyAboutit }}</h1>
+                       {{ studyAboutit }}
                    {% endif %}
                     {{ studycontent.studyAbout |raw }}
                     <h1>{% trans from "study" %}txt_studywhatsinvolved_title{% endtrans %}</h1>
