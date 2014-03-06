@@ -4102,11 +4102,17 @@ footer .row_2 p {
 	color: red;
 	margin-top: 50px;
 }
-#prelaunch_email {
+.video_text #prelaunch_email, #prelaunch_email {
 	width: 265px;
 	height: 40px;
 	text-align: center;
 	margin-bottom: 10px;
+}
+.video_text #prelaunch_input_box {
+	display: block;
+}
+#prelaunch_input_box {
+	display: none;
 }
 #uniform-recruiter, #uniform-recruiter_loggedin {
 	margin-right: 5px;
@@ -4140,3 +4146,6 @@ footer .row_2 p {
 	border-radius: 5px 5px 0px 0px;
 	background: #fff;
 }
+.intro_page .input_msg {
+	display: none;
+} 
