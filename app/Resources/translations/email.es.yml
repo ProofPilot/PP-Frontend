@@ -7,15 +7,15 @@ confirm_verify_title: 'Verifique por favor su dirección de correo electrónico'
 do_it: '¡HAZLO AHORA!'
 do_it_task_email_title: 'Lo que tienes que hacer en ProofPilot'
 doit_email_what_you_got: 'Esto es lo que tienes que hacer en ProofPilot'
-email_incentive_title: email_incentive_title   # FIXME
+email_incentive_title: 'Te has ganado un incentivo de %Studyname%'
 email_login: 'Ingresa para ProofPilot'
 email_not_send_try_later: 'El correo electrónico no enviado intentarlo más tarde'
-email_promo_code_title: email_promo_code_title
+email_promo_code_title: '¡Has desbloqueado una recompensa especial!'
 email_reset_password: 'Restablecer la contraseña'
-email_title_change_password: email_title_change_password
+email_title_change_password: 'Cambiar su contraseña'
 email_title_notice: 'Olvídese de verificar su dirección de correo electrónico con ProofPilot?'
 email_title_prelaunch: 'Prelanzamiento %studyName% electrónico previo aviso'
-email_title_thank_you_refferal: email_title_thank_you_refferal
+email_title_thank_you_refferal: 'Gracias por recomendar a un amigo para %StudyName%'
 email_title_verify: 'Verifique por favor su dirección de correo electrónico'
 email_to_friends_add_email: 'Añadir otra dirección de correo'
 email_to_friends_cancle: Cancelar
@@ -35,8 +35,8 @@ link_below_to_confirm: 'Si por alguna razón, no se puede hacer clic el botón, 
 message_from: Mensaje
 notice_verification: 'Verificación de su dirección de e-mail comienza su viaje como un participante en los estudios de investigación.'
 notice_verification_text: "Oye, esto es ProofPilot. Hemos notado que no has confirmado tu dirección de correo electrónico. ¿Por confirmar su dirección de correo electrónico? Algunos estudios lo requieran para la participación. Otros requieren que el fin de obtener incentivos valiosos. \n<p> \nComience su viaje con ProofPilot verificando su dirección de correo electrónico hoy en día."
-prelaunch_body: prelaunch_body
-prelaunch_let_know: prelaunch_let_know
+prelaunch_body: 'Tenemos sus datos y le informaremos cuando este estudio pone en marcha. Si usted indicó que usted puede ser capaz de ayudar a reclutar para este estudio estaremos en contacto en breve.'
+prelaunch_let_know: 'Le dejaremos saber cuándo% studyName% lanzamientos!'
 reset_pass_link: 'Haga clic aquí para restablecer su contraseña'
 reset_pass_text: 'Sí, le sucede a todos nosotros: que no puede recordar su contraseña. Eso está bien. Haga clic en este enlace para restablecer tu contraseña'
 reset_pass_title: 'Restablecer la contraseña'
@@ -46,13 +46,13 @@ study_welcome_excited: 'Estamos muy contentos de tenerlo a bordo. Esto es lo que
 study_welcome_hold_on: 'Hold On! Aquí está su Primer Estudio de tareas'
 study_welcome_joint_other_studies: 'Únete Otros estudios en ProofPilot'
 study_welcome_welcome_to: 'Bienvenido a'
-txt_change_password_description: txt_change_password_description
-txt_change_password_title: txt_change_password_title
-txt_incentive: txt_incentive   # FIXME
-txt_promo_code: txt_promo_code
-txt_thanks_for_reffering: txt_thanks_for_reffering
-txt_thanks_for_reffering_tatx_part_two: txt_thanks_for_reffering_tatx_part_two
-txt_thanks_for_reffering_text: txt_thanks_for_reffering_text
-txt_you_got_for_incentive: txt_you_got_for_incentive   # FIXME
-welcome_to_study: 'Welcome to'
-you_have_new_study_task: you_have_new_study_task
+txt_change_password_description: 'Vamos a cambiar su contraseña. Es rápido y fácil.'
+txt_change_password_title: 'Cambiar la contraseña'
+txt_incentive: 'Gracias por su participación en este estudio. Su incentivo Actualmente se ha puesto en cola para su revisión y aprobación. Suponiendo que todo está bien, su incentivo estará en camino en breve.'
+txt_promo_code: 'Aquí hay un poco de algo ...'
+txt_thanks_for_reffering: 'Gracias por referir a un amigo a %studyName%'
+txt_thanks_for_reffering_tatx_part_two: 'Como muestra de nuestro agradecimiento, por favor, mire su correo electrónico para un incentivo especial gracias. Llegará pronto, si no lo ha hecho.'
+txt_thanks_for_reffering_text: 'Sólo queríamos escribir una pequeña nota para darle las gracias. Alguien acaba de unirse, porque usted le ha invitado (aunque por razones de privacidad, no podemos decir quién). El éxito de este esfuerzo es por tu culpa. No podríamos hacerlo sin ustedes.'
+txt_you_got_for_incentive: 'Tienes %incentiveAmount% dólar para el %interventionName%'
+welcome_to_study: 'Bienvenido a'
+you_have_new_study_task: 'Usted tiene una nueva tarea de estudio'

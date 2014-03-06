@@ -24,8 +24,8 @@ txt_pin: Cuota
 txt_share: Cuota
 txt_sponsored_by: 'Este estudio está patrocinado por'
 txt_staff: Personal
-txt_studyabout_title: txt_studyabout_title   # FIXME
-txt_studywhatsinvolved_title: txt_studywhatsinvolved_title   # FIXME
+txt_studyabout_title: 'Acerca de este estudio'
+txt_studywhatsinvolved_title: 'De qué se trata?'
 txt_tweet: Tweet
 txt_you_are_eligible: 'Eres Usted es elegible. Acepta el consentimiento para continuar ...'
 unavailable_functionality: 'No hay resultados provisionales de este estudio todavía. Te avisaremos cuando los resultados área disponible para su revisión.'
