@@ -69,92 +69,13 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function(){
-
-        var chosenCities = [];
-        var cityIds = [];
         {% if intervention is defined and intervention.type == 'Shipping Info'  %}
-            var interventionCode = '{{ intervention.code }}';
-            var interventionType = '{{ intervention.type }}';
-            $('#mailing_address_interventionCode').val(interventionCode);
-            $('#mailing_address_interventionType').val(interventionType);
-        {% endif %}
-        $('#mailing_address_participantZipcode').on('blur', function(){
-            if(!$(this).val())
-                return;
-
-            $.getJSON(
-                Routing.generate('_get_city_state_by_zip', {
-                    'zipcode': $(this).val(), 
-                    '_locale':'{{ app.request.locale }}'
-                }),
-                null,
-                function(data, textStatus, jqXHR) {
-                    if($.isEmptyObject(data)) {
-                        $('#mailing_address_city').val('');
-                        $('#mailing_address_cityId').val('');
-                        $('#mailing_address_state').val('');
-                        $('#mailing_address_stateId').val('');
-                    };
-                    if (!(data instanceof Array)) return;
-                    $('#mailing_address_city').val(data[0]['cityName']);
-                    $('#mailing_address_cityId').val(data[0]['cityId']);
-                    $('#mailing_address_state').val(data[0]['stateCode']);
-                    $('#mailing_address_stateId').val(data[0]['stateId']);
-
-                    chosenCities = []; cityIds = [];
-
-                    var len = data.length;
-                    for(var i=0;i<len;i++) {
-                        chosenCities[i] = {'data': data[i]["cityId"], 'value': data[i]["cityName"]};
-                        cityIds[i] = data[i]["cityId"];
-                    }
-
-                    var cityoptions = {
-                        lookup: chosenCities,
-                        minChars: 0,
-                        maxHeight: 150,
-                        onSelect: function(suggestion) {
-                            $("#mailing_address_city").val(suggestion.value);
-                            $("#mailing_address_cityId").val(suggestion.data);
-                        }
-                    };
-
-                    $('#mailing_address_city').autocomplete('disable');
-                    $('#mailing_address_city').autocomplete('setOptions', cityoptions);
-                    $('#mailing_address_city').autocomplete('enable');
-
-                });
-            });
-            
-            $("#mailing_address_city").autocomplete({
-                serviceUrl: Routing.generate('searchCityWithAjax', {'_locale':'{{ app.request.locale }}'}),
-                minChars: 3,
-                maxHeight: 150,
-                width: 278,
-                onSelect: function(suggestion) {
-                    $("#mailing_address_city").val(suggestion.value);
-                    $("#mailing_address_cityId").val(suggestion.data);
-            	}
-                });
-            
-            $("#mailing_address_state" ).autocomplete({
-            	serviceUrl: Routing.generate('searchStateWithAjax', {'_locale':'{{ app.request.locale }}'}),
-                minChars: 1,
-                maxHeight: 150,
-            	onSelect: function(suggestion) {
-            		 $("#mailing_address_state").val(suggestion.value);
-                     $("#mailing_address_stateId").val(suggestion.data);
-            	}
-            });
-
-            $("#mailing_address_participantZipcode").on('blur', function() {
-            	$('#error').remove(); 
-            	var inputVal = $(this).val();
-                var zipReg = /^[0-9]\d{4}-\d{4}|[0-9]{5}$/;
-                if(!zipReg.test(inputVal)) {
-                    $(this).after('<p class="error" id="error">{% trans from "register" %}txt_check_zipcode{% endtrans %}</p>');
-            }});
-      });
+        var interventionCode = '{{ intervention.code }}';
+        var interventionType = '{{ intervention.type }}';
+        $('#mailing_address_interventionCode').val(interventionCode);
+        $('#mailing_address_interventionType').val(interventionType);
+    {% endif %}
+    });
 </script>
 {% block stylesheets %}
     <style type="text/css">

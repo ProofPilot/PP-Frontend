@@ -1,5 +1,5 @@
 <!--  insert some handlebars -->
-{% javascripts output='generated/hbs/my-handlebars-templates.js'
+{% javascripts output='hbs/my-handlebars-templates.js'
     '@CyclogramFrontendBundle/Resources/public/hbs/*.hbs'
 %}
 <script type="text/javascript" src="{{ asset_url }}"></script>
@@ -75,6 +75,14 @@
     var clinicsTable = Handlebars.templates['clinicsTable.hbs'];
 
     $(document).ready(function(){
+        function funcCustom() {
+           	$(this).dialog("widget").find(".ui-dialog-titlebar").hide();
+               $('<div class="modal_close_btn">×</div>').appendTo($(this));
+               $('.modal_close_btn, .cancel a, .btn_cancel').on('click', function(e) {
+                   e.preventDefault();
+                   $(this).closest('.ui-dialog-content').dialog("close");
+               });
+           }
 
         var map;
         var markers = [];

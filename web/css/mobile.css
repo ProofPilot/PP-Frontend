@@ -388,7 +388,7 @@
 }
 .intro_page .text_wrapper .v_toolbar.for_mobile .social_share {
 	overflow: hidden;
-	width: 225px;
+	width: 270px;
 }
 .intro_page .text_wrapper .v_toolbar.for_mobile ul li span {
 	padding-top: 12px;
@@ -409,6 +409,12 @@
 .intro_page .text_wrapper .v_toolbar.for_mobile ul li a.tw {
     background: url("../images/icon_share_tw.png") no-repeat scroll 50% 50% rgba(0, 0, 0, 0);
     background-size: 24px 24px;
+}
+.intro_page .text_wrapper .v_toolbar.for_mobile ul li a.ln {
+    background: url("../../images/icon_share_ln.png") no-repeat scroll 50% 50% / 24px 24px rgba(0, 0, 0, 0);
+}
+.intro_page .text_wrapper .v_toolbar.for_mobile ul li a.pn {
+    background: url("../../images/icon_share_pn.png") no-repeat scroll 50% 50% / 24px 24px rgba(0, 0, 0, 0);
 }
 .intro_page .text_wrapper .v_toolbar.for_mobile ul li a.fb {
     background: url("../images/icon_share_fb.png") no-repeat scroll 50% 50% rgba(0, 0, 0, 0);

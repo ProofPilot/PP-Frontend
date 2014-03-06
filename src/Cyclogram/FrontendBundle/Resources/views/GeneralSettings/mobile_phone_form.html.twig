@@ -20,14 +20,3 @@
               </div>
           </form>
     </div>
-    <script src= {{ asset ('js/jquery.numeric.js') }}></script>
-    <script>
-       $(document).ready(function(){
-            $("#phone_phone_small").numeric();
-            $('#phone_phone_wide').numeric();
-            var check = $("#phone_phone_small").val();
-            if (check != '') { 
-                $('#phone_phone_wide').focus();
-            }
-       });
-    </script>

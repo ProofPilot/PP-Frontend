@@ -53,6 +53,7 @@ class StudyController extends Controller
             throw new NotFoundHttpException();
         
         $cc = $this->container->get('cyclogram.common');
+        $this->parameters = $cc->defaultJsParameters($this->getRequest());
         $study = $studyContent->getStudy();
         $studyId = $studyContent->getStudyId();
         $securityContext = $this->container->get('security.context');
@@ -306,8 +307,8 @@ class StudyController extends Controller
                       'image' => '/newsletter/images/newsletter_tmp_image.jpg'
                 )
         );
-        
-        return $this->render('CyclogramStudyBundle:Email:_newsletter.html.twig', $parameters);
+        $this->parameters = array_merge($this->parameters, $parameters);
+        return $this->render('CyclogramStudyBundle:Email:_newsletter.html.twig', $this->parameters);
     }
     
 }

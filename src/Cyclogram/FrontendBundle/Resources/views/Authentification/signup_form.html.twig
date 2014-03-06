@@ -78,7 +78,7 @@
             </div>
             <div class="loginform_right">
                 <h2>{% trans from "register" %}header_new_user_register{% endtrans %}</h2>
-                {% if studyCode and surveyId is defined  %}
+                {% if studyCode and surveyId is defined and studyCode != 'jsCode' %}
                     <form novalidate action="{{ path('_signup', {'studyCode' : studyCode, 'surveyId' : surveyId}) }}" method="post" name="registration" id="registration_form">
                 {% else  %}
                     <form novalidate action="{{ path('_signup') }}" method="post" name="registration" id="registration_form">

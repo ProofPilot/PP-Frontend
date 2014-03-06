@@ -1,16 +1,4 @@
 {%  extends '::dashboard.html.twig' %}
-    {% block stylesheets %}
-        <link rel="stylesheet" href={{ asset('css/jquery-ui-1.10.3/base/jquery-ui.min.css') }}>
-        <link rel="stylesheet" href={{ asset('css/jquery-ui-1.10.3/base/jquery.ui.datepicker.min.css') }}>
-    {%  endblock stylesheets %}
-    {% block javascripts %}
-        <script src="{{ asset('js/jquery-ui-1.10.3/jquery-ui.min.js') }}"></script>
-        <script src="{{ asset('js/jquery-ui-1.10.3/jquery.ui.datepicker.min.js') }}"></script>
-    {% endblock javascripts %}
-    
-{# {% form_theme form '::fields_theme2.html.twig' %}#}
-
-{# {% from '::macro.html.twig' import showonerror,hideonerror %}#}
     {% block content %}
     <div class="site_container">
     {% include '::header.html.twig' %}

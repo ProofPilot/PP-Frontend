@@ -29,6 +29,14 @@ use JMS\SecurityExtraBundle\Annotation\Secure;
  */
 class ContactPreferencesController extends Controller
 {
+    private $parameters = array();
+    
+    public function preExecute()
+    {
+        $cc = $this->container->get('cyclogram.common');
+        $this->parameters = $cc->defaultJsParameters($this->getRequest());
+    }
+    
     /**
      * @Route("/contact_prefs", name="_contact_prefs")
      * @Secure(roles="ROLE_PARTICIPANT, IS_AUTHENTICATED_REMEMBERED")
@@ -156,6 +164,7 @@ class ContactPreferencesController extends Controller
         $parameters["user"]["name"] = $participant->getParticipantFirstname() . ' ' . $participant->getParticipantLastname();
         $parameters["user"]["last_access"] = $participant->getParticipantLastTouchDatetime();
     
-        return $this->render('CyclogramFrontendBundle:GeneralSettings:contact_prefs.html.twig', $parameters);
+        $this->parameters = array_merge($this->parameters,$parameters);
+        return $this->render('CyclogramFrontendBundle:GeneralSettings:contact_prefs.html.twig', $this->parameters);
     }
 }

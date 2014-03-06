@@ -82,49 +82,73 @@ class GlobalExtension extends \Twig_Extension
     
     public function isEnrolledInStudy($studyCode)
     {
-        $participant = $this->securityContext->getToken()->getUser();
-        return $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Participant')->isEnrolledInStudy($participant, $studyCode);
+        if ($studyCode !== 'jsCode') {
+            $participant = $this->securityContext->getToken()->getUser();
+            return $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Participant')->isEnrolledInStudy($participant, $studyCode);
+        } else {
+            return false;
+        }
     }
     
     public function isNotEligible($studyCode)
     {
-        $participant = $this->securityContext->getToken()->getUser();
-        return $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Participant')->isNotEligibleInStudy($participant, $studyCode);
+        if ($studyCode !== 'jsCode') {
+            $participant = $this->securityContext->getToken()->getUser();
+            return $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Participant')->isNotEligibleInStudy($participant, $studyCode);
+        } else {
+            return false;
+        }
     }
     
     public function isStudyLogicImplemented($studyCode) {
-        $logic = $this->container->get('study_logic');
-        
-        $studies = $logic->getSupportedStudies();
-        foreach ($studies as $study) {
-            $supportedStudies[] = strtolower($study);
+        if ($studyCode !== 'jsCode') {
+            $logic = $this->container->get('study_logic');
+            
+            $studies = $logic->getSupportedStudies();
+            foreach ($studies as $study) {
+                $supportedStudies[] = strtolower($study);
+            }
+            
+            return in_array(strtolower($studyCode), $supportedStudies) ? true : false;
+        } else {
+            return false;
         }
-        
-        return in_array(strtolower($studyCode), $supportedStudies) ? true : false;
     }
     
     public function isParticipantRegisterLast($studyCode)
     {
+        if ($studyCode !== 'jsCode') {
         $study =  $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
         if($study->getParticipantRegisterLast() == 1)
             return true;
         else return false;
+        } else {
+            return  false;
+        }
     }
     
     public function isSkipConsent($studyCode)
     {
+        if ($studyCode !== 'jsCode') {
         $study =  $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
         if($study->getStudySkipConsent() == 1)
             return true;
         else return false;
+        } else {
+            return  false;
+        }
     }
     
     public function isSkipAboutMe($studyCode)
     {
-        $study =  $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
-        if($study->getStudySkipAboutMe() == 1)
-            return true;
-       else return false;
+        if ($studyCode !== 'jsCode') {
+            $study =  $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
+            if($study->getStudySkipAboutMe() == 1)
+                return true;
+           else return false;
+       } else {
+           return  false;
+       }
     }
     
 //     public function getGoogleCampaignInfo($studyId)

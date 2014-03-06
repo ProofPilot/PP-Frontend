@@ -50,6 +50,14 @@ use JMS\SecurityExtraBundle\Annotation\Secure;
 class GeneralSettingsController  extends Controller
 {
 
+    private $parameters = array();
+    
+    public function preExecute()
+    {
+        $cc = $this->container->get('cyclogram.common');
+        $this->parameters = $cc->defaultJsParameters($this->getRequest());
+    }
+    
     /**
      * @Route("/general_settings", name="_settings")
      * @Secure(roles="ROLE_PARTICIPANT, IS_AUTHENTICATED_REMEMBERED")
@@ -233,7 +241,8 @@ class GeneralSettingsController  extends Controller
         
         $parameters['form'] = $form->createView();
             
-        return $this->render('CyclogramFrontendBundle:GeneralSettings:general_settings.html.twig', $parameters);
+        $this->parameters = array_merge($this->parameters, $parameters);
+        return $this->render('CyclogramFrontendBundle:GeneralSettings:general_settings.html.twig', $this->parameters);
     }
     
     /**
@@ -366,8 +375,9 @@ class GeneralSettingsController  extends Controller
         }
         
         $parameters['formShippingInformation'] = $form->createView();
-    
-        return $this->render('CyclogramFrontendBundle:GeneralSettings:shipping_information.html.twig', $parameters);
+        
+        $this->parameters = array_merge($this->parameters, $parameters);
+        return $this->render('CyclogramFrontendBundle:GeneralSettings:shipping_information.html.twig', $this->parameters);
     }
     
     /**
@@ -516,7 +526,8 @@ class GeneralSettingsController  extends Controller
         $parameters["user"]["last_access"] = $participant->getParticipantLastTouchDatetime();
         $parameters['formAboutMe'] = $form->createView();
         
-        return $this->render('CyclogramFrontendBundle:GeneralSettings:about_me.html.twig', $parameters);
+        $this->parameters = array_merge($this->parameters, $parameters);
+        return $this->render('CyclogramFrontendBundle:GeneralSettings:about_me.html.twig', $this->parameters);
     }
     
     /**
@@ -825,9 +836,8 @@ class GeneralSettingsController  extends Controller
                     return new Response(json_encode(array('error' => false, 'message' =>  $this->get('translator')->trans("to_complete_intervention", array(), "shipping_information", $locale))));
             }
             $participantData = $this->aboutMeParticipantData($participant, $form);
-            if(!is_null($message))
-                return $this->render('CyclogramFrontendBundle:GeneralSettings:about_me_new.html.twig',
-                        array (
+            if(!is_null($message)) {
+                $this->parameters = array_merge($this->parameters,array (
                                 'formAbout' => $form->createView(),
                                 'countryName' => $country->getCountryName(),
                                 'countryId' => $country->getCountryId(),
@@ -835,9 +845,9 @@ class GeneralSettingsController  extends Controller
                                 'error' =>'Invalid : '.implode(',', $message),
                                 'data' => $participantData
                         ));
-            else 
-                return $this->render('CyclogramFrontendBundle:GeneralSettings:about_me_new.html.twig',
-                        array (
+                return $this->render('CyclogramFrontendBundle:GeneralSettings:about_me_new.html.twig',$this->parameters);
+            } else  {
+                $this->parameters = array_merge($this->parameters, array (
                                 'formAbout' => $form->createView(),
                                 'countryName' => $country->getCountryName(),
                                 'countryId' => $country->getCountryId(),
@@ -845,16 +855,17 @@ class GeneralSettingsController  extends Controller
                                 'update' =>true,
                                 'data' => $participantData
                         ));
+                return $this->render('CyclogramFrontendBundle:GeneralSettings:about_me_new.html.twig', $this->parameters);
+            }
         }
-
-        return $this->render('CyclogramFrontendBundle:GeneralSettings:about_me_new.html.twig',
-                array (
+        $this->parameters = array_merge($this->parameters,                 array (
                         'formAbout' => $form->createView(),
                         'countryName' => $country->getCountryName(),
                         'countryId' => $country->getCountryId(),
                         'currencySymbol' => $country->getCurrency()->getCurrencySymbol(),
                         'data' =>$participantData
                 ));
+        return $this->render('CyclogramFrontendBundle:GeneralSettings:about_me_new.html.twig',$this->parameters);
     }
     
     private function aboutMeParticipantData($participant,$form) {

@@ -65,6 +65,14 @@ use Symfony\Component\Security\Core\SecurityContext;
 class AuthentificationController extends Controller
 {
 
+    private $parameters = array();
+    
+    public function preExecute()
+    {
+        $cc = $this->container->get('cyclogram.common');
+        $this->parameters = $cc->defaultJsParameters($this->getRequest());
+    }
+
     /**
      * @Route("/signup/{studyCode}/{surveyId}", name="_signup", defaults={"studyCode"= null, "surveyId" = null})
      * @Template()
@@ -90,7 +98,7 @@ class AuthentificationController extends Controller
         $studyJoinFacebookButton = "";
         $locale = $this->getRequest()->getLocale();
         $language = $em->getRepository('CyclogramProofPilotBundle:Language')->findOneBylocale($locale);
-        if(!empty($studyCode)) {
+        if(!empty($studyCode) && $studyCode !== 'jsCode') {
 	        $study = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
 	        $studyContent = $em->getRepository('CyclogramProofPilotBundle:StudyContent')->findOneBy(array('study' => $study, 'language' => $language));
 	        $studyJoinButtonName = $studyContent->getStudyJoinButtonName();
@@ -194,11 +202,10 @@ class AuthentificationController extends Controller
         //login check
         $error = $this->getErrorForRequest($request);
         if($error) {
-            if ($request->isXmlHttpRequest()) 
-                
+            if ($request->isXmlHttpRequest()) {
                 return new Response(json_encode(array('error' => true)));
-            else
-                return $this->render('CyclogramFrontendBundle:Authentification:signup.html.twig', array(
+            } else {
+                $this->parameters = array_merge($this->parameters,array(
                         'last_username' => $session->get(SecurityContext::LAST_USERNAME),
                 		'studyJoinButtonName' => $studyJoinButtonName,
                 		'studySpecificLoginHeader' => $studySpecificLoginHeader,
@@ -207,6 +214,8 @@ class AuthentificationController extends Controller
                         'studyJoinFacebookButton' =>  $studyJoinFacebookButton,
                         'error'         => $error
                 ));
+                return $this->render('CyclogramFrontendBundle:Authentification:signup.html.twig', $this->parameters);
+            }
         }
         if (isset($studyCode)&&isset($surveyId)) {
             $bag = new AttributeBag();
@@ -218,18 +227,18 @@ class AuthentificationController extends Controller
             $session->registerBag($bag);
             $session->set('ProtectedSurvey', $bag);
         }
-            
+
         //render forms
-        return $this->render('CyclogramFrontendBundle:Authentification:signup.html.twig', array(
+        $this->parameters = array_merge($this->parameters,array(
                     'last_username' => $session->get(SecurityContext::LAST_USERNAME),
 	        		'studyJoinButtonName' => $studyJoinButtonName,
 	        		'studySpecificLoginHeader' => $studySpecificLoginHeader,
         			'studyJoinGoogleButton' =>  $studyJoinGoogleButton,
         			'studyJoinFacebookButton' =>  $studyJoinFacebookButton,
                     'form' => $form->createView(),
-                    'studyCode' => $studyCode,
                     'surveyId' => $surveyId
         ));
+        return $this->render('CyclogramFrontendBundle:Authentification:signup.html.twig', $this->parameters);
     }
     
     /**
@@ -238,7 +247,6 @@ class AuthentificationController extends Controller
     public function securityCheckAction($studyCode=null, $surveyId=null)
     {
         // The security layer will intercept this request
-        $session = $request->getSession();
     }
     
     
@@ -320,7 +328,7 @@ class AuthentificationController extends Controller
         }
         
         
-        if (isset($studyCode)) {
+        if (isset($studyCode) && $studyCode !== 'jsCode') {
             $isEnrolled = $em->getRepository('CyclogramProofPilotBundle:Participant')->isEnrolledInStudy($participant, $studyCode);
             if ($isEnrolled)
                 return $this->redirect($this->generateUrl("_main"));
@@ -340,7 +348,8 @@ class AuthentificationController extends Controller
                 	return $this->redirect($url);
                 }
             }elseif ($study->getStudySkipAboutMe()) {
-                return $this->render('CyclogramFrontendBundle:Authentification:consent_main.html.twig', array('studyCode' => $studyCode, 'surveyId' => $studyContent->getStudyElegibilitySurvey(),'studycontent' => $studyContent));
+                $this->parameters = array_merge($this->parameters, array('surveyId' => $studyContent->getStudyElegibilitySurvey(),'studycontent' => $studyContent));
+                return $this->render('CyclogramFrontendBundle:Authentification:consent_main.html.twig',  $this->parameters);
             } else {
                 return $this->redirect($this->generateUrl("_signup_about", array('studyCode' => $studyCode, 'surveyId' => $studyContent->getStudyElegibilitySurvey())));
             }
@@ -362,21 +371,24 @@ class AuthentificationController extends Controller
         
         if (($this->get('security.context')->isGranted('ROLE_FACEBOOK_USER') || $this->get('security.context')->isGranted('ROLE_GOOGLE_USER')) 
                         && ($participant->getParticipantBasicInformation() == true)) {
-            if (isset($studyCode)) {
+            if (isset($studyCode) && $studyCode !== 'jsCode') {
                 $study = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
                 $studyContent =  $this->getDoctrine()->getRepository("CyclogramProofPilotBundle:StudyContent")->getStudyContent($study->getStudyCode(), $locale);
-                if ($study->getStudySkipConsent())
+                if ($study->getStudySkipConsent()) {
                     return $this->OauthRedirect($studyCode);
-                else
-                    return $this->render('CyclogramFrontendBundle:Authentification:consent_main.html.twig', array('studyCode' => $studyCode, 'surveyId' => $studyContent->getStudyElegibilitySurvey(), 'studycontent' => $studyContent));
+                } else {
+                    $this->parameters = array_merge($this->parameters, array('surveyId' => $studyContent->getStudyElegibilitySurvey(),'studycontent' => $studyContent));
+                    return $this->render('CyclogramFrontendBundle:Authentification:consent_main.html.twig', $this->parameters);
+                }
             } else {
                 return $this->OauthRedirect($studyCode);
             }
         }
 
         if (empty($participant)) {
-            return $this->render("::error.html.twig", array(
-                    "error"=>"Wrong participant id"));
+            $this->parameters = array_merge($this->parameters, array("error"=>"Wrong participant id"));
+            return $this->render("::error.html.twig",
+                    $this->parameters);
         }
         $form = $this->createForm(new SignUpAboutForm($this->container));
         $clientIp = $request->getClientIp();
@@ -552,35 +564,30 @@ class AuthentificationController extends Controller
                     }
                 }
                 if ($message == null) {
-                    if (isset($studyCode)) {
+                    if (isset($studyCode) && $studyCode !== 'jsCode') {
                         $study = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
                         $studyContent =  $this->getDoctrine()->getRepository("CyclogramProofPilotBundle:StudyContent")->getStudyContent($study->getStudyCode(), $locale);
-                        if ($study->getStudySkipConsent())
+                        if ($study->getStudySkipConsent()) {
                             return $this->OauthRedirect($studyCode);
-                        else
-                            return $this->render('CyclogramFrontendBundle:Authentification:consent_main.html.twig', array('studyCode' => $studyCode, 'surveyId' => $studyContent->getStudyElegibilitySurvey(), 'studycontent' => $studyContent));
+                        } else {
+                            $this->parameters = array_merge($this->parameters , array('surveyId' => $studyContent->getStudyElegibilitySurvey(), 'studycontent' => $studyContent));
+                            return $this->render('CyclogramFrontendBundle:Authentification:consent_main.html.twig',$this->parameters );
+                        }
                     } else {
                         return $this->OauthRedirect($studyCode);
                     }
                 } else {
-                   return $this->render('CyclogramFrontendBundle:Authentification:signup_about.html.twig',
-                            array (
+                    $this->parameters = array_merge($this->parameters , array (
                                     'formAbout' => $form->createView(),
-                                    'countryName' => $country->getCountryName(),
-                                    'countryId' => $country->getCountryId(),
-                                    'currencySymbol' => $country->getCurrency()->getCurrencySymbol(), 
                                     'error' =>'Invalid : '.implode(',', $message)
                                 ));
+                   return $this->render('CyclogramFrontendBundle:Authentification:signup_about.html.twig',$this->parameters);
                 }
             }
-        
-        return $this->render('CyclogramFrontendBundle:Authentification:signup_about.html.twig',
-                array (
-                        'formAbout' => $form->createView(),
-                        'countryName' => $country->getCountryName(),
-                        'countryId' => $country->getCountryId(),
-                        'currencySymbol' => $country->getCurrency()->getCurrencySymbol()
-                       ));
+            $this->parameters = array_merge($this->parameters , array (
+                    'formAbout' => $form->createView()
+            ));
+        return $this->render('CyclogramFrontendBundle:Authentification:signup_about.html.twig',$this->parameters);
     }
     
     /**
@@ -645,7 +652,8 @@ class AuthentificationController extends Controller
     
         } else {
             $error = $this->get('translator')->trans('mail_confirmation_fail', array(), 'register');
-            return $this->render('CyclogramFrontendBundle:Email:email_confirm.html.twig', array('error' => $error));
+            $this->parameters = array_merge($this->parameters, array('error' => $error));
+            return $this->render('CyclogramFrontendBundle:Email:email_confirm.html.twig', $this->parameters);
         }
          
     }
@@ -695,14 +703,15 @@ class AuthentificationController extends Controller
                     else 
                         return new Response(json_encode(array('error' => true, 'message' => $send['message'])));
                 }
-                if($send['status'] == true)
-                    return $this->render('CyclogramFrontendBundle:Authentification:username_sent.html.twig');
-                else 
-                    return $this->render('CyclogramFrontendBundle:Authentification:forgot_username.html.twig',
-                            array(
+                if($send['status'] == true) {
+                    return $this->render('CyclogramFrontendBundle:Authentification:username_sent.html.twig', $this->parameters);
+                } else { 
+                    $this->parameters = array_merge($this->parameters, array(
                                     'formForgorUsername' => $form->createView(),
                                     'error' => $send['message']
                             ));
+                    return $this->render('CyclogramFrontendBundle:Authentification:forgot_username.html.twig',$this->parameters);
+                }
             } elseif ($request->isXmlHttpRequest()) {
                 $validator = $this->container->get('validator');
                 $errors = $validator->validate($form);
@@ -712,10 +721,10 @@ class AuthentificationController extends Controller
                 return new Response(json_encode(array('error' => true, 'message' => $messages)));
             }
         }
-        return $this->render('CyclogramFrontendBundle:Authentification:forgot_username.html.twig',
-                array(
-                        'formForgorUsername' => $form->createView()
-                ));
+        $this->parameters = array_merge($this->parameters, array(
+                'formForgorUsername' => $form->createView(),
+        ));
+        return $this->render('CyclogramFrontendBundle:Authentification:forgot_username.html.twig',$this->parameters);
     }
     
     /**
@@ -763,30 +772,31 @@ class AuthentificationController extends Controller
                             $embedded,
                             true,
                             $parameters);
-                    if ($request->isXmlHttpRequest())
+                    if ($request->isXmlHttpRequest()) {
                         if ($send['status'] == true)
                             return new Response(json_encode(array('error' => false)));
                         else 
                             return new Response(json_encode(array('error' => true, 'message' => $send['message'] )));
-                    return $this->render('CyclogramFrontendBundle:Authentification:reset_password_confirmation.html.twig');
+                    }
+                    return $this->render('CyclogramFrontendBundle:Authentification:reset_password_confirmation.html.twig', $this->parameters);
                 } else {
                     if ($request->isXmlHttpRequest())
                         return new Response(json_encode(array('error' => true, 'message' => $this->get('translator')->trans("doesnt_match_records", array(), "login"))));
-                    return $this->render('CyclogramFrontendBundle:Authentification:forgot_your_password.html.twig',
-                            array(
+                    $this->parameters = array_merge($this->parameters,  array(
                                     "formForgotPassword" => $form->createView(),
                                     "error" => $this->get('translator')->trans("doesnt_match_records", array(), "login")
                             ));
+                    return $this->render('CyclogramFrontendBundle:Authentification:forgot_your_password.html.twig',$thi->parameters);
                 }
             } elseif ($request->isXmlHttpRequest()) {
                 if ($request->isXmlHttpRequest())
                     return new Response(json_encode(array('error' => true, 'message' => $this->get('translator')->trans("doesnt_match_records", array(), "login"))));
             }
         }
-        return $this->render('CyclogramFrontendBundle:Authentification:forgot_your_password.html.twig',
-                array(
-                        "formForgotPassword" => $form->createView()
-                ));
+        $this->parameters = array_merge($this->parameters,  array(
+                "formForgotPassword" => $form->createView()
+        ));
+        return $this->render('CyclogramFrontendBundle:Authentification:forgot_your_password.html.twig',$this->parameters);
     }
     
     /**
@@ -836,14 +846,14 @@ class AuthentificationController extends Controller
     
                 $em->persist($participant);
                 $em->flush($participant);
-                return $this->render('CyclogramFrontendBundle:Authentification:password_changed.html.twig');
+                return $this->render('CyclogramFrontendBundle:Authentification:password_changed.html.twig', $this->parameters);
             }
         }
-        return $this->render('CyclogramFrontendBundle:Authentification:create_new_password.html.twig',
-                array(
+        $this->parameters = array_merge($this->parameters,                 array(
                         "form" => $form->createView(),
                         'id' => $id
                 ));
+        return $this->render('CyclogramFrontendBundle:Authentification:create_new_password.html.twig',$this->parameters);
     }
     
     /**
@@ -982,7 +992,7 @@ class AuthentificationController extends Controller
     {
         $request = $this->getRequest();
         $em = $this->getDoctrine()->getManager();
-        if (isset($studyCode)) {
+        if (isset($studyCode) && $studyCode !== 'jsCode') {
             $redirectUrl = $this->generateUrl("_main");
             $study = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
             $language = $em->getRepository('CyclogramProofPilotBundle:Language')->findOneByLocale($request->getLocale());

@@ -97,6 +97,31 @@ class StudyRepository extends EntityRepository
                 ->getResult();
     }
     
+    public function getStudyOrganizations($studyCode)
+    {
+        return $this->getEntityManager()
+        ->createQuery("
+                SELECT o.organizationName, o.organizationAddress1, o.organizationLogo
+                FROM CyclogramProofPilotBundle:Organization o
+                WHERE o.status = :organizationstatus
+                AND o.organizationId IN (SELECT org.organizationId FROM CyclogramProofPilotBundle:StudyOrganizationLink sol
+                JOIN sol.study s
+                JOIN sol.organization org
+                INNER JOIN sol.studyOrganizationRole role
+                WHERE s.studyCode = :code
+                AND sol.status = :solstatus
+                AND role.studyOrganizationRoleName = 'Site'
+                GROUP BY sol.organization, sol.study)
+    
+                ")
+                ->setParameters(array(
+                        'code' => $studyCode,
+                        'solstatus' => StudyOrganizationLink::STATUS_ACTIVE,
+                        'organizationstatus' => Organization::STATUS_ACTIVE,
+                ))
+                ->getResult();
+    }
+    
     /**
      * Check if studie's organization has any active default sites
      * @param unknown_type $studyId
@@ -231,30 +256,7 @@ class StudyRepository extends EntityRepository
         return $results;
     }
     
-    public function getStudyOrganizations($studyCode)
-    {
-        return $this->getEntityManager()
-        ->createQuery("
-                SELECT o.organizationName, o.organizationAddress1, o.organizationLogo
-                FROM CyclogramProofPilotBundle:Organization o
-                WHERE o.status = :organizationstatus
-                AND o.organizationId IN (SELECT org.organizationId FROM CyclogramProofPilotBundle:StudyOrganizationLink sol
-                                         JOIN sol.study s
-                                         JOIN sol.organization org
-                                         WHERE s.studyCode = :code
-                                         AND sol.status = :solstatus 
-                                         GROUP BY sol.organization, sol.study)
-                
-                ")
-                ->setParameters(array(
-                        'code' => $studyCode,
-                        'solstatus' => StudyOrganizationLink::STATUS_ACTIVE,
-                        'organizationstatus' => Organization::STATUS_ACTIVE,
-                ))
-                ->getResult();
-    }
     
-
     public function getStudyLocations($studyCode)
     {
         return $this->getEntityManager()
