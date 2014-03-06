@@ -179,9 +179,10 @@ class StudyController extends Controller
             $siteName = $this->getRequest()->get('utm_source');
             $csl = $this->getDoctrine()->getRepository("CyclogramProofPilotBundle:CampaignSiteLink")->getCSLParameters($campaignName, $siteName);
             if (!$csl) {
-                return $this->render("::error.html.twig", array(
+                $this->parameters =array_merge($this->parameters, array(
                         "error" => "Referral URL parameters are wrong"
                         ));
+                return $this->render("::error.html.twig", $this->parameters);
             }
             $siteId = $csl->getSite()->getSiteId();
             $campaignId = $csl->getCampaign()->getCampaignId();
