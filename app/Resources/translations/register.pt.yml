@@ -1,6 +1,6 @@
 btn_next: Próximo
 btn_save_mailing_address: 'Guardar e entrar'
-btn_send_confirmation_email: btn_send_confirmation_email
+btn_send_confirmation_email: 'Enviar e-mail de confirmação'
 confirm_password: 'Confirme a senha'
 consent_accept_join: 'EU ACEITO. Junte-se ao estudo'
 consent_any_information: 'Qualquer informação que você compartilhar conosco é completamente confidencial e segura.'
@@ -38,7 +38,7 @@ pick_user: 'Escolha o seu nome de usuário'
 study_register_error: 'Houve um problema - tente todo o processo de registro de novo'
 txt_check_email: 'Por favor, verifique o seu endereço de e-mail'
 txt_check_zipcode: 'Por favor, verifique o seu cep'
-txt_incorect_day: txt_incorect_day
+txt_incorect_day: 'Dia incorreta'
 txt_join: Junte-se
 txt_join_with: Junte-se
 txt_subtitle_check_email: 'Por favor, verifique o seu endereço de e-mail'

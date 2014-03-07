@@ -8,9 +8,9 @@ btn_send_pass: 'Send password'
 label_new_pass: 'New password'
 label_repeat_pass: 'Repeat password'
 label_username: Username
-txt_footer_top: 'ON TOP'
+txt_footer_top: 'Top of Page'
 txt_header_login: 'Join or Login'
 txt_header_or: or
 txt_header_register: Register
 txt_header_register_here: 'Register Here'
-txt_reminders_confirm: 'To be part of research studies, you must be willing to receive reminders via text message or e-mail message and you must select almost one weekday and time period. Are you sure you want to unsubscribe?'
+txt_reminders_confirm: 'To be part of research studies, you must be willing to receive reminders via text message or e-mail message and you must select at least one weekday and time period. Are you sure you want to unsubscribe?'

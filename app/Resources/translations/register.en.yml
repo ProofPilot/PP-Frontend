@@ -1,6 +1,6 @@
 btn_next: JOIN
 btn_save_mailing_address: 'Save and login'
-btn_send_confirmation_email: btn_send_confirmation_email
+btn_send_confirmation_email: 'Send confirmation email'
 confirm_password: 'Confirm Password'
 consent_accept_join: 'I ACCEPT. Join the study'
 consent_any_information: 'Any information you share with us is completely confidential and secure.'
@@ -39,7 +39,7 @@ pick_user: 'Pick Username'
 study_register_error: 'There was a problem - try the entire registration process again'
 txt_check_email: 'Please check your email'
 txt_check_zipcode: 'Please check your zip code'
-txt_incorect_day: txt_incorect_day
+txt_incorect_day: 'Incorrect day'
 txt_join: JOIN
 txt_join_with: 'Join with'
 txt_subtitle_check_email: 'Please check your email address'

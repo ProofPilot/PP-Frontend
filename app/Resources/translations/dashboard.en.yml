@@ -9,9 +9,9 @@ do_it_now: 'Do It Now'
 enter_mobile_phone: ' Enter your mobile phone number'
 enter_sms_code: 'Enter verification code you received on your phone'
 join_a_study: 'Join a study'
-label_phone_small: label_phone_small
-label_phone_wide: label_phone_wide
-label_sms_code: label_sms_code
+label_phone_small: Phone
+label_phone_wide: Phone
+label_sms_code: 'SMS code'
 no_code: 'No Code? Send Another'
 no_do_it: 'You have no study tasks right now'
 
@@ -33,6 +33,6 @@ what_next_list:
     help: Help
     how_activate_tests: 'How to activate your tests'
     other_info: 'Some other info'
-    reade_instruction: 'Read instructions to Perform the Tests'
+    reade_instruction: 'Read instructions to perform the tests'
 
 wrong_sms: 'Wrong SMS'
