@@ -539,7 +539,7 @@ class AuthentificationController extends Controller
                 $em->flush();
                 
                 if ($request->isXmlHttpRequest()) {
-                    if ($message == null) {
+                    if ($message == null &&$studyCode !== 'jsCode') {
                         $study = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
                         if ($study->getStudySkipConsent()) {
                             $participant = $this->get('security.context')->getToken()->getUser();
