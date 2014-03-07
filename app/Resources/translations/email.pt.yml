@@ -7,15 +7,15 @@ confirm_verify_title: 'Por favor, verifique seu e-mail'
 do_it: 'FAÇA AGORA'
 do_it_task_email_title: 'O que você tem a fazer no ProofPilot'
 doit_email_what_you_got: 'Aqui está o que você tem que fazer no ProofPilot'
-email_incentive_title: email_incentive_title   # FIXME
+email_incentive_title: 'Você ganhou um incentivo de %Studyname%'
 email_login: 'Entre para ProofPilot'
 email_not_send_try_later: 'E-mail não enviado tente mais tarde'
-email_promo_code_title: email_promo_code_title
+email_promo_code_title: 'Você abriu uma recompensa especial'
 email_reset_password: 'Redefinir sua senha'
-email_title_change_password: email_title_change_password
+email_title_change_password: 'Altere sua senha'
 email_title_notice: 'Título do aviso E-mail'
 email_title_prelaunch: 'Prelaunch %studyName% aviso correio'
-email_title_thank_you_refferal: email_title_thank_you_refferal
+email_title_thank_you_refferal: 'Obrigado pela indicação de um amigo para %StudyName%'
 email_title_verify: 'Por favor, verifique seu e-mail'
 email_to_friends_add_email: 'Adicionar outro e-mail'
 email_to_friends_cancle: Cancelar
@@ -35,8 +35,8 @@ link_below_to_confirm: 'Se por algum motivo, você não pode clicar no botão, u
 message_from: 'Mensagem do'
 notice_verification: 'Verificando o seu e-mail começa sua jornada como um participante em estudos de investigação.'
 notice_verification_text: "Ei, isso é ProofPilot. Notamos que você ainda não confirmou seu endereço de e-mail. Por confirmar seu endereço de e-mail? Alguns estudos necessitam dele para a participação. Outros exigem que, a fim de obter incentivos valiosos. \n<p> \nComece sua viagem com ProofPilot verificando seu endereço de e-mail hoje."
-prelaunch_body: prelaunch_body
-prelaunch_let_know: prelaunch_let_know
+prelaunch_body: 'Temos seus dados e permite-lhe saber quando este estudo lança. Se você indicou que você pode ser capaz de ajudar a recrutar para este estudo, vamos estar em contato em breve.'
+prelaunch_let_know: 'Nós vamos deixar você saber quando %studyName% lançamentos!'
 reset_pass_link: 'Clique aqui para redefinir sua senha'
 reset_pass_text: 'Sim, isso acontece com todos nós: você não lembra da sua senha. Isso é OK. Clique neste link para redefinir sua senha'
 reset_pass_title: 'Redefinir sua senha'
@@ -46,13 +46,13 @@ study_welcome_excited: 'Estamos realmente animados em tê-lo a bordo. Aqui está
 study_welcome_hold_on: 'Hold On! Aqui é o seu primeiro Estudo Task'
 study_welcome_joint_other_studies: 'Junte-se outros estudos em ProofPilot'
 study_welcome_welcome_to: 'Bem-vindo ao'
-txt_change_password_description: txt_change_password_description
-txt_change_password_title: txt_change_password_title
-txt_incentive: txt_incentive   # FIXME
-txt_promo_code: txt_promo_code
-txt_thanks_for_reffering: txt_thanks_for_reffering
-txt_thanks_for_reffering_tatx_part_two: txt_thanks_for_reffering_tatx_part_two
-txt_thanks_for_reffering_text: txt_thanks_for_reffering_text
-txt_you_got_for_incentive: txt_you_got_for_incentive   # FIXME
+txt_change_password_description: 'Vamos mudar sua senha. É rápido e fácil.'
+txt_change_password_title: 'Mude sua senha'
+txt_incentive: 'Obrigado por sua participação neste estudo. Seu incentivo foi atualmente na fila para análise e aprovação. Assumindo que tudo é bom, o incentivo vai estar a caminho em breve.'
+txt_promo_code: 'Aqui está um pouco de algo ...'
+txt_thanks_for_reffering: 'Obrigado por convidar um amigo para %studyName%'
+txt_thanks_for_reffering_tatx_part_two: 'Como um símbolo de nossa gratidão, por favor, ver o seu e-mail para um incentivo especial obrigado. Ele vai chegar em breve, se não já.'
+txt_thanks_for_reffering_text: 'Nós só queria escrever uma nota rápida para agradecer. Alguém acaba de entrar porque você indicou (embora por razões de privacidade, não podemos dizer quem). O sucesso desse esforço é por causa de você. Nós não poderíamos fazer isso sem você.'
+txt_you_got_for_incentive: 'Você tem %incentiveAmount% dólar por %interventionName%'
 welcome_to_study: 'Bem-vindo ao'
-you_have_new_study_task: you_have_new_study_task
+you_have_new_study_task: 'Você tem uma nova tarefa de estudo'
