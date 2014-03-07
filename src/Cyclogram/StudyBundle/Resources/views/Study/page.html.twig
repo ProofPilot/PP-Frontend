@@ -3,6 +3,35 @@
 {% block header %}
     {% include '::header.html.twig' %}
 {% endblock header %}
+{% block javascripts %}
+<script type="text/javascript">
+$(document).ready(function(){
+    $('#signup_about_form').submit(function(e){
+        $(this).ajaxSubmit({
+            dataType: "json",
+            success: function(json) {
+               if(json.error){
+                    $('#signup_about_form_error').html('<p class="error">'+json.message+'</p>');
+                } else if (json.url){
+                	window.location.replace(json.url);
+                }else {
+                    $("#div_register_step2").dialog('close');
+                    $("#div_consent").dialog({
+                        modal: true,
+                        width: 'auto',
+                        fluid: true,
+                        resizable: false,
+                        position: ['top',100],
+                        open: funcCustom
+                    });
+                }
+            }
+        });
+        return false;
+    });
+});
+</script>
+{% endblock javascripts %}
 
 {% block content %}
     <div class="intro_page">

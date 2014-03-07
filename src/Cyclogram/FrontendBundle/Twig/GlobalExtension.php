@@ -82,7 +82,7 @@ class GlobalExtension extends \Twig_Extension
     
     public function isEnrolledInStudy($studyCode)
     {
-        if ($studyCode !== 'jsCode') {
+        if (isset($studyCode) && $studyCode !== 'jsCode') {
             $participant = $this->securityContext->getToken()->getUser();
             return $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Participant')->isEnrolledInStudy($participant, $studyCode);
         } else {
@@ -92,7 +92,7 @@ class GlobalExtension extends \Twig_Extension
     
     public function isNotEligible($studyCode)
     {
-        if ($studyCode !== 'jsCode') {
+        if (isset($studyCode) && $studyCode !== 'jsCode') {
             $participant = $this->securityContext->getToken()->getUser();
             return $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Participant')->isNotEligibleInStudy($participant, $studyCode);
         } else {
@@ -101,7 +101,7 @@ class GlobalExtension extends \Twig_Extension
     }
     
     public function isStudyLogicImplemented($studyCode) {
-        if ($studyCode !== 'jsCode') {
+        if (isset($studyCode) && $studyCode !== 'jsCode') {
             $logic = $this->container->get('study_logic');
             
             $studies = $logic->getSupportedStudies();
@@ -117,7 +117,7 @@ class GlobalExtension extends \Twig_Extension
     
     public function isParticipantRegisterLast($studyCode)
     {
-        if ($studyCode !== 'jsCode') {
+        if (isset($studyCode) && $studyCode !== 'jsCode') {
         $study =  $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
         if($study->getParticipantRegisterLast() == 1)
             return true;
@@ -129,7 +129,7 @@ class GlobalExtension extends \Twig_Extension
     
     public function isSkipConsent($studyCode)
     {
-        if ($studyCode !== 'jsCode') {
+        if (isset($studyCode) && $studyCode !== 'jsCode') {
         $study =  $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
         if($study->getStudySkipConsent() == 1)
             return true;
@@ -141,7 +141,7 @@ class GlobalExtension extends \Twig_Extension
     
     public function isSkipAboutMe($studyCode)
     {
-        if ($studyCode !== 'jsCode') {
+        if (isset($studyCode) && $studyCode !== 'jsCode') {
             $study =  $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
             if($study->getStudySkipAboutMe() == 1)
                 return true;

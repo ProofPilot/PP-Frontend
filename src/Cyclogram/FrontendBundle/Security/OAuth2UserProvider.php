@@ -60,7 +60,7 @@ class OAuth2UserProvider implements OAuthAwareUserProviderInterface
         //if participant does not existr and it was registration
         if (empty($participant)) {
             $studyCode = $request->query->get('state');
-            if (!empty($studyCode)) {
+            if (!empty($studyCode)  && $studyCode !== 'jsCode') {
                 $study = $this->userManager->getRepository("CyclogramProofPilotBundle:Study")->findOneByStudyCode($studyCode);
                 $studyStatus = $this->userManager->getRepository('CyclogramProofPilotBundle:Status')->find($study->getStatus());
 
@@ -202,7 +202,7 @@ class OAuth2UserProvider implements OAuthAwareUserProviderInterface
             $this->userManager->persist($participant);
             $this->userManager->flush();
             $studyCode = $request->query->get('state');
-            if (!empty($studyCode)) {
+            if (!empty($studyCode) && $studyCode !== 'jsCode') {
                 $study = $this->userManager->getRepository("CyclogramProofPilotBundle:Study")->findOneByStudyCode($studyCode);
                 $studyStatus = $this->userManager->getRepository('CyclogramProofPilotBundle:Status')->find($study->getStatus());
                 if($studyStatus->getStatusName() == 'Pre-Launch') {

@@ -746,14 +746,14 @@
 		-------------------------------------------------------------------------------------------------------------*/
 		
         // facebook authentification
-        $('#facebook_button, #facebook_button_landing_page').click(function(e) { 
+        $('.facebook_button, #facebook_button, #facebook_button_landing_page').click(function(e) { 
             e.preventDefault();
             e.stopPropagation();
             fb_login();
         });
 
         //google authentification
-        $('#google_button, #google_button_landing_page').click(function(e) {
+        $('.google_button, #google_button, #google_button_landing_page').click(function(e) {
             e.preventDefault();
             e.stopPropagation();
             g_login();
@@ -904,33 +904,6 @@
 	    	});
  	        return false;
              });
-        // signup about ajax
-        $('#signup_about_form').submit(function(e){
-            $(this).ajaxSubmit({
-                dataType: "json",
-                success: function(json) {
-                   if(json.error){
-                        $('#signup_about_form_error').html('<p class="error">'+json.message+'</p>');
-                    } else if (json.url){
-                    	$('#about_me_popup').dialog('close');
-                    	window.location.replace(json.url);
-                    }else if (json.message) {
-                    	$('#about_me_popup').dialog('close');
-                    }else {
-                        $("#div_register_step2").dialog('close');
-                        $("#div_consent").dialog({
-                            modal: true,
-                            width: 'auto',
-                            fluid: true,
-                            resizable: false,
-                            position: ['top',100],
-                            open: funcCustom
-                        });
-                    }
-                }
-            });
-            return false;
-        });
         $('.embed').on('click', function(e) {
             e.preventDefault();
             $('#embed_list').dialog();
@@ -1325,7 +1298,7 @@
            }
          	/*-----------------------------------------------------------------------------------------------------------
          	-------------------------------------------------------------------------------------------------------------
-         	-----------------------------------------shipping_information_form.html.twig--------------------------------------
+         	-----------------------------------------shipping_information_form.html.twig---------------------------------
          	-------------------------------------------------------------------------------------------------------------
          	-------------------------------------------------------------------------------------------------------------*/
             var chosenCities = [];
