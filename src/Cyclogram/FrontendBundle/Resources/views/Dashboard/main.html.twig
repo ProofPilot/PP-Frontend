@@ -1,4 +1,31 @@
 {%  extends '::dashboard.html.twig' %}
+{% block javascripts %}
+<script type="text/javascript">
+$(document).ready(function(){
+    $('#signup_about_form').submit(function(e){
+        $('.about_me_notice').remove();
+        $('.error_msg').remove();
+        $(this).ajaxSubmit({
+            dataType: "json",
+            success: function(json) {
+                if(json.error) {
+                    $('#signup_about_form_error').html('<p class="error">'+json.message+'</p>');
+                } else {
+                    if (json.url) {
+                        $('#about_me_popup').dialog('close');
+                        window.location.replace(json.url);
+                    } else {
+                        alert(json.message);
+                        $('#about_me_popup').dialog('close');
+                    }
+                }
+            }
+        });
+        return false;
+    });
+});
+</script>
+{% endblock javascripts %}
 
 {% block content %}
     <div class="site_container">
