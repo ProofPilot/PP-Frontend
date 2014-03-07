@@ -123,16 +123,19 @@ class AuthentificationController extends Controller
                 $em->flush($participantArmLink);
             }
             if ($request->isXmlHttpRequest()) {
-                if ($study->getStudySkipAboutMe() && $study->getStudySkipConsent()) {
-                    $redirectUrl = $this->generateUrl("_main");
-                   $eligibilitySurvey = $studyContent->getStudyElegibilitySurvey();
-                    if (!empty($surveyId)) {
-                    	return new Response(json_encode(array('error' => false, 'url' => $this->generateUrl("_eligibility_survey", array('studyCode' => $studyCode,'surveyId' => $surveyId, 'redirectUrl' => $redirectUrl)))));
-                    } else if (is_null($eligibilitySurvey)){
-                    	$logic = $this->get('study_logic');
-                    	$participant = $this->get('security.context')->getToken()->getUser();
-                    	$url = $logic->studyRegistration($participant, $studyCode, null, null);
-                    	return new Response(json_encode(array('error' => false, 'url' => $url)));
+                if(!empty($studyCode) && $studyCode !== 'jsCode') {
+                $study = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
+                    if ($study->getStudySkipAboutMe() && $study->getStudySkipConsent()) {
+                        $redirectUrl = $this->generateUrl("_main");
+                       $eligibilitySurvey = $studyContent->getStudyElegibilitySurvey();
+                        if (!empty($surveyId)) {
+                        	return new Response(json_encode(array('error' => false, 'url' => $this->generateUrl("_eligibility_survey", array('studyCode' => $studyCode,'surveyId' => $surveyId, 'redirectUrl' => $redirectUrl)))));
+                        } else if (is_null($eligibilitySurvey)){
+                        	$logic = $this->get('study_logic');
+                        	$participant = $this->get('security.context')->getToken()->getUser();
+                        	$url = $logic->studyRegistration($participant, $studyCode, null, null);
+                        	return new Response(json_encode(array('error' => false, 'url' => $url)));
+                        }
                     }
                 }
                 return new Response(json_encode(array('error' => false)));
@@ -947,7 +950,7 @@ class AuthentificationController extends Controller
             $participant->setParticipantEmailCode($parameters['code']);
             $em->persist($participant);
             $em->flush($participant);
-            if (!empty($studyCode))
+            if (!empty($studyCode) && $studyCode !== 'jsCode')
                 $parameters['studyCode'] = $studyCode;
             $parameters['email'] = $participant->getParticipantEmail();
     
@@ -1175,7 +1178,7 @@ class AuthentificationController extends Controller
         $cc = $this->get('cyclogram.common');
         $embedded = array();
         $embedded = $cc->getEmbeddedImages();
-            if (!empty($studyCode))
+            if (!empty($studyCode)  && $studyCode !== 'jsCode')
                 $parameters['studyCode'] = $studyCode;
             $parameters['email'] = $participant->getParticipantEmail();
             $studyEntity = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneBystudyCode($studyCode);
