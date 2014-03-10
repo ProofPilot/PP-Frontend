@@ -287,11 +287,11 @@ $(document).ready(function(){
                         </ul>
                     {% endif %}
                     </div>
-                   <h1>
-                   {% if studyAboutit is not defined %}
-                       {% trans from "study" %}txt_studyabout_title{% endtrans %}</h1>
+                   
+                   {% if studyAboutit is empty %}
+                      <h1> {% trans from "study" %}txt_studyabout_title{% endtrans %}</h1>
                    {% else %}
-                       {{ studyAboutit }}
+                      <h1> {{ studyAboutit }}</h1>
                    {% endif %}
                     {{ studycontent.studyAbout |raw }}
                     <h1>{% trans from "study" %}txt_studywhatsinvolved_title{% endtrans %}</h1>
