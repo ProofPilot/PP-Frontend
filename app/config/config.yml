@@ -22,9 +22,9 @@ framework:
     templating:
         engines: ['twig']
         assets_version: "%assets_version%"
-#        assets_base_urls:
-#            http: [%url_assets%]
-#            ssl:  [%url_assets_ssl%]
+        assets_base_urls:
+            http: [%assets_static%]
+            ssl:  [%assets_static_ssl%]
     default_locale:  "%locale%"
     trusted_proxies: ~
     session:         ~
@@ -55,7 +55,7 @@ twig:
 # Assetic Configuration
 assetic:
     debug:          %kernel.debug%
-    use_controller: true
+    use_controller: false
     write_to: %assetic_output_dir%
     #bundles:        [ ]
     #java: /usr/bin/java

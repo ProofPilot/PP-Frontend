@@ -42,31 +42,48 @@
         'css/site.css'
         'css/mobile.css'
         'css/media-queries.css'
-        filter='cssrewrite,'
+        filter='cssrewrite'
         output='generated/css/global.css'
     %}
-        <link rel="stylesheet" href="{{ asset_url }}" />
+        <link rel="stylesheet" href="{{ asset(asset_url) }}" />
     {% endstylesheets %}
     
-    <script type="text/javascript" src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
-    <script type="text/javascript" src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> 
-    <script src={{ asset('js/vendor/modernizr-2.6.2.min.js') }}></script>
+{#     <script type="text/javascript" src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>#}
+{#     <script type="text/javascript" src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>#}
+{#     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> #}
+{#     <script src={{ asset('js/vendor/modernizr-2.6.2.min.js') }}></script>#}
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAgFoz3VYlZpWVsuIKfplU6c0yr8VaaoMc&sensor=false"></script>
-    <script src="https://platform.twitter.com/widgets.js"></script>
+{#     <script src="https://platform.twitter.com/widgets.js"></script>#}
 {#         <script>window.jQuery || document.write('<script src={{ asset('js/vendor/jquery-1.10.2.min.js') }}><\/script>')</script>#}
-    <script src={{ asset('js/jquery-ui-1.10.3/jquery-ui.min.js') }}></script>
-    <script src={{ asset('js/jquery-ui-1.10.3/jquery.ui.datepicker.min.js') }}></script>
-    <script type="text/javascript"src={{ asset('js/jquery.autocomplete.min.js') }}></script>
-    <script type="text/javascript" src="{{ asset('/js/handlebars.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('/js/handlebars.helpers.js') }}"></script>
+{#     <script src={{ asset('js/jquery-ui-1.10.3/jquery-ui.min.js') }}></script>#}
+{#     <script src={{ asset('js/jquery-ui-1.10.3/jquery.ui.datepicker.min.js') }}></script>#}
+{#     <script type="text/javascript"src={{ asset('js/jquery.autocomplete.min.js') }}></script>#}
+{#     <script type="text/javascript" src="{{ asset('/js/handlebars.js') }}"></script>#}
+{#     <script type="text/javascript" src="{{ asset('/js/handlebars.helpers.js') }}"></script>#}
     
-    <script src="{{ asset('js/jquery.uniform.min.js') }}"></script>
-    <script src= {{ asset ('js/jquery.numeric.js') }}></script>
-    <script src= {{ asset ('js/jquery.form.js') }}></script>
+{#     <script src="{{ asset('js/jquery.uniform.min.js') }}"></script>#}
+{#     <script src= {{ asset ('js/jquery.numeric.js') }}></script>#}
+{#     <script src= {{ asset ('js/jquery.form.js') }}></script>#}
+    {% javascripts
+        'bundles/fosjsrouting/js/router.js'
+        '//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js'
+        'js/vendor/modernizr-2.6.2.min.js'
+        'https://platform.twitter.com/widgets.js'
+        'js/jquery-ui-1.10.3/jquery-ui.min.js'
+        'js/jquery-ui-1.10.3/jquery.ui.datepicker.min.js'
+        'js/jquery.autocomplete.min.js'
+        'js/handlebars.js'
+        'js/handlebars.helpers.js'
+        'js/jquery.uniform.min.js'
+        'js/jquery.numeric.js'
+        'js/jquery.form.js'
+        output='generated/js/global.js'
+    %}
+        <script src="{{ asset(asset_url) }}"></script>
+    {% endjavascripts %}
+    <script type="text/javascript" src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
     {% include '::main.html.twig' %}
     {% include '::google_analytics.html.twig' %}
-    <script src="https://platform.twitter.com/widgets.js"></script>
     
     <script> var ISOLDIE = false;</script>
     <!--[if lt IE 9]>
@@ -79,8 +96,6 @@
         alert(browser_msg);
     }
     </script>
-    {% block javascripts %}
-    {% endblock javascripts %}
 
   </head>
 

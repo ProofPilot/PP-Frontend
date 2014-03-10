@@ -58,4 +58,5 @@ parameters:
     handlebars.bin: /usr/bin/handlebars
     handlebars.node: /usr/bin/node
     assetic_output_dir: %kernel.root_dir%/../web/
-    
+    assets_static: http://d1q0yu9uor3hfp.cloudfront.net/new-frontend
+    assets_static_ssl: https://d1q0yu9uor3hfp.cloudfront.net/new-frontend
