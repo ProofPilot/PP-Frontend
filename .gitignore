@@ -2,6 +2,7 @@
 /web/media/*
 /web/symlinks/*
 /web/generated/*
+/web/new-frontend
 /app/cache/*
 /app/logs/*
 /vendor*/
