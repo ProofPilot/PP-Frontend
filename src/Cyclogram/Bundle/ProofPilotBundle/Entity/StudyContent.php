@@ -492,7 +492,7 @@ class StudyContent
         return $this->studyVimeoVideo;
     }
 
-    public function setStudyVimeoVideo(string $studyVimeoVideo)
+    public function setStudyVimeoVideo($studyVimeoVideo)
     {
         $this->studyVimeoVideo = $studyVimeoVideo;
     }
