@@ -1,6 +1,8 @@
 parameters:
     site_name: "ProofPilot"
     site_url: http://frontend-bogdand.proofpilot.dyndns.org
+    site_host: 'new-frontend.dev1.proofpilot.net'
+    site_scheme: 'http'
     admin_project_path: /proofpilot
     admin_project_url:  'http://admin.dev1.proofpilot.net'
     base_path: ""

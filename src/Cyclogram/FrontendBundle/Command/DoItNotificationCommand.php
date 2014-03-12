@@ -148,8 +148,10 @@ class DoItNotificationCommand extends ContainerAwareCommand
     private function sendDoItNowEmail($participant, $interventionCode = null) 
     {
         $context = $this->getContainer()->get('router')->getContext();
-        $context->setHost('new-frontend-dm.proofpilot.dyndns.org');
-        $context->setScheme('http');
+        $host_url = $this->getContainer()->getParameter('site_host');
+        $context->setHost($host_url);
+        $host_scheme = $this->getContainer()->getParameter('site_scheme');
+        $context->setScheme($host_scheme);
         
         $cc = $this->getContainer()->get('cyclogram.common');
         $em = $this->getContainer()->get('doctrine')->getManager();
