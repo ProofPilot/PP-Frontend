@@ -180,7 +180,7 @@ class GeneralSettingsController  extends Controller
                     
                     $sms = $this->get('sms');
                              $message = $this->container->get('translator')->trans('sms_phone_text', array(), "general_settings",  $locale);
-                    $sentSms = $sms->sendSmsAction( array('message' => $message.' '.$participantSMSCode, 'phoneNumber'=>$participant->getParticipantMobileNumber()) );
+                    $sentSms = $sms->sendSmsAction( array('message' => $message.' '.$participantSMSCode, 'phoneNumber'=>$data['newPhoneNumberSmall'].$data['newPhoneNumberWide']) );
                     if($sentSms) {
                         $session = $request->getSession();
                         $session->set('newPhoneNumber', array($data['newPhoneNumberSmall'],$data['newPhoneNumberWide']));
