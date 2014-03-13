@@ -388,7 +388,7 @@ $(document).ready(function(){
         </div>
         <div class="msg_details">
             <label for="tmp_subject">{%  trans from "email" %}email_to_friends_subject{% endtrans %}</label>
-            <input id="tmp_subject" type="text" name="subject" class="text" value="{%  trans from "study" %}inivted_to_study{% endtrans %} {{ studycontent.studyName }}" />
+            <input id="tmp_subject" type="text" name="subject" class="text" value="{%  trans from 'study' %}inivted_to_study{% endtrans %} {{ studycontent.getStudyName }}" />
             <label for="tmp_msg">{%  trans from "email" %}email_to_friends_message{% endtrans %}</label>
             <textarea rows="3" cols="28.5" name="description" class="text"></textarea>
             {% if studyCode is defined %}

@@ -247,8 +247,11 @@ class StudyController extends Controller
         
         $this->parameters['studyJoinButtonName'] =  $studyJoinButtonName;
         $participant = $this->get('security.context')->getToken()->getUser();
-        if ($participant != 'anon.')
+        if ($participant != 'anon.') {
             $this->parameters['participant_email'] = $participant->getParticipantEmail();
+        } else {
+            unset($this->parameters['participant_email']);
+        }
         
         $request = $this->container->get('request');
         $clientIp = $request->getClientIp();

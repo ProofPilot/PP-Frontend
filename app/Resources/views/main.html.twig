@@ -1374,8 +1374,10 @@
            //mail to friends
            $('.email').bind('click', function(e) {
                e.preventDefault();
-               $('#tmp_subject').val('{%  trans from "study" %}inivted_to_study{% endtrans %}'+" " +$(this).children('.email_to_friends_study').val());
-               $('#tmp_who').val('{{ participant_email }}')
+               /* $('#tmp_subject').val('{%  trans from "study" %}inivted_to_study{% endtrans %}'+" " +$(this).children('.email_to_friends_study').val()); */
+               {% if  participant_email is defined %}
+                   $('#tmp_who').val('{{ participant_email }}')
+               {% endif %}
                $('#email_list').dialog({
                    modal: true,
                    width: '330',
