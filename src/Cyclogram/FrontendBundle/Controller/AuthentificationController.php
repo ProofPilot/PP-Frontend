@@ -154,9 +154,9 @@ class AuthentificationController extends Controller
                         $participant = $securityContext->getToken()->getUser();
                         $study = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
                         $url = $ls->studyRegistration($participant, $studyCode, $surveyId, $saveId);
-                        if ($participant->getParticipantEmailConfirmed() == false)
-                            $this->confirmParticipantEmail($participant);
-                        $this->confirmParticipantEmail($participant);
+//                         if ($participant->getParticipantEmailConfirmed() == false){
+//                             $this->confirmParticipantEmail($participant);
+//                         }
                         if ($study->getStudySkipAboutMe()) {
                             return $this->redirect($url);
                         }
@@ -900,9 +900,9 @@ class AuthentificationController extends Controller
         $roles = array("ROLE_USER", "ROLE_PARTICIPANT");
         $participant->setRoles($roles);
         $participant->setParticipantEmailCode($mailCode);
-        if ($participant->getParticipantEmailConfirmed() == false && (is_null($studyCode) && !$session->has('SurveyInfo'))) {
+//         if ($participant->getParticipantEmailConfirmed() == false && (is_null($studyCode) && !$session->has('SurveyInfo'))) {
             $this->confirmParticipantEmail($participant);
-        }
+//         }
         $em->persist($participant);
         $em->flush($participant);
         

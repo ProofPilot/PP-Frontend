@@ -221,7 +221,7 @@ $(document).ready(function(){
                                 	</a>
                                 {% endif %}
                                {% if is_participant_register_last(studyCode) %}
-                                   {% set redirectUrl = path('_signup')  %}
+                                   {% set redirectUrl = path('_signup', {'studyCode': studyCode})  %}
                                    {% if is_skip_consent(studyCode) and surveyId is not empty%}
                                         <a href="{{ path('_eligibility_survey', {'studyCode': studyCode, 'surveyId': surveyId, 'redirectUrl': redirectUrl} ) }}" class="join"><span>{% trans from "study" %}button_join_the_study_goal{% endtrans %}</span></a>
                                    {% elseif surveyId is empty %}

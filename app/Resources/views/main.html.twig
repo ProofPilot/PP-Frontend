@@ -784,6 +784,8 @@
                 open: funcCustom
             });
         });
+        {# only for landing page #}
+        {% if app.request.get('_route') != '_signup' %}
         $('#registration_form').submit(function(e){
             $('.error').remove();
             $(this).ajaxSubmit({
@@ -814,6 +816,8 @@
                             position: ['top',100],
                             open: funcCustom
                         });
+                    } else if ('{{ studyCode }}' == 'jsCode'){
+                    	window.location.replace("{{ path('_signup_about') }}");
                     } else {
                         $("#div_register").dialog('close');
                         if ({{ countryName and countryId }}) {
@@ -832,7 +836,7 @@
             });
             return false;
         });
-        
+        {% endif %}
         //login ajax
         $("#login_form").submit(function(e){
             $('.error').remove();

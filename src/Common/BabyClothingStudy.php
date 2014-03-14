@@ -122,10 +122,10 @@ class BabyClothingStudy extends AbstractStudy implements StudyInterface
             $reason[] = "No children";
         }
 
-        if (isset($surveyResult['187572X763X7979SQ001']) && $surveyResult['187572X763X7979SQ001'] != 'A4') {
-            $isEligible = false;
-            $reason[] = "Insufficient children age range";
-        }
+//         if (isset($surveyResult['187572X763X7979SQ001']) && $surveyResult['187572X763X7979SQ001'] != 'A4') {
+//             $isEligible = false;
+//             $reason[] = "Insufficient children age range";
+//         }
         
         if (isset($surveyResult['187572x763x7984'])
                 && ($surveyResult['187572x763x7984'] == 'A1' || $surveyResult['187572x763x7984'] == 'A2')) {
