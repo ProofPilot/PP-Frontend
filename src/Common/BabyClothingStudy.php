@@ -39,7 +39,6 @@ class BabyClothingStudy extends AbstractStudy implements StudyInterface
     public function studyRegistration($participant, $surveyId, $saveId,
             $campaignLink)
     {
-        $session = $this->container->get('session');
         $em = $this->container->get('doctrine')->getManager();
         $participantSurveyLink = $em->getRepository('CyclogramProofPilotBundle:ParticipantSurveyLink')
         ->findOneBy(array('saveId'=>$saveId, 'sidId'=>$surveyId));
@@ -47,7 +46,7 @@ class BabyClothingStudy extends AbstractStudy implements StudyInterface
             $participantSurveyLink->setStatus(ParticipantSurveyLink::STATUS_CLOSED);
             $em->persist($participantSurveyLink);
             
-            //if 187572/gid/778/qid/8270 is not null then issue promo code ID 19
+            //create eligibility intervention
             $intervention = $this->findIntervention('howdoyoushopforbabyclothing', $participant->getParticipantLanguage());
             $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')
             ->addParticipantInterventionLink($participant, $intervention);
@@ -55,18 +54,6 @@ class BabyClothingStudy extends AbstractStudy implements StudyInterface
             $newInterventionLink->setStatus(ParticipantInterventionLink::STATUS_CLOSED);
             $em->persist($newInterventionLink);
             $em->flush();
-            $sql = "select * from lime_survey_187572 where id = '" . $saveId . "'";
-            $lime_manager = $this->container->get('doctrine')->getManager('limesurvey');
-            $stmt = $lime_manager->getConnection()->prepare($sql);
-            $stmt->execute();
-            $result = $stmt->fetchAll();
-            $result = $result[0];
-            if(!empty($result['187572X778X82701']) && !empty($result['187572X778X82702']) &&
-               !empty($result['187572X778X82703']) && !empty($result['187572X778X82704']) &&
-               !empty($result['187572X778X82705']) && !empty($result['187572X778X82706']) && 
-               !empty($result['187572X778X82707'])){
-               $this->updatePromoCode($participant, $newInterventionLink);
-            }
             //endif
             
             $ArmParticipantLink = null;
@@ -84,40 +71,40 @@ class BabyClothingStudy extends AbstractStudy implements StudyInterface
     }
     public function interventionLogic($participant)
     {
-//         $em = $this->container->get('doctrine')->getManager();
-        
-//         $participantArm = $em->getRepository('CyclogramProofPilotBundle:ParticipantArmLink')->getStudyArm($participant, $this->getStudyCode());
-//         if (isset($participantArm))
-//             $participantArmName = $participantArm->getArm()->getArmCode();
-//             //get all participant intervention links
-//             $interventionLinks = $em
-//             ->getRepository(
-//                     'CyclogramProofPilotBundle:ParticipantInterventionLink')
-//                     ->getStudyInterventionLinks($participant, $this->getStudyCode());
-//             foreach ($interventionLinks as $interventionLink) {
-//                 $interventionCode = $interventionLink->getIntervention()->getInterventionCode();
-//                 $intervention = $interventionLink->getIntervention();
-//                 $status = $interventionLink->getStatus();
-//                 switch ($interventionCode) {
-//                     case 'MPFORM' :
-//                         $surveyId = $intervention->getSidId();
-//                         if ($status == ParticipantInterventionLink::STATUS_ACTIVE) {
-//                             $passed = $em->getRepository('CyclogramProofPilotBundle:ParticipantSurveyLink')
-//                             ->checkIfSurveyPassed($participant, $surveyId);
-//                             if ($passed) {
-//                                 $this->createIncentive($participant, $intervention);
-//                                 $interventionLink->setStatus(ParticipantInterventionLink::STATUS_CLOSED);
-//                                 $em->persist($interventionLink);
-//                                 $em->flush();
-//                                 $intervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')
-//                                     ->findOneByInterventionCode("MPFOCUS");
-//                                 $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')
-//                                     ->addParticipantInterventionLink($participant,$intervention, false);
-//                             }
-//                         }
-//                         break;
-//                 }
-//         }    
+        $em = $this->container->get('doctrine')->getManager();
+        $participantArm = $em->getRepository('CyclogramProofPilotBundle:ParticipantArmLink')->getStudyArm($participant, $this->getStudyCode());
+        if (isset($participantArm))
+            $participantArmName = $participantArm->getArm()->getArmCode();
+            //get all participant intervention links
+            $interventionLinks = $em
+            ->getRepository(
+                    'CyclogramProofPilotBundle:ParticipantInterventionLink')
+                    ->getStudyInterventionLinks($participant, $this->getStudyCode());
+            foreach ($interventionLinks as $interventionLink) {
+                $interventionCode = $interventionLink->getIntervention()->getInterventionCode();
+                $intervention = $interventionLink->getIntervention();
+                $status = $interventionLink->getStatus();
+                switch ($interventionCode) {
+                    case 'howdoyoushopforbabyclothing' :
+                        $surveyId = $intervention->getSidId();
+                        if (!$interventionLink->getPromoCodeUsed()) {
+                            $psl = $em
+                            ->getRepository(
+                                    'CyclogramProofPilotBundle:ParticipantSurveyLink')->
+                                    findOneBy(array('participant' => $participant, 'sidId' => $surveyId));
+                            $sql = "select * from lime_survey_187572 where id = '" . $psl->getSaveId() . "'";
+                            $lime_manager = $this->container->get('doctrine')->getManager('limesurvey');
+                            $stmt = $lime_manager->getConnection()->prepare($sql);
+                            $stmt->execute();
+                            $result = $stmt->fetchAll();
+                            $result = $result[0];
+                            if($result['187572X778X8860'] == "Y"){
+                                $this->updatePromoCode($participant, $interventionLink);
+                            }
+                        }
+                        break;
+                }
+        }    
         return true;
     }
     
@@ -143,11 +130,12 @@ class BabyClothingStudy extends AbstractStudy implements StudyInterface
             $isEligible = false;
             $reason[] = "No children";
         }
-
-//         if (isset($surveyResult['187572X763X7979SQ001']) && $surveyResult['187572X763X7979SQ001'] != 'A4') {
-//             $isEligible = false;
-//             $reason[] = "Insufficient children age range";
-//         }
+        
+        $not_eligible_array = array('A1','A2','A3');
+        if (isset($surveyResult['187572X763X7979SQ004']) && in_array($surveyResult['187572X763X7979SQ004'], $not_eligible_array)) {
+            $isEligible = false;
+            $reason[] = "Unappropriate children age range";
+        }
         
         if (isset($surveyResult['187572x763x7984'])
                 && ($surveyResult['187572x763x7984'] == 'A1' || $surveyResult['187572x763x7984'] == 'A2')) {
