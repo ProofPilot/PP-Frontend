@@ -373,11 +373,11 @@ class StudyRepository extends EntityRepository
                 INNER JOIN i.study s
                 WHERE p.participantEmail = :email
                 AND s.studyCode = :studyCode
-                AND pil.status <> :pilstatus')
+                AND pil.status not in (:pilstatus)')
                 ->setParameters(array(
                         'email' => $participant->getParticipantEmail(),
                         'studyCode' => $studyCode,
-                        'pilstatus' => ParticipantInterventionLink::STATUS_REFERRAL
+                        'pilstatus' => array(ParticipantInterventionLink::STATUS_REFERRAL, ParticipantInterventionLink::STATUS_CLOSED)
                 ))
                 ->getResult();
     }

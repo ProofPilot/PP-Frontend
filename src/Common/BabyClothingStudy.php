@@ -46,7 +46,29 @@ class BabyClothingStudy extends AbstractStudy implements StudyInterface
         if (isset($participantSurveyLink)) {
             $participantSurveyLink->setStatus(ParticipantSurveyLink::STATUS_CLOSED);
             $em->persist($participantSurveyLink);
-        
+            
+            //if 187572/gid/778/qid/8270 is not null then issue promo code ID 19
+            $intervention = $this->findIntervention('howdoyoushopforbabyclothing', $participant->getParticipantLanguage());
+            $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')
+            ->addParticipantInterventionLink($participant, $intervention);
+            $newInterventionLink = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')->findOneBy(array('intervention' => $intervention, 'participant' =>$participant));
+            $newInterventionLink->setStatus(ParticipantInterventionLink::STATUS_CLOSED);
+            $em->persist($newInterventionLink);
+            $em->flush();
+            $sql = "select * from lime_survey_187572 where id = '" . $saveId . "'";
+            $lime_manager = $this->container->get('doctrine')->getManager('limesurvey');
+            $stmt = $lime_manager->getConnection()->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetchAll();
+            $result = $result[0];
+            if(!empty($result['187572X778X82701']) && !empty($result['187572X778X82702']) &&
+               !empty($result['187572X778X82703']) && !empty($result['187572X778X82704']) &&
+               !empty($result['187572X778X82705']) && !empty($result['187572X778X82706']) && 
+               !empty($result['187572X778X82707'])){
+               $this->updatePromoCode($participant, $newInterventionLink);
+            }
+            //endif
+            
             $ArmParticipantLink = null;
             $armData = $em->getRepository('CyclogramProofPilotBundle:Arm')->findOneByArmCode('BasicBabyClothing');
             if ($armData) {
