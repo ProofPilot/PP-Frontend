@@ -98,7 +98,7 @@ class BabyClothingStudy extends AbstractStudy implements StudyInterface
                             $stmt->execute();
                             $result = $stmt->fetchAll();
                             $result = $result[0];
-                            if($result['187572X778X8860'] == "Y"){
+                            if(isset($result['187572X778X8860']) && $result['187572X778X8860'] == "Y"){
                                 $this->updatePromoCode($participant, $interventionLink);
                             }
                         }
