@@ -64,24 +64,24 @@ $(document).ready(function(){
                     {% endif %}
                 </div>
                 {% if not is_granted('ROLE_PARTICIPANT') or not is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                    <div id="prelaunch_input_box">
-                        <input type="text" placeholder="enter e-mail address" id="prelaunch_email"></input><br>
-                        <input type="checkbox" id="recruiter"></input><span>{% trans from "register" %}help_recruit_people{% endtrans %}</span>
+                    <div class="prelaunch_input_box">
+                        <input type="text" placeholder="enter e-mail address" class="prelaunch_email"></input><br>
+                        <input type="checkbox" class="recruiter"></input><span>{% trans from "register" %}help_recruit_people{% endtrans %}</span>
                     </div>
                     {% if studyJoinButtonName is not empty%}
-                        <a href="#" class="join for_mobile" id="send_prelaunch"><span>{{ studyJoinButtonName|striptags }}</span></a>
+                        <a href="#" class="join for_mobile send_prelaunch"><span>{{ studyJoinButtonName|striptags }}</span></a>
                     {% else %}
-                        <a href="#" class="join for_mobile" id="send_prelaunch"><span>{% trans from "register" %}let_me_know{% endtrans %}</span></a>
+                        <a href="#" class="join for_mobile send_prelaunch send_prelaunch"><span>{% trans from "register" %}let_me_know{% endtrans %}</span></a>
                     {% endif %}
                 {% endif %}
                 {% if is_granted('ROLE_PARTICIPANT') or is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                    <div id="logged_in_input_box">
-                        <input type="checkbox" id="recruiter_loggedin"></input><span>{% trans from "register" %}help_recruit_people{% endtrans %}</span>
+                    <div class="logged_in_input_box">
+                        <input type="checkbox" class="recruiter_loggedin"></input><span>{% trans from "register" %}help_recruit_people{% endtrans %}</span>
                     </div>
                     {% if studyJoinButtonName is empty %}
-	                    <a href="#" class="join for_mobile" id="send_prelaunch_loggedin" >{% trans from "register" %}let_me_know{% endtrans %}</a>
+	                    <a href="#" class="join for_mobile send_prelaunch_loggedin">{% trans from "register" %}let_me_know{% endtrans %}</a>
                     {% else %}
-                        <a href="#" class="join for_mobile" id="send_prelaunch_loggedin" >{{ studyJoinButtonName|striptags }}</a>
+                        <a href="#" class="join for_mobile send_prelaunch_loggedin">{{ studyJoinButtonName|striptags }}</a>
                     {% endif %}
                 {% endif %}
             {% endif %}
@@ -159,14 +159,14 @@ $(document).ready(function(){
                                 {% endif %}
                             </div>
                             {% if not is_granted('ROLE_PARTICIPANT') or not is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                                <div id="prelaunch_input_box">
-                                    <input type="text" placeholder="enter e-mail address" id="prelaunch_email"></input><br>
-                                    <input type="checkbox" id="recruiter"></input><span>{% trans from "register" %}help_recruit_people{% endtrans %}</span>
+                                <div class="prelaunch_input_box">
+                                    <input type="text" placeholder="enter e-mail address" class="prelaunch_email"></input><br>
+                                    <input type="checkbox" class="recruiter"></input><span>{% trans from "register" %}help_recruit_people{% endtrans %}</span>
                                 </div>
                                 {% if studyJoinButtonName is not empty%}
-                                	<a href="#" class="join" id="send_prelaunch"><span>{{ studyJoinButtonName|striptags }}</span></a>
+                                	<a href="#" class="join send_prelaunch"><span>{{ studyJoinButtonName|striptags }}</span></a>
                                 {% else %}
-                                	<a href="#" class="join" id="send_prelaunch"><span>{% trans from "register" %}let_me_know{% endtrans %}</span></a>
+                                	<a href="#" class="join send_prelaunch"><span>{% trans from "register" %}let_me_know{% endtrans %}</span></a>
                                 {% endif %}
                                 {% if studyJoinFacebookButton is empty %}
 	                                <a class="fb" id="facebook_button_landing_page" href="">
@@ -188,13 +188,13 @@ $(document).ready(function(){
                                 {% endif %}
                             {% endif %}
                             {% if is_granted('ROLE_PARTICIPANT') or is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                                <div id="logged_in_input_box">
-                                    <input type="checkbox" id="recruiter_loggedin"></input><span>{% trans from "register" %}help_recruit_people{% endtrans %}</span>
+                                <div class="logged_in_input_box">
+                                    <input type="checkbox" class="recruiter_loggedin"></input><span>{% trans from "register" %}help_recruit_people{% endtrans %}</span>
                                 </div>
                                 {% if studyJoinButtonName is empty %}
-	                                <a href="#" class="join" id="send_prelaunch_loggedin" >{% trans from "register" %}let_me_know{% endtrans %}</a>
+	                                <a href="#" class="join send_prelaunch_loggedin">{% trans from "register" %}let_me_know{% endtrans %}</a>
                                 {% else %}
-                                	<a href="#" class="join" id="send_prelaunch_loggedin" >{{ studyJoinButtonName|striptags }}</a>
+                                	<a href="#" class="join send_prelaunch_loggedin">{{ studyJoinButtonName|striptags }}</a>
                                 {% endif %}
                             {% endif %}
                         {% endif %}
