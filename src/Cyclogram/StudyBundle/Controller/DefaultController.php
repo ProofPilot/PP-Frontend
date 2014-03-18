@@ -78,4 +78,26 @@ class DefaultController extends Controller
         $this->parameters = array_merge($this->parameters, $parameters);
         return $this->render('CyclogramStudyBundle:Study:is_it_secure.html.twig', $this->parameters);
     }
+    /**
+     * @Route("/help", name="_help")
+     * @Template()
+     */
+    public function helpAction()
+    {
+        $locale = $this->getRequest()->getLocale();
+        $em = $this->getDoctrine()->getManager();
+    
+    
+        $blockContent = $em->getRepository("CyclogramProofPilotBundle:StaticBlocks")->getBlockContent("help_title", $locale);
+        $parameters["title"] = $blockContent;
+    
+        $blockContent = $em->getRepository("CyclogramProofPilotBundle:StaticBlocks")->getBlockContent("help_content", $locale);
+        $parameters["content"] = $blockContent;
+    
+        $blockContent = $em->getRepository("CyclogramProofPilotBundle:StaticBlocks")->getBlockContent("help_about", $locale);
+        $parameters["about"] = $blockContent;
+    
+        $this->parameters = array_merge($this->parameters, $parameters);
+        return $this->render('CyclogramStudyBundle:Study:is_it_secure.html.twig', $this->parameters);
+    }
 }
