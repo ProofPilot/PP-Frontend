@@ -4159,4 +4159,15 @@ footer .row_2 p {
 }
 .intro_page .input_msg {
 	display: none;
-} 
+}
+.prelaunch_msg {
+	display: none;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 700;
+    margin-bottom: 30px;
+    text-align: center;
+}
+.video_text .prelaunch_msg {
+	display: block !important;
+}

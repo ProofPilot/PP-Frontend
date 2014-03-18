@@ -1250,6 +1250,12 @@
 	.video_text .prelaunch_input_box {
 		display: none;
 	}
+	.prelaunch_msg {
+		display: block;
+	}
+	.video_text .prelaunch_msg {
+		display: none !important;
+	}
 	.prelaunch_input_box {
 		display: block;
 		text-align: center;
