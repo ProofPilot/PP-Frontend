@@ -498,6 +498,12 @@
     .panel .panel_right .dashboard_panel .box_more_studies .more_studies_col:last-child {
     	padding-right: 10px;
     }
+    .intro_page .text_wrapper .home_text .v_toolbar .social_share li a {
+		margin-right: 25px;
+	}
+	.intro_page .text_wrapper .video_wrapper .video_text a span {
+		font-size: 14px;
+	}
 }
 
 /* @media screen and (max-width: 990px) */ 
@@ -559,9 +565,6 @@
 		box-sizing:border-box;
 		-moz-box-sizing:border-box;
 		-webkit-box-sizing:border-box; 	
-	}
-	.intro_page .text_wrapper .home_text .v_toolbar .social_share li a {
-		margin-right: 25px;
 	}
 }
 
@@ -739,9 +742,6 @@
 	.panel .panel_left .menu_cont a.icon_dashboard {
 		font-size: 16px !important;
 	}
-	.intro_page .text_wrapper .video_wrapper .video_text a span {
-        font-size: 16px;
-    }
     .intro_page .text_wrapper .video_wrapper .video_text .social_col a.fb, .intro_page .text_wrapper .video_wrapper .video_text .social_col a.gp {
     	font-size: 14px;
 	}
@@ -1244,18 +1244,18 @@
 	.intro_page .text_wrapper .video_wrapper .video_text #facebook_button_landing_page {
 		display: block;
 	}
-	.intro_page .text_wrapper .video_wrapper .video_text #prelaunch_input_box {
+	.intro_page .text_wrapper .video_wrapper .video_text .prelaunch_input_box {
 		display: none;
 	}
-	.video_text #prelaunch_input_box {
+	.video_text .prelaunch_input_box {
 		display: none;
 	}
-	#prelaunch_input_box {
+	.prelaunch_input_box {
 		display: block;
 		text-align: center;
 		margin: 15px 0px;
 	}
-	#prelaunch_input_box #uniform-recruiter, #logged_in_input_box #uniform-recruiter_loggedin {
+	.prelaunch_input_box #uniform-recruiter, #logged_in_input_box #uniform-recruiter_loggedin {
 		top: 0px;
 	}
 	.intro_page .input_msg {
@@ -2141,6 +2141,7 @@
 	.intro_page .home_welcome {
 		overflow: visible;
 		float: left;
+		width: 100%;
 	}
 	.intro_page .home_welcome .welcome_banner img {
 		width: 100%;
