@@ -1409,12 +1409,17 @@
            $('#email_submit').bind('click' , function(e){
                $('#email_list').ajaxSubmit({
                    dataType: "json",
+                   beforeSend: function() {
+                       $('#email_list').hide();
+                       $('body').prepend('<div class="ajax_preloader"></div>');
+                   },
                    success: function(json) {
                        if(json.error) {
                            alert(json.message);
                        } else {
                            $('#email_list').dialog('close');
                            alert(json.message);
+                           $('.ajax_preloader').remove();
                        }}
                });
                return false;
