@@ -34,6 +34,7 @@ $(document).ready(function(){
 {% endblock javascripts %}
 
 {% block content %}
+{% set queryParams = app.request.query.all %}
     <div class="intro_page">
         <div class="choose_action alt for_mobile">
         {% if studycontent.studySponsorBy is not empty %}
@@ -148,7 +149,7 @@ $(document).ready(function(){
                     {% if preLaunchNotified is defined  and  preLaunchNotified == true%}
                         <span class="prelaunch_msg">we_will_notify_prelaunch</span>
                     {% elseif studyStatus  == 'Pre-Launch'%}
-                        {% if (queryParams["preLaunch"] is defined) %}
+                        {% if queryParams["preLaunch"] is defined %}
                             <span class="prelaunch_msg">{{ queryParams["preLaunch"] }}</span>
                         {% else %}
                             <div class="input_msg">
