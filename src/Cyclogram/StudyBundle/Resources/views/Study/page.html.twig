@@ -224,7 +224,7 @@ $(document).ready(function(){
                                    {% set redirectUrl = path('_signup', {'studyCode': studyCode})  %}
                                    {% if is_skip_consent(studyCode) and surveyId is not empty%}
                                         <a href="{{ path('_eligibility_survey', {'studyCode': studyCode, 'surveyId': surveyId, 'redirectUrl': redirectUrl} ) }}" class="join"><span>{% trans from "study" %}button_join_the_study_goal{% endtrans %}</span></a>
-                                   {% elseif surveyId is empty %}
+                                   {% elseif surveyId is not empty %}
                                        <a href="{{ path('_consent', {'studyCode': studyCode, 'surveyId': surveyId}) }}" class="join"><span>{% trans from "study" %}button_join_the_study_goal{% endtrans %}</span></a>
                                    {% else %}
                                        <a href="" class="join consent"><span>{% trans from "study" %}button_join_the_study_goal{% endtrans %}</span></a>
@@ -263,7 +263,15 @@ $(document).ready(function(){
                             {% elseif not is_not_eligible_in_study(studyCode) %}
                                 {% set redirectUrl = path('_main')  %}
                                 <p class="join">{% trans from "study" %}txt_join_before_goal{% endtrans %}</p>
-                                <a href="" class="join consent"><span>{% trans from "study" %}button_join_the_study_goal{% endtrans %}</span></a>
+                                {% if is_skip_consent(studyCode) and surveyId is not empty%}
+                                    <a href="{{ path('_eligibility_survey', {'studyCode': studyCode, 'surveyId': surveyId, 'redirectUrl': redirectUrl} ) }}" class="join"><span>{% trans from "study" %}button_join_the_study_goal{% endtrans %}</span></a>
+                                {% elseif surveyId is not empty %}
+                                    <a href="{{ path('_consent', {'studyCode': studyCode, 'surveyId': surveyId}) }}" class="join consent"><span>{% trans from "study" %}button_join_the_study_goal{% endtrans %}</span></a>
+                                {% elseif is_skip_consent(studyCode)%}
+                                    <a href="{{ path('_consent', {'studyCode': studyCode }) }}" class="join"><span>{% trans from "study" %}button_join_the_study_goal{% endtrans %}</span></a>
+                                {% else %}
+                                    <a href="{{ path('_consent', {'studyCode': studyCode }) }}" class="join consent"><span>{% trans from "study" %}button_join_the_study_goal{% endtrans %}</span></a>
+                                {% endif %}
                             {% endif %}
                         {% endif %}
                     {% endif %}
