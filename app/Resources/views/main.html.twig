@@ -772,10 +772,6 @@
             });
         });
 
-        $('#registration_next').on('click', function() {
-            $(this).parent().prepend('<div class="join_preloader"></div>');
-        });
-
         //consent ajax
         $(".consent").bind('click', function(e) {
             e.preventDefault();
@@ -792,11 +788,13 @@
         {% if app.request.get('_route') != '_signup' %}
         $('#registration_form').submit(function(e){
             $('.error').remove();
+            $('#registration_next').parent().prepend('<div class="join_preloader"></div>');
             $(this).ajaxSubmit({
                 dataType: "json",
                 success: function(json) {
                 	{% set skipAboutMe = is_skip_about_me(studyCode) %}
                     if(json.error){
+                        $('.join_preloader').remove();
                         var messages = json.messages;
                         for (var i = 0; i < messages .length; i++){
                             var message = messages[i].message;
@@ -1420,6 +1418,8 @@
                    success: function(json) {
                        if(json.error) {
                            alert(json.message);
+                           $('#email_list').dialog('close');
+                           $('.ajax_preloader').remove();
                        } else {
                            $('#email_list').dialog('close');
                            alert(json.message);
