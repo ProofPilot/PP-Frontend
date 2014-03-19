@@ -1492,6 +1492,7 @@ div.checker input {
     color: #6E6E6E;
     line-height: 39px;
     padding-top: 10px;
+    position: relative;
 }
 .mobile_reg.login_form .loginform_left .actions_row button.submit, .mobile_reg.login_form .loginform_right .actions_row button.submit {
     float: right;

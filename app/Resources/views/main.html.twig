@@ -771,7 +771,11 @@
                 open: funcCustom
             });
         });
-        
+
+        $('#registration_next').on('click', function() {
+            $(this).parent().prepend('<div class="join_preloader"></div>');
+        });
+
         //consent ajax
         $(".consent").bind('click', function(e) {
             e.preventDefault();
