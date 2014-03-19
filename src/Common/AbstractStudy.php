@@ -253,6 +253,7 @@ class AbstractStudy
                    $parameters = array();
                    $parameters['email'] = $participant->getParticipantEmail();
                    $parameters['host'] = $this->container->getParameter('site_url');
+                   $parameters['site_scheme'] = $this->container->getParameter('site_scheme');
                    $parameters['locale'] = $participant->getLocale();
                    $parameters["studies"] = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Study')->getRandomStudyInfo($participant->getLocale(), $participant);
                    $parameters["codeContent"] = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Code')->getCodeContentByCode($code->getCodeValue(), $participant, $promoCode->getPromoCode()->getPromoCodeId());
