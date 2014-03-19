@@ -4180,3 +4180,11 @@ footer .row_2 p {
 	left: 49%;
 	z-index: 101;
 }
+.join_preloader {
+	background: url("../images/join_preloader.gif") no-repeat;
+	width: 24px;
+	height: 24px;
+	position: absolute;
+	top: 20px;
+    right: 120px;
+}
