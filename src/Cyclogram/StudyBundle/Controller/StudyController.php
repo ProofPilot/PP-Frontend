@@ -90,22 +90,22 @@ class StudyController extends Controller
         $this->parameters['surveyId'] = $studyContent->getStudyElegibilitySurvey();
         $this->parameters["logo"] = $this->container->getParameter('study_image_url') . '/' . $studyId. '/' .$studyContent->getStudyLogo();
         //$vimeo = $studyContent->getStudyVimeoVideo();
-        $youtube = $studyContent->getStudyVideo();
-        if (!empty($youtube)) {
-            $video_id = substr( $youtube, strrpos( $youtube, '/' )+1 );
-            $this->parameters["youtubeVideoShare"] = "
-            function postFeed2(){
-            FB.ui({method: 'feed',
-            source: 'http://www.youtube.com/v/{$video_id}',
-            picture: 'http://img.youtube.com/vi/{$video_id}/0.jpg',
-            caption: '{$this->parameters["shareStudyTagline"]}',
-            link: '{$this->parameters['reffferalFacebookStudyUrl']}',
-            name: '{$this->parameters["shareStudyName"]}',
-            description: '{$this->parameters["facebookcontent"]}',
-            },function(response) {
-            window.location.reload();
-        }); return false;}";//$youtube;
-            }
+//         $youtube = $studyContent->getStudyVideo();
+//         if (!empty($youtube)) {
+//             $video_id = substr( $youtube, strrpos( $youtube, '/' )+1 );
+//             $this->parameters["youtubeVideoShare"] = "
+//             function postFeed2(){
+//             FB.ui({method: 'feed',
+//             source: 'http://www.youtube.com/v/{$video_id}',
+//             picture: 'http://img.youtube.com/vi/{$video_id}/0.jpg',
+//             caption: '{$this->parameters["shareStudyTagline"]}',
+//             link: '{$this->parameters['reffferalFacebookStudyUrl']}',
+//             name: '{$this->parameters["shareStudyName"]}',
+//             description: '{$this->parameters["facebookcontent"]}',
+//             },function(response) {
+//             window.location.reload();
+//         }); return false;}";//$youtube;
+//             }
         
         $this->parameters["graphic"] = $this->container->getParameter('study_image_url') . '/' .$studyId. '/' .$studyContent->getStudyGraphic();
 
