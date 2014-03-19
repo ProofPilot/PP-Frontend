@@ -283,7 +283,13 @@ $(document).ready(function(){
                     <div class="v_toolbar">
                     {% if studyAllowSharing %}
                         <ul class="social_share">
+                        {% if youtubeVideoShare is defined %}
+                        <script type="text/javascript">{{ youtubeVideoShare|raw }}
+                        </script>
+                            <li><a href='' class="fb" onClick="return postFeed2();"> {% trans from "study" %}txt_share{% endtrans %}</a></li>
+                        {% else %}
                             <li><a href='' class="fb" onClick="return postFeed('{{ reffferalFacebookStudyUrl }}','{{ shareStudyTagline }}','{{ facebookcontent }}','{{ graphic }}','{{ shareStudyName }}')"> {% trans from "study" %}txt_share{% endtrans %}</a></li>
+                        {% endif %}
                         {% if reffferalShortStudyUrl is defined %}
                             <li><a href="#" onclick="popUp=window.open('https://twitter.com/share?url={{ reffferalShortStudyUrl }}&text={%  trans from "study" %}social_join_study{% endtrans %} {{ shareStudyName }} {%  trans from "study" %}social_at_proofpilot{% endtrans %}', 'popupwindow', 'scrollbars=yes,width=800,height=400');popUp.focus();return false" class="tw">{% trans from "study" %}txt_tweet{% endtrans %}</a></li>
                             <li><a class="ln" href="#" onclick="popUp=window.open('http://www.linkedin.com/shareArticle?mini=true&amp;url={{ reffferalShortStudyUrl }}&amp;title={{ shareStudyName }}&amp;summary={{ facebookcontent |raw }}', 'popupwindow', 'scrollbars=yes,width=600,height=450');popUp.focus();return false" >{% trans from "study" %}txt_share{% endtrans %}</a></li>
