@@ -4171,3 +4171,12 @@ footer .row_2 p {
 .video_text .prelaunch_msg {
 	display: block !important;
 }
+.ajax_preloader {
+	background: url("../images/ajax_preloader.gif") no-repeat;
+	width: 48px;
+	height: 48px;
+	position: absolute;
+	top: 50%;
+	left: 49%;
+	z-index: 101;
+}
