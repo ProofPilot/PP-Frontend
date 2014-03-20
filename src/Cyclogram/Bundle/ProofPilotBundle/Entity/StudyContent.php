@@ -59,6 +59,13 @@ class StudyContent
     /**
      * @var string
      *
+     * @ORM\Column(name="study_wistia_video", type="string", length=255, nullable=true)
+     */
+    protected $studyWistiaVideo;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="study_logo", type="string", length=255, nullable=true)
      */
     private $studyLogo;
@@ -495,6 +502,16 @@ class StudyContent
     public function setStudyVimeoVideo($studyVimeoVideo)
     {
         $this->studyVimeoVideo = $studyVimeoVideo;
+    }
+
+    public function getStudyWistiaVideo()
+    {
+        return $this->studyWistiaVideo;
+    }
+
+    public function setStudyWistiaVideo($studyWistiaVideo)
+    {
+        $this->studyWistiaVideo = $studyWistiaVideo;
     }
 
 }
