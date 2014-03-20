@@ -786,6 +786,32 @@
         });
         {# only for landing page #}
         {% if app.request.get('_route') != '_signup' %}
+      //forgot username ajax
+        $("#forgot_username").bind('click', function(e){
+     	   e.preventDefault();
+     	   $("#div_register").dialog('close');
+          $("#div_forgot_username").dialog({
+              modal: true,
+              width: 'auto',
+              fluid: true,
+              resizable: false,
+              position: ['top',100],
+              open: funcCustom
+          });
+      });
+        //forgot password ajax
+        $("#forgot_password").bind('click', function(e){
+     	   e.preventDefault();
+     	   $("#div_register").dialog('close');
+          $("#div_forgot_password").dialog({
+        	  modal: true,
+              width: 'auto',
+              fluid: true,
+              resizable: false,
+              position: ['top',100],
+              open: funcCustom
+          });
+      });
         $('#registration_form').submit(function(e){
             $('.error').remove();
             $('#registration_next').parent().prepend('<div class="join_preloader"></div>');
@@ -854,19 +880,6 @@
             });
             return false;
         });
-        //forgot username ajax
-        $("#forgot_username").bind('click', function(e){
-     	   e.preventDefault();
-     	   $("#div_register").dialog('close');
-          $("#div_forgot_username").dialog({
-              modal: true,
-              width: 'auto',
-              fluid: true,
-              resizable: false,
-              position: ['top',100],
-              open: funcCustom
-          });
-      });
         $("#forgot_username_form").submit(function(e){
        	$('.error').remove();
        	$('.notice').remove();
@@ -882,19 +895,6 @@
 	    	});
  	        return false;
              });
-        //forgot password ajax
-        $("#forgot_password").bind('click', function(e){
-     	   e.preventDefault();
-     	   $("#div_register").dialog('close');
-          $("#div_forgot_password").dialog({
-        	  modal: true,
-              width: 'auto',
-              fluid: true,
-              resizable: false,
-              position: ['top',100],
-              open: funcCustom
-          });
-      });
         $("#forgot_password_form").submit(function(e){
        	$('.error').remove();
   	        $(this).ajaxSubmit({
