@@ -624,7 +624,10 @@ class AuthentificationController extends Controller
             if ($participant != 'anon.') {
                 $redirectUrl = $this->generateUrl("_main");
             } else {
-                $redirectUrl = $this->generateUrl("_signup");
+                if (!is_null($surveyId))
+                    $redirectUrl = $this->generateUrl("_signup",array('studyCode' => $studyCode));
+                else
+                    $redirectUrl = $this->generateUrl("_signup");
             }
 
                 
