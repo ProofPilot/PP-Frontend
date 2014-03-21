@@ -1460,14 +1460,7 @@
            }
 
            // custom changes for jQuery UI
-           function funcCustom() {
-           	$(this).dialog("widget").find(".ui-dialog-titlebar").hide();
-               $('<div class="modal_close_btn">×</div>').appendTo($(this));
-               $('.modal_close_btn, .cancel a, .btn_cancel').on('click', function(e) {
-                   e.preventDefault();
-                   $(this).closest('.ui-dialog-content').dialog("close");
-               });
-           }
+
            // using in landing page and dashboard
            $('#mailing_address_form').submit(function(e){
                
@@ -1494,8 +1487,18 @@
                return false;	
            });
     });
+
 	
 })(jQuery);
+function funcCustom() {
+	$ = jQuery;
+   	$(this).dialog("widget").find(".ui-dialog-titlebar").hide();
+       $('<div class="modal_close_btn">×</div>').appendTo($(this));
+       $('.modal_close_btn, .cancel a, .btn_cancel').on('click', function(e) {
+           e.preventDefault();
+           $(this).closest('.ui-dialog-content').dialog("close");
+       });
+   }
 // FACEBOOK BLOCK
 function fb_login() {
     FB.getLoginStatus(function(response) {
