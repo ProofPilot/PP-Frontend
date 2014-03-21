@@ -244,7 +244,7 @@ $(document).ready(function(){
                                    {% if is_skip_consent(studyCode) and surveyId is not empty%}
                                         <a href="{{ path('_eligibility_survey', {'studyCode': studyCode, 'surveyId': surveyId, 'redirectUrl': redirectUrl} ) }}" class="join"><span>{% trans from "study" %}button_join_the_study_goal{% endtrans %}</span></a>
                                    {% elseif surveyId is not empty %}
-                                       <a href="{{ path('_consent', {'studyCode': studyCode, 'surveyId': surveyId}) }}" class="join"><span>{% trans from "study" %}button_join_the_study_goal{% endtrans %}</span></a>
+                                       <a href="{{ path('_consent', {'studyCode': studyCode, 'surveyId': surveyId}) }}" class="join consent"><span>{% trans from "study" %}button_join_the_study_goal{% endtrans %}</span></a>
                                    {% else %}
                                        <a href="" class="join consent"><span>{% trans from "study" %}button_join_the_study_goal{% endtrans %}</span></a>
                                    {% endif %}
