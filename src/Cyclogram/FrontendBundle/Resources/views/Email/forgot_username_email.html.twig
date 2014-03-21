@@ -3,8 +3,10 @@
 			<td width="643" style="background-color: white;">
 			
 				<p style="margin: 0px; padding: 0px; margin-bottom: 25px; color: #ae4840; font-family: Arial; font-weight: bold; font-size: 40px;">{{ 'forgot_username_title' | trans({}, "email", locale) }}</p>
-				        
+				{% if registrationWith is defined %}
+				<p style="margin: 0px; padding: 0px; margin-bottom: 35px; color: #8b8b8b; font-family: Arial; font-size: 13px; line-height: 20px;">{% trans with {'%registrationWith%': registrationWith } from "email" %}txt_register_with{% endtrans %}</a></p>
+				{% else %}
 				 <p style="margin: 0px; padding: 0px; margin-bottom: 35px; color: #8b8b8b; font-family: Arial; font-size: 13px; line-height: 20px;">{{ 'forgot_username_text' | trans({}, "email", locale) }} : {{ userName }}</a></p>
-				
+				{% endif %}
 			</td>
 {% endblock %}

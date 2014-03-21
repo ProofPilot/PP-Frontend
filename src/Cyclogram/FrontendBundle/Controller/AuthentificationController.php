@@ -681,7 +681,17 @@ class AuthentificationController extends Controller
             if( $form->isValid() ) {
                 $values = $form->getData();
                 $participant = $em->getRepository('CyclogramProofPilotBundle:Participant')->findOneByParticipantEmail($values['participantEmail']);
-                $parameters['userName'] = $participant->getParticipantUsername();
+                $userName = $participant->getParticipantUserName();
+                if (is_null($userName)) {
+                    $fid = $participant->getFacebookId();
+                    $gid = $participant->getGoogleId();
+                    if (!is_null($fid))
+                        $parameters['registrationWith'] = 'Facebook';
+                    elseif (!is_null($gid))
+                        $parameters['registrationWith'] = 'Google';
+                } else {
+                    $parameters['userName'] = $participant->getParticipantUsername();
+                }
                 $parameters['email'] = $values['participantEmail'];
                 $parameters['locale'] = $request->getLocale();
                 $parameters['host'] = $this->container->getParameter('site_url');

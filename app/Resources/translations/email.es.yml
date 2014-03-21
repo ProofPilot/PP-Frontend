@@ -50,6 +50,7 @@ txt_change_password_description: 'Vamos a cambiar su contraseña. Es rápido y f
 txt_change_password_title: 'Cambiar la contraseña'
 txt_incentive: 'Gracias por su participación en este estudio. Su incentivo Actualmente se ha puesto en cola para su revisión y aprobación. Suponiendo que todo está bien, su incentivo estará en camino en breve.'
 txt_promo_code: 'Aquí hay un poco de algo ...'
+txt_register_with: txt_register_with   # FIXME
 txt_thanks_for_reffering: 'Gracias por referir a un amigo a %studyName%'
 txt_thanks_for_reffering_tatx_part_two: 'Como muestra de nuestro agradecimiento, por favor, mire su correo electrónico para un incentivo especial gracias. Llegará pronto, si no lo ha hecho.'
 txt_thanks_for_reffering_text: 'Sólo queríamos escribir una pequeña nota para darle las gracias. Alguien acaba de unirse, porque usted le ha invitado (aunque por razones de privacidad, no podemos decir quién). El éxito de este esfuerzo es por tu culpa. No podríamos hacerlo sin ustedes.'

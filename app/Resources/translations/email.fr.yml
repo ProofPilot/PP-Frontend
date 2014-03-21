@@ -7,7 +7,7 @@ confirm_verify_title: confirm_verify_title
 do_it: do_it
 do_it_task_email_title: do_it_task_email_title
 doit_email_what_you_got: doit_email_what_you_got
-email_incentive_title: email_incentive_title   # FIXME
+email_incentive_title: email_incentive_title
 email_login: email_login
 email_not_send_try_later: email_not_send_try_later
 email_promo_code_title: email_promo_code_title
@@ -48,11 +48,12 @@ study_welcome_joint_other_studies: study_welcome_joint_other_studies
 study_welcome_welcome_to: study_welcome_welcome_to
 txt_change_password_description: txt_change_password_description
 txt_change_password_title: txt_change_password_title
-txt_incentive: txt_incentive   # FIXME
+txt_incentive: txt_incentive
 txt_promo_code: txt_promo_code
+txt_register_with: txt_register_with   # FIXME
 txt_thanks_for_reffering: txt_thanks_for_reffering
 txt_thanks_for_reffering_tatx_part_two: txt_thanks_for_reffering_tatx_part_two
 txt_thanks_for_reffering_text: txt_thanks_for_reffering_text
-txt_you_got_for_incentive: txt_you_got_for_incentive   # FIXME
+txt_you_got_for_incentive: txt_you_got_for_incentive
 welcome_to_study: welcome_to_study
 you_have_new_study_task: you_have_new_study_task
