@@ -233,7 +233,7 @@ class KOCStudy extends AbstractStudy implements StudyInterface
         return $isEligible;
     }
     public function checkEligibility($studyCode, $participant) {
-        return false;
+        return true;
     }
     public static function getStudyCode()
     {
@@ -241,60 +241,7 @@ class KOCStudy extends AbstractStudy implements StudyInterface
     }
     public function commandInterventionLogic()
     {
-        $em = $this->container->get('doctrine')->getManager();
-        foreach ($this->getArmCodes() as $armCode) {
-                $period = 1;
-                $baseLineIntervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')->findOneByInterventionCode('KOCBaseline');
-                $technologyUseIntervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')->findOneByInterventionCode('KOCTechnologyUseSurvey');
-                $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:Study')
-                                        ->getParticipantsWithArmAndPeriod($armCode, $period);
-                foreach ($interventionLinks as $interventionLink) {
-                    if (!$em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')
-                            ->checkIfExistParticipantInterventionLink('KOCTechnologyUseSurvey', $interventionLink['participantId'])) {
-                        $participantInterventionLink = new ParticipantInterventionLink();
-                        $participantInterventionLink->setIntervention($technologyUseIntervention);
-                        $participantInterventionLink->setParticipant($em->getReference('Cyclogram\Bundle\ProofPilotBundle\Entity\Participant', $interventionLink['participantId']));
-                        $participantInterventionLink->setParticipantInterventionLinkDatetimeStart(new \DateTime("now"));
-                        $participantInterventionLink->setStatus(ParticipantInterventionLink::STATUS_ACTIVE);
-                        $em->persist($participantInterventionLink);
-                        $em->flush();
-                    }
-                }
-                
-                $period = 3;
-                $condomPickUpIntervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')->findOneByInterventionCode('KOCCondomPick-UpSurvey');
-                $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')
-                                        ->getParticipantByInterventionCodeAndPeriod($technologyUseIntervention->getInterventionCode(), $period);
-                foreach ($interventionLinks as $interventionLink) {
-                    if (!$em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')
-                            ->checkIfExistParticipantInterventionLink('KOCCondomPick-UpSurvey', $interventionLink['participantId'])) {
-                        $participantInterventionLink = new ParticipantInterventionLink();
-                        $participantInterventionLink->setIntervention($condomPickUpIntervention);
-                        $participantInterventionLink->setParticipant($em->getReference('Cyclogram\Bundle\ProofPilotBundle\Entity\Participant', $interventionLink['participantId']));
-                        $participantInterventionLink->setParticipantInterventionLinkDatetimeStart(new \DateTime("now"));
-                        $participantInterventionLink->setStatus(ParticipantInterventionLink::STATUS_ACTIVE);
-                        $em->persist($participantInterventionLink);
-                        $em->flush();
-                    }
-                }
-                
-                $period = 30;
-                $condomFollowUpPickUpIntervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')->findOneByInterventionCode('KOCFollow-UpSurvey');
-                $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:Study')
-                                        -> getParticipantsWithArmAndPeriod($armCode, $period);
-                foreach ($interventionLinks as $interventionLink) {
-                    if (!$em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')
-                            ->checkIfExistParticipantInterventionLink('KOCFollow-UpSurvey', $interventionLink['participantId'])) {
-                        $participantInterventionLink = new ParticipantInterventionLink();
-                        $participantInterventionLink->setIntervention($condomFollowUpPickUpIntervention);
-                        $participantInterventionLink->setParticipant($em->getReference('Cyclogram\Bundle\ProofPilotBundle\Entity\Participant', $interventionLink['participantId']));
-                        $participantInterventionLink->setParticipantInterventionLinkDatetimeStart(new \DateTime("now"));
-                        $participantInterventionLink->setStatus(ParticipantInterventionLink::STATUS_ACTIVE);
-                        $em->persist($participantInterventionLink);
-                        $em->flush();
-                    }
-               }
-        }
+        $this->addInterventionsbByPeriod($this->getStudyCode());
     }
 
 }

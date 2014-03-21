@@ -155,8 +155,7 @@ class BabyClothingStudy extends AbstractStudy implements StudyInterface
     }
     public function commandInterventionLogic()
     {
-        return;
-
+        $this->addInterventionsbByPeriod($this->getStudyCode());
     }
 
 }

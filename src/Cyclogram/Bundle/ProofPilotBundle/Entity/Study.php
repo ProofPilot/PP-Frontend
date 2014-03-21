@@ -98,6 +98,13 @@ class Study
     protected $studyTwitterPage;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="study_intervention_start", type="string", length=255, nullable=true)
+     */
+    protected $studyInterventionStart;
+
+    /**
      * @var boolean
      *
      * @ORM\Column(name="study_allow_mobile_devices_store_date", type="boolean", nullable=false)
@@ -593,6 +600,16 @@ class Study
     public function setStudySkipAboutMe($studySkipAboutMe)
     {
         $this->studySkipAboutMe = $studySkipAboutMe;
+    }
+
+    public function getStudyInterventionStart()
+    {
+        return $this->studyInterventionStart;
+    }
+
+    public function setStudyInterventionStart($studyInterventionStart)
+    {
+        $this->studyInterventionStart = $studyInterventionStart;
     }
 
 }

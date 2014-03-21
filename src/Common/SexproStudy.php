@@ -355,7 +355,7 @@ class SexproStudy extends AbstractStudy implements StudyInterface
     }
     public function commandInterventionLogic()
     {
-        return true;
+        $this->addInterventionsbByPeriod($this->getStudyCode());
     }
 
 }
