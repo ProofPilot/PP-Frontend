@@ -360,22 +360,7 @@ class DatingTodayStudy extends AbstractStudy implements StudyInterface
     }
     public function commandInterventionLogic()
     {
-            
-        foreach ($this->getArmCodes() as $armCode) {
-            $this->addInterventionbByPeriod(7, 'WEEK1', $armCode);
-            $this->addInterventionbByPeriod(7, 'REFER2', $armCode);
-            $this->addInterventionbByPeriod(10, 'HUFF1', $armCode);
-            $this->addInterventionbByPeriod(14, 'WEEK2', $armCode);
-            $this->addInterventionbByPeriod(17, 'HUFF2', $armCode);
-            $this->addInterventionbByPeriod(21, 'WEEK3', $armCode);
-            $this->addInterventionbByPeriod(25, 'HUFF3', $armCode);
-            $this->addInterventionbByPeriod(28, 'WEEK4', $armCode);
-            $this->addInterventionbByPeriod(30, 'HUFF4', $armCode);
-            $this->addInterventionbByPeriod(35, 'WEEK5', $armCode);
-            $this->addInterventionbByPeriod(38, 'HUFF5', $armCode);
-            $this->addInterventionbByPeriod(42, 'WEEK5', $armCode);
-            $this->addInterventionbByPeriod(45, 'HUFF6', $armCode);
-        }
+        $this->addInterventionsbByPeriod($this->getStudyCode());
     }
 
 }

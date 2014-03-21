@@ -62,12 +62,20 @@ class DashboardController extends Controller
     
     /**
      * @Route("/mapTest", name="_maptest")
-     * @Secure(roles="ROLE_PARTICIPANT, IS_AUTHENTICATED_REMEMBERED")
      * @Template()
      */
     public function mapTestAction()
     {
-        return $this->render('CyclogramFrontendBundle:Dashboard:maptest.html.twig');
+        $em = $this->getDoctrine()->getManager();
+        $study = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode('datingtoday');
+        $comandInterventionLogic = $study->getStudyInterventionStart();
+//         return new Response(var_dump(json_decode('{"interventions":[{"period":1, "from_registration:" : true, "parentIntervention": null, "interventionCode": "KOCTechnologyUseSurvey", "armCode": "KOCCondomTrainingArm"}]}')));
+        if (!is_null($comandInterventionLogic)) {
+            $logic = json_decode($comandInterventionLogic,true);
+            foreach ($logic['interventions'] as $l) {
+                return  new Response(var_dump($l));
+            }
+        }
     
     }
     

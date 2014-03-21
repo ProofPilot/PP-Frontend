@@ -307,22 +307,35 @@ class AbstractStudy
         }
     }
     
-    protected function addInterventionbByPeriod($period, $interventionCode, $armCode) {
+    protected function addInterventionsbByPeriod($studyCode) {
         $em = $this->container->get('doctrine')->getManager();
-        $intervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')->findOneByInterventionCode($interventionCode);
-        $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:Study')
-        ->getParticipantsWithArmAndPeriod($armCode, $period);
-        
-        foreach ($interventionLinks as $interventionLink) {
-            if (!$em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')
-                    ->checkIfExistParticipantInterventionLink($interventionCode, $interventionLink['participantId'])) {
-                $participantInterventionLink = new ParticipantInterventionLink();
-                $participantInterventionLink->setIntervention($intervention);
-                $participantInterventionLink->setParticipant($em->getReference('Cyclogram\Bundle\ProofPilotBundle\Entity\Participant', $interventionLink['participantId']));
-                $participantInterventionLink->setParticipantInterventionLinkDatetimeStart(new \DateTime("now"));
-                $participantInterventionLink->setStatus(ParticipantInterventionLink::STATUS_ACTIVE);
-                $em->persist($participantInterventionLink);
-                $em->flush();
+        $study = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
+        if (isset($study)) {
+            $comandInterventionLogic = $study->getStudyInterventionStart();
+            if (!is_null($comandInterventionLogic)) {
+                $logics = json_decode($comandInterventionLogic,true);
+                foreach ($logics['interventions'] as $logic) {
+                    $intervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')->findOneByInterventionCode($logic['interventionCode']);
+                    if ($logic['from_registration'] == true) {
+                        $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:Study')
+                        ->getParticipantsWithArmAndPeriod($logic['armCode'], $logic['period']);
+                    } elseif (!is_null($logic['parentIntervention'])) {
+                        $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')
+                        ->getParticipantByInterventionCodeAndPeriod($logic['parentIntervention'], $logic['period']);
+                    }
+                    foreach ($interventionLinks as $interventionLink) {
+                        if (!$em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')
+                                ->checkIfExistParticipantInterventionLink($logic['interventionCode'], $interventionLink['participantId'])) {
+                            $participantInterventionLink = new ParticipantInterventionLink();
+                            $participantInterventionLink->setIntervention($intervention);
+                            $participantInterventionLink->setParticipant($em->getReference('Cyclogram\Bundle\ProofPilotBundle\Entity\Participant', $interventionLink['participantId']));
+                            $participantInterventionLink->setParticipantInterventionLinkDatetimeStart(new \DateTime("now"));
+                            $participantInterventionLink->setStatus(ParticipantInterventionLink::STATUS_ACTIVE);
+                            $em->persist($participantInterventionLink);
+                            $em->flush();
+                        }
+                    }
+                }
             }
         }
         

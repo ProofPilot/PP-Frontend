@@ -133,27 +133,7 @@ class PledgeToTestStudy extends AbstractStudy implements StudyInterface
     }
     public function commandInterventionLogic()
     {
-    	$period = 14;
-    	$em = $this->container->get('doctrine')->getManager();
-    	$intervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')->findOneBy(array('interventionCode' => 'Site', 'language' => '1'));
-    	$newIntervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')
-    	->findOneBy(array('interventionCode' => 'Pledge', 'language' => '1'));
-    	$interventionLinks = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')
-    	->getParticipantByInterventionCodeAndPeriod($intervention->getInterventionCode(), $period);
-    	foreach ($interventionLinks as $interventionLink) {
-    		$isIntervention = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')
-    		->checkIfExistParticipantInterventionLink($newIntervention->getInterventionCode(), $interventionLink['participantId']);
-    		if (!$isIntervention) {
-    			$participantInterventionLink = new ParticipantInterventionLink();
-    			$participantInterventionLink->setIntervention($newIntervention);
-    			$participantInterventionLink->setParticipant($em->getReference('Cyclogram\Bundle\ProofPilotBundle\Entity\Participant', $interventionLink['participantId']));
-    			$participantInterventionLink->setParticipantInterventionLinkDatetimeStart(new \DateTime("now"));
-    			$participantInterventionLink->setStatus(ParticipantInterventionLink::STATUS_ACTIVE);
-    			$em->persist($participantInterventionLink);
-    			$em->flush();
-    		}
-    	}
-
+        $this->addInterventionsbByPeriod($this->getStudyCode());
     }
 
 }
