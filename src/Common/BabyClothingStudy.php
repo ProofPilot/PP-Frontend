@@ -120,7 +120,7 @@ class BabyClothingStudy extends AbstractStudy implements StudyInterface
         }
         
         if (isset($surveyResult['187572X763X7976'])
-                && intval($surveyResult['187572X763X7976']) < 1964) {
+                && intval($surveyResult['187572X763X7976']) <= 1965) {
             $isEligible = false;
             $reason[] = "Did not pass age criterea";
         }
@@ -129,12 +129,6 @@ class BabyClothingStudy extends AbstractStudy implements StudyInterface
                 &&  in_array($surveyResult['187572X763X7978'], array('A1','A5'))) {
             $isEligible = false;
             $reason[] = "No children";
-        }
-        
-        $not_eligible_array = array('A1','A2','A3');
-        if (isset($surveyResult['187572X763X7979SQ004']) && in_array($surveyResult['187572X763X7979SQ004'], $not_eligible_array)) {
-            $isEligible = false;
-            $reason[] = "Unappropriate children age range";
         }
         
         if (isset($surveyResult['187572x763x7984'])
