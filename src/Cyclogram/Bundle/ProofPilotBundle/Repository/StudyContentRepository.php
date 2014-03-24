@@ -18,6 +18,10 @@
 */
 namespace Cyclogram\Bundle\ProofPilotBundle\Repository;
 
+use Cyclogram\FrontendBundle\CyclogramFrontendBundle;
+
+use Cyclogram\Bundle\ProofPilotBundle\Entity\StudyContent;
+
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\Mapping as ORM;
@@ -51,9 +55,11 @@ class StudyContentRepository extends EntityRepository
                 WHERE 
                 sc.studyUrl = :studyurl
                 AND l.locale IN (:locales)
+                AND s.status IN (:studyStatus)
                 ")
                 ->setParameter('studyurl', $studyUrl)
                 ->setParameter('locales', $fallbacks[$locale])
+                ->setParameter('studyStatus', array(\Cyclogram\Bundle\ProofPilotBundle\Entity\Study::STATUS_ACTIVE, \Cyclogram\Bundle\ProofPilotBundle\Entity\Study::STATUS_PRELAUNCH))
                 ->getResult();
         
         foreach($fallbacks[$locale] as $locale) {
