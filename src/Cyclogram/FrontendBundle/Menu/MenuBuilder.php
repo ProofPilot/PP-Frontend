@@ -78,10 +78,10 @@ class MenuBuilder extends ContainerAware implements TranslationContainerInterfac
                 )
                 ->setAttribute('class', 'icon_settings')->setExtra('translation_domain', 'generalmenus')->setAttribute('contact_us', true)->setAttribute('mail', $this->container->getParameter('mailer_from') );
 
-        $menu->addChild('bottom_study_right_menu.help'
-                         , array('route' => '_help')
-                         )
-                         ->setAttribute('class', 'icon_about')->setExtra('translation_domain', 'generalmenus');
+//         $menu->addChild('bottom_study_right_menu.help'
+//                          , array('route' => '_help')
+//                          )
+//                          ->setAttribute('class', 'icon_about')->setExtra('translation_domain', 'generalmenus');
         
         return $menu;
     }
