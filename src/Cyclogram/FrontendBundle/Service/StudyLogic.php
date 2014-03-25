@@ -94,6 +94,14 @@ class StudyLogic
                 $router = $this->container->get('router');
                 $url = $router->generate('_main');
             } else {
+                $studyArms = $em->getRepository('CyclogramProofPilotBundle:Study')->getStudyArms($studyCode);
+                $participantArmLink = new ParticipantArmLink();
+                $participantArmLink->setArm($studyArms[0]);
+                $participantArmLink->setParticipant($participant);
+                $participantArmLink->setStatus(ParticipantArmLink::STATUS_NOT_ELIGIBLE);
+                $participantArmLink->setParticipantArmLinkDatetime(new \DateTime());
+                $em->persist($participantArmLink);
+                $em->flush($participantArmLink);
                 $router = $this->container->get('router');
                 $url = $router->generate('_page', array(
                         'studyUrl' => $studyCode,
