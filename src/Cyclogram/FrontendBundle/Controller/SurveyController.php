@@ -161,6 +161,9 @@ class SurveyController extends Controller
         //if the user is already logged in 
         if($this->get('security.context')->isGranted("ROLE_PARTICIPANT")) {
             $participant = $this->get('security.context')->getToken()->getUser();
+            $conn = $this->container->get('database_connection');
+            $sql = "UPDATE limesurvey.lime_survey_{$surveyId} SET token = {$participant->getParticipantId()} WHERE id = {$saveId}";
+            $conn->query($sql);
             if ($studyContent->getStudyElegibilitySurvey() == $surveyId) {
                 if ($session->has('referralSite') && $session->has('referralCampaign')){
                     if($isEligible)
@@ -210,7 +213,10 @@ class SurveyController extends Controller
             $study = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
             if ($study->getParticipantRegisterLast()){
                 $session->set('nonEligible', $studyCode);
-                return $this->redirect($redirectUrl);
+                return $this->redirect($this->generateUrl('_signup', array(
+                            'studyCode' => $studyCode,
+                            'surveyId' => $surveyId,
+                             'saveId' =>$saveId)));
             } else {
                 return $this->redirect($this->generateUrl('_page', array(
                             'studyUrl' => $studyContent->getStudyUrl(),

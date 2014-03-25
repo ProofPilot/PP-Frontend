@@ -74,10 +74,10 @@ class AuthentificationController extends Controller
     }
 
     /**
-     * @Route("/signup/{studyCode}/{surveyId}", name="_signup", defaults={"studyCode"= null, "surveyId" = null})
+     * @Route("/signup/{studyCode}/{surveyId}/{saveId}", name="_signup", defaults={"studyCode"= null, "surveyId" = null, "saveId" = null})
      * @Template()
      */
-    public function signupStartAction(Request $request, $studyCode=null, $surveyId=null)
+    public function signupStartAction(Request $request, $studyCode=null, $surveyId=null, $saveId = null)
     {
 
         $session = $request->getSession();
@@ -121,6 +121,10 @@ class AuthentificationController extends Controller
                 $participantArmLink->setParticipantArmLinkDatetime(new \DateTime());
                 $em->persist($participantArmLink);
                 $em->flush($participantArmLink);
+                
+                $conn = $this->container->get('database_connection');
+                $sql = "UPDATE limesurvey.lime_survey_{$surveyId} SET token = {$participant->getParticipantId()} WHERE id = {$saveId}";
+                $conn->query($sql);
             }
             if ($request->isXmlHttpRequest()) {
                 if(!empty($studyCode) && $studyCode !== 'jsCode') {
@@ -220,7 +224,7 @@ class AuthentificationController extends Controller
                 return $this->render('CyclogramFrontendBundle:Authentification:signup.html.twig', $this->parameters);
             }
         }
-        if (isset($studyCode)&&isset($surveyId)) {
+        if (isset($studyCode)&&isset($surveyId) && !$session->has('nonEligible')) {
             $bag = new AttributeBag();
             $bag->setName("ProtectedSurvey");
             $array = array();
@@ -239,7 +243,8 @@ class AuthentificationController extends Controller
         			'studyJoinGoogleButton' =>  $studyJoinGoogleButton,
         			'studyJoinFacebookButton' =>  $studyJoinFacebookButton,
                     'form' => $form->createView(),
-                    'surveyId' => $surveyId
+                    'surveyId' => $surveyId,
+                    'saveId' => $saveId
         ));
         return $this->render('CyclogramFrontendBundle:Authentification:signup.html.twig', $this->parameters);
     }

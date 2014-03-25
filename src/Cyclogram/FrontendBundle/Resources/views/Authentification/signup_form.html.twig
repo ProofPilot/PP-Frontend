@@ -78,9 +78,11 @@
             </div>
             <div class="loginform_right">
                 <h2>{% trans from "register" %}header_new_user_register{% endtrans %}</h2>
-                {% if studyCode and surveyId is defined and studyCode != 'jsCode' %}
-                    <form novalidate action="{{ path('_signup', {'studyCode' : studyCode, 'surveyId' : surveyId}) }}" method="post" name="registration" id="registration_form">
-                {% else  %}
+                {% if  studyCode and surveyId and saveId is defined and studyCode != 'jsCode' %}
+                    <form novalidate action="{{ path('_signup', {'studyCode' : studyCode, 'surveyId' : surveyId, 'saveId' : saveId}) }}" method="post" name="registration" id="registration_form">
+                {% elseif  studyCode and surveyId is defined and studyCode != 'jsCode' %}
+                <form novalidate action="{{ path('_signup', {'studyCode' : studyCode, 'surveyId' : surveyId}) }}" method="post" name="registration" id="registration_form">
+                {% else %}
                     <form novalidate action="{{ path('_signup') }}" method="post" name="registration" id="registration_form">
                 {% endif %}
                     <label for="reg_field_1">{% trans from "register" %}enter_email{% endtrans %}</label> 
