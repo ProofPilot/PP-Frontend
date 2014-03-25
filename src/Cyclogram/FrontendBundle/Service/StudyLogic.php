@@ -343,23 +343,8 @@ class StudyLogic
         $studyCode = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Intervention')
         ->getInterventionStudyCode($intervention->getInterventionId());
     
-        $typeName = $interventionLink->getIntervention()->getInterventionType()->getInterventionTypeName();
-        switch($typeName) {
-            case 'Activity':
-                return $intervention->getInterventionUrl();
-            case 'Survey & Observation':
-                $surveyId = $intervention->getSidId();
-                $redirectPath = $this->container->get('router')->generate('_main', array('_locale' => $locale));
-                $path = $this->container->get('router')->generate('_survey_protected', array(
-                        '_locale' => $locale,
-                        'studyCode' => $studyCode,
-                        'surveyId' => $surveyId,
-                        'redirectUrl' => urlencode($redirectPath)
-    
-                ));
-                return $path;
-    
-        }
+        $intervention = $interventionLink->getIntervention();
+        return $this->container->get('router')->generate('_signup', array('_locale' => $locale, 'interventionCode' => $intervention->getInterventionCode()));
     }
     
 }
