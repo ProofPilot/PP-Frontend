@@ -394,5 +394,32 @@ class ParticipantRepository extends EntityRepository implements
     
         return $results;
     }
+    
+    public function deleteParticipant($participantId)
+    {
+        //remove participant from code table
+        $this->getEntityManager()
+        ->createQuery('UPDATE CyclogramProofPilotBundle:Code c
+                SET c.codeRedeemedByParticipant = null
+                WHERE c.codeRedeemedByParticipant = :participantId
+                ')
+                ->setParameter('participantId', $participantId)
+                ->execute();
+        // remove participant communication log
+        $this->getEntityManager()
+        ->createQuery('DELETE FROM CyclogramProofPilotBundle:ParticipantCommunicationLog pcl
+                WHERE pcl.participant = :participantId
+                ')
+                ->setParameter('participantId', $participantId)
+                ->execute();
+        // remove participant
+        $this->getEntityManager()
+        ->createQuery('DELETE FROM CyclogramProofPilotBundle:Participant p
+                WHERE p.participantId = :participantId
+                ')
+                ->setParameter('participantId', $participantId)
+                ->execute();
+
+    }
 
 }
