@@ -60,6 +60,7 @@ class CodeRepository extends EntityRepository
                 AND c.promoCode = :promocode
                 AND c.status = :cstatus
                 AND pcc.languageId = :language")
+                ->setMaxResults(1)
                 ->setParameter('cstatus', Code::STATUS_UNUSED)
                 ->setParameter('code', $codeValue)
                 ->setParameter('language', $language)
