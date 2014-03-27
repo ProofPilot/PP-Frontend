@@ -13,8 +13,8 @@ enter_email: 'Enter your e-mail'
 header_new_user_register: 'New ProofPilot Users'
 header_register: Register
 help_recruit_people: 'I can help recruit others to this study'
-join_with_facebook: 'Join with Facebook'
-join_with_google: 'Join with Google'
+join_with_facebook: 'Join or Login with Facebook'
+join_with_google: 'Join or Login with Google'
 label_address1: 'Street Address'
 label_address2: 'Street Address #2'
 label_city: City
