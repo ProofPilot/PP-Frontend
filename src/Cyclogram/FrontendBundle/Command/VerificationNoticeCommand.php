@@ -83,11 +83,10 @@ class VerificationNoticeCommand extends ContainerAwareCommand
         $parameters['host'] = $this->getContainer()->getParameter('site_url');
         $parameters['code'] = $participant->getParticipantEmailCode();
         $parameters["studies"] = $this->getContainer()->get('doctrine')->getRepository('CyclogramProofPilotBundle:Study')->getRandomStudyInfo($locale, $participant);
-        $path = $this->getContainer()->get('router')->generate('_send_verification_email', array(
+        $path = $this->getContainer()->get('router')->generate('email_verify', array(
                 '_locale' => $parameters['locale'],
                 'email' => $parameters['email'],
-                'code' => $parameters['code'],
-                'id' => $participant->getParticipantId()
+                'code' => $parameters['code']
         ));
         $parameters['siteurl'] = $this->getContainer()->getParameter('site_url').$path;
 
