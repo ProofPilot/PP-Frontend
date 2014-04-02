@@ -60,6 +60,12 @@ class AbstractStudy
                 $participant->setParticipantIncentiveBalance($sum);
                 $em->persist($participant);
                 $em->flush();
+                $study = $intervention->getStudy();
+                $studyContent = $em->getRepository('CyclogramProofPilotBundle:StudyContent')->findOneBy(
+                        array(
+                                'studyId' => $study->getStudyId(),
+                                'language' => $em->getRepository('CyclogramProofPilotBundle:Language')->findOneBylocale($participant->getLocale()))
+                );
                 
                 $cc = $this->container->get('cyclogram.common');
                 $embedded = array();
@@ -71,10 +77,11 @@ class AbstractStudy
                 $parameters["studies"] = $this->container->get('doctrine')->getRepository('CyclogramProofPilotBundle:Study')->getRandomStudyInfo($participant->getLocale(), $participant);
                 $parameters["incentiveAmount"] = $incentive->getIncentiveAmount();
                 $parameters["interventionName"] = $intervention->getInterventionName();
+                
                  
                 $cc->sendMail(null,
                         $participant->getParticipantEmail(),
-                        $this->container->get('translator')->trans("email_incentive_title", array(), "email", $parameters['locale']),
+                        $this->container->get('translator')->trans("email_incentive_title", array('%studyName%' => $studyContent->getStudyName()), "email", $parameters['locale']),
                         'CyclogramFrontendBundle:Email:incentive_email.html.twig',
                         null,
                         $embedded,
