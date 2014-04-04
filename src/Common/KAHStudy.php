@@ -1375,26 +1375,27 @@ class KAHStudy extends AbstractStudy implements StudyInterface
     }
     public function commandInterventionLogic()
     {
-        $period = 3;
-        $em = $this->container->get('doctrine')->getManager();
-        $intervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')->findOneByInterventionCode('KAHPhase3TestPackage');
-        $newIntervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')
-                              ->findOneByInterventionCode('KAHPhase3ReportResults');
-        $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')
-                                ->getParticipantByInterventionCodeAndPeriod($intervention->getInterventionCode(), $period);
-        foreach ($interventionLinks as $interventionLink) {
-            $isIntervention = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')
-                                 ->checkIfExistParticipantInterventionLink($newIntervention->getInterventionCode(), $interventionLink['participantId']);
-            if (!$isIntervention) {
-                $participantInterventionLink = new ParticipantInterventionLink();
-                $participantInterventionLink->setIntervention($newIntervention);
-                $participantInterventionLink->setParticipant($em->getReference('Cyclogram\Bundle\ProofPilotBundle\Entity\Participant', $interventionLink['participantId']));
-                $participantInterventionLink->setParticipantInterventionLinkDatetimeStart(new \DateTime("now"));
-                $participantInterventionLink->setStatus(ParticipantInterventionLink::STATUS_ACTIVE);
-                $em->persist($participantInterventionLink);
-                $em->flush();
-            }
-        }
+        return true;
+//         $period = 3;
+//         $em = $this->container->get('doctrine')->getManager();
+//         $intervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')->findOneByInterventionCode('KAHPhase3TestPackage');
+//         $newIntervention = $em->getRepository('CyclogramProofPilotBundle:Intervention')
+//                               ->findOneByInterventionCode('KAHPhase3ReportResults');
+//         $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')
+//                                 ->getParticipantByInterventionCodeAndPeriod($intervention->getInterventionCode(), $period);
+//         foreach ($interventionLinks as $interventionLink) {
+//             $isIntervention = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')
+//                                  ->checkIfExistParticipantInterventionLink($newIntervention->getInterventionCode(), $interventionLink['participantId']);
+//             if (!$isIntervention) {
+//                 $participantInterventionLink = new ParticipantInterventionLink();
+//                 $participantInterventionLink->setIntervention($newIntervention);
+//                 $participantInterventionLink->setParticipant($em->getReference('Cyclogram\Bundle\ProofPilotBundle\Entity\Participant', $interventionLink['participantId']));
+//                 $participantInterventionLink->setParticipantInterventionLinkDatetimeStart(new \DateTime("now"));
+//                 $participantInterventionLink->setStatus(ParticipantInterventionLink::STATUS_ACTIVE);
+//                 $em->persist($participantInterventionLink);
+//                 $em->flush();
+//             }
+//         }
     }
 
 }

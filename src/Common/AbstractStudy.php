@@ -96,7 +96,7 @@ class AbstractStudy
         $interventionExpiredPeriod = $intervention->getInterventionExpirationPeriod();
         if (isset($interventionExpiredDate)) {
             $interventionLink->setParticipantInterventionLinkExpiarationDate($interventionExpiredDate);
-        } elseif (isset($interventionExpiredPeriod)) {
+        } elseif (isset($interventionExpiredPeriod) && $interventionExpiredPeriod != '0' ) {
             $date = new \DateTime("now");
             $date->add(new \DateInterval('P'.$interventionExpiredPeriod.'D'));
             $interventionLink->setParticipantInterventionLinkExpiarationDate($date);
