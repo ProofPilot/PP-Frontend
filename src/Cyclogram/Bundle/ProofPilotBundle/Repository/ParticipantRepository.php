@@ -242,7 +242,7 @@ class ParticipantRepository extends EntityRepository implements
      */
     public function getParticipantsForEmailNotifications($reminderId, $timeZoneId=null, $contactTimeId=null, $weekDayId=null, $studyCode = null, $interventionCode = null)
     {
-        if(isset($timeZoneId) && isset($contactTimeId) && isset($contactTimeId))
+        if(isset($timeZoneId) && isset($contactTimeId) && isset($weekDayId))
             $query = $this->getEntityManager()
             ->createQuery("
                     SELECT p
@@ -294,7 +294,7 @@ class ParticipantRepository extends EntityRepository implements
      */
     public function getParticipantsForSmsNotifications($reminderId, $timeZoneId=null, $contactTimeId=null, $weekDayId=null, $studyCode = null, $interventionCode = null)
     {
-        if(isset($timeZoneId) && isset($contactTimeId) && isset($contactTimeId))
+        if(isset($timeZoneId) && isset($contactTimeId) && isset($weekDayId))
             $query = $this->getEntityManager()
             ->createQuery("
                     SELECT p
