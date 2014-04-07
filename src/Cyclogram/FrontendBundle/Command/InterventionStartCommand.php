@@ -36,7 +36,11 @@ class InterventionStartCommand extends ContainerAwareCommand
     
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $logic = $this->getContainer()->get('study_logic');
-        $logic->commandInterventionLogic();
+        try {
+            $logic = $this->getContainer()->get('study_logic');
+            $logic->commandInterventionLogic();
+        } catch (\Exception $e) {
+            throw new \Exception();
+        }
     }
 }
