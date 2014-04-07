@@ -50,71 +50,79 @@ class GeneralCommand extends ContainerAwareCommand
         $interventionCode = $input->getArgument('intervention');
         if ($currentHour == $input->getArgument('hour')) {
             //send:verificationNotice
-            $VerificationNoticeCommand = $this->getApplication()->find('send:verificationNotice');
-            if (!empty($VerificationNoticeCommand)) {
-                $output->writeln("<!--Running command send:verificationNotice--!>");
-                $input = new ArrayInput(array('command' => 'send:verificationNotice'));
-                $returnCode = $VerificationNoticeCommand->run($input, $output);
-                if ($returnCode == 0) {
-                    $output->writeln("<!--send:verificationNotice command complitet--!>");
+            try {
+                $VerificationNoticeCommand = $this->getApplication()->find('send:verificationNotice');
+                if (!empty($VerificationNoticeCommand)) {
+                    $output->writeln("<!--Running command send:verificationNotice--!>");
+                    $input = new ArrayInput(array('command' => 'send:verificationNotice'));
+                    $returnCode = $VerificationNoticeCommand->run($input, $output);
+                    if ($returnCode == 0) {
+                        $output->writeln("<!--send:verificationNotice command complitet--!>");
+                    } else {
+                        $output->writeln("<!--send:verificationNotice error--!>");
+                    }
                 } else {
-                    $output->writeln("<!--send:verificationNotice error--!>");
+                    $output->writeln("<!--Cant't find send:verificationNotice command--!>");
                 }
-            } else {
-                $output->writeln("<!--Cant't find send:verificationNotice command--!>");
-            }
+            } catch (\Exception $e){}
             $output->writeln("\n");
             //send:kahintervetionstart
-            $InterventionStartCommand = $this->getApplication()->find('send:interventionstart');
-            if (!empty($InterventionStartCommand)) {
-                $output->writeln("<!--Running command send:intervetionstart--!>");
-                $input = new ArrayInput(array('command' => 'send:interventionstart'));
-                $returnCode = $InterventionStartCommand->run($input, $output);
-                if ($returnCode == 0) {
-                    $output->writeln("<!--send:interventionstart command complitet--!>");
+            try {
+                $InterventionStartCommand = $this->getApplication()->find('send:interventionstart');
+                if (!empty($InterventionStartCommand)) {
+                    $output->writeln("<!--Running command send:intervetionstart--!>");
+                    $input = new ArrayInput(array('command' => 'send:interventionstart'));
+                    $returnCode = $InterventionStartCommand->run($input, $output);
+                    if ($returnCode == 0) {
+                        $output->writeln("<!--send:interventionstart command complitet--!>");
+                    } else {
+                        $output->writeln("<!--send:interventionstart error--!>");
+                    }
                 } else {
-                    $output->writeln("<!--send:interventionstart error--!>");
+                    $output->writeln("<!--Cant't find send:interventionstart command--!>");
                 }
-            } else {
-                $output->writeln("<!--Cant't find send:interventionstart command--!>");
-            }
+            } catch (\Exception $e){}
             $output->writeln("\n");
             //send:interventionexpirecheck
-            $InterventionExpiredCommand = $this->getApplication()->find('send:interventionexpirecheck');
-            if (!empty($InterventionExpiredCommand)) {
-                $output->writeln("<!--Running command send:interventionexpirecheck--!>");
-                $input = new ArrayInput(array('command' => 'send:interventionexpirecheck'));
-                $returnCode = $InterventionExpiredCommand->run($input, $output);
-                if ($returnCode == 0) {
-                    $output->writeln("<!--send:interventionexpirecheck command complitet--!>");
+            try {
+                $InterventionExpiredCommand = $this->getApplication()->find('send:interventionexpirecheck');
+                if (!empty($InterventionExpiredCommand)) {
+                    $output->writeln("<!--Running command send:interventionexpirecheck--!>");
+                    $input = new ArrayInput(array('command' => 'send:interventionexpirecheck'));
+                    $returnCode = $InterventionExpiredCommand->run($input, $output);
+                    if ($returnCode == 0) {
+                        $output->writeln("<!--send:interventionexpirecheck command complitet--!>");
+                    } else {
+                        $output->writeln("<!--send:interventionexpirecheck error--!>");
+                    }
                 } else {
-                    $output->writeln("<!--send:interventionexpirecheck error--!>");
+                    $output->writeln("<!--Cant't find send:interventionexpirecheck command--!>");
                 }
-            } else {
-                $output->writeln("<!--Cant't find send:interventionexpirecheck command--!>");
-            }
+            } catch (\Exception $e){}
             $output->writeln("\n");
         }
         
         //send:doitnotification
-        $DoItNotificationCommand = $this->getApplication()->find('send:doitnotification');
-        $output->writeln("<!--Running command send:doitnotification--!>");
-//         $studyCode = $input->getArgument('study');
-//         $interventionCode = $input->getArgument('intervention');
-        if (isset($studyCode) && isset($interventionCode)){
-            $input = new ArrayInput(array(
-                                        'command' => 'send:doitnotification',
-                                        'study' => $studyCode,
-                                        'intervention' => $interventionCode));
-        } else  {
-            $input = new ArrayInput(array('command' => 'send:doitnotification'));
-        }
-        $returnCode = $DoItNotificationCommand->run($input, $output);
-        if ($returnCode == 0) {
-            $output->writeln("<!--send:doitnotification command complitet--!>"); 
-        } else {
-            $output->writeln("<!--send:doitnotification error--!>");
-        }
+        try {
+            $DoItNotificationCommand = $this->getApplication()->find('send:doitnotification');
+            $output->writeln("<!--Running command send:doitnotification--!>");
+    //         $studyCode = $input->getArgument('study');
+    //         $interventionCode = $input->getArgument('intervention');
+            if (isset($studyCode) && isset($interventionCode)){
+                $input = new ArrayInput(array(
+                                            'command' => 'send:doitnotification',
+                                            'study' => $studyCode,
+                                            'intervention' => $interventionCode));
+            } else  {
+                $input = new ArrayInput(array('command' => 'send:doitnotification'));
+            }
+            $returnCode = $DoItNotificationCommand->run($input, $output);
+            if ($returnCode == 0) {
+                $output->writeln("<!--send:doitnotification command complitet--!>"); 
+            } else {
+                $output->writeln("<!--send:doitnotification error--!>");
+            }
+        } catch (\Exception $e){}
         $output->writeln("\n");
 
         

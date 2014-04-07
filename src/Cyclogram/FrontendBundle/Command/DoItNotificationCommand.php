@@ -39,277 +39,292 @@ class DoItNotificationCommand extends ContainerAwareCommand
     
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-
-        $em = $this->getContainer()->get('doctrine')->getManager();
-        
-//         $contactPeriod = $em->getRepository('CyclogramProofPilotBundle:ParticipantContactTime')->getCurrentContactPeriod();
-//         $periodId = $contactPeriod->getParticipantContactTimesId();
-//         $periodStart = $contactPeriod->getParticipantContactTimesRangeStart();
-//         $periodEnd = $contactPeriod->getParticipantContactTimesRangeEnd();
-        
-//         $output->writeln("Server is in contact period #".$periodId."[".$periodStart->format("H:i:s")."-".$periodEnd->format("H:i:s")."]");
-//         $output->writeln("Server weekday is ".date("l")." #".date("w")."\n");
-        
-//         //get all participant timezones and process them one by one
-//         $timezones = $em->getRepository('CyclogramProofPilotBundle:ParticipantTimezone')->findAll();
-//         foreach($timezones as $timezone)
-//         {
-//             $output->writeln("Processing timezone " . $timezone->getParticipantTimezoneName() . "");
-//             $currentInTz = new \DateTime(null, new \DateTimeZone($timezone->getParticipantTimezoneName()));
-//             $weekDayInTz = (int)$currentInTz->format("w");
-//             $periodInTz = $em->getRepository('CyclogramProofPilotBundle:ParticipantContactTime')->getCurrentContactPeriod($currentInTz);
-//             $periodId = $periodInTz->getParticipantContactTimesId();
-//             $periodStart = $periodInTz->getParticipantContactTimesRangeStart();
-//             $periodEnd = $periodInTz->getParticipantContactTimesRangeEnd();
-//             $output->writeln("Timezone in contact period #".$periodId."[".$periodStart->format("H:i:s")."-".$periodEnd->format("H:i:s")."]");
-//             $output->writeln("Timezone weekday is ".$weekDayInTz);
+        try {
+            $em = $this->getContainer()->get('doctrine')->getManager();
             
-            $output->writeln("Looking for participants with email notification... ");
-            $studyCode = $input->getArgument('study');
-            $interventionCode = $input->getArgument('intervention');
-            if (isset($studyCode) && isset($interventionCode))
-            $participants = $em->getRepository('CyclogramProofPilotBundle:Participant')
-                ->getParticipantsForEmailNotifications(
-                        1, //reminder type
-//                         $timezone->getParticipantTimezoneId(),  //timezone   
-//                         $periodId, //id of period in timezone
-//                         $weekDayInTz, //weekday in timezone
-                        $studyCode,
-                        $interventionCode
-                    );
-            else
-                $participants = $em->getRepository('CyclogramProofPilotBundle:Participant')
-                ->getParticipantsForEmailNotifications(
-                        1 //reminder type
-//                         $timezone->getParticipantTimezoneId(),  //timezone   
-//                         $periodId, //id of period in timezone
-//                         $weekDayInTz //weekday in timezone
-                    );
-            foreach($participants as $participant) {
-            	if (isset($studyCode) && isset($interventionCode))
-            	{
-            		$result = $this->sendDoItNowEmail($participant, $interventionCode);
-            	} else {
-            		$result = $this->sendDoItNowEmail($participant);
-            	}
+    //         $contactPeriod = $em->getRepository('CyclogramProofPilotBundle:ParticipantContactTime')->getCurrentContactPeriod();
+    //         $periodId = $contactPeriod->getParticipantContactTimesId();
+    //         $periodStart = $contactPeriod->getParticipantContactTimesRangeStart();
+    //         $periodEnd = $contactPeriod->getParticipantContactTimesRangeEnd();
+            
+    //         $output->writeln("Server is in contact period #".$periodId."[".$periodStart->format("H:i:s")."-".$periodEnd->format("H:i:s")."]");
+    //         $output->writeln("Server weekday is ".date("l")." #".date("w")."\n");
+            
+    //         //get all participant timezones and process them one by one
+    //         $timezones = $em->getRepository('CyclogramProofPilotBundle:ParticipantTimezone')->findAll();
+    //         foreach($timezones as $timezone)
+    //         {
+    //             $output->writeln("Processing timezone " . $timezone->getParticipantTimezoneName() . "");
+    //             $currentInTz = new \DateTime(null, new \DateTimeZone($timezone->getParticipantTimezoneName()));
+    //             $weekDayInTz = (int)$currentInTz->format("w");
+    //             $periodInTz = $em->getRepository('CyclogramProofPilotBundle:ParticipantContactTime')->getCurrentContactPeriod($currentInTz);
+    //             $periodId = $periodInTz->getParticipantContactTimesId();
+    //             $periodStart = $periodInTz->getParticipantContactTimesRangeStart();
+    //             $periodEnd = $periodInTz->getParticipantContactTimesRangeEnd();
+    //             $output->writeln("Timezone in contact period #".$periodId."[".$periodStart->format("H:i:s")."-".$periodEnd->format("H:i:s")."]");
+    //             $output->writeln("Timezone weekday is ".$weekDayInTz);
                 
-                if($result['send'] == true){
-                    $output->writeln($participant->getParticipantEmail());
-                    $output->writeln("sent email");
-                } else {
-                    if (!empty($result['message']))
-                    {
-                        $output->writeln($participant->getParticipantEmail());
-                        $output->writeln($result['message']);
+                $output->writeln("Looking for participants with email notification... ");
+                $studyCode = $input->getArgument('study');
+                $interventionCode = $input->getArgument('intervention');
+                try {
+                    if (isset($studyCode) && isset($interventionCode))
+                    $participants = $em->getRepository('CyclogramProofPilotBundle:Participant')
+                        ->getParticipantsForEmailNotifications(
+                                1, //reminder type
+        //                         $timezone->getParticipantTimezoneId(),  //timezone   
+        //                         $periodId, //id of period in timezone
+        //                         $weekDayInTz, //weekday in timezone
+                                $studyCode,
+                                $interventionCode
+                            );
+                    else
+                        $participants = $em->getRepository('CyclogramProofPilotBundle:Participant')
+                        ->getParticipantsForEmailNotifications(
+                                1 //reminder type
+        //                         $timezone->getParticipantTimezoneId(),  //timezone   
+        //                         $periodId, //id of period in timezone
+        //                         $weekDayInTz //weekday in timezone
+                            );
+                    foreach($participants as $participant) {
+                    	if (isset($studyCode) && isset($interventionCode))
+                    	{
+                    		$result = $this->sendDoItNowEmail($participant, $interventionCode);
+                    	} else {
+                    		$result = $this->sendDoItNowEmail($participant);
+                    	}
+                        
+                        if($result['send'] == true){
+                            $output->writeln($participant->getParticipantEmail());
+                            $output->writeln("sent email");
+                        } else {
+                            if (!empty($result['message']))
+                            {
+                                $output->writeln($participant->getParticipantEmail());
+                                $output->writeln($result['message']);
+                            }
+                        }
                     }
-                }
-            }
-            
-            $output->writeln("Looking for participants with SMS notification... ");
-            if (isset($studyCode) && isset($interventionCode))
-                $participants = $em->getRepository('CyclogramProofPilotBundle:Participant')
-                ->getParticipantsForSmsNotifications(
-                        1, //reminder type
-//                         $timezone->getParticipantTimezoneId(),  //timezone
-//                         $periodId, //id of period in timezone
-//                         $weekDayInTz, //weekday in timezone
-                        $studyCode,
-                        $interventionCode
-                );
-            else 
-                $participants = $em->getRepository('CyclogramProofPilotBundle:Participant')
-                ->getParticipantsForSmsNotifications(
-                        1 //reminder type
-//                         $timezone->getParticipantTimezoneId(),  //timezone
-//                         $periodId, //id of period in timezone
-//                         $weekDayInTz //weekday in timezone
-                );
-            foreach($participants as $participant) {
-                if (isset($studyCode) && isset($interventionCode))
-                {
-                    $result = $this->sendDoItNowSMS($participant, $interventionCode);
-                } else {
-                    $result = $this->sendDoItNowSMS($participant);
-                }
-                if($result['send'] == true){
-                    $output->writeln($participant->getParticipantUsername()." phone number: ".$participant->getParticipantMobileNumber());
-                    $output->writeln("sent sms");
-                } else {
-                    if (!empty($result['message']))
-                    {
-                        $output->writeln($participant->getParticipantUsername()." phone number: ".$participant->getParticipantMobileNumber());
-                        $output->writeln($result['message']);
+                } catch (\Exception $e) {}
+                
+                $output->writeln("Looking for participants with SMS notification... ");
+                try {
+                    if (isset($studyCode) && isset($interventionCode))
+                        $participants = $em->getRepository('CyclogramProofPilotBundle:Participant')
+                        ->getParticipantsForSmsNotifications(
+                                1, //reminder type
+        //                         $timezone->getParticipantTimezoneId(),  //timezone
+        //                         $periodId, //id of period in timezone
+        //                         $weekDayInTz, //weekday in timezone
+                                $studyCode,
+                                $interventionCode
+                        );
+                    else 
+                        $participants = $em->getRepository('CyclogramProofPilotBundle:Participant')
+                        ->getParticipantsForSmsNotifications(
+                                1 //reminder type
+        //                         $timezone->getParticipantTimezoneId(),  //timezone
+        //                         $periodId, //id of period in timezone
+        //                         $weekDayInTz //weekday in timezone
+                        );
+                    foreach($participants as $participant) {
+                        if (isset($studyCode) && isset($interventionCode))
+                        {
+                            $result = $this->sendDoItNowSMS($participant, $interventionCode);
+                        } else {
+                            $result = $this->sendDoItNowSMS($participant);
+                        }
+                        if($result['send'] == true){
+                            $output->writeln($participant->getParticipantUsername()." phone number: ".$participant->getParticipantMobileNumber());
+                            $output->writeln("sent sms");
+                        } else {
+                            if (!empty($result['message']))
+                            {
+                                $output->writeln($participant->getParticipantUsername()." phone number: ".$participant->getParticipantMobileNumber());
+                                $output->writeln($result['message']);
+                            }
+                        }
                     }
-                }
-            }
+                } catch (\Exception $e){}
+        } catch (\Exception $e){
+            throw new \Exception();
+        }
 //         }
     }
     
     private function sendDoItNowEmail($participant, $interventionCode = null) 
     {
-        $context = $this->getContainer()->get('router')->getContext();
-        $host_url = $this->getContainer()->getParameter('site_host');
-        $context->setHost($host_url);
-        $host_scheme = $this->getContainer()->getParameter('site_scheme');
-        $context->setScheme($host_scheme);
-        
-        $cc = $this->getContainer()->get('cyclogram.common');
-        $em = $this->getContainer()->get('doctrine')->getManager();
-        
-        $locale = $participant->getLocale();
-        
-        $embedded = array();
-        $embedded = $cc->getEmbeddedImages();
-        
-        
-	    if(isset($interventionCode))
-	        $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')->getNotSendParticipantInterventionLinks($participant, $interventionCode);
-	    else
-	        $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')->getNotSendParticipantInterventionLinks($participant);
-        
-        $parameters["weeklyInterventions"] = array();
-        if (!empty($interventionLinks)){
-            $parameters['email'] = $participant->getParticipantEmail();
-            $parameters['locale'] = $participant->getLocale();
-            $parameters['host'] = $this->getContainer()->getParameter('site_url');
-            $parameters["studies"] = $this->getContainer()->get('doctrine')->getRepository('CyclogramProofPilotBundle:Study')->getRandomStudyInfo($locale, $participant);
-            foreach($interventionLinks as $interventionLink) {
-                $sendTime = $interventionLink->getParticipantInterventionLinkSendEmailTime();
-                if (is_null($sendTime)) {
-                        $interventionId = $interventionLink->getIntervention()->getInterventionId();
-                        $interventionContent = $this->getContainer()->get('doctrine')->getRepository("CyclogramProofPilotBundle:Intervention")->getInterventionContent($interventionId, $locale);
-                
-                        $study = $interventionLink->getIntervention()->getStudy();
-                        $studyId = $study->getStudyId();
-                        $studyContent = $this->getContainer()->get('doctrine')->getRepository('CyclogramProofPilotBundle:StudyContent')->getStudyContentById($studyId, $locale);
-                
-                        $intervention = array();
-                        $intervention["title"] = $interventionContent->getInterventionTitle();
-                        $intervention["content"] = $interventionContent->getInterventionDescripton();
-                        $parameters['siteurl'] = $this->getContainer()->getParameter('site_url').$this->getInterventionUrl($interventionLink, $locale);
-                        $interventionUrl = $this->getInterventionUrl($interventionLink, $locale);
-                        if (!empty($interventionUrl)) {
-                            $intervention["url"] =  $interventionUrl;
-                        } else { 
-                            $intervention["url"] = $this->getContainer()->getParameter('site_url').$this->getContainer()->get('router')->generate('_signup', array('interventionCode'=> $interventionContent->getInterventionCode(), '_locale' => $locale));
-                        }
+        try {
+            $context = $this->getContainer()->get('router')->getContext();
+            $host_url = $this->getContainer()->getParameter('site_host');
+            $context->setHost($host_url);
+            $host_scheme = $this->getContainer()->getParameter('site_scheme');
+            $context->setScheme($host_scheme);
+            
+            $cc = $this->getContainer()->get('cyclogram.common');
+            $em = $this->getContainer()->get('doctrine')->getManager();
+            
+            $locale = $participant->getLocale();
+            
+            $embedded = array();
+            $embedded = $cc->getEmbeddedImages();
+            
+            
+    	    if(isset($interventionCode))
+    	        $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')->getNotSendParticipantInterventionLinks($participant, $interventionCode);
+    	    else
+    	        $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')->getNotSendParticipantInterventionLinks($participant);
+            
+            $parameters["weeklyInterventions"] = array();
+            if (!empty($interventionLinks)){
+                $parameters['email'] = $participant->getParticipantEmail();
+                $parameters['locale'] = $participant->getLocale();
+                $parameters['host'] = $this->getContainer()->getParameter('site_url');
+                $parameters["studies"] = $this->getContainer()->get('doctrine')->getRepository('CyclogramProofPilotBundle:Study')->getRandomStudyInfo($locale, $participant);
+                foreach($interventionLinks as $interventionLink) {
+                    $sendTime = $interventionLink->getParticipantInterventionLinkSendEmailTime();
+                    if (is_null($sendTime)) {
+                            $interventionId = $interventionLink->getIntervention()->getInterventionId();
+                            $interventionContent = $this->getContainer()->get('doctrine')->getRepository("CyclogramProofPilotBundle:Intervention")->getInterventionContent($interventionId, $locale);
+                    
+                            $study = $interventionLink->getIntervention()->getStudy();
+                            $studyId = $study->getStudyId();
+                            $studyContent = $this->getContainer()->get('doctrine')->getRepository('CyclogramProofPilotBundle:StudyContent')->getStudyContentById($studyId, $locale);
+                    
+                            $intervention = array();
+                            $intervention["title"] = $interventionContent->getInterventionTitle();
+                            $intervention["content"] = $interventionContent->getInterventionDescripton();
+                            $parameters['siteurl'] = $this->getContainer()->getParameter('site_url').$this->getInterventionUrl($interventionLink, $locale);
+                            $interventionUrl = $this->getInterventionUrl($interventionLink, $locale);
+                            if (!empty($interventionUrl)) {
+                                $intervention["url"] =  $interventionUrl;
+                            } else { 
+                                $intervention["url"] = $this->getContainer()->getParameter('site_url').$this->getContainer()->get('router')->generate('_signup', array('interventionCode'=> $interventionContent->getInterventionCode(), '_locale' => $locale));
+                            }
+                                $intervention["logo"] = $this->getContainer()->getParameter('study_image_url') . "/" . $studyId . "/" . $studyContent->getStudyLogo();
+                            
+                            $parameters["intervention"] = $intervention;
+                            if (!isset($interventionCode))
+                                $interventionLink->setParticipantInterventionLinkSendEmailTime(new \DateTime());
+                            $em->persist($interventionLink);
+                            $em->flush();
+                            if (!empty($parameters["intervention"])){
+                                $send = $cc->sendMail(null,
+                                        $participant->getParticipantEmail(),
+                                        $intervention["title"],
+                                        'CyclogramFrontendBundle:Email:doitemail.html.twig',
+                                        null,
+                                        $embedded,
+                                        true,
+                                        $parameters);
+                            }
+                    } else {
+                        $sendTime = date('W') - $interventionLink->getParticipantInterventionLinkSendEmailTime()->format('W');
+                        if ($sendTime == 1 || $sendTime == -51){
+                            $interventionId = $interventionLink->getIntervention()->getInterventionId();
+                            $interventionContent = $this->getContainer()->get('doctrine')->getRepository("CyclogramProofPilotBundle:Intervention")->getInterventionContent($interventionId, $locale);
+                            
+                            $study = $interventionLink->getIntervention()->getStudy();
+                            $studyId = $study->getStudyId();
+                            $studyContent = $this->getContainer()->get('doctrine')->getRepository('CyclogramProofPilotBundle:StudyContent')->getStudyContentById($studyId, $locale);
+                            
+                            $intervention = array();
+                            $intervention["title"] = $interventionContent->getInterventionTitle();
+                            $intervention["content"] = $interventionContent->getInterventionDescripton();
+                            $interventionUrl = $this->getInterventionUrl($interventionLink, $locale);
+                            if (!empty($interventionUrl))
+                                $intervention["url"] =  $interventionUrl;
+                            else
+                                $intervention["url"] = $this->getContainer()->getParameter('site_url').$this->getContainer()->get('router')->generate('_signup', array('_locale' => $locale));
                             $intervention["logo"] = $this->getContainer()->getParameter('study_image_url') . "/" . $studyId . "/" . $studyContent->getStudyLogo();
-                        
-                        $parameters["intervention"] = $intervention;
-                        if (!isset($interventionCode))
-                            $interventionLink->setParticipantInterventionLinkSendEmailTime(new \DateTime());
-                        $em->persist($interventionLink);
-                        $em->flush();
-                        if (!empty($parameters["intervention"])){
+                            
+                            $parameters["weeklyInterventions"][] = $intervention;
+                            if (!isset($interventionCode))
+                                $interventionLink->setParticipantInterventionLinkSendEmailTime(new \DateTime());
+                            $em->persist($interventionLink);
+                            $em->flush();
+                        }
+                        $parameters['siteurl'] = $this->getContainer()->getParameter('site_url').$this->getInterventionUrl($interventionLink, $locale);
+                        if (!empty($parameters["weeklyInterventions"])){
                             $send = $cc->sendMail(null,
                                     $participant->getParticipantEmail(),
-                                    $intervention["title"],
+                                    $this->getContainer()->get('translator')->trans("do_it_task_email_title", array(), "email", $parameters['locale']),
                                     'CyclogramFrontendBundle:Email:doitemail.html.twig',
                                     null,
                                     $embedded,
                                     true,
                                     $parameters);
                         }
-                } else {
-                    $sendTime = date('W') - $interventionLink->getParticipantInterventionLinkSendEmailTime()->format('W');
-                    if ($sendTime == 1 || $sendTime == -51){
-                        $interventionId = $interventionLink->getIntervention()->getInterventionId();
-                        $interventionContent = $this->getContainer()->get('doctrine')->getRepository("CyclogramProofPilotBundle:Intervention")->getInterventionContent($interventionId, $locale);
-                        
-                        $study = $interventionLink->getIntervention()->getStudy();
-                        $studyId = $study->getStudyId();
-                        $studyContent = $this->getContainer()->get('doctrine')->getRepository('CyclogramProofPilotBundle:StudyContent')->getStudyContentById($studyId, $locale);
-                        
-                        $intervention = array();
-                        $intervention["title"] = $interventionContent->getInterventionTitle();
-                        $intervention["content"] = $interventionContent->getInterventionDescripton();
-                        $interventionUrl = $this->getInterventionUrl($interventionLink, $locale);
-                        if (!empty($interventionUrl))
-                            $intervention["url"] =  $interventionUrl;
-                        else
-                            $intervention["url"] = $this->getContainer()->getParameter('site_url').$this->getContainer()->get('router')->generate('_signup', array('_locale' => $locale));
-                        $intervention["logo"] = $this->getContainer()->getParameter('study_image_url') . "/" . $studyId . "/" . $studyContent->getStudyLogo();
-                        
-                        $parameters["weeklyInterventions"][] = $intervention;
-                        if (!isset($interventionCode))
-                            $interventionLink->setParticipantInterventionLinkSendEmailTime(new \DateTime());
-                        $em->persist($interventionLink);
-                        $em->flush();
-                    }
-                    $parameters['siteurl'] = $this->getContainer()->getParameter('site_url').$this->getInterventionUrl($interventionLink, $locale);
-                    if (!empty($parameters["weeklyInterventions"])){
-                        $send = $cc->sendMail(null,
-                                $participant->getParticipantEmail(),
-                                $this->getContainer()->get('translator')->trans("do_it_task_email_title", array(), "email", $parameters['locale']),
-                                'CyclogramFrontendBundle:Email:doitemail.html.twig',
-                                null,
-                                $embedded,
-                                true,
-                                $parameters);
                     }
                 }
-            }
-            if(isset($send)) {
-                if ($send['status'] == true){
-                    $status = true;
-                    return array('send' => true, 'message' => 'sent email');
-                } else {
-                    return array('send' => false, 'message' => 'email not send');
+                if(isset($send)) {
+                    if ($send['status'] == true){
+                        $status = true;
+                        return array('send' => true, 'message' => 'sent email');
+                    } else {
+                        return array('send' => false, 'message' => 'email not send');
+                    }
+                }else {
+                    return array('send' => false, 'message' => 'No intervenion');
                 }
-            }else {
-                return array('send' => false, 'message' => 'No intervenion');
+    
             }
-
+        } catch (\Exception $e) {
+            throw new \Exception();
         }
     }
     
     private function sendDoItNowSMS($participant, $interventionCode = null) {
-        $locale = $participant->getLocale();
-        
-        $cc = $this->getContainer()->get('cyclogram.common');
-        $em = $this->getContainer()->get('doctrine')->getManager();
-        
-        if(isset($interventionCode))
-	        $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')->getNotSendParticipantInterventionLinks($participant, $interventionCode);
-	    else
-	        $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')->getNotSendParticipantInterventionLinks($participant);
-        
-        $interventions = array();
-        if (!empty($interventionLinks)){
-            foreach($interventionLinks as $interventionLink) {
-                $sendTime = $interventionLink->getParticipantInterventionLinkSendSmsTime();
-                if (!is_null($sendTime))
-                    $sendTime = date('W') - $interventionLink->getParticipantInterventionLinkSendSmsTime()->format('W');
-                if (is_null($sendTime) || $sendTime == 1 || $sendTime == -51){
-                    $interventionId = $interventionLink->getIntervention()->getInterventionId();
-                    $interventionContent = $this->getContainer()->get('doctrine')->getRepository("CyclogramProofPilotBundle:Intervention")->getInterventionContent($interventionId, $locale);
+        try {
+            $locale = $participant->getLocale();
             
-                    $study = $interventionLink->getIntervention()->getStudy();
-                    $studyId = $study->getStudyId();
-                    $studyContent = $this->getContainer()->get('doctrine')->getRepository('CyclogramProofPilotBundle:StudyContent')->getStudyContentById($studyId, $locale);
+            $cc = $this->getContainer()->get('cyclogram.common');
+            $em = $this->getContainer()->get('doctrine')->getManager();
             
-                    $intervention = array();
-                    $interventionTitle = strip_tags($interventionContent->getInterventionName());
-                        if (!empty($interventionUrl))
-                            $url = $cc::generateGoogleShorURL($interventionUrl);
-                        else 
-                            $url = $cc::generateGoogleShorURL($this->getContainer()->getParameter('site_url').$this->getContainer()->get('router')->generate('_signup', array('_locale' => $locale)));
-                        $sms = $this->getContainer()->get('sms');
-                        $message = $this->getContainer()->get('translator')->trans('sms_title', array(), 'security', $locale);
-                        $sentSms = $sms->sendSmsAction( array('message' => $message .': '. $interventionTitle.' '.$url, 'phoneNumber'=> $participant->getParticipantMobileNumber()) );
-                        if ($sentSms){
-                            if (!isset($interventionCode))
-                                $interventionLink->setParticipantInterventionLinkSendSmsTime(new \DateTime());
-                            $em->persist($interventionLink);
-                            $em->flush();
-                            return array('send' => true, 'message' => 'sent sms');
-                        } else {
-                            return array('send' => false, 'message' => 'sms not send');
-                        }
+            if(isset($interventionCode))
+    	        $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')->getNotSendParticipantInterventionLinks($participant, $interventionCode);
+    	    else
+    	        $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')->getNotSendParticipantInterventionLinks($participant);
+            
+            $interventions = array();
+            if (!empty($interventionLinks)){
+                foreach($interventionLinks as $interventionLink) {
+                    $sendTime = $interventionLink->getParticipantInterventionLinkSendSmsTime();
+                    if (!is_null($sendTime))
+                        $sendTime = date('W') - $interventionLink->getParticipantInterventionLinkSendSmsTime()->format('W');
+                    if (is_null($sendTime) || $sendTime == 1 || $sendTime == -51){
+                        $interventionId = $interventionLink->getIntervention()->getInterventionId();
+                        $interventionContent = $this->getContainer()->get('doctrine')->getRepository("CyclogramProofPilotBundle:Intervention")->getInterventionContent($interventionId, $locale);
+                
+                        $study = $interventionLink->getIntervention()->getStudy();
+                        $studyId = $study->getStudyId();
+                        $studyContent = $this->getContainer()->get('doctrine')->getRepository('CyclogramProofPilotBundle:StudyContent')->getStudyContentById($studyId, $locale);
+                
+                        $intervention = array();
+                        $interventionTitle = strip_tags($interventionContent->getInterventionName());
+                            if (!empty($interventionUrl))
+                                $url = $cc::generateGoogleShorURL($interventionUrl);
+                            else 
+                                $url = $cc::generateGoogleShorURL($this->getContainer()->getParameter('site_url').$this->getContainer()->get('router')->generate('_signup', array('_locale' => $locale)));
+                            $sms = $this->getContainer()->get('sms');
+                            $message = $this->getContainer()->get('translator')->trans('sms_title', array(), 'security', $locale);
+                            $sentSms = $sms->sendSmsAction( array('message' => $message .': '. $interventionTitle.' '.$url, 'phoneNumber'=> $participant->getParticipantMobileNumber()) );
+                            if ($sentSms){
+                                if (!isset($interventionCode))
+                                    $interventionLink->setParticipantInterventionLinkSendSmsTime(new \DateTime());
+                                $em->persist($interventionLink);
+                                $em->flush();
+                                return array('send' => true, 'message' => 'sent sms');
+                            } else {
+                                return array('send' => false, 'message' => 'sms not send');
+                            }
+                    }
                 }
             }
-        }
-        return array('send' => false, 'message' => '');
+            return array('send' => false, 'message' => '');
+       } catch (\Exception $e) {
+            throw new \Exception();
+       }
     }
     
     

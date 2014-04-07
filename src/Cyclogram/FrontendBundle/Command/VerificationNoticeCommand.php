@@ -36,92 +36,107 @@ class VerificationNoticeCommand extends ContainerAwareCommand
     
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-
+    try {
         $em = $this->getContainer()->get('doctrine')->getManager();
         $participants = $em->getRepository('CyclogramProofPilotBundle:Participant')->getParticipantsWithNotConfirmedEmails();
         
         foreach ($participants as $participant) {
 //             if (!$em->getRepository('CyclogramProofPilotBundle:Participant')->isEnrolledInStudy($participant, 'sexpro')) {
                 // send email
-                $result = $this->sendDoItNowEmail($participant);
-                if($result['send'] == true){
-                    $output->writeln($participant->getParticipantEmail());
-                    $output->writeln("sent email");
-                } else {
-                    if (!empty($result['message']))
-                    {
+                try {
+                    $result = $this->sendDoItNowEmail($participant);
+                    if($result['send'] == true){
                         $output->writeln($participant->getParticipantEmail());
-                        $output->writeln($result['message']);
+                        $output->writeln("sent email");
+                    } else {
+                        if (!empty($result['message']))
+                        {
+                            $output->writeln($participant->getParticipantEmail());
+                            $output->writeln($result['message']);
+                        }
                     }
-                }
-                $result = $this->sendDoItNowSMS($participant);
-                if($result['send'] == true){
-                    $output->writeln($participant->getParticipantUsername()." phone number: ".$participant->getParticipantMobileNumber());
-                    $output->writeln("sent sms");
-                } else {
-                    if (!empty($result['message']))
-                    {
+                } catch (\Exception $e){}
+                try {
+                    $result = $this->sendDoItNowSMS($participant);
+                    if($result['send'] == true){
                         $output->writeln($participant->getParticipantUsername()." phone number: ".$participant->getParticipantMobileNumber());
-                        $output->writeln($result['message']);
+                        $output->writeln("sent sms");
+                    } else {
+                        if (!empty($result['message']))
+                        {
+                            $output->writeln($participant->getParticipantUsername()." phone number: ".$participant->getParticipantMobileNumber());
+                            $output->writeln($result['message']);
+                        }
                     }
-                }
+                    } catch (\Exception $e){}
             }
+    } catch (\Exception $e) {
+        throw new \Exception();
+    }
 //         }
     }
     
     private function sendDoItNowEmail($participant) 
     {
-        
-        $cc = $this->getContainer()->get('cyclogram.common');
-        
-        $embedded = array();
-        $embedded = $cc->getEmbeddedImages();
-        $locale = $participant->getLocale();
-        
-        $parameters['email'] = $participant->getParticipantEmail();
-        $parameters['locale'] = $participant->getLocale();
-        $parameters['host'] = $this->getContainer()->getParameter('site_url');
-        $parameters['code'] = $participant->getParticipantEmailCode();
-        $parameters["studies"] = $this->getContainer()->get('doctrine')->getRepository('CyclogramProofPilotBundle:Study')->getRandomStudyInfo($locale, $participant);
-        $path = $this->getContainer()->get('router')->generate('email_verify', array(
-                '_locale' => $parameters['locale'],
-                'email' => $parameters['email'],
-                'code' => $parameters['code']
-        ));
-        $parameters['siteurl'] = $this->getContainer()->getParameter('site_url').$path;
-
-        $send = $cc->sendMail(null,
-                $participant->getParticipantEmail(),
-                $this->getContainer()->get('translator')->trans("email_title_notice", array(), "email", $parameters['locale']),
-                'CyclogramFrontendBundle:Email:verification_notice_email.html.twig',
-                null,
-                $embedded,
-                true,
-                $parameters);
-        if ($send['status'] == true){
-            return array('send' => true, 'message' => 'sent email');
-        } else {
-            return array('send' => false, 'message' => 'email not send');
+        try {
+            $cc = $this->getContainer()->get('cyclogram.common');
+            
+            $embedded = array();
+            $embedded = $cc->getEmbeddedImages();
+            $locale = $participant->getLocale();
+            
+            $parameters['email'] = $participant->getParticipantEmail();
+            $parameters['locale'] = $participant->getLocale();
+            $parameters['host'] = $this->getContainer()->getParameter('site_url');
+            $parameters['code'] = $participant->getParticipantEmailCode();
+            $parameters["studies"] = $this->getContainer()->get('doctrine')->getRepository('CyclogramProofPilotBundle:Study')->getRandomStudyInfo($locale, $participant);
+            $path = $this->getContainer()->get('router')->generate('email_verify', array(
+                    '_locale' => $parameters['locale'],
+                    'email' => $parameters['email'],
+                    'code' => $parameters['code']
+            ));
+            $parameters['siteurl'] = $this->getContainer()->getParameter('site_url').$path;
+    
+            $send = $cc->sendMail(null,
+                    $participant->getParticipantEmail(),
+                    $this->getContainer()->get('translator')->trans("email_title_notice", array(), "email", $parameters['locale']),
+                    'CyclogramFrontendBundle:Email:verification_notice_email.html.twig',
+                    null,
+                    $embedded,
+                    true,
+                    $parameters);
+            if ($send['status'] == true){
+                return array('send' => true, 'message' => 'sent email');
+            } else {
+                return array('send' => false, 'message' => 'email not send');
+            }
+        }catch (\Exception $e) {
+            throw new \Exception(); 
         }
     }
     
-    private function sendDoItNowSMS($participant) {
-        $locale = $participant->getLocale();
-        
-        $cc = $this->getContainer()->get('cyclogram.common');
-        $url = $cc::generateGoogleShorURL($this->getContainer()->getParameter('site_url').$this->getContainer()->get('router')->generate('_send_verification_email', array(
-                '_locale' => $participant->getLocale(),
-                'email' => $participant->getParticipantEmail(),
-                'code' => $participant->getParticipantEmailCode(),
-                'id' => $participant->getParticipantId()
-        )));
-        $sms = $this->getContainer()->get('sms');
-        $message = $this->getContainer()->get('translator')->trans('sms_notice_title', array(), 'security', $locale);
-        $sentSms = $sms->sendSmsAction( array('message' => $message.' '.$url , 'phoneNumber'=> $participant->getParticipantMobileNumber()) );
-        if ($sentSms){
-            return array('send' => true, 'message' => 'sent sms');
-        } else {
-            return array('send' => false, 'message' => 'sms not send');
+    private function sendDoItNowSMS($participant) 
+    {
+        try {
+            $locale = $participant->getLocale();
+            
+            $cc = $this->getContainer()->get('cyclogram.common');
+            $url = $cc::generateGoogleShorURL($this->getContainer()->getParameter('site_url').$this->getContainer()->get('router')->generate('_send_verification_email', array(
+                    '_locale' => $participant->getLocale(),
+                    'email' => $participant->getParticipantEmail(),
+                    'code' => $participant->getParticipantEmailCode(),
+                    'id' => $participant->getParticipantId()
+            )));
+            $sms = $this->getContainer()->get('sms');
+            $message = $this->getContainer()->get('translator')->trans('sms_notice_title', array(), 'security', $locale);
+            $sentSms = $sms->sendSmsAction( array('message' => $message.' '.$url , 'phoneNumber'=> $participant->getParticipantMobileNumber()) );
+            if ($sentSms){
+                return array('send' => true, 'message' => 'sent sms');
+            } else {
+                return array('send' => false, 'message' => 'sms not send');
+            }
+        } catch (\Exception $e) {
+            throw new \Exception(); 
         }
     }
 }

@@ -38,18 +38,21 @@ class InterventionExpirationCheckCommand extends ContainerAwareCommand
     
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-    
-        $em = $this->getContainer()->get('doctrine')->getManager();
-        $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')->getAllActiveInterventionLinks();
-        foreach ($interventionLinks as $interventionLink) {
-            $participant = $interventionLink->getParticipant();
-            $locale = $participant->getLocale();
-            $intervention = $interventionLink->getIntervention();
-            if ($em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')->checkIfIntervetionLinkExpire($intervention, $participant, $locale)) {
-                $interventionLink->setStatus(ParticipantInterventionLink::STATUS_EXPIRED);
-                $em->persist($interventionLink);
-                $em->flush();
+        try {
+            $em = $this->getContainer()->get('doctrine')->getManager();
+            $interventionLinks = $em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')->getAllActiveInterventionLinks();
+            foreach ($interventionLinks as $interventionLink) {
+                $participant = $interventionLink->getParticipant();
+                $locale = $participant->getLocale();
+                $intervention = $interventionLink->getIntervention();
+                if ($em->getRepository('CyclogramProofPilotBundle:ParticipantInterventionLink')->checkIfIntervetionLinkExpire($intervention, $participant, $locale)) {
+                    $interventionLink->setStatus(ParticipantInterventionLink::STATUS_EXPIRED);
+                    $em->persist($interventionLink);
+                    $em->flush();
+                }
             }
+        } catch (\Exception $e) {
+            throw new \Exception();
         }
     }
 }
