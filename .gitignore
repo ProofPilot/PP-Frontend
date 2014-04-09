@@ -8,7 +8,7 @@
 /vendor*/
 /web/assetic/js/*
 /web/assetic/css/*
-
+/app/spool/*
 
 /app/config/parameters.yml
 
