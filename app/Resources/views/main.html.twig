@@ -786,6 +786,21 @@
         });
         {# only for landing page #}
         {% if app.request.get('_route') != '_signup' %}
+        //login ajax
+        $("#login_form").submit(function(e){
+            $('.error').remove();
+            $(this).ajaxSubmit({
+                dataType: "json",
+                success: function(json) {
+                    if(json.error) {
+                        $('#reg_field_2').after('<div><p class="error">{%  trans from "login" %}txt_login_error_message{% endtrans %}</p></div>');
+                    } else {
+                        window.location.replace(json.url);
+                    }
+                }
+            });
+            return false;
+        });
       //forgot username ajax
         $("#forgot_username").bind('click', function(e){
      	   e.preventDefault();
@@ -865,21 +880,6 @@
             return false;
         });
         {% endif %}
-        //login ajax
-        $("#login_form").submit(function(e){
-            $('.error').remove();
-            $(this).ajaxSubmit({
-                dataType: "json",
-                success: function(json) {
-                    if(json.error) {
-                        $('#reg_field_2').after('<div><p class="error">{%  trans from "login" %}txt_login_error_message{% endtrans %}</p></div>');
-                    } else {
-                        window.location.replace(json.url);
-                    }
-                }
-            });
-            return false;
-        });
         $("#forgot_username_form").submit(function(e){
        	$('.error').remove();
        	$('.notice').remove();

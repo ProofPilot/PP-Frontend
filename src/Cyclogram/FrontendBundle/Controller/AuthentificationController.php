@@ -274,14 +274,30 @@ class AuthentificationController extends Controller
         $language = $this->getRequest()->getLocale();
         $em = $this->getDoctrine()->getManager();
         $session = $request->getSession();
-        if ($request->isXmlHttpRequest()) {
-            if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
-                return new Response(json_encode(array('error' => true)));
+        if ( $session->has('SurveyInfo')) {
+            if ($session->has('referralSite') && $session->has('referralCampaign')){
+                $ls = $this->get('study_logic');
+                $bag = $session->get('SurveyInfo');
+                $surveyId = $bag->get('surveyId');
+                $saveId = $bag->get('saveId');
+                $studyCode = $bag->get('studyCode');
+                $session->remove('SurveyInfo');
+                $securityContext = $this->container->get('security.context');
+                $participant = $securityContext->getToken()->getUser();
+                $study = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
+                $url = $ls->studyRegistration($participant, $studyCode, $surveyId, $saveId);
+                //                         if ($participant->getParticipantEmailConfirmed() == false){
+                //                             $this->confirmParticipantEmail($participant);
+                //                         }
+                if ($study->getStudySkipAboutMe()) {
+                    return $this->redirect($url);
+                }
+            } else {
+                $study = $em->getRepository('CyclogramProofPilotBundle:Study')->findOneByStudyCode($studyCode);
+                $session->set("message", $this->get('translator')->trans('study_register_error', array(), 'register'));
+                $studyContent = $em->getRepository('CyclogramProofPilotBundle:StudyContent')->findOneByStudyUrl($studyCode);
+                return $this->redirect($this->generateUrl("_page", array("studyUrl" => $studyContent->getStudyUrl())));
             }
-            return new Response(json_encode(array('error' => false, 'url' => $this->generateUrl("_main"))));
-        }
-        if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
-            return $this->redirect($this->generateUrl("_signup", array('error' => true)));
         }
         if ($session->has('ProtectedSurvey')) {
             $bag = $session->get('ProtectedSurvey');
@@ -299,6 +315,15 @@ class AuthentificationController extends Controller
                         'redirectUrl'=>urlencode($redirectPath
                         ))));
             }
+        }
+        if ($request->isXmlHttpRequest()) {
+            if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
+                return new Response(json_encode(array('error' => true)));
+            }
+            return new Response(json_encode(array('error' => false, 'url' => $this->generateUrl("_main"))));
+        }
+        if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
+            return $this->redirect($this->generateUrl("_signup", array('error' => true)));
         }
         return $this->redirect($this->generateUrl("_main"));
     }
