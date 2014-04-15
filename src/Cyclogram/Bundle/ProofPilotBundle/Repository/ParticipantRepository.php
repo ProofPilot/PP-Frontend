@@ -421,5 +421,26 @@ class ParticipantRepository extends EntityRepository implements
                 ->execute();
 
     }
+    
+    /**
+     * Get all enrolled studies of participant
+     * @param unknown_type $participant
+     * @return unknown
+     */
+    public function getParticipantAndStudyInfo() {
+        $results = $this->getEntityManager()
+        ->createQuery('SELECT p.participantId, p.participantUsername, p.participantMobileNumber, p.participantEmail, p.participantEmailCode, p.locale, s.studyCode FROM CyclogramProofPilotBundle:ParticipantArmLink pal
+                INNER JOIN pal.arm a
+                INNER JOIN a.study s
+                INNER JOIN pal.participant p
+                WHERE 
+                DATEDIFF(CURRENT_DATE(), p.participantRegistrationtime) = 1
+                AND p.participantEmailConfirmed = 0
+                ')
+                ->getResult();
+
+    
+        return $results;
+    }
 
 }

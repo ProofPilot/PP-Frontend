@@ -228,7 +228,7 @@ class StudyRepository extends EntityRepository
                 FROM CyclogramProofPilotBundle:ParticipantArmLink pal
                 INNER JOIN pal.participant p
                 INNER JOIN pal.arm a
-                WHERE DATEDIFF(CURRENT_DATE(), pal.participantArmLinkDatetime) = :period
+                WHERE DATEDIFF(CURRENT_DATE(), pal.participantArmLinkDatetime) >= :period
                 AND a.armCode = :code
                 AND pal.status = :palstatus
                 ")->setParameters(array(
@@ -380,6 +380,20 @@ class StudyRepository extends EntityRepository
                         'pilstatus' => array(ParticipantInterventionLink::STATUS_REFERRAL, ParticipantInterventionLink::STATUS_CLOSED)
                 ))
                 ->getResult();
+    }
+    
+    public function getAllStudyContent () {
+    return $this->getEntityManager()
+    ->createQuery('SELECT sc.studyId, sc.studyName, sc.studyLogo, s.studyCode, sc.studyGraphic, sc.studyTagline  FROM
+            CyclogramProofPilotBundle:StudyContent sc
+            INNER JOIN sc.study s
+            WHERE (s.status = :status
+            OR s.status =:prelaunchstatus)')
+            ->setParameters(array(
+                    'status' => Study::STATUS_ACTIVE,
+                    'prelaunchstatus' => Study::STATUS_PRELAUNCH
+            ))
+            ->getResult();
     }
 
 }
