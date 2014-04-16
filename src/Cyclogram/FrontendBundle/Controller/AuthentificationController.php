@@ -360,7 +360,23 @@ class AuthentificationController extends Controller
             $session->remove('confirmation');
         }
         
-        
+        if ($session->has('ProtectedSurvey')) {
+            $bag = $session->get('ProtectedSurvey');
+            $surveyId = $bag->get('surveyId');
+            $studyCode = $bag->get('studyCode');
+            $session->remove('ProtectedSurvey');
+            $participant = $this->get('security.context')->getToken()->getUser();
+            $enrolled = $em->getRepository('CyclogramProofPilotBundle:Participant')->isEnrolledInStudy($participant, $studyCode);
+            $closed = $em->getRepository('CyclogramProofPilotBundle:ParticipantSurveyLink')->checkIfSurveyClosed($participant, $surveyId);
+            if ($enrolled && !$closed) {
+                $redirectPath = $this->get('router')->generate('_main');
+                return $this->redirect($this->get('router')->generate('_survey_protected', array(
+                        'studyCode'=>$studyCode,
+                        'surveyId'=>$surveyId,
+                        'redirectUrl'=>urlencode($redirectPath
+                        ))));
+            }
+        }
         if (isset($studyCode) && $studyCode !== 'jsCode') {
             $isEnrolled = $em->getRepository('CyclogramProofPilotBundle:Participant')->isEnrolledInStudy($participant, $studyCode);
             if ($isEnrolled)

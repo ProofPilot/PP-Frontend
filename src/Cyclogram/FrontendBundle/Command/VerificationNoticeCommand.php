@@ -46,16 +46,6 @@ class VerificationNoticeCommand extends ContainerAwareCommand
 
         foreach ($participants as $participant) {
             
-                if (is_null($participantId)) {
-                    $participantId = $participant['participantId'];
-                    $participantsArray[$participantId]['id'] = $participant['participantId'];
-                    $participantsArray[$participantId]['email'] = $participant['participantEmail'];
-                    $participantsArray[$participantId]['emailCode'] = $participant['participantEmailCode'];
-                    $participantsArray[$participantId]['locale'] = $participant['locale'];
-                    $participantsArray[$participantId]['studies'][] = $participant['studyCode'];
-                    $participantsArray[$participantId]['username'] = $participant['participantUsername'];
-                    $participantsArray[$participantId]['mobile'] = $participant['participantMobileNumber'];
-                } elseif ($participantId != $participant['participantId']) {
                     $participantId = $participant['participantId'];
                     if (array_key_exists($participantId, $participantsArray)) {
                         $participantsArray[$participantId]['studies'][] = $participant['studyCode'];
@@ -68,7 +58,7 @@ class VerificationNoticeCommand extends ContainerAwareCommand
                         $participantsArray[$participantId]['username'] = $participant['participantUsername'];
                         $participantsArray[$participantId]['mobile'] = $participant['participantMobileNumber'];
                     }
-                }
+
                 
         }
         foreach ($participantsArray as $participant){
