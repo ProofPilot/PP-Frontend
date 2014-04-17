@@ -339,14 +339,14 @@ class AuthentificationController extends Controller
         $locale = $this->getRequest()->getLocale()?$this->getRequest()->getLocale():'en';
         $language = $em->getRepository('CyclogramProofPilotBundle:Language')->findOneByLocale($locale);
         
-       
         
         if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
             return $this->redirect($this->generateUrl("_signup", array('error' => true)));
         }
         
         $participant = $this->get('security.context')->getToken()->getUser();
-        if($session->has('preLaunch')) {
+        $isEnrolled = $em->getRepository('CyclogramProofPilotBundle:Participant')->isEnrolledInStudy($participant, $studyCode);
+        if($session->has('preLaunch') && !$isEnrolled) {
             $message = $session->get('preLaunch');
             $session->remove('preLaunch');
             $this->prelauncCmpaignRegistration($participant, $studyCode, $recruiter);
